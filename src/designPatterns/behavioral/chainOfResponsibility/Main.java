@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-        int randomNumber = (int) Math.ceil(Math.random() * 2);
+        int randomNumber = (int) Math.ceil(Math.random() * 10);
         methodThree(randomNumber);
     }
 
