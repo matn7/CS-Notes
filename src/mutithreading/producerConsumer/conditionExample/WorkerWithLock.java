@@ -1,8 +1,6 @@
-package mutithreading.producerConsumer;
+package mutithreading.producerConsumer.conditionExample;
 
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import mutithreading.producerConsumer.conditionExample.Runner;
 
 /**
  * Created by Mati on 09.07.2017.

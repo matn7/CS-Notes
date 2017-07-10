@@ -1,4 +1,4 @@
-package mutithreading.producerConsumer;
+package mutithreading.producerConsumer.conditionExample;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
