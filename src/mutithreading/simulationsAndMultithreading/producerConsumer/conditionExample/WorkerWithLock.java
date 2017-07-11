@@ -1,17 +1,18 @@
-package mutithreading.simulationsAndMultithreading.waitAndNotify;
+package mutithreading.simulationsAndMultithreading.producerConsumer.conditionExample;
 
 /**
- * Created by Mati on 11.07.2017.
+ * Created by Mati on 09.07.2017.
  */
-public class Main {
+public class WorkerWithLock {
 
     public static void main(String[] args) {
-        Processor processor = new Processor();
+        final Runner runner = new Runner();
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    processor.produce();
+                    runner.produce();
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -22,22 +23,25 @@ public class Main {
             @Override
             public void run() {
                 try {
-                    processor.consume();
+
+                    runner.consume();
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
-
         t1.start();
         t2.start();
 
-        try {
+
+       try {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 
 }

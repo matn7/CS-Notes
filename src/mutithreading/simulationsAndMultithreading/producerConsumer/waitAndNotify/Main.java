@@ -1,20 +1,17 @@
-package mutithreading.producerConsumer.conditionExample;
-
-import mutithreading.producerConsumer.conditionExample.Runner;
+package mutithreading.simulationsAndMultithreading.producerConsumer.waitAndNotify;
 
 /**
- * Created by Mati on 09.07.2017.
+ * Created by Mati on 11.07.2017.
  */
-public class WorkerWithLock {
+public class Main {
 
     public static void main(String[] args) {
-        final Runner runner = new Runner();
+        Processor processor = new Processor();
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    runner.produce();
-
+                    processor.produce();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -25,25 +22,22 @@ public class WorkerWithLock {
             @Override
             public void run() {
                 try {
-
-                    runner.consume();
-
+                    processor.consume();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
+
         t1.start();
         t2.start();
 
-
-       try {
+        try {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 
 }

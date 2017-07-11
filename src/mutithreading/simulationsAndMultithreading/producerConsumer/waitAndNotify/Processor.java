@@ -1,4 +1,4 @@
-package mutithreading.simulationsAndMultithreading.waitAndNotify;
+package mutithreading.simulationsAndMultithreading.producerConsumer.waitAndNotify;
 
 /**
  * Created by Mati on 11.07.2017.
