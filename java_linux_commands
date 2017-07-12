@@ -1,0 +1,28 @@
+################
+# Selecting GC #
+################
+java -XX:+UseSerialGC
+java -XX:+UseParallelGC
+java -XX:+UseConcMarkSweepGC
+
+#############
+# Tune heap #
+#############
+java -XX:NewSize=128m -XX:MaxNewSize=128m -XX:SurvivorRatio=8 -Xms512m -Xmx512m
+
+##############
+# GC logging #
+##############
+java -XX:+PrintGC (-verbose:gc)
+
+###############
+# Thread dump #
+###############
+jsp
+jstack -L <java_pid_from_jsp_command> > jstack.out
+
+#############
+# Heap dump #
+#############
+jsp
+jmap -heap <java_pid_from_jsp_command> > jmap.out
