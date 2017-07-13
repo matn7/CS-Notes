@@ -71,7 +71,61 @@ parent class, child class
 HashMap, HashSet
 
 
+# String
 
+* Immutable and final
+* Thread safe - prevent from change cach
+* String pool cache (optimization)
+* Hash codes - keys in hashCodes are Strings
+
+#########################
+# Garbage Collection GC #
+#########################
+
+* Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
+* live object = reachable (referenced by someone else)
+* dead object = unreachable (unreferenced)
+* Objects are alocated in the "heap" of java memory
+* static members, class definition are stored in "method area" Permgen/Metaspace
+* Garbage Collection is carried out by a daemon hread called "Garbage Collector"
+* Force GC to happened System.gc (no guaranteed)
+* Wen failed to alocated bcause of full heap. Error message java.lang.OutOfMemoryError
+
+* Gargage Collector involves
+    - Mark : go through all program structure, mark reachable objects as live
+    - Delete/Sweep : Delete unreachable objects
+    - Compacting : Compact memory by moving around objects
+
+* Typed of Garbage Collector
+    - Serial Collector : Runs on single thread, useful in basic applications
+    - Concurrent Collector : GC execute as application runs, not wait the old generation to full stop the world
+      execute only during mark/re-mark phase
+    - Parallel Collector : Uses multiple CPUs to perform GC. Multiple threads doing mark/sweep. Does not start until
+      heap is full/near-full. "Stop the world" when runs.
+
+* Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required
+* Use paraller collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
+
+java -XX:+UseSerialGC
+java -XX:+UseParallelGC
+java -XX:+UseConcMarkSweepGC
+
+
+###############
+# Concurrency #
+###############
+* fail-safe do not throw ConcurrentModificationException
+* fail-fast throw ConcurrentModificationException
+
+# Concurrent Collections
+
+    # ConcurrentHashMap
+    * Full concurrency during retreival
+    * Reads can happen fast, while writes require lock
+    * Whole table is not locked only segment is locked
+    * Iterations do not throw concurrent modification exception
+    * Null key not allowed
+    * Operations are atomic
 
 
 

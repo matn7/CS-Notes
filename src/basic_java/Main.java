@@ -34,10 +34,7 @@ public class Main {
         System.out.println("s3 == s4: " + s3 == s4);
         System.out.println("s3.equals(s4): " + s3.equals(s4));
 
-        // Why String Immutale?
-        // * Thread safe - prevent from change cach
-        // * String pool cache (optimization)
-        // * Hash codes - keys in hashCodes are Strings
+
 
         // Constructor chaining
         Temporary temp = new Temporary(23,34);

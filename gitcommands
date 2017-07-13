@@ -1,4 +1,9 @@
+git init
 git status
 git add .
-git commit -m ""
+git commit -m "message"
 git push
+git checkout -b "branchname"
+git checkout "branchname"
+git branch
+
