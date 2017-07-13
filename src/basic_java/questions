@@ -78,6 +78,13 @@ HashMap, HashSet
 * String pool cache (optimization)
 * Hash codes - keys in hashCodes are Strings
 
+
+# Interfaces
+
+* All methods public abstract
+* All properties public static final
+* 
+
 #########################
 # Garbage Collection GC #
 #########################
