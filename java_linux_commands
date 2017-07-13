@@ -26,3 +26,39 @@ jstack -L <java_pid_from_jsp_command> > jstack.out
 #############
 jsp
 jmap -heap <java_pid_from_jsp_command> > jmap.out
+
+
+ls -lrt | grep "^l"             // list all links from directory
+touch fileName                  // create file fileName
+chmod 777 fileName              // change umask 777
+uname -a                        // OS information, CPU, system architecture 32/64 bit
+&                               // run process in background
+fg <PID>                        // back to foreground
+kill -9 <PID>                   // kill that process
+ping                            // check remote host is alive
+history                         // command history
+scp                             // secure copy
+top                             // list processed
+df -h                           // check disk space
+ps -ef                          // list processed
+ps -auxwww                      // list process with very long name
+cat /proc/cpuinfo               // System info, CPU
+ln -s new_package latest        // create softlink
+ln myfile.txt myhardlink.txt    // create hardlink
+find                            // Unix command to find file
+grep -c "Unix" filename         // count Unix word apperance in filename
+export                          // set environmental variable
+lsof                            // list process that using a particular file
+netstat -a | grep "port"        // check wich host are connecting to your host by particular port
+nohup                           // run process in background, different from &, process does not stop even when user who
+                                // started process logs off
+watch                           // repeatedly execute commands provided with specific delay
+sed s/Unix/UNIX/g fileName      // replace word Unx to UNIX in fileName
+cut -f3 fileName                // display 3 column in fileName
+du -sh | grep G                 // check how much space each directory take
+uptime                          // check how many days server is up
+nslookup                        // check DNS and ip address
+
+ephemeral port - in unix port used by OS for client sockets
+Soft Links - unix softlinks are pointers to programs, files or directories located elsewhere
+Hard Links - unix hardlinks are pointers to programs and files, but NOT directories

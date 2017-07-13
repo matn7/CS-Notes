@@ -112,6 +112,18 @@ HashMap, HashSet
 * Constructor - reserve space in memory for object
 
 
+# Serialization
+
+* Abstract class - high level class, by whom inherits
+* Data serialization allows to know about all references (extends)
+* Serialized object will be read to file. They will acquire some special identification number, object will use this
+  number to other objects
+* To perform serialization class need to implements Serializable interface
+* Serializable marker interface (without method), safety guard to make sure you know what you are doing.
+* transient data that we dont want to be serialized
+* Fragile data should be marked as transient, or should not implement Serializable
+
+
 #########################
 # Garbage Collection GC #
 #########################
