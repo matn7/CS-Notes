@@ -9,7 +9,7 @@ git commit -m "Initial commit on new branch"
 git push
 
 git checkout master
-git merge
+git merge notes
 git branch
 git pull origin master
 git merge "branchname"
