@@ -1,0 +1,99 @@
+# ClassCastException
+
+* When references to objects ponits to objects different classes
+* When argument if wrong type, method compareTo should throw exception
+* No expliit casting
+* Try add wrond data type
+* SerialVersionUID
+
+
+# Constructor Chaining
+
+* Call in the same class this()
+* Call from parent class super()
+* Use to execute more tasks in one constructor
+* Improver readability of code
+
+
+# Overloading
+
+* Compile time polymorphism
+* Use the same method name but with different arguments
+
+
+# Overriding
+
+* Runtime polymorphism
+* The same method name with exactly the same arguments
+
+
+# final
+
+* Value of member variable cannot be changed
+* Object reference cannot be changed
+* Class cannot be inherited
+* Method cannot be overriden
+
+
+# finally
+
+* Try, catch, block. Stuff between {} in finnaly always be executed, even when in try return statement
+* Finnaly want execute. Program crasch before go to this block, or in try System.exit(0)
+
+
+# finalize
+
+* JVM call this method when GC is about to e called
+
+
+# == vs equals
+
+* == check wether object are the same (point to the same place in memory, the same object)
+* .equals() when compare content of objects
+
+
+# Class Loaders
+
+* Bootstrap Class Loader
+* Extension Class Loader
+* System Class Loader
+
+
+# SerialVersionUID
+
+* Mark added to class to during deserialization, reconstruct good class. Useful when there is some class hierarchies
+parent class, child class
+
+
+# hashCode, equals
+
+* You must override hashcode in every class that overrides equals. Failure to do so affect working with hashbasec collection
+HashMap, HashSet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
