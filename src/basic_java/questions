@@ -83,7 +83,34 @@ HashMap, HashSet
 
 * All methods public abstract
 * All properties public static final
-* 
+* Implement interfaces, want to imitate behavior of class
+* Use to impose behavior on other classes
+* You can implements more than one interface (impose behavior), example implements Comparable interface to extort
+  sorting behavior
+
+
+# Class Object
+
+* Parent class of all classes
+* hashCode
+* equals
+
+
+# Abstract class and methods
+
+* Cannot instantiate abstract class
+* Are needed during inheritance
+* Whant something to be overriden to not forget about it later
+* Additional responsibilities added to class
+
+
+# OOP
+
+* Objects - containers that keep variables functions thematically connected to each others, to use it easier later
+* Classes - Frame to build instances of objects
+* Objects have, properties, methods
+* Constructor - reserve space in memory for object
+
 
 #########################
 # Garbage Collection GC #
