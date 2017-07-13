@@ -4,6 +4,9 @@ git add .
 git commit -m "message"
 git push
 git checkout -b "branchname"
+git push -u origin notes
 git checkout "branchname"
 git branch
 git pull origin master
+git merge "branchname"
+
