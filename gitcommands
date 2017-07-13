@@ -6,4 +6,4 @@ git push
 git checkout -b "branchname"
 git checkout "branchname"
 git branch
-
+git pull origin master
