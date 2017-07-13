@@ -3,13 +3,16 @@ git status
 git add .
 git commit -m "message"
 git push
+
 git checkout -b "branchname"
-git push -u origin notes
+git push -u origin "branchname"
 git commit -m "Initial commit on new branch"
 git push
 
 git checkout master
 git merge notes
+git push
+
 git branch
 git pull origin master
 git merge "branchname"
