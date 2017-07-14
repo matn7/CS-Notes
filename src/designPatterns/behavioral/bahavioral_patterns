@@ -1,0 +1,27 @@
+#######################
+# Behavioral Patterns #
+#######################
+
+# Strategy Pattern
+
+* String Sorting
+Java has standard way of handling sorting.
+Create a lot of algorithm each implements the interface Comparator<String>
+Any object that implements this interface has a method that takes in 2 Strings, and specified which comes first.
+int compare(String s1, String s2), by returning -1,0,1 whether the first string is less than, equal to, more than the second
+Each algorithm can specify its own logic to determine this order.
+Sort using
+Collections.sort(List<String> list, Comparator<String> comparator).
+Strategy Pattern is used to specify a behavior "how to sort".
+Strategy Pattern uses composition Member variable), over Inheritance (Interfaces or abstract classes), in modified class
+Idea of Strategy Pattern is make it easy to vary the behavior ofa class at runtime, and do so using composition rather
+than inheritance.
+
+* Dependency Injection
+Is widely used and very powerful technique of setting up member variables of complicated classes on fly.
+It is fundamentally similar to the strategy pattern.
+
+Dependency injection allows a class which uses many different services to not know about the instantiation
+of each of this services, instead its member variables which are these services are injected into the class
+this allows the instantiation of the class to be simple and it is a injector which holds all the complicated
+information of what class to instantiate and inject into a particular class.

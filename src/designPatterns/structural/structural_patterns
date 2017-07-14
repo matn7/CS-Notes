@@ -1,0 +1,10 @@
+#######################
+# Structural Patterns #
+#######################
+
+# Decorator Pattern
+Dynamically add responsibilities to objects
+On example File API in Java
+Adding new functionality to existing class should be easily done while extending the class
+inherited from it we use it within a composite or any other way. You should not force user
+to modfy this class in order to change functionality, Java does it via Decorator Pattern.

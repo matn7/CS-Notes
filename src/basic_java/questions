@@ -124,6 +124,17 @@ HashMap, HashSet
 * Fragile data should be marked as transient, or should not implement Serializable
 
 
+# What is the difference between composition and inheritance ?
+
+Composition refers to defining behavior by member variables a class includes
+Inheritance refers to defining behavior by the interfaces or classes that a class inherits from
+Composition = "has-a", Inheritance = "is-a"
+
+
+# How are the Strategy Pattern and Dependency Injection related ?
+Each defines behavior by setting member variables of a class
+
+
 #########################
 # Garbage Collection GC #
 #########################
@@ -184,8 +195,105 @@ java -XX:+UseConcMarkSweepGC
     * Operations are atomic
 
 
+###################
+# Design Patterns #
+###################
+
+* Design Patterns are canonical solutions to recuring problems
+* Creational Patterns "How should object be created"
+    - Factory, AbstractFactory, Singleton, Builder, Prototype, Dependency Injection
+* Behavioral Patterns "How should object behave and interact with each other"
+    - Strategy, Template, Iterator, Command, Chain of Responsibility, Memento, Visitor, State, Mediator, Observer
+* Structural Patterns "How should classes behave and interact with each other"
+    - Decorator, Adapter, Facade, Composite, Flyweight, Bridge, Proxy
+* Concurrency Pattern "How should specific situation be handled in multithreading"
+    - Double checked locking
+* Model View Controller "Architectural pattern"
+
+* Libraries and Frameworks are both code written by others that we can use.
+* Design Patterns are proven ideas for solving common problems.
+* Code usually calls libraries and is often called by frameworks, but is stractured using Design Patterns
 
 
+# Creational
+
+* How objects are constructed
+* Decouple the construction of an action from its use
+* Hide implementation of an object only reveal its interface
+* Defer instantiation until run time
+* Families of related objects that must be used together
+* Allow creation of finite number of instances
+
+
+# Behavioral
+
+* How do objects behave and interact with each other
+* How logical unit (classes) as whole interacts with the outside world
+* Iterator pattern - here logical unit includes 1 class Iterator class. This pattern governs how the
+    is used by the client (the outside world)
+
+
+# Structural
+
+* How classes within the logical unit interacts with each other
+* MVC pattern - logical unit includes 3 classes model, view, controller
+    The pattern governs how the Model, View, Controller interact with each other
+    If the interaction etween the M, V, C were change, the UI would not look or behave any different !
+
+
+# Design Principle #1 : Relay on Interfaces, not implementation
+
+"Program to an interface not implementation" decorator, iterator, adapter
+
+Interface is a surface that a unit offers to outside world.
+That unit could be a single class, or even be a collection of classes.
+The implementation is a guts of that unit.
+Never get assumption about content of any unit.
+ArrayList<String> list = new ArrayList<>(), wrong
+List<String> list = new ArrayList<>(), correct
+
+
+# Design Principle #2 : The Open / Close Principle
+
+"Classes should be open for extension but closed for modfication"
+
+Once you have written a class, it's done. Never add enything to it after that.
+No new member variables, no new methods, no new interfaces implemented, No modification.
+But other code should be able to use your class in new ways, New applications via extension.
+
+* Inheritance, template pattern
+    - If you structure your code into abstract base class, other classes can find
+      new way to use it via Inheritance
+
+* Delegation, observer, MVC, Chain of Responsibility
+    - If you fire events and expose properties, other code can listen in, and use your code via Delegation
+
+* Composition, strategy pattern
+    - If you take in member variale to determine behavior, you allow extension via Composition
+
+
+# Design Principle #3 : Principle of Least Knowledge
+
+"Only talk to friends, don't talk to strangers"
+
+Only make method calls to friends.
+friends - object passed in as parameter to methods of your classes. Object created insde your class.
+Code should never include multiple '.' operators in the same function call.
+int friendNumber = media.getRelatives().getFriend(), not OK
+int firndNumber = media.getFriend(), OK
+But this rule is not always a case.
+
+
+# Design Principle #4 : Dependency Injection
+
+"Depend on abstraction never on details"
+Used technique to set member variables of objects on the fly.
+
+# Design Principle #5 : Hollywood Principle
+
+"Don't call us we will call you"
+Class notifies other class of changes when they occurs via events or messages.
+Idea high-level component calling low-level is used components in frameworks.
 
 
 
