@@ -162,6 +162,16 @@ java -XX:+UseConcMarkSweepGC
 ###############
 * fail-safe do not throw ConcurrentModificationException
 * fail-fast throw ConcurrentModificationException
+* volatile - value read always from main memory no cache
+* synchronized - acquire intrinsic lock on object. Only one object can execute this part of code.
+* join() - wait until other thread finish executng
+
+# Start Thread
+
+* Extends Thread - override run() method
+* Implements Runnable - override run() method, pas Runnable object to Thread class constructor. Call start method
+  on thread object.
+
 
 # Concurrent Collections
 
