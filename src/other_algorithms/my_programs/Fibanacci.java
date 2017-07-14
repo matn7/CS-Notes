@@ -7,8 +7,11 @@ public class Fibanacci {
 
     public static void main(String[] args) {
         //for (int i = 0; i < 4; i++) {
-            System.out.println(fibanacci(23));
-       // }
+        System.out.println(fibanacci(1));
+        System.out.println(fibanacci(2));
+        System.out.println(fibanacci(3));
+        System.out.println(fibanacci(4));
+        //}
     }
 
     public static int fibanacci(int num) {
