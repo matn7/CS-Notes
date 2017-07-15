@@ -25,3 +25,59 @@ Dependency injection allows a class which uses many different services to not kn
 of each of this services, instead its member variables which are these services are injected into the class
 this allows the instantiation of the class to be simple and it is a injector which holds all the complicated
 information of what class to instantiate and inject into a particular class.
+
+
+# Template
+
+Frameworks are complicated group of classes that do bunch of stuff. Complicated collections of interconnected classes.
+As a programmer your job is to plugin little bits of code that customize what the framework does.
+Framework widely use something known as the Dependency Inversion Principle.
+Abstract base class is a template for the complicated operations.
+The abstract (unimplemented) methods left for the programmer are called hooks.
+Basic point of template pattern, specify a complex set of steps, and have client code plugin specific
+implementations of individual steps.
+Allow subclass to customize parts of an algorithm, but force them to adher to the overall algorithm.
+Specific bit that programmers need to do using frameworks is called an Event.
+And the place where you the programmer, stand by waiting fr the envent and decide how to react to the event is called Listener.
+In API JavaFX framework.
+
+
+# Iterator
+
+Collections are containers which means that they hold collections of data.
+A List is a collection of values in order,
+A Set is a collection of values in no particular order.
+A Map is a collection of key value pairs.
+Every java collections implements the interface Iterable<T>. This interface has a single method Iterator iterator().
+Every java collections offers a way to get a coresponding iterator object.
+An iterator offers a way to get in sequence every element of a collection. This is completely independent of how the collection
+is implementec. hasNext(), next(), remove() methods of Iterator.
+Classes which implements the Iterable<T> interface can be used in for-each statements in code.
+An iterator is a simple way of allowing some external code to loop through a collection of data without
+assignment privileges.
+
+External iterators have advantages that because the iterator sits outside a collection. It is easy enough to define different
+iterators for collection.
+
+Internal iterators
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
