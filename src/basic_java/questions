@@ -1,3 +1,27 @@
+@Described terms:
+ClassCastException
+Constructor Chaining
+Overloading
+Overriding
+final
+finally
+finalize
+== vs equals
+Class Loaders
+SerialVersionUID
+hashCode, equals
+String
+Interfaces
+Class Object
+Abstract class and methods
+OOP
+Serialization
+What is the difference between composition and inheritance ?
+How are the Strategy Pattern and Dependency Injection related ?
+Reflection
+Volatile
+
+
 # ClassCastException
 
 * When references to objects ponits to objects different classes
@@ -110,6 +134,7 @@ HashMap, HashSet
 * Classes - Frame to build instances of objects
 * Objects have, properties, methods
 * Constructor - reserve space in memory for object
+* Creating an object from a class ins called instantiation
 
 
 # Serialization
@@ -133,6 +158,34 @@ Composition = "has-a", Inheritance = "is-a"
 
 # How are the Strategy Pattern and Dependency Injection related ?
 Each defines behavior by setting member variables of a class
+
+
+# Reflection
+
+Reflection is a way to invoke methods of objects on the fly at run-time.
+Reflection is slow and complicated. Method call via reflection may take 10x longer than usual.
+Instantiation an object from a name of a class.
+Reflection is the ability at runtime to actually create objects of classes, invoke methods, manipulate metadata
+Type introspection is the ability at runtime to explore the type of an object.
+Refletion drawbacks: complectit, performance overhead, security consideration, violation of abstraction.
+Reflection is good for unit testing jUnit.
+
+
+# Volatile
+
+* Declaring variable volatile means the value of this variable will never be cached thread locally.
+  All reads and writes will go straight to main memory. Access to the variable acts as through it is
+  enclosed in a synchronized bock, synchronized on itself.
+
+# Synchronized
+
+* Every objects in Java has a lock associated with it.
+  This lock is called the intrinsic lock or monitor. It is possible to specify that only one thread can
+  execute a section of code once it has acquired the lock on same object.
+  If some other thread currentl holds that lock, the current thread must waits its turn.
+  This is achieved using synchronized keyword.
+  Using right making a method synchronized can help eliminate thread interference and memory consistency error.
+  Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this"
 
 
 #########################
@@ -194,6 +247,24 @@ java -XX:+UseConcMarkSweepGC
     * Null key not allowed
     * Operations are atomic
 
+
+# Threads complications
+
+* Thread interference and memory consistency errors
+    - If two thread access the same variable, it is possible for them to get in each others way
+      For example tow threads incremanting the same variable at the same time.
+      To fic this make sure that section of code is only accessed by one thread at a time, by using synchronized keyword for example.
+      But this slows down performance, and can lead to thread contention issues (starvation, livelock, deadlock)
+
+* Thread Contention
+    - Deadlock : two thread each is blocked by a lock held by the other
+    - Livelock : two thread's don't deadlock, but keep blocking on locks held by each other, neither can progress
+    - Starvation : Same thread keep acquiring locks greadly. And cause other threads to be unable to get anything done.
+
+
+# Synchronized keyword
+
+* Every objects
 
 ###################
 # Design Patterns #

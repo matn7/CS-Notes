@@ -8,3 +8,14 @@ On example File API in Java
 Adding new functionality to existing class should be easily done while extending the class
 inherited from it we use it within a composite or any other way. You should not force user
 to modfy this class in order to change functionality, Java does it via Decorator Pattern.
+
+All input streams derive from common abstract class InputStream which constins standard operations shared by all streams.
+read(), close(), reset()
+There is a separate class deriving from input stream
+FileInputStream, ObectInputStream, AudioINputStream.
+InputStream object can be chained to get more input stream objects, this chaining of objects
+all of which descend from the same interface or abstract based class.
+It is crucial that the decorators be independent of each others. No decorator should know the
+exact type of another, only that they all have a common interface or abstract base class.
+Use decorator when you have a lots of objects each with a specific behavior indepandent of all others.
+Decorator objects are usually chained together, and should never know any details of other objects in the chain

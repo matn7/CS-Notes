@@ -1,0 +1,51 @@
+#######################
+# Creational Patterns #
+#######################
+
+# Factory
+
+Provides one of the best ways to create an obect. In Factory pattern create oject without exposing
+the creation logic to the client and refer to newly created object using a common interface.
+Factory pattern on database connection.
+Create interface IDataBase common across all databases. Create database classes MySql and Oracle.
+Each of these DB implements IDataBase interface.
+To make switchover between classes use config file and reflection mehanism.
+Config file is text file used to specify inputs that the application uses at runtime. Code now does not to be
+recompiled and rereleased.
+IDataBase database = DatabaseFactory.getDatabase()
+
+Basic idea of factory pattern is to decouple implementation of a class from its use.
+Create a mechanism for many alternative implementations to be instantiated from a single method.
+Factory obects create a dingle family of classes.
+
+# Abstract Factory
+
+If we want to use factory pattern without reflection.
+Have two factory classes MySql and Oracle, each of these factory classes only returns database objects of
+a specific type. Most implementation of these two classes are shared, so place shared code into abstract base class.
+The implementation details of how an object of database type is instantiated is completely hidden and decoupled from the user.
+Use abstract factory to create families of related classes.
+The abstract factory pattern is useful when we don't want to use reflection and also if we have different
+versions of oracle and MSSQL Database, or if we have different implementations not just of database
+but also of command and connection for MS-SQL Oracle.
+Abstract factory pattern is a way to create groups of related classes that implements different interfaces.
+Abstract factory object create entire families of classes. Is useful to create families of product while
+abstracting away CREATION and IMPLEMENTATION details from the user.
+
+
+# Singleton
+
+One object of particular class ins needed. Device Drivers, Registry Settings. Singleton objects
+make sense when the state of an object consumes a lot of memory, and just one version of that state
+is sufficient for entire application.
+Singleton objects must satisfy two attributes: Exactly one instance of object should exists.
+Everyone should be able to access it, global point of access.
+Standard parts of implementing the Singleton are Private Constructor, Synchronized getter for the Singleton.
+
+Double checked locking in software enginnering is software design pattern used to reduce the overhead of acquiring a lock,
+by first testing the locking creation, without actually acquiring the lock.
+
+Singleton classes should never be subclassed or extended.
+
+Make sure your sigleton object can't be cloned. Make sure that singleton class does not implement cloneable, or if
+it does override the clone() method to throw Exception.
