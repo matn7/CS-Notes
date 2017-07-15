@@ -176,6 +176,7 @@ Reflection is good for unit testing jUnit.
 * Declaring variable volatile means the value of this variable will never be cached thread locally.
   All reads and writes will go straight to main memory. Access to the variable acts as through it is
   enclosed in a synchronized bock, synchronized on itself.
+  Slower than cach, make sure value be read every time.
 
 # Synchronized
 
@@ -185,7 +186,8 @@ Reflection is good for unit testing jUnit.
   If some other thread currentl holds that lock, the current thread must waits its turn.
   This is achieved using synchronized keyword.
   Using right making a method synchronized can help eliminate thread interference and memory consistency error.
-  Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this"
+  Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this".
+  If we use synchronized we don't need to use volatile keyword.
 
 
 #########################
@@ -230,11 +232,45 @@ java -XX:+UseConcMarkSweepGC
 * synchronized - acquire intrinsic lock on object. Only one object can execute this part of code.
 * join() - wait until other thread finish executng
 
+
+# Process and threads
+
+* In concurrent programming two units of executio process and treads.
+* Processing time for a single core is shared among processes and threads, time slicing
+
+* Process : Has a self contained execution environment. Private set of runtime resources.
+  Each process has its own memory space. Process can communicate with each others IPC.
+
+* Threads : Lightweight process. Creating a new thread requires fewer resources than creating a new process.
+  Exists within a process. Every process has at least one thread.
+
+* join() : method wait until thread to finish
+
+* threads prioritity : importance of a thread to the sheduler. Lower prioritity thread tend to run less often.
+  setPrioritity(), getPrioritity(). MAX_PRIORITITY, NORM_PRIORITITY, MIN_PRIORITITY
+
+* yield() : this static method is essentially used to notify the system thet the current thread is willing to
+  give up CPU for a while, but sheduler can immediately pick them back. Is put back into the ready queue of the processor,
+  and waits for it next turn.
+
+
 # Start Thread
 
 * Extends Thread - override run() method
+
 * Implements Runnable - override run() method, pas Runnable object to Thread class constructor. Call start method
   on thread object.
+
+* Executor Service - dynamically reuse thread. Check if threads are already working.
+  - Executors.newCachedThreadPool() return an executor service that can dynamically reuse threas.
+    Before starting a job, it going to check wether there are any threads that finished the job if so reuse them.
+    If no create new one, good for processor effective solution
+  - Executors.newSingleThreadPool() uses single thread for the job.
+  - Executors.newFixedThreadPool() maximize the number of threads. If all the thread are busy we have to wait
+    for one to terminate.
+
+  - executorService.execute(Runable)
+  - executorService.execute(Callable or Runnable)
 
 
 # Concurrent Collections
@@ -246,6 +282,15 @@ java -XX:+UseConcMarkSweepGC
     * Iterations do not throw concurrent modification exception
     * Null key not allowed
     * Operations are atomic
+
+    # BlockingQueue
+    * Interface that represents a queue that is thread safe. put(), take()
+
+    # DelayQueue
+    * Like BlockingQueue that implements Delay interface. Cannot put null into it.
+
+    # PrioritityBlockingQueue
+    * Iplements Comparable interface. Determine what will be the order of a Queue.
 
 
 # Threads complications
@@ -262,9 +307,40 @@ java -XX:+UseConcMarkSweepGC
     - Starvation : Same thread keep acquiring locks greadly. And cause other threads to be unable to get anything done.
 
 
-# Synchronized keyword
+# Semaphores
 
-* Every objects
+* Variables that are used to controlling access to common resources, important in OS.
+  is a record of how many units of particular resource are available.
+  Semaphores track how many resources are free, it does not keep track of which of the resources are free.
+  Metexes are binary semaphores. Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlck it.
+  Methods acquire() if permit is available take it, release() add a permit.
+
+
+# Callable and Future
+
+* Returns something from a thread implements Callable instead of Runnable.
+
+
+# Thread States
+
+* Runnable - create a new thread and call start method
+* Blocked - enter synchronized block, lock
+* Waiting - after wait()
+* Terminated - run method is over
+
+
+# Concurrent Libraries
+
+    - CountDownLatch : Used to synchronize one ore more tasks by forcing them to wait for completion of a set of operatios
+      being performed by other tasks. Give initial count to count down latch object and task that calls await() on that
+      oject will block until count reaches zero. The count cannot be reset. Typically use is to divide a problem into "n"
+      independetly solveable tasks and create a CountDownLatch with value of "n".
+      When each task is finished it calls countDown on Latch. Task waiting to solve call await() on the Latch to hold
+      themselves back until it is completed.
+
+    - CyclicBarrier : Used in situation where you want to create a group of tasks to perform work in parallerl plus wait
+      until they are still finished before moving on to the next step, like join or countDownLatch.
+      Can be reused.
 
 ###################
 # Design Patterns #
