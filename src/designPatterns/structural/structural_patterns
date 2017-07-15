@@ -3,6 +3,7 @@
 #######################
 
 # Decorator Pattern
+
 Dynamically add responsibilities to objects
 On example File API in Java
 Adding new functionality to existing class should be easily done while extending the class
@@ -19,3 +20,22 @@ It is crucial that the decorators be independent of each others. No decorator sh
 exact type of another, only that they all have a common interface or abstract base class.
 Use decorator when you have a lots of objects each with a specific behavior indepandent of all others.
 Decorator objects are usually chained together, and should never know any details of other objects in the chain
+
+
+# Adapter Pattern
+
+Adapter is device that converts attributes of one electrical device or system to these of an otherwise incompatiblie device o system.
+An adapter takes in an object that implements an interface and gives out an object that implements different interface.
+In Java convertc array on list, JavaFX Framework tables and charts.
+
+
+# Facade Pattern
+
+A facade provides a simple interface for a larger body of complicated code. Multiple systems can work together
+behind the facade, however the user will see only the simple interface.
+In Java API URL to download data. Java NET library. Which manages complecity, assumes that you don't know or care how a content from
+URL are obtained. Java abstracted all that process for you, assmes that you dont know much about networking or stuff.
+Facase are in Reflection, Networking, Database access, Madia Players.
+Basic point in facade is a wrapper to abstract the complexity of a group of interconnected classes.
+What motivates a Facade pattern, classes should know as little as possible about other classes they use, relay on abstractions-interface
+not implementations, loosely coupled code is preferable to tightly coupled.

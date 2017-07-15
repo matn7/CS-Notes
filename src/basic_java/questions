@@ -353,6 +353,7 @@ Code should never include multiple '.' operators in the same function call.
 int friendNumber = media.getRelatives().getFriend(), not OK
 int firndNumber = media.getFriend(), OK
 But this rule is not always a case.
+Summarized, each unit should have only limited knowledge about other units. Each unit should only tolk to its friend.
 
 
 # Design Principle #4 : Dependency Injection
