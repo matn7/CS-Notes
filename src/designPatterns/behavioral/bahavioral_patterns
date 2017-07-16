@@ -139,6 +139,16 @@ The code to be executed on different thread is encapsulated in a command object.
 Third Example undo and logging
 
 
+# The Chain Of Responsibility Pattern
+
+Allow more than one receiving element to handle request. The sender interacts with only first receiver in a queue.
+Handle Exceptions.
+Handle mouse clicks. UI applications often are built on the composite pattern,
+meaning that windows contain other windows. The nested windows pass the mouse click action down from one to another
+until some windows has a handler from a mouse click.
+Some events need to be handled by one of multiple objects, and it is not known which one object specifically will know how to do
+what's needed.
+
 
 
 

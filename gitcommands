@@ -1,19 +1,26 @@
-git init
-git status
-git add .
-git commit -m "message"
-git push
+git init                                        # initialize repo
+git status                                      # code status, look for changes
+git add .                                       # add new added code
+git commit -m "message"                         # commit changes with required message
+git push                                        # push to remote repo
 
-git checkout -b "branchname"
-git push -u origin "branchname"
-git commit -m "Initial commit on new branch"
-git push
+git checkout -b "newbranchname"                 # change branch
+git push -u origin "newbranchname"              # push branch to remote repo
+git commit -m "Initial commit on new branch"    # commit on new branch
+git push                                        # push changes to remote branch
 
-git checkout master
-git merge notes
-git push
+git checkout master                             # checkout to master branch
+git merge "newbranchname"                       # merge master branch with newly created branch
+git push                                        # merged result push no need to do commit
 
-git branch
-git pull origin master
-git merge "branchname"
+git branch                                      # list all branches and one you are currently on
+git pull origin master                          # download latest changes from branchname
 
+git checkout <commit hash>                      # checkout (go back) to specific commit using <hash code>
+git checkout master                             # go back to master branch
+
+##############
+# .gitignore #
+##############
+Put here everything that you dont want to git track for you.
+Each file in each line.
