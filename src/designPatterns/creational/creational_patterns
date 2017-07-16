@@ -2,7 +2,7 @@
 # Creational Patterns #
 #######################
 
-# Factory
+# Factory Pattern
 
 Provides one of the best ways to create an obect. In Factory pattern create oject without exposing
 the creation logic to the client and refer to newly created object using a common interface.
@@ -33,7 +33,7 @@ Abstract factory object create entire families of classes. Is useful to create f
 abstracting away CREATION and IMPLEMENTATION details from the user.
 
 
-# Singleton
+# Singleton Pattern
 
 One object of particular class ins needed. Device Drivers, Registry Settings. Singleton objects
 make sense when the state of an object consumes a lot of memory, and just one version of that state
@@ -49,3 +49,34 @@ Singleton classes should never be subclassed or extended.
 
 Make sure your sigleton object can't be cloned. Make sure that singleton class does not implement cloneable, or if
 it does override the clone() method to throw Exception.
+
+
+# Builder Pattern
+
+When you know exactly what object you need use a constructor.
+When you don't know exactly what object is needed but you want to be able to decide at runtime from a family of objects.
+Use factory pattern.
+When you know beforehead exactly what object you need but that object has to be build up slowely as user inputs comes in.
+Use Builder pattern.
+In API StringBuilder for example.
+Allow object to be created in a step-by-step manner.
+Abstract the user of a class from implementation details of the objects of the class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

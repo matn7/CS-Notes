@@ -39,3 +39,35 @@ Facase are in Reflection, Networking, Database access, Madia Players.
 Basic point in facade is a wrapper to abstract the complexity of a group of interconnected classes.
 What motivates a Facade pattern, classes should know as little as possible about other classes they use, relay on abstractions-interface
 not implementations, loosely coupled code is preferable to tightly coupled.
+
+
+# Composite Pattern
+
+Create a class hierarchy to reflect dependent objects, all of which ahare a common interface.
+Allow the user to interact with every dependent object in a tree like hierrchy of objects.
+The Composite Pattern is the basic of most UI Containers in Java.
+Swing Containers.
+Each UI has a JFrame -> A JFrame contains many UI Elements like JComponent -> JComponent includes
+JMenu, JTreeView, JFileChoser ...
+Each JComponent contains any number of children, which are also JComponent objects.
+The User interacts both with the root of this tree of JComponent and with individual JComponents.
+Example Animations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
