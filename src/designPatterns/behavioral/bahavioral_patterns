@@ -150,7 +150,57 @@ Some events need to be handled by one of multiple objects, and it is not known w
 what's needed.
 
 
+# Memento Pattern
 
+Object sometimes need to know how to save their state and go back to that saved state.
+Example Serialization. Ability of an obect to save it's state. If an object can save its state, a relatively
+easy way to implement undo is to have the object "RESET" to previously saved state.
+Java has build in memento pattern via the Serializable interface.
+Any class that implements Serilizale and in which all member variales are serializable can be written to file or
+read from file with minimal effort.
+The Serializable interface has 2 methods - read object and write object.
+If member variable belongs to a class that does not implement serializable, you can just mark the member as
+"TRANSIENT" meaning that Java should not write out its value to file.
+Serializing and de-serializing meant laying out the object, 1 member variable at a time.
+Objects marked Serializable know how to save their state to file, and this is an implementation of Memento Pattern.
+A lot of build in objects are already Serializable.
+
+Saving to file Serializing
+FileOutputStream
+ObjectOutputStream
+writeObject
+
+Reading from file Deserializing
+FileInputStream
+ObjectInputStream
+readObject
+
+
+# Visitor Pattern
+
+Example object that knows how to traverse the tree of a composite object. The visitor object sits outside
+the composite object which allows us to have any number of visitor classes for a given composite object.
+Each visitor object define its own traversal (DEPTH-FIRST, IN-ORDER, ...) of the composite tree, as well
+as its own unique operation on each node.
+Using visitor object along with a composite object makes it easy to customize the process of traversal,
+and to add new operations.
+The Visitor pattern is a way to do something with each node of a Composite object.
+Visitor + Composite = Decorator.
+
+
+# The State Pattern
+
+This pattern is used to encapsulate varying behavior for the same object based on its initial state.
+This can be cleaner way for an object to change its behavior at runtime without restoring to large
+monolithic condition statements and thus imporve maintainability.
+
+Example Java Media Classes
+Media encapsulates an audio or video file. Has duration, tracks, metadata.
+MediaPlayer allows the user to do all of things user do with the media. Play, Pause, Change Volume.
+MediaView the view actually appears on screen. State pattern is life saver where classes have discret states and
+transitions between them.
+ Basic of State Pattern. State Machines have discret states, each state can be represented by a member variable.
+All these member variables implement a common interface.
 
 
 
