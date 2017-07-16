@@ -27,7 +27,7 @@ this allows the instantiation of the class to be simple and it is a injector whi
 information of what class to instantiate and inject into a particular class.
 
 
-# Template
+# Template Pattern
 
 Frameworks are complicated group of classes that do bunch of stuff. Complicated collections of interconnected classes.
 As a programmer your job is to plugin little bits of code that customize what the framework does.
@@ -42,7 +42,7 @@ And the place where you the programmer, stand by waiting fr the envent and decid
 In API JavaFX framework.
 
 
-# Iterator
+# Iterator Pattern
 
 Collections are containers which means that they hold collections of data.
 A List is a collection of values in order,
@@ -62,8 +62,81 @@ iterators for collection.
 Internal iterators
 
 
+# Observer Pattern
+
+MVC + Observer = UI
+All UI's.
+Variables announce changes to their states. Other object subscribe to listen to these changes.
+Object that publish these updates are called PUBLISHERS (a button).
+Objects that subscribe to listen to these changes are called SUBSCRIBERS (UI app).
+The code that gets executed when an update is published is called CALLBACK (Display popup when button is clicked)
+Publishers announce different types of updates - each of which is reffered to as AN EVENT (button clicked, hover)
+Collback belongs to subscriber object but is called by the publisher object when the event occurs.
+Another example capturig mouse clicks. JComponent alows programers to listen in on mouse event.
+Implement mouseadapter interface. Listen via addmouselistener method, which is present in every UI Element.
+Within these methods, it is possible to examine if the mouse event was popup trigger (right click).
+Listener - the command object with the code that gets executed when something happens.
+Subscriber/observer - The object that wait for something to happen. The object that register to be informed of changes.
+    Part of controllers and model in MVC.
+Publisher - The object that announces that somethig has happened. Are part of views.
+Event - The something that happens.
+Observer pattern and command pattern are related, the publisher maintains a list of command objects and executes their code when an event occurs.
+The command objects are part of the controller, and the observer objects are part of the view.
 
 
+# Command Pattern
+
+Class that has just one method. It encapsulates all the state needed for that one method to do its thing.
+Classes with one methods menus, threading, indomanagers
+Command objects lie at heart of the command pattern. A command object has a single method, and whether state is
+needed for that method to do its thing.
+A command object separates an action from the execution of that action.
+A command objects separates the execution of an action from the action itself.
+The Client - the user who triggers the execution of the action
+The Invoker - the button which is clicked by the client to trigger execution of the action
+The Receiver - the display area which is acted upon by the action.
+The Trigger that causes the action to be executed is called AN EVENT.
+A class with a single method is essentially an action
+
+Example Lambda function: functional constructors in an object oriented language.
+Anonymous classes (listeers, threads) are an excellent way to encapsulate little bits of behavior into objects.
+Very high proportion of anonymous classes siply consisted of - objects that implement an interface with just one function.
+Example anonymuus class Comparator is an interface with a single method, compare.
+Such interfaces are called "Functional Interfaces" or "Single Abstract Method Interfaces".
+Interfaces with just one method can actually be encapsulated using single functions - no real need for them to be encapsulated using classes.
+
+LAMBDA FUNCTIONS ARE SIMPLY ANONYMOUS FUNCTIONS.
+These anonymous function objects are often called "closures".
+In a for loop it is impossible or at least very complicated to parallelize the loop acress multiple different CPUs.
+Lambda functions are functional programming area a natural way to parallelize computing across CPUs.
+Divide up the list you are iterating over, and send parts of the list, along with the lambda function,
+to different cloud nodes, then aggregate the results. This is exectly what cloud computing is all about.
+
+Lambda functions are powerful when output of one is fed as the input of the next.
+Lambda functions represent the action.
+Java has added exactly this functionality, using "AGGREGATE OPERATIONS".
+Filter, Map and Foreach are standard aggregate operations in functional porgramming.
+Call ".stream()" method on any collection to get an object of type stream on which aggregate functions can be applied in sequence.
+Stream can be imagined as stream of values, where each value is being subjected to an operation like MAP, FOREACH, FILTER.
+
+Maps is an aggregate operation that takes a lambda expression, applies it to every element of input stream,
+and send the results out as the output stream.
+
+Filter is an aggregate operation that takes in one lambda expression that encapsulates a condition, applies
+it to every element of an input stream, every element that satisfies the condition is placed on the output stream.
+
+Foreach is an aggregate operation that takes a lambda expression and applies to each element of an
+input stream, but does not produce an output stream.
+Foreach is used for operations like printing to screen or saving to file, where it makes no sense to produce output stream.
+
+Second example threading.
+In Threading we define the action that we would like the new thread to undertake. And wrap the action
+in the body of a object that implements an interface with just one method.
+Define command object Runnable. Receiver is a screen, the invoker is a Thread object. Client calls start
+on that object to trigger the execution of the action.
+The code to be executed on different thread is encapsulated in a command object.
+
+Third Example undo and logging
 
 
 

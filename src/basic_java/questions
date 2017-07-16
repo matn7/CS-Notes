@@ -437,12 +437,42 @@ Summarized, each unit should have only limited knowledge about other units. Each
 "Depend on abstraction never on details"
 Used technique to set member variables of objects on the fly.
 
+
 # Design Principle #5 : Hollywood Principle
 
 "Don't call us we will call you"
 Class notifies other class of changes when they occurs via events or messages.
 Idea high-level component calling low-level is used components in frameworks.
 
+
+# MVC Paradigm
+
+Model View Controller is an architectural pattern. In Java API Swing.
+Basic idea of MVC is to separate data from its representation, separating data from its manipulation,
+allowing different simultaneous representations of the same data.
+MediaPlayer Example. Controller a slider to adjust volume in a media player app. Model the mp4 file of a movie
+to be played in a media player app. View the area of the media-player app that actually displays video.
+User sees the model through a view, and manipulates it via the controller.
+
+
+# What is a basic point of observer pattern
+
+An object announces updates to its value, and other objects can read to these updates.
+
+
+# When a publisher fires an update, how do subscriber bacome aware of it.
+
+The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified.
+
+
+# How are properties and bindings different from eah other.
+
+Properties are ONE:ONE, bindings are ONE:MANY
+
+
+# How Observer and MVC related
+
+The View act as publisher, controller as subscriber
 
 
 

@@ -1,0 +1,14 @@
+# The command pattern in action threading
+
+* Old way
+Runnable interface - is implemented by a class with the operations to be carried out by the other thread
+Thread - in build class objects of the thread class take in the rnable objects and run them in individual threads
+Thread.join() - the main class calls the .join() method on each thread which will wait until the thread finishes.
+
+* New way
+Callable interface - is implemented by a class with the operations to be carried out on other thread.
+Executors - in build classes java provides helper objects that know how to start, manage and stop 'callable' objects.
+Future.get() - futures are objects whic would will hold results in the Future,
+one callable object finishes whatever stuff it had to do n the other thread.
+
+Both these ways make use of the Command Pattern
