@@ -342,6 +342,78 @@ java -XX:+UseConcMarkSweepGC
       until they are still finished before moving on to the next step, like join or countDownLatch.
       Can be reused.
 
+
+## From Java 8 Book ##
+
+# Concurrent Programming
+Runnable describes task that might be executed asynchronously.
+Executor plans execute runnable instance.
+Callable tasks that return results or throw exception.
+Results without synchronization are unpredctable.
+Beter use thread safe data structures than use locks.
+ConcurrentHashMap is thread safe array allows to updates elements using atomic operations.
+To interrupt task set interrupt flag or throw InterruptedException.
+
+Thread is mechanism that allow to execute sequence of instruction, these instructions are delivered by OS.
+Couple of threads work in parallel using multiple porcessors of different time slice of the same processor.
+
+Executor executes a task by choosing threads that might be executed with.
+Runnable task = () -> {};
+Executor exec = Executors...;
+exec.execute(task);
+
+Factory method Executor class
+Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks
+Executors.newFixedThreadPool(thread_num); - good for grater amount of tasks
+To acquire number of thread based on number of processors.
+int processors = Runtime.getRuntime().availableProcessors();
+
+Objects Future and Executor
+Callable - Method call() oposite to method run() Runnable interface returns value or throw an Exceptions.
+To execute callable there is a need for ExecutorService instance.
+ExecutorService exec = ExecutorService.newFixedThreadPool(2);
+Callable<V> call = ...;
+Future<V> result = exec.submit(call);
+Future is an object that represents a calculations, which results will be accessible in a future.
+
+Thread safety
+RAM memory are slow, couple of time slower then modern processors. Processor try to collect needed data
+in registers or cache memory on main board, and lastly make changes in main memory.
+This cache memory is key factor for performance optimization.
+Thread Visibility
+- final value is visible after initialization
+- initial value of static variable is visible after static initialization
+- changes variale with volatile keyword are visible
+- changes after release a lock are visible for all that acquire this lock.
+Volatile keyword - compilator generates needed instructions to make sure that all changes that being applien in one task are
+reachable in another.
+
+Chasing
+Are problems always when shared variables are modified. Locks to critical section make atomic.
+
+Strategy of safety concurrency
+- Avoid schare data between tasks. One task z1, second task z2, z3 = z1 + z2
+- Use immutable objects
+- Locks allows only one task access to data at a time. Use data ctructures and algorithms from java libraries.
+
+Un modifiable classes
+Class in immutable if instance after creation cannot change.
+Implement immutable class
+- variable with final modificator
+- non method can modufy data
+- do not allow to leack modification
+- Do not allow to this refernece pass outside constructor
+
+Concurrent Algorithms
+* Parallel Strams
+Long results = coll.parallelStream().filter(s->s.startsWith('a')).count();
+ParallelStream method returns parallel stream. Stream is parted on segments.
+Filtering and counting is executed for each segments and results are joined together without your further interactions.
+* Parralel operations on arrays
+Arrays operations part array on segments, parallelly process them and join results.
+Arrays.parrarelSetAll(), parallelSort()
+Process array into a stream, long sum = IntStream.of(value).parallel().sum();
+
 ###################
 # Design Patterns #
 ###################

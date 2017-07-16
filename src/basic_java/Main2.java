@@ -7,6 +7,7 @@ public class Main2 {
 
     public static void main(String[] args) {
         Honda honda = new Accord(20000,"XT4");
+
     }
 
 }
