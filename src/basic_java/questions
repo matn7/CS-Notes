@@ -1,33 +1,9 @@
-@Described terms:
-ClassCastException
-Constructor Chaining
-Overloading
-Overriding
-final
-finally
-finalize
-== vs equals
-Class Loaders
-SerialVersionUID
-hashCode, equals
-String
-Interfaces
-Class Object
-Abstract class and methods
-OOP
-Serialization
-What is the difference between composition and inheritance ?
-How are the Strategy Pattern and Dependency Injection related ?
-Reflection
-Volatile
-
-
 # ClassCastException
 
 * When references to objects ponits to objects different classes
 * When argument if wrong type, method compareTo should throw exception
 * No expliit casting
-* Try add wrond data type
+* Try add wrong data type
 * SerialVersionUID
 
 
@@ -36,7 +12,7 @@ Volatile
 * Call in the same class this()
 * Call from parent class super()
 * Use to execute more tasks in one constructor
-* Improver readability of code
+* Improve readability of code
 
 
 # Overloading
@@ -61,8 +37,8 @@ Volatile
 
 # finally
 
-* Try, catch, block. Stuff between {} in finnaly always be executed, even when in try return statement
-* Finnaly want execute. Program crasch before go to this block, or in try System.exit(0)
+* Try, catch block. Stuff between {} in finally always be executed, even when in try return statement
+* Finnaly does't execute, Program crash before go to this block, or in try System.exit(0)
 
 
 # finalize
@@ -91,8 +67,66 @@ parent class, child class
 
 # hashCode, equals
 
-* You must override hashcode in every class that overrides equals. Failure to do so affect working with hashbasec collection
+* You must override hashcode in every class that overrides equals. Failure to do so affect working with hashbase collection
 HashMap, HashSet
+
+
+# equals
+
+Check whether one object can be equal to another. Equals method implemented in Object class, check whether two
+references to object are identical. Override equal method if you want to check equality based on state of object.
+Two object are equals when they have the same value.
+Checks that we need to perform.
+// Check whether objects are identical
+if (this == otherObject) return true;
+// False if parameter is null
+if (otherObject == null) return false;
+// Check whether otherObject is the same instance as this), se getClass or instanceof
+if (getClass() != otherObject.getClass()) return false;
+// Check values
+return Ojects.equal(some, other.some) && ...;
+
+
+# hashCode
+
+Hash is integer number that identify an object. Hash should be different.
+If x and y are different objects, in big probability x.hashCode and y.hashCode should also be different.
+hash = 31 * hash + chartAt(i)
+HashCode must be compatile.
+if x.equals(y) return true, x.hashCode == y.hashCode.
+If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
+data structures HasSet, HashMap could be lost
+
+Object.hash(some, some2);
+
+
+# this
+
+Can separate local variables from instance variables. this determinas instance variables.
+Use this reference when instance and local variables have the same name.
+
+
+# static
+
+For specified class then be only one static variable.
+Initialization is during class loading. Static method does not work on objects. Math.pow(x,a).
+Gets memory only once in class are at time class loading.
+Refer to common property of all objects, company name for example.
+Static methods belongs to class rather than object of class.
+Can be invoked without creating an instance of class.
+this and super cannot be used in static context.
+Why java main method is static?
+Because object is not required to call static method if it were non static method, jvm create object first
+then call main() method that will lead the problem of extra memory allocation.
+Static block is used to initialize the static data member. It is executing before main method at the time of class loading.
+Static, variable (class variable), method (class method), block, nested class.
+Factories methods - static methods that returns new class instance.
+
+
+# Enum
+
+Named constants. No need to use equals method. No need to override toString.
+Thread safe.
 
 
 # String
@@ -188,6 +222,32 @@ Reflection is good for unit testing jUnit.
   Using right making a method synchronized can help eliminate thread interference and memory consistency error.
   Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this".
   If we use synchronized we don't need to use volatile keyword.
+
+
+##########
+# Java 8 #
+##########
+
+# Lambda
+Is a block of code that you can pass to use in future once or more times. Useful
+Pass comparision method Arrays.sort
+Run task in different thread
+Action event example after button clicked
+
+# Functional Interfaces
+In Java there are a lot of interfaces that determines the action like Runnable or Comparator.
+Lambda expression is compatibile with this interfaces.
+You can putlambda expression in all places, when you can put object that implements one abstract method.
+Such interfaces are called functional interfaces.
+
+# Streams
+Process data in more abstract way, than in case of collections. In case of stream you determine what should be done
+not the way it will be executed. Ore processing details live on implementation.
+Example xalculate average value of parameters. Your task is to determine the source of data
+and parameters, library that use stream optimizes all calculations and process the result.
+long counter = word.stream().filter(s->s.length() > 12).count();
+3 stream steps. Create stream, determine intermediate operations that modify stream to other form.
+End operation that generates result. After taht step stream cannot be used anymore.
 
 
 ##################
