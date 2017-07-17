@@ -249,6 +249,15 @@ long counter = word.stream().filter(s->s.length() > 12).count();
 3 stream steps. Create stream, determine intermediate operations that modify stream to other form.
 End operation that generates result. After taht step stream cannot be used anymore.
 
+# Optional
+Optional object Optional<T>pack up object type T. Optional Object is safe alternative to reference to T type,
+which can accept object or null value. Use method that returns alternative value if returned value does not exists
+or take value if present.
+String value = OptionalString.orElse(""); // String or " " if not
+String result = OprionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value
+ifPresent method accepts function. If optional value exists, is passed to function. Else do nothing.
+Optional value is a stream of size zero or one. If value exists function is triggered.
+
 
 ##################
 # Big-O Notation #
@@ -286,6 +295,29 @@ for (int i = 1; i < n;) {
 }
 The complexity of this operation is O(log(N))
 
+Lists and Sets |  get  | add   | remove | contains
+---------------+-------+-------+--------+---------
+ArrayList      | O(1)  |  O(1) |  O(n)  |  O(n)
+LinkedList     | O(n)  |  O(1) |  O(1)  |  O(n)
+HashSet        | O(1)  |  O(1) |  O(1)  |  O(1)
+LinkedHashSet  | O(1)  |  O(1) |  O(1)  |  O(1)
+TreeSet        |O(logN)|O(logN)| O(logN)| O(logN)
+---------------+-------+-------+--------+---------
+Maps
+---------------+-------+-------+--------+---------
+HashMap        | O(1)  |  O(1) |  O(1)  |  O(1)
+LinkedHashMap  | O(1)  |  O(1) |  O(1)  |  O(1)
+TreeMap        |O(logN)|O(logN)| O(logN)| O(logN)
+
+
+Queue           | offer  | peek | pull   | size |
+----------------+--------+------+--------+------+
+PrioritityQueue | O(logN)| O(1) | O(logN)| O(1) |
+
+Sorting algorithms | Time Complexity | Space Complexity |
+-------------------+-----------------+------------------+
+MergeSort          |     O(NlogN)    |       O(n)       |
+TreeSort           |     O(NlogN)    |       O(n)       |
 
 #########################
 # Garbage Collection GC #
