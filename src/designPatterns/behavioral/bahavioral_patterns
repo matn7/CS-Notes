@@ -203,6 +203,14 @@ transitions between them.
 All these member variables implement a common interface.
 
 
+# Mediator Pattern
+
+When class hierarchies got too complicated, they can be simplified using Mediator.
+A mediator object decouples peer objects on a hierarchy from needing to know all about each other.
+Examples all UIs.
+The frame acts as the mediator so that none of individual UI Elements need to know about each others.
+The UI Elements are reffered as COLLEAGUES.
+Collages are entirely decoupled from each other.
 
 
 

@@ -217,6 +217,15 @@ Focus on the worst case performance.
 Code uses time, space and network resource. The amount of resource used determines code's performance.
 Complecity is a measure of performance.
 
+Big O Notation allows us express complexity as a measure of input size. This express the complexity of an algorithm.
+A algorithm which complexity does not change with input size is O(1), is said to have constant time complexity.
+The Complexity of an algorithm is O(N) is the time taken by the algorithm increases linearly when N increases.
+The Complexity of an algorithm is O(N^2) if the time taken by the algorithm increases quadratically when N increases.
+for (int i = 1; i < n;) {
+    i = i * 2;
+}
+The complexity of this operation is O(log(N))
+
 
 #########################
 # Garbage Collection GC #
@@ -441,6 +450,24 @@ Filtering and counting is executed for each segments and results are joined toge
 Arrays operations part array on segments, parallelly process them and join results.
 Arrays.parrarelSetAll(), parallelSort()
 Process array into a stream, long sum = IntStream.of(value).parallel().sum();
+
+Thread safe data structures
+ConcurrentHashMap
+Map on which operations are thread safe. Can support large number of parallel read and some number of parallel reads.
+To actualiza data compute method. This method is Atomic, no other thread can modify map content while executing operation.
+BlockingQueues
+Is one of the most commonly used tool for synchronized work. One task put element into the queue, while take task
+take element fro a queue. Allows to safety pass tasks from one task to another.
+LinkedBlockingQueue, ArrayBlockingQueue.
+ConcurrentSkipListMap - compare keys.
+ConcurrentSkipListSet
+CopyOnWriteArrayList, CopyOnWriteArraySet - are thread safe thanks the fact that all methods that modify collection
+make copy used array. Good in situation when number of threads go through queue is larger than number of thread that modify queue.
+
+Atomic Values
+AtomicLong nextNumber = new AtomicLong();
+long id = nextWord.incrementAndGet();
+Atomic operation, load data, modify data and save data cannot be interrupted in between.
 
 ###################
 # Design Patterns #

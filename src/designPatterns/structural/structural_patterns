@@ -43,6 +43,7 @@ not implementations, loosely coupled code is preferable to tightly coupled.
 
 # Composite Pattern
 
+Objects are created from objects "like themselves" (in example share the same interface).
 Create a class hierarchy to reflect dependent objects, all of which ahare a common interface.
 Allow the user to interact with every dependent object in a tree like hierrchy of objects.
 The Composite Pattern is the basic of most UI Containers in Java.
@@ -86,7 +87,22 @@ Because bridge and strategy both plug in member variables to determine behavior 
 composition ("Has a") over inheritance ("Is a").
 
 
+# Proxy Pattern
 
+Proxies are objects that "stand in" for other objects.
+Proxy objects control access or abstract functionality of other objects.
+Example RMI (Remote Method Invocation). RMI was a way in Java to make method calls to code that resided
+on a different machine.
+RMI was important step in the evolution of distributed computing, and was build atop of Proxy Pattern.
+When you made an RMI call, you would get a Proxy Object a stand-in for the actual object that resides
+on a different computer.
+The underlying principle of the proxy pattern is that one object controls access to another.
+This controlling object is called proxy or surrogate. In RMI, a proxy is needed to abstract complex dealing
+with an object on another machine.
+Proxies might be useful if expensive calls can be cached.
+The Proxy for a command object could maintain a cache where the key=set of parameters from each call
+to the command, and value=Result of that command.
+This techniques is called MEMOIZATION, and can lead to big performance savings.
 
 
 
