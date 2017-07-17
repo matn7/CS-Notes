@@ -1,74 +1,74 @@
 # ClassCastException
 
-* When references to objects ponits to objects different classes
-* When argument if wrong type, method compareTo should throw exception
-* No expliit casting
-* Try add wrong data type
-* SerialVersionUID
+When references to objects ponits to objects different classes
+When argument is wrong type, method compareTo should throw exception
+No explicit casting
+Try add wrong data type
+SerialVersionUID
 
 
 # Constructor Chaining
 
-* Call in the same class this()
-* Call from parent class super()
-* Use to execute more tasks in one constructor
-* Improve readability of code
+Call in the same class this()
+Call from parent class super()
+Use to execute more tasks in one constructor
+Improve readability of code
 
 
 # Overloading
 
-* Compile time polymorphism
-* Use the same method name but with different arguments
+Compile time polymorphism
+Use the same method name but with different arguments
 
 
 # Overriding
 
-* Runtime polymorphism
-* The same method name with exactly the same arguments
+Runtime polymorphism
+The same method name with exactly the same arguments
 
 
 # final
 
-* Value of member variable cannot be changed
-* Object reference cannot be changed
-* Class cannot be inherited
-* Method cannot be overriden
+Value of member variable cannot be changed
+Object reference cannot be changed
+Class cannot be inherited
+Method cannot be overriden
 
 
 # finally
 
-* Try, catch block. Stuff between {} in finally always be executed, even when in try return statement
-* Finnaly does't execute, Program crash before go to this block, or in try System.exit(0)
+Try, catch block. Stuff between {} in finally always be executed, even when in try return statement
+Finally does't execute, Program crash before go to this block, or in by System.exit(0)
 
 
 # finalize
 
-* JVM call this method when GC is about to e called
+JVM call this method when GC is about to be called
 
 
 # == vs equals
 
-* == check wether object are the same (point to the same place in memory, the same object)
-* .equals() when compare content of objects
+== check wether object are the same (point to the same place in memory, the same object)
+.equals() when compare content of objects
 
 
 # Class Loaders
 
-* Bootstrap Class Loader
-* Extension Class Loader
-* System Class Loader
+Bootstrap Class Loader
+Extension Class Loader
+System Class Loader
 
 
 # SerialVersionUID
 
-* Mark added to class to during deserialization, reconstruct good class. Useful when there is some class hierarchies
+Mark added to class to during deserialization, reconstruct proper class. Useful when there is some class hierarchies
 parent class, child class
 
 
 # hashCode, equals
 
-* You must override hashcode in every class that overrides equals. Failure to do so affect working with hashbase collection
-HashMap, HashSet
+You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
+collections HashMap, HashSet
 
 
 # equals
@@ -77,38 +77,39 @@ Check whether one object can be equal to another. Equals method implemented in O
 references to object are identical. Override equal method if you want to check equality based on state of object.
 Two object are equals when they have the same value.
 Checks that we need to perform.
-// Check whether objects are identical
+// Check whether objects are identical, very fast
 if (this == otherObject) return true;
 // False if parameter is null
 if (otherObject == null) return false;
-// Check whether otherObject is the same instance as this), se getClass or instanceof
+// Check whether otherObject is the same instance as this), use getClass or instanceof
 if (getClass() != otherObject.getClass()) return false;
 // Check values
-return Ojects.equal(some, other.some) && ...;
+return Objects.equal(some, other.some) && ...;
 
 
 # hashCode
 
 Hash is integer number that identify an object. Hash should be different.
 If x and y are different objects, in big probability x.hashCode and y.hashCode should also be different.
-hash = 31 * hash + chartAt(i)
-HashCode must be compatile.
+for (int i = 0; i < str.length(); i++) {
+    hash = 31 * hash + chartAt(i)
+}
+HashCode must be compatible.
 if x.equals(y) return true, x.hashCode == y.hashCode.
 If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
-data structures HasSet, HashMap could be lost
-
+data structures HasSet, HashMap could be lost.
 Object.hash(some, some2);
 
 
 # this
 
-Can separate local variables from instance variables. this determinas instance variables.
+Can separate local variables from instance variables. this determines instance variables.
 Use this reference when instance and local variables have the same name.
 
 
 # static
 
-For specified class then be only one static variable.
+For specified class can be only one static variable.
 Initialization is during class loading. Static method does not work on objects. Math.pow(x,a).
 Gets memory only once in class are at time class loading.
 Refer to common property of all objects, company name for example.
@@ -131,56 +132,56 @@ Thread safe.
 
 # String
 
-* Immutable and final
-* Thread safe - prevent from change cach
-* String pool cache (optimization)
-* Hash codes - keys in hashCodes are Strings
+Immutable and final
+Thread safe - prevent from change cache
+String pool cache (optimization)
+Hash codes - keys in hashCodes are Strings
 
 
 # Interfaces
 
-* All methods public abstract
-* All properties public static final
-* Implement interfaces, want to imitate behavior of class
-* Use to impose behavior on other classes
-* You can implements more than one interface (impose behavior), example implements Comparable interface to extort
-  sorting behavior
+All methods public abstract
+All properties public static final
+Implement interfaces, want to imitate behavior of class
+Use to impose behavior on other classes
+You can implements more than one interface (impose behavior), example implements Comparable interface (strategy pattern)
+to extort sorting behavior.
 
 
 # Class Object
 
-* Parent class of all classes
-* hashCode
-* equals
+Parent class of all classes
+hashCode
+equals
 
 
 # Abstract class and methods
 
-* Cannot instantiate abstract class
-* Are needed during inheritance
-* Whant something to be overriden to not forget about it later
-* Additional responsibilities added to class
+Cannot instantiate abstract class
+Are needed during inheritance
+Want something to be overriden to not forget about it later
+Additional responsibilities added to class
 
 
 # OOP
 
-* Objects - containers that keep variables functions thematically connected to each others, to use it easier later
-* Classes - Frame to build instances of objects
-* Objects have, properties, methods
-* Constructor - reserve space in memory for object
-* Creating an object from a class ins called instantiation
+Objects - containers that keep variables functions thematically connected to each others, to use it easier later
+Classes - Frame to build instances of objects
+Objects have, properties, methods
+Constructor - reserve space in memory for object
+Creating an object from a class is called instantiation
 
 
 # Serialization
 
-* Abstract class - high level class, by whom inherits
-* Data serialization allows to know about all references (extends)
-* Serialized object will be read to file. They will acquire some special identification number, object will use this
-  number to other objects
-* To perform serialization class need to implements Serializable interface
-* Serializable marker interface (without method), safety guard to make sure you know what you are doing.
-* transient data that we dont want to be serialized
-* Fragile data should be marked as transient, or should not implement Serializable
+Abstract class - high level class, by whom inherits
+Data serialization allows to know about all references (extends)
+Serialized object will be read to file. They will acquire some special identification number, object will use this
+number to other objects
+To perform serialization class need to implements Serializable interface
+Serializable marker interface (without method), safety guard to make sure you know what you are doing.
+transient data that we dont want to be serialized
+Fragile data should be marked as transient, or should not implement Serializable
 
 
 # What is the difference between composition and inheritance ?
@@ -201,27 +202,28 @@ Reflection is slow and complicated. Method call via reflection may take 10x long
 Instantiation an object from a name of a class.
 Reflection is the ability at runtime to actually create objects of classes, invoke methods, manipulate metadata
 Type introspection is the ability at runtime to explore the type of an object.
-Refletion drawbacks: complectit, performance overhead, security consideration, violation of abstraction.
+Reflection drawbacks: complexity, performance overhead, security consideration, violation of abstraction.
 Reflection is good for unit testing jUnit.
 
 
 # Volatile
 
-* Declaring variable volatile means the value of this variable will never be cached thread locally.
-  All reads and writes will go straight to main memory. Access to the variable acts as through it is
-  enclosed in a synchronized bock, synchronized on itself.
-  Slower than cach, make sure value be read every time.
+Declaring variable volatile means the value of this variable will never be cached thread locally.
+All reads and writes will go straight to main memory. Access to the variable acts as through it is
+enclosed in a synchronized bock, synchronized on itself.
+Slower than cache, make sure value be read every time.
+
 
 # Synchronized
 
-* Every objects in Java has a lock associated with it.
-  This lock is called the intrinsic lock or monitor. It is possible to specify that only one thread can
-  execute a section of code once it has acquired the lock on same object.
-  If some other thread currentl holds that lock, the current thread must waits its turn.
-  This is achieved using synchronized keyword.
-  Using right making a method synchronized can help eliminate thread interference and memory consistency error.
-  Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this".
-  If we use synchronized we don't need to use volatile keyword.
+Every objects in Java has a lock associated with it.
+This lock is called the intrinsic lock or monitor. It is possible to specify that only one thread can
+execute a section of code once it has acquired the lock on same object.
+If some other thread currently holds that lock, the current thread must waits its turn.
+This is achieved using synchronized keyword.
+Using right making a method synchronized can help eliminate thread interference and memory consistency error.
+Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this".
+If we use synchronized we don't need to use volatile keyword.
 
 
 ##########
