@@ -146,6 +146,14 @@ Implement interfaces, want to imitate behavior of class
 Use to impose behavior on other classes
 You can implements more than one interface (impose behavior), example implements Comparable interface (strategy pattern)
 to extort sorting behavior.
+You cannot put instance variables. Interface determines behavior not state of object.
+You can provide default implementation of interface. Mark such method with default modifier
+public interface IntSequence {
+    default boolean hasNext() {return true; }
+}
+Keyword super allows to call super type methods
+Comparable interface when class want to allow sort their elements Comparable.
+Callback - code fragment is call as a result on user response
 
 
 # Class Object
@@ -170,6 +178,13 @@ Classes - Frame to build instances of objects
 Objects have, properties, methods
 Constructor - reserve space in memory for object
 Creating an object from a class is called instantiation
+
+Constructor references
+Are counterpart to method references.
+Employee::new
+int[]::new === n->new int[n]
+
+Local class is not declared as public or private as it isn't available outside of method
 
 
 # Serialization
@@ -226,6 +241,40 @@ Making method synchronized is a shortcut to making the entire body of the method
 If we use synchronized we don't need to use volatile keyword.
 
 
+###############
+# Collections #
+###############
+
+Collection interface provides methods for all collections except Map which are provided by Map interfaces
+List is sequential collection in which every element has ndex in form of integral number
+Sets are to optimalize test endurance. Java has mplementation of HashSet and TreeSet
+In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
+List interface has mathods which allow to access to n th element of List. To do so Class should implement RandomAccess
+interface. It is a marker interface which does not have any methods.
+For instance ArrayList implements List and RandomAccess, but LinkedList only List interface
+
+ConcurrentHasMap does not allow null values for keys or values.
+LinkedHashMap maintains insertion order and process elements based on this order
+
+Thread safe data structures
+In such collections iterators presents elements which exists on the beginning of teration buc can reflect some lub
+all modifications that beeing processed after their creation. Such iterator does not throw ConcurrentModificationException.
+
+ConcurrentHashMap
+Methods in atomic ways sets or replace elements if it is the same at a point of time.
+There are couple of mass operations to search, modify or look for ConcurrentHashMap.
+search, reduce, forEach.
+
+BlockingQueue
+pool, peek methods return null to sygnalize failure. In that reason insert null vales to them is incorrect
+LinkedBlockingQueue
+ArrayBlockingQueue
+Other Thread Safe Data Structures
+ConcurrentSkipListMap
+ConcurrentSkipListSet
+CopyOnWriteArrayList
+CopyOnWriteArraySet
+
 ##########
 # Java 8 #
 ##########
@@ -251,6 +300,35 @@ long counter = word.stream().filter(s->s.length() > 12).count();
 3 stream steps. Create stream, determine intermediate operations that modify stream to other form.
 End operation that generates result. After taht step stream cannot be used anymore.
 
+Streams allow efficient parallel process
+You can create strams from Collection, Generators or Iterators
+Use filter to choose elements and map to process them
+Other operation to process stream : limit, distinct, sorted
+To get result from stream use reduce operator like : count, max, min, findFirst, findLast, some of them returns Optional vale
+Optional type is a safe way to work with null values. To use them use methods ifPresent, orElse
+You can collect stream results in Collections, Arrays, Strings or Maps
+GroupyingBy and partitioningBy From Collector class allows to separate stream on group and determine result for each of these groups
+Special streams for primitive typed like : int, long, double
+Parallel Streams automizes parallel operations on streams
+
+Streams vs Collections
+Streams does not store elements. They can be stored in processing by stream collection or generated on demand
+Streams operation does not modify source data. For instance filter does not delete elements from stream but returns new one
+Sreams operations are lazy. They process is delay until the results are needed.
+
+Stream workflow
+Create stream
+Determine intermediate operations which process stream to different form, this process might require couple of steps (filter)
+Process end operation which generates the result. After this step stream can no longer be used
+
+Map method is analogous to map interface from stream. Optional value is a stream on size ero or one.
+filterMap method from stream interface. Is used to join two methods.
+
+ParallelStreams
+Stream.of(arrays).parallel()
+Map<Integer, Long> word = words.parallelStream().filter(s->s.length() < 12).collect(groupingBy(String::length));
+
+
 # Optional
 Optional object Optional<T>pack up object type T. Optional Object is safe alternative to reference to T type,
 which can accept object or null value. Use method that returns alternative value if returned value does not exists
@@ -259,6 +337,18 @@ String value = OptionalString.orElse(""); // String or " " if not
 String result = OprionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value
 ifPresent method accepts function. If optional value exists, is passed to function. Else do nothing.
 Optional value is a stream of size zero or one. If value exists function is triggered.
+
+
+# Predicate<T>
+Function that return logical value.
+Predicate.isEqual(a) is counterpart of a::equals, but works correctly even with null values.
+Methods and, or, negate to join predicates
+Predicate.isEqual(b) === x->b.equal(x)
+
+
+# Functional Interface
+Compilator checks whether marked interface is with one abstract method
+Generated javadoc with info that this is an functional interface
 
 
 ##################
@@ -320,6 +410,7 @@ Sorting algorithms | Time Complexity | Space Complexity |
 -------------------+-----------------+------------------+
 MergeSort          |     O(NlogN)    |       O(n)       |
 TreeSort           |     O(NlogN)    |       O(n)       |
+
 
 #########################
 # Garbage Collection GC #

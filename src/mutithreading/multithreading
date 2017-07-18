@@ -1,14 +1,78 @@
+#######################
+# Java Multithreading #
+#######################
+
+The default single Thread is called main thread
+
+Processes vs Threads
+Every program runs in its own process.
+A process can 'spawn off' multiple threads
+Even if process does not create any threads, iy still has the main default thread which is being executed.
+In a program different threads have instructions that maybe executed simultaneously
+But all of these threads are controlled by the same process
+
+PROGRAM : PROCESS :: 1 : 1
+PROCESS : THREADS :: 1 : MANY
+
 # The command pattern in action threading
 
-* Old way
+Old way
 Runnable interface - is implemented by a class with the operations to be carried out by the other thread
-Thread - in build class objects of the thread class take in the rnable objects and run them in individual threads
+Thread - in build class objects of the thread class take in the runnable objects and run them in individual threads
 Thread.join() - the main class calls the .join() method on each thread which will wait until the thread finishes.
 
-* New way
+New way
 Callable interface - is implemented by a class with the operations to be carried out on other thread.
 Executors - in build classes java provides helper objects that know how to start, manage and stop 'callable' objects.
-Future.get() - futures are objects whic would will hold results in the Future,
-one callable object finishes whatever stuff it had to do n the other thread.
+Future.get() - futures are objects which will hold results in the Future,
+one callable object finishes whatever stuff it had to do on the other thread.
 
 Both these ways make use of the Command Pattern
+
+Command Pattern separates the execution of an action from the Action itself
+In threading we define the action that we would like the New Thread to undertake
+And wrap that Action in the Body of an Object that implements an interfacewith just one method
+Callable Runnable
+
+Thread Object
+In Java each thread is associated with an instance of the class thread
+The static thread.getCurrentThread() method will return the currently executing thread at any point in time.
+
+Old Ways Thread and Runnable
+* Write a class that implements the runnable interface
+Instantiate a thread object and pass i the runnable object in the constructor
+Call the .start() method on the thread object
+Creating a Runnable object is the preffered solution because it nicely separates the thread from the task to be run on the thread.
+
+* Write a subclass of thread and overwrite the run method
+Call the .start() method on the thread object
+
+Thread Interrupts
+Java provides a way for threads to interrupt other threads, and to check if they themeselves have been interrupted.
+To interrupt another thread, call the '.interrpt()' member function on that thread
+You might do this if for instance some threads is taking too long to do something that it ought to
+There are two ways for thread to check if it has been interrupted
+Catch an INTERRUPTEDEXCEPTION
+Call the static 'Thread.interrupt' member function to see if the curent thread has been interrupted
+
+ Thread Join
+ The join method of a thread class ia w way of waiting until the thread finishes execution of its run method
+ Calling thread on another thread is similar to calling sleep on the current thread until thet other thread finishes execution
+ Like .sleep(), the .join() method throws an interrupted exception if the thread is interrupted before it finishes execution
+
+ Synchronization
+ In Java threading support, threads mostly comminicate with each other via shared
+
+
+
+
+
+
+
+
+
+
+
+
+
+
