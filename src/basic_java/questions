@@ -126,8 +126,21 @@ Factories methods - static methods that returns new class instance.
 
 # Enum
 
+Sometimes you need to define connected constants like
+public static final int MONDAY = 0
+You can do this using enum
+enum Weekday {MON, TUE,.. };
+Now weekday is datatype with values Weekday.MON
+
+public Enum Size { SMALL, MEDIUM, LARGE; }
 Named constants. No need to use equals method. No need to override toString.
 Thread safe.
+Enum is subclass class of Enum class, which contains toString, valueOf and compareTo method
+Compare element using ==
+Methods : valueOf, ordinal
+Enum constructors are always private.
+Variables Enum type can contains static variables
+static import now can use SMALL instead of Size.SMALL
 
 
 # String
@@ -161,6 +174,8 @@ Callback - code fragment is call as a result on user response
 Parent class of all classes
 hashCode
 equals
+toString - representation of object as String by default class name pls hash
+clone
 
 
 # Abstract class and methods
@@ -186,6 +201,17 @@ int[]::new === n->new int[n]
 
 Local class is not declared as public or private as it isn't available outside of method
 
+Abstract method does not have implementation, abstract class can not hava instantion.
+Class can define methods without implementation forcing subclasses to implement them. Such method and class
+that contain it are called abstract.
+Abstract classes can have instance variables or constructors.
+Cannot instantiate abstract class
+
+Encapsulation - use of objects implemented by someone else, use theri methods without know what sits inside
+
+Instance variable are in default initialized
+Local variables need to be explicitly initialized
+
 
 # Serialization
 
@@ -197,6 +223,14 @@ To perform serialization class need to implements Serializable interface
 Serializable marker interface (without method), safety guard to make sure you know what you are doing.
 transient data that we dont want to be serialized
 Fragile data should be marked as transient, or should not implement Serializable
+
+Serialization is a machanism to transform in collection of bytes, which can be then deliver to other place
+save on disk, and reconstruct objects based on this collection of bytes.
+Deliver object from one VM to another. To make object serializable that means can transform to bytes states
+it has to be an instance of Serializable interface. It is an marker interface without methods.
+All object must be serializable.
+Serializable mechanism supports version mechanism serialVersionUID = 1L;
+s used to enchanced state, what would happen when class would change
 
 
 # What is the difference between composition and inheritance ?
