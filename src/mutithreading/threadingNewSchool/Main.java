@@ -26,7 +26,7 @@ public class Main {
 
         // When executor runs a callable, the result is stored in form of a future object.
         // The Future<> object is a template, which stands for the result of the other thread.
-        // This object is returned as soone as the call to executor is made, but it probably will
+        // This object is returned as soon as the call to executor is made, but it probably will
         // not actually have a result ready right away.
         // How to wait and get the actual result? By using Future isDone() and future.get() methods.
 
