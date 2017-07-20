@@ -62,3 +62,50 @@ nslookup                        // check DNS and ip address
 ephemeral port - in unix port used by OS for client sockets
 Soft Links - unix softlinks are pointers to programs, files or directories located elsewhere
 Hard Links - unix hardlinks are pointers to programs and files, but NOT directories
+
+# Linux Directories
+/; /bin; /boot; /dev; /etc; /home; /lib; /media; /mnt; /opt; /root; /run; /sbin; /srv; /tmp; /usr; /var
+
+// Dev Ops stuff
+which wget
+sudo su
+yum install wget
+wget --no-cookies ".../jdk-8u/11-linux-x64.tar.gz"
+tar xzf jdk-8u/11-linux-x64.tar.gz
+sudo rpm --import http://jenkins-ci.org/redhat/jenkins-ci.org.key
+sudo yum install jenkins
+service jenkins start
+ps -ef | grep jenkins
+yum install httpd
+service httpd start
+// /etc/https/conf/httpd.conf
+service jenkins restart
+ssh-keygen -t rsa -c 'email@email.com' // .ssh/ in this location would be public and private keys
+git --version
+uname -r
+sudo yum update
+sudo yum install docker-engine
+sudo systemctl enable docker.service
+sudo systemctl start docker
+ps -ef | grep docker
+wget http://..../0.0.1/spring-core-0.0.1.jar
+which java
+java -jar ./spring-core-0.0.1.jar
+cd /etc/systemd/service
+vi spring.service
+
+systemctl daemon-reload
+systemctl sprinf.service
+systemctl start spring
+tail -f /var/log/messages
+
+// artifactory, nexus
+
+
+# Maven
+mvn clean install
+mvn clean deploy
+mvn clean test
+mvn clean package
+
+
