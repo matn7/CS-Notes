@@ -19,13 +19,14 @@ Improve readability of code
 
 Compile time polymorphism
 Use the same method name but with different arguments
+static binding method like private, final and static.
 
 
 # Overriding
 
 Runtime polymorphism
 The same method name with exactly the same arguments
-
+dynamic binding
 
 # final
 
@@ -125,6 +126,8 @@ Static block is used to initialize the static data member. It is executing befor
 Static, variable (class variable), method (class method), block, nested class.
 Factories methods - static methods that returns new class instance.
 
+You cannot override static method in Java because they are resolved at compile time rather than runtime
+
 
 # Enum
 
@@ -170,6 +173,8 @@ public interface IntSequence {
 Keyword super allows to call super type methods
 Comparable interface when class want to allow sort their elements Comparable.
 Callback - code fragment is call as a result on user response
+Interface is used heavily n API to define contract of a class.
+You cannot create non abstract method in interface. All methods are for default abstract.
 
 
 # Class Object
@@ -209,11 +214,15 @@ Class can define methods without implementation forcing subclasses to implement 
 that contain it are called abstract.
 Abstract classes can have instance variables or constructors.
 Cannot instantiate abstract class
+Abstract calss is used to provide default implementation with something left to customize.
 
 Encapsulation - use of objects implemented by someone else, use theri methods without know what sits inside
 
 Instance variable are in default initialized
 Local variables need to be explicitly initialized
+
+If part can exists without whole then relationship between two class is known as aggregation.
+If part cannot exists without whole the relationship between two class is known as composition
 
 
 # Serialization
@@ -234,6 +243,13 @@ it has to be an instance of Serializable interface. It is an marker interface wi
 All object must be serializable.
 Serializable mechanism supports version mechanism serialVersionUID = 1L;
 s used to enchanced state, what would happen when class would change
+Static variables are no serialized only istance variables are serialized
+
+# Different between Serializable and Externalizable
+Serializable is marker interface with no method Defined.
+Use default serialization process which can b very slow for some application.
+Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the
+serialization process.
 
 
 # What is the difference between composition and inheritance ?
@@ -264,6 +280,10 @@ Declaring variable volatile means the value of this variable will never be cache
 All reads and writes will go straight to main memory. Access to the variable acts as through it is
 enclosed in a synchronized bock, synchronized on itself.
 Slower than cache, make sure value be read every time.
+Happens-before relationship means any writes happens before any read in volatile variable
+Every thread reads its value from main memory and don't used cached value available in every thread stack.
+Volatile variable prevents compiler from doing reordering which can compromise synchronization.
+ Only applicable to field or properties of class. You cannot use volatile keyword during class or method declaration in Java.
 
 
 # Synchronized
@@ -277,6 +297,16 @@ Using right making a method synchronized can help eliminate thread interference 
 Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this".
 If we use synchronized we don't need to use volatile keyword.
 
+# Enumerator and Iterator differences
+Itarator allows you to remove elements from collection. Methods for iterator hasNext(), next().
+Does not allow other thread to modify the collection oject while some thread is iterating over it and throws
+ConcurrentModificationException
+Enumerator hasMoreElements(). For Collections read only
+
+# Checked and Unchecked Exceptions
+Checked Exceptions ensures that handling of exception is provided and its verified by compiler also.
+For throwing unchecked exception no special provision is needed.
+
 
 ###############
 # Collections #
@@ -288,7 +318,10 @@ Sets are to optimalize test endurance. Java has mplementation of HashSet and Tre
 In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
 List interface has mathods which allow to access to n th element of List. To do so Class should implement RandomAccess
 interface. It is a marker interface which does not have any methods.
-For instance ArrayList implements List and RandomAccess, but LinkedList only List interface
+For instance ArrayList implements List and RandomAccess, but LinkedList only List interface.
+RandomAccess means random search if you know the index, LinkedList only allows sequential search.
+Adding and removing elements from middle of LinkedList is fast compared to ArrayList, because it only
+require to modify links and no other elements are rearranged.
 
 ConcurrentHasMap does not allow null values for keys or values.
 LinkedHashMap maintains insertion order and process elements based on this order
@@ -410,6 +443,16 @@ A good example is AtomicInteger. To implement a value of AtomicInteger we use th
 What is the BlockedQueue in Java?
 BlockedQueue interface is introdced in Java specifically to address specific needs of some Producer Consumer scenarios.
 BlockedQueue allows the consumer to wait (for a specific time of infinitely) for an element to become available.
+
+HashMap and HashTable differences
+HashMap is not synchronized. Faster than HashTable. Allows null keys.
+HashTable is synchronized. Slower than HashMap. Does not allow null keys.
+
+TreeSet and TreeMap differences
+TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
+TreeMap is an implementation of Map.
+TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
+
 
 ##########
 # Java 8 #
@@ -635,6 +678,7 @@ volatile - value read always from main memory no cache
 synchronized - acquire intrinsic lock on object. Only one object can execute this part of code.
 join() - wait until other thread finish executng
 
+wait and notify for inter thread communication. Must be called from sychronized context method, block.
 
 # Process and threads
 
