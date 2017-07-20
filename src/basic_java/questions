@@ -1,10 +1,10 @@
 # ClassCastException
 
-When references to objects ponits to objects different classes
-When argument is wrong type, method compareTo should throw exception
-No explicit casting
-Try add wrong data type
-SerialVersionUID
+-When references to objects ponits to objects different classes
+-When argument is wrong type, method compareTo should throw exception
+-No explicit casting
+-Try add wrong data type
+-SerialVersionUID
 
 
 # Constructor Chaining
@@ -48,7 +48,7 @@ JVM call this method when GC is about to be called
 
 # == vs equals
 
-== check wether object are the same (point to the same place in memory, the same object)
+== check whether object are the same (point to the same place in memory, the same object)
 .equals() when compare content of objects
 
 
@@ -77,19 +77,19 @@ Check whether one object can be equal to another. Equals method implemented in O
 references to object are identical. Override equal method if you want to check equality based on state of object.
 Two object are equals when they have the same value.
 Checks that we need to perform.
-// Check whether objects are identical, very fast
-if (this == otherObject) return true;
-// False if parameter is null
-if (otherObject == null) return false;
-// Check whether otherObject is the same instance as this), use getClass or instanceof
-if (getClass() != otherObject.getClass()) return false;
-// Check values
-return Objects.equal(some, other.some) && ...;
+    // Check whether objects are identical, very fast
+    if (this == otherObject) return true;
+    // False if parameter is null
+    if (otherObject == null) return false;
+    // Check whether otherObject is the same instance as this), use getClass or instanceof
+    if (getClass() != otherObject.getClass()) return false;
+    // Check values
+    return Objects.equal(some, other.some) && ...;
 
 
 # hashCode
 
-Hash is integer number that identify an object. Hash should be different.
+Hash is integer number that identify an object.
 If x and y are different objects, in big probability x.hashCode and y.hashCode should also be different.
 for (int i = 0; i < str.length(); i++) {
     hash = 31 * hash + chartAt(i)
@@ -103,7 +103,7 @@ Object.hash(some, some2);
 
 # this
 
-Can separate local variables from instance variables. this determines instance variables.
+Can separate local variables from instance variables. 'this' determines instance variables.
 Use this reference when instance and local variables have the same name.
 
 
@@ -115,10 +115,12 @@ Gets memory only once in class are at time class loading.
 Refer to common property of all objects, company name for example.
 Static methods belongs to class rather than object of class.
 Can be invoked without creating an instance of class.
-this and super cannot be used in static context.
+'this' and 'super' cannot be used in static context.
+
 Why java main method is static?
 Because object is not required to call static method if it were non static method, jvm create object first
 then call main() method that will lead the problem of extra memory allocation.
+
 Static block is used to initialize the static data member. It is executing before main method at the time of class loading.
 Static, variable (class variable), method (class method), block, nested class.
 Factories methods - static methods that returns new class instance.
@@ -128,6 +130,7 @@ Factories methods - static methods that returns new class instance.
 
 Sometimes you need to define connected constants like
 public static final int MONDAY = 0
+
 You can do this using enum
 enum Weekday {MON, TUE,.. };
 Now weekday is datatype with values Weekday.MON
@@ -309,6 +312,105 @@ ConcurrentSkipListSet
 CopyOnWriteArrayList
 CopyOnWriteArraySet
 
+HashMap implements Map interface there by supporting key values pairs.
+
+TreeMap is similar to HashMap except that it stores keys in sorted order. It implements NavigableMap interface and
+SortedMap interfaces along with tha Map interface
+
+PrioritityQueue
+Implements Queue interface.
+-offer() adding an element to prioritity queue
+-peek() get the element with highest prioritity
+
+What is the difference between synchronized and Concurrent Collections
+Synchronized collections are implemented using synchronized mehods and synchronized blocks. Only one Thread
+can executing any of the synchronized code at given point in time. This places severe restrictions on the concurrency
+of thread - there by affecting performance of the application. All the pre Java 5 synchronized collections
+HashTable & Vector use this approach
+Post Java 5 collections using new approach to synchronization are available in Java.
+These are concurrent collections
+--------------------------------+--------------------------------
+SYNCHRONIZED                    | CONCURRENT
+--------------------------------+--------------------------------
+Use synchronized                | New approach to thread safety
+methods and blocks              |   - Copy on Write
+                                |   - Compare and Swap
+                                |   - Lock and unlock
+--------------------------------+--------------------------------
+Vector, HashTable               | CopyOnWriteArrayList
+                                | ConcurrentLinkedQueue
+                                | ConcurrentHashMap
+--------------------------------+--------------------------------
+Only one thread Executing       | New approaches allow more
+any of the synchronized         | concurrency in specific
+code                            | context
+--------------------------------+--------------------------------
+fail fast iterators             | fails safe iterators
+throw                           | don't throw
+ConcurrentModificationException | ConcurrentModificationException
+--------------------------------+--------------------------------
+
+Post Java 5 collections using new approach to synchronization are available in Java.
+These are called concurrent collections. Examples of new approaches are
+- Copy on Write
+- Compare and Swap
+- Lock and Unlock
+New approaches to concurrency provide better performance in specific context
+
+Copy on Write
+All collections are sorted in immutable array. A new array is created if there is anymodification to the collection
+Read operations are not synchronized. Writes operations are synchronized.
+Copy on Write scenario is used where reads greatly out number writes on a collection
+CopyOnWriteArrayList and CopyOnWriteArraySet are implementations of this approach
+Copy on Write collections are typically used in subject - observer scenario, where the observed very
+rarely change. Most frequent operations would be iteration around the observers and notifying them.
+
+What is Compare and Swap approach
+In compare and swap approach instead of synchronizing entire method, the value of member variable before
+calculation is cached. After the calculation the cache value is compared with the current value of member variable.
+If the value is not modfied the calculated result is stored into the member variable.
+If another thread has modified the value, then the calculation can be performed again, or skipped as the need might be.
+ConcurrentLinkedQueue uses this approach.
+
+What is a Lock? How is it different from using synchronzed approach?
+When 10 methods are declared as synchronized, only any of them is executed by any of the threas at any point in time.
+This has severe performance impact.
+Another new approach introduced in Java 5 is to use lock and unlock methods. Lock an unlock methods are used
+to divide methods into different blocks and help enchance concurrency.
+The 10 methods can be divided into different blocks which can be synchronized on different variables.
+
+What is initial capacity of a Java Collection?
+An instance of HashMap has two parameters that affect its performance initial capacity and load factor.
+The capacity is the number of buckets in the hash table, and the initial capacity is the capacity at the time the
+hash table is created. The load factor a measure of how full the hash table is allowed to get before its capacity automatically increased.
+When the number of entries in the hash table exceeds the product of load factor and the current capacity, the hash
+table is rehashed (internal structure rebuild). So the hash table has approximetely twice the number of buckets.
+As a general rule the default load factor .75 offers a good tradeoff between time and space cost.
+Higher value decrease space overhead but increase the lookup cost (put and get operations).
+
+What is a different between fail safe and fail fast
+Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
+This was the default behavior of the synchronized collections of pre Java 5
+Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
+This is the default behavior of the concurrent collections, introduced since Java 5
+
+What are atomic operations in Java?
+In programming an atomic action s one that effectively happens all at once. An atomic action cannot stop in the middle.
+It either happens completely or it doesn't happen at all. No side effect of an atomic action are visible until the action is completed.
+Even small operation like i++ id not thread sfe. Operation involves three steps:
+- Read the value which is currently stored in i
+- Add one to it (atomic operation)
+- Store it in i
+In multithreaded environment there can be unexpected results. For example if thread1 is reading the value
+and immediately after that thread2 store the value.
+To prevent these, Java provides atomic operations. Atomic operations are performed as a single unit
+without interference from other threads ensuring data consistency.
+A good example is AtomicInteger. To implement a value of AtomicInteger we use the incrementAndGet() method Java ensures this operation is Atomic.
+
+What is the BlockedQueue in Java?
+BlockedQueue interface is introdced in Java specifically to address specific needs of some Producer Consumer scenarios.
+BlockedQueue allows the consumer to wait (for a specific time of infinitely) for an element to become available.
+
 ##########
 # Java 8 #
 ##########
@@ -361,6 +463,28 @@ filterMap method from stream interface. Is used to join two methods.
 ParallelStreams
 Stream.of(arrays).parallel()
 Map<Integer, Long> word = words.parallelStream().filter(s->s.length() < 12).collect(groupingBy(String::length));
+
+Streams are introduced in Java . In combination with Lambda expression, they attempt to bring some of the
+important functional programming concepts to Java.
+A stream is a seqence of elements supporting sequential nd parallel aggregate operations.
+Consider the flow:
+- Creating an array as stream
+- Use lambda expression to create a filter
+- Use map function to invoke a String function
+- Use sorted function to sort array
+- Print the array using forEach
+Arrays.stream(new String[]{"Ram", "Tam", "Tam"})
+    .filter(s->s.startsWith("Ta"))
+    .map(String::toLowerCase_
+    .sorted()
+    .forEach(System.out::println);
+In general any use of streams involves.
+-source - Creating or use existing stream
+-Intermediate Operations - returns new stream
+-Terminal operation - consume the stream print.
+Intermediate Oparations are of two parts
+-Stateful - elements need to be compared against eah others (sort)
+-Stateless - no need for comparing with other element (map, filter)
 
 
 # Optional
