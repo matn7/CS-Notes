@@ -140,3 +140,91 @@ REST permits many different data formats SOAP only XML.
 SOAP services have well defined structure and interface (WSDL)
 SOAP is based on well defined structure (WS-Security, WS-Atomic Transaction ad WS-Reliable messaging)
 
+
+#######################
+# JEE Design Patterns #
+#######################
+
+Net profile - set of most complementary technologies to build we apps:
+Servlets, JSF, JSP, EJB, JTA, JPA
+
+Convention over configuration - process of building web app without to much configuration complications.
+
+Component Model - entities, Java Beans, EJB Beans, Manages Beans, Servlets, SOAP, REST WS
+
+CDI - separates relation between objects. Dependency injection to object instead create new object using new operator
+ Context - differentiate EJB beans from CDI. CDI beans are created in context and scope and exists till its destruction.
+ @ApplicationScope, @ConversationScope, @SessionScope, @RequestScope
+
+Interceptors - logical separates and store methods calls to root and call sufficient methods: logging, security
+
+Dependency injection CDI - instead of create dependencies and new objects using new keyword. Needed resources are injected to target object.
+- client does not need to know about different representations of injected resources
+- easier unit testing using dummies (atrap) object
+- configuration can be placed outside
+- loosly coupled architecture easier create socket services
+You can inject
+- POJO
+- business resources data, queues
+- EJB references
+- Session Beans
+- EntityManager objects
+- Web service references
+
+CDI can exists without EJB container. Provides factory and injection of any bean
+EJB need to have EJB container. Container add additional services like transaction, concurrency
+CDI is lighter and much stronger but less functional than EJB for POJO objects
+
+CDI Beans
+- Need to have no argument constructor or container with @Inject annotation
+- cannot be non static inner class
+- Bean cannot be defined as EJB
+
+Contexts and Scopes
+- @RequestScoped - user HTTP request
+- @SessionScoped - user HTTP session
+- @ApplicationScoped - state schared with all app users
+- @ConversationScoped - controled by programmer
+
+##########
+# Spring #
+##########
+
+Bean Scope
+- Singleton : single instance of bean
+- Prototype : return new instance every time it is created
+- Request : new instance every HTTP request
+- Session : new Http session, new instance
+- GlobalSession : single instance per global session
+
+Kinds of injection
+- Property based injection
+@Autowired
+private NotificationServce notification;
+- Setter based injection
+@Autowired
+public void setNotificationService(NotificationServce notification) {
+    this.notification = notification;
+}
+- Constructor based injection
+@Autowired
+public PageController(NotificationServce notification) {
+    this.notification = notification;
+}
+
+@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan
+
+Incoming request  +------------------+ Delegate Request  +------------+
+----------------->+                  +------------------>+            | Handle Request
+                  | Front Controller |    +-------+      | Controller |
+<-----------------+                  +<---| model |------+            | Create model
+Resturn Response  +--+------------+--+    +-------+      +------------+
+                     |            |        Delegate
+             Return  |        +---+---+    rendering
+             control |        | model |    of response
+                     |        +---+---+
+                     |            |
+                     |            |
+                  +--+------------+--+
+                  |   View Template  |          Servlet engine (JBoss, Tomcat)
+                  +------------------+

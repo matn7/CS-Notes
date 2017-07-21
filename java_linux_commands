@@ -62,6 +62,8 @@ du -sh | grep G                 // check how much space each directory take
 uptime                          // check how many days server is up
 nslookup                        // check DNS and ip address
 
+curl
+
 ephemeral port - in unix port used by OS for client sockets
 Soft Links - unix softlinks are pointers to programs, files or directories located elsewhere
 Hard Links - unix hardlinks are pointers to programs and files, but NOT directories
@@ -104,8 +106,28 @@ tail -f /var/log/messages
 
 // artifactory, nexus
 
+#########
+# Maven #
+#########
 
-# Maven
+Build Tools automates developer tasks (ant, maven, gradle)
+- Compiling source code into binary
+- Packagig that binary code
+- Run test
+- Deploy to other system (PROD)
+
+Maven
+- Dependency management
+- Plugin based architecture
+- XML configuration
+
+Parent pom to configuration project
+
+<dependencies>
+<build>
+<plugins>
+mvn spring-boot:run
+
 mvn clean install
 mvn clean deploy
 mvn clean test
