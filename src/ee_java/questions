@@ -1,0 +1,142 @@
+################
+# Web Services #
+################
+
+# Web service is a service offered over the web i.e. HTTP. Whenever we browse the internet we are making
+use of inumerable web services.
+When type google.com:
+- Browser invoke a get request on google.com
+- google.com returns a HTTP response with the HTML content to show
+- Browser understand the HTML content and renders it for user
+Browser invoking a GET request and google.com server is responding with HTTP response.
+
+
+# What are important parts of a web service?
+Important parts:
+- Service Provider - google.com is the service provider. Handles the request and sends response back
+- Service Consumer - Browser is a service consumer. Creates regest, invokes service process and response
+- Data Exchange Format - data exchange in this example is done by HTTP portocol. Data can be XML, JSON, HTML, Text
+
+
+# Advantages of web service?
+- Re-use web service avoid the need to implement business logic repeatedly. If we expose WS other apps can re use functionality
+- Modularity
+- Language Neutral
+- Basics of SAO (service oriented architecture)
+
+
+# Different type of web services?
+WS are classified usually by data exchange format. Two popular type of WS:
+- SOAP
+- RESTFUL
+
+
+# What are SOAP WS
+In SOAP data exchange format (request and response) happens using SOAP format. SOAP is based on XML.
+SOAP format defines SOAP-Envelope which envelopes the entire document.
+SOAR header contains any information needed to identify the request. Part of authentication, authorization.
+SOAP body contains real XML content of request or response.
+SOAP fault in case of error response.
+
+
+# What s a WSDL?
+WSDL defines the format for SOAP Message exchange between the Server (Service Provider) and the client (Service consumer)
+A WSDL defines:
+- What are the different services exposed by the server?
+- How can a service (operation) be called? What url use? Endpoint
+- What should be the structure of request xml?
+- What should be the structure of response xml?
+
+
+# What is marschalling and unmarschalling? How do JAXB and XML help with this?
+SOAP WS use SOAP based XML format for communication. Java application work with beans i.e. Java objects.
+For an application to expose or consume SOAP WS, we need two things:
+- Convert Java Object to SOAP XML. This is called Marshalling
+- Convert SOAP XML to Java Object. This is called Un Marshalling
+JAXB and XML Beans are frameworks which enable use to do marshalling and unmarshalling easy.
+
+
+# How do you handle security for WS?
+At two levels transport level and application level
+- At transport level, SSL is used to exchange certificates (HTTPS). This ensures that the server
+and client are mutually authenticated.
+- At the application level security is implemented by transferring encrypted info (dygital signature) in the message header (SOAP header).
+
+
+# What are the popular Java Specifications for Web Services?
+JAX-WS for SOAP WS
+JAX-RS for REST WS
+
+
+# What is Service Oriented Architecture (SAO)?
+Service Oriented architecture is an architectural style where applications are built on top of language neutral
+loosely coupled, independent, reusable components.
+Major components of SOAP are:
+- User interface layer.
+- Business process layer
+- Services
+
+
+# What is the REST WS?
+Any services that satisfies REST constraints are called RESTful WS.
+
+
+# Important constraints of REST WS
+- Client-Server
+- The interface (URL) - uniform and exposing resources.
+- The service is stateless - the same result
+- Service result should be cacheable
+- Should assume layered architecture
+
+
+# Richardson Maturity Level?
+- Level 0 - Expose SOAP WS in REST style. Expose action based service using REST
+- Level 1 - Expose resources with proper URI.
+- Level 2 - Resources use URI's and HTTPmethods. Update account PUT, create POST, GET, DELETE
+- Level 3 - HATEOAS not only the info being requested but also info about next possible ections that the
+  WS can do. Example return user details plus info how get users previous post, retreive list, sort etc.
+
+
+# Best practice with REST API
+- Does request makes sense to api consumer
+- URI should represent resources
+- Use HTTP methods
+
+
+# HTTP methods in REST bst practice
+- GET : should not update anything. Should be indepotent (same result in multiple calls). Return codes 200, 404, 400
+- POST : should create new resource. Return JSON with link to new resource. Return codes 201
+- PUT : update resource. Code 200
+- DELETE : Delete resource
+
+
+# Explain JAX-RS
+JAX-RS is a Java specification for RESTful WS implemented by all JEE compliant WS.
+Important annotations:
+@ApplicationPath("/") - define URL path
+@GET, @POST - define HTTP methods invokes that methods
+@Produce(MediaType.APPLICATION_JSON) - defines output format of REST WS
+@Path("/{id}") on a method and @PathParam("id") on method parameter. Dynamic parameter in REST URL
+@Path("{user_id}/followers/{follower_id}")
+@QueryParam("page") method parameter /user?page=10
+Useful methods:
+-Response.OK(jsonBuilder.build()).build() - returns JSON response with status code
+-JSON.createObjectBuilder).add("id", user.getId()) creates a user object
+
+
+# Advantages of REST WS
+Lightweight
+Easy to expose
+Most use HTTP protocol
+High Performance
+
+
+# Difference between JSON and REST
+REST is architectural principle.
+SOAP is message exchange format.
+REST is build over siple HTTP protocol. SOAP arem more complex.
+REST better performance and scalability. REST reads can be cached SOAP cannot.
+REST permits many different data formats SOAP only XML.
+SOAP services have well defined structure and interface (WSDL)
+SOAP is based on well defined structure (WS-Security, WS-Atomic Transaction ad WS-Reliable messaging)
+

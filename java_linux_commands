@@ -21,6 +21,9 @@ java -XX:+PrintGC (-verbose:gc)
 jsp
 jstack -L <java_pid_from_jsp_command> > jstack.out
 
+kill -3
+jconsole
+
 #############
 # Heap dump #
 #############

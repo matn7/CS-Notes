@@ -27,6 +27,11 @@ static binding method like private, final and static.
 Runtime polymorphism
 The same method name with exactly the same arguments
 dynamic binding
+We cannot override private methods in Java as if we declare any variable, method as private that variable or method
+will be visited for that class only and also if we declare any method as private than they are bounded with class at compile
+time not in runtime so we can't reference those method using any object.
+Yoyu cannot override static method in Java becouse method overriding is based upon dynamic binding at runtime
+and static method are bounded using static binding at compile time
 
 # final
 
@@ -70,6 +75,12 @@ parent class, child class
 
 You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
 collections HashMap, HashSet
+In Map objects are stored as key and value. put(key,value) method is used to store objects in HashMap at this time
+hashCode() method is used to calculate the hash code of key object and both kay and value object is stored
+as map.entry, if two keys object have some hash-code then only value object is stored in the same bucket location but
+as a linked list value is stored and if hash code is different then another bucket location is created.
+While retrieving get(key) method is used at this time hash code of key object is calculated and then equals() method
+is called to compare value object.
 
 
 # equals
@@ -307,6 +318,32 @@ Enumerator hasMoreElements(). For Collections read only
 Checked Exceptions ensures that handling of exception is provided and its verified by compiler also.
 For throwing unchecked exception no special provision is needed.
 
+# What is load factor of HashMap
+HashMap performance depends on two things initial capacity and load factor.
+Whenever create HashMap initial capacity number of buckets is created initially and load factor is criteria
+to decide when we have to increase the size of HashMap when its about to get full.
+
+# Why wait and notify is declared in Object class instead Thread?
+Both are communication mechanism between two threads in Java.
+Object class makes them avilable for every object if this mechanism is not available via any JAva keyword like
+synchronized.
+Locks are available on per Object basis, which is another reason wait and notify is declared in Object class
+rather than Thread Class.
+
+# Why wait and notify called from synchronized method in Java?
+To avoid:
+- IllegalMonitorStateException which will occur if we don't call wait(), notify() or notifyAll() method
+from synchronized context
+- Any potential race condition between wait and notify method in Java
+
+
+# What will happen if we put a key object in a HashMap which is already there?
+It will replace the old mapping because HashMap doesn't allow duplicate keys.
+The same key will result in the same hashcode and will end up at the same position in the bucket.
+Each bucket contains a linked list of Map.Entry object, which contains both Key and Value. Now
+Java will take the Key object from each entry and compare with this new key using equals() method, if
+that return true then alue object in that entry will be replaced by new value.
+
 
 ###############
 # Collections #
@@ -330,10 +367,27 @@ Thread safe data structures
 In such collections iterators presents elements which exists on the beginning of teration buc can reflect some lub
 all modifications that beeing processed after their creation. Such iterator does not throw ConcurrentModificationException.
 
-ConcurrentHashMap
+#ConcurrentHashMap
 Methods in atomic ways sets or replace elements if it is the same at a point of time.
 There are couple of mass operations to search, modify or look for ConcurrentHashMap.
 search, reduce, forEach.
+
+ConcurrentHashMap vs HashTable vs SynchronizedMap
+All are thread safe.
+HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
+SynchronizedMap not very different from HasTable similar performance in concurrent Java program.
+You can create synchronized Map version by using Collections.synchronizedMap().
+ConcurrentHashMap is specially designed for concurrent use i.e. more than one thread.
+By default it simultaneously allows 16 hreads to read and write from Map without any external synchronization.
+It is very scallable beaause of stripped locking technique used i the internal implementation of ConcurrentHashMap class.
+Unilike HashTable and Synchronized Map, it never locks whole Map, instead, it divides the Map into segments and locking is done on those.
+It perform better if number of reader are greater than the numberof writer threads.
+
+In multithreading Java application synchronized collection classes like Hashtable and Vector quickly becomes
+the bottleneck, to address that Java 5 introduced some concurrent collections.
+
+ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
+thread safety
 
 BlockingQueue
 pool, peek methods return null to sygnalize failure. In that reason insert null vales to them is incorrect
