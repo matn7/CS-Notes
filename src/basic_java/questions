@@ -690,6 +690,110 @@ Sorting algorithms
 - Binary Search
 
 
+##################
+# Data Structure #
+##################
+
+# Tree Data Structure
+
+A Binary tree is one where every node can have a maximum of two children. The left and right.
+Two binary trees are the same if
+1. Every corresponding node has the same value
+2. The structure of the tree at every corresponding node is thesame
+
+
+# Stack Data Structure
+
+A stack is data structure to hold elements such that the last element you add to the stack is first one you access.
+LIFO list in first out
+Major operations that you performed on the stack are always focused on one end of the stack, called the TOP
+
+Adding new elements to the stack is called -> PUSH -> push an element to the top of a stack
+Removing an element from the top a stack is called -> POP -> pop an element from the top of stack
+See what element on stack is do not ermove it -> PEEK -> peek at the top of a stack
+
+Peek let's you access the top element in the stack without actually changing the Data Structure
+
+Common operations on stack
+PUSH    POP     PEEK
+
+Other operations which are useful
+ISEMPTY     ISFULL      SIZE
+
+If you try to POP from an empty element or PUSH into full stack -> It's an ERROR throw an Exception!
+
+The most common operations on a stack involve pushing and popping elements from the TOP.
+The operations are on one end of the stack.
+A LinkedList match perfectly to build a stack
+
+Performance
+PUSH and POP from a stack O(1) constant time complexity.
+isEmpty and isFull also O(1)
+Size O(1)
+
+Useful
+Implementing Undo in application
+Implementing back button in browser
+Holding the memory for recursive calls in a programing language
+
++-------+------+-----+------+--------+---------+------+
+|       | PUSH | POP | PEEK | isFull | isEmpty | Size |
++-------+------+-----+------+--------+---------+------+
+| Stack | O(1) |O(1) | O(1) |  O(1)  |   O(1)  | O(1) |
++-------+------+-----+------+--------+---------+------+
+
+
+# Queue Data Structure
+
+Queue is a Data Structure where you add elements to the End of the Queue and remove elements
+from the beggining of the QUEUE.
+
+FIFO first in first out
+LILO last in last out
+
+The operations are performed at two ends. Removal its at the beggining and addition is at the end of the queue.
+
+Adding a new element to the end of the Queue is called
+ENQUEUE -> enqueue an element from the queue
+
+Removing an element from the beggining of a queue is called
+DEQUEUE -> dequeue an element from the queue
+
+Similar to stack you might just want to see what the first element in a queue is without removing it
+PEEK -> Peek at the first element in a queue
+
+The Queue implementation in Java
+OFFER -> adds to a queue if space is available
+
+Common operations on the queue
+ENQUEUE     DEQUEUE     PEEK
+
+Other operations
+ISEMPTY ISFULL OFFER
+
+If you try to dequeue from an empty queue or enqueue into full queue. It's an error throw Exception
+
+The most common operations on queue involve enqueueing and dequeueing elements.
+The operations are on both ends of queue.
+A LinkedList which is a pointer to head and tail works well.
+
+Performance
+Enqueueing and dequeueing implemented in this way is O(1).
+IsEmpty isFull O(1)
+Space complexity O(N)
+
+Useful
+Calls
+Queueing job to be printed
+Order processing system E-Commerance websites or bank transactions.
+
++-------+---------+---------+--------+---------+
+|       | Enqueue | Dequeue | isFull | isEmpty |
++-------+---------+---------+--------+---------+
+| Queue |   O(1)  |   O(1)  |  O(1)  |   O(1)  |
++-------+---------+---------+--------+---------+
+
+
 #########################
 # Garbage Collection GC #
 #########################
