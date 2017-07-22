@@ -395,10 +395,25 @@ that return true then value object in that entry will be replaced by new value
 ###############
 
 Collection interface provides methods for all collections except Map which are provided by Map interfaces
-
 Thread safe data structures
 In such collections iterators presents elements which exists on the beginning of iteration but can reflect some lub
 all modifications that beeing processed after their creation. Such iterator does not throw ConcurrentModificationException.
+In multithreading Java application synchronized collection classes like Hashtable and Vector quickly becomes
+the bottleneck, to address that Java 5 introduced some concurrent collections.
+
++------+--------------+-----------------------+
+|      | Collection   | Con / TS Collection   |
++------+--------------+-----------------------+
+| List | ArrayList    | CopyOnWriteArrayList  |
+|      | LinkedList   | Vector                |
++------+--------------+-----------------------+
+| Set  | HashSet      | CopyOnWriteArraySet   |
+|      | TreeSet      |                       |
++------+--------------+-----------------------+
+| Map  | HashMap      | ConcurrentHashMap     |
+|      | TreeMap      | HashTable             |
+|      | LinkedHashMap|                       |
++------+--------------+-----------------------+
 
 # LIST
 
@@ -419,79 +434,61 @@ Sets are to optimize strength test. Java has implementation of HashSet and TreeS
 # MAP
 
 In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
-
-ConcurrentHasMap does not allow null values for keys or values
 LinkedHashMap maintains insertion order and process elements based on this order
-
-# ConcurrentHashMap
-Methods in atomic ways sets or replace elements if it is the same at a point of time.
-There are couple of mass operations to search, modify or look for ConcurrentHashMap.
-search, reduce, forEach.
-
-ConcurrentHashMap vs HashTable vs SynchronizedMap
-All are thread safe.
-HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
-SynchronizedMap not very different from HasTable similar performance in concurrent Java program.
-You can create synchronized Map version by using Collections.synchronizedMap().
-ConcurrentHashMap is specially designed for concurrent use i.e. more than one thread.
-By default it simultaneously allows 16 hreads to read and write from Map without any external synchronization.
-It is very scallable beaause of stripped locking technique used i the internal implementation of ConcurrentHashMap class.
-Unilike HashTable and Synchronized Map, it never locks whole Map, instead, it divides the Map into segments and locking is done on those.
-It perform better if number of reader are greater than the numberof writer threads.
-
-In multithreading Java application synchronized collection classes like Hashtable and Vector quickly becomes
-the bottleneck, to address that Java 5 introduced some concurrent collections.
-
-ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
-thread safety
-
-BlockingQueue
-pool, peek methods return null to sygnalize failure. In that reason insert null vales to them is incorrect
-LinkedBlockingQueue
-ArrayBlockingQueue
-Other Thread Safe Data Structures
-ConcurrentSkipListMap
-ConcurrentSkipListSet
-CopyOnWriteArrayList
-CopyOnWriteArraySet
-
 HashMap implements Map interface there by supporting key values pairs.
-
 TreeMap is similar to HashMap except that it stores keys in sorted order. It implements NavigableMap interface and
 SortedMap interfaces along with tha Map interface
 
-PrioritityQueue
-Implements Queue interface.
--offer() adding an element to prioritity queue
--peek() get the element with highest prioritity
+ConcurrentHashMap
+Methods in atomic ways sets or replace elements if it is the same at a point of time.
+There are couple of mass operations to search, modify or look for ConcurrentHashMap.
+search, reduce, forEach.
+ConcurrentHasMap does not allow null values for keys or values
+ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
+thread safety
+ConcurrentSkipListMap
 
-What is the difference between synchronized and Concurrent Collections
+
+# QUEUES
+
+BlockingQueue
+pool, peek methods return null to signal failure. In that reason insert null vales to them is incorrect
+LinkedBlockingQueue
+ArrayBlockingQueue
+Other Thread Safe Data Structures
+
+# PriorityQueue
+Implements Queue interface.
+-offer() adding an element to priority queue
+-peek() get the element with highest priority
+
+# What is the difference between synchronized and Concurrent Collections
 Synchronized collections are implemented using synchronized mehods and synchronized blocks. Only one Thread
 can executing any of the synchronized code at given point in time. This places severe restrictions on the concurrency
 of thread - there by affecting performance of the application. All the pre Java 5 synchronized collections
 HashTable & Vector use this approach
 Post Java 5 collections using new approach to synchronization are available in Java.
 These are concurrent collections
---------------------------------+--------------------------------
-SYNCHRONIZED                    | CONCURRENT
---------------------------------+--------------------------------
-Use synchronized                | New approach to thread safety
-methods and blocks              |   - Copy on Write
-                                |   - Compare and Swap
-                                |   - Lock and unlock
---------------------------------+--------------------------------
-Vector, HashTable               | CopyOnWriteArrayList
-                                | ConcurrentLinkedQueue
-                                | ConcurrentHashMap
---------------------------------+--------------------------------
-Only one thread Executing       | New approaches allow more
-any of the synchronized         | concurrency in specific
-code                            | context
---------------------------------+--------------------------------
-fail fast iterators             | fails safe iterators
-throw                           | don't throw
-ConcurrentModificationException | ConcurrentModificationException
---------------------------------+--------------------------------
++--------------------------------+--------------------------------+
+|SYNCHRONIZED                    | CONCURRENT                     |
++--------------------------------+--------------------------------+
+| Use synchronized               | New approach to thread safety  |
+| methods and blocks             |   - Copy on Write              |
+|                                |   - Compare and Swap           |
+|                                |   - Lock and unlock            |
++--------------------------------+--------------------------------+
+| Vector, HashTable              | CopyOnWriteArrayList           |
+|                                | ConcurrentLinkedQueue          |
+|                                | ConcurrentHashMap              |
++--------------------------------+--------------------------------+
+| Only one thread Executing      | New approaches allow more      |
+| any of the synchronized        | concurrency in specific        |
+| code                           | context                        |
++--------------------------------+--------------------------------+
+| fail fast iterators            | fails safe iterators           |
+| throw                          | don't throw                    |
+| ConcurrentModificationException| ConcurrentModificationException|
++--------------------------------+--------------------------------+
 
 Post Java 5 collections using new approach to synchronization are available in Java.
 These are called concurrent collections. Examples of new approaches are
@@ -501,7 +498,7 @@ These are called concurrent collections. Examples of new approaches are
 New approaches to concurrency provide better performance in specific context
 
 Copy on Write
-All collections are sorted in immutable array. A new array is created if there is anymodification to the collection
+All collections are sorted in immutable array. A new array is created if there is any modification to the collection
 Read operations are not synchronized. Writes operations are synchronized.
 Copy on Write scenario is used where reads greatly out number writes on a collection
 CopyOnWriteArrayList and CopyOnWriteArraySet are implementations of this approach
@@ -511,18 +508,18 @@ rarely change. Most frequent operations would be iteration around the observers 
 What is Compare and Swap approach
 In compare and swap approach instead of synchronizing entire method, the value of member variable before
 calculation is cached. After the calculation the cache value is compared with the current value of member variable.
-If the value is not modfied the calculated result is stored into the member variable.
+If the value is not modified the calculated result is stored into the member variable.
 If another thread has modified the value, then the calculation can be performed again, or skipped as the need might be.
 ConcurrentLinkedQueue uses this approach.
 
-What is a Lock? How is it different from using synchronzed approach?
+# What is a Lock? How is it different from using synchronized approach?
 When 10 methods are declared as synchronized, only any of them is executed by any of the threas at any point in time.
 This has severe performance impact.
 Another new approach introduced in Java 5 is to use lock and unlock methods. Lock an unlock methods are used
 to divide methods into different blocks and help enchance concurrency.
 The 10 methods can be divided into different blocks which can be synchronized on different variables.
 
-What is initial capacity of a Java Collection?
+# What is initial capacity of a HashMap?
 An instance of HashMap has two parameters that affect its performance initial capacity and load factor.
 The capacity is the number of buckets in the hash table, and the initial capacity is the capacity at the time the
 hash table is created. The load factor a measure of how full the hash table is allowed to get before its capacity automatically increased.
@@ -531,34 +528,45 @@ table is rehashed (internal structure rebuild). So the hash table has approximet
 As a general rule the default load factor .75 offers a good tradeoff between time and space cost.
 Higher value decrease space overhead but increase the lookup cost (put and get operations).
 
-What is a different between fail safe and fail fast
+# What is a different between fail safe and fail fast
 Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
 This was the default behavior of the synchronized collections of pre Java 5
 Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
 This is the default behavior of the concurrent collections, introduced since Java 5
 
-What are atomic operations in Java?
-In programming an atomic action s one that effectively happens all at once. An atomic action cannot stop in the middle.
+# ConcurrentHashMap vs HashTable vs SynchronizedMap
+All are thread safe.
+HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
+SynchronizedMap not very different from HasTable similar performance in concurrent Java program.
+You can create synchronized Map version by using Collections.synchronizedMap().
+ConcurrentHashMap is specially designed for concurrent use i.e. more than one thread.
+By default it simultaneously allows 16 hreads to read and write from Map without any external synchronization.
+It is very scallable because of stripped locking technique used i the internal implementation of ConcurrentHashMap class.
+Unilike HashTable and Synchronized Map, it never locks whole Map, instead, it divides the Map into segments and locking is done on those.
+It perform better if number of reader are greater than the numberof writer threads.
+
+# What are atomic operations in Java?
+In programming an atomic action is one that effectively happens all at once. An atomic action cannot stop in the middle.
 It either happens completely or it doesn't happen at all. No side effect of an atomic action are visible until the action is completed.
 Even small operation like i++ id not thread sfe. Operation involves three steps:
 - Read the value which is currently stored in i
 - Add one to it (atomic operation)
 - Store it in i
-In multithreaded environment there can be unexpected results. For example if thread1 is reading the value
-and immediately after that thread2 store the value.
+In multithreaded environment there can be unexpected results. For example if thread 1 is reading the value
+and immediately after that thread 2 store the value.
 To prevent these, Java provides atomic operations. Atomic operations are performed as a single unit
 without interference from other threads ensuring data consistency.
 A good example is AtomicInteger. To implement a value of AtomicInteger we use the incrementAndGet() method Java ensures this operation is Atomic.
 
-What is the BlockedQueue in Java?
+# What is the BlockedQueue in Java?
 BlockedQueue interface is introdced in Java specifically to address specific needs of some Producer Consumer scenarios.
 BlockedQueue allows the consumer to wait (for a specific time of infinitely) for an element to become available.
 
-HashMap and HashTable differences
+# HashMap and HashTable differences
 HashMap is not synchronized. Faster than HashTable. Allows null keys.
 HashTable is synchronized. Slower than HashMap. Does not allow null keys.
 
-TreeSet and TreeMap differences
+# TreeSet and TreeMap differences
 TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
 TreeMap is an implementation of Map.
 TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
@@ -751,6 +759,49 @@ Sorting algorithms
 ##################
 
 # Tree Data Structure
+
+Tree is a structure which is made up of nodes. Each node can pont to a number of nodes
+Unlike stacks, queues, linked lists the order of elements is not importatn in a tree
+It is non linear data structure
+Tree is used to represent hierarchical information.
+
+
+# The Binary Tree
+
+A general tree data structure can have number of children but these trees are less useful and not very commonly used
+in data structure
+In binary tree each node can have 0, 1 or 2 children
+
+Root - a node with no parents, every tree has exactly one root
+Edge - a link from a parent to a child node
+Leaf - node with no children
+Siblings node - are in the same level in a tree
+
+     +---+
+     | A | A -> ROOT
+     +---+
+    /     \ Edges
+ +---+   +---+
+ | B |   | C |   B-C -> SIBLINGS
+ +---+   +---+
+        /     \ Edges
+     +---+   +---+
+     | D |   | E | D-E -> SIBLINGS, LEAF
+     +---+   +---+
+
+Binary Tree Traversal
+Visiting nodes of a tree is called TRAVERSING TREE
+
+BREADTH-FIRST TRAVERSAL
+Involves visiting nodes at every leaf before moving on to the next level
+Start at root node it is at level 0 and is the first node to visit
+Next step check whether there are other Nodes at the same level and visit them
+Once a level is exhausted then we can move to the next level
+Continue process till every node is visited
+
+
+
+A root node is ancestor of all nodes.
 
 A Binary tree is one where every node can have a maximum of two children. The left and right.
 Two binary trees are the same if
