@@ -1,10 +1,10 @@
 # ClassCastException
 
--When references to objects ponits to objects different classes
--When argument is wrong type, method compareTo should throw exception
--No explicit casting
--Try add wrong data type
--SerialVersionUID
+- When references to objects points to objects different classes
+- When argument is wrong type, method compareTo should throw ClassCastException
+- No explicit casting
+- Try add wrong data type to collection or array
+- SerialVersionUID
 
 
 # Constructor Chaining
@@ -14,13 +14,25 @@ Call from parent class super()
 Use to execute more tasks in one constructor
 Improve readability of code
 
+public Temporary(int x, int y) {
+    this(5);
+    System.out.print(" " + x * y + " ");
+}
+public Temporary(int x) {
+    this();
+    System.out.print(" " + x + " ");
+}
+public Temporary() {
+    System.out.print(" Default ");
+}
+-> Default  5  782
+
 
 # Overloading
 
 Compile time polymorphism
 Use the same method name but with different arguments
-static binding method like private, final and static.
-
+static binding binds private, final, static method, fields, class, variables
 
 # Overriding
 
@@ -29,9 +41,11 @@ The same method name with exactly the same arguments
 dynamic binding
 We cannot override private methods in Java as if we declare any variable, method as private that variable or method
 will be visited for that class only and also if we declare any method as private than they are bounded with class at compile
-time not in runtime so we can't reference those method using any object.
-Yoyu cannot override static method in Java becouse method overriding is based upon dynamic binding at runtime
+time not in runtime so we can't reference those method using any object
+
+You cannot override static method in Java becouse method overriding is based upon dynamic binding at runtime
 and static method are bounded using static binding at compile time
+
 
 # final
 
@@ -43,8 +57,9 @@ Method cannot be overriden
 
 # finally
 
-Try, catch block. Stuff between {} in finally always be executed, even when in try return statement
-Finally does't execute, Program crash before go to this block, or in by System.exit(0)
+Try, catch block. Stuff in finally always be executed, even when in try return statement
+Finally does't execute in cases like
+program crash before go to this block or System.exit(0) in try
 
 
 # finalize
@@ -67,17 +82,17 @@ System Class Loader
 
 # SerialVersionUID
 
-Mark added to class to during deserialization, reconstruct proper class. Useful when there is some class hierarchies
-parent class, child class
+Mark added to class to during deserialization, reconstruct proper class (unique identifier).
+Useful when there is some complex class hierarchies parent class, child class.
 
 
 # hashCode, equals
 
 You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
-collections HashMap, HashSet
+collections like HashMap, HashSet
 In Map objects are stored as key and value. put(key,value) method is used to store objects in HashMap at this time
 hashCode() method is used to calculate the hash code of key object and both kay and value object is stored
-as map.entry, if two keys object have some hash-code then only value object is stored in the same bucket location but
+as map.entry, if two keys object have some hash code then only one value object is stored in the same bucket location but
 as a linked list value is stored and if hash code is different then another bucket location is created.
 While retrieving get(key) method is used at this time hash code of key object is calculated and then equals() method
 is called to compare value object.
@@ -85,9 +100,11 @@ is called to compare value object.
 
 # equals
 
-Check whether one object can be equal to another. Equals method implemented in Object class, check whether two
-references to object are identical. Override equal method if you want to check equality based on state of object.
+Check whether one object can be equal to another.
+Equals method implemented in Object class, check whether two references to object are identical.
+Override equal method if you want to check equality based on state of object.
 Two object are equals when they have the same value.
+
 Checks that we need to perform.
     // Check whether objects are identical, very fast
     if (this == otherObject) return true;
@@ -102,10 +119,11 @@ Checks that we need to perform.
 # hashCode
 
 Hash is integer number that identify an object.
-If x and y are different objects, in big probability x.hashCode and y.hashCode should also be different.
+If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
 for (int i = 0; i < str.length(); i++) {
     hash = 31 * hash + chartAt(i)
 }
+
 HashCode must be compatible.
 if x.equals(y) return true, x.hashCode == y.hashCode.
 If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
@@ -115,14 +133,15 @@ Object.hash(some, some2);
 
 # this
 
-Can separate local variables from instance variables. 'this' determines instance variables.
+Can separate local variables from instance variables.
+'this' determines instance variables.
 Use this reference when instance and local variables have the same name.
 
 
 # static
 
 For specified class can be only one static variable.
-Initialization is during class loading. Static method does not work on objects. Math.pow(x,a).
+Initialization is during class loading. Static method does not work on objects. Math.pow(x,a)
 Gets memory only once in class are at time class loading.
 Refer to common property of all objects, company name for example.
 Static methods belongs to class rather than object of class.
@@ -172,15 +191,19 @@ Hash codes - keys in hashCodes are Strings
 
 All methods public abstract
 All properties public static final
+
 Implement interfaces, want to imitate behavior of class
 Use to impose behavior on other classes
+
 You can implements more than one interface (impose behavior), example implements Comparable interface (strategy pattern)
 to extort sorting behavior.
+
 You cannot put instance variables. Interface determines behavior not state of object.
 You can provide default implementation of interface. Mark such method with default modifier
 public interface IntSequence {
     default boolean hasNext() {return true; }
 }
+
 Keyword super allows to call super type methods
 Comparable interface when class want to allow sort their elements Comparable.
 Callback - code fragment is call as a result on user response
@@ -208,7 +231,7 @@ Additional responsibilities added to class
 # OOP
 
 Objects - containers that keep variables functions thematically connected to each others, to use it easier later
-Classes - Frame to build instances of objects
+Classes - frame to build instances of objects
 Objects have, properties, methods
 Constructor - reserve space in memory for object
 Creating an object from a class is called instantiation
@@ -220,19 +243,19 @@ int[]::new === n->new int[n]
 
 Local class is not declared as public or private as it isn't available outside of method
 
-Abstract method does not have implementation, abstract class can not hava instantion.
-Class can define methods without implementation forcing subclasses to implement them. Such method and class
-that contain it are called abstract.
+Abstract method does not have implementation, abstract class can not have instantiation.
+Class can define methods without implementation forcing subclasses to implement them.
+Such method and class that contain it are called abstract.
 Abstract classes can have instance variables or constructors.
 Cannot instantiate abstract class
 Abstract calss is used to provide default implementation with something left to customize.
 
-Encapsulation - use of objects implemented by someone else, use theri methods without know what sits inside
+Encapsulation - use of objects implemented by someone else, use their methods without know what sits inside
 
 Instance variable are in default initialized
 Local variables need to be explicitly initialized
 
-If part can exists without whole then relationship between two class is known as aggregation.
+If part can exists without whole then relationship between two class is known as aggregation
 If part cannot exists without whole the relationship between two class is known as composition
 
 
@@ -243,7 +266,7 @@ Data serialization allows to know about all references (extends)
 Serialized object will be read to file. They will acquire some special identification number, object will use this
 number to other objects
 To perform serialization class need to implements Serializable interface
-Serializable marker interface (without method), safety guard to make sure you know what you are doing.
+Serializable marker interface (without method), safety guard to make sure you know what you are doing
 transient data that we dont want to be serialized
 Fragile data should be marked as transient, or should not implement Serializable
 
@@ -253,14 +276,16 @@ Deliver object from one VM to another. To make object serializable that means ca
 it has to be an instance of Serializable interface. It is an marker interface without methods.
 All object must be serializable.
 Serializable mechanism supports version mechanism serialVersionUID = 1L;
-s used to enchanced state, what would happen when class would change
+is used to enhanced state, what would happen when class would change
 Static variables are no serialized only istance variables are serialized
 
+
 # Different between Serializable and Externalizable
-Serializable is marker interface with no method Defined.
-Use default serialization process which can b very slow for some application.
+
+Serializable is marker interface with no method defined
+Use default serialization process which can be very slow for some application
 Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the
-serialization process.
+serialization process
 
 
 # What is the difference between composition and inheritance ?
@@ -271,66 +296,85 @@ Composition = "has-a", Inheritance = "is-a"
 
 
 # How are the Strategy Pattern and Dependency Injection related ?
+
 Each defines behavior by setting member variables of a class
 
 
 # Reflection
 
-Reflection is a way to invoke methods of objects on the fly at run-time.
-Reflection is slow and complicated. Method call via reflection may take 10x longer than usual.
-Instantiation an object from a name of a class.
+Reflection is a way to invoke methods of objects on the fly at run-time
+Reflection is slow and complicated. Method call via reflection may take 10x longer than usual
+Instantiation an object from a name of a class
 Reflection is the ability at runtime to actually create objects of classes, invoke methods, manipulate metadata
+
 Type introspection is the ability at runtime to explore the type of an object.
-Reflection drawbacks: complexity, performance overhead, security consideration, violation of abstraction.
-Reflection is good for unit testing jUnit.
+
+Reflection drawbacks: complexity, performance overhead, security consideration, violation of abstraction
+
+Reflection is good for unit testing jUnit
 
 
 # Volatile
 
-Declaring variable volatile means the value of this variable will never be cached thread locally.
+Declaring variable volatile means the value of this variable will never be cached thread locally
 All reads and writes will go straight to main memory. Access to the variable acts as through it is
-enclosed in a synchronized bock, synchronized on itself.
-Slower than cache, make sure value be read every time.
+enclosed in a synchronized bock, synchronized on itself
+Slower than cache, make sure value be read every time
+
 Happens-before relationship means any writes happens before any read in volatile variable
-Every thread reads its value from main memory and don't used cached value available in every thread stack.
-Volatile variable prevents compiler from doing reordering which can compromise synchronization.
- Only applicable to field or properties of class. You cannot use volatile keyword during class or method declaration in Java.
+Every thread reads its value from main memory and don't used cached value available in every thread stack
+Volatile variable prevents compiler from doing reordering which can compromise synchronization
+
+Only applicable to field or properties of class.
+You cannot use volatile keyword during class or method declaration in Java
 
 
 # Synchronized
 
-Every objects in Java has a lock associated with it.
+Every objects in Java has a lock associated with it
 This lock is called the intrinsic lock or monitor. It is possible to specify that only one thread can
-execute a section of code once it has acquired the lock on same object.
-If some other thread currently holds that lock, the current thread must waits its turn.
-This is achieved using synchronized keyword.
-Using right making a method synchronized can help eliminate thread interference and memory consistency error.
-Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this".
-If we use synchronized we don't need to use volatile keyword.
+execute a section of code once it has acquired the lock on same object
+If some other thread currently holds that lock, the current thread must waits its turn
+This is achieved using synchronized keyword
+
+Using right making a method synchronized can help eliminate thread interference and memory consistency error
+Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this"
+If we use synchronized we don't need to use volatile keyword
+
 
 # Enumerator and Iterator differences
-Itarator allows you to remove elements from collection. Methods for iterator hasNext(), next().
-Does not allow other thread to modify the collection oject while some thread is iterating over it and throws
+
+Iterator allows you to remove elements from collection. Methods for iterator hasNext(), next()
+Iterator does not allow other thread to modify the collection object while some thread is iterating over it and throws
 ConcurrentModificationException
+
 Enumerator hasMoreElements(). For Collections read only
 
+
 # Checked and Unchecked Exceptions
-Checked Exceptions ensures that handling of exception is provided and its verified by compiler also.
+
+Checked Exceptions ensures that handling of exception is provided and its verified by compiler also
 For throwing unchecked exception no special provision is needed.
 
+
 # What is load factor of HashMap
+
 HashMap performance depends on two things initial capacity and load factor.
 Whenever create HashMap initial capacity number of buckets is created initially and load factor is criteria
-to decide when we have to increase the size of HashMap when its about to get full.
+to decide when we have to increase the size of HashMap when its about to get full
+
 
 # Why wait and notify is declared in Object class instead Thread?
-Both are communication mechanism between two threads in Java.
-Object class makes them avilable for every object if this mechanism is not available via any JAva keyword like
-synchronized.
+
+Both are communication mechanism between two threads in Java
+Object class makes them available for every object if this mechanism is not available via any Java keyword like
+synchronized
 Locks are available on per Object basis, which is another reason wait and notify is declared in Object class
-rather than Thread Class.
+rather than Thread class
+
 
 # Why wait and notify called from synchronized method in Java?
+
 To avoid:
 - IllegalMonitorStateException which will occur if we don't call wait(), notify() or notifyAll() method
 from synchronized context
@@ -338,11 +382,12 @@ from synchronized context
 
 
 # What will happen if we put a key object in a HashMap which is already there?
-It will replace the old mapping because HashMap doesn't allow duplicate keys.
-The same key will result in the same hashcode and will end up at the same position in the bucket.
-Each bucket contains a linked list of Map.Entry object, which contains both Key and Value. Now
-Java will take the Key object from each entry and compare with this new key using equals() method, if
-that return true then alue object in that entry will be replaced by new value.
+
+It will replace the old mapping because HashMap doesn't allow duplicate keys
+The same key will result in the same hashcode and will end up at the same position in the bucket
+Each bucket contains a linked list of Map.Entry object, which contains both Key and Value
+Now Java will take the Key object from each entry and compare with this new key using equals() method, if
+that return true then value object in that entry will be replaced by new value
 
 
 ###############
@@ -350,9 +395,14 @@ that return true then alue object in that entry will be replaced by new value.
 ###############
 
 Collection interface provides methods for all collections except Map which are provided by Map interfaces
-List is sequential collection in which every element has ndex in form of integral number
-Sets are to optimalize test endurance. Java has mplementation of HashSet and TreeSet
-In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
+
+Thread safe data structures
+In such collections iterators presents elements which exists on the beginning of iteration but can reflect some lub
+all modifications that beeing processed after their creation. Such iterator does not throw ConcurrentModificationException.
+
+# LIST
+
+List is sequential collection in which every element has index in form of integral number
 List interface has mathods which allow to access to n th element of List. To do so Class should implement RandomAccess
 interface. It is a marker interface which does not have any methods.
 For instance ArrayList implements List and RandomAccess, but LinkedList only List interface.
@@ -360,14 +410,20 @@ RandomAccess means random search if you know the index, LinkedList only allows s
 Adding and removing elements from middle of LinkedList is fast compared to ArrayList, because it only
 require to modify links and no other elements are rearranged.
 
-ConcurrentHasMap does not allow null values for keys or values.
+
+# SET
+
+Sets are to optimize strength test. Java has implementation of HashSet and TreeSet
+
+
+# MAP
+
+In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
+
+ConcurrentHasMap does not allow null values for keys or values
 LinkedHashMap maintains insertion order and process elements based on this order
 
-Thread safe data structures
-In such collections iterators presents elements which exists on the beginning of teration buc can reflect some lub
-all modifications that beeing processed after their creation. Such iterator does not throw ConcurrentModificationException.
-
-#ConcurrentHashMap
+# ConcurrentHashMap
 Methods in atomic ways sets or replace elements if it is the same at a point of time.
 There are couple of mass operations to search, modify or look for ConcurrentHashMap.
 search, reduce, forEach.
