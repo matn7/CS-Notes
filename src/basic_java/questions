@@ -577,31 +577,40 @@ TreeSet is implemented via TreeMap much like how HashSet is implemented using Ha
 ##########
 
 # Lambda
-Is a block of code that you can pass to use in future once or more times. Useful
-Pass comparision method Arrays.sort
+
+Is a block of code that you can pass to use in future once or more times
+Useful
+Pass comparison method Arrays.sort
 Run task in different thread
 Action event example after button clicked
 
+
 # Functional Interfaces
-In Java there are a lot of interfaces that determines the action like Runnable or Comparator.
-Lambda expression is compatibile with this interfaces.
-You can putlambda expression in all places, when you can put object that implements one abstract method.
-Such interfaces are called functional interfaces.
+
+In Java there are a lot of interfaces that determines the action like Runnable or Comparator
+Lambda expression is compatibile with this interfaces
+You can put lambda expression in all places, when you can put object that implements one abstract method
+Such interfaces are called functional interfaces
+
 
 # Streams
+
 Process data in more abstract way, than in case of collections. In case of stream you determine what should be done
-not the way it will be executed. Ore processing details live on implementation.
-Example xalculate average value of parameters. Your task is to determine the source of data
+not the way it will be executed. Processing details live on implementation.
+Example calculate average value of parameters. Your task is to determine the source of data
 and parameters, library that use stream optimizes all calculations and process the result.
+
 long counter = word.stream().filter(s->s.length() > 12).count();
+
 3 stream steps. Create stream, determine intermediate operations that modify stream to other form.
-End operation that generates result. After taht step stream cannot be used anymore.
+End operation that generates result. After that step stream cannot be used anymore.
 
 Streams allow efficient parallel process
-You can create strams from Collection, Generators or Iterators
+You can create streams from Collection, Generators or Iterators
 Use filter to choose elements and map to process them
 Other operation to process stream : limit, distinct, sorted
 To get result from stream use reduce operator like : count, max, min, findFirst, findLast, some of them returns Optional vale
+
 Optional type is a safe way to work with null values. To use them use methods ifPresent, orElse
 You can collect stream results in Collections, Arrays, Strings or Maps
 GroupyingBy and partitioningBy From Collector class allows to separate stream on group and determine result for each of these groups
@@ -618,7 +627,7 @@ Create stream
 Determine intermediate operations which process stream to different form, this process might require couple of steps (filter)
 Process end operation which generates the result. After this step stream can no longer be used
 
-Map method is analogous to map interface from stream. Optional value is a stream on size ero or one.
+Map method is analogous to map interface from stream. Optional value is a stream on size zero or one.
 filterMap method from stream interface. Is used to join two methods.
 
 ParallelStreams
@@ -627,7 +636,7 @@ Map<Integer, Long> word = words.parallelStream().filter(s->s.length() < 12).coll
 
 Streams are introduced in Java . In combination with Lambda expression, they attempt to bring some of the
 important functional programming concepts to Java.
-A stream is a seqence of elements supporting sequential nd parallel aggregate operations.
+A stream is a sequence of elements supporting sequential nd parallel aggregate operations.
 Consider the flow:
 - Creating an array as stream
 - Use lambda expression to create a filter
@@ -636,7 +645,7 @@ Consider the flow:
 - Print the array using forEach
 Arrays.stream(new String[]{"Ram", "Tam", "Tam"})
     .filter(s->s.startsWith("Ta"))
-    .map(String::toLowerCase_
+    .map(String::toLowerCase)
     .sorted()
     .forEach(System.out::println);
 In general any use of streams involves.
@@ -644,21 +653,23 @@ In general any use of streams involves.
 -Intermediate Operations - returns new stream
 -Terminal operation - consume the stream print.
 Intermediate Oparations are of two parts
--Stateful - elements need to be compared against eah others (sort)
+-Stateful - elements need to be compared against each others (sort)
 -Stateless - no need for comparing with other element (map, filter)
 
 
 # Optional
-Optional object Optional<T>pack up object type T. Optional Object is safe alternative to reference to T type,
+
+Optional object Optional<T> pack up object type T. Optional Object is safe alternative to reference to T type,
 which can accept object or null value. Use method that returns alternative value if returned value does not exists
 or take value if present.
-String value = OptionalString.orElse(""); // String or " " if not
-String result = OprionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value
+String value = optionalString.orElse(""); // String or " " if not
+String result = optionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value
 ifPresent method accepts function. If optional value exists, is passed to function. Else do nothing.
 Optional value is a stream of size zero or one. If value exists function is triggered.
 
 
 # Predicate<T>
+
 Function that return logical value.
 Predicate.isEqual(a) is counterpart of a::equals, but works correctly even with null values.
 Methods and, or, negate to join predicates
@@ -666,6 +677,7 @@ Predicate.isEqual(b) === x->b.equal(x)
 
 
 # Functional Interface
+
 Compilator checks whether marked interface is with one abstract method
 Generated javadoc with info that this is an functional interface
 
@@ -675,65 +687,71 @@ Generated javadoc with info that this is an functional interface
 ##################
 
 Complexity and the Big-O notation
-Performance is a measured along resource consumption and code consumes variety of resources.
-Improving code performance beyond a certain point involves Tradeoffs
+Performance is a measured along resource consumption and code consumes variety of resources
+Improving code performance beyond a certain point involves Trade offs
 Consuming more of one resources can help consume less of another.
 
 Measures of performance
-Time - The amount of processing or number of operations code has to perform to accomplish it's objectives.
-Space - This is both the memory needed by code to store information at run-time as well as disk space needed by code for persistent storage.
-Network - The bandwidth code uses to pass information to clients or other machines.
+Time - The amount of processing or number of operations code has to perform to accomplish it's objectives
+Space - This is both the memory needed by code to store information at run-time as well as disk space needed by code for persistent storage
+Network - The bandwidth code uses to pass information to clients or other machines
 
 Performance indicates how much of these resources the code uses. Code is also more performant when
 it uses the resources we have in plenty rather that those we lack.
 
 Complexity
-Complecity is a measure of how resource requirements change as the size of the problem gets larger.
-Affects performance. The higher the complexity the problem the lower the performance.
+Complecity is a measure of how resource requirements change as the size of the problem gets larger
+Affects performance. The higher the complexity the problem the lower the performance
 
-Time required by code to run depends on the basic operations it performs.
-Arithmetic operations read, assignment write. How performance changes based on input size.
-Focus on the worst case performance.
-Code uses time, space and network resource. The amount of resource used determines code's performance.
-Complecity is a measure of performance.
+Time required by code to run depends on the basic operations it performs
+Arithmetic operations read, assignment write. How performance changes based on input size
+Focus on the worst case performance
+Code uses time, space and network resource. The amount of resource used determines code's performance
+Complecity is a measure of performance
 
-Big O Notation allows us express complexity as a measure of input size. This express the complexity of an algorithm.
-A algorithm which complexity does not change with input size is O(1), is said to have constant time complexity.
-The Complexity of an algorithm is O(N) is the time taken by the algorithm increases linearly when N increases.
-The Complexity of an algorithm is O(N^2) if the time taken by the algorithm increases quadratically when N increases.
+Big O Notation allows us express complexity as a measure of input size. This express the complexity of an algorithm
+A algorithm which complexity does not change with input size is O(1), is said to have constant time complexity
+The Complexity of an algorithm is O(N) is the time taken by the algorithm increases linearly when N increases
+The Complexity of an algorithm is O(N^2) if the time taken by the algorithm increases quadratically when N increases
 for (int i = 1; i < n;) {
     i = i * 2;
 }
 The complexity of this operation is O(log(N))
 
-Lists and Sets |  get  | add   | remove | contains
----------------+-------+-------+--------+---------
-ArrayList      | O(1)  |  O(1) |  O(n)  |  O(n)
-LinkedList     | O(n)  |  O(1) |  O(1)  |  O(n)
-HashSet        | O(1)  |  O(1) |  O(1)  |  O(1)
-LinkedHashSet  | O(1)  |  O(1) |  O(1)  |  O(1)
-TreeSet        |O(logN)|O(logN)| O(logN)| O(logN)
----------------+-------+-------+--------+---------
-Maps
----------------+-------+-------+--------+---------
-HashMap        | O(1)  |  O(1) |  O(1)  |  O(1)
-LinkedHashMap  | O(1)  |  O(1) |  O(1)  |  O(1)
-TreeMap        |O(logN)|O(logN)| O(logN)| O(logN)
++----------------+-------+-------+--------+----------+
+| Lists and Sets |  get  | add   | remove | contains |
++----------------+-------+-------+--------+----------+
+| ArrayList      | O(1)  |  O(1) |  O(n)  |  O(n)    |
+| LinkedList     | O(n)  |  O(1) |  O(1)  |  O(n)    |
+| HashSet        | O(1)  |  O(1) |  O(1)  |  O(1)    |
+| LinkedHashSet  | O(1)  |  O(1) |  O(1)  |  O(1)    |
+| TreeSet        |O(logN)|O(logN)| O(logN)| O(logN)  |
++----------------+-------+-------+--------+----------+
+| Maps                                               |
++----------------+-------+-------+--------+----------+
+| HashMap        | O(1)  |  O(1) |  O(1)  |  O(1)    |
+| LinkedHashMap  | O(1)  |  O(1) |  O(1)  |  O(1)    |
+| TreeMap        |O(logN)|O(logN)| O(logN)| O(logN)  |
++----------------+-------+-------+--------+----------+
 
++-----------------+--------+------+--------+------+
+| Queue           | offer  | peek | pull   | size |
++-----------------+--------+------+--------+------+
+| PrioritityQueue | O(logN)| O(1) | O(logN)| O(1) |
++-----------------+--------+------+--------+------+
 
-Queue           | offer  | peek | pull   | size |
-----------------+--------+------+--------+------+
-PrioritityQueue | O(logN)| O(1) | O(logN)| O(1) |
-
-Sorting algorithms | Time Complexity | Space Complexity |
--------------------+-----------------+------------------+
-MergeSort          |     O(NlogN)    |       O(n)       |
-TreeSort           |     O(NlogN)    |       O(n)       |
++--------------------+-----------------+------------------+
+| Sorting algorithms | Time Complexity | Space Complexity |
++--------------------+-----------------+------------------+
+| MergeSort          |     O(NlogN)    |       O(n)       |
+| TreeSort           |     O(NlogN)    |       O(n)       |
++--------------------+-----------------+------------------+
 
 
 # Sorting
+
 Trade offs in sorting
-What is the complexity of the algorithm used.
+What is the complexity of the algorithm used
 How does it scales as the input size increases?
 How much space does it occupy?
 Does it need extra space to hold information during sorting?
@@ -760,10 +778,10 @@ Sorting algorithms
 
 # Tree Data Structure
 
-Tree is a structure which is made up of nodes. Each node can pont to a number of nodes
-Unlike stacks, queues, linked lists the order of elements is not importatn in a tree
+Tree is a structure which is made up of nodes. Each node can point to a number of nodes
+Unlike stacks, queues, linked lists the order of elements is not important in a tree
 It is non linear data structure
-Tree is used to represent hierarchical information.
+Tree is used to represent hierarchical information
 
 
 # The Binary Tree
@@ -803,21 +821,33 @@ Continue process till every node is visited
 
 A root node is ancestor of all nodes.
 
-A Binary tree is one where every node can have a maximum of two children. The left and right.
+A Binary tree is one where every node can have a maximum of two children. The left and right
 Two binary trees are the same if
 1. Every corresponding node has the same value
-2. The structure of the tree at every corresponding node is thesame
+2. The structure of the tree at every corresponding node is the same
 
 
 # Stack Data Structure
 
-A stack is data structure to hold elements such that the last element you add to the stack is first one you access.
+A stack is data structure to hold elements such that the last element you add to the stack is first one you access
 LIFO list in first out
 Major operations that you performed on the stack are always focused on one end of the stack, called the TOP
 
 Adding new elements to the stack is called -> PUSH -> push an element to the top of a stack
 Removing an element from the top a stack is called -> POP -> pop an element from the top of stack
-See what element on stack is do not ermove it -> PEEK -> peek at the top of a stack
+See what element on stack is do not remove it -> PEEK -> peek at the top of a stack
+
+                  +---+
+ |     |         || X ||           |     |            |     |
+ |     |  PUSH   |+---+|      POP  |     |      PEEK  |     |
+ |+---+|  +---+  |+---+|     +---+ |+---+|      +---+ |+---+|
+ || Y ||  | X |  || Y ||     | X | || Y ||      | Y | || Y ||
+ |+---+|  +---+  |+---+|     +---+ |+---+|      +---+ |+---+|
+ |+---+|         |+---+|           |+---+|            |+---+|
+ || Z ||         || Z ||           || Z ||            || Z ||
+ |+---+|         |+---+|           |+---+|            |+---+|
+ +-----+         +-----+           +-----+            +-----+
+
 
 Peek let's you access the top element in the stack without actually changing the Data Structure
 
@@ -853,17 +883,30 @@ Holding the memory for recursive calls in a programing language
 # Queue Data Structure
 
 Queue is a Data Structure where you add elements to the End of the Queue and remove elements
-from the beggining of the QUEUE.
+from the beginning of the QUEUE.
+
+                +--------------------------------------------------+
+                     +---++---++---++---++---+
+                     | A || B || C || D || E |
+                     +---++---++---++---++---+
+                +--------------------------------------------------+
+
+
+DEQUEUE remove  +--------------------------------------------------+   ENQUEUE add new element
+     +---+           +---++---++---++---++---+                        +---+
+  <- | A |           | B || C || D || E || F |                     <- | F |
+     +---+           +---++---++---++---++---+                        +---+
+                +--------------------------------------------------+
 
 FIFO first in first out
 LILO last in last out
 
-The operations are performed at two ends. Removal its at the beggining and addition is at the end of the queue.
+The operations are performed at two ends. Removal its at the beginning and addition is at the end of the queue.
 
 Adding a new element to the end of the Queue is called
 ENQUEUE -> enqueue an element from the queue
 
-Removing an element from the beggining of a queue is called
+Removing an element from the beginning of a queue is called
 DEQUEUE -> dequeue an element from the queue
 
 Similar to stack you might just want to see what the first element in a queue is without removing it
@@ -880,12 +923,12 @@ ISEMPTY ISFULL OFFER
 
 If you try to dequeue from an empty queue or enqueue into full queue. It's an error throw Exception
 
-The most common operations on queue involve enqueueing and dequeueing elements.
-The operations are on both ends of queue.
-A LinkedList which is a pointer to head and tail works well.
+The most common operations on queue involve enqueueing and dequeueing elements
+The operations are on both ends of queue
+A LinkedList which is a pointer to head and tail works well
 
 Performance
-Enqueueing and dequeueing implemented in this way is O(1).
+Enqueueing and dequeueing implemented in this way is O(1)
 IsEmpty isFull O(1)
 Space complexity O(N)
 
@@ -908,13 +951,13 @@ Order processing system E-Commerance websites or bank transactions.
 Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
 live object = reachable (referenced by someone else)
 dead object = unreachable (unreferenced)
-Objects are alocated in the "heap" of java memory
+Objects are allocated in the "heap" of java memory
 static members, class definition are stored in "method area" Permgen/Metaspace
-Garbage Collection is carried out by a daemon hread called "Garbage Collector"
+Garbage Collection is carried out by a daemon thread called "Garbage Collector"
 Force GC to happened System.gc (no guaranteed)
-When failed to alocated bcause of full heap. Error message java.lang.OutOfMemoryError
+When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
 
-Gargage Collector involves
+Garbage Collector involves
     - Mark : go through all program structure, mark reachable objects as live
     - Delete/Sweep : Delete unreachable objects
     - Compacting : Compact memory by moving around objects
@@ -937,139 +980,143 @@ java -XX:+UseConcMarkSweepGC
 ###############
 # Concurrency #
 ###############
+
 fail-safe do not throw ConcurrentModificationException
 fail-fast throw ConcurrentModificationException
 volatile - value read always from main memory no cache
-synchronized - acquire intrinsic lock on object. Only one object can execute this part of code.
-join() - wait until other thread finish executng
+synchronized - acquire intrinsic lock on object. Only one object can execute this part of code
+join() - wait until other thread finish executing
 
-wait and notify for inter thread communication. Must be called from sychronized context method, block.
+wait and notify for inter thread communication. Must be called from synchronized context method, block
+
 
 # Process and threads
 
-* In concurrent programming two units of execution process and treads.
-* Processing time for a single core is shared among processes and threads, time slicing
+In concurrent programming two units of execution process and treads.
+Processing time for a single core is shared among processes and threads, time slicing
 
-* Process : Has a self contained execution environment. Private set of runtime resources.
-  Each process has its own memory space. Process can communicate with each others IPC.
+Process : Has a self contained execution environment. Private set of runtime resources
+Each process has its own memory space. Process can communicate with each others IPC
 
-* Threads : Lightweight process. Creating a new thread requires fewer resources than creating a new process.
-  Exists within a process. Every process has at least one thread.
+Threads : Lightweight process. Creating a new thread requires fewer resources than creating a new process
+Exists within a process. Every process has at least one thread
 
-* join() : method wait until thread to finish
+join() : method wait until thread to finish
 
-* threads prioritity : importance of a thread to the sheduler. Lower prioritity thread tend to run less often.
-  setPrioritity(), getPrioritity(). MAX_PRIORITITY, NORM_PRIORITITY, MIN_PRIORITITY
+threads priority : importance of a thread to the scheduler. Lower priority thread tend to run less often.
+setPriority(), getPriority(). MAX_PRIORITY, NORM_PRIORITY, MIN_PRIORITY
 
-* yield() : this static method is essentially used to notify the system thet the current thread is willing to
-  give up CPU for a while, but sheduler can immediately pick them back. Is put back into the ready queue of the processor,
-  and waits for it next turn.
+yield() : this static method is essentially used to notify the system that the current thread is willing to
+give up CPU for a while, but scheduler can immediately pick them back. Is put back into the ready queue of the processor,
+and waits for it next turn.
 
 
 # Start Thread
 
-* Extends Thread - override run() method
+Extends Thread - override run() method
 
-* Implements Runnable - override run() method, pas Runnable object to Thread class constructor. Call start method
-  on thread object.
+Implements Runnable - override run() method, pas Runnable object to Thread class constructor. Call start method
+on thread object.
 
-* Executor Service - dynamically reuse thread. Check if threads are already working.
-  - Executors.newCachedThreadPool() return an executor service that can dynamically reuse threas.
-    Before starting a job, it going to check wether there are any threads that finished the job if so reuse them.
+Executor Service - dynamically reuse thread. Check if threads are already working
+  - Executors.newCachedThreadPool() return an executor service that can dynamically reuse threads
+    Before starting a job, it going to check whether there are any threads that finished the job if so reuse them
     If no create new one, good for processor effective solution
-  - Executors.newSingleThreadPool() uses single thread for the job.
+  - Executors.newSingleThreadPool() uses single thread for the job
   - Executors.newFixedThreadPool() maximize the number of threads. If all the thread are busy we have to wait
-    for one to terminate.
+    for one to terminate
 
-  - executorService.execute(Runable)
-  - executorService.execute(Callable or Runnable)
+  - executorService.execute(Runnable)
+  - executorService.submit(Callable or Runnable)
 
 
 # Concurrent Collections
 
     # ConcurrentHashMap
-    * Full concurrency during retreival
-    * Reads can happen fast, while writes require lock
-    * Whole table is not locked only segment is locked
-    * Iterations do not throw concurrent modification exception
-    * Null key not allowed
-    * Operations are atomic
+    Full concurrency during retrieval
+    Reads can happen fast, while writes require lock
+    Whole table is not locked only segment is locked
+    Iterations do not throw concurrent modification exception
+    Null key not allowed
+    Operations are atomic
 
     # BlockingQueue
-    * Interface that represents a queue that is thread safe. put(), take()
+    Interface that represents a queue that is thread safe. put(), take()
 
     # DelayQueue
-    * Like BlockingQueue that implements Delay interface. Cannot put null into it.
+    Like BlockingQueue that implements Delay interface. Cannot put null into it.
 
-    # PrioritityBlockingQueue
-    * Iplements Comparable interface. Determine what will be the order of a Queue.
+    # PriorityBlockingQueue
+    Implements Comparable interface. Determine what will be the order of a Queue.
 
 
 # Threads complications
 
-* Thread interference and memory consistency errors
+Thread interference and memory consistency errors
     - If two thread access the same variable, it is possible for them to get in each others way
-      For example tow threads incremanting the same variable at the same time.
-      To fic this make sure that section of code is only accessed by one thread at a time, by using synchronized keyword for example.
+      For example tow threads incrementing the same variable at the same time
+      To fix this make sure that section of code is only accessed by one thread at a time, by using synchronized keyword for example
       But this slows down performance, and can lead to thread contention issues (starvation, livelock, deadlock)
 
-* Thread Contention
+Thread Contention
     - Deadlock : two thread each is blocked by a lock held by the other
     - Livelock : two thread's don't deadlock, but keep blocking on locks held by each other, neither can progress
-    - Starvation : Same thread keep acquiring locks greadly. And cause other threads to be unable to get anything done.
+    - Starvation : Same thread keep acquiring locks, and cause other threads to be unable to get anything done
 
 
 # Semaphores
 
-* Variables that are used to controlling access to common resources, important in OS.
-  is a record of how many units of particular resource are available.
-  Semaphores track how many resources are free, it does not keep track of which of the resources are free.
-  Metexes are binary semaphores. Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlck it.
-  Methods acquire() if permit is available take it, release() add a permit.
+Variables that are used to controlling access to common resources, important in OS
+is a record of how many units of particular resource are available
+Semaphores track how many resources are free, it does not keep track of which of the resources are free
+Mutexes are binary semaphores. Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlock it
+Methods acquire() if permit is available take it, release() add a permit
 
 
 # Callable and Future
 
-* Returns something from a thread implements Callable instead of Runnable.
+Returns something from a thread implements Callable instead of Runnable
 
 
 # Thread States
 
-* Runnable - create a new thread and call start method
-* Blocked - enter synchronized block, lock
-* Waiting - after wait()
-* Terminated - run method is over
+Runnable - create a new thread and call start method
+Blocked - enter synchronized block, lock
+Waiting - after wait()
+Terminated - run method is over
 
 
 # Concurrent Libraries
 
-    - CountDownLatch : Used to synchronize one ore more tasks by forcing them to wait for completion of a set of operatios
+    - CountDownLatch : Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations
       being performed by other tasks. Give initial count to count down latch object and task that calls await() on that
-      oject will block until count reaches zero. The count cannot be reset. Typically use is to divide a problem into "n"
-      independetly solveable tasks and create a CountDownLatch with value of "n".
+      object will block until count reaches zero. The count cannot be reset. Typically use is to divide a problem into "n"
+      independently solve able tasks and create a CountDownLatch with value of "n"
       When each task is finished it calls countDown on Latch. Task waiting to solve call await() on the Latch to hold
-      themselves back until it is completed.
+      themselves back until it is completed
 
-    - CyclicBarrier : Used in situation where you want to create a group of tasks to perform work in parallerl plus wait
+    - CyclicBarrier : Used in situation where you want to create a group of tasks to perform work in parallel plus wait
       until they are still finished before moving on to the next step, like join or countDownLatch.
       Can be reused.
 
 
-## From Java 8 Book ##
+# From Java 8 Book
+
 
 # Concurrent Programming
-Runnable describes task that might be executed asynchronously.
-Executor plans execute runnable instance.
-Callable tasks that return results or throw exception.
-Results without synchronization are unpredctable.
-Beter use thread safe data structures than use locks.
-ConcurrentHashMap is thread safe array allows to updates elements using atomic operations.
-To interrupt task set interrupt flag or throw InterruptedException.
 
-Thread is mechanism that allow to execute sequence of instruction, these instructions are delivered by OS.
-Couple of threads work in parallel using multiple porcessors of different time slice of the same processor.
+Runnable describes task that might be executed asynchronously
+Executor plans execute runnable instance
+Callable tasks that return results or throw exception
+Results without synchronization are unpredictable
+Better use thread safe data structures than use locks
+ConcurrentHashMap is thread safe array allows to updates elements using atomic operations
+To interrupt task set interrupt flag or throw InterruptedException
 
-Executor executes a task by choosing threads that might be executed with.
+Thread is mechanism that allow to execute sequence of instruction, these instructions are provided by OS
+Couple of threads work in parallel using multiple processors of different time slice of the same processor
+
+Executor executes a task by choosing threads that might be executed with
 Runnable task = () -> {};
 Executor exec = Executors...;
 exec.execute(task);
