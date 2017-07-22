@@ -186,6 +186,209 @@ Contexts and Scopes
 - @ApplicationScoped - state schared with all app users
 - @ConversationScoped - controled by programmer
 
+AOP Aspect oriented programming (interceptors) - conception which determine the order of executing code based on aspects.
+Eah aspect stores executing of program and before continue add own function.
+
+Cross cutting concerns - events, securitt, Spring, AspectJ, Servlet Filters
+AOP is not design pattern but way of programming
+@WebFilter(fileName="TimeOfDayFilter", urlPatterns={"/*"})
+public class SecurityFilter implements FIlter {
+...
+}
+Advice - decoration object
+Pointcut - point of execution of aspect
+
+# Data Access Object
+DAO is to provide convenient interface to data access.
+Is used to standarize code to access to persistent storage. DAO manages connection to source of data
+in order to save and download data.
+Abstraction and encapsulation of data source separates implementation of application from source of data.
+Separates business logic from implementation of data source.
+DAO pattern packs CRUD operation in interface which is implemented by some concrete class.
+DAO implmentation use low level interfaces API like JPA and Hibernate.
+
+Implementation consists of
+- DAO interface
+- Concrete implementation of DAO interface
+- DAO factory
+- DTA object
+
+API JPA and ORM
+- JPA interface is ised to control interaction of program and data source
+- Determines way of access to information and save them and manage them between object and source
+- JPA does not allow on execute CRUD operation or anything data manage related
+- Key in JPA is entity. Entity is longterm object which we can save in data base no as serializable object but as data
+- POJO object with adnotations and mapped on fields in data source
+
+No need to add more adnotations. This way is calling ORM (Object relational mapping)
+
+@Entity
+public class Movie implements Serializable {
+    private static final long serialVersionUID = -8789769878978L;
+    @Id
+    @GeneratedValue
+    private Long id;
+    private Long title;
+    public Movie() {}
+    // getters setters
+}
+
+- Entity class need to have no argument constructor, which can be public private
+- It must be a class. Enumeration, iterface or final class is not allowed
+- final could not be any variable or setter method
+- Class must implements Serializable interface
+
+Primary key could be
+- primitive Java type
+- Java wrapper
+- primaty type array
+- Java type String, BigInteger, Data
+
+// DAO interface which defines primary CRUD methods
+public interface MovieDAO {
+    public void addMovie(Movie movie);
+    public Movie getMove(in id);
+    public void deleteMovie(int id);
+    public void updateMovie(Movie movie);
+    pulic List<Movie> getAllMovies();
+}
+
+EntityaMnager - object defines with context of saving defined in persistence.xml
+Interface API EntityManager provides functions to create, delete, save and delete and make calls
+
+public class MovieDaoImpl implments MovieDAO {
+    private EntityManager em;
+    public MovieDaoImpl(EntityManager em) {
+        this.em = em;
+    }
+    @Override
+    public void addMovie(Movie movie) {
+        em.persist(movie);
+    }
+    ...
+}
+
+// DAO Factory
+@ApplicationScoped
+public class MovieDaoFactory {
+    @PersistenceContext(unitName="moviePU")
+    private EntityManager em;
+
+    @Produces
+    public MovieDAO createMovieDAO() {
+        return new MovieDaoImpl(em);
+    }
+}
+
+Persistence unit - List of entities in application defined in persistence.xml file.
+FTA
+Provider - factory to ENtityMagager copies
+Class - entity class used in application
+properties - data base connection
+
+// persistence.xml
+<persistence-unit name="MoviePU" transaction-type="JTA">
+    <provider>PersistenceProvider</provider>
+    <jta-data-source>jdbc</jta-data-source>
+    <class>Movie</class>
+</persistence-unit>
+
+// DAO type safe
+public interface BaseDAO<E,K> {
+    public void create(E entity);
+    public Movie retreive(K id);
+    public void update(E entity);
+    public void delete(K id);
+}
+
+// implementation of DAO
+public interface MovieDAO extends BaseDAO<Movie, Integer> {
+    public List<Movie> findAllMovies();
+}
+
+########
+# REST #
+########
+- Determines style of representation and send data. Consists of 6 elements about data, their interactions on the internet.
+- Set of conventions, styles and techniques which was determines by tears of practices
+- REST can be treated as formatting style of identifiers URI which represents the resources provided and stored by app.
+- Resources are represented by Nouns and used in combine with HTTP methods to make REST URI identifiers
+- HTTP Get gets the resources
+- HTTP POST creates resources
+- URI represents resources on server, HTTP method determines an execution process of this resource (delete, retreive)
+- JSON data format but can also be other
+
+6 REST conditions
+- Client-Server
+- Common interface
+- Stateless : no data state should be stored
+- Capability of save data in buffer
+- Layering system
+- Code on demand
+
+Richardson maturity level
+- Level 0 : send and get demands on one URI. Model RPC
+- Level 1 : different layer communication is possible. POST resources/123 but only one HTTP method
+- Level 2 : http verbs. Http verbs and nonun resources. Use all HTP protocol (GET, POST, PUT, DELETE)
+- Level 3 : hypermedial control. HATEOAS get client resources, and next step to further retreive them
+
+Name of resources should be nouns
+Activities to execte as HTTP verbs
+
+Indepondent is trait as all client calls to specific URI identifier always shall provide the same result.
+
+- GET : to get data. JSON, XML. 200 OK return code. 404 not found or 400 bad request.
+/users/123456/followers
+
+- POST : create resources in specific context. Http 2001 created plus reference to newely created resources.
+204 no content
+/users/123456/posts
+
+- PUT : modify resources. 200 OK
+/users/123456
+
+- DELETE : deletes resource. 200 OK.
+/users/123456
+
+
+REST in Java EE
+@Path - defines context that identifies URI and class or mehod to retreive process this request
+@GET, @POST, @PUT, @DELETE
+@ApplicationPath
+
+// Implementation of REST API GET /users
+@ApplicationPath("/")
+@Path("users")
+publicclass User extends Application {
+    @GET
+    public String getUser() {
+        return "Users representation";
+    }
+}
+
+// Send to client response with JSON data
+@ApplicationPath("/")
+@Path("users")
+public class Users extends Application {
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsers() {
+        ArrayList<User> allUsers = this.findAllUsers();
+        JsonArrayBuilder json = Json.createArrayBuilder();
+        ...
+    }
+    return Response.OK(json.builder()).build();
+}
+
+@GET
+@Path("/{id}")
+@Produces(MadiaType.APPLICATION_JSON)
+public Response getUser(@PathParam("id") String id) {
+    ..
+    return Response.ok(json.build()).build();
+}
+
+
 ##########
 # Spring #
 ##########

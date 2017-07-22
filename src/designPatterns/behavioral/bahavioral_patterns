@@ -83,6 +83,15 @@ Event - The something that happens.
 Observer pattern and command pattern are related, the publisher maintains a list of command objects and executes their code when an event occurs.
 The command objects are part of the controller, and the observer objects are part of the view.
 
+- If object change state it notifies other object about this
+- subject : object that about to change its state
+- observer : object that receives notification about changes
+Defines relation between object one to many, which tells that when one state of object change, others are automatically
+notify about that and properly actualize.
+Behavioral Pattern
+-Each implementations must share common interface
+-Havily used in UI and frame systems
+-Often calls listener pattern
 
 # Command Pattern
 
