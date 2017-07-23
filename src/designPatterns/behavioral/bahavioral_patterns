@@ -4,7 +4,7 @@
 
 # Strategy Pattern
 
-* String Sorting
+String Sorting
 Java has standard way of handling sorting.
 Create a lot of algorithm each implements the interface Comparator<String>
 Any object that implements this interface has a method that takes in 2 Strings, and specified which comes first.
@@ -13,11 +13,11 @@ Each algorithm can specify its own logic to determine this order.
 Sort using
 Collections.sort(List<String> list, Comparator<String> comparator).
 Strategy Pattern is used to specify a behavior "how to sort".
-Strategy Pattern uses composition Member variable), over Inheritance (Interfaces or abstract classes), in modified class
-Idea of Strategy Pattern is make it easy to vary the behavior ofa class at runtime, and do so using composition rather
+Strategy Pattern uses composition (Member variable), over Inheritance (Interfaces or abstract classes), in modified class
+Idea of Strategy Pattern is make it easy to vary the behavior of a class at runtime, and do so using composition rather
 than inheritance.
 
-* Dependency Injection
+Dependency Injection
 Is widely used and very powerful technique of setting up member variables of complicated classes on fly.
 It is fundamentally similar to the strategy pattern.
 
@@ -36,9 +36,9 @@ Abstract base class is a template for the complicated operations.
 The abstract (unimplemented) methods left for the programmer are called hooks.
 Basic point of template pattern, specify a complex set of steps, and have client code plugin specific
 implementations of individual steps.
-Allow subclass to customize parts of an algorithm, but force them to adher to the overall algorithm.
+Allow subclass to customize parts of an algorithm, but force them to follow the overall algorithm.
 Specific bit that programmers need to do using frameworks is called an Event.
-And the place where you the programmer, stand by waiting fr the envent and decide how to react to the event is called Listener.
+And the place where you the programmer, stand by waiting for the event and decide how to react to the event is called Listener.
 In API JavaFX framework.
 
 
@@ -49,16 +49,16 @@ A List is a collection of values in order,
 A Set is a collection of values in no particular order.
 A Map is a collection of key value pairs.
 Every java collections implements the interface Iterable<T>. This interface has a single method Iterator iterator().
-Every java collections offers a way to get a coresponding iterator object.
+Every java collections offers a way to get a corresponding iterator object.
 An iterator offers a way to get in sequence every element of a collection. This is completely independent of how the collection
-is implementec. hasNext(), next(), remove() methods of Iterator.
-Classes which implements the Iterable<T> interface can be used in for-each statements in code.
+is implemented.
+hasNext(), next(), remove() methods of Iterator.
+Classes which implements the Iterable<T> interface can be used in foreach statements in code.
 An iterator is a simple way of allowing some external code to loop through a collection of data without
 assignment privileges.
 
 External iterators have advantages that because the iterator sits outside a collection. It is easy enough to define different
 iterators for collection.
-
 Internal iterators
 
 
@@ -70,14 +70,14 @@ Variables announce changes to their states. Other object subscribe to listen to 
 Object that publish these updates are called PUBLISHERS (a button).
 Objects that subscribe to listen to these changes are called SUBSCRIBERS (UI app).
 The code that gets executed when an update is published is called CALLBACK (Display popup when button is clicked)
-Publishers announce different types of updates - each of which is reffered to as AN EVENT (button clicked, hover)
-Collback belongs to subscriber object but is called by the publisher object when the event occurs.
-Another example capturig mouse clicks. JComponent alows programers to listen in on mouse event.
-Implement mouseadapter interface. Listen via addmouselistener method, which is present in every UI Element.
+Publishers announce different types of updates - each of which is referred to as AN EVENT (button clicked, hover)
+Callback belongs to subscriber object but is called by the publisher object when the event occurs.
+Another example capturing mouse clicks. JComponent allows programmers to listen in on mouse event.
+Implement mouse adapter interface. Listen via addmouselistener method, which is present in every UI Element.
 Within these methods, it is possible to examine if the mouse event was popup trigger (right click).
 Listener - the command object with the code that gets executed when something happens.
 Subscriber/observer - The object that wait for something to happen. The object that register to be informed of changes.
-    Part of controllers and model in MVC.
+Part of controllers and model in MVC.
 Publisher - The object that announces that somethig has happened. Are part of views.
 Event - The something that happens.
 Observer pattern and command pattern are related, the publisher maintains a list of command objects and executes their code when an event occurs.
@@ -90,13 +90,14 @@ Defines relation between object one to many, which tells that when one state of 
 notify about that and properly actualize.
 Behavioral Pattern
 -Each implementations must share common interface
--Havily used in UI and frame systems
+-Heavily used in UI and frame systems
 -Often calls listener pattern
+
 
 # Command Pattern
 
 Class that has just one method. It encapsulates all the state needed for that one method to do its thing.
-Classes with one methods menus, threading, indomanagers
+Classes with one methods menus, threading
 Command objects lie at heart of the command pattern. A command object has a single method, and whether state is
 needed for that method to do its thing.
 A command object separates an action from the execution of that action.
@@ -108,23 +109,23 @@ The Trigger that causes the action to be executed is called AN EVENT.
 A class with a single method is essentially an action
 
 Example Lambda function: functional constructors in an object oriented language.
-Anonymous classes (listeers, threads) are an excellent way to encapsulate little bits of behavior into objects.
-Very high proportion of anonymous classes siply consisted of - objects that implement an interface with just one function.
-Example anonymuus class Comparator is an interface with a single method, compare.
+Anonymous classes (listeners, threads) are an excellent way to encapsulate little bits of behavior into objects.
+Very high proportion of anonymous classes simply consisted of - objects that implement an interface with just one function.
+Example anonymous class Comparator is an interface with a single method, compare.
 Such interfaces are called "Functional Interfaces" or "Single Abstract Method Interfaces".
 Interfaces with just one method can actually be encapsulated using single functions - no real need for them to be encapsulated using classes.
 
 LAMBDA FUNCTIONS ARE SIMPLY ANONYMOUS FUNCTIONS.
 These anonymous function objects are often called "closures".
-In a for loop it is impossible or at least very complicated to parallelize the loop acress multiple different CPUs.
+In a for loop it is impossible or at least very complicated to parallelize the loop across multiple different CPUs.
 Lambda functions are functional programming area a natural way to parallelize computing across CPUs.
 Divide up the list you are iterating over, and send parts of the list, along with the lambda function,
-to different cloud nodes, then aggregate the results. This is exectly what cloud computing is all about.
+to different cloud nodes, then aggregate the results. This is exactly what cloud computing is all about.
 
 Lambda functions are powerful when output of one is fed as the input of the next.
 Lambda functions represent the action.
 Java has added exactly this functionality, using "AGGREGATE OPERATIONS".
-Filter, Map and Foreach are standard aggregate operations in functional porgramming.
+Filter, Map and Foreach are standard aggregate operations in functional programming.
 Call ".stream()" method on any collection to get an object of type stream on which aggregate functions can be applied in sequence.
 Stream can be imagined as stream of values, where each value is being subjected to an operation like MAP, FOREACH, FILTER.
 

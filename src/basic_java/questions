@@ -408,11 +408,14 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 |      | LinkedList   | Vector                |
 +------+--------------+-----------------------+
 | Set  | HashSet      | CopyOnWriteArraySet   |
-|      | TreeSet      |                       |
+|      | TreeSet      | ConcurrentSkipListSet |
 +------+--------------+-----------------------+
 | Map  | HashMap      | ConcurrentHashMap     |
 |      | TreeMap      | HashTable             |
-|      | LinkedHashMap|                       |
+|      | LinkedHashMap| ConcurrentSkipListMap |
++------+--------------+-----------------------+
+| Queue|              | LinkedBlockingQueue   |
+|      |              | ArrayBlockingQueue    |
 +------+--------------+-----------------------+
 
 # LIST
@@ -583,6 +586,11 @@ Useful
 Pass comparison method Arrays.sort
 Run task in different thread
 Action event example after button clicked
+Lambda Functions are simply anonymous functions
+
+Output of one operation is fed into another
+This functionality using something called AGGREGATE OPERATIONS
+FILTER, MAP and FOREACH are standard aggregate operations in functional programming
 
 
 # Functional Interfaces
@@ -1124,67 +1132,70 @@ exec.execute(task);
 Factory method Executor class
 Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks
 Executors.newFixedThreadPool(thread_num); - good for grater amount of tasks
-To acquire number of thread based on number of processors.
+To acquire number of thread based on number of processors
 int processors = Runtime.getRuntime().availableProcessors();
 
 Objects Future and Executor
-Callable - Method call() oposite to method run() Runnable interface returns value or throw an Exceptions.
-To execute callable there is a need for ExecutorService instance.
+Callable - Method call() opposite to method run() from Runnable interface returns value or throw an Exceptions
+To execute callable there is a need for ExecutorService instance
 ExecutorService exec = ExecutorService.newFixedThreadPool(2);
 Callable<V> call = ...;
 Future<V> result = exec.submit(call);
-Future is an object that represents a calculations, which results will be accessible in a future.
+Future is an object that represents a calculations, which results will be accessible in a future
 
 Thread safety
 RAM memory are slow, couple of time slower then modern processors. Processor try to collect needed data
-in registers or cache memory on main board, and lastly make changes in main memory.
-This cache memory is key factor for performance optimization.
+in registers or cache memory on main board, and at the end make changes in main memory
+This cache memory is key factor for performance optimization
+
 Thread Visibility
 - final value is visible after initialization
 - initial value of static variable is visible after static initialization
-- changes variale with volatile keyword are visible
-- changes after release a lock are visible for all that acquire this lock.
-Volatile keyword - compilator generates needed instructions to make sure that all changes that being applien in one task are
-reachable in another.
+- changes variable with volatile keyword are visible
+- changes after release a lock are visible for all that acquire this lock
+Volatile keyword - compiler generates needed instructions to make sure that all changes that being applied in
+one task are visible in another
 
 Chasing
-Are problems always when shared variables are modified. Locks to critical section make atomic.
+Are problems always when shared variables are modified. Locks to critical section make atomic
 
 Strategy of safety concurrency
-- Avoid schare data between tasks. One task z1, second task z2, z3 = z1 + z2
+- Avoid shared data between tasks. One task z1, second task z2, third z3 = z1 + z2
 - Use immutable objects
-- Locks allows only one task access to data at a time. Use data ctructures and algorithms from java libraries.
+- Locks allows only one task access to data at a time. Use data structures and algorithms from java libraries
 
-Un modifiable classes
-Class in immutable if instance after creation cannot change.
+Immutable classes
+Class is immutable if instance after creation cannot change
 Implement immutable class
-- variable with final modificator
-- non method can modufy data
+- variable with final keyword
+- non method can modify data
 - do not allow to leack modification
-- Do not allow to this refernece pass outside constructor
+- do not allow to this reference pass outside constructor
 
 Concurrent Algorithms
-* Parallel Strams
+Parallel Streams
 Long results = coll.parallelStream().filter(s->s.startsWith('a')).count();
-ParallelStream method returns parallel stream. Stream is parted on segments.
-Filtering and counting is executed for each segments and results are joined together without your further interactions.
-* Parralel operations on arrays
-Arrays operations part array on segments, parallelly process them and join results.
+ParallelStream method returns parallel stream. Stream is parted on segments
+Filtering and counting is executed for each segments and results are joined together without your further interactions
+Parallel operations on arrays
+Arrays operations part array on segments, parallelly process them and join results
 Arrays.parrarelSetAll(), parallelSort()
 Process array into a stream, long sum = IntStream.of(value).parallel().sum();
 
 Thread safe data structures
 ConcurrentHashMap
-Map on which operations are thread safe. Can support large number of parallel read and some number of parallel reads.
-To actualiza data compute method. This method is Atomic, no other thread can modify map content while executing operation.
+Map on which operations are thread safe. Can support large number of parallel read and some number of parallel reads
+To actualize data compute() method. This method is Atomic, no other thread can modify map content while executing operation
+
 BlockingQueues
 Is one of the most commonly used tool for synchronized work. One task put element into the queue, while take task
-take element fro a queue. Allows to safety pass tasks from one task to another.
-LinkedBlockingQueue, ArrayBlockingQueue.
-ConcurrentSkipListMap - compare keys.
+take element fro a queue. Allows to safety pass tasks from one task to another
+
+LinkedBlockingQueue, ArrayBlockingQueue
+ConcurrentSkipListMap - compare keys
 ConcurrentSkipListSet
 CopyOnWriteArrayList, CopyOnWriteArraySet - are thread safe thanks the fact that all methods that modify collection
-make copy used array. Good in situation when number of threads go through queue is larger than number of thread that modify queue.
+make copy used array. Good in situation when number of threads go through queue is larger than number of thread that modify queue
 
 Atomic Values
 AtomicLong nextNumber = new AtomicLong();
@@ -1195,90 +1206,91 @@ Atomic operation, load data, modify data and save data cannot be interrupted in 
 # Design Patterns #
 ###################
 
-* Design Patterns are canonical solutions to recuring problems
-* Creational Patterns "How should object be created"
+Design Patterns are canonical solutions to recurring problems
+Creational Patterns "How should object be created"
     - Factory, AbstractFactory, Singleton, Builder, Prototype, Dependency Injection
-* Behavioral Patterns "How should object behave and interact with each other"
+Behavioral Patterns "How should object behave and interact with each other"
     - Strategy, Template, Iterator, Command, Chain of Responsibility, Memento, Visitor, State, Mediator, Observer
-* Structural Patterns "How should classes behave and interact with each other"
+Structural Patterns "How should classes behave and interact with each other"
     - Decorator, Adapter, Facade, Composite, Flyweight, Bridge, Proxy
-* Concurrency Pattern "How should specific situation be handled in multithreading"
+Concurrency Pattern "How should specific situation be handled in multithreading"
     - Double checked locking
-* Model View Controller "Architectural pattern"
+Model View Controller "Architectural pattern"
 
-* Libraries and Frameworks are both code written by others that we can use.
-* Design Patterns are proven ideas for solving common problems.
-* Code usually calls libraries and is often called by frameworks, but is stractured using Design Patterns
+Libraries and Frameworks are both code written by others that we can use
+Design Patterns are proven ideas for solving common problems
+Code usually calls libraries and is often called by frameworks, but is structured using Design Patterns
 
 
 # Creational
 
-* How objects are constructed
-* Decouple the construction of an action from its use
-* Hide implementation of an object only reveal its interface
-* Defer instantiation until run time
-* Families of related objects that must be used together
-* Allow creation of finite number of instances
+How objects are constructed
+Decouple the construction of an action from its use
+Hide implementation of an object only reveal its interface
+Defer instantiation until run time
+Families of related objects that must be used together
+Allow creation of finite number of instances
 
 
 # Behavioral
 
-* How do objects behave and interact with each other
-* How logical unit (classes) as whole interacts with the outside world
-* Iterator pattern - here logical unit includes 1 class Iterator class. This pattern governs how the
-    is used by the client (the outside world)
+How do objects behave and interact with each other
+How logical unit (classes) as whole interacts with the outside world
+Iterator pattern - here logical unit includes one class Iterator class. This pattern governs how the
+is used by the client (the outside world)
 
 
 # Structural
 
-* How classes within the logical unit interacts with each other
-* MVC pattern - logical unit includes 3 classes model, view, controller
-    The pattern governs how the Model, View, Controller interact with each other
-    If the interaction etween the M, V, C were change, the UI would not look or behave any different !
+How classes within the logical unit interacts with each other
+MVC pattern - logical unit includes 3 classes model, view, controller
+The pattern governs how the Model, View, Controller interact with each other
+If the interaction between the M, V, C were change, the UI would not look or behave any different !
 
 
 # Design Principle #1 : Relay on Interfaces, not implementation
 
 "Program to an interface not implementation" decorator, iterator, adapter
 
-Interface is a surface that a unit offers to outside world.
-That unit could be a single class, or even be a collection of classes.
-The implementation is a guts of that unit.
-Never get assumption about content of any unit.
+Interface is a surface that a unit offers to outside world
+That unit could be a single class, or even be a collection of classes
+The implementation is a guts of that unit
+Never get assumption about content of any unit
+
 ArrayList<String> list = new ArrayList<>(), wrong
 List<String> list = new ArrayList<>(), correct
 
 
 # Design Principle #2 : The Open / Close Principle
 
-"Classes should be open for extension but closed for modfication"
+"Classes should be open for extension but closed for modification"
 
-Once you have written a class, it's done. Never add enything to it after that.
-No new member variables, no new methods, no new interfaces implemented, No modification.
-But other code should be able to use your class in new ways, New applications via extension.
+Once you have written a class, it's done. Never add anything to it after that
+No new member variables, no new methods, no new interfaces implemented, No modification
+But other code should be able to use your class in new ways, New applications via extension
 
-* Inheritance, template pattern
+Inheritance, template pattern
     - If you structure your code into abstract base class, other classes can find
       new way to use it via Inheritance
 
-* Delegation, observer, MVC, Chain of Responsibility
+Delegation, observer, MVC, Chain of Responsibility
     - If you fire events and expose properties, other code can listen in, and use your code via Delegation
 
-* Composition, strategy pattern
-    - If you take in member variale to determine behavior, you allow extension via Composition
+Composition, strategy pattern
+    - If you take in member variable to determine behavior, you allow extension via Composition
 
 
 # Design Principle #3 : Principle of Least Knowledge
 
 "Only talk to friends, don't talk to strangers"
 
-Only make method calls to friends.
-friends - object passed in as parameter to methods of your classes. Object created insde your class.
-Code should never include multiple '.' operators in the same function call.
+Only make method calls to friends
+friends - object passed in as parameter to methods of your classes. Object created inside your class
+Code should never include multiple '.' operators in the same function call
 int friendNumber = media.getRelatives().getFriend(), not OK
-int firndNumber = media.getFriend(), OK
-But this rule is not always a case.
-Summarized, each unit should have only limited knowledge about other units. Each unit should only tolk to its friend.
+int friendNumber = media.getFriend(), OK
+But this rule is not always a case
+Summarized, each unit should have only limited knowledge about other units. Each unit should only talk to its friend
 
 
 # Design Principle #4 : Dependency Injection
@@ -1296,25 +1308,25 @@ Idea high-level component calling low-level is used components in frameworks.
 
 # MVC Paradigm
 
-Model View Controller is an architectural pattern. In Java API Swing.
+Model View Controller is an architectural pattern. In Java API Swing
 Basic idea of MVC is to separate data from its representation, separating data from its manipulation,
-allowing different simultaneous representations of the same data.
+allowing different simultaneous representations of the same data
 MediaPlayer Example. Controller a slider to adjust volume in a media player app. Model the mp4 file of a movie
-to be played in a media player app. View the area of the media-player app that actually displays video.
-User sees the model through a view, and manipulates it via the controller.
+to be played in a media player app. View the area of the media-player app that actually displays video
+User sees the model through a view, and manipulates it via the controller
 
 
 # What is a basic point of observer pattern
 
-An object announces updates to its value, and other objects can read to these updates.
+An object announces updates to its value, and other objects can read to these updates
 
 
-# When a publisher fires an update, how do subscriber bacome aware of it.
+# When a publisher fires an update, how do subscriber bacome aware of it
 
-The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified.
+The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified
 
 
-# How are properties and bindings different from eah other.
+# How are properties and bindings different from eah other
 
 Properties are ONE:ONE, bindings are ONE:MANY
 

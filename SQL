@@ -1,0 +1,182 @@
+Subsets of SQL
+- Data definition language DDL
+- Data manipulation language DML
+- Data control language DCL
+
+DDL
+Allows you to CREATE, ALTER, DELETE databases objects such as schema, tables, view, sequence
+
+DML
+Makes user access and manipulates data.
+Insert, Retreive, Update, Delete data from DB.
+
+DCL
+Allows you to control access to the databases.
+GRANT : to grant specific user to perform specific task
+REVOKE : to cancel previously denied or granted permissions
+
+A TABLE is a set of organized data. It has COLUMNS and ROWS.
+A table contains specified number of column called fields but can have any number of rows which is known as record
+
+PRIMARY KEY is a combination of fields which uniquely specify a row. Cannot be NULL.
+
+FOREIGN KEY is specified as a key which is related to the primary key of another table.
+Relationship needs to be created between two tables by referencing foreign key with the primary key of another table.
+
+UNIQUE KEY constraint uniquely identifies each record in the database. This provides uniqueness for the column or set
+of columns
+
+OPERATORS is SQL
+- Arithmetic
+- Logical
+- Comparision
+
+INDEX in SQL
+Index is used to increase performance and allow faster retreival of records from the table. An index creates
+an entry for each value and it will be faster to retreive data.
+
+Types of INDEXES in SQL
+- Unique Index
+- Clustered Index
+- NonClustered Index
+
+UNIQUE INDEX
+Does not allow the field to have duplicate values. Unique index can be applied automatically when primary key is defined.
+
+CLUSTERED INDEX
+Reorder the physical order of the table and search based on the key values. Each table can only have one clustered index.
+Can have only one clustered index. Reading is faster than non-clustered index.
+
+NONCLUSTERED INDEX
+Does not alter the physical order of the table and maintains logical order of data. Each table can have 999 non-clustered index.
+
+ORDER BY clause for sorting column
+
+
+# JOINS
+Joins are used to merge two tables or retreive data from tables. It depends on relationship between tables.
+- Inner join
+- Right join
+- Left join
+- Full join
+
++------------+                             +----------+
+| tblCountry |                             | tblState |
++------------+--------------+              +----------+------------+------------+
+| Country Id | Country Name |              | State Id | Country Id | State Name |
++------------+--------------+              +----------+------------+------------+
+|      1     |    India     |              |     1    |     1      | Maharastra |
++------------+--------------+              +----------+------------+------------+
+|      2     |    Nepal     |              |     2    |     1      | Punjab     |
++------------+--------------+              +----------+------------+------------+
+|      4     |    Srilanka  |              |     3    |     2      | Kathmandu  |
++------------+--------------+              +----------+------------+------------+
+|    NULL    |    NULL      |              |     4    |    NULL    | California |
++------------+--------------+              +----------+------------+------------+
+
+
+# INNER JOIN
+Returns rows when there is at least one match of rows between the tables.
+
+SELECT * FROM tblCountry INNER JOIN tblState ON tblCountry.CountryId = tblState.CountryId
+
++------------+--------------+----------+------------+------------+
+| Country Id | Country Name | State Id | Country Id | State Name |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    1     |     1      | Maharastra |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    2     |     1      |   Punjab   |
++------------+--------------+----------+------------+------------+
+|      2     |    Nepal     |    3     |     2      |  Kathmandu |
++------------+--------------+----------+------------+------------+
+
+
+# RIGHT JOIN
+Retrieve rows which are common between the tables and all rows of Right hand side.
+
+SELECT * FROM tblCountry RIGHT JOIN tblState ON tblCountry.CountryId = tblState.CountryId
+
++------------+--------------+----------+------------+------------+
+| Country Id | Country Name | State Id | Country Id | State Name |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    1     |     1      | Maharastra |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    2     |     1      |   Punjab   |
++------------+--------------+----------+------------+------------+
+|      2     |    Nepal     |    3     |     2      |  Kathmandu |
++------------+--------------+----------+------------+------------+
+|    NULL    |    NULL      |    4     |   NULL     | California |
++------------+--------------+----------+------------+------------+
+
+
+# LEFT JOIN
+Retrieve rows which are common between the tables and all rows of Left hand side.
+
+SELECT * FROM tblCountry LEFT JOIN tblState ON tblConutry.CountryId = tblState.CountryId
+
++------------+--------------+----------+------------+------------+
+| Country Id | Country Name | State Id | Country Id | State Name |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    1     |     1      | Maharastra |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    2     |     1      |   Punjab   |
++------------+--------------+----------+------------+------------+
+|      2     |    Nepal     |    3     |     2      |  Kathmandu |
++------------+--------------+----------+------------+------------+
+|      4     |   Srilanka   |   NULL   |   NULL     |  NULL      |
++------------+--------------+----------+------------+------------+
+
+
+# FULL JOIN
+Return rows when there are mathcing rows in any one of the tables.
+All from left and right hand side of table.
+
+SELECT * FROM tblCountry FULL JOIN tblState ON tblCountry.CountryId = tblState.CountryId
+
++------------+--------------+----------+------------+------------+
+| Country Id | Country Name | State Id | Country Id | State Name |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    1     |     1      | Maharastra |
++------------+--------------+----------+------------+------------+
+|      1     |    India     |    2     |     1      |   Punjab   |
++------------+--------------+----------+------------+------------+
+|      2     |    Nepal     |    3     |     2      |  Kathmandu |
++------------+--------------+----------+------------+------------+
+|      4     |   Srilanka   |   NULL   |   NULL     |    NULL    |
++------------+--------------+----------+------------+------------+
+|    NULL    |     NULL     |     4    |   NULL     | California |
++------------+--------------+----------+------------+------------+
+
+
+TRIGGERS
+Allows execute a batch of SQL code,
+
+
+SET OPERATORS
+Union, Intersect or Minus operators are called set operators
+
+
+Difference between BETWEEN and IN
+BETWEEN is used to display rows based on a range of values.
+IN is used to check for values contained in a specific set of values.
+
+
+Find by letters
+SELECT * FROM Employees WHERE EmpName LIKE 'A%'
+
+
+ACID
+To ensure that data transactions are processed reliably in a database system.
+A single logical operation of a data is called transaction.
+- Atomicity
+- Consistency : data must meet all validation rules
+- Isolation : concurrent property of execution should not be met. Concurrency control.
+- Durability : if transaction has been commited it will remain (even when power loss)
+
+
+DISTINCT
+The DISTINCT keyword is used to ensure that the featched value is only a non-duplicate value
+
+
+
+
