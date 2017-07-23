@@ -63,6 +63,9 @@ uptime                          // check how many days server is up
 nslookup                        // check DNS and ip address
 
 curl
+curl -v http://localhost:8080/posts
+curl -v -H "Accept: application/xml" http://localhost:8080/posts
+curl -help
 
 ephemeral port - in unix port used by OS for client sockets
 Soft Links - unix softlinks are pointers to programs, files or directories located elsewhere

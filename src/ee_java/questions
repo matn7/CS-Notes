@@ -309,6 +309,10 @@ public interface MovieDAO extends BaseDAO<Movie, Integer> {
 ########
 # REST #
 ########
+
+Content Negotiation
+Specification defined in HTTP that allows different version of document at the same URI.
+
 - Determines style of representation and send data. Consists of 6 elements about data, their interactions on the internet.
 - Set of conventions, styles and techniques which was determines by tears of practices
 - REST can be treated as formatting style of identifiers URI which represents the resources provided and stored by app.
@@ -431,3 +435,5 @@ Resturn Response  +--+------------+--+    +-------+      +------------+
                   +--+------------+--+
                   |   View Template  |          Servlet engine (JBoss, Tomcat)
                   +------------------+
+
+

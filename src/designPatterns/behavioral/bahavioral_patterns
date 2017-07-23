@@ -163,10 +163,10 @@ what's needed.
 # Memento Pattern
 
 Object sometimes need to know how to save their state and go back to that saved state.
-Example Serialization. Ability of an obect to save it's state. If an object can save its state, a relatively
+Example Serialization. Ability of an object to save it's state. If an object can save its state, a relatively
 easy way to implement undo is to have the object "RESET" to previously saved state.
 Java has build in memento pattern via the Serializable interface.
-Any class that implements Serilizale and in which all member variales are serializable can be written to file or
+Any class that implements Serializable and in which all member variables are serializable can be written to file or
 read from file with minimal effort.
 The Serializable interface has 2 methods - read object and write object.
 If member variable belongs to a class that does not implement serializable, you can just mark the member as
@@ -202,14 +202,14 @@ Visitor + Composite = Decorator.
 
 This pattern is used to encapsulate varying behavior for the same object based on its initial state.
 This can be cleaner way for an object to change its behavior at runtime without restoring to large
-monolithic condition statements and thus imporve maintainability.
+monolithic condition statements and thus improve maintainability.
 
 Example Java Media Classes
 Media encapsulates an audio or video file. Has duration, tracks, metadata.
 MediaPlayer allows the user to do all of things user do with the media. Play, Pause, Change Volume.
 MediaView the view actually appears on screen. State pattern is life saver where classes have discret states and
 transitions between them.
- Basic of State Pattern. State Machines have discret states, each state can be represented by a member variable.
+Basic of State Pattern. State Machines have discret states, each state can be represented by a member variable.
 All these member variables implement a common interface.
 
 
