@@ -34,6 +34,7 @@ Compile time polymorphism
 Use the same method name but with different arguments
 static binding binds private, final, static method, fields, class, variables
 
+
 # Overriding
 
 Runtime polymorphism
@@ -96,6 +97,150 @@ as map.entry, if two keys object have some hash code then only one value object 
 as a linked list value is stored and if hash code is different then another bucket location is created.
 While retrieving get(key) method is used at this time hash code of key object is calculated and then equals() method
 is called to compare value object.
+
+
+######################
+# How HashMap works? #
+######################
+
+It's a map implementation
+A map is an associative array data structure "key1"->value, "hey2"->value
+
+Hashing: transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
+A shorter value helps in indexing and faster searches.
+
+In Java every object has a method public int hashcode() that will return a hash value for given object.
+
+If two object are equal they should have the same hascode as well.
+Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
+
+Index of null key is always 0, as hash of null is always 0
+
+HASHMAP
++-------------+
+|<<interface>>|  +-------------+ +-----------+ +--------------+
+|     Map     |  | AbstractMap | | Cloneable | | Serializable |
++-------------+  +-------------+ +-----------+ +--------------+
+        |      /
+        |     /
+        |    /
+    +-------+
+    |HashMap|
+    +-------+
+
+Detailed
++------------------+
+|Node<K,V>[] table;|
++------------------+
+ ||
+ \/
++--+                        +-----------------+
+|  |                        |    Node<K,V>    |
++--+                        +-----------------+
++--+                        | int hash;       |
+|  |                        | K key;          |
++--+                        | V value;        |
++--+                        | Node<K,V> next; | <- It is a LinkedList
+|  |                        +-----------------+
++--+
+
+# PUT
+Each index in this table is known as bucket. Each bucket is a node that can be linked list of nodes
+                                                +---+
+scores.put("QUEEN",120);                        | 0 |--> WALL | 70772256 | 70 | null
+scores.put("KNIGHT",100);                       +---+
+scores.put("CASTLE",10);                        | 1 |
+scores.put("RAM",110);                          +---+
+scores.put("SWORD",99);                         | 2 |--> KNIGHT | 64205538 | 100 | null
+scores.put("GALLEON",80);                       +---+
+scores.put("WALL",70);                          | 3 |
+                                                +---+
++------------------------+                      | 4 |--> QUEEN | 2306996 | 120 | ---> CASTLE | 63281940 | 10 | ---> GALLEON | 2656852 | 80 | null
+| put(K k, V v)          |                      +---+
+|   hash(k)              |                      | 5 |
+|                        |                      +---+
+|   index = hash & (n-1) |                      | 6 |--> SWORD | 79019862 | 99 | null
+| n = 16                 |                      +---+
++------------------------+                      | 7 |
+scores.put("QUEEN",120);                        +---+
+hash("QUEEN") = 2306996                         | 8 |
+index = 2306996 & 15 = 4                        +---+
+                                                | 9 |
+scores.put("KNIGHT",100);                       +---+
+hash("KNIGHT") = 64205538                       | 10|--> RAM | 2163866 | 110 | null
+index = 64205538 & 15 = 2                       +---+
+                                                | 11|
+scores.put("CASTLE",10);                        +---+
+hash("CASTLE") = 63281940                       | 12|
+index = 63281940 & 15 = 4 (COLLISION)           +---+
+                                                | 13|
+scores.put("RAM",110);                          +---+
+hash("RAM") = 2163866                           | 14|
+index = 2163866 & 15 = 10                       +---+
+                                                | 15|
+scores.put("SWORD",99);                         +---+
+hash("SWORD") = 79019862
+index = 79019862 & 15 = 6
+
+scores.put("GALLEON",80);
+hash("GALLEON") = 2656852
+index = 2656852 & 15 = 4 (COLLISION)
+
+scores.put("WALL",70);
+hash("WALL") = 70772256
+index = 70772256 & 15 = 0
+
+# GET
+
+scores.get("KNIGHT");
+scores.get("QUEEN");
+scores.get("GALLEON");
+
++------------------------+
+| V get(Object key)      |
+|   hash(key)            |
+|                        |
+|   index = hash & (n-1) |
++------------------------+
+scores.get("KNIGHT");
+hash = 64205538
+index = 64205538 & 15 = 2
+
+    Compare hash with hash that is stored under index = 2, 64205538 == 64205538 = true
+    Compare key using equals method "KNIGHT".equals("KNIGHT") = true
+
+scores.get("KNIGHT") = 100; // FOUND VALUE MATH
+
+
+scores.get("QUEEN");
+hash = 2306996
+index = 2306996 & 15 = 4
+
+    Compare hash with hash that is stored undex index = 4, 2306996 == 2306996 = true
+    Compare key using equals method "QUEEN".equals("QUEEN") = true
+
+scores.get("QUEEN") = 120; // FOUND VALUE
+
+
+scores.get("GALLEON");
+hash = 2656852
+index = 2656852 & 15 = 4
+
+    Compare hash with that is stored under index = 4, 2656852 == 2306996 = false
+        Compare hash with that is stored under index = 4, next node, 2656852 == 63281940 = false
+            Compare hash with that is stored under index = 4, next node, 2656852 == 2656852 = true
+    Compare key using equals method "GALLEON".equals("QUEEN") = false
+        Compare key using equals method, next node, "GALLEON".equals("CASTLE") = false
+            Compare key using equals method, next node, "GALLEON".equals("GALLEON") = true
+
+scores.get("GALLEON") = 80; // FOUND VALUE
+
+
+In Java 8, when we have too many unequal keys which gives some hashcode(index) - when the number of items n a hash bucket
+- when the number of items in a hash bucket grows beyound threshold(TREEIFY_TRESHOLD = 8), content of that bucket
+switches from using linked list of Entry objects to a balanced tree. This theoretically improves the worst-case
+performance from O(n) to O(log n).
+Balanced search tree, where leaf nodes have lesser weight(HashCode or Comparable result) for the Keys involved.
 
 
 # equals
