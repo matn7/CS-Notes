@@ -100,150 +100,6 @@ While retrieving get(key) method is used at this time hash code of key object is
 is called to compare value object.
 
 
-######################
-# How HashMap works? #
-######################
-
-It's a map implementation
-A map is an associative array data structure "key1"->value, "hey2"->value
-
-Hashing: transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
-A shorter value helps in indexing and faster searches.
-
-In Java every object has a method public int hashcode() that will return a hash value for given object.
-
-If two object are equal they should have the same hascode as well.
-Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
-
-Index of null key is always 0, as hash of null is always 0
-
-HASHMAP
-+-------------+
-|<<interface>>|  +-------------+ +-----------+ +--------------+
-|     Map     |  | AbstractMap | | Cloneable | | Serializable |
-+-------------+  +-------------+ +-----------+ +--------------+
-        |      /
-        |     /
-        |    /
-    +-------+
-    |HashMap|
-    +-------+
-
-Detailed
-+------------------+
-|Node<K,V>[] table;|
-+------------------+
- ||
- \/
-+--+                        +-----------------+
-|  |                        |    Node<K,V>    |
-+--+                        +-----------------+
-+--+                        | int hash;       |
-|  |                        | K key;          |
-+--+                        | V value;        |
-+--+                        | Node<K,V> next; | <- It is a LinkedList
-|  |                        +-----------------+
-+--+
-
-# PUT
-Each index in this table is known as bucket. Each bucket is a node that can be linked list of nodes
-                                                +---+
-scores.put("QUEEN",120);                        | 0 |--> WALL | 70772256 | 70 | null
-scores.put("KNIGHT",100);                       +---+
-scores.put("CASTLE",10);                        | 1 |
-scores.put("RAM",110);                          +---+
-scores.put("SWORD",99);                         | 2 |--> KNIGHT | 64205538 | 100 | null
-scores.put("GALLEON",80);                       +---+
-scores.put("WALL",70);                          | 3 |
-                                                +---+
-+------------------------+                      | 4 |--> QUEEN | 2306996 | 120 | - |--> CASTLE | 63281940 | 10 | - |--> GALLEON | 2656852 | 80 | null
-| put(K k, V v)          |                      +---+
-|   hash(k)              |                      | 5 |
-|                        |                      +---+
-|   index = hash & (n-1) |                      | 6 |--> SWORD | 79019862 | 99 | null
-| n = 16                 |                      +---+
-+------------------------+                      | 7 |
-scores.put("QUEEN",120);                        +---+
-hash("QUEEN") = 2306996                         | 8 |
-index = 2306996 & 15 = 4                        +---+
-                                                | 9 |
-scores.put("KNIGHT",100);                       +---+
-hash("KNIGHT") = 64205538                       | 10|--> RAM | 2163866 | 110 | null
-index = 64205538 & 15 = 2                       +---+
-                                                | 11|
-scores.put("CASTLE",10);                        +---+
-hash("CASTLE") = 63281940                       | 12|
-index = 63281940 & 15 = 4 (COLLISION)           +---+
-                                                | 13|
-scores.put("RAM",110);                          +---+
-hash("RAM") = 2163866                           | 14|
-index = 2163866 & 15 = 10                       +---+
-                                                | 15|
-scores.put("SWORD",99);                         +---+
-hash("SWORD") = 79019862
-index = 79019862 & 15 = 6
-
-scores.put("GALLEON",80);
-hash("GALLEON") = 2656852
-index = 2656852 & 15 = 4 (COLLISION)
-
-scores.put("WALL",70);
-hash("WALL") = 70772256
-index = 70772256 & 15 = 0
-
-# GET
-
-scores.get("KNIGHT");
-scores.get("QUEEN");
-scores.get("GALLEON");
-
-+------------------------+
-| V get(Object key)      |
-|   hash(key)            |
-|                        |
-|   index = hash & (n-1) |
-+------------------------+
-scores.get("KNIGHT");
-hash = 64205538
-index = 64205538 & 15 = 2
-
-    Compare hash with hash that is stored under index = 2, 64205538 == 64205538 = true
-    Compare key using equals method "KNIGHT".equals("KNIGHT") = true
-
-scores.get("KNIGHT") = 100; // FOUND VALUE MATH
-
-
-scores.get("QUEEN");
-hash = 2306996
-index = 2306996 & 15 = 4
-
-    Compare hash with hash that is stored undex index = 4, 2306996 == 2306996 = true
-    Compare key using equals method "QUEEN".equals("QUEEN") = true
-
-scores.get("QUEEN") = 120; // FOUND VALUE
-
-
-scores.get("GALLEON");
-hash = 2656852
-index = 2656852 & 15 = 4
-
-    Compare hash with that is stored under index = 4, 2656852 == 2306996 = false
-        Compare hash with that is stored under index = 4, next node, 2656852 == 63281940 = false
-            Compare hash with that is stored under index = 4, next node, 2656852 == 2656852 = true
-    Compare key using equals method "GALLEON".equals("QUEEN") = false
-        Compare key using equals method, next node, "GALLEON".equals("CASTLE") = false
-            Compare key using equals method, next node, "GALLEON".equals("GALLEON") = true
-
-scores.get("GALLEON") = 80; // FOUND VALUE
-
-
-In Java 8, when we have too many unequal keys which gives some hashcode(index)
-- when the number of items in a hash bucket grows bayound threshold(TREEIFY_TRESHOLD = 8), content of that bucket
-switches from using linked list of Entry objects to a balanced tree. This theoretically improves the worst-case
-performance from O(n) to O(log n).
-Balanced search tree, where leaf nodes have lesser weight(HashCode or Comparable result) for the Keys involved.
-
-
 # equals
 
 Check whether one object can be equal to another.
@@ -498,36 +354,6 @@ ConcurrentModificationException
 Enumerator hasMoreElements(). For Collections read only
 
 
-######################
-# Exception Handling #
-######################
-
-Exception handling helps us to recover from an unexpected situations like file not found.
-Important part is try-catch block.
-If exception is handled it does not propagate further
-In a try block, the lines after the line throwing exception are not executed
-
-# finally block
-When an exception happens the code after the line throwing exception is not executed.
-If code like closing connection is present in these lines of code, it is not executed.
-This leads to connction and other resource leaks.
-Code writtern in finnaly block is executed even when there is an exception.
-dangling unclosed connection. Finnaly block is used when code needs to be executed irrespective
-of whether an exception is thrown.
-
-+--------------------------+
-| } finally {              |
-|       connection.close();|
-| }                        |
-+--------------------------+
-
-
-# Checked and Unchecked Exceptions
-
-Checked Exceptions ensures that handling of exception is provided and its verified by compiler also
-For throwing unchecked exception no special provision is needed.
-
-
 # What is load factor of HashMap
 
 HashMap performance depends on two things initial capacity and load factor.
@@ -561,7 +387,247 @@ Now Java will take the Key object from each entry and compare with this new key 
 that return true then value object in that entry will be replaced by new value
 
 
-# Generics
+######################
+# How HashMap works? #
+######################
+
+It's a map implementation
+A map is an associative array data structure "key1"->value, "hey2"->value
+
+Hashing: transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
+A shorter value helps in indexing and faster searches.
+
+In Java every object has a method public int hashcode() that will return a hash value for given object.
+
+If two object are equal they should have the same hascode as well.
+Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
+
+Index of null key is always 0, as hash of null is always 0
+
+HASHMAP
++-------------+
+|<<interface>>|  +-------------+ +-----------+ +--------------+
+|     Map     |  | AbstractMap | | Cloneable | | Serializable |
++-------------+  +-------------+ +-----------+ +--------------+
+        |      /
+        |     /
+        |    /
+    +-------+
+    |HashMap|
+    +-------+
+
+Detailed
++------------------+
+|Node<K,V>[] table;|
++------------------+
+ ||
+ \/
++--+                        +-----------------+
+|  |                        |    Node<K,V>    |
++--+                        +-----------------+
++--+                        | int hash;       |
+|  |                        | K key;          |
++--+                        | V value;        |
++--+                        | Node<K,V> next; | <- It is a LinkedList
+|  |                        +-----------------+
++--+
+
+# PUT
+Each index in this table is known as bucket. Each bucket is a node that can be linked list of nodes
+                                                +---+
+scores.put("QUEEN",120);                        | 0 |--> WALL | 70772256 | 70 | null
+scores.put("KNIGHT",100);                       +---+
+scores.put("CASTLE",10);                        | 1 |
+scores.put("RAM",110);                          +---+
+scores.put("SWORD",99);                         | 2 |--> KNIGHT | 64205538 | 100 | null
+scores.put("GALLEON",80);                       +---+
+scores.put("WALL",70);                          | 3 |
+                                                +---+
++------------------------+                      | 4 |--> QUEEN | 2306996 | 120 | - |--> CASTLE | 63281940 | 10 | - |--> GALLEON | 2656852 | 80 | null
+| put(K k, V v)          |                      +---+
+|   hash(k)              |                      | 5 |
+|                        |                      +---+
+|   index = hash & (n-1) |                      | 6 |--> SWORD | 79019862 | 99 | null
+| n = 16                 |                      +---+
++------------------------+                      | 7 |
+scores.put("QUEEN",120);                        +---+
+hash("QUEEN") = 2306996                         | 8 |
+index = 2306996 & 15 = 4                        +---+
+                                                | 9 |
+scores.put("KNIGHT",100);                       +---+
+hash("KNIGHT") = 64205538                       | 10|--> RAM | 2163866 | 110 | null
+index = 64205538 & 15 = 2                       +---+
+                                                | 11|
+scores.put("CASTLE",10);                        +---+
+hash("CASTLE") = 63281940                       | 12|
+index = 63281940 & 15 = 4 (COLLISION)           +---+
+                                                | 13|
+scores.put("RAM",110);                          +---+
+hash("RAM") = 2163866                           | 14|
+index = 2163866 & 15 = 10                       +---+
+                                                | 15|
+scores.put("SWORD",99);                         +---+
+hash("SWORD") = 79019862
+index = 79019862 & 15 = 6
+
+scores.put("GALLEON",80);
+hash("GALLEON") = 2656852
+index = 2656852 & 15 = 4 (COLLISION)
+
+scores.put("WALL",70);
+hash("WALL") = 70772256
+index = 70772256 & 15 = 0
+
+# GET
+
+scores.get("KNIGHT");
+scores.get("QUEEN");
+scores.get("GALLEON");
+
++------------------------+
+| V get(Object key)      |
+|   hash(key)            |
+|                        |
+|   index = hash & (n-1) |
++------------------------+
+scores.get("KNIGHT");
+hash = 64205538
+index = 64205538 & 15 = 2
+
+    Compare hash with hash that is stored under index = 2, 64205538 == 64205538 = true
+    Compare key using equals method "KNIGHT".equals("KNIGHT") = true
+
+scores.get("KNIGHT") = 100; // FOUND VALUE MATH
+
+
+scores.get("QUEEN");
+hash = 2306996
+index = 2306996 & 15 = 4
+
+    Compare hash with hash that is stored undex index = 4, 2306996 == 2306996 = true
+    Compare key using equals method "QUEEN".equals("QUEEN") = true
+
+scores.get("QUEEN") = 120; // FOUND VALUE
+
+
+scores.get("GALLEON");
+hash = 2656852
+index = 2656852 & 15 = 4
+
+    Compare hash with that is stored under index = 4, 2656852 == 2306996 = false
+        Compare hash with that is stored under index = 4, next node, 2656852 == 63281940 = false
+            Compare hash with that is stored under index = 4, next node, 2656852 == 2656852 = true
+    Compare key using equals method "GALLEON".equals("QUEEN") = false
+        Compare key using equals method, next node, "GALLEON".equals("CASTLE") = false
+            Compare key using equals method, next node, "GALLEON".equals("GALLEON") = true
+
+scores.get("GALLEON") = 80; // FOUND VALUE
+
+
+In Java 8, when we have too many unequal keys which gives some hashcode(index)
+- when the number of items in a hash bucket grows bayound threshold(TREEIFY_TRESHOLD = 8), content of that bucket
+switches from using linked list of Entry objects to a balanced tree. This theoretically improves the worst-case
+performance from O(n) to O(log n).
+Balanced search tree, where leaf nodes have lesser weight(HashCode or Comparable result) for the Keys involved.
+
+
+######################
+# Exception Handling #
+######################
+
+Exception handling helps us to recover from an unexpected situations like file not found.
+Important part is try-catch block.
+If exception is handled it does not propagate further
+In a try block, the lines after the line throwing exception are not executed
+
+# finally block
+When an exception happens the code after the line throwing exception is not executed.
+If code like closing connection is present in these lines of code, it is not executed.
+This leads to connction and other resource leaks.
+Code writtern in finnaly block is executed even when there is an exception.
+dangling unclosed connection. Finnaly block is used when code needs to be executed irrespective
+of whether an exception is thrown.
+
++--------------------------+
+| } finally {              |
+|       connection.close();|
+| }                        |
++--------------------------+
+
+In what scenarios finally block not executed?
+- If exception is thrown in finally
+- If JVM crashes in between (for example System.exit())
+Finnaly block execute even when there is a return statement in try block
+
+try without catch block is allower for instance since Java 7
++-------------+
+| try {       |
+|   ...       |
+| } finally { |
+|   ...       |
+| }           |
++-------------+
+
+With Java 7 try with resources (automatic resource management)
++-----------------------------------------------------------------+
+| try (FileInputStream input = new FileInputStream("file.txt")) { |
+|   ...                                                           |
+| }                                                               |
++-----------------------------------------------------------------+
+
+Hierarchy of Exception class in Java
+Throwable is the highest level of Error Handling classes.
++---------------------------------------------+
+| // Pre defined Java Classes                 |
+| class Error extends Throwable {}            |
+| class Exception extends Throwanle {}        |
+| class RuntimeException extends Exception {} |
++---------------------------------------------+
+
+Difference between Error and Exception
+Error is used in situation where there is nothing programmer can do about an error.
+StackOverflow, OutOfMemory. Programer can handle Exception.
+
+Difference between checked and un-checked exceptions
+Runtime Exceptions and classes that extends RuntimeException are called unchecked exception.
+Other Exception classes are called Checked Exceptions. They are Subclasses of Exception which are
+not subclass of RuntimeException. Checked exceptions should be handled or thrown.
++-----------------------------------+
+|throw new Exception("Exception 1");|
++-----------------------------------+
+
+Create custom Exception
+By extending Exception class or RuntimeException class.
+If extends Exception class it will be checked exception.
+If extends RuntimeException it will b un checked exception.
++-----------------------------------------------+
+| class CustomException extends Exception {...} |
++-----------------------------------------------+
+
+Order of Exceptions
+Specific Exception should be before the Generic Exception.
++---------------------------------------------+
+| try {                                       |
+|   ...                                       |
+| } catch (CurrenciesDoNotMatchException e) { |
+|   ...                                       |
+| } catch (Exception e) {                     |
+|   ...                                       |
+| }                                           |
+|                                             |
+| // Multiple repeated exception              |
+| catch (IOException | SQLException e)        |
++---------------------------------------------+
+
+# Checked and Unchecked Exceptions
+
+Checked Exceptions ensures that handling of exception is provided and its verified by compiler also
+For throwing unchecked exception no special provision is needed.
+
+
+############
+# Generics #
+############
 
 Generics are used to create Generic Classes and Generic Methods which can work with different Types (classes).
 Make class type parameter to a class.
@@ -610,7 +676,9 @@ To restrict Generic class to a super class of particular class we can use Generi
 We can use the class MyListRestricted with any class that is super to class Number.
 
 
-# File API
+############
+# File API #
+############
 
 +-----------------+------------------------------------+
 | Create file     | File file = new File("nazwa.txt"); |
@@ -1085,7 +1153,7 @@ In general any use of streams involves.
 -source - Creating or use existing stream
 -Intermediate Operations - returns new stream
 -Terminal operation - consume the stream print
-Intermediate Oparations are of two parts
+Intermediate Operations are of two parts
 -Stateful - elements need to be compared against each others (sort)
 -Stateless - no need for comparing with other element (map, filter)
 
@@ -1095,8 +1163,10 @@ Intermediate Oparations are of two parts
 Optional object Optional<T> pack up object type T. Optional Object is safe alternative to reference to T type,
 which can accept object or null value. Use method that returns alternative value if returned value does not exists
 or take value if present.
-String value = optionalString.orElse(""); // String or " " if not
-String result = optionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value
++-------------------------------------------------------------------------------------------------------+
+|String value = optionalString.orElse(""); // String or " " if not                                      |
+|String result = optionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value |
++-------------------------------------------------------------------------------------------------------+
 ifPresent method accepts function. If optional value exists, is passed to function. Else do nothing.
 Optional value is a stream of size zero or one. If value exists function is triggered.
 
@@ -1107,12 +1177,6 @@ Function that return logical value.
 Predicate.isEqual(a) is counterpart of a::equals, but works correctly even with null values.
 Methods and, or, negate to join predicates
 Predicate.isEqual(b) === x->b.equal(x)
-
-
-# Functional Interface
-
-Compilator checks whether marked interface is with one abstract method
-Generated javadoc with info that this is an functional interface
 
 
 ##################
@@ -1129,7 +1193,7 @@ Time - The amount of processing or number of operations code has to perform to a
 Space - This is both the memory needed by code to store information at run-time as well as disk space needed by code for persistent storage
 Network - The bandwidth code uses to pass information to clients or other machines
 
-Performance indicates how much of these resources the code uses. Code is also more eficient when
+Performance indicates how much of these resources the code uses. Code is also more efficient when
 it uses the resources we have in plenty rather that those we lack.
 
 Complexity
@@ -1146,9 +1210,11 @@ Big O Notation allows us express complexity as a measure of input size. This exp
 A algorithm which complexity does not change with input size is O(1), is said to have constant time complexity
 The Complexity of an algorithm is O(N) is the time taken by the algorithm increases linearly when N increases
 The Complexity of an algorithm is O(N^2) if the time taken by the algorithm increases quadratically when N increases
-for (int i = 1; i < n;) {
-    i = i * 2;
-}
++---------------------------+
+| for (int i = 1; i < n;) { |
+|    i = i * 2;             |
+| }                         |
++---------------------------+
 The complexity of this operation is O(log(N))
 
 +----------------+-------+-------+--------+----------+
@@ -1250,8 +1316,6 @@ Next step check whether there are other Nodes at the same level and visit them
 Once a level is exhausted then we can move to the next level
 Continue process till every node is visited
 
-
-
 A root node is ancestor of all nodes.
 
 A Binary tree is one where every node can have a maximum of two children. The left and right
@@ -1271,15 +1335,15 @@ Removing an element from the top a stack is called -> POP -> pop an element from
 See what element on stack is do not remove it -> PEEK -> peek at the top of a stack
 
                   +---+
- |     |         || X ||           |     |            |     |
- |     |  PUSH   |+---+|      POP  |     |      PEEK  |     |
- |+---+|  +---+  |+---+|     +---+ |+---+|      +---+ |+---+|
- || Y ||  | X |  || Y ||     | X | || Y ||      | Y | || Y ||
- |+---+|  +---+  |+---+|     +---+ |+---+|      +---+ |+---+|
- |+---+|         |+---+|           |+---+|            |+---+|
- || Z ||         || Z ||           || Z ||            || Z ||
- |+---+|         |+---+|           |+---+|            |+---+|
- +-----+         +-----+           +-----+            +-----+
+ |     |         || X ||                |     |                 |     |
+ |     |  PUSH   |+---+|      POP       |     |      PEEK       |     |
+ |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
+ || Y ||  | X |  || Y ||     | X |      || Y ||      | Y |      || Y ||
+ |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
+ |+---+|         |+---+|                |+---+|                 |+---+|
+ || Z ||         || Z ||                || Z ||                 || Z ||
+ |+---+|         |+---+|                |+---+|                 |+---+|
+ +-----+         +-----+                +-----+                 +-----+
 
 
 Peek let's you access the top element in the stack without actually changing the Data Structure
@@ -1368,7 +1432,7 @@ Space complexity O(N)
 Useful
 Calls
 Queueing job to be printed
-Order processing system E-Commerance websites or bank transactions.
+Order processing system E-Commerce websites or bank transactions.
 
 +-------+---------+---------+--------+---------+
 |       | Enqueue | Dequeue | isFull | isEmpty |
@@ -1403,7 +1467,7 @@ Typed of Garbage Collector
       heap is full/near-full. "Stop the world" when runs.
 
 Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required
-Use paraller collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
+Use parallel collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
 
 java -XX:+UseSerialGC
 java -XX:+UseParallelGC
@@ -1421,7 +1485,6 @@ synchronized - acquire intrinsic lock on object. Only one object can execute thi
 join() - wait until other thread finish executing
 
 wait and notify for inter thread communication. Must be called from synchronized context method, block
-
 
 # Process and threads
 
@@ -1443,12 +1506,11 @@ yield() : this static method is essentially used to notify the system that the c
 give up CPU for a while, but scheduler can immediately pick them back. Is put back into the ready queue of the processor,
 and waits for it next turn.
 
-
 # Start Thread
 
 Extends Thread - override run() method
 
-Implements Runnable - override run() method, pas Runnable object to Thread class constructor. Call start method
+Implements Runnable - override run() method, pass Runnable object to Thread class constructor. Call start method
 on thread object.
 
 Executor Service - dynamically reuse thread. Check if threads are already working
@@ -1461,7 +1523,6 @@ Executor Service - dynamically reuse thread. Check if threads are already workin
 
   - executorService.execute(Runnable)
   - executorService.submit(Callable or Runnable)
-
 
 # Concurrent Collections
 
@@ -1487,7 +1548,7 @@ Executor Service - dynamically reuse thread. Check if threads are already workin
 
 Thread interference and memory consistency errors
     - If two thread access the same variable, it is possible for them to get in each others way
-      For example tow threads incrementing the same variable at the same time
+      For example two threads incrementing the same variable at the same time
       To fix this make sure that section of code is only accessed by one thread at a time, by using synchronized keyword for example
       But this slows down performance, and can lead to thread contention issues (starvation, livelock, deadlock)
 
@@ -1535,7 +1596,6 @@ Terminated - run method is over
 
 # From Java 8 Book
 
-
 # Concurrent Programming
 
 Runnable describes task that might be executed asynchronously
@@ -1550,15 +1610,19 @@ Thread is mechanism that allow to execute sequence of instruction, these instruc
 Couple of threads work in parallel using multiple processors of different time slice of the same processor
 
 Executor executes a task by choosing threads that might be executed with
-Runnable task = () -> {};
-Executor exec = Executors...;
-exec.execute(task);
++-------------------------------+
+| Runnable task = () -> {};     |
+| Executor exec = Executors...; |
+| exec.execute(task);           |
++-------------------------------+
 
 Factory method Executor class
 Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks
 Executors.newFixedThreadPool(thread_num); - good for grater amount of tasks
 To acquire number of thread based on number of processors
-int processors = Runtime.getRuntime().availableProcessors();
++--------------------------------------------------------------+
+| int processors = Runtime.getRuntime().availableProcessors(); |
++--------------------------------------------------------------+
 
 Objects Future and Executor
 Callable - Method call() opposite to method run() from Runnable interface returns value or throw an Exceptions
