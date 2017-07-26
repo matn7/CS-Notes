@@ -14,18 +14,20 @@ Call from parent class super()
 Use to execute more tasks in one constructor
 Improve readability of code
 
-public Temporary(int x, int y) {
-    this(5);
-    System.out.print(" " + x * y + " ");
-}
-public Temporary(int x) {
-    this();
-    System.out.print(" " + x + " ");
-}
-public Temporary() {
-    System.out.print(" Default ");
-}
--> Default  5  782
++-----------------------------------------+
+| public Temporary(int x, int y) {        |
+|    this(5);                             |
+|    System.out.print(" " + x * y + " "); |
+| }                                       |
+| public Temporary(int x) {               |
+|     this();                             |
+|     System.out.print(" " + x + " ");    |
+| }                                       |
+| public Temporary() {                    |
+|     System.out.print(" Default ");      |
+| }                                       |
+|-> Default  5  782                       |
++-----------------------------------------+
 
 
 # Overloading
@@ -77,61 +79,49 @@ JVM call this method when GC is about to be called
 
 # Class Loaders
 
-Bootstrap Class Loader
-Extension Class Loader
-System Class Loader
+A Java class is made up of a number of custom classes (written by programmers) and core classes
+(which come pre-packed with Java). When program is executed, JVM needs to load the content of the needed class.
+JVM uses class loader to find the classes.
+
+Bootstrap Class Loader - Loads all the Java core files
+Extension Class Loader - Loads all classes from extension directory
+System Class Loader - Loads all classes from CLASSPATH
+
+When JVM needs to find a class, it starts with System Class Loader. If it is not found, it checks with Extension Class Loader.
+If it not found, it goes to the Bootstrap Class Loader. If class is still not found, a ClossNotFoundException is thrown.
+
+
+# Autoboxing
+
+Autoboxing is the automatic conversion that the Java complier makes between the primitive types and their
+corresponding object wrapper classes. For example, converting an int to an Integer, double to a Double.
+If conversions goes the other way it is called unboxing.
+Auto boxing helps in saving memory by reusing already created wrapper objects. However wrapper classes
+created using new are not reused.
+
+Two wrapper objects created using new are not same object
++--------------------------------------------------+
+| Integer nineA = new Integer(9);                  |
+| Integer nineB = new Integer(9);                  |
+| System.out.println(nineA == nineB); // false     |
+| System.out.println(nineA.equals(nineB)); // true |
++--------------------------------------------------+
+
+Two wrapper objects created using boxing are same object
++--------------------------------------------------+
+| Integer nineC = 9;                               |
+| Integer nineD = 9;                               |
+| System.out.println(nineA == nineB); // true      |
+| System.out.println(nineA.equals(nineB)); // true |
++--------------------------------------------------+
+
+Wrapper classes are final and immutable.
 
 
 # SerialVersionUID
 
 Mark added to class to during deserialization, reconstruct proper class (unique identifier).
 Useful when there is some complex class hierarchies parent class, child class.
-
-
-# hashCode, equals
-
-You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
-collections like HashMap, HashSet
-In Map objects are stored as key and value. put(key,value) method is used to store objects in HashMap at this time
-hashCode() method is used to calculate the hash code of key object and both kay and value object is stored
-as map.entry, if two keys object have some hash code then only one value object is stored in the same bucket location but
-as a linked list value is stored and if hash code is different then another bucket location is created.
-While retrieving get(key) method is used at this time hash code of key object is calculated and then equals() method
-is called to compare value object.
-
-
-# equals
-
-Check whether one object can be equal to another.
-Equals method implemented in Object class, check whether two references to object are identical.
-Override equal method if you want to check equality based on state of object.
-Two object are equals when they have the same value.
-
-Checks that we need to perform.
-public boolean equals(Object obj) {
-    // Check whether objects are identical, very fast
-    if (this == obj) return true;
-    // False if parameter is null
-    if (obj == null) return false;
-    // Check whether otherObject is the same instance as this), use getClass or instanceof
-    if (getClass() != obj.getClass()) return false;
-    // Check values
-    return some.equal(other.some) && ...;
-}
-
-# hashCode
-
-Hash is integer number that identify an object.
-If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
-for (int i = 0; i < str.length(); i++) {
-    hash = 31 * hash + chartAt(i)
-}
-
-HashCode must be compatible.
-if x.equals(y) return true, x.hashCode == y.hashCode.
-If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
-data structures HasSet, HashMap could be lost.
-Object.hash(some, some2);
 
 
 # this
@@ -162,6 +152,39 @@ Factories methods - static methods that returns new class instance.
 You cannot override static method in Java because they are resolved at compile time rather than runtime
 
 
+# What are Initialization Blocks
+
+Initialization blocks - code which runs when an object is created or class is loaded.
+There are two types of Initialization blocks.
+- Static Initializer: Code runs when a class is loaded
+- Instance Initializer: Code runs when a new object is created
+
+
+# What is static initializer
+
+Code within static {} is called a static initializer. This is run only when class is first loaded.
+Only static variables can be accessed in a static initializer. Even though three instances are created static
+initializer is run only once.
++---------------------------------------------------------------------+
+| public class InitializerExamples() {                                |
+|   static int count;                                                 |
+|   int i;                                                            |
+|   static {                                                          |
+|       // Static initializer is run only when class is first loaded. |
+|       // only static vars can be accessed                           |
+|       // i = 6; // ERROR                                            |
+|       count = 2; // OK                                              |
+|   }                                                                 |
+| }                                                                   |
++---------------------------------------------------------------------+
+
+
+# What is Regular Expression
+
+Regular Expression makes parsing, scanning and splitting a string very easy.
+Java classes Pattern, Mathcer and Scanner
+
+
 # Enum
 
 Sometimes you need to define connected constants like
@@ -171,7 +194,9 @@ You can do this using enum
 enum Weekday {MON, TUE,.. };
 Now weekday is data type with values Weekday.MON
 
-public Enum Size { SMALL, MEDIUM, LARGE; }
++--------------------------------------------+
+| public Enum Size { SMALL, MEDIUM, LARGE; } |
++--------------------------------------------+
 Named constants. No need to use equals method. No need to override toString.
 Thread safe.
 Enum is subclass class of Enum class, which contains toString, valueOf and compareTo method
@@ -181,6 +206,25 @@ Enum constructors are always private.
 Variables Enum type can contains static variables
 static import now can use SMALL instead of Size.SMALL
 
+Enum alows specifying a list of values for a Type.
+Example below declares an enum Season with 4 possible values
++--------------------------------+
+| enum Season {                  |
+|   WINTER, SPRING, SUMMER, FALL |
+| };                             |
++--------------------------------+
+
+Value of enums can be compared using == or equals function.
+
+
+# Variable arguments
+Variable arguments allow calling method with different number of parameters.
++----------------------------------+
+| public int sum(int... numbers) { |
+|   ...                            |
+| }                                |
++----------------------------------+
+
 
 # String
 
@@ -188,6 +232,44 @@ Immutable and final
 Thread safe - prevent from change cache
 String pool cache (optimization)
 Hash codes - keys in hashCodes are Strings
+
+Why String is immutable.
+Value of a Strin once created cannot be modified. Any modification on a String object creates a new object.
++--------------------------------------+
+| String str3 = "string1";             |
+| str3.concat("string2");              |
+| System.out.println(str3); // string1 |
++--------------------------------------+
+
+The result should be assigned to a new reference variable (or some variable can be resed)
++-----------------------------------------------+
+| String concat = str3.concat("string2");       |
+| System.out.println(concat); // string1string2 |
++-----------------------------------------------+
+
+Where are String literals store in memory?
+All strings literals are stored in "String constant pool". If compiler finds a String literal, it checks if
+it exists, it is reused.
+Following statement creates 1 String object (created on pool) and 1 referece varable
++------------------------+
+| String str1 = "Value"; |
++------------------------+
+
+However if new operator is used to create String object, the new object is created on heap.
+Following piece of code created 2 objects
++----------------------------------------------------------------------+
+| // 1. String Literal "Value" - created in the "string constant pool" |
+| // 2. String object - created on the heap                            |
+| String str2 = new String("Value");                                   |
++----------------------------------------------------------------------+
+
+Some methods:
+.charAt(), .length(), .equalsIgnoreCase(), .substring()
+
+# toString method
+
+Is used to print a content of an object. If not overriden default implementation is printed.
+It pronts hashCode and class name. If is overriden new content is printed
 
 
 # Interfaces
@@ -260,35 +342,6 @@ Local variables need to be explicitly initialized
 
 If part can exists without whole then relationship between two class is known as aggregation
 If part cannot exists without whole the relationship between two class is known as composition
-
-
-# Serialization
-
-Abstract class - high level class, by whom inherits
-Data serialization allows to know about all references (extends)
-Serialized object will be read to file. They will acquire some special identification number (SerialVersionUID), object will use this
-number to other objects
-To perform serialization class need to implements Serializable interface
-Serializable marker interface (without method), safety guard to make sure you know what you are doing
-transient data that we dont want to be serialized
-Fragile data should be marked as transient, or should not implement Serializable
-
-Serialization is a machanism to transform in collection of bytes, which can be then deliver to other place
-save on disk, and reconstruct objects based on this collection of bytes.
-Deliver object from one VM to another. To make object serializable that means can transform to bytes states
-it has to be an instance of Serializable interface. It is an marker interface without methods.
-All object must be serializable.
-Serializable mechanism supports version mechanism serialVersionUID = 1L;
-is used to enhanced state, what would happen when class would change
-Static variables are no serialized only istance variables are serialized
-
-
-# Different between Serializable and Externalizable
-
-Serializable is marker interface with no method defined
-Use default serialization process which can be very slow for some application
-Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the
-serialization process
 
 
 # What is the difference between composition and inheritance ?
@@ -385,6 +438,261 @@ The same key will result in the same hashcode and will end up at the same positi
 Each bucket contains a linked list of Map.Entry object, which contains both Key and Value
 Now Java will take the Key object from each entry and compare with this new key using equals() method, if
 that return true then value object in that entry will be replaced by new value
+
+
+# Casting
+Casting is used when we want to convert one data type to another. Two types of casting:
+- Implicit casting
+- Explicit casting
+
+Implicit Casting is done by compiler. Good example of implicit casting are all the automatic widening conversions
+i.e. storing smaller values in larger variables types.
++------------------------------------------+
+| int value = 100;                         |
+| long number = value; // Implicit casting |
+| float f = 100; // Implicit casting       |
++------------------------------------------+
+
+Explicit Casting is done through code. Example are narrowing conversions - storing larger values into smaller variables.
+Explicit casting would cause truncation of value if the value stored is greater than the size of varible.
++------------------------------------------+
+| long number1 = 12345;                    |
+| int x = (int) numer1; // Explicit castig |
++------------------------------------------+
+
+
+# Variables initialization in Java
+
+- Member object and static class variables are always initialized with default values
+- Local/block variables are NOT initialized by complier
++----------------------------------------------------------+
+| public class VariableInit {                              |
+|   public static void main(String[] args) {               |
+|       Player player = new Player();                      |
+|       // score is an int variable default 0              |
+|       System.out.println(player.score); // 0             |
+|       // name is a memberreference variable default null |
+|       System.out.println(player.name); // null           |
+|       int local; // not initialized                      |
+|       // System.out.println(local); // ERROR             |
+|       String value = null; // initialized                |
+|       System.out.println(value); // null                 |
+|   }                                                      |
+| }                                                        |
++----------------------------------------------------------+
+
+
+##############################
+# hashCode, equals, toString #
+##############################
+
+You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
+collections like HashMap, HashSet
+In Map objects are stored as key and value. put(key,value) method is used to store objects in HashMap at this time
+hashCode() method is used to calculate the hash code of key object and both kay and value object is stored
+as map.entry, if two keys object have some hash code then only one value object is stored in the same bucket location but
+as a linked list value is stored and if hash code is different then another bucket location is created.
+While retrieving get(key) method is used at this time hash code of key object is calculated and then equals() method
+is called to compare value object.
+
+
+# equals
+
+Check whether one object can be equal to another.
+Equals method implemented in Object class, check whether two references to object are identical.
+Override equal method if you want to check equality based on state of object.
+Two object are equals when they have the same value.
+
+Checks that we need to perform.
+public boolean equals(Object obj) {
+    // Check whether objects are identical, very fast
+    if (this == obj) return true;
+    // False if parameter is null
+    if (obj == null) return false;
+    // Check whether otherObject is the same instance as this), use getClass or instanceof
+    if (getClass() != obj.getClass()) return false;
+    // Check values
+    return some.equal(other.some) && ...;
+}
+
+Eqials method is used when we compare two objects. Default implementation of equals method is defined in Object class.
+Two object references are equals only if they are pointing to the same object.
+We need to override equals method, if we would want to compare the contents of an object.
+
+We can override equals method in the class to check the content of the objects.
+The implementation of equals method checks if the id's of both objects are equal.
+If so return true.
++-------------------------------------+
+| @override                           |
+| public boolean equals(Object obj) { |
+|   Client other = (Client) obj;      |
+|   if (id != other.id)               |
+|       return false;                 |
+|   return true;                      |
++-------------------------------------+
+
+Important things to consider when implementing equals method.
+- Reflexive: For any reference value x, x.equals(x) return true
+- Symmetric: For any reference values x and y, if x.equals(y) should return true if and only id y.equals(x) returns true.
+- Transtive: For any reference values x,y and z, if x.equals(y) returns true and y.equals(z) returns true,
+    then x.equals(z) must retun true
+- Consistent: For any reference values x and y, multiple invocations of x.equals(y) consistently return true
+    if no information used in equals is modified
+- For any non-null reference value x, x.equals(null) should return false
+
++---------------------------------------+
+| @Override                             |
+| public boolean equals(Object obj) {   |
+|   if (this == obj) {                  |
+|       return true;                    |
+|   }                                   |
+|   if (obj == null) {                  |
+|       return false;                   |
+|   }                                   |
+|   if (getClass() != obj.getClass()) { |
+|       return false;                   |
+|   }                                   |
+|   Client other = (Client) obj;        |
+|   if (id != other.id) {               |
+|       return false;                   |
+|   }                                   |
+|   return true;                        |
+| }                                     |
++---------------------------------------+
+
+
+# hashCode
+
+Hash is integer number that identify an object.
+If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
+for (int i = 0; i < str.length(); i++) {
+    hash = 31 * hash + chartAt(i)
+}
+
+HashCode must be compatible.
+if x.equals(y) return true, x.hashCode == y.hashCode.
+If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
+data structures HasSet, HashMap could be lost.
+Object.hash(some, some2);
+
+HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
+A group of object's might share the same hashCode.
+The implementation of hashCode decides effectiveness of Hashing. A good hashing fnction evenly
+distributes object's into different groups or buckets.
+A good hashCode should have the followig properties:
+- if obj1.equals(obj2) is true, then obj1.hashCode() should be equal to obj2.hashCode().
+- obj.hashCode() should return the same value when run multiple times, if values of obj used in equals() have not change.
+- if obj1.equals(obj2) is false, it is NOT required thet obj1.hashCode() is not equal to obj2.hashCode().
+    Two unequals objects might have the same hashCode.
++----------------------------------+
+| @Override                        |
+| public int hashCode() {          |
+|   final int prime = 31;          |
+|   int result = 1;                |
+|   result = prime * result + id;  |
+|   return result;                 |
+| }                                |
++----------------------------------+
+
+
+#################
+# Serialization #
+#################
+
+Abstract class - high level class, by whom inherits
+Data serialization allows to know about all references (extends)
+Serialized object will be read to file. They will acquire some special identification number (SerialVersionUID), object will use this
+number to other objects
+To perform serialization class need to implements Serializable interface
+Serializable marker interface (without method), safety guard to make sure you know what you are doing
+transient data that we dont want to be serialized
+Fragile data should be marked as transient, or should not implement Serializable
+
+Serialization is a machanism to transform in collection of bytes, which can be then deliver to other place
+save on disk, and reconstruct objects based on this collection of bytes.
+Deliver object from one VM to another. To make object serializable that means can transform to bytes states
+it has to be an instance of Serializable interface. It is an marker interface without methods.
+All object must be serializable.
+Serializable mechanism supports version mechanism serialVersionUID = 1L;
+is used to enhanced state, what would happen when class would change
+Static variables are no serialized only istance variables are serialized
+
+Serialization is a process saving state of an object to a sequence of bytes. These sequence of bytes
+can be sent over a network or stored in a file.
+
++-----------------+
+|  Serializable   |                       +------+
+| << interface >> |                       | file |
++-----------------+                       +------+
+         |                               /
+  +-------------+     +-----------------+     +----------+
+  | Java Object |---->| Stream of bytes |---->| Database |
+  +-------------+     +-----------------+     +----------+
+                                         \
+                                          +--------+
+                                          | memory |
+                                          +--------+
+Serialization helps us to save and retreive state of an object.
+-Serialization: convert object state to some internal object representation
+-Deserialization: To reverse convert internal representation to object
+Two importants methods
+-ObjectOutputStream.writeObject(): serialize and write to file
+-ObjectInputStream.readObject(): read from file and deserialize
+
+How to serialize object using Serializable interface
+To serialize object it should implements Serializable interface. In the example below, Rectangle class implements
+Serializable interface. Note that Serializable interface does not declare any method to be implemented.
+Create new Rectangle object and serializing it to a file Rectangle.ser.
++----------------------------------------------------------------------+
+| class Rectangle implements Serializable {                            |
+|   public Rectangle(int length, int breadth) {                        |
+|       this.length = length;                                          |
+|       this.breadth = breadth;                                        |
+|       area = length * breadth;                                       |
+|   }                                                                  |
+|   int length;                                                        |
+|   int breadth;                                                       |
+|   int area;                                                          |
+| }                                                                    |
++----------------------------------------------------------------------+
+| FileOutputStream fileStream = new FileOutputStream("Rectangle.ser"); |
+| ObjectOutputStream objectStream = new OjectOutputStream(fileStream); |
+| objectStream.writeObject(new Rectangle(5,6));                        |
+| objectStream.close();                                                |
++----------------------------------------------------------------------+
+
+How to deserialize on Java
+A rectangle object is deserialized from file Rectangle.ser
++-------------------------------------------------------------------------------+
+| FileInputStream fileInputStream = new FileInputStream("Rectangle.ser");       |
+| ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream); |
+| Rectangle rectangle = (Rectangle) objectInputStream.readObject();             |
+| objectInputStream.close();                                                    |
++-------------------------------------------------------------------------------+
+
+We mark all the properties of the Object that should not be serialized as transient.
+Transient attributes in an object are not serialized. As we dont need to serialize area we can calculate it later
+mark this variable as transient.
+
+All classes that need to be serialized have to implement Serializable interface
+
+Are the constructors in an object invoked when it is de-serialized?
+No when a class is deserialized, initialization (constructor's initializer's) does not take place.
+The state of an object is retained as it is.
+
+Are the values of static variables stored when object is serialized?
+Static variables are not part of the object they are not serialized.
+
++---------------------+
+| trensient int area; |
++---------------------+
+
+# Different between Serializable and Externalizable
+
+Serializable is marker interface with no method defined
+Use default serialization process which can be very slow for some application
+Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the
+serialization process
 
 
 ######################
@@ -1472,6 +1780,24 @@ Use parallel collector, when there is less memory, lesser number of CPUs, high t
 java -XX:+UseSerialGC
 java -XX:+UseParallelGC
 java -XX:+UseConcMarkSweepGC
+
+# Garbage Collector example
++----------------------------------------------------------+
+| void method() {                                          |
+|   Calendar calendar = new GregorianCalendar(2000,12,12); |
+|   System.out.println(calendar);                          |
+| }                                                        |
++----------------------------------------------------------+
+Object of class GregorianCallendar is created on the heap by the first line in method with one reference variable calendar.
+After method ends execution the reference variable calendar is no longer valid. Hence there are no reference
+to the object created in the method. JVM recognizes this and removes the object from the heap. This is called GC
+
+
+# When Garbage Collection is run
+
+Based on fancies of JVM. Possible situations
+- When available memory on he heap is low
+- When CPU is free
 
 
 ###############

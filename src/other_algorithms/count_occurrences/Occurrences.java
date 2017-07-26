@@ -14,8 +14,8 @@ public class Occurrences {
 
     public static void occurrs(String str) {
         // Maps
-        Map<Character, Integer> mapNum = new LinkedHashMap<>();
-        Map<Integer, Character> map = new LinkedHashMap<>();
+        Map<Character, Integer> mapNum = new LinkedHashMap<>(); // stores character, occurences <'M', 2>
+        Map<Integer, Character> map = new LinkedHashMap<>(); // linked hash map maintains insertion order
 
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == ' ') {
@@ -27,7 +27,7 @@ public class Occurrences {
             // second loop count occurrences
             for (int j = 0; j < str.length(); j++) {
                 if (map.get(i) == map.get(j)) {
-                    mapNum.put(map.get(i), ++k);
+                    mapNum.put(map.get(i), ++k); // character is a key
                 }
             }
         }
