@@ -19,7 +19,7 @@ public class Prime {
             return false;
         }
 
-        for (int i = 3; i < Math.ceil(Math.sqrt(num)); i += 2) { // bigest divider is root square of number
+        for (int i = 3; i < Math.ceil(Math.sqrt(num)); i += 2) { // biggest divider
             if (num % i == 0) {
                 return false;
             }
@@ -37,6 +37,7 @@ public class Prime {
             isPrime[i] = true;
         }
 
+        // multiplication of 2, 3, 4, 5 as false
         for (int i = 2; i*i <= bound; i++) {
             if (isPrime[i]) {
                 for (int j = i; i*j <= bound; j++) {

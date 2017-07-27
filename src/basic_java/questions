@@ -482,6 +482,239 @@ Explicit casting would cause truncation of value if the value stored is greater 
 +----------------------------------------------------------+
 
 
+##########################
+# Java Memory Management #
+##########################
+
+# Stack
+
+The stack
++----+
+|+----+
+||+----+  PUSH  +---+   +     +    +---+  PULL, POP
+|||    |  --->  |   |   |     |    |   |  --->      FILO
++||    |        +---+   |     |    +---+
+ +|    |                |     |
+  +----+                +-----+
+
+  every threads has
+  its own stack
+
+All local variables are defined in stack. No more data after last }. Tide scoping.
+Local variable short lifetime.
+
+# Heap
+Longer lifetime store data
+Objects are in Heap. Huge area of storing data. All memory from your application except data on stack.
+One heap for all threads, number of stacks for each Thread.
+
+The stack               The Heap
++-------+              +---------------------+
+|+-------+             | String              |
+||+-------+            | Integer             |
+||| int   |            |                     |
++|| double|            |                     |
+ +|       |            |                     |
+  +-------+            +---------------------+
+
+int age = 21;
+String name = "Hello";
+
+   Stack
++----------+            +----------------------+
+|+--------+|            |   +------+           |
+||  name  ||---------\  |   |String|           |
+|+--------+|          \ | +-+------+-+         |
+|+--------+|           \->|  Hello   |         |
+|| age=21 ||            | +----------+         |
+|+--------+|            |                      |
+|          |            |                      |
++----------+            +----------------------+
+
+Java Memory - Runle
+- Objects are stored on the heap
+- Variables are a reference to the object
+- Local variables are stored on the stack
+
+# Passing variables by value
+
++--------------------------------------------------+
+| class Main {                                     |
+|    public static void main(String[] args) {      |
+|        int localValue = 5;                       |
+|        calculate(localValue);                    |
+|        System.out.println(localValue); // 5      |
+|    }                                             |
+|    // copy of local variable                     |
+|    public static void calculate(int calcValue) { |
+|        calcValue = calcValue * 100;              |
+|    }                                             |
+| }                                                |
++--------------------------------------------------+
+
+# How objects are passed
+For object passed into methods, the REFERENCE to the object is passed BY VALUE.
+"No object passed to method but rather pointer to object"
+Passing Values
++--------------------------------------------------------+
+| public class Main {                                    |
+|     public static void main(String[] args) {           |
+|         Customer c = new Customer("Betty");            |
+|         renameCustomer(c);                             |
+|         System.out.println(c.getName()); // Grazyna    |
+|     }                                                  |
+|     public static void renameCustomer(Customer cust) { |
+|         cust.setName("Grazyna");                       |
+|     }                                                  |
+| }                                                      |
++--------------------------------------------------------+
+
+            +-------------------------------------------+
+            |      +----------+                         |
++-----+     |      | Customer |           +--------+    |
+|+---+|     |    +-+----------+-+         | String |    |
+|| c |+-----+--->|  +------+    |       +-+--------+-+  |
+|+---+|     |    |  | name |----+------>| Grazyna    |  |
+|     |     |    |  +------+    |       +------------+  |
++-----+     |    +-----+--------+                       |
+            |          X                                |
+            |          |                                |
+            |    +--------+                             |
+            |    | String |                             |
+            |    +--------+                             |
+            |    | Betty  |                             |
+            |    +--------+                             |
+            +-------------------------------------------+
+
+# The "final" keyword
+Can be assigned only once
++--------------------------------------+
+| final Customer c;                    |
+| c = new Customer("Mark");            |
+| c = new Customer("Amanda"); // ERROR |
+| c.setName("Robert"); // OK           |
++--------------------------------------+
+
+# Immutable collections
+Collections.unmodifableMap()
+Collections.unmodifableList()
+
+String three = new Integer(67).toString().intern(); // JVM optimizes of building object
+String four = "67";
+
+# GC
+In other languages you must state when an object is no longer needed by calling a method like free().
+Object that are not freed continue to consume memory ... this is a memory leak.
+
+Java avoids memory leak by:
+- Running on a virtual machine
+- Adapts a Garbage Collection strategy
+
+Garbage collection - any object on the heap which cannot be reached through a reference from a stack
+is eligable for garbage collection.
+
+Soft leaks - an object is referenced on the stack even though it will never be used again.
+
+Vm arguments
+-Xmx100m - run application with small heap size
+jvisualvm.exe
+
+General Garbage collection
+The "Mark and Sweep" process.
+
+Generational Garbage Collection
+- Most object's don't live for long
+- If an object survives it is likely for live forever
+                    minor    major collection
++---------+        +-------+----------------+
+|         |        | young | old generation |
+|         |        |       |  +--------+    |
+|         |        |       |  | String |    |
+| +-----+ |        |       |  +--------+    |
+| |name |-+--------+-------+->| John   |    |
+| +-----+ |        |       |  +--------+    |
++---------+        +-------+----------------+
+
+GC yound generation deletes unused objects
+After that String John go to old generation.
+Actually it can be 8 GC, but the VM changes the number of generations ased on the amount of memory available.
+
+Program VirtualGC to view some memory leaks
+
+# PermGen / MetaSpace
+Perm Gen is never GC
+On PermGen internalize String metadata of class is stored in this.
+Info about class.
+Problem to many classes or internalized strings
+Increase size of Permgen
+If you redeploy number of times the permgen will run out of space
+
+Java 7
+No internalized Strings are stored in PermGen. They are an old part of heap and can be GC.
+
+Java 8
+Remove PermGen introduce metaspace where all metadata of classes are placed. No part of heap.
+Max size of metaspace is your computer Space
+
++-------+---------------+   +-----------+
+| young | old           |   | Metaspace |
+|       |               |   |           |
+|       |               |   |           |
+|       |               |   |           |
+| Heap  |               |   |           |
++-------+---------------+   +-----------+
+
+# Tunning the VM
+-Xmx set the maximum heap size
+-Xms set starting heap size
++-------------------+
+| -Xmx512m -Xms150m |
++-------------------+
+
+PermGen Size
+-XX:MaxPermSize
++----------------------+
+| -XX:MaxPermSize=256m |
++----------------------+
+
+-verbose:gc print to the console when garbage collection takes place
+
+-Xmx10m -verbose:gc // print garbage collection
+
+Young generation = 1/3 heap size
+-Xmn set the size of young generation
+-Xms256m
+
+# Generating heap dumps
+-XX;HeapDumpOnOutOfMemory // creates a heapdmp file
+
+# Choosing a GC
+Types of GC:
+- Serial : -XX:+UseSerialGC
+- Parallel young generation: -XX:+UseParallelGC
+- Mostly Concurrent: -XX:+UseConcMarkSweepGC
+                     -XX:+UseG1GC
+
+use -XX:+PrintCommandLineFlage to find out which is your default
+
+jmeter to generate load
+apache-jmeter
+
+WeakReferences - might not survive GC. If not variable will be equal to null.
+Soft - stronger than weak, can be destroy if GC claims that space is needed.
++-------------------------------------+
+| WeakReferencs<Book> mybook = book1; |
+| SoftReference<Book> mybook = book2; |
++-------------------------------------+
+
+WeakHashMap - reference between key and values are weak.
++-------------------------------------------------------+
+| MapBook, BookImage> imageCache = new WeakHashMap<>(); |
++-------------------------------------------------------+
+
+Guava Library can make soft hash map
+
+
 ##############################
 # hashCode, equals, toString #
 ##############################
@@ -565,9 +798,11 @@ Important things to consider when implementing equals method.
 
 Hash is integer number that identify an object.
 If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
-for (int i = 0; i < str.length(); i++) {
-    hash = 31 * hash + chartAt(i)
-}
++------------------------------------------+
+| for (int i = 0; i < str.length(); i++) { |
+|     hash = 31 * hash + chartAt(i)        |
+| }                                        |
++------------------------------------------+
 
 HashCode must be compatible.
 if x.equals(y) return true, x.hashCode == y.hashCode.
@@ -577,7 +812,7 @@ Object.hash(some, some2);
 
 HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
 A group of object's might share the same hashCode.
-The implementation of hashCode decides effectiveness of Hashing. A good hashing fnction evenly
+The implementation of hashCode decides effectiveness of Hashing. A good hashing function evenly
 distributes object's into different groups or buckets.
 A good hashCode should have the followig properties:
 - if obj1.equals(obj2) is true, then obj1.hashCode() should be equal to obj2.hashCode().
@@ -707,7 +942,7 @@ A shorter value helps in indexing and faster searches.
 
 In Java every object has a method public int hashcode() that will return a hash value for given object.
 
-If two object are equal they should have the same hascode as well.
+If two object are equal they should have the same hashcode as well.
 Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
 
 Index of null key is always 0, as hash of null is always 0
@@ -982,6 +1217,8 @@ String is not valid substitute for "T extends Number"
 To restrict Generic class to a super class of particular class we can use Generic Restrictions.
 "T super Number"
 We can use the class MyListRestricted with any class that is super to class Number.
+
+PECS - Produces extends, Consumer super
 
 
 ############
