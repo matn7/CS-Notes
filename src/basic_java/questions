@@ -1869,6 +1869,164 @@ Two binary trees are the same if
 2. The structure of the tree at every corresponding node is the same
 
 
+DEPTH-FIRST TRAVERSAL
+Depth first traversal involves going right to the leaf of the binary Tree first before moving up tree.
+Depth first can be:
+PRE-ORDER, IN_ORDER, POST-ORDER
+
+All depth first traveral are most efficiently and intuitively implemented using RECURSION
+
+PRE-ORDER
+Each node is processed first (pre) before it's right and left subtrees.
+The left sub-trees are processed before the right sub trees.
+NODE -> LEFT SUBTREE -> RIGHT SUBTREE
+
+
+IN-ORDER
+The Left subtree is processed first, then the NODE, then RIGHT SUBTREE
+LEFT-SUBTREE -> NODE -> RIGHT SUBTREE
+
+
+POST-ORDER
+Both subtrees are processed BEFORE the node itself. The node is processed AFTER (POST) the subtree
+LEFT-SUBTREE -> RIGHT SUBTREE -> NODE
+
+
+# The Binary Search Tree
+
+Also called an Ordered binary tree and it's a tree with some specific Characteristics.
+
+For Every Node in the TREE:
+Each node in the left subtree of thet node has a value less than or equal to the value of the node.
+Each node in the right subtree of that node has a value greater than the value of the node.
+
+            8                   Every node in the left subtree is <= 8
+           / \
+          7   14                Every node in the right subtree in > 8
+         /   /  \
+        4   12   16
+       / \    \    \
+      2   5    13   18
+
+Binary search tree are typically used for FAST INSERTION and FAST LOOKUP.
+
+The structure of a tree depends on the order in which the nodes are ADDED:
+INSERTION
+
+We can simply follow the RIGHT or LEFT subtrees based on the value we want to find:
+LOOKUP
+
+Insertion and Lookup
+Insert the Node 2 in the tree
+
+            8       step-1) Compare Node to be inserted with root node
+           / \      step-2) 8 has left child so continue compare node values
+          6   14    step-3) 6 already has a left child continue compare node values
+         / \    \   step-4) 2 < 4 so mowe down to the left subtree
+        4   7    16
+       /           \
+     +-+            18
+     |2|
+     +-+
+
+Lookup in a Binary Search Tree
+Lookup the value 7 in the tree
+
+            8       step-1) Compare 7 with the root value
+           / \      step-2) 8 has a left child so continue comparing the node
+          6   14    step-3) Compare 7 to 6. Go to right child
+         / \    \   step-4) Match. The Node has been found
+        4  +-+   16
+           |7|     \
+           +-+      18
+
+Insertion
+The Complexity for Node insertion is O(logN).
+The actual complexity depends on the shape of the tree. I.E all right or left child can have O(N)
+
+Lookup
+The Complexity for value lookup is O(logN) in average case.
+For both insertion and lookup we have the TREE we have to traverse at every step. This gives us the log(N) complexity.
+
+
+# Heaps
+
+THE PRIORITITY QUEUE
+When a certain element in a collection has HIGHEST WEIGHTAGE OR PRIORITY - A common use case is to process that first.
+The data structure to store elements where the highest prioritity has to be processed first can be called a
+prioritity queue.
+At every step we access the element with highest prioritity.
+
+Common operations on a prioritity Queue:
+INSERT ELEMENTS
+ACCESS the highest prioritity element
+REMOVE the highest prioritity element
+
+An Array or List
+          | UNORDERED                             | ORDERED
+----------+---------------------------------------+----------------------------------------------------------------------
+INSERTION | Can be anything in a list or array    | Requires finding the right position for the element based on priority
+          | complexity O(1)                       | complexity O(N)
+----------+---------------------------------------+----------------------------------------------------------------------
+ACCESS    | Accessing the highest prioritity      | Accessing the highest prioritity elements is easy
+          | element requires going through all    | complexity O(1)
+          | elements in the list - complexity O(N)|
+----------+---------------------------------------+----------------------------------------------------------------------
+REMOVE    | Requires going through all elements   | Removing the highest prioritity element - O(1)
+          | O(N)                                  |
+----------+---------------------------------------+----------------------------------------------------------------------
+
+BALANCED BINARY SEARCH TREE
+
+INSERTION | O(logN)
+----------+---------
+ACCESS    | O(logN)
+----------+---------
+REMOVE    | O(logN)
+
+Both insertion and access moderatively fast.
+List solutions make one of these super fast while comparing heavily on the other
+
+BINARY HEAP
+
+INSERTION | O(logN)
+----------+---------
+ACCESS    | O(1)
+----------+---------
+REMOVE    | O(logN)
+----------+---------
+
+THE BINARY HEAP
+A Heap is just a tree with a special properties or constraints on the vales of it's Nodes
+This is called a HEAP Property
+
+Types of Heap:
+-MINIMUM HEAP
+Every node value should be <= value of it's children
+The node with the smallest value should be the root of the tree
+-MAXIMUM HEAP
+Every Node value should be >= Value of it;s children.
+The node with the largest value should be the root of the tree
+
+The heap should form a complete binary tree -
+all levels except the last one should be filled
+
+Node at index 0, left child at index 1, right child at index 2
+Node at index: i
+has a left child at index: 2i + 1
+has a right child at index: 2i + 2
+Node at index: i GetParent at index: (i-1)/2
+
+        5
+      /   \
+     8     6
+    / \   / \
+   9   12 11 7
+  / \
+ 15 10
+
+ 5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
+
 # Stack Data Structure
 
 A stack is data structure to hold elements such that the last element you add to the stack is first one you access

@@ -1,4 +1,4 @@
-package data_structures.tree;
+package data_structures.tree.breadth_first;
 
 import data_structures.queue.Queue;
 
