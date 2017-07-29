@@ -10,6 +10,7 @@ public abstract class Heap<T extends Comparable>  {
 
 
 
+
     // Get parent index
     public int getParentIndex(int index) {
         if (index < 0 || index > count) {
@@ -46,7 +47,7 @@ public abstract class Heap<T extends Comparable>  {
     // Use an array to store heap elements
     private T[] array;
     private int count = 0;
-    private Heap(Class<T> clazz) {
+    public Heap(Class<T> clazz) {
         this(clazz, MAX_SIZE);
     }
     // Instantiate generic array in Java
@@ -77,4 +78,6 @@ public abstract class Heap<T extends Comparable>  {
     public T getElementAtIndex(int index) {
         return array[index];
     }
+
+
 }

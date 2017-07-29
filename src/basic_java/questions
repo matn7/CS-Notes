@@ -1329,7 +1329,7 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 |      | LinkedHashMap| ConcurrentSkipListMap |
 +------+--------------+-----------------------+
 | Queue| PriorityQueue| LinkedBlockingQueue   |
-|      | ArrayDeququq | ArrayBlockingQueue    |
+|      | ArrayDequeue | ArrayBlockingQueue    |
 |      |              | BlockingQueue         |
 |      |              | PriorityBlockingQueue |
 +------+--------------+-----------------------+
@@ -1337,7 +1337,7 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 # LIST
 
 List interface extends Collection interface. It contains all methods defined in Collection interface.
-In addition List iterface allows operation specifying the position of the element in the Collection.
+In addition List interface allows operation specifying the position of the element in the Collection.
 Any implementation of List interface would maintain the insertion order.
 When new element is inserted without specifying a position it is inserted at the end of the List of elements.
 We can also use void add(int position, E param) method to insert an element at specific position.
@@ -1395,7 +1395,7 @@ List<String> valueList = Arrays.asList(valueArray)
 
 # SET
 
-Sets are to optimize strength test. Java has implementation of HashSet and TreeSet.
+Java has implementation of HashSet and TreeSet.
 Does not allow duplicates.
 
 What is a difference between Set and SortedSet
@@ -1426,6 +1426,7 @@ lower(), floor(), higher(), cailing()
 
 
 # MAP
+
 Map interface does not extends Collection.
 A Map interface supports Collections that use a key value pair.
 A key-value pair is a set of linked data items a key, which is a unique identifier for some item data, and the value
@@ -1464,7 +1465,7 @@ Queue interface extends Collection interface. Queue interface is typically used 
 holding elements in order for some processing.
 Queue interface offers methods peek() and poll(), which get element at the head of a queue.
 The difference is that poll() method removes the head from queue also. peek() would keep head of
-the queue unhanged.
+the queue unchanged.
 offer, remove, pull, element, peek
 
 BlockingQueue
@@ -1479,6 +1480,7 @@ Implements Queue interface.
 
 
 # Iterator
+
 Iterator interface allows us to iterate (loop around) a collection. All collections define a method iterator()
 that gets an iterator of collection.
 hasNext() check if there is another elements in the collection being iterated, next() gets the next element
@@ -1601,7 +1603,7 @@ TreeMap is an implementation of Map.
 TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
 
 # Vector Class
-Vector class has the same operations ar ArrayList. However all methods in Vector are synchronized.
+Vector class has the same operations as ArrayList. However all methods in Vector are synchronized.
 We can use Vector if we share a List between two threads that we would want them synchronized.
 
 # What is a LinkedList
@@ -2026,6 +2028,61 @@ Node at index: i GetParent at index: (i-1)/2
  15 10
 
  5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
+
+
+THE BINARY HEAP
+
+Place a single element in the wrong place.
+Then try to find the right position for the element.
+This process is called HEAPIFY
+
+        13
+      /    \
+     8      6
+    / \    /  \
+   9  12  11   7
+  / \
+ 15  10
+
+SHIFT DOWN                   |SFIFT UP
+-----------------------------+-----------------------------
+All elements in the wrong    | An element is in the wrong
+position with respect to     | position with respect to
+other elements below it on   | other above in the
+the heap                     | heap
+                             |
+It has to be moved downwards | It has to be moved upwards in
+in the heap towards the leaf | the Heap towards the ROOT
+node to find it's right      | Node to find it's right position
+position                     |
+
+SWAP 6 and 8
+SWAP 13 and 7
+
+        7
+      /    \
+     6      8
+    / \    /  \
+   9  12  11   13
+  / \
+ 15  10
+
+Insertion                       | O(logN)
+--------------------------------+--------
+Access highest priority element | O(1)
+--------------------------------+--------
+Remove                          | O(logN)
+--------------------------------+--------
+
+Heap Sort
+Insertion and removal | O(logN)
+----------------------+---------
+Sorting               | O(NlogN)
+
+Heap sort is not adaptive
+It's not a stable sort
+It does not need additional space - space complexity is O(1)
+
 
 # Stack Data Structure
 
