@@ -93,7 +93,7 @@ If it not found, it goes to the Bootstrap Class Loader. If class is still not fo
 
 # Autoboxing
 
-Autoboxing is the automatic conversion that the Java complier makes between the primitive types and their
+Autoboxing is the automatic conversion that the Java compiler makes between the primitive types and their
 corresponding object wrapper classes. For example, converting an int to an Integer, double to a Double.
 If conversions goes the other way it is called unboxing.
 Auto boxing helps in saving memory by reusing already created wrapper objects. However wrapper classes
@@ -182,7 +182,7 @@ initializer is run only once.
 # What is Regular Expression
 
 Regular Expression makes parsing, scanning and splitting a string very easy.
-Java classes Pattern, Mathcer and Scanner
+Java classes Pattern, Matcher and Scanner
 
 
 # Enum
@@ -218,6 +218,7 @@ Value of enums can be compared using == or equals function.
 
 
 # Variable arguments
+
 Variable arguments allow calling method with different number of parameters.
 +----------------------------------+
 | public int sum(int... numbers) { |
@@ -234,14 +235,14 @@ String pool cache (optimization)
 Hash codes - keys in hashCodes are Strings
 
 Why String is immutable.
-Value of a Strin once created cannot be modified. Any modification on a String object creates a new object.
+Value of a String once created cannot be modified. Any modification on a String object creates a new object.
 +--------------------------------------+
 | String str3 = "string1";             |
 | str3.concat("string2");              |
 | System.out.println(str3); // string1 |
 +--------------------------------------+
 
-The result should be assigned to a new reference variable (or some variable can be resed)
+The result should be assigned to a new reference variable (or some variable can be reused)
 +-----------------------------------------------+
 | String concat = str3.concat("string2");       |
 | System.out.println(concat); // string1string2 |
@@ -265,6 +266,7 @@ Following piece of code created 2 objects
 
 Some methods:
 .charAt(), .length(), .equalsIgnoreCase(), .substring()
+
 
 # toString method
 
@@ -292,7 +294,7 @@ public interface IntSequence {
 Keyword super allows to call super type methods
 Comparable interface when class want to allow sort their elements Comparable.
 Callback - code fragment is call as a result on user response
-Interface is used heavily n API to define contract of a class.
+Interface is used heavily in API to define contract of a class.
 You cannot create non abstract method in interface. All methods are for default abstract.
 
 
@@ -441,6 +443,7 @@ that return true then value object in that entry will be replaced by new value
 
 
 # Casting
+
 Casting is used when we want to convert one data type to another. Two types of casting:
 - Implicit casting
 - Explicit casting
@@ -465,21 +468,21 @@ Explicit casting would cause truncation of value if the value stored is greater 
 
 - Member object and static class variables are always initialized with default values
 - Local/block variables are NOT initialized by complier
-+----------------------------------------------------------+
-| public class VariableInit {                              |
-|   public static void main(String[] args) {               |
-|       Player player = new Player();                      |
-|       // score is an int variable default 0              |
-|       System.out.println(player.score); // 0             |
-|       // name is a memberreference variable default null |
-|       System.out.println(player.name); // null           |
-|       int local; // not initialized                      |
-|       // System.out.println(local); // ERROR             |
-|       String value = null; // initialized                |
-|       System.out.println(value); // null                 |
-|   }                                                      |
-| }                                                        |
-+----------------------------------------------------------+
++-----------------------------------------------------------+
+| public class VariableInit {                               |
+|   public static void main(String[] args) {                |
+|       Player player = new Player();                       |
+|       // score is an int variable default 0               |
+|       System.out.println(player.score); // 0              |
+|       // name is a member reference variable default null |
+|       System.out.println(player.name); // null            |
+|       int local; // not initialized                       |
+|       // System.out.println(local); // ERROR              |
+|       String value = null; // initialized                 |
+|       System.out.println(value); // null                  |
+|   }                                                       |
+| }                                                         |
++-----------------------------------------------------------+
 
 
 ##########################
@@ -500,10 +503,12 @@ The stack
   every threads has
   its own stack
 
-All local variables are defined in stack. No more data after last }. Tide scoping.
+All local variables are defined in stack.
+No more data after last }. Tide scoping.
 Local variable short lifetime.
 
 # Heap
+
 Longer lifetime store data
 Objects are in Heap. Huge area of storing data. All memory from your application except data on stack.
 One heap for all threads, number of stacks for each Thread.
@@ -553,6 +558,7 @@ Java Memory - Runle
 +--------------------------------------------------+
 
 # How objects are passed
+
 For object passed into methods, the REFERENCE to the object is passed BY VALUE.
 "No object passed to method but rather pointer to object"
 Passing Values
@@ -578,8 +584,8 @@ Passing Values
 |     |     |    |  +------+    |       +------------+  |
 +-----+     |    +-----+--------+                       |
             |          X                                |
-            |          |                                |
-            |    +--------+                             |
+            |          V                                |
+            |    +-----+--+                             |
             |    | String |                             |
             |    +--------+                             |
             |    | Betty  |                             |
@@ -587,6 +593,7 @@ Passing Values
             +-------------------------------------------+
 
 # The "final" keyword
+
 Can be assigned only once
 +--------------------------------------+
 | final Customer c;                    |
@@ -596,6 +603,7 @@ Can be assigned only once
 +--------------------------------------+
 
 # Immutable collections
+
 Collections.unmodifableMap()
 Collections.unmodifableList()
 
@@ -603,6 +611,7 @@ String three = new Integer(67).toString().intern(); // JVM optimizes of building
 String four = "67";
 
 # GC
+
 In other languages you must state when an object is no longer needed by calling a method like free().
 Object that are not freed continue to consume memory ... this is a memory leak.
 
@@ -625,6 +634,7 @@ The "Mark and Sweep" process.
 Generational Garbage Collection
 - Most object's don't live for long
 - If an object survives it is likely for live forever
+
                     minor    major collection
 +---------+        +-------+----------------+
 |         |        | young | old generation |
@@ -635,19 +645,20 @@ Generational Garbage Collection
 | +-----+ |        |       |  +--------+    |
 +---------+        +-------+----------------+
 
-GC yound generation deletes unused objects
+GC young generation deletes unused objects
 After that String John go to old generation.
-Actually it can be 8 GC, but the VM changes the number of generations ased on the amount of memory available.
+Actually it can be 8 GC, but the VM changes the number of generations based on the amount of memory available.
 
 Program VirtualGC to view some memory leaks
 
 # PermGen / MetaSpace
+
 Perm Gen is never GC
 On PermGen internalize String metadata of class is stored in this.
 Info about class.
 Problem to many classes or internalized strings
-Increase size of Permgen
-If you redeploy number of times the permgen will run out of space
+Increase size of PermGen
+If you redeploy number of times the PermGen will run out of space
 
 Java 7
 No internalized Strings are stored in PermGen. They are an old part of heap and can be GC.
@@ -664,7 +675,8 @@ Max size of metaspace is your computer Space
 | Heap  |               |   |           |
 +-------+---------------+   +-----------+
 
-# Tunning the VM
+# Tuning the VM
+
 -Xmx set the maximum heap size
 -Xms set starting heap size
 +-------------------+
@@ -686,16 +698,18 @@ Young generation = 1/3 heap size
 -Xms256m
 
 # Generating heap dumps
--XX;HeapDumpOnOutOfMemory // creates a heapdmp file
+
+-XX:HeapDumpOnOutOfMemory // creates a heapdump file "hprof"
 
 # Choosing a GC
+
 Types of GC:
 - Serial : -XX:+UseSerialGC
 - Parallel young generation: -XX:+UseParallelGC
 - Mostly Concurrent: -XX:+UseConcMarkSweepGC
                      -XX:+UseG1GC
 
-use -XX:+PrintCommandLineFlage to find out which is your default
+use -XX:+PrintCommandLineFlag to find out which is your default
 
 jmeter to generate load
 apache-jmeter
@@ -708,9 +722,9 @@ Soft - stronger than weak, can be destroy if GC claims that space is needed.
 +-------------------------------------+
 
 WeakHashMap - reference between key and values are weak.
-+-------------------------------------------------------+
-| MapBook, BookImage> imageCache = new WeakHashMap<>(); |
-+-------------------------------------------------------+
++--------------------------------------------------------+
+| Map<Book, BookImage> imageCache = new WeakHashMap<>(); |
++--------------------------------------------------------+
 
 Guava Library can make soft hash map
 
@@ -736,19 +750,7 @@ Equals method implemented in Object class, check whether two references to objec
 Override equal method if you want to check equality based on state of object.
 Two object are equals when they have the same value.
 
-Checks that we need to perform.
-public boolean equals(Object obj) {
-    // Check whether objects are identical, very fast
-    if (this == obj) return true;
-    // False if parameter is null
-    if (obj == null) return false;
-    // Check whether otherObject is the same instance as this), use getClass or instanceof
-    if (getClass() != obj.getClass()) return false;
-    // Check values
-    return some.equal(other.some) && ...;
-}
-
-Eqials method is used when we compare two objects. Default implementation of equals method is defined in Object class.
+Equals method is used when we compare two objects. Default implementation of equals method is defined in Object class.
 Two object references are equals only if they are pointing to the same object.
 We need to override equals method, if we would want to compare the contents of an object.
 
@@ -762,11 +764,12 @@ If so return true.
 |   if (id != other.id)               |
 |       return false;                 |
 |   return true;                      |
+| }                                   |
 +-------------------------------------+
 
 Important things to consider when implementing equals method.
 - Reflexive: For any reference value x, x.equals(x) return true
-- Symmetric: For any reference values x and y, if x.equals(y) should return true if and only id y.equals(x) returns true.
+- Symmetric: For any reference values x and y, if x.equals(y) should return true if and only if y.equals(x) returns true.
 - Transtive: For any reference values x,y and z, if x.equals(y) returns true and y.equals(z) returns true,
     then x.equals(z) must retun true
 - Consistent: For any reference values x and y, multiple invocations of x.equals(y) consistently return true
@@ -798,11 +801,16 @@ Important things to consider when implementing equals method.
 
 Hash is integer number that identify an object.
 If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
-+------------------------------------------+
-| for (int i = 0; i < str.length(); i++) { |
-|     hash = 31 * hash + chartAt(i)        |
-| }                                        |
-+------------------------------------------+
++--------------------------------------------+
+| @Override                                  |
+| public int hashCode() {                    |
+|   int hash = 1;                            |
+|   for (int i = 0; i < str.length(); i++) { |
+|         hash = 31 * hash + chartAt(i)      |
+|   }                                        |
+|   return hash;                             |
+| }                                          |
++--------------------------------------------+
 
 HashCode must be compatible.
 if x.equals(y) return true, x.hashCode == y.hashCode.
@@ -814,7 +822,7 @@ HashCode's are used in hashing to decide which group (or bucket) an object shoul
 A group of object's might share the same hashCode.
 The implementation of hashCode decides effectiveness of Hashing. A good hashing function evenly
 distributes object's into different groups or buckets.
-A good hashCode should have the followig properties:
+A good hashCode should have the following properties:
 - if obj1.equals(obj2) is true, then obj1.hashCode() should be equal to obj2.hashCode().
 - obj.hashCode() should return the same value when run multiple times, if values of obj used in equals() have not change.
 - if obj1.equals(obj2) is false, it is NOT required thet obj1.hashCode() is not equal to obj2.hashCode().
@@ -840,17 +848,17 @@ Serialized object will be read to file. They will acquire some special identific
 number to other objects
 To perform serialization class need to implements Serializable interface
 Serializable marker interface (without method), safety guard to make sure you know what you are doing
-transient data that we dont want to be serialized
+transient data that we don't want to be serialized
 Fragile data should be marked as transient, or should not implement Serializable
 
-Serialization is a machanism to transform in collection of bytes, which can be then deliver to other place
+Serialization is a mechanism to transform in collection of bytes, which can be then deliver to other place
 save on disk, and reconstruct objects based on this collection of bytes.
 Deliver object from one VM to another. To make object serializable that means can transform to bytes states
 it has to be an instance of Serializable interface. It is an marker interface without methods.
 All object must be serializable.
 Serializable mechanism supports version mechanism serialVersionUID = 1L;
 is used to enhanced state, what would happen when class would change
-Static variables are no serialized only istance variables are serialized
+Static variables are no serialized only instance variables are serialized
 
 Serialization is a process saving state of an object to a sequence of bytes. These sequence of bytes
 can be sent over a network or stored in a file.
@@ -858,9 +866,9 @@ can be sent over a network or stored in a file.
 +-----------------+
 |  Serializable   |                       +------+
 | << interface >> |                       | file |
-+-----------------+                       +------+
++--------+--------+                       +------+
          |                               /
-  +-------------+     +-----------------+     +----------+
+  +------+------+     +-----------------+     +----------+
   | Java Object |---->| Stream of bytes |---->| Database |
   +-------------+     +-----------------+     +----------+
                                          \
@@ -870,7 +878,7 @@ can be sent over a network or stored in a file.
 Serialization helps us to save and retreive state of an object.
 -Serialization: convert object state to some internal object representation
 -Deserialization: To reverse convert internal representation to object
-Two importants methods
+Two important methods
 -ObjectOutputStream.writeObject(): serialize and write to file
 -ObjectInputStream.readObject(): read from file and deserialize
 
@@ -889,15 +897,15 @@ Create new Rectangle object and serializing it to a file Rectangle.ser.
 |   int breadth;                                                       |
 |   int area;                                                          |
 | }                                                                    |
-+----------------------------------------------------------------------+
-| FileOutputStream fileStream = new FileOutputStream("Rectangle.ser"); |
-| ObjectOutputStream objectStream = new OjectOutputStream(fileStream); |
-| objectStream.writeObject(new Rectangle(5,6));                        |
-| objectStream.close();                                                |
-+----------------------------------------------------------------------+
++----------------------------------------------------------------------++
+| FileOutputStream fileStream = new FileOutputStream("Rectangle.ser");  |
+| ObjectOutputStream objectStream = new ObjectOutputStream(fileStream); |
+| objectStream.writeObject(new Rectangle(5,6));                         |
+| objectStream.close();                                                 |
++-----------------------------------------------------------------------+
 
 How to deserialize on Java
-A rectangle object is deserialized from file Rectangle.ser
+A rectangle object is deserialize from file Rectangle.ser
 +-------------------------------------------------------------------------------+
 | FileInputStream fileInputStream = new FileInputStream("Rectangle.ser");       |
 | ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream); |
@@ -906,20 +914,20 @@ A rectangle object is deserialized from file Rectangle.ser
 +-------------------------------------------------------------------------------+
 
 We mark all the properties of the Object that should not be serialized as transient.
-Transient attributes in an object are not serialized. As we dont need to serialize area we can calculate it later
+Transient attributes in an object are not serialized. As we don't need to serialize area we can calculate it later
 mark this variable as transient.
 
 All classes that need to be serialized have to implement Serializable interface
 
 Are the constructors in an object invoked when it is de-serialized?
-No when a class is deserialized, initialization (constructor's initializer's) does not take place.
+No when a class is de-serialized, initialization (constructor's initializer's) does not take place.
 The state of an object is retained as it is.
 
 Are the values of static variables stored when object is serialized?
 Static variables are not part of the object they are not serialized.
 
 +---------------------+
-| trensient int area; |
+| transient int area; |
 +---------------------+
 
 # Different between Serializable and Externalizable
@@ -962,7 +970,7 @@ HASHMAP
 Detailed
 +------------------+
 |Node<K,V>[] table;|
-+------------------+
++++----------------+
  ||
  \/
 +--+                        +-----------------+
@@ -976,6 +984,7 @@ Detailed
 +--+
 
 # PUT
+
 Each index in this table is known as bucket. Each bucket is a node that can be linked list of nodes
                                                 +---+
 scores.put("QUEEN",120);                        | 0 |--> WALL | 70772256 | 70 | null
@@ -1040,7 +1049,7 @@ index = 64205538 & 15 = 2
     Compare hash with hash that is stored under index = 2, 64205538 == 64205538 = true
     Compare key using equals method "KNIGHT".equals("KNIGHT") = true
 
-scores.get("KNIGHT") = 100; // FOUND VALUE MATH
+scores.get("KNIGHT") = 100; // FOUND VALUE
 
 
 scores.get("QUEEN");
@@ -1068,7 +1077,7 @@ scores.get("GALLEON") = 80; // FOUND VALUE
 
 
 In Java 8, when we have too many unequal keys which gives some hashcode(index)
-- when the number of items in a hash bucket grows bayound threshold(TREEIFY_TRESHOLD = 8), content of that bucket
+- when the number of items in a hash bucket grows beyond threshold(TREEIFY_TRESHOLD = 8), content of that bucket
 switches from using linked list of Entry objects to a balanced tree. This theoretically improves the worst-case
 performance from O(n) to O(log n).
 Balanced search tree, where leaf nodes have lesser weight(HashCode or Comparable result) for the Keys involved.
@@ -1078,16 +1087,17 @@ Balanced search tree, where leaf nodes have lesser weight(HashCode or Comparable
 # Exception Handling #
 ######################
 
-Exception handling helps us to recover from an unexpected situations like file not found.
+Exception handling helps us to recover from an unexpected situations like file not found, connection is lost.
 Important part is try-catch block.
 If exception is handled it does not propagate further
 In a try block, the lines after the line throwing exception are not executed
 
 # finally block
+
 When an exception happens the code after the line throwing exception is not executed.
 If code like closing connection is present in these lines of code, it is not executed.
-This leads to connction and other resource leaks.
-Code writtern in finnaly block is executed even when there is an exception.
+This leads to connection and other resource leaks.
+Code written in finnaly block is executed even when there is an exception.
 dangling unclosed connection. Finnaly block is used when code needs to be executed irrespective
 of whether an exception is thrown.
 
@@ -1102,7 +1112,7 @@ In what scenarios finally block not executed?
 - If JVM crashes in between (for example System.exit())
 Finnaly block execute even when there is a return statement in try block
 
-try without catch block is allower for instance since Java 7
+try without catch block is allowed for instance since Java 7
 +-------------+
 | try {       |
 |   ...       |
@@ -1123,13 +1133,13 @@ Throwable is the highest level of Error Handling classes.
 +---------------------------------------------+
 | // Pre defined Java Classes                 |
 | class Error extends Throwable {}            |
-| class Exception extends Throwanle {}        |
+| class Exception extends Throwable {}        |
 | class RuntimeException extends Exception {} |
 +---------------------------------------------+
 
 Difference between Error and Exception
 Error is used in situation where there is nothing programmer can do about an error.
-StackOverflow, OutOfMemory. Programer can handle Exception.
+StackOverflow, OutOfMemory. Programmer can handle Exception.
 
 Difference between checked and un-checked exceptions
 Runtime Exceptions and classes that extends RuntimeException are called unchecked exception.
@@ -1142,7 +1152,7 @@ not subclass of RuntimeException. Checked exceptions should be handled or thrown
 Create custom Exception
 By extending Exception class or RuntimeException class.
 If extends Exception class it will be checked exception.
-If extends RuntimeException it will b un checked exception.
+If extends RuntimeException it will be un-checked exception.
 +-----------------------------------------------+
 | class CustomException extends Exception {...} |
 +-----------------------------------------------+
@@ -1251,8 +1261,7 @@ Write to file using FileWriter
 Read from file using FileReader
 .read(), .close()
 
-BufferedWriter and BuffererReader
-BufferedWriter and BufferedReader provide better buffering in addition to basic file writing and readng
+BufferedWriter and BufferedReader provide better buffering in addition to basic file writing and reading
 operations. For example instead reading entire file, we can read file line by line.
 
 BufferedWriter class helps writing to a class with better Buffering than FileWriter.
@@ -1345,7 +1354,7 @@ Methods:
 get, set, add, remove, indexOf, lastIndexOf
 
 List is sequential collection in which every element has index in form of integral number
-List interface has mathods which allow to access to n th element of List. To do so Class should implement RandomAccess
+List interface has methods which allow to access to n'th element of List. To do so Class should implement RandomAccess
 interface. It is a marker interface which does not have any methods.
 For instance ArrayList implements List and RandomAccess, but LinkedList only List interface.
 RandomAccess means random search if you know the index, LinkedList only allows sequential search.
@@ -1405,14 +1414,14 @@ Methods of Sorted Set:
 subset, headSet, tailSet
 
 HashSet
-HashSet implements Set interface. HahSet does not allow duplicates. HashSet does not supports ordering.
+HashSet implements Set interface. HashSet does not allow duplicates. HashSet does not supports ordering.
 The order in which elements are inserted is not maintained.
 +----------------------------------------+
 | Set<String> hashSet = new HashSet<>(); |
 +----------------------------------------+
 
 LinkedHashSet
-LinkdeHashSet implements Set interface and exposes similar operations to HashSet.
+LinkedHashSet implements Set interface and exposes similar operations to HashSet.
 Maintains insertion order.
 
 TreeSet
@@ -1474,6 +1483,7 @@ LinkedBlockingQueue
 ArrayBlockingQueue
 
 # PriorityQueue
+
 Implements Queue interface.
 -offer() adding an element to priority queue
 -peek() get the element with highest priority
@@ -1494,6 +1504,7 @@ hasNext() check if there is another elements in the collection being iterated, n
 
 
 # What is the difference between synchronized and Concurrent Collections
+
 Synchronized collections are implemented using synchronized methods and synchronized blocks. Only one Thread
 can executing any of the synchronized code at given point in time. This places severe restrictions on the concurrency
 of thread - there by affecting performance of the application. All the pre Java 5 synchronized collections
@@ -1544,6 +1555,7 @@ If another thread has modified the value, then the calculation can be performed 
 ConcurrentLinkedQueue uses this approach.
 
 # What is a Lock? How is it different from using synchronized approach?
+
 When 10 methods are declared as synchronized, only any of them is executed by any of the threads at any point in time.
 This has severe performance impact.
 Another new approach introduced in Java 5 is to use lock and unlock methods. Lock an unlock methods are used
@@ -1551,6 +1563,7 @@ to divide methods into different blocks and help enhance concurrency.
 The 10 methods can be divided into different blocks which can be synchronized on different variables.
 
 # What is initial capacity of a HashMap?
+
 An instance of HashMap has two parameters that affect its performance initial capacity and load factor.
 The capacity is the number of buckets in the hash table, and the initial capacity is the capacity at the time the
 hash table is created. The load factor a measure of how full the hash table is allowed to get before its capacity automatically increased.
@@ -1560,12 +1573,14 @@ As a general rule the default load factor .75 offers a good trade off between ti
 Higher value decrease space overhead but increase the lookup cost (put and get operations).
 
 # What is a different between fail safe and fail fast
+
 Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
 This was the default behavior of the synchronized collections of pre Java 5
 Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
 This is the default behavior of the concurrent collections, introduced since Java 5
 
 # ConcurrentHashMap vs HashTable vs SynchronizedMap
+
 All are thread safe.
 HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
 SynchronizedMap not very different from HasTable similar performance in concurrent Java program.
@@ -1577,9 +1592,10 @@ Unlike HashTable and Synchronized Map, it never locks whole Map, instead, it div
 It perform better if number of reader are greater than the number of writer threads.
 
 # What are atomic operations in Java?
+
 In programming an atomic action is one that effectively happens all at once. An atomic action cannot stop in the middle.
 It either happens completely or it doesn't happen at all. No side effect of an atomic action are visible until the action is completed.
-Even small operation like i++ id not thread sfe. Operation involves three steps:
+Even small operation like i++ id not thread safe. Operation involves three steps:
 - Read the value which is currently stored in i
 - Add one to it (atomic operation)
 - Store it in i
@@ -1590,23 +1606,28 @@ without interference from other threads ensuring data consistency.
 A good example is AtomicInteger. To implement a value of AtomicInteger we use the incrementAndGet() method Java ensures this operation is Atomic.
 
 # What is the BlockedQueue in Java?
-BlockedQueue interface is introdced in Java specifically to address specific needs of some Producer Consumer scenarios.
+
+BlockedQueue interface is introduced in Java specifically to address specific needs of some Producer Consumer scenarios.
 BlockedQueue allows the consumer to wait (for a specific time of infinitely) for an element to become available.
 
 # HashMap and HashTable differences
+
 HashMap is not synchronized. Faster than HashTable. Allows null keys.
 HashTable is synchronized. Slower than HashMap. Does not allow null keys.
 
 # TreeSet and TreeMap differences
+
 TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
 TreeMap is an implementation of Map.
 TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
 
 # Vector Class
+
 Vector class has the same operations as ArrayList. However all methods in Vector are synchronized.
 We can use Vector if we share a List between two threads that we would want them synchronized.
 
 # What is a LinkedList
+
 LinkedList extends List and Queue interfaces. Other than operations exposed by Queue interface, LinkedList
 has the same operations as ArrayList.
 ArrayList uses an Array kind of structure to share elements. So inserting and deleting from an ArrayList are expensive operations.
@@ -1648,7 +1669,9 @@ not the way it will be executed. Processing details live on implementation.
 Example calculate average value of parameters. Your task is to determine the source of data
 and parameters, library that use stream optimizes all calculations and process the result.
 
-long counter = word.stream().filter(s->s.length() > 12).count();
++------------------------------------------------------------------+
+| long counter = word.stream().filter(s->s.length() > 12).count(); |
++------------------------------------------------------------------+
 
 3 stream steps. Create stream, determine intermediate operations that modify stream to other form.
 End operation that generates result. After that step stream cannot be used anymore.
@@ -1668,7 +1691,7 @@ Parallel Streams automated parallel operations on streams
 Streams vs Collections
 Streams does not store elements. They can be stored in processing by stream collection or generated on demand
 Streams operation does not modify source data. For instance filter does not delete elements from stream but returns new one
-Sreams operations are lazy. They process is delay until the results are needed.
+Streams operations are lazy. They process is delay until the results are needed.
 
 Stream workflow
 Create stream
@@ -1899,7 +1922,7 @@ LEFT-SUBTREE -> RIGHT SUBTREE -> NODE
 Also called an Ordered binary tree and it's a tree with some specific Characteristics.
 
 For Every Node in the TREE:
-Each node in the left subtree of thet node has a value less than or equal to the value of the node.
+Each node in the left subtree of that node has a value less than or equal to the value of the node.
 Each node in the right subtree of that node has a value greater than the value of the node.
 
             8                   Every node in the left subtree is <= 8
@@ -1953,16 +1976,16 @@ For both insertion and lookup we have the TREE we have to traverse at every step
 
 # Heaps
 
-THE PRIORITITY QUEUE
-When a certain element in a collection has HIGHEST WEIGHTAGE OR PRIORITY - A common use case is to process that first.
-The data structure to store elements where the highest prioritity has to be processed first can be called a
-prioritity queue.
-At every step we access the element with highest prioritity.
+THE PRIORITY QUEUE
+When a certain element in a collection has HIGHEST WEIGHT-AGE OR PRIORITY - A common use case is to process that first.
+The data structure to store elements where the highest priority has to be processed first can be called a
+priority queue.
+At every step we access the element with highest priority.
 
-Common operations on a prioritity Queue:
+Common operations on a priority Queue:
 INSERT ELEMENTS
-ACCESS the highest prioritity element
-REMOVE the highest prioritity element
+ACCESS the highest priority element
+REMOVE the highest priority element
 
 An Array or List
           | UNORDERED                             | ORDERED
@@ -1970,7 +1993,7 @@ An Array or List
 INSERTION | Can be anything in a list or array    | Requires finding the right position for the element based on priority
           | complexity O(1)                       | complexity O(N)
 ----------+---------------------------------------+----------------------------------------------------------------------
-ACCESS    | Accessing the highest prioritity      | Accessing the highest prioritity elements is easy
+ACCESS    | Accessing the highest priority        | Accessing the highest priority elements is easy
           | element requires going through all    | complexity O(1)
           | elements in the list - complexity O(N)|
 ----------+---------------------------------------+----------------------------------------------------------------------
@@ -2209,7 +2232,7 @@ Java provides automatic memory management through a program called Garbage Colle
 live object = reachable (referenced by someone else)
 dead object = unreachable (unreferenced)
 Objects are allocated in the "heap" of java memory
-static members, class definition are stored in "method area" Permgen/Metaspace
+static members, class definition are stored in "method area" PermGen/Metaspace
 Garbage Collection is carried out by a daemon thread called "Garbage Collector"
 Force GC to happened System.gc (no guaranteed)
 When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
@@ -2436,7 +2459,7 @@ Class is immutable if instance after creation cannot change
 Implement immutable class
 - variable with final keyword
 - non method can modify data
-- do not allow to leack modification
+- do not allow to leak modification
 - do not allow to this reference pass outside constructor
 
 Concurrent Algorithms
@@ -2446,7 +2469,7 @@ ParallelStream method returns parallel stream. Stream is parted on segments
 Filtering and counting is executed for each segments and results are joined together without your further interactions
 Parallel operations on arrays
 Arrays operations part array on segments, parallelly process them and join results
-Arrays.parrarelSetAll(), parallelSort()
+Arrays.pararellSetAll(), parallelSort()
 Process array into a stream, long sum = IntStream.of(value).parallel().sum();
 
 Thread safe data structures
@@ -2456,7 +2479,7 @@ To actualize data compute() method. This method is Atomic, no other thread can m
 
 BlockingQueues
 Is one of the most commonly used tool for synchronized work. One task put element into the queue, while take task
-take element fro a queue. Allows to safety pass tasks from one task to another
+take element from a queue. Allows to safety pass tasks from one task to another
 
 LinkedBlockingQueue, ArrayBlockingQueue
 ConcurrentSkipListMap - compare keys
@@ -2588,7 +2611,7 @@ User sees the model through a view, and manipulates it via the controller
 An object announces updates to its value, and other objects can read to these updates
 
 
-# When a publisher fires an update, how do subscriber bacome aware of it
+# When a publisher fires an update, how do subscriber become aware of it
 
 The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified
 
