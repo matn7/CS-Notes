@@ -17,7 +17,9 @@ public class Main {
 
         // Step2: Populate listOfStrings
         listOfStrings.add("Pies");
+        //listOfStrings.add("Panda");
         listOfStrings.add("Slon");
+       // listOfStrings.add("Panda");
         listOfStrings.add("Panda");
         listOfStrings.add("Biedronka");
 

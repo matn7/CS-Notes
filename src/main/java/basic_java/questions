@@ -2107,6 +2107,8 @@ It's not a stable sort
 It does not need additional space - space complexity is O(1)
 
 
+
+
 # Stack Data Structure
 
 A stack is data structure to hold elements such that the last element you add to the stack is first one you access

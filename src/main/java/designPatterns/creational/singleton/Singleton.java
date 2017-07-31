@@ -14,7 +14,7 @@ public class Singleton {
         // nobody can instantiate outside this class
     }
 
-    // method must be marked synchronized, else it is possible that 2 dfferent threads
+    // method must be marked synchronized, else it is possible that 2 different threads
     // might enter this method simultaneously and create more than one instance of object
     public static synchronized Singleton getSingleton() {
         if (singleton == null) {

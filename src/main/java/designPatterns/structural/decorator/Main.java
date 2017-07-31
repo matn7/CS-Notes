@@ -9,7 +9,7 @@ public class Main {
         Order fourSeasonPizza = new Pizza("Four season", 10);
         fourSeasonPizza = new RegularExtra("Pepperoni", 4, fourSeasonPizza);
         fourSeasonPizza = new DoubleExtra("Mozarella", 2, fourSeasonPizza);
-        fourSeasonPizza = new NoCostExtra("becon", 2, fourSeasonPizza);
+        // fourSeasonPizza = new NoCostExtra("becon", 2, fourSeasonPizza);
 
         System.out.println(fourSeasonPizza.getPrice() + " : " + fourSeasonPizza.getLabel());
     }

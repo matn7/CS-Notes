@@ -25,7 +25,7 @@ public class SingletonImproved implements Cloneable {
         return singleton;
     }
 
-    // make sure that singleton object cant be cloned
+    // make sure that singleton object can't be cloned
     @Override
     protected Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
