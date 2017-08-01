@@ -2107,6 +2107,314 @@ It's not a stable sort
 It does not need additional space - space complexity is O(1)
 
 
+# THE GRAPH
+
+A Graph is used to represent relationsips between entities.
+
+The entities can be anything - Graphs find applications in variety of ways in real world.
+These relationship can be arbitarily complicated and of a variety of different types.
+
+VERTEX                     | EDGE
+---------------------------+---------------------------------------------------------
+The Entities Are People    | Personal Relationships - People Work Together - Linkedin
+                           +---------------------------------------------------------
+                           | Personal Relationships - People are friends - Facebook
+---------------------------+---------------------------------------------------------
+The Entities Are Locations | A Way to Get from location to another ROADS, RAIL, AIR - Google Maps
+---------------------------+---------------------------------------------------------
+The Entities are old       | A Network to carry voice from one instrument to another - at&t
+fashioned Phones -         |
+LANDLINES                  |
+---------------------------+---------------------------------------------------------
+The Entities Are computer  | A Way to send information or data from one computer to
+across the world           | another - Google, Level(3), cisco
+
+The Graphs are used to represent information in many real world applications
+There are many algorithms to optimize different problems represented using graphs
+
+A Graph is a SET of VERTICES and EDGES
++---+                    +---+
+| A |--------------------| B | (V,E)
++---+                    +---+
+
+Two Vertices and A single Edge is also a valid graph
++---+   Edge             +---+
+| A |--------------------| B | (V,E)
++---+                    +---+
+VERTEX                  VERTEX
+
++---+                    +---+
+| A |------------------->| B |
++---+                    +---+
+SOURCE                  DESTINATION
+
+The Arrow on the Edge. This means that the relationship between two vertices is directed - THE EDGE is a DIRECTED EDGE
+
++---+                    +---+ | UNDIRECTED edges represent
+| A |--------------------| B | | 2 - way relationship such as:
++---+                    +---+ | 1. Two way road
+                               | 2. I am his friend and he is mine
+-------------------------------+----------------------------------
+                               | DIRECTED edges represent
++---+                    +---+ | 1 - way relationship such as:
+| A |------------------->| B | | 1. ONE way road
++---+                    +---+ | 2. I report to my manager
+
+
+UNDIRECTED GRAPH
+
++---+         +---+         +---+
+| A |---------| B |---------| F |
++---+         +---+         +---+
+  |  \       /                |  \
+  |   \     /                 |   \
+  |    +---+                  |    +---+
+  |    | D |                  |    | H |
+  |    +---+                  |    +---+
+  |         \                 |
+  |          \                |
++---+         +---+         +---+
+| C |---------| E |---------| G |
++---+         +---+         +---+
+
+A - C are ADJACENT Nodes
+3 edges are INDICENT Vertex F
+
+The way to go from C to B. C -> A -> B
+This series of Edges is called a PATH
+
+Nodes A,D,E,C form a cycle
+
+UNDIRECTED ACYCLIC GRAPH
++---+         +---+         +---+
+| A |---------| B |---------| F |
++---+         +---+         +---+
+  |          /                |  \
+  |         /                 |   \
+  |    +---+                  |    +---+
+  |    | D |                  |    | H |
+  |    +---+                  |    +---+
+  |                           |
+  |                           |
++---+         +---+         +---+
+| C |---------| E |         | G |
++---+         +---+         +---+
+
+Every Node is CONNECTED TO EVERY OTHER NODE via a series of edges
+This Graph has no cycles
+A Connected graph with no cycles. This is a connected graph
+
+               B
+             / | \
+            A  D  F
+           /     / \
+          C     G   H
+         /
+        E
+Graph with no cycle is tree
+
+DIRECTED GRAPH
++---+         +---+         +---+
+| A |-------->| B |-------->| F |
++---+         +---+         +---+
+  |  A       /                A  \
+  |   \     V                 |   V
+  |    +---+                  |    +---+
+  |    | D |                  |    | H |
+  |    +---+                  |    +---+
+  |         \                 |
+  V          V                |
++---+         +---+         +---+
+| C |-------->| E |-------->| G |
++---+         +---+         +---+
+Nodes A,B,D,A form a cycle
+
+DIRECTED ACYCLIC GRAPH (DAG)
++---+         +---+         +---+
+| A |-------->| B |-------->| F |
++---+         +---+         +---+
+  |  A                        A  \
+  |   \                       |   V
+  |    +---+                  |    +---+
+  |    | D |                  |    | H |
+  |    +---+                  |    +---+
+  |         \                 |
+  V          V                |
++---+         +---+         +---+
+| C |-------->| E |-------->| G |
++---+         +---+         +---+
+
+A Graph Representation
+To represent a Graph there is a need a way to model a vertex which may held some information.
+A way to model directed or undirected EDGES.
+
+There are 3 standard ways thet Graphs can be represented.
+ADJACENCY MATRIX
+ADJACENCY SET
+ADJACENCY LIST
+
+ADJACENCY MATRUX
+Use a metrix with ROWS and COLUMNS a matrix is table
+The Row labels and the column labels represent the Vertices
+Each cell represets relationship between the vertices i.e. the EDGES
++---+     +---+                   A  B  C  D  E
+| A |---->| B |                 +----------------
++---+     +---+               A | 0  1  1  0  0
+  |         A   V             B | 0  0  0  1  0
+  |         |    +---+        C | 0  0  0  0  1
+  |         |    | D |        D | 0  0  0  0  0
+  |         |    +---+        E | 0  1  0  1  0
+  V         |  A
++---+     +---+
+| C |---->| E |
++---+     +---+
+
+A value 1 or true in (row A, column B) indicates Edge from A to B
+DIRECTED GRAPH
++---+     +---+                   A  B  C  D  E
+| A |-----| B |                 +----------------
++---+     +---+               A | 0  1  1  0  0
+  |         |   \             B | 1  0  0  1  1
+  |         |    +---+        C | 1  0  0  0  1
+  |         |    | D |        D | 0  1  0  0  1
+  |         |    +---+        E | 0  1  1  1  0
+  |         |  /
++---+     +---+
+| C |-----| E |
++---+     +---+
+
+
+
+ADJACENCY LIST (adjacent means neighbors cells)
+
+Each vertex is a node.
+Each vertex as a pointer to a LinkedList.
+This LinkedList contains all the other ndes this vertex connects to directly.
+
+If a vertex V has an Edge leading to Another Vertex U
+Then U is present in V's LinkedList
+
++---+     +---+                   DIRECTED GRAPH
+| A |---->| B |               A -> B -> c
++---+     +---+               B -> D
+  |         A   V             C -> E
+  |         |    +---+        D
+  |         |    | D |        E -> B -> D
+  |         |    +---+
+  V         |  A
++---+     +---+
+| C |---->| E |
++---+     +---+
+
++---+     +---+                   UNDIRECTED GRAPH
+| A |-----| B |
++---+     +---+               A -> B -> C
+  |         |   \             B -> A -> D -> E
+  |         |    +---+        C -> A -> E
+  |         |    | D |        D -> B -> E
+  |         |    +---+        E -> C -> B -> D
+  |         |  /
++---+     +---+
+| C |-----| E |
++---+     +---+
+
+Adjacency List Downsides
+The ORDER of the Vertices in the AdjacencyList is MATTER
+The same Graph can have MULTIPLE REPRESENTATIONS
+Certain operation become tricky e.g. deleting a Node involves looking through all the adjacency List to
+remove the Node from all Lists
+
+
+ADJACENCY SET
+
+Similar to AdjacencyList
+Instead of a LinkedList to maintain the adjacent vertices USE A SET
+
+The GRAPH Representations
+
+ADJACENCY MATRIX             |   ADJACENCY LIST, SET
+-----------------------------+-----------------------
+This works well when the     | A SPARSE Graph with Few
+Graph is WELL CONNECTED i.e. | Connections between nodes
+Many Nodes are connected     | might be more efficiently
+with many other Nodes.       | represented using Adjacency
+The overhead of V^2 spece is | List or Set
+worth it when the number of  |
+connections are large        |
+
+E = Number of Edges
+V = Number of Vertices
+
+                  | Adjacency Matrix | Adjacency List | Adjacency Set
+------------------+------------------+----------------+------------------
+SPACE             |     V^2          |  E + V         |  E + V
+------------------+------------------+----------------+------------------
+IS EDGE PRESENT   |     1            |  DEGREE OF V   |  Log(DEGREE OF V)
+------------------+------------------+----------------+------------------
+Iterate over      |     V            |  DEGREE OF V   |  DEGREE OF V
+edges on a vertex |                  |                |
+
+
+THE GRAPH Traversal
+
+DEPTH-FIRST, BREADTH-FIRST
+In a greph multiple paths can lead from one node to another
+
+A Graph can also have cycles, the same Node can be visited multiple times
+
+In order to avoid infinite looping In a Graph we need t keep track of the Node previously visited
+
+
+THE GRAPH TOPOLOGICAL SORT
+
+It is an ordering of vertices in a DIRECTED ACTCLIC GRAPH in which each node comes before
+all the nodes to which it has outgoing EDGE
+
++---+       +---+
+| A |------>| B | A should come before
++---+       +---+
+
++---+     +---+
+| A |---->| B |               A should come before B and C
++---+     +---+               C should come before E
+  |         A   V             E should come before B and D
+  |         |    +---+        B should come before D
+  |         |    | D |
+  |         |    +---+
+  V         |  A
++---+     +---+
+| C |---->| E |
++---+     +---+
+
+Topological sort for this graph will be:
+A,C,E,B,D
+
+First find vertex which has no incoming edge
+It's the destination of no edge no arror points to it
+
+A - is the only vertex with No incoming edge this is the first element of the SORT!
+
+INDEGREE
+Number of inword directed graph edges for a given graph vertex
+
+Indegree of A is 0
+
+If there were NO VERTICES WITH 0 INDEGREE, than there would have been no topolofical sort.
+
+If we remove A from this graph, we have to reduce the INDEGREE of all its immediate neighbors.
+The Next vertex in this SORT the One with Indegree 0
+C is the Next element
+
+Remove C from a graph and decrement the indegree of its immediate neighbors. The Next vertex with indegree of 0 is E.
+
+Result: ACEBD
+
+Running time for topological sort is O(V + E)
+
+Every Edge and Every vertex is visited ONCE
+
+It is an ordering of vertices in DIRECTED ACYCLIC GRAPH i which each node comes before all the
+Nodes to which It has outgoing EDGES
 
 
 # Stack Data Structure
