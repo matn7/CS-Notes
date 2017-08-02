@@ -2637,22 +2637,22 @@ Executor Service - dynamically reuse thread. Check if threads are already workin
 
 # Concurrent Collections
 
-    # ConcurrentHashMap
-    Full concurrency during retrieval
-    Reads can happen fast, while writes require lock
-    Whole table is not locked only segment is locked
-    Iterations do not throw concurrent modification exception
-    Null key not allowed
-    Operations are atomic
+ConcurrentHashMap
+Full concurrency during retrieval
+Reads can happen fast, while writes require lock
+Whole table is not locked only segment is locked
+Iterations do not throw concurrent modification exception
+Null key not allowed
+Operations are atomic
 
-    # BlockingQueue
-    Interface that represents a queue that is thread safe. put(), take()
+BlockingQueue
+Interface that represents a queue that is thread safe. put(), take()
 
-    # DelayQueue
-    Like BlockingQueue that implements Delay interface. Cannot put null into it.
+DelayQueue
+Like BlockingQueue that implements Delay interface. Cannot put null into it.
 
-    # PriorityBlockingQueue
-    Implements Comparable interface. Determine what will be the order of a Queue.
+PriorityBlockingQueue
+Implements Comparable interface. Determine what will be the order of a Queue.
 
 
 # Threads complications
@@ -2738,9 +2738,11 @@ To acquire number of thread based on number of processors
 Objects Future and Executor
 Callable - Method call() opposite to method run() from Runnable interface returns value or throw an Exceptions
 To execute callable there is a need for ExecutorService instance
-ExecutorService exec = ExecutorService.newFixedThreadPool(2);
-Callable<V> call = ...;
-Future<V> result = exec.submit(call);
++---------------------------------------------------------------+
+| ExecutorService exec = ExecutorService.newFixedThreadPool(2); |
+| Callable<V> call = ...;                                       |
+| Future<V> result = exec.submit(call);                         |
++---------------------------------------------------------------+
 Future is an object that represents a calculations, which results will be accessible in a future
 
 Thread safety
@@ -2770,25 +2772,30 @@ Implement immutable class
 - variable with final keyword
 - non method can modify data
 - do not allow to leak modification
-- do not allow to this reference pass outside constructor
+- do not allow to "this" reference pass outside constructor
 
 Concurrent Algorithms
 Parallel Streams
-Long results = coll.parallelStream().filter(s->s.startsWith('a')).count();
++----------------------------------------------------------------------------+
+| Long results = coll.parallelStream().filter(s->s.startsWith('a')).count(); |
++----------------------------------------------------------------------------+
 ParallelStream method returns parallel stream. Stream is parted on segments
 Filtering and counting is executed for each segments and results are joined together without your further interactions
 Parallel operations on arrays
 Arrays operations part array on segments, parallelly process them and join results
 Arrays.pararellSetAll(), parallelSort()
-Process array into a stream, long sum = IntStream.of(value).parallel().sum();
+Process array into a stream,
++--------------------------------------------------+
+| long sum = IntStream.of(value).parallel().sum(); |
++--------------------------------------------------+
 
 Thread safe data structures
 ConcurrentHashMap
-Map on which operations are thread safe. Can support large number of parallel read and some number of parallel reads
+Map on which operations are thread safe. Can support large number of parallel read and some number of parallel writes
 To actualize data compute() method. This method is Atomic, no other thread can modify map content while executing operation
 
 BlockingQueues
-Is one of the most commonly used tool for synchronized work. One task put element into the queue, while take task
+Is one of the most commonly used tool for synchronized work. One task put element into the queue, while another
 take element from a queue. Allows to safety pass tasks from one task to another
 
 LinkedBlockingQueue, ArrayBlockingQueue
@@ -2798,9 +2805,12 @@ CopyOnWriteArrayList, CopyOnWriteArraySet - are thread safe thanks the fact that
 make copy used array. Good in situation when number of threads go through queue is larger than number of thread that modify queue
 
 Atomic Values
-AtomicLong nextNumber = new AtomicLong();
-long id = nextWord.incrementAndGet();
++-------------------------------------------+
+| AtomicLong nextNumber = new AtomicLong(); |
+| long id = nextWord.incrementAndGet();     |
++-------------------------------------------+
 Atomic operation, load data, modify data and save data cannot be interrupted in between.
+
 
 ###################
 # Design Patterns #

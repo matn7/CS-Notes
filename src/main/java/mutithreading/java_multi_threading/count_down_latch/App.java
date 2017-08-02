@@ -20,11 +20,13 @@ class Processor implements Runnable {
     @Override
     public void run() {
         System.out.println("Started");
+        System.out.println(latch.toString());
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         // value specified in constructow will be count down
         latch.countDown();
     }

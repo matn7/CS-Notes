@@ -1,6 +1,7 @@
 package mutithreading.java_multi_threading.interrupting_thread;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by Mati on 22.07.2017.
@@ -28,6 +29,9 @@ public class App {
 
         t1.start();
         Thread.sleep(5000);
+     /*   Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+*/
         t1.interrupt();
         t1.join();
         System.out.println("Finished");
