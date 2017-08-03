@@ -1635,6 +1635,42 @@ However search of an ArrayList is faster than LinkedList.
 LinkedList uses Linked representation. Each object holds a link to the next element. Hence insertion and deletion are faster than
 ArrayList, but searching is slower.
 
+# HashMap, Collections.synchronizedMap, ConcurrentHashMap
+The Map object is an associative containers that store elements, formed by a
+combination of a unique identify key and a mapped value. If very highly concurrent
+application in which may want to modify or read key value in different threads then
+it's ideal to use Concurrent Hashmap.
+If multiple threads access a hash map concurrently, and at least one of the threads
+modifies the map structurally, it must be synchronized externally to avoid inconsistent
+view of contents.
+Two ways to synchronize HashMap
+- Java Collections synchronizedMap()
+- ConcurrentHashMap
++-----------------------------------------------------------------------------------+
+| // Hashtable                                                                      |
+| Map<String, String> normalMap = new Hashtable<>();                                |
+| // synchronizedMap                                                                |
+| synchronizedHashMap = Collections.synchronizedMap(new HashMap<String, String>()); |
+| // ConcurrentHashMap                                                              |
+| concurrentHashMap = new ConcurrentHashMap<String, String>();                      |
++-----------------------------------------------------------------------------------+
+
+ConcurrentHashMap
+- To achieve high concurrency in project
+- Thread safe without synchronizing whole map
+- Reads happen very fast while write is done with a lock
+- Not locking at object level
+- Lock is at hashmap bucket level
+- Does not throw ConcurrentModificationException if one thread tries to modify it while another is iterating over it
+- Uses multitude of locks
+
+
+SynchronizedHashMap
+- Synchronized at object level
+- Every read/write operations need to acquire lock
+- Locking the entire collection leads to performance overhead
+- May cause contention
+- Returns iterator which fail fast on concurrent modification
 
 ##########
 # Java 8 #
@@ -1668,6 +1704,7 @@ Process data in more abstract way, than in case of collections. In case of strea
 not the way it will be executed. Processing details live on implementation.
 Example calculate average value of parameters. Your task is to determine the source of data
 and parameters, library that use stream optimizes all calculations and process the result.
+Returns Optional<T> value.
 
 +------------------------------------------------------------------+
 | long counter = word.stream().filter(s->s.length() > 12).count(); |
@@ -2573,7 +2610,7 @@ java -XX:+UseConcMarkSweepGC
 |   System.out.println(calendar);                          |
 | }                                                        |
 +----------------------------------------------------------+
-Object of class GregorianCallendar is created on the heap by the first line in method with one reference variable calendar.
+Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
 After method ends execution the reference variable calendar is no longer valid. Hence there are no reference
 to the object created in the method. JVM recognizes this and removes the object from the heap. This is called GC
 

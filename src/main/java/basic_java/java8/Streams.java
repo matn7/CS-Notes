@@ -1,10 +1,9 @@
 package basic_java.java8;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -70,8 +69,8 @@ public class Streams {
         // Typ Optional
         // Objekt Optional<T> opakowuje objekt typu T lub brak obiektu
         // Tworzy alternatywną wartość, jeżeli zwracana wartość nie istnieje, lub pobiera wartość jeżeli jest ona obecna
-        Optional<String> optionalString = null;
-        String wynik = optionalString.orElse("");
+        Optional<String> optionalString = words.stream().findAny();
+        //String wynik = optionalString.orElse("");
         String wynik2 = optionalString.orElseGet(() -> System.getProperty("user.dir"));
         String wynik3 = optionalString.orElseThrow(IllegalStateException::new);
         // Wykorzystanie wartości gdy jest obecna
@@ -80,6 +79,88 @@ public class Streams {
 
         // przetwarzanie wyniku działania funkcji
         Optional<Boolean> dodane = optionalString.map(words::add);
+
+
+        // Kolekcje wyników
+        // iterate, forEach
+        // stream.forEach(System.out::println)
+        String[] results3 = words.stream().toArray(String[]::new);
+
+        List<String> result4 = words.stream().collect(Collectors.toList());
+        Set<String> result5 = words.stream().collect(Collectors.toSet());
+        TreeSet<String> result6 = words.stream().collect(Collectors.toCollection(TreeSet::new));
+        String combinedResults = words.stream().collect(Collectors.joining());
+        String result7 = words.stream().map(Object::toString).collect(Collectors.joining(", "));
+
+        IntSummaryStatistics summary = words.stream().collect(Collectors.summarizingInt(String::length));
+        double avgWordLength = summary.getAverage();
+        double maxWordLength = summary.getMax();
+
+        // Tworzenie Map
+        List<Osoba> people = new ArrayList<>();
+        people.add(new Osoba(1, "Majk"));
+        people.add(new Osoba(2, "Dagmara"));
+        people.add(new Osoba(3, "Blazej"));
+        people.add(new Osoba(4, "Karmel"));
+        people.add(new Osoba(5, "Mariusz"));
+        Map<Integer, String> idNaNazwisko = people.stream().collect(Collectors.toMap(Osoba::getId, Osoba::getNazwisko));
+        System.out.println(idNaNazwisko.toString());
+
+        Map<Integer, Osoba> idNaOsobe = people.stream().collect(Collectors.toMap(Osoba::getId, Function.identity()));
+
+        Stream<Locale> locales = Stream.of(Locale.getAvailableLocales());
+        Map<String, String> languagesNames = locales.collect(Collectors.toMap(Locale::getDisplayLanguage, Locale::getDisplayLanguage,
+                (existing, newvalue) -> existing));
+        Stream<Locale> locales2 = Stream.of(Locale.getAvailableLocales());
+        Map<String, Set<String>> countryLanguagesSet = locales2.collect(
+                Collectors.toMap(
+                        Locale::getDisplayCountry,
+                        l -> Collections.singleton(l.getDisplayLanguage()),
+                        (a, b) -> {
+                            Set<String> join = new HashSet<String>(a);
+                            join.addAll(b);
+                            return join;
+                        }
+                )
+        );
+
+        Map<Integer, Osoba> idNaOsobe2 = people.stream().collect(
+                Collectors.toMap(
+                        Osoba::getId,
+                        Function.identity(),
+                        (exists, newvalue) -> { throw new IllegalStateException(); },
+                        TreeMap::new
+                )
+        );
+        Stream<Locale> locales3 = Stream.of(Locale.getAvailableLocales());
+        // Grupowanie i partycjonowanie
+        Map<String, List<Locale>> countryPerLocale = locales3.collect(Collectors.groupingBy(Locale::getCountry));
+        List<Locale> swissLocales = countryPerLocale.get("CH");
+        Stream<Locale> locales4 = Stream.of(Locale.getAvailableLocales());
+        Map<Boolean, List<Locale>> englishAndOtherLocales = locales4.collect(
+                Collectors.partitioningBy(l -> l.getLanguage().equals("en")));
+        List<Locale> englishLocales = englishAndOtherLocales.get(true);
+
+        // Kolektory strumieniowe
+        // Do dalszego przetwarzanie wartosci z mapy.
+        Stream<Locale> locales5 = Stream.of(Locale.getAvailableLocales());
+        Map<String, Set<Locale>> countriesOnLocalizationSet = locales5.collect(Collectors.groupingBy(Locale::getCountry, Collectors.toSet()));
+
+        // counting zlicza ilość zebranych elementów
+        Stream<Locale> locales6 = Stream.of(Locale.getAvailableLocales());
+        Map<String, Long> countriesOnLocalizationsCounter = locales6.collect(Collectors.groupingBy(Locale::getCountry, Collectors.counting()));
+        // summingInt
+        //maxBy, minBy
+        // mapping
+
+        // Operacje redukcji
+        List<Integer> value8 = new ArrayList<>();
+        value8.add(123);
+        value8.add(876);
+        value8.add(-9870);
+        value8.add(Integer.MAX_VALUE);
+
+        Optional<Integer> suma =value8.stream().reduce((x,y) -> x + y);
 
     }
 
@@ -99,4 +180,30 @@ public class Streams {
         return x < 0 ? Optional.empty() : Optional.of(Math.sqrt(x));
     }
 
+}
+
+class Osoba {
+    String nazwisko;
+    Integer id;
+
+    public Osoba(Integer id, String nazwisko) {
+        this.id = id;
+        this.nazwisko = nazwisko;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
 }
