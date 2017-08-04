@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -161,6 +162,21 @@ public class Streams {
         value8.add(Integer.MAX_VALUE);
 
         Optional<Integer> suma =value8.stream().reduce((x,y) -> x + y);
+
+        // Strumienie typów prostych
+        IntStream od0do99 = IntStream.range(0,100);
+        IntStream od0do100 = IntStream.rangeClosed(0,100);
+
+        Stream<String> slowa = words.stream();
+        IntStream dlugosc = slowa.mapToInt(String::length);
+        Stream<Integer> liczby = IntStream.range(0,100).boxed();
+
+        // Strumienie Równoległe
+        Stream<String> parallelStream = words.parallelStream();
+        Map<Integer, Long> shortWordsCounter = words.parallelStream().filter(s->s.length() < 12)
+                .collect(Collectors.groupingBy(String::length, Collectors.counting()));
+        Stream<String> sample = words.parallelStream().unordered().limit(2);
+        Map<Integer, List<String>> res = words.parallelStream().collect(Collectors.groupingBy(String::length));
 
     }
 
