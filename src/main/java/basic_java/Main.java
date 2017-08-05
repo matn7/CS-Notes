@@ -3,21 +3,7 @@ package basic_java;
 /**
  * Created by Mati on 12.07.2017.
  */
-class Temporary {
-    public Temporary(int x, int y) {
-        this(5);
-        System.out.print(" " + x * y + " ");
-    }
 
-    public Temporary(int x) {
-        this();
-        System.out.print(" " + x + " ");
-    }
-
-    public Temporary() {
-        System.out.print(" Default ");
-    }
-}
 
 class Customer {
     String name;
@@ -60,9 +46,7 @@ public class Main {
 
 
 
-        // Constructor chaining
-        Temporary temp = new Temporary(23,34);
-        // Output - Default  5  782
+
 
         System.out.println();
         // Java memory

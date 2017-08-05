@@ -56,7 +56,7 @@ and static method are bounded using static binding at compile time
 Value of member variable cannot be changed
 Object reference cannot be changed
 Class cannot be inherited
-Method cannot be overriden
+Method cannot be Overriding
 
 
 # finally
@@ -83,12 +83,15 @@ A Java class is made up of a number of custom classes (written by programmers) a
 (which come pre-packed with Java). When program is executed, JVM needs to load the content of the needed class.
 JVM uses class loader to find the classes.
 
-Bootstrap Class Loader - Loads all the Java core files
-Extension Class Loader - Loads all classes from extension directory
-System Class Loader - Loads all classes from CLASSPATH
+- Bootstrap Class Loader : Loads all the Java core files
+- Extension Class Loader : Loads all classes from extension directory
+- System Class Loader : Loads all classes from CLASSPATH
 
 When JVM needs to find a class, it starts with System Class Loader. If it is not found, it checks with Extension Class Loader.
 If it not found, it goes to the Bootstrap Class Loader. If class is still not found, a ClossNotFoundException is thrown.
++---------------------------------------------------------------------------------------------------+
+| System Class Loader -> Extension Class Loader -> Bootstrap Class Loader -> ClossNotFoundException |
++---------------------------------------------------------------------------------------------------+
 
 
 # Autoboxing
@@ -111,8 +114,8 @@ Two wrapper objects created using boxing are same object
 +--------------------------------------------------+
 | Integer nineC = 9;                               |
 | Integer nineD = 9;                               |
-| System.out.println(nineA == nineB); // true      |
-| System.out.println(nineA.equals(nineB)); // true |
+| System.out.println(nineC == nineD); // true      |
+| System.out.println(nineC.equals(nineD)); // true |
 +--------------------------------------------------+
 
 Wrapper classes are final and immutable.
@@ -156,8 +159,8 @@ You cannot override static method in Java because they are resolved at compile t
 
 Initialization blocks - code which runs when an object is created or class is loaded.
 There are two types of Initialization blocks.
-- Static Initializer: Code runs when a class is loaded
-- Instance Initializer: Code runs when a new object is created
+- Static Initializer : Code runs when a class is loaded
+- Instance Initializer : Code runs when a new object is created
 
 
 # What is static initializer
@@ -181,18 +184,25 @@ initializer is run only once.
 
 # What is Regular Expression
 
-Regular Expression makes parsing, scanning and splitting a string very easy.
-Java classes Pattern, Matcher and Scanner
+Regular Expression makes parsing, scanning and splitting a String very easy.
+Java classes:
+- Pattern
+- Matcher
+- Scanner
 
 
 # Enum
 
 Sometimes you need to define connected constants like
-public static final int MONDAY = 0
++------------------------------------+
+| public static final int MONDAY = 0 |
++------------------------------------+
 
 You can do this using enum
-enum Weekday {MON, TUE,.. };
 Now weekday is data type with values Weekday.MON
++--------------------------+
+| enum Weekday {MON, TUE}; |
++--------------------------+
 
 +--------------------------------------------+
 | public Enum Size { SMALL, MEDIUM, LARGE; } |
@@ -251,7 +261,7 @@ The result should be assigned to a new reference variable (or some variable can 
 Where are String literals store in memory?
 All strings literals are stored in "String constant pool". If compiler finds a String literal, it checks if
 it exists, it is reused.
-Following statement creates 1 String object (created on pool) and 1 referece varable
+Following statement creates 1 String object (created on pool) and 1 referenced variable
 +------------------------+
 | String str1 = "Value"; |
 +------------------------+
@@ -261,17 +271,21 @@ Following piece of code created 2 objects
 +----------------------------------------------------------------------+
 | // 1. String Literal "Value" - created in the "string constant pool" |
 | // 2. String object - created on the heap                            |
+| String str1 = "Value"                                                |
 | String str2 = new String("Value");                                   |
 +----------------------------------------------------------------------+
 
 Some methods:
-.charAt(), .length(), .equalsIgnoreCase(), .substring()
+.charAt()
+.length()
+.equalsIgnoreCase()
+.substring()
 
 
 # toString method
 
-Is used to print a content of an object. If not overriden default implementation is printed.
-It pronts hashCode and class name. If is overriden new content is printed
+Is used to print a content of an object. If not overridden default implementation is printed.
+It prints hashCode and class name. If is overridden new content is printed
 
 
 # Interfaces
@@ -287,16 +301,18 @@ to extort sorting behavior.
 
 You cannot put instance variables. Interface determines behavior not state of object.
 You can provide default implementation of interface. Mark such method with default modifier
-public interface IntSequence {
-    default boolean hasNext() {return true; }
-}
++-----------------------------------------------+
+| public interface IntSequence {                |
+|     default boolean hasNext() {return true; } |
+| }                                             |
++-----------------------------------------------+
 
 Keyword super allows to call super type methods
 Comparable interface when class want to allow sort their elements Comparable.
 Callback - code fragment is call as a result on user response
 Interface is used heavily in API to define contract of a class.
 You cannot create non abstract method in interface. All methods are for default abstract.
-
+Since Java8 methods in interfaces can contain default methods, static and abstract.
 
 # Class Object
 
@@ -311,7 +327,7 @@ clone
 
 Cannot instantiate abstract class
 Are needed during inheritance
-Want something to be overriden to not forget about it later
+Want something to be overridden to not forget about it later
 Additional responsibilities added to class
 
 
@@ -351,6 +367,60 @@ If part cannot exists without whole the relationship between two class is known 
 Composition refers to defining behavior by member variables a class includes
 Inheritance refers to defining behavior by the interfaces or classes that a class inherits from
 Composition = "has-a", Inheritance = "is-a"
+
+
+# Association
+
+The Association relationship indicates that class know about and holds reference to another class.
+Association can be described as "has-a" relationship
+
++-------------------------+           +----------------------------+
+| public class Cannon {   |           | public class Plane {       |
+|   private Plane target; |           |     private Cannon target; |
+|   private int posX;     +---------->+     private int posX;      |
+|   private int posY;     |           |     private int posY;      |
+|   private int damage;   |           |     private int damage;    |
+|   ...                   |           |     ...                    |
+| }                       |           | }                          |
++-------------------------+           +----------------------------+
+
+
+# Aggregation
+
+One object is User of another object.
+
++-----------------------------+       +----------------------------+
+| public class Organization { |       | public class Person {      |
+|   private List employees;   +-----<>+   private String name;     |
+| }                           |       | }                          |
++-----------------------------+       +----------------------------+
+
+
+# Composition
+
+One object is an owner of another.
+
++---------------------------------------------+         +------------------------+
+| public class Car {                          |         | class Engine {         |
+|   // final make sure that will be initiated +------<*>+   private String type; |
+|   private final Engine engine;              |         | }                      |
+|   public Car() {                            |         +------------------------+
+|       engine = new Engine();                |
+|   }                                         |
+| }                                           |
++---------------------------------------------+
+
+Relations between objects only differ in their strength. Composition strongest relationship, accosiation the most general.
+
++-------------------------------+
+|   ASSOCIATION                 |
+|   +-------------------------+ |
+|   |   AGGREGATION           | |
+|   |   +-------------------+ | |
+|   |   |   COMPOSITION     | | |
+|   |   +-------------------+ | |
+|   +-------------------------+ |
++-------------------------------+
 
 
 # How are the Strategy Pattern and Dependency Injection related ?
@@ -943,12 +1013,12 @@ serialization process
 ######################
 
 It's a map implementation
-A map is an associative array data structure "key1"->value, "hey2"->value
+A map is an associative array data structure "key1"->value, "key2"->value
 
 Hashing: transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
 A shorter value helps in indexing and faster searches.
 
-In Java every object has a method public int hashcode() that will return a hash value for given object.
+In Java every object has a method public int hashCode() that will return a hash value for given object.
 
 If two object are equal they should have the same hashcode as well.
 Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
@@ -1428,7 +1498,7 @@ TreeSet
 TreeSet implements Set, SortedSet and NavigableSet interfaces. TreeSet is similar to HashSet except
 that it stores elements in sorted order.
 Some methods:
-lower(), floor(), higher(), cailing()
+lower(), floor(), higher(), ceiling()
 +----------------------------------------+
 | Set<String> treeSet = new TreeSet<>(); |
 +----------------------------------------+
@@ -1482,6 +1552,7 @@ pool, peek methods return null to signal failure. In that reason insert null val
 LinkedBlockingQueue
 ArrayBlockingQueue
 
+
 # PriorityQueue
 
 Implements Queue interface.
@@ -1512,7 +1583,7 @@ HashTable & Vector use this approach
 Post Java 5 collections using new approach to synchronization are available in Java.
 These are concurrent collections
 +--------------------------------+--------------------------------+
-|SYNCHRONIZED                    | CONCURRENT                     |
+| SYNCHRONIZED                   | CONCURRENT                     |
 +--------------------------------+--------------------------------+
 | Use synchronized               | New approach to thread safety  |
 | methods and blocks             |   - Copy on Write              |
@@ -1595,7 +1666,7 @@ It perform better if number of reader are greater than the number of writer thre
 
 In programming an atomic action is one that effectively happens all at once. An atomic action cannot stop in the middle.
 It either happens completely or it doesn't happen at all. No side effect of an atomic action are visible until the action is completed.
-Even small operation like i++ id not thread safe. Operation involves three steps:
+Even small operation like i++ is not thread safe. Operation involves three steps:
 - Read the value which is currently stored in i
 - Add one to it (atomic operation)
 - Store it in i
@@ -1636,10 +1707,11 @@ LinkedList uses Linked representation. Each object holds a link to the next elem
 ArrayList, but searching is slower.
 
 # HashMap, Collections.synchronizedMap, ConcurrentHashMap
+
 The Map object is an associative containers that store elements, formed by a
 combination of a unique identify key and a mapped value. If very highly concurrent
 application in which may want to modify or read key value in different threads then
-it's ideal to use Concurrent Hashmap.
+it's ideal to use ConcurrentHashMap.
 If multiple threads access a hash map concurrently, and at least one of the threads
 modifies the map structurally, it must be synchronized externally to avoid inconsistent
 view of contents.
@@ -1660,7 +1732,7 @@ ConcurrentHashMap
 - Thread safe without synchronizing whole map
 - Reads happen very fast while write is done with a lock
 - Not locking at object level
-- Lock is at hashmap bucket level
+- Lock is at HashMap bucket level
 - Does not throw ConcurrentModificationException if one thread tries to modify it while another is iterating over it
 - Uses multitude of locks
 
@@ -1671,6 +1743,7 @@ SynchronizedHashMap
 - Locking the entire collection leads to performance overhead
 - May cause contention
 - Returns iterator which fail fast on concurrent modification
+
 
 ##########
 # Java 8 #

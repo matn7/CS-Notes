@@ -20,14 +20,16 @@ public class BubbleSort {
     public static void swap(int[] listToSort, int iIndex, int jIndex) {
         int temp = listToSort[iIndex];
         listToSort[iIndex] = listToSort[jIndex];
-        listToSort[jIndex] = temp;
+        listToSort[jIndex] = temp; // listToSort[iIndex]
     }
 
     public static void bubbleSort(int[] listToSort) {
         for (int i = 0; i < listToSort.length; i++) {
-            boolean swapped = false;
-            for (int j = listToSort.length - 1; j > i; j--) {
+            boolean swapped = false; // if no swap array is fully sorted, required one extra step
+            for (int j = listToSort.length - 1; j > i; j--) { // sorts from right side
+                System.out.println("j: " + listToSort[j] + " , j-1: " + listToSort[j-1]);
                 if (listToSort[j] < listToSort[j - 1]) {
+                    System.out.println("Swapped: " + listToSort[j] + " , with " + listToSort[j-1]);
                     swap(listToSort, j, j-1);
                     swapped = true;
                 }
