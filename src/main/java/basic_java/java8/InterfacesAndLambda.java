@@ -125,6 +125,12 @@ public class InterfacesAndLambda {
 
         // @FunctionalInterface
         // Tworzy nowy interfejs funkcyjny
+
+        // Lokalne klasy wewnętrzne
+        // Możesz definiować klasę wewnątrz metody. Taka klasa jest nazywana klasą lokalną.
+        // Klasa lokalna nie jest deklarowana jako publiczna lub prywatna, ponieważ nie jest dostępna spoza metody.
+        // Zalety nazwa klasy ukryta wewnątrz metody. metody klasy mogą zyskiwać dostęp do zmiennych zewnętrznych, tak
+        // jak w przypadku wyrażeń Lambda.
     }
 
     private static void repeat(int n, Runnable action) {
@@ -133,5 +139,7 @@ public class InterfacesAndLambda {
         }
 
     }
+
+
 
 }

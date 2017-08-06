@@ -4,19 +4,20 @@
 
 # Factory Pattern
 
-Provides one of the best ways to create an obect. In Factory pattern create oject without exposing
+Provides one of the best ways to create an object. In Factory pattern create object without exposing
 the creation logic to the client and refer to newly created object using a common interface.
 Factory pattern on database connection.
 Create interface IDataBase common across all databases. Create database classes MySql and Oracle.
 Each of these DB implements IDataBase interface.
-To make switchover between classes use config file and reflection mehanism.
+To make switchover between classes use config file and reflection mechanism.
 Config file is text file used to specify inputs that the application uses at runtime. Code now does not to be
-recompiled and rereleased.
+recompiled and re released.
 IDataBase database = DatabaseFactory.getDatabase()
 
 Basic idea of factory pattern is to decouple implementation of a class from its use.
 Create a mechanism for many alternative implementations to be instantiated from a single method.
-Factory obects create a dingle family of classes.
+Factory objects create a dingle family of classes.
+
 
 # Abstract Factory
 
@@ -35,19 +36,19 @@ abstracting away CREATION and IMPLEMENTATION details from the user.
 
 # Singleton Pattern
 
-One object of particular class ins needed. Device Drivers, Registry Settings. Singleton objects
+One object of particular class is needed. Device Drivers, Registry Settings. Singleton objects
 make sense when the state of an object consumes a lot of memory, and just one version of that state
 is sufficient for entire application.
 Singleton objects must satisfy two attributes: Exactly one instance of object should exists.
 Everyone should be able to access it, global point of access.
 Standard parts of implementing the Singleton are Private Constructor, Synchronized getter for the Singleton.
 
-Double checked locking in software enginnering is software design pattern used to reduce the overhead of acquiring a lock,
+Double checked locking in software engineering is software design pattern used to reduce the overhead of acquiring a lock,
 by first testing the locking creation, without actually acquiring the lock.
 
 Singleton classes should never be subclassed or extended.
 
-Make sure your sigleton object can't be cloned. Make sure that singleton class does not implement cloneable, or if
+Make sure your singleton object can't be cloned. Make sure that singleton class does not implement cloneable, or if
 it does override the clone() method to throw Exception.
 
 
@@ -56,7 +57,7 @@ it does override the clone() method to throw Exception.
 When you know exactly what object you need use a constructor.
 When you don't know exactly what object is needed but you want to be able to decide at runtime from a family of objects.
 Use factory pattern.
-When you know beforehead exactly what object you need but that object has to be build up slowely as user inputs comes in.
+When you know beforehand exactly what object you need but that object has to be build up slowly as user inputs comes in.
 Use Builder pattern.
 In API StringBuilder for example.
 Allow object to be created in a step-by-step manner.
@@ -69,7 +70,7 @@ When an object if class can be created as a clone of another object of that clas
 Class has a constructor that takes in another object of the same class.
 Such constructor is called a copy constructor.
 In Java this functionality is effected not via constructor, but rather via the clone method of the interface Cloneable.
-To clone object: Clone the parent portion on object, cone each member variable of this object.
+To clone object: Clone the parent portion on object, clone each member variable of this object.
 When a class inherits from another class, every object of the child class has an actual copy of the parent inside.
 The child class may not know how to clone the member variable of the parent class. So the first line of the clone
 method of any class should always be super.clone()

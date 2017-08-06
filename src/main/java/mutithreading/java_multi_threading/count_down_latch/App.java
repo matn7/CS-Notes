@@ -10,7 +10,8 @@ import java.util.concurrent.Executors;
 // Problems with synchronization
 class Processor implements Runnable {
 
-    // Thread safe class
+    // Thread safe class.
+    // CountDownLatch is used when we want to synchronize operations.
     private CountDownLatch latch;
 
     public Processor(CountDownLatch latch) {
@@ -21,13 +22,14 @@ class Processor implements Runnable {
     public void run() {
         System.out.println("Started");
         System.out.println(latch.toString());
+        // 3 s delay
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // value specified in constructow will be count down
+        // value specified in constructor will be count down
         latch.countDown();
     }
 }
@@ -40,6 +42,7 @@ public class App {
         CountDownLatch latch = new CountDownLatch(3);
         ExecutorService executorService = Executors.newFixedThreadPool(3);
         for (int i = 0; i < 3; i++) {
+            // submit accepts Runnable and Callable
             executorService.submit(new Processor(latch));
         }
         // Waits until countdown latch reach 0

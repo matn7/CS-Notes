@@ -25,7 +25,7 @@ public class Main {
 
         System.out.println("Before sorting: " + listOfStrings);
 
-        // Step3: Sort list of strings. But when Panda on the first position on the list
+        // Step3: Sort list of strings. But when Panda word it must appears first
         Collections.sort(listOfStrings, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {

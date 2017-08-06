@@ -32,6 +32,7 @@ public class App {
      /*   Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
 */
+        System.out.println("Interrupted is about to be called soon");
         t1.interrupt();
         t1.join();
         System.out.println("Finished");

@@ -5,7 +5,7 @@ package designPatterns.structural.decorator;
  */
 public class Pizza implements Order {
     // Class that must be decorated implements interface Order
-    // Decorator means dynamically ad responsibilities to object
+    // Decorator means dynamically add responsibilities to object
 
     private String label;
     private double price;

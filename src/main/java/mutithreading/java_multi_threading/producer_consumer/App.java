@@ -10,7 +10,7 @@ import java.util.concurrent.BlockingQueue;
 public class App {
 
     // BlockingQueue, ArrayBlockingQueue
-    private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(10);
+    private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(10); // 10 is capacity
 
     public static void main(String[] args) {
         Processor processor = new Processor();
@@ -18,7 +18,7 @@ public class App {
             @Override
             public void run() {
                 try {
-                   // producer();
+                   // produce - put item on the queue
                     processor.produce();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -30,7 +30,7 @@ public class App {
             @Override
             public void run() {
                 try {
-                    //consumer();
+                    // consume - take item from a queue
                     processor.consume();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -42,7 +42,7 @@ public class App {
         t2.start();
     }
 
-    private static void producer() throws InterruptedException {
+/*    private static void producer() throws InterruptedException {
         Random random = new Random();
         while (true) {
             queue.put(random.nextInt(100));
@@ -58,6 +58,6 @@ public class App {
                 System.out.println("Taken value: " + value + ". Queue size is: " + queue.size());
             }
         }
-    }
+    }*/
 
 }

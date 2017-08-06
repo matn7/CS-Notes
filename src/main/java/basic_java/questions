@@ -1830,12 +1830,12 @@ Arrays.stream(new String[]{"Ram", "Tam", "Tam"})
     .sorted()
     .forEach(System.out::println);
 In general any use of streams involves.
--source - Creating or use existing stream
--Intermediate Operations - returns new stream
--Terminal operation - consume the stream print
+- source : Creating or use existing stream
+- Intermediate Operations : returns new stream
+- Terminal operation : consume the stream print
 Intermediate Operations are of two parts
--Stateful - elements need to be compared against each others (sort)
--Stateless - no need for comparing with other element (map, filter)
+- Stateful : elements need to be compared against each others (sort)
+- Stateless : no need for comparing with other element (map, filter)
 
 
 # Optional
@@ -3046,7 +3046,7 @@ An object announces updates to its value, and other objects can read to these up
 The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified
 
 
-# How are properties and bindings different from eah other
+# How are properties and bindings different from each other
 
 Properties are ONE:ONE, bindings are ONE:MANY
 

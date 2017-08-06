@@ -5,15 +5,15 @@
 # Decorator Pattern
 
 Dynamically add responsibilities to objects
-On example File API in Java
+For example File API in Java
 Adding new functionality to existing class should be easily done while extending the class
 inherited from it we use it within a composite or any other way. You should not force user
-to modfy this class in order to change functionality, Java does it via Decorator Pattern.
+to modify this class in order to change functionality, Java does it via Decorator Pattern.
 
-All input streams derive from common abstract class InputStream which constins standard operations shared by all streams.
+All input streams derive from common abstract class InputStream which contains standard operations shared by all streams.
 read(), close(), reset()
 There is a separate class deriving from input stream
-FileInputStream, ObectInputStream, AudioINputStream.
+FileInputStream, ObectInputStream, AudioInputStream.
 InputStream object can be chained to get more input stream objects, this chaining of objects
 all of which descend from the same interface or abstract based class.
 It is crucial that the decorators be independent of each others. No decorator should know the
@@ -24,9 +24,9 @@ Decorator objects are usually chained together, and should never know any detail
 
 # Adapter Pattern
 
-Adapter is device that converts attributes of one electrical device or system to these of an otherwise incompatiblie device o system.
+Adapter is device that converts attributes of one electrical device or system to these of an otherwise incompatible device or system.
 An adapter takes in an object that implements an interface and gives out an object that implements different interface.
-In Java convertc array on list, JavaFX Framework tables and charts.
+In Java convert array on list, JavaFX Framework tables and charts.
 
 
 # Facade Pattern

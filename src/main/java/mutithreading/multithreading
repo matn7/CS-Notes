@@ -7,7 +7,7 @@ The default single Thread is called main thread
 Processes vs Threads
 Every program runs in its own process.
 A process can 'spawn off' multiple threads
-Even if process does not create any threads, iy still has the main default thread which is being executed.
+Even if process does not create any threads, it still has the main default thread which is being executed.
 In a program different threads have instructions that maybe executed simultaneously
 But all of these threads are controlled by the same process
 
@@ -31,7 +31,7 @@ Both these ways make use of the Command Pattern
 
 Command Pattern separates the execution of an action from the Action itself
 In threading we define the action that we would like the New Thread to undertake
-And wrap that Action in the Body of an Object that implements an interfacewith just one method
+And wrap that Action in the Body of an Object that implements an interface with just one method
 Callable Runnable
 
 Thread Object
@@ -48,8 +48,8 @@ Creating a Runnable object is the preffered solution because it nicely separates
 Call the .start() method on the thread object
 
 Thread Interrupts
-Java provides a way for threads to interrupt other threads, and to check if they themeselves have been interrupted.
-To interrupt another thread, call the '.interrpt()' member function on that thread
+Java provides a way for threads to interrupt other threads, and to check if they themselves have been interrupted.
+To interrupt another thread, call the '.interrupt()' member function on that thread
 You might do this if for instance some threads is taking too long to do something that it ought to
 There are two ways for thread to check if it has been interrupted
 Catch an INTERRUPTEDEXCEPTION
@@ -61,7 +61,7 @@ Calling thread on another thread is similar to calling sleep on the current thre
 Like .sleep(), the .join() method throws an interrupted exception if the thread is interrupted before it finishes execution
 
 Synchronization
-In Java threading support, threads mostly comminicate with each other via shared objects or shared member variables
+In Java threading support, threads mostly communicate with each other via shared objects or shared member variables
 within the same object.
 Three types of complications can arise from this
 Thread interfarence
@@ -72,10 +72,10 @@ Thread Contention
 Threads get in each others way and slow down or sometimes even have to be killed by Java
 
 Thread Interference and memory consistency error
-If two threads access the same variable, it's bossible for them to get in each others way.
-That's because Java might switch execution from one threa to another even midway through a simple seemingly aromic instruction
+If two threads access the same variable, it's possible for them to get in each others way.
+That's because Java might switch execution from one thread to another even midway through a simple seemingly atomic instruction
 For instance two threads incrementing the same variable could simply lose one of the two increments
-Solution make ure a section of code is only accessed by one thread at a time
+Solution make sure a section of code is only accessed by one thread at a time
 Restricting access to an object or a variable - akin locking the variable so only thread can access at a time
 is a powerful concept used widely in computer science especially in databases. The synchronized keyword
 Locking variables correctly can eliminate thread interference and memory consistency errors.
@@ -88,20 +88,20 @@ This lock is usually always open i.e. any number of threads can access the objec
 But it's possible to specify that a thread can only execute a section of code once it has acquired th lock
 on same object.
 If some other thread currently holds that lock, the current thread must wait it's turn.
-This i achived using the synchronized keyword.
+This i achieved using the synchronized keyword.
 Any method in Java can be marked as synchronized.
-Remeber that the only one thread at a time only applies to the same method of the same object
-Doing so eans that only one thread can be executing this member function on this object at a given point in time.
+Remember that the only one thread at a time only applies to the same method of the same object
+Doing so means that only one thread can be executing this member function on this object at a given point in time.
 So if for instance the method does something to a static class variable errors can still result.
-Using right marking a method as syncronized can help eliminate thread interference and memory consistency error
+Using right marking a method as synchronized can help eliminate thread interference and memory consistency error
 
 Synchronized blocks of code
 Since every object in Java has an intrinsic lock associated with it, it is actually possible to lock
 any section of code by marking it as synchronized.
-In general any object can be used as a lock using the synchronzed statement.
-In fact making a method as synchrnonized is marely a shortcut to marking the entire ody of the method as synchronized
+In general any object can be used as a lock using the synchronized statement.
+In fact making a method as synchronized is marely a shortcut to marking the entire ody of the method as synchronized
 on 'this'.
-Thread never gets blocked on itself, which means that one synchronized method af an object can always call
+Thread never gets blocked on itself, which means that one synchronized method of an object can always call
 another synchronized method of the same object without blocking.
 
 Thread contention
@@ -115,8 +115,8 @@ Some threads keep locks greedly. And cause other threads to be uable to get anyt
 
 NEW SCHOOL LIBRARIES - CALLABLES, EXECUTORS
 CALLABLE
-Is a new interface similar to runnale. Used to specify code to run on a new thread, but with 2 major
-imporovements over Runnable
+Is a new interface similar to runnable. Used to specify code to run on a new thread, but with 2 major
+improvements over Runnable
 EXECUTORS
 Are a high level abstraction for threads, this means a programmer need never directly work with thread
 objects now
@@ -124,14 +124,14 @@ THREAD POOLS
 Any serious threading needs a lot of threads, and in the old days programmers had to build their own
 thread Banks
 LOCK OBJECTS
-All Java objects have an intrinsic lock but lock objects hava a way to try and acquire, and back off if
+All Java objects have an intrinsic lock but lock objects have a way to try and acquire, and back off if
 doing so would cause livelock, deadlock
 CONCURRENT COLLECTIONS
 ATOMIC VARIABLES
 
 MODERN MULTI-THREADING
 IMPLEMENT THE CALLABLE INTERFACE
-Callable has 2 advantages over runable.
+Callable has 2 advantages over runnable.
 1. It is a generic class tha explicitly returns the thread result (so no shared memory to be relied upon).
 2. It correctly Passes Exceptions from one thread to another
 SUBMIT THE CALLABLE To AN EXECUTOR OBJECT,
@@ -141,14 +141,14 @@ possible to submit the callable object to a thread pool (Rather than having to i
 If tou need to interrupt THE OPERATION MIDWAY, CALL FUTURE.CANCEL
 The future object is a generic object that will take the output of callable .call and send it back to the main thread.
 Calling Future.cancel is like calling thread.interrupt in old way. Executor is an excellent abstraction for thread pools.
-Wich were widely used, but easy to get wrong.
+Which were widely used, but easy to get wrong.
 FUTURE.GET TO WAIT FOR THE CALLABLE TO FINISH RUNNING
 This is a blocking call, i.e. it will simply wait until the underlying callable .call has finished running.
 Future.GET will also relay on any exception thrown in the callable. This is a huge debugging aid.
 
 THE SINGLETON PATTERN
 There are situations where exactly one object of particular type is needed.
-Device Drivers, Registry Setting managers, or other syste wide shared objects.
+Device Drivers, Registry Setting managers, or other system wide shared objects.
 Singleton object also makes sense where the state of an object consumes a lot of memory, and just one version of that
 state is sufficient for the entire application.
 In such situations, a standard and widely used way of achieving this is via Singleton Pattern.
@@ -156,12 +156,12 @@ Singleton object must satisfy two attributes:
 - Exactly one instance of object should exists
 - Everyone ought to be able to access that one singleton object. Object needs to be globally accessible.
 
-Marking the getter as sunchronized can lead to quite a performance hit:
+Marking the getter as synchronized can lead to quite a performance hit:
 1. Eagerly instantiate the singleton (no need to synchronize getter after that).
 Make singleton class variable volatile in this case.
 2. Double checked locking  mark the member variable as volatile.
 Use a standard double checked locking test so the synchronization penalty is only interrupted the first time, when the Singleton is null.
-On al subsequent calls, the penalty is avoided. The use of the volatile keyword then prevents any thread from reading
+On all subsequent calls, the penalty is avoided. The use of the volatile keyword then prevents any thread from reading
 a state version of the Singleton.
 Declaring a VOLATILE Java variable means the value of the variable will never be cached thread-locally. All reads
 and writes will go straight to main memory. Access to the variable acts as through it is enclosed in a synchronized block,
