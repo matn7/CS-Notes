@@ -22,7 +22,8 @@ public class MultithreadingProgramming {
     // Blokada zapewnia, że tylko jeden wątek w danej chwili wykonuje krytyczny fragment kodu.
     // Zadanie, które można przerwać powinno konczyć działanie gdy ustawiona jest flaga interrupted lub pojawi się wyjątek InterruptedException.
     // Klasa Process pozwala wykonywać polecenia w oddzielnych procesach oraz wchodzić w interakcję ze strumieniem wejściowym, wyjściowym lub błędów.
-    
+    private static volatile int licznik = 0;
+
     public static void main(String[] args) {
         // Zadania współbieżne
         // Uruchomienie zadania
@@ -50,6 +51,57 @@ public class MultithreadingProgramming {
         // metody get() jest zablokowana dopóki nie pojawi się wynik lub nie zostaie przekroczony czas wykonywaia.
         // metoda cancel() próbuje anulować zadanie.
         // ExecutorCompletionService zwraca wartość Future w takiej kolejności w jakiej kończą działanie.
+
+        // Bezpieczeństwo wątków
+        // Widoczność
+        // Miejsca w pamięci takich jak zmienna done niczym o bitach gdzieś w tranzystorach układu RAM.
+        // Pamięci RAM są powolne - kilka razy wolniejsze niż nowoczesne procesory. Procesor próbuje przechowywać potrzebne dane w rejestrach
+        // lub pamięci podręcznej na płycie głównej i w ostateczności przepisuje zmieny w pamięci.
+        // Ta pamięć podręczna jest niezastąpiona, jeśli chodzi o wydajność procesora.
+        // Kompilator i maszyna wirtualna i procesor mogą zmieniać kolejność instrukcji, aby przyspieszyć wykonywanie operacji,
+        // pod warunkiem, że nie zmienu to semantyki programu.
+
+        // Sposoby zapewniania widoczności aktualizacji zmiennej:
+        // 1. Wartość zmiennej final jest widoczna po inicjalizacji.
+        // 2. Początkowa wartość zmiennej statycznej jest widoczna po inicjalizacji statycznej.
+        // 3. Zmiany zmiennej z modyfikatorem volatile są widoczne.
+        // 4. Zmiany wprowadzone przed zwolnieniem blokady są widoczne dla każdego poberającego tę blokadę.
+
+        // Wspaniałym pomysłem jest deklarowanie każdego pola, które nie zmienia się po inicjalizacji jako final.
+        // Dizęki temu nie będzie problemu z widocznością.
+
+        // Wyścigi
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                licznik++; // Zadanie 1
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                licznik++; // Zadanie 2
+            }
+        });
+        t2.start();
+        /*
+         int licznik = 0; // Początkowa wartość
+         rejestr1 = licznik + 1; // Wątek 1 oblicza licznik + 1
+         ..// Wątek 1 jest wywłaszczany
+         rejestr2 = licznik + 1; // Wątek 2 oblicza licznik + 1
+         licznik = rejestr2; // Wątek 2 zapisuje 1 e licznik
+         // Wątek 1 zaczyna ponownie działąnie
+         licznik = rejestr1; // Wątek 1 zapisuje 1 w licznik
+         */
+
+        // W tym wypadku licznik ma wartość 1 a nie 2. To się nazywa wyścig (race condition) ponieważ zależy od tego który wątek
+        // wygra wyścig i pierwszy zaktualizuje współdzieloną zmienną.
+
+        // Strategie bezpiecznego korzystania ze współbieżności
+        // Ograniczenie : unikaj współdzielenia danych pomiędzy zadaniami. Na przykład gdy Twoje zadania muszą coś zliczyć, utwórz w każdym
+        // z nich oddzielny licznik, zamiast aktualizować wspólny liczik
+
     }
 
 }
