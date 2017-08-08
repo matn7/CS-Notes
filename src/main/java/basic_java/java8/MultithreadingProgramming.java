@@ -100,8 +100,52 @@ public class MultithreadingProgramming {
 
         // Strategie bezpiecznego korzystania ze współbieżności
         // Ograniczenie : unikaj współdzielenia danych pomiędzy zadaniami. Na przykład gdy Twoje zadania muszą coś zliczyć, utwórz w każdym
-        // z nich oddzielny licznik, zamiast aktualizować wspólny liczik
+        // z nich oddzielny licznik, zamiast aktualizować wspólny liczik. Gdy zadania zakończą działanie niech przekażą swoje wyniki do
+        // innego zadania które je połączy.
 
+        // Korzystanie z obiektów niemodyfikowalnych.
+        // Współdzieleni niemodyfikowalnych obiektów jest bezpieczne.
+
+        // Stosowaie Blokad
+        // Dając tylko jednemu zadaniu dostęp do danych w danej chwili, można uchronić je przed uszkodzeniem.
+        // Możliwe jest partycjonowanie danych w taki sposób, by do różnych fragmentów można było odwoływać się w tym samym czasie.
+
+        // Klasy niemodyfikowalne
+        // Klasa jest niemodyfikowalna gdy jej instancje po utworzeniu nie mogą się zmieniać.
+        // Implementowanie niemodyfikowalnych klas:
+        // - Zmienne instancji z modyfikatorem final.
+        // - Żadna z metod nie może modyfikować danych
+        // - Nie pozwól przeciekać modyfikacjom.
+        // - Nie pozwól by referencja this wyszła poza konstruktor
+
+        // Algorytmy równoległe
+        // Strumienie równoległe
+        // Metoda parallelStream() zwraca strumień równoległy. Strumień jest podzielony na segmenty.
+        // Filtrowanie i zliczanie jest wykonywane dla każdego segmentu.
+        // Równoległe operacje na tablicach
+        // Arrays.parallelSort(words, Comparator.comparing(String::length));
+
+        // Struktury danych bezpieczne dla wątków
+        // Kolekcje z pakietu java.util.concurrent zostały sprytnie zaimplementowane tak że wiele wątkó może z nich korzystać
+        // bez wzajemnego blokowania się, pod warunkiem, że będą uzyskiwały dostęp do różnych części struktury danych.
+        // Iterator małej spójności nie wyrzuci wyjątku ConcurrentModificationException.
+
+        // Klasa ConcurrentHashMap
+        // Mapa skrótów, na której operacje są bezpieczne dla wątków. Może wspierać dużą liczbę równoległych odczytów i pewną
+        // liczbę równoległych zapisów.
+        // Metoda compute() do bezpiecznego aktualizowania wartości.
+        // Metoda compute() jest atomowa.
+        // computeIfPresent, computeIfAbsent obliczają nową wartość jeśli istieje stara lub jeśli takiej wartości jeszcze nie ma.
+        // merge do dodawania klucza po raz pierwszy
+
+        // Kolejki blokujące
+        //Używana do synchronizacj zadań. Pozwala bezpiecznie przekazywać dane z jednego zadania do drugiego.
+        // Metody pool i peek zwracają null, by zasygnalizować niepowodzenie. Dlatego wstawianie wartości null do takich kolejek nie
+        // jest poprawne.
+        // LinkedBlockingQueue, ArrayBlockingQueue
+
+        // ConcurrentSkipListMap - działanie opiera się na porównywaniu kluczy.
+        // CopyOnWriteArrayList, CopyOnWriteArraySet - wszystkie metody modyfikujące wykonują kopię wykorzystywanej tablicy.
     }
 
 }
