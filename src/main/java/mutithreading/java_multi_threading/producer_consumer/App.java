@@ -38,8 +38,22 @@ public class App {
             }
         });
 
+        Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // consume - take item from a queue
+                    processor.consume();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         t1.start();
         t2.start();
+        t3.start();
     }
 
 /*    private static void producer() throws InterruptedException {

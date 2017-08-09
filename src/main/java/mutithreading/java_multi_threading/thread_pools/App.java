@@ -21,6 +21,7 @@ class Processor implements Runnable {
     @Override
     public void run() {
         System.out.println("Starting: " + id);
+        System.out.println(Thread.currentThread().getName());
 
         try {
             Thread.sleep(5000);

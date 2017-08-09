@@ -1,9 +1,13 @@
 package basic_java.java8;
 
+import java.text.NumberFormat;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Mati on 06.08.2017.
@@ -23,6 +27,10 @@ public class MultithreadingProgramming {
     // Zadanie, które można przerwać powinno konczyć działanie gdy ustawiona jest flaga interrupted lub pojawi się wyjątek InterruptedException.
     // Klasa Process pozwala wykonywać polecenia w oddzielnych procesach oraz wchodzić w interakcję ze strumieniem wejściowym, wyjściowym lub błędów.
     private static volatile int licznik = 0;
+    public static AtomicLong nastpenaLiczba = new AtomicLong();
+    public static AtomicLong najwieksza = new AtomicLong();
+    private int wartosc;
+    public static final ThreadLocal<NumberFormat> formatWalut = ThreadLocal.withInitial(() -> NumberFormat.getCurrencyInstance());
 
     public static void main(String[] args) {
         // Zadania współbieżne
@@ -146,6 +154,92 @@ public class MultithreadingProgramming {
 
         // ConcurrentSkipListMap - działanie opiera się na porównywaniu kluczy.
         // CopyOnWriteArrayList, CopyOnWriteArraySet - wszystkie metody modyfikujące wykonują kopię wykorzystywanej tablicy.
+
+        // Wartości atomowe
+        // Metoda incrementAndGet atomowo zwiększa AtomicLong i zwraca wartość po inkrementacji.
+        // Operacje pobrania wartości, dodania 1, zapamiętania jej i utworzenia nowej wartości nie mogą być przerwane.
+        long id = nastpenaLiczba.incrementAndGet();
+
+        // updateAndGet.
+        //najwieksza.updateAndGet(x -> Math.max(x, observed));
+        // największa.accumulateAndGet(observed, Math::max);
+
+        // Gdy masz bardzo dużą liczbę wątków korzystających z tych samych wartości atomowych, obniża się wydajność, ponieważ aktualizacje są
+        // wykonywane optymistycznie.
+        // Jeśli przewidujesz dużą rywalizację, powinieneś po prostu użyć LongAdder zamiast AtomicLong.
+        // increment, by zwiększyć licznik, lub add by dodać wartość i sum by pobrać licznik
+
+
+        // Blokady
+        // Blokady wielowejściowe
+        // Kod który musi być wykonany w całości bez przerwy, jest nazywany sekcją krytyczną (critical section)
+        Lock blokadaLicznika = new ReentrantLock();
+        int licznik = 0; // Współdzielony przez wiele wątków
+        blokadaLicznika.lock();
+        try {
+            licznik++; // sekcja krytyczna
+        } finally {
+            blokadaLicznika.unlock(); // zwlnienie blokady
+        }
+
+        // Z blokad powinno się korzystać w ostateczności. W pierwszej kolejności należy unikać współdzielenia, korzystając z niemodyfikowalnych
+        // danych lub przekazując modyfikowalne dane z jednego wątku do drugiego.
+        // Jeśli musisz współdzielić korzystaj z bezpiecznych dla wątków struktur takich jak ConcurrentHashMap lub LongAdder.
+
+        // synchronized
+        // Nie musisz korzystać z jawnej blokady, ponieważ w języku Java każdy obiekt ma wewnętrzną blokadę.
+        // Słowo kluczowe synchronized jest wykorzystywane do aktywowana wewnętrznej blokady.
+        Object obj = new Object();
+        synchronized (obj) {
+            // Sekcja krytyczna
+        }
+        // Jest to równoważne z
+        // obj.wewnetrznaBlokada.lock();
+        // try {
+        //      // sekcja krytyczna
+        // } finally {
+        //      obj.wewnetrznaBlokada.unlock();
+        // }
+
+        // Każdy obiekt ma wewnętrzną blokadę.
+        // monitor - klasa, w której wszystkie zmienne instancji są prywatne i wszystkie metody są zabezpieczone prywatną blokadą.
+
+        // Oczekiwanie warunkowe
+        // wait();
+        // Gdy wątek wywołuje metodę wait, wprowadza do obiektu zestaw wait. Wątek pozostaje nieaktywny, dopóki inny wątek
+        // nie wywoła notifyAll na tym samym obiekcie.
+        // notifyAll() reaktywuje wszystkie wątki zapisane w zestawie wait.
+        // Należy korzystać z klas syncronizjących CountDownLatch lub CyclicBarrier zamiast z wait i notifyAll.
+
+        // Wątki
+        // Każdy wątek ma status przerwany, który sygnalizuje że ktoś chce przerwać działanie wątku.
+        // Thread.currentThread().isInterrupted()
+
+        // Zmienne lokalne w wątku
+        // String kwota = formatWalut.get().format(suma);
+
+        // Stany wątków: nowy, uruchomiony, zablokowany, oczekujący, zakończony
+
+        // Obliczenia Asynchroniczne
+
+
+    }
+    public synchronized void method() {
+
+    }
+
+    // Jest to równoważne z
+    // public void method() {
+    //      this.wewnetrznaBlokada.lock();
+    //      try {
+    //          // Sekcja krytyczna
+    //      } finally {
+    //          this.wewnetrznaBlokada.unlock();
+    //      }
+    // }
+    public synchronized int increase() {
+        wartosc++;
+        return wartosc;
     }
 
 }

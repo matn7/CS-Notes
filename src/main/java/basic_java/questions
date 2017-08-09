@@ -555,6 +555,14 @@ Explicit casting would cause truncation of value if the value stored is greater 
 +-----------------------------------------------------------+
 
 
+# Variables in JAVA
+
+- Instance Variables (Non-Static Fields)
+- Class Variables (Static Fields) : one copy of this variable in existence.
+- Local Variables : methods stores its temporary state in local variables. Declared between {} in method. Accessible only in method declared.
+- Parameters : classified as variables.
+
+
 ##########################
 # Java Memory Management #
 ##########################

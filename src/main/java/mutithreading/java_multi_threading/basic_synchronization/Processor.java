@@ -5,7 +5,7 @@ package mutithreading.java_multi_threading.basic_synchronization;
  */
 public class Processor extends Thread {
 
-    // vloatinle value not cached read every time from main memory
+    // vloatile value not cached read every time from main memory
     private volatile boolean running = true;
 
     @Override

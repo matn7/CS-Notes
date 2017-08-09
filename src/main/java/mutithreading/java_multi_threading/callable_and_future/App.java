@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 public class App {
 
     // Return value from multithreading
-    // Callable - parametrized class in <> bracket. Between bracket but the return type
+    // Callable - parametrized class in <> bracket. Between bracket put the return type
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
         Future<Integer> future = executorService.submit(new Callable<Integer>() {

@@ -18,6 +18,7 @@ public class Processor {
         while (true) {
             synchronized (lock) {
                 while (list.size() == LIMIT) {
+                    // If we produced limit number wait
                     lock.wait();
                 }
                 list.add(value++);
@@ -31,6 +32,7 @@ public class Processor {
         while (true) {
             synchronized (lock) {
                 while (list.size() == 0) {
+                    // If we have nothing to take from list wait
                     lock.wait();
                 }
                 System.out.println("List size is: " + list.size());
