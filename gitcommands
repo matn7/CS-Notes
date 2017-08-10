@@ -19,6 +19,8 @@ git pull origin master                          # download latest changes from b
 git checkout <commit hash>                      # checkout (go back) to specific commit using <hash code>
 git checkout master                             # go back to master branch
 
+git diff
+
 ##############
 # .gitignore #
 ##############

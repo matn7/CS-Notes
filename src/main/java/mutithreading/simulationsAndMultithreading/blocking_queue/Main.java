@@ -9,6 +9,7 @@ import java.util.concurrent.BlockingQueue;
 public class Main {
 
     public static void main(String[] args) {
+        // (num) - capacity
         BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<String>(5);
         FirstWorker firstWorker = new FirstWorker(blockingQueue);
         SecondWorker secondWorker = new SecondWorker(blockingQueue);

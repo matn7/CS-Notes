@@ -1,5 +1,6 @@
 package basic_java.java8;
 
+import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -222,6 +223,25 @@ public class MultithreadingProgramming {
 
         // Obliczenia Asynchroniczne
 
+        // Klasa ComparableFuture
+        // W przypadku ComparableFuture określasz po prostu, co ma zostać wykonane i w jakiej kolejności.
+
+        // Procesy
+        // Aby uruchomić inny program użyj klasy ProcessBuilder i Process.
+        // Klasa Process wykonuje polecenie w oddzielnm procesie systemu operacyjnego i pozwala na interakcję ze
+        // strumieniami standardowego wejścia, wyjścia i błędów
+        // Klasa ProcessBuilder jest bardziej elastycznym zamiennikiem wywołań Runtime.exec.
+
+        // Tworzenie Procesu
+        // ProcessBuilder builder = new ProcessBuilder("gcc, "myapp.c");
+        // Strumień wejścia, wyjścia i błędu procesu. Każdy z nich jest potokiem.
+        // OutputStream processIn = p.getOutputStream();
+        // Strumień wejściowy procesu jest strumieniem wyjściowym maszyny wirtualnej. Zapisujesz do tego strumienia
+        // i to, co tam zapiszesz, pojawia się na wejściu procesu.
+
+        // Uruchomienie Procesu
+        // Metoda start na obiekcie ProcessBuilder
+        // Aby zakończyć process wywołaj destroy lub destroyForcibly. SIGTERM, SIGKILL.
 
     }
     public synchronized void method() {

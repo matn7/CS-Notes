@@ -25,6 +25,9 @@ public class Main {
 
     // Use when your system needs to create multiple families of products.
     // In Java UI toolkit different versions based on OS, Windows, OSX, LINUX
+
+    // Downsides - system will need to change. New attribute added to AbstractProduct or AbstractFactory, which would mean
+    // a change to the interface.
     public static void main(String[] args) {
         PlaneBuilder builder = new PlaneBuilder();
         AbstractPlaneFactory planeFactory = null;
