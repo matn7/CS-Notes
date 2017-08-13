@@ -15,7 +15,7 @@ public class Singleton {
     }
 
     // Use standard double check locking
-    // so that synchronizatio penalty is only
+    // so that synchronization penalty is only
     // interrupted the first time, when Singleton is
     // null. On all subsequent calls this penalty
     // is avoided. The use of volatile keyword then prevents any

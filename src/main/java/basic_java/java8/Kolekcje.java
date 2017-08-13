@@ -40,5 +40,40 @@ public class Kolekcje {
         for (String element : coll) {
             System.out.println(element);
         }
-    }
+
+        // Zestawy
+        // Wydajnie sprawdza czy wartość jest elementem, nie zachowuje informacji o tym w jakij kolejności elementy zostały dodae.
+
+        // Mapy
+        // Przechowują połączenie klucz-wartość.
+        // Aby przejść przez wszystkie klucze i wartości mapy, możesz przejść przez zestaw zwrócony przez metodę entrySet.
+        // for (Map.Entry<String, Integer> wpis : counts.entrySet()) {
+        //  String k = wpis.getKey();
+        //  Iteger v = wpis.getValue();
+        //  ..
+        // }
+        // counts.forEach((k,v) -> {
+        //      // Process k and v
+        // });
+
+        // Inne kolekcje
+        // Properties
+        // Klasa Properties implementuje mapę, która może być łatwo zapisana i wczytywana w postaci czystego tekstu.
+        // Takie mapy są używane do przechowwania opcji konfiguracyjnych programów.
+        // Przykłady: user.dir, os.name, os.arch
+
+        // Zestawy bitów
+        // BitSet przechowuje sekwencje bitów.
+
+        // Stosy, kolejki
+        // Stos to struktura danych pozwalająca na dodawanie i usuwanie elementów z jenego końca wierzchołka stosu.
+        // Kolejka pozwala wydajnie dodawać elementy po jednej stronie i usuwać z drugiej strony.
+
+        // Klasa WeakHashMap
+        // Struktura danych współpracująca z mechanizmem garbage collector, umożliwiając usuwanie par klucz-wartość
+        // w sytuacji, gdy jedna referencja do klucza istnieje w tej strukturze danych.
+        // WeakReference jeżeli obiekt jest dostępny jednynie za pomocą słabej referencji, garbage collector przejmuje go i umieszcza
+        // słabą referencję w kolejce związanej z obiektem WeakReference. Jeśli na obiekcie zostanie wywołana metoda
+        // , obiekt WeakHashMap sprawdza, czy w kolejce słabych referencji pojawiły się nowe elementy i usuwa związane z nmi elementy struktury.
+     }
 }
