@@ -15,17 +15,18 @@ Use to execute more tasks in one constructor
 Improve readability of code
 
 +-----------------------------------------+
-| public Temporary(int x, int y) {        |
+| public Temporary(int x, int y) {//23,34 |
 |    this(5);                             |
 |    System.out.print(" " + x * y + " "); |
 | }                                       |
-| public Temporary(int x) {               |
+| public Temporary(int x) {     //5       |
 |     this();                             |
 |     System.out.print(" " + x + " ");    |
 | }                                       |
 | public Temporary() {                    |
 |     System.out.print(" Default ");      |
 | }                                       |
+|//Temporary temp = new Temporary(23, 34);|
 |-> Default  5  782                       |
 +-----------------------------------------+
 
@@ -88,9 +89,9 @@ JVM uses class loader to find the classes.
 - System Class Loader : Loads all classes from CLASSPATH
 
 When JVM needs to find a class, it starts with System Class Loader. If it is not found, it checks with Extension Class Loader.
-If it not found, it goes to the Bootstrap Class Loader. If class is still not found, a ClossNotFoundException is thrown.
+If it not found, it goes to the Bootstrap Class Loader. If class is still not found, a ClassNotFoundException is thrown.
 +---------------------------------------------------------------------------------------------------+
-| System Class Loader -> Extension Class Loader -> Bootstrap Class Loader -> ClossNotFoundException |
+| System Class Loader -> Extension Class Loader -> Bootstrap Class Loader -> ClassNotFoundException |
 +---------------------------------------------------------------------------------------------------+
 
 
@@ -153,6 +154,16 @@ Static, variable (class variable), method (class method), block, nested class.
 Factories methods - static methods that returns new class instance.
 
 You cannot override static method in Java because they are resolved at compile time rather than runtime
+
+In Java6 it was possible to run program without main method by using static initialization block. It is not a case anymore.
++-----------------------------------------+
+| public class Foo {                      |
+|     static {                            |
+|          System.out.println("Message"); |
+|          System.exit(0);                |
+|     }                                   |
+| }                                       |
++-----------------------------------------+
 
 
 # What are Initialization Blocks
@@ -290,7 +301,7 @@ It prints hashCode and class name. If is overridden new content is printed
 
 # Interfaces
 
-All methods public abstract
+All methods public abstract (Since Java8 can also be static and default methods)
 All properties public static final
 
 Implement interfaces, want to imitate behavior of class
@@ -313,6 +324,7 @@ Callback - code fragment is call as a result on user response
 Interface is used heavily in API to define contract of a class.
 You cannot create non abstract method in interface. All methods are for default abstract.
 Since Java8 methods in interfaces can contain default methods, static and abstract.
+
 
 # Class Object
 
@@ -410,7 +422,7 @@ One object is an owner of another.
 | }                                           |
 +---------------------------------------------+
 
-Relations between objects only differ in their strength. Composition strongest relationship, accosiation the most general.
+Relations between objects only differ in their strength. Composition strongest relationship, ASSOCIATION the most general.
 
 +-------------------------------+
 |   ASSOCIATION                 |
@@ -571,8 +583,8 @@ Explicit casting would cause truncation of value if the value stored is greater 
 
 The stack
 +----+
-|+----+
-||+----+  PUSH  +---+   +     +    +---+  PULL, POP
+|+---++
+||+---++  PUSH  +---+   +     +    +---+  PULL, POP
 |||    |  --->  |   |   |     |    |   |  --->      FILO
 +||    |        +---+   |     |    +---+
  +|    |                |     |
@@ -585,6 +597,7 @@ All local variables are defined in stack.
 No more data after last }. Tide scoping.
 Local variable short lifetime.
 
+
 # Heap
 
 Longer lifetime store data
@@ -593,8 +606,8 @@ One heap for all threads, number of stacks for each Thread.
 
 The stack               The Heap
 +-------+              +---------------------+
-|+-------+             | String              |
-||+-------+            | Integer             |
+|+------++             | String              |
+||+------++            | Integer             |
 ||| int   |            |                     |
 +|| double|            |                     |
  +|       |            |                     |
@@ -606,18 +619,19 @@ String name = "Hello";
    Stack
 +----------+            +----------------------+
 |+--------+|            |   +------+           |
-||  name  ||---------\  |   |String|           |
+||  name  ++---------\  |   |String|           |
 |+--------+|          \ | +-+------+-+         |
-|+--------+|           \->|  Hello   |         |
+|+--------+|           \+>+  Hello   |         |
 || age=21 ||            | +----------+         |
 |+--------+|            |                      |
 |          |            |                      |
 +----------+            +----------------------+
 
-Java Memory - Runle
+Java Memory - Rule
 - Objects are stored on the heap
 - Variables are a reference to the object
 - Local variables are stored on the stack
+
 
 # Passing variables by value
 
@@ -634,6 +648,7 @@ Java Memory - Runle
 |    }                                             |
 | }                                                |
 +--------------------------------------------------+
+
 
 # How objects are passed
 
@@ -657,11 +672,11 @@ Passing Values
             |      +----------+                         |
 +-----+     |      | Customer |           +--------+    |
 |+---+|     |    +-+----------+-+         | String |    |
-|| c |+-----+--->|  +------+    |       +-+--------+-+  |
-|+---+|     |    |  | name |----+------>| Grazyna    |  |
+|| c |+-----+--->+  +------+    |       +-+--------+-+  |
+|+---+|     |    |  | name |----+------>+ Grazyna    |  |
 |     |     |    |  +------+    |       +------------+  |
 +-----+     |    +-----+--------+                       |
-            |          X                                |
+            |          X (break this reference)         |
             |          V                                |
             |    +-----+--+                             |
             |    | String |                             |
@@ -669,6 +684,7 @@ Passing Values
             |    | Betty  |                             |
             |    +--------+                             |
             +-------------------------------------------+
+
 
 # The "final" keyword
 
@@ -680,6 +696,7 @@ Can be assigned only once
 | c.setName("Robert"); // OK           |
 +--------------------------------------+
 
+
 # Immutable collections
 
 Collections.unmodifableMap()
@@ -688,7 +705,8 @@ Collections.unmodifableList()
 String three = new Integer(67).toString().intern(); // JVM optimizes of building object
 String four = "67";
 
-# GC
+
+# Garbage Collector
 
 In other languages you must state when an object is no longer needed by calling a method like free().
 Object that are not freed continue to consume memory ... this is a memory leak.
@@ -728,6 +746,7 @@ After that String John go to old generation.
 Actually it can be 8 GC, but the VM changes the number of generations based on the amount of memory available.
 
 Program VirtualGC to view some memory leaks
+
 
 # PermGen / MetaSpace
 
@@ -775,9 +794,11 @@ Young generation = 1/3 heap size
 -Xmn set the size of young generation
 -Xms256m
 
+
 # Generating heap dumps
 
--XX:HeapDumpOnOutOfMemory // creates a heapdump file "hprof"
+-XX:HeapDumpOnOutOfMemory // creates a heap dump file "hprof"
+
 
 # Choosing a GC
 
@@ -835,6 +856,7 @@ We need to override equals method, if we would want to compare the contents of a
 We can override equals method in the class to check the content of the objects.
 The implementation of equals method checks if the id's of both objects are equal.
 If so return true.
+
 +-------------------------------------+
 | @override                           |
 | public boolean equals(Object obj) { |
@@ -848,7 +870,7 @@ If so return true.
 Important things to consider when implementing equals method.
 - Reflexive: For any reference value x, x.equals(x) return true
 - Symmetric: For any reference values x and y, if x.equals(y) should return true if and only if y.equals(x) returns true.
-- Transtive: For any reference values x,y and z, if x.equals(y) returns true and y.equals(z) returns true,
+- Transitive: For any reference values x, y and z, if x.equals(y) returns true and y.equals(z) returns true,
     then x.equals(z) must retun true
 - Consistent: For any reference values x and y, multiple invocations of x.equals(y) consistently return true
     if no information used in equals is modified
@@ -879,6 +901,7 @@ Important things to consider when implementing equals method.
 
 Hash is integer number that identify an object.
 If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
+
 +--------------------------------------------+
 | @Override                                  |
 | public int hashCode() {                    |
@@ -891,10 +914,13 @@ If x and y are different objects, x.hashCode and y.hashCode should also be diffe
 +--------------------------------------------+
 
 HashCode must be compatible.
-if x.equals(y) return true, x.hashCode == y.hashCode.
+if x.equals(y) return true, x.hashCode() == y.hashCode().
 If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
 data structures HasSet, HashMap could be lost.
-Object.hash(some, some2);
+
++---------------------------+
+| Object.hash(some, some2); |
++---------------------------+
 
 HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
 A group of object's might share the same hashCode.
@@ -905,6 +931,7 @@ A good hashCode should have the following properties:
 - obj.hashCode() should return the same value when run multiple times, if values of obj used in equals() have not change.
 - if obj1.equals(obj2) is false, it is NOT required thet obj1.hashCode() is not equal to obj2.hashCode().
     Two unequals objects might have the same hashCode.
+
 +----------------------------------+
 | @Override                        |
 | public int hashCode() {          |
@@ -947,15 +974,17 @@ can be sent over a network or stored in a file.
 +--------+--------+                       +------+
          |                               /
   +------+------+     +-----------------+     +----------+
-  | Java Object |---->| Stream of bytes |---->| Database |
+  | Java Object +---->+ Stream of bytes +---->+ Database |
   +-------------+     +-----------------+     +----------+
                                          \
                                           +--------+
                                           | memory |
                                           +--------+
+
 Serialization helps us to save and retreive state of an object.
 -Serialization: convert object state to some internal object representation
 -Deserialization: To reverse convert internal representation to object
+
 Two important methods
 -ObjectOutputStream.writeObject(): serialize and write to file
 -ObjectInputStream.readObject(): read from file and deserialize
@@ -964,6 +993,7 @@ How to serialize object using Serializable interface
 To serialize object it should implements Serializable interface. In the example below, Rectangle class implements
 Serializable interface. Note that Serializable interface does not declare any method to be implemented.
 Create new Rectangle object and serializing it to a file Rectangle.ser.
+
 +----------------------------------------------------------------------+
 | class Rectangle implements Serializable {                            |
 |   public Rectangle(int length, int breadth) {                        |
@@ -984,6 +1014,7 @@ Create new Rectangle object and serializing it to a file Rectangle.ser.
 
 How to deserialize on Java
 A rectangle object is deserialize from file Rectangle.ser
+
 +-------------------------------------------------------------------------------+
 | FileInputStream fileInputStream = new FileInputStream("Rectangle.ser");       |
 | ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream); |
@@ -992,7 +1023,7 @@ A rectangle object is deserialize from file Rectangle.ser
 +-------------------------------------------------------------------------------+
 
 We mark all the properties of the Object that should not be serialized as transient.
-Transient attributes in an object are not serialized. As we don't need to serialize area we can calculate it later
+Transient attributes in an object are not serialized. As we don't need to serialize 'area' we can calculate it later
 mark this variable as transient.
 
 All classes that need to be serialized have to implement Serializable interface
@@ -1007,6 +1038,7 @@ Static variables are not part of the object they are not serialized.
 +---------------------+
 | transient int area; |
 +---------------------+
+
 
 # Different between Serializable and Externalizable
 
@@ -1061,9 +1093,11 @@ Detailed
 |  |                        +-----------------+
 +--+
 
+
 # PUT
 
 Each index in this table is known as bucket. Each bucket is a node that can be linked list of nodes
+
                                                 +---+
 scores.put("QUEEN",120);                        | 0 |--> WALL | 70772256 | 70 | null
 scores.put("KNIGHT",100);                       +---+
@@ -1170,13 +1204,14 @@ Important part is try-catch block.
 If exception is handled it does not propagate further
 In a try block, the lines after the line throwing exception are not executed
 
+
 # finally block
 
 When an exception happens the code after the line throwing exception is not executed.
 If code like closing connection is present in these lines of code, it is not executed.
 This leads to connection and other resource leaks.
-Code written in finnaly block is executed even when there is an exception.
-dangling unclosed connection. Finnaly block is used when code needs to be executed irrespective
+Code written in finally block is executed even when there is an exception.
+dangling unclosed connection. Finally block is used when code needs to be executed irrespective
 of whether an exception is thrown.
 
 +--------------------------+
@@ -1188,9 +1223,10 @@ of whether an exception is thrown.
 In what scenarios finally block not executed?
 - If exception is thrown in finally
 - If JVM crashes in between (for example System.exit())
-Finnaly block execute even when there is a return statement in try block
+Finally block execute even when there is a return statement in try block
 
 try without catch block is allowed for instance since Java 7
+
 +-------------+
 | try {       |
 |   ...       |
@@ -1200,6 +1236,7 @@ try without catch block is allowed for instance since Java 7
 +-------------+
 
 With Java 7 try with resources (automatic resource management)
+
 +-----------------------------------------------------------------+
 | try (FileInputStream input = new FileInputStream("file.txt")) { |
 |   ...                                                           |
@@ -1208,6 +1245,7 @@ With Java 7 try with resources (automatic resource management)
 
 Hierarchy of Exception class in Java
 Throwable is the highest level of Error Handling classes.
+
 +---------------------------------------------+
 | // Pre defined Java Classes                 |
 | class Error extends Throwable {}            |
@@ -1223,6 +1261,7 @@ Difference between checked and un-checked exceptions
 Runtime Exceptions and classes that extends RuntimeException are called unchecked exception.
 Other Exception classes are called Checked Exceptions. They are Subclasses of Exception which are
 not subclass of RuntimeException. Checked exceptions should be handled or thrown.
+
 +-----------------------------------+
 |throw new Exception("Exception 1");|
 +-----------------------------------+
@@ -1231,12 +1270,14 @@ Create custom Exception
 By extending Exception class or RuntimeException class.
 If extends Exception class it will be checked exception.
 If extends RuntimeException it will be un-checked exception.
+
 +-----------------------------------------------+
 | class CustomException extends Exception {...} |
 +-----------------------------------------------+
 
 Order of Exceptions
 Specific Exception should be before the Generic Exception.
+
 +---------------------------------------------+
 | try {                                       |
 |   ...                                       |
@@ -1250,6 +1291,7 @@ Specific Exception should be before the Generic Exception.
 | catch (IOException | SQLException e)        |
 +---------------------------------------------+
 
+
 # Checked and Unchecked Exceptions
 
 Checked Exceptions ensures that handling of exception is provided and its verified by compiler also
@@ -1262,6 +1304,7 @@ For throwing unchecked exception no special provision is needed.
 
 Generics are used to create Generic Classes and Generic Methods which can work with different Types (classes).
 Make class type parameter to a class.
+
 +---------------------------------+
 | class MyListGeneric<T> {        |
 |   private List<T> values;       |
@@ -1284,6 +1327,7 @@ To restrict Generics to a subclass of particular class we can use Generic Restri
 "T extends Number"
 We can use the class MyListRestricted with any class extending (sub class) of Number - Float, Integer, Double
 String is not valid substitute for "T extends Number"
+
 +--------------------------------------------+
 | class MyListRestricted<T extends Number> { |
 |   private List<T> values;                  |
@@ -1331,6 +1375,7 @@ PECS - Produces extends, Consumer super
 | Create new      | File newDir = new File("newDir");  |
 | directory       | newDir.mkdir();                    |
 +-----------------+------------------------------------+
+
 File class represents files and directories.
 
 Write to file using FileWriter
@@ -1357,6 +1402,7 @@ BufferedWriter constructor only accept another writer as argument
 +-----------------------------------------------------------------+
 
 BufferedReader helps to read the file line by line. BufferedReader constructors only accept another Reader as argument.
+
 +-----------------------------------------------------------------+
 | FileReader fileReader = new FileReader("text.txt");             |
 | BufferedReader bufferedReader = new BufferedReader(fileReader); |
@@ -1371,6 +1417,7 @@ BufferedReader helps to read the file line by line. BufferedReader constructors 
 PrintWriter
 Provides advanced methods to write formatted test to the file. It supports printf function.
 PrintWriter constructor supports varied kind of arguments - Fle, String Path and Writer
+
 +-----------------------------------------------------------------+
 | PrintWriter printWriter = new PrintWriter("text.txt");          |
 | printWriter.format("%15s", "My Name");                          |
@@ -1384,6 +1431,7 @@ PrintWriter constructor supports varied kind of arguments - Fle, String Path and
 ###############
 # Collections #
 ###############
+
 
 Why need collections
 Arrays are not dynamic. Once an array of particular size is created, the size cannot be modified.

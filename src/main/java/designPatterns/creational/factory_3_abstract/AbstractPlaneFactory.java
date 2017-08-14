@@ -5,5 +5,5 @@ package designPatterns.creational.factory_3_abstract;
  */
 public interface AbstractPlaneFactory {
     // AbstractFactory
-    public MilitaryPlane createPlane();
+    MilitaryPlane createPlane();
 }
