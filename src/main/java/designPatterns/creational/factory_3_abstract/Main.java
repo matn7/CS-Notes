@@ -31,6 +31,7 @@ public class Main {
     public static void main(String[] args) {
         PlaneBuilder builder = new PlaneBuilder();
         AbstractPlaneFactory planeFactory = null;
+
         Scanner scanner = new Scanner(System.in);
         List<PlaneType> planeModels = new ArrayList<>();
         planeModels.add(PlaneType.SPITFIRE);

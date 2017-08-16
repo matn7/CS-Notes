@@ -47,4 +47,11 @@ public class ProgramowaneUogolnione {
     // }
     // Obie metody spowodują wygenerowanie metody pomostowej.
     // public int compareTo(Objecy inny);
+
+    // Nie możesz wyrzucić lub przechwycić obiektów klasy uogólnionej. Nie możesz utworzyć uogólnionej klasy rozszerzającej Throwable.
+
+    // Refleksje i uogólnienia
+    // Klasa Class<T>
+    // Możesz użyć obiektu tej klasy by ustalić jakie metody ma klasa, lb skonstruować inną jej instancję.
+
 }

@@ -25,7 +25,7 @@ public class NewsAgency extends Observable implements Publisher {
         }
     }
 
-    // Reguster observer. We can think of this as some news are proper for TV only some for Radio only.
+    // Register observer. We can think of this as some news are proper for TV only some for Radio only.
     // Simply add Class that implements Observer to ArrayList.
     // Here register where we want to display our message.
     public void register(Observer outlet) {

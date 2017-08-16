@@ -1442,7 +1442,8 @@ lots of other operations.
 Some methods in collection class
 add, remove, size, isEmpty, clear, contains, containsAll, retainAll
 
-Collection interface provides methods for all collections except Map which are provided by Map interfaces
+Collection interface provides methods for all collections except Map which are provided by Map interface
+
 Thread safe data structures
 In such collections iterators presents elements which exists on the beginning of iteration but can reflect
 all modifications that being processed after their creation. Such iterator does not throw ConcurrentModificationException.
@@ -1450,7 +1451,8 @@ In multithreading Java application synchronized collection classes like HashTabl
 the bottleneck, to address that Java 5 introduced some concurrent collections.
 
 +------+--------------+-----------------------+
-|      | Collection   | Con / TS Collection   |
+|      | Collection   | Cononcurrent          |
+|      |              | Thread Sefe           |
 +------+--------------+-----------------------+
 | List | ArrayList    | CopyOnWriteArrayList  |
 |      | LinkedList   | Vector                |
@@ -1468,6 +1470,7 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 |      |              | BlockingQueue         |
 |      |              | PriorityBlockingQueue |
 +------+--------------+-----------------------+
+
 
 # LIST
 
@@ -1537,11 +1540,12 @@ What is a difference between Set and SortedSet
 SortedSet interface extends the Set interface. Both Set and SortedSet does not allow duplicate elements.
 SortedSet maintains its elements in a sorted order. Set interface does not guaranteed any order
 Methods of Sorted Set:
-subset, headSet, tailSet
+subset(), headSet(), tailSet()
 
 HashSet
 HashSet implements Set interface. HashSet does not allow duplicates. HashSet does not supports ordering.
 The order in which elements are inserted is not maintained.
+
 +----------------------------------------+
 | Set<String> hashSet = new HashSet<>(); |
 +----------------------------------------+
@@ -1555,6 +1559,7 @@ TreeSet implements Set, SortedSet and NavigableSet interfaces. TreeSet is simila
 that it stores elements in sorted order.
 Some methods:
 lower(), floor(), higher(), ceiling()
+
 +----------------------------------------+
 | Set<String> treeSet = new TreeSet<>(); |
 +----------------------------------------+
@@ -1570,7 +1575,7 @@ files. A key-value pair in Map interface is called Entry.
 Put method allows to add a key-value pair to the Map.
 Get method allows to get a value from the Map based on key
 Other methods:
-size, isEmpty, remove, putAll, clear, containsKey, containsValue
+size(), isEmpty(), remove(), putAll(), clear(), containsKey(), containsValue()
 
 In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
 LinkedHashMap maintains insertion order and process elements based on this order
@@ -1582,7 +1587,7 @@ ConcurrentHashMap
 Methods in atomic ways sets or replace elements if it is the same at a point of time.
 There are couple of mass operations to search, modify or look for ConcurrentHashMap.
 search, reduce, forEach.
-ConcurrentHasMap does not allow null values for keys or values
+ConcurrentHashMap does not allow null values for keys or values
 ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
 thread safety
 ConcurrentSkipListMap
@@ -1591,7 +1596,7 @@ Difference between Map and SortedMap
 SortedMap interface extends Map interface. In addition, an implementation of SortedMap interface maintains
 keys in sorted order.
 Methods are available in the interface to get a ranges of values based on their keys:
-subMap, headMap, tailMap, firstKey, lastKey
+subMap(), headMap(), tailMap(), firstKey(), lastKey()
 
 
 # QUEUES
@@ -1601,7 +1606,7 @@ holding elements in order for some processing.
 Queue interface offers methods peek() and poll(), which get element at the head of a queue.
 The difference is that poll() method removes the head from queue also. peek() would keep head of
 the queue unchanged.
-offer, remove, pull, element, peek
+offer(), remove(), pull(), element(), peek()
 
 BlockingQueue
 pool, peek methods return null to signal failure. In that reason insert null vales to them is incorrect
@@ -1638,6 +1643,7 @@ of thread - there by affecting performance of the application. All the pre Java 
 HashTable & Vector use this approach
 Post Java 5 collections using new approach to synchronization are available in Java.
 These are concurrent collections
+
 +--------------------------------+--------------------------------+
 | SYNCHRONIZED                   | CONCURRENT                     |
 +--------------------------------+--------------------------------+
@@ -1681,6 +1687,7 @@ If the value is not modified the calculated result is stored into the member var
 If another thread has modified the value, then the calculation can be performed again, or skipped as the need might be.
 ConcurrentLinkedQueue uses this approach.
 
+
 # What is a Lock? How is it different from using synchronized approach?
 
 When 10 methods are declared as synchronized, only any of them is executed by any of the threads at any point in time.
@@ -1688,6 +1695,7 @@ This has severe performance impact.
 Another new approach introduced in Java 5 is to use lock and unlock methods. Lock an unlock methods are used
 to divide methods into different blocks and help enhance concurrency.
 The 10 methods can be divided into different blocks which can be synchronized on different variables.
+
 
 # What is initial capacity of a HashMap?
 
@@ -1699,12 +1707,14 @@ table is rehashed (internal structure rebuild). So the hash table has approximat
 As a general rule the default load factor .75 offers a good trade off between time and space cost.
 Higher value decrease space overhead but increase the lookup cost (put and get operations).
 
+
 # What is a different between fail safe and fail fast
 
 Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
 This was the default behavior of the synchronized collections of pre Java 5
 Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
 This is the default behavior of the concurrent collections, introduced since Java 5
+
 
 # ConcurrentHashMap vs HashTable vs SynchronizedMap
 
@@ -1717,6 +1727,7 @@ By default it simultaneously allows 16 threads to read and write from Map withou
 It is very scalable because of stripped locking technique used i the internal implementation of ConcurrentHashMap class.
 Unlike HashTable and Synchronized Map, it never locks whole Map, instead, it divides the Map into segments and locking is done on those.
 It perform better if number of reader are greater than the number of writer threads.
+
 
 # What are atomic operations in Java?
 
@@ -1732,15 +1743,18 @@ To prevent these, Java provides atomic operations. Atomic operations are perform
 without interference from other threads ensuring data consistency.
 A good example is AtomicInteger. To implement a value of AtomicInteger we use the incrementAndGet() method Java ensures this operation is Atomic.
 
+
 # What is the BlockedQueue in Java?
 
 BlockedQueue interface is introduced in Java specifically to address specific needs of some Producer Consumer scenarios.
 BlockedQueue allows the consumer to wait (for a specific time of infinitely) for an element to become available.
 
+
 # HashMap and HashTable differences
 
 HashMap is not synchronized. Faster than HashTable. Allows null keys.
-HashTable is synchronized. Slower than HashMap. Does not allow null keys.
+Hashtable is synchronized. Slower than HashMap. Does not allow null keys.
+
 
 # TreeSet and TreeMap differences
 
@@ -1748,10 +1762,12 @@ TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does 
 TreeMap is an implementation of Map.
 TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
 
+
 # Vector Class
 
 Vector class has the same operations as ArrayList. However all methods in Vector are synchronized.
 We can use Vector if we share a List between two threads that we would want them synchronized.
+
 
 # What is a LinkedList
 
@@ -1761,6 +1777,7 @@ ArrayList uses an Array kind of structure to share elements. So inserting and de
 However search of an ArrayList is faster than LinkedList.
 LinkedList uses Linked representation. Each object holds a link to the next element. Hence insertion and deletion are faster than
 ArrayList, but searching is slower.
+
 
 # HashMap, Collections.synchronizedMap, ConcurrentHashMap
 
@@ -1774,6 +1791,7 @@ view of contents.
 Two ways to synchronize HashMap
 - Java Collections synchronizedMap()
 - ConcurrentHashMap
+
 +-----------------------------------------------------------------------------------+
 | // Hashtable                                                                      |
 | Map<String, String> normalMap = new Hashtable<>();                                |
@@ -1899,10 +1917,12 @@ Intermediate Operations are of two parts
 Optional object Optional<T> pack up object type T. Optional Object is safe alternative to reference to T type,
 which can accept object or null value. Use method that returns alternative value if returned value does not exists
 or take value if present.
+
 +-------------------------------------------------------------------------------------------------------+
 |String value = optionalString.orElse(""); // String or " " if not                                      |
 |String result = optionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value |
 +-------------------------------------------------------------------------------------------------------+
+
 ifPresent method accepts function. If optional value exists, is passed to function. Else do nothing.
 Optional value is a stream of size zero or one. If value exists function is triggered.
 
@@ -1946,11 +1966,13 @@ Big O Notation allows us express complexity as a measure of input size. This exp
 A algorithm which complexity does not change with input size is O(1), is said to have constant time complexity
 The Complexity of an algorithm is O(N) is the time taken by the algorithm increases linearly when N increases
 The Complexity of an algorithm is O(N^2) if the time taken by the algorithm increases quadratically when N increases
+
 +---------------------------+
 | for (int i = 1; i < n;) { |
 |    i = i * 2;             |
 | }                         |
 +---------------------------+
+
 The complexity of this operation is O(log(N))
 
 +----------------+-------+-------+--------+----------+
@@ -2045,6 +2067,7 @@ Siblings node - are in the same level in a tree
 Binary Tree Traversal
 Visiting nodes of a tree is called TRAVERSING TREE
 
+
 BREADTH-FIRST TRAVERSAL
 Involves visiting nodes at every leaf before moving on to the next level
 Start at root node it is at level 0 and is the first node to visit
@@ -2065,18 +2088,16 @@ Depth first traversal involves going right to the leaf of the binary Tree first 
 Depth first can be:
 PRE-ORDER, IN_ORDER, POST-ORDER
 
-All depth first traveral are most efficiently and intuitively implemented using RECURSION
+All depth first traversal are most efficiently and intuitively implemented using RECURSION
 
 PRE-ORDER
 Each node is processed first (pre) before it's right and left subtrees.
 The left sub-trees are processed before the right sub trees.
 NODE -> LEFT SUBTREE -> RIGHT SUBTREE
 
-
 IN-ORDER
 The Left subtree is processed first, then the NODE, then RIGHT SUBTREE
 LEFT-SUBTREE -> NODE -> RIGHT SUBTREE
-
 
 POST-ORDER
 Both subtrees are processed BEFORE the node itself. The node is processed AFTER (POST) the subtree
@@ -2175,7 +2196,7 @@ ACCESS    | O(logN)
 ----------+---------
 REMOVE    | O(logN)
 
-Both insertion and access moderatively fast.
+Both insertion and access moderately fast.
 List solutions make one of these super fast while comparing heavily on the other
 
 BINARY HEAP
@@ -2196,7 +2217,7 @@ Types of Heap:
 Every node value should be <= value of it's children
 The node with the smallest value should be the root of the tree
 -MAXIMUM HEAP
-Every Node value should be >= Value of it;s children.
+Every Node value should be >= Value of it's children.
 The node with the largest value should be the root of the tree
 
 The heap should form a complete binary tree -
@@ -2211,7 +2232,7 @@ Node at index: i GetParent at index: (i-1)/2
         5
       /   \
      8     6
-    / \   / \
+    / \    /\
    9   12 11 7
   / \
  15 10
@@ -2233,7 +2254,7 @@ This process is called HEAPIFY
   / \
  15  10
 
-SHIFT DOWN                   |SFIFT UP
+SHIFT DOWN                   |SHIFT UP
 -----------------------------+-----------------------------
 All elements in the wrong    | An element is in the wrong
 position with respect to     | position with respect to
@@ -2275,10 +2296,10 @@ It does not need additional space - space complexity is O(1)
 
 # THE GRAPH
 
-A Graph is used to represent relationsips between entities.
+A Graph is used to represent relationships between entities.
 
 The entities can be anything - Graphs find applications in variety of ways in real world.
-These relationship can be arbitarily complicated and of a variety of different types.
+These relationship can be arbitrarily complicated and of a variety of different types.
 
 VERTEX                     | EDGE
 ---------------------------+---------------------------------------------------------
@@ -2300,38 +2321,38 @@ There are many algorithms to optimize different problems represented using graph
 
 A Graph is a SET of VERTICES and EDGES
 +---+                    +---+
-| A |--------------------| B | (V,E)
+| A +--------------------+ B | (V,E)
 +---+                    +---+
 
 Two Vertices and A single Edge is also a valid graph
 +---+   Edge             +---+
-| A |--------------------| B | (V,E)
+| A +--------------------+ B | (V,E)
 +---+                    +---+
 VERTEX                  VERTEX
 
 +---+                    +---+
-| A |------------------->| B |
+| A +------------------->+ B |
 +---+                    +---+
 SOURCE                  DESTINATION
 
 The Arrow on the Edge. This means that the relationship between two vertices is directed - THE EDGE is a DIRECTED EDGE
 
 +---+                    +---+ | UNDIRECTED edges represent
-| A |--------------------| B | | 2 - way relationship such as:
+| A +--------------------+ B | | 2 - way relationship such as:
 +---+                    +---+ | 1. Two way road
                                | 2. I am his friend and he is mine
 -------------------------------+----------------------------------
                                | DIRECTED edges represent
 +---+                    +---+ | 1 - way relationship such as:
-| A |------------------->| B | | 1. ONE way road
+| A +------------------->+ B | | 1. ONE way road
 +---+                    +---+ | 2. I report to my manager
 
 
 UNDIRECTED GRAPH
 
 +---+         +---+         +---+
-| A |---------| B |---------| F |
-+---+         +---+         +---+
+| A +---------+ B +---------+ F |
++-+-+         +---+         +-+-+
   |  \       /                |  \
   |   \     /                 |   \
   |    +---+                  |    +---+
@@ -2339,8 +2360,8 @@ UNDIRECTED GRAPH
   |    +---+                  |    +---+
   |         \                 |
   |          \                |
-+---+         +---+         +---+
-| C |---------| E |---------| G |
++-+-+         +---+         +-+-+
+| C +---------+ E +---------+ G |
 +---+         +---+         +---+
 
 A - C are ADJACENT Nodes
@@ -2351,10 +2372,12 @@ This series of Edges is called a PATH
 
 Nodes A,D,E,C form a cycle
 
+
 UNDIRECTED ACYCLIC GRAPH
+
 +---+         +---+         +---+
-| A |---------| B |---------| F |
-+---+         +---+         +---+
+| A +---------+ B +---------+ F |
++-+-+         +---+         +-+-+
   |          /                |  \
   |         /                 |   \
   |    +---+                  |    +---+
@@ -2362,8 +2385,8 @@ UNDIRECTED ACYCLIC GRAPH
   |    +---+                  |    +---+
   |                           |
   |                           |
-+---+         +---+         +---+
-| C |---------| E |         | G |
++-+-+         +---+         +-+-+
+| C +---------+ E |         | G |
 +---+         +---+         +---+
 
 Every Node is CONNECTED TO EVERY OTHER NODE via a series of edges
@@ -2379,10 +2402,12 @@ A Connected graph with no cycles. This is a connected graph
         E
 Graph with no cycle is tree
 
+
 DIRECTED GRAPH
+
 +---+         +---+         +---+
-| A |-------->| B |-------->| F |
-+---+         +---+         +---+
+| A +-------->+ B +-------->+ F |
++---+         +---+         +-+-+
   |  A       /                A  \
   |   \     V                 |   V
   |    +---+                  |    +---+
@@ -2390,15 +2415,17 @@ DIRECTED GRAPH
   |    +---+                  |    +---+
   |         \                 |
   V          V                |
-+---+         +---+         +---+
-| C |-------->| E |-------->| G |
++-+-+         +---+         +-+-+
+| C +-------->+ E +-------->+ G |
 +---+         +---+         +---+
 Nodes A,B,D,A form a cycle
 
+
 DIRECTED ACYCLIC GRAPH (DAG)
+
 +---+         +---+         +---+
-| A |-------->| B |-------->| F |
-+---+         +---+         +---+
+| A +-------->+ B +-------->+ F |
++-+-+         +---+         +-+-+
   |  A                        A  \
   |   \                       |   V
   |    +---+                  |    +---+
@@ -2406,82 +2433,83 @@ DIRECTED ACYCLIC GRAPH (DAG)
   |    +---+                  |    +---+
   |         \                 |
   V          V                |
-+---+         +---+         +---+
-| C |-------->| E |-------->| G |
++-+-+         +---+         +-+-+
+| C +-------->+ E +-------->+ G |
 +---+         +---+         +---+
 
 A Graph Representation
 To represent a Graph there is a need a way to model a vertex which may held some information.
 A way to model directed or undirected EDGES.
 
-There are 3 standard ways thet Graphs can be represented.
+There are 3 standard ways that Graphs can be represented.
 ADJACENCY MATRIX
 ADJACENCY SET
 ADJACENCY LIST
 
-ADJACENCY MATRUX
+ADJACENCY MATRIX
 Use a metrix with ROWS and COLUMNS a matrix is table
 The Row labels and the column labels represent the Vertices
-Each cell represets relationship between the vertices i.e. the EDGES
+Each cell represent relationship between the vertices i.e. the EDGES
+
 +---+     +---+                   A  B  C  D  E
-| A |---->| B |                 +----------------
-+---+     +---+               A | 0  1  1  0  0
+| A +---->+ B |                 +----------------
++-+-+     +-+-+               A | 0  1  1  0  0
   |         A   V             B | 0  0  0  1  0
   |         |    +---+        C | 0  0  0  0  1
   |         |    | D |        D | 0  0  0  0  0
   |         |    +---+        E | 0  1  0  1  0
   V         |  A
-+---+     +---+
-| C |---->| E |
++-+-+     +-+-+
+| C +---->+ E |
 +---+     +---+
 
 A value 1 or true in (row A, column B) indicates Edge from A to B
 DIRECTED GRAPH
+
 +---+     +---+                   A  B  C  D  E
-| A |-----| B |                 +----------------
-+---+     +---+               A | 0  1  1  0  0
+| A +-----+ B |                 +----------------
++-+-+     +-+-+               A | 0  1  1  0  0
   |         |   \             B | 1  0  0  1  1
   |         |    +---+        C | 1  0  0  0  1
   |         |    | D |        D | 0  1  0  0  1
   |         |    +---+        E | 0  1  1  1  0
   |         |  /
++-+-+     +-+-+
+| C +-----+ E |
 +---+     +---+
-| C |-----| E |
-+---+     +---+
-
 
 
 ADJACENCY LIST (adjacent means neighbors cells)
 
 Each vertex is a node.
 Each vertex as a pointer to a LinkedList.
-This LinkedList contains all the other ndes this vertex connects to directly.
+This LinkedList contains all the other nodes this vertex connects to directly.
 
 If a vertex V has an Edge leading to Another Vertex U
 Then U is present in V's LinkedList
 
 +---+     +---+                   DIRECTED GRAPH
-| A |---->| B |               A -> B -> c
-+---+     +---+               B -> D
+| A +---->+ B |               A -> B -> c
++-+-+     +-+-+               B -> D
   |         A   V             C -> E
   |         |    +---+        D
   |         |    | D |        E -> B -> D
   |         |    +---+
   V         |  A
-+---+     +---+
-| C |---->| E |
++-+-+     +-+-+
+| C +---->+ E |
 +---+     +---+
 
 +---+     +---+                   UNDIRECTED GRAPH
-| A |-----| B |
-+---+     +---+               A -> B -> C
+| A +-----+ B |
++---+     +-+-+               A -> B -> C
   |         |   \             B -> A -> D -> E
   |         |    +---+        C -> A -> E
   |         |    | D |        D -> B -> E
   |         |    +---+        E -> C -> B -> D
   |         |  /
-+---+     +---+
-| C |-----| E |
++-+-+     +-+-+
+| C +-----+ E |
 +---+     +---+
 
 Adjacency List Downsides
@@ -2524,32 +2552,32 @@ edges on a vertex |                  |                |
 THE GRAPH Traversal
 
 DEPTH-FIRST, BREADTH-FIRST
-In a greph multiple paths can lead from one node to another
+In a graph multiple paths can lead from one node to another
 
 A Graph can also have cycles, the same Node can be visited multiple times
 
-In order to avoid infinite looping In a Graph we need t keep track of the Node previously visited
+In order to avoid infinite looping In a Graph we need to keep track of the Node previously visited
 
 
 THE GRAPH TOPOLOGICAL SORT
 
-It is an ordering of vertices in a DIRECTED ACTCLIC GRAPH in which each node comes before
+It is an ordering of vertices in a DIRECTED ACYCLIC GRAPH in which each node comes before
 all the nodes to which it has outgoing EDGE
 
 +---+       +---+
-| A |------>| B | A should come before
+| A +------>+ B | A should come before
 +---+       +---+
 
 +---+     +---+
-| A |---->| B |               A should come before B and C
-+---+     +---+               C should come before E
+| A +---->+ B |               A should come before B and C
++-+-+     +-+-+               C should come before E
   |         A   V             E should come before B and D
   |         |    +---+        B should come before D
   |         |    | D |
   |         |    +---+
   V         |  A
-+---+     +---+
-| C |---->| E |
++-+-+     +-+-+
+| C +---->+ E |
 +---+     +---+
 
 Topological sort for this graph will be:
@@ -2560,15 +2588,15 @@ It's the destination of no edge no arror points to it
 
 A - is the only vertex with No incoming edge this is the first element of the SORT!
 
-INDEGREE
-Number of inword directed graph edges for a given graph vertex
+IN DEGREE
+Number of inward directed graph edges for a given graph vertex
 
-Indegree of A is 0
+In degree of A is 0
 
-If there were NO VERTICES WITH 0 INDEGREE, than there would have been no topolofical sort.
+If there were NO VERTICES WITH 0 IN DEGREE, than there would have been no topological sort.
 
-If we remove A from this graph, we have to reduce the INDEGREE of all its immediate neighbors.
-The Next vertex in this SORT the One with Indegree 0
+If we remove A from this graph, we have to reduce the IN DEGREE of all its immediate neighbors.
+The Next vertex in this SORT the One with In degree 0
 C is the Next element
 
 Remove C from a graph and decrement the indegree of its immediate neighbors. The Next vertex with indegree of 0 is E.
@@ -2732,13 +2760,16 @@ java -XX:+UseSerialGC
 java -XX:+UseParallelGC
 java -XX:+UseConcMarkSweepGC
 
+
 # Garbage Collector example
+
 +----------------------------------------------------------+
 | void method() {                                          |
 |   Calendar calendar = new GregorianCalendar(2000,12,12); |
 |   System.out.println(calendar);                          |
 | }                                                        |
 +----------------------------------------------------------+
+
 Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
 After method ends execution the reference variable calendar is no longer valid. Hence there are no reference
 to the object created in the method. JVM recognizes this and removes the object from the heap. This is called GC
@@ -2763,6 +2794,7 @@ join() - wait until other thread finish executing
 
 wait and notify for inter thread communication. Must be called from synchronized context method, block
 
+
 # Process and threads
 
 In concurrent programming two units of execution process and treads.
@@ -2783,6 +2815,7 @@ yield() : this static method is essentially used to notify the system that the c
 give up CPU for a while, but scheduler can immediately pick them back. Is put back into the ready queue of the processor,
 and waits for it next turn.
 
+
 # Start Thread
 
 Extends Thread - override run() method
@@ -2800,6 +2833,7 @@ Executor Service - dynamically reuse thread. Check if threads are already workin
 
   - executorService.execute(Runnable)
   - executorService.submit(Callable or Runnable)
+
 
 # Concurrent Collections
 
@@ -2887,6 +2921,7 @@ Thread is mechanism that allow to execute sequence of instruction, these instruc
 Couple of threads work in parallel using multiple processors of different time slice of the same processor
 
 Executor executes a task by choosing threads that might be executed with
+
 +-------------------------------+
 | Runnable task = () -> {};     |
 | Executor exec = Executors...; |
@@ -2897,6 +2932,7 @@ Factory method Executor class
 Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks
 Executors.newFixedThreadPool(thread_num); - good for grater amount of tasks
 To acquire number of thread based on number of processors
+
 +--------------------------------------------------------------+
 | int processors = Runtime.getRuntime().availableProcessors(); |
 +--------------------------------------------------------------+
@@ -2904,11 +2940,13 @@ To acquire number of thread based on number of processors
 Objects Future and Executor
 Callable - Method call() opposite to method run() from Runnable interface returns value or throw an Exceptions
 To execute callable there is a need for ExecutorService instance
+
 +---------------------------------------------------------------+
 | ExecutorService exec = ExecutorService.newFixedThreadPool(2); |
 | Callable<V> call = ...;                                       |
 | Future<V> result = exec.submit(call);                         |
 +---------------------------------------------------------------+
+
 Future is an object that represents a calculations, which results will be accessible in a future
 
 Thread safety
@@ -2940,22 +2978,28 @@ Implement immutable class
 - do not allow to leak modification
 - do not allow to "this" reference pass outside constructor
 
+
 Concurrent Algorithms
 Parallel Streams
+
 +----------------------------------------------------------------------------+
 | Long results = coll.parallelStream().filter(s->s.startsWith('a')).count(); |
 +----------------------------------------------------------------------------+
+
 ParallelStream method returns parallel stream. Stream is parted on segments
 Filtering and counting is executed for each segments and results are joined together without your further interactions
 Parallel operations on arrays
 Arrays operations part array on segments, parallelly process them and join results
 Arrays.pararellSetAll(), parallelSort()
 Process array into a stream,
+
 +--------------------------------------------------+
 | long sum = IntStream.of(value).parallel().sum(); |
 +--------------------------------------------------+
 
+
 Thread safe data structures
+
 ConcurrentHashMap
 Map on which operations are thread safe. Can support large number of parallel read and some number of parallel writes
 To actualize data compute() method. This method is Atomic, no other thread can modify map content while executing operation
@@ -2971,10 +3015,12 @@ CopyOnWriteArrayList, CopyOnWriteArraySet - are thread safe thanks the fact that
 make copy used array. Good in situation when number of threads go through queue is larger than number of thread that modify queue
 
 Atomic Values
+
 +-------------------------------------------+
 | AtomicLong nextNumber = new AtomicLong(); |
 | long id = nextWord.incrementAndGet();     |
 +-------------------------------------------+
+
 Atomic operation, load data, modify data and save data cannot be interrupted in between.
 
 
