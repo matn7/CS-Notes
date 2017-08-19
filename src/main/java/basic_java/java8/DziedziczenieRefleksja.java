@@ -49,4 +49,135 @@ public class DziedziczenieRefleksja {
     // dostęp do zmiennych instancji klasy nadrzędnej.
     // Metoda clone z klasy Object, est zadeklarowana jako protected
 
+    // Metody klasy java.lang.Object
+
+    // String toString()
+
+    // boolean equals(Object inny). Zamiast obj.equals(inny) można użyć odpornego na wartość null wyrażenia Object.equalse(obj, inny)
+
+    // int hashCode() - obiekt równy musi mieć taką samą sumę kontrolną. Jeśli nie zostanie to przesłonięte, suma kontrolna jest
+    // przypisywana w wybrany sposób przez maszynę wirtualną.
+
+    // Class<?> getClass()
+
+    // protected Object clone() - wykonuje kopię bieżącego obiektu. Domyślnie tworzona jest płytka kopia.
+
+    // protected void finalize() - ta metoda jest wywoływana, gdy obiekt jest przejmowany przez mechanizm garbage collector. Nie należy jej przesłaniać.
+
+    // wait, notify, notifyAll
+
+    // Przykłąd implementacji metody equals
+
+    /*
+    public class Item {
+        private String description;
+        private double price;
+
+        public boolean equals(Object otherObject) {
+            // szybkie sprawdzenie czy obiekty są identyczne
+            if (this == otherObject) return true;
+            // Musi zwrócić false jeśli parametrem jest null
+            if (otherObject == null) return false;
+            // Sprawdzenie, czy otherObject jest klasy Item
+            if (getClass() != otherObject.getClass()) return false;
+            // Sprawdzenei czy zmienne instancji mają identyczne wartości
+            Item other = (Item) otherbject;
+            return Objects.equals(description, other.description) && price == other.price;
+        }
+
+        public int hashCode() { ... }
+    }
+
+    */
+
+    // Jeśli definiujesz metodę equas dla klasy podrzędnej, najpierw wykonaj equals dla klasy nadrzędnej.
+    // Jeśli ten test nie będzie pozytywny, obiekty nie mogą być równe.
+
+    // Metoda hashCode
+    // Suma kontrolna to liczba całkowita identyfikująca obiekt. Sumy kontrolne powinny być zróżnicowane.
+    // Jeśli x i y nie są takimi samymi obiektami, z dużym prawdopodobieństwem x.hashCode() i y.hashCode() powinny się różnić.
+    // Do bliczania sumy kontrolnej klasa String używa
+    // int hash = 0;
+    // for (int i = 0; i < length(); i++) {
+    //      hash = 31 * hash + charAt(i);
+    // }
+
+    // Metody hashCode i equals muszą być kompatybilne. Jeśli x.equals(y) zwraca true, to musi być też spełniony warunek x.hashCode() == y.hashCode()
+
+    // Jeśli zmieniasz definicję metody equals, będziesz też musiał zdefiniować ponownie metodę hashCode w taki sposób, by pozostała kompatybilna z metodą equals.
+    // Jeśli tego nie zrobisz i użytkownicy Twojej klasy umieszczą obiekty w kolekcji HashSet lub tablicy HashMap, moga one zostać utracone.
+
+    // Wyliczenia
+    // Sposoby wyliczania
+    // Porównuje się za pomocą ==
+    // Nie potrzeba tworzyć metody toString
+
+    // Konstruktory metody i pola
+    // Konstruktor typu wyliczeniowego jest zawsze prywatny.
+
+    // Zawartość elementó
+    // Możesz dodać metody do każdej instancji typu wyliczeniowego enum
+
+    // Elementy statyczne
+    // Stałe wyliczeniowe są konstruowane przez zmiennymi statycznymi, dlatego nie można kożystać ze zmiennych statycznych w konstruktorze.
+
+    // Informacje o typie i zasobach w czasie działania programu
+    // Klasa Class
+    // Aby uzyskać więcej informacji o obiekcie np jakiej jest klasy.
+
+    // Programy wczytujące klasy
+    // Class loader odpowiada za odczytywanie bajtów i zmianę ich na klasę lub interfejs w wirtualnej maszynie.
+    // Maszyna wirtualna wczytuje pliki klas na żądanie, zaczynając od klasy, z której ma być wczytana metoda main.
+    // Klasy z bibliotekami Javy (pliki JAR jre/lib/rt.jar) wczytywane są przez początkowy program wczytujący (bootstrap class loader)
+    // Standardowe rozszerzenia z katalogu jre/lib/ext wczytuje program wczytujący rozszerzenia (extension class loader)
+    // Klasy aplikacji systemowy program wczytujący klasy (system class loader)
+
+    // Refleksje
+    // Refleksje umożliwiają programowi sprawdzenie zawartości dowolnego obiektu w czasie działania i wywołania na nim dowolnych metod.
+
+    // JavaBeans
+    // JavaBean to klasa z bezargumentowym konstruktorem, parami metod odczytujących i ustawiających wartości oraz dowolną liczbą innych metod.
+    // public Type getProperty()
+    // public void setProperty(Type newValue)
+
+
+}
+
+enum Size {
+    SMALL("S"), MEDIUM("M"), LARGE("L"), EXTRA_LARGE("XL");
+
+    private String abbreviation;
+
+    Size(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+}
+
+enum Operation {
+    ADD {
+        public int eval(int arg1, int arg2) {
+            return arg1 + arg2;
+        }
+    },
+    SUBTRACT {
+        public int eval(int arg1, int arg2) {
+            return arg1 - arg2;
+        }
+    },
+    MULTIPLY {
+        public int eval(int arg1, int arg2) {
+            return arg1 * arg2;
+        }
+    },
+    DIVIDE {
+        public int eval(int arg1, int arg2) {
+            return arg1 / arg2;
+        }
+    };
+
+    public abstract int eval(int arg1, int arg2);
 }

@@ -109,6 +109,43 @@ tail -f /var/log/messages
 
 // artifactory, nexus
 
+// REST
+curl http://localhost:8080/stream/all
+// get by {id}
+curl http://localhost:8080/stream/1
+// get stream of events
+curl http://localhost:8080/stream/events
+
+curl client:secret@localhost:8082/auth/oauth/token -d grant_type=client_credentials -d scope=read -d client_id=client -d client_secret=secret -d username=client -d password=secret
+curl http://localhost:8082/auth/user
+
+curl -H "Authorization: Bearer 9b6f8738-896a-4b6b-a67f-3ca66a0c489a" http://localhost:8082/auth/user
+
+// Login Rest Endpoint
+// GET
+localhost:8080/auth/private?token=
+localhost:8080/auth/private?token=64abd4cd-e252-4d6a-a53b-c44d8842f27b
+
+curl -X GET localhost:8080/auth/private?token=64abd4cd-e252-4d6a-a53b-c44d8842f27b
+
+// POST
+// Postman
+// Login
+localhost:8080/auth/login
+{"username":"Mario","password":"pass2"}
+
+// Windows curl
+curl -H "content-type: application/json" -X POST -d "{"""username""": """Mario""","""password""": """secret"""}" http://localhost:8080/auth/login
+
+// Logout
+localhost:8080/auth/logout?token=64abd4cd-e252-4d6a-a53b-c44d8842f27b
+
+curl -X POST localhost:8080/auth/logout?token=64abd4cd-e252-4d6a-a53b-c44d8842f27b // delete
+curl -X GET http://localhost:8080/auth/private?token=64abd4cd-e252-4d6a-a53b-c44d8842f27b // unauthorized
+
+
+
+
 #########
 # Maven #
 #########
