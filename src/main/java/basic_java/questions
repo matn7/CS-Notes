@@ -218,6 +218,7 @@ Now weekday is data type with values Weekday.MON
 +--------------------------------------------+
 | public Enum Size { SMALL, MEDIUM, LARGE; } |
 +--------------------------------------------+
+
 Named constants. No need to use equals method. No need to override toString.
 Thread safe.
 Enum is subclass class of Enum class, which contains toString, valueOf and compareTo method
@@ -229,6 +230,7 @@ static import now can use SMALL instead of Size.SMALL
 
 Enum alows specifying a list of values for a Type.
 Example below declares an enum Season with 4 possible values
+
 +--------------------------------+
 | enum Season {                  |
 |   WINTER, SPRING, SUMMER, FALL |
@@ -241,6 +243,7 @@ Value of enums can be compared using == or equals function.
 # Variable arguments
 
 Variable arguments allow calling method with different number of parameters.
+
 +----------------------------------+
 | public int sum(int... numbers) { |
 |   ...                            |
@@ -257,6 +260,7 @@ Hash codes - keys in hashCodes are Strings
 
 Why String is immutable.
 Value of a String once created cannot be modified. Any modification on a String object creates a new object.
+
 +--------------------------------------+
 | String str3 = "string1";             |
 | str3.concat("string2");              |
@@ -264,6 +268,7 @@ Value of a String once created cannot be modified. Any modification on a String 
 +--------------------------------------+
 
 The result should be assigned to a new reference variable (or some variable can be reused)
+
 +-----------------------------------------------+
 | String concat = str3.concat("string2");       |
 | System.out.println(concat); // string1string2 |
@@ -273,12 +278,14 @@ Where are String literals store in memory?
 All strings literals are stored in "String constant pool". If compiler finds a String literal, it checks if
 it exists, it is reused.
 Following statement creates 1 String object (created on pool) and 1 referenced variable
+
 +------------------------+
 | String str1 = "Value"; |
 +------------------------+
 
 However if new operator is used to create String object, the new object is created on heap.
 Following piece of code created 2 objects
+
 +----------------------------------------------------------------------+
 | // 1. String Literal "Value" - created in the "string constant pool" |
 | // 2. String object - created on the heap                            |
@@ -312,6 +319,7 @@ to extort sorting behavior.
 
 You cannot put instance variables. Interface determines behavior not state of object.
 You can provide default implementation of interface. Mark such method with default modifier
+
 +-----------------------------------------------+
 | public interface IntSequence {                |
 |     default boolean hasNext() {return true; } |

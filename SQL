@@ -1,16 +1,19 @@
-Subsets of SQL
+# Subsets of SQL
 - Data definition language DDL
 - Data manipulation language DML
 - Data control language DCL
 
-DDL
+
+# DDL
 Allows you to CREATE, ALTER, DELETE databases objects such as schema, tables, view, sequence
 
-DML
+
+# DML
 Makes user access and manipulates data.
 Insert, Retreive, Update, Delete data from DB.
 
-DCL
+
+# DCL
 Allows you to control access to the databases.
 GRANT : to grant specific user to perform specific task
 REVOKE : to cancel previously denied or granted permissions
@@ -31,11 +34,13 @@ OPERATORS is SQL
 - Logical
 - Comparision
 
-INDEX in SQL
+
+# INDEX in SQL
 Index is used to increase performance and allow faster retreival of records from the table. An index creates
 an entry for each value and it will be faster to retreive data.
 
-Types of INDEXES in SQL
+
+# Types of INDEXES in SQL
 - Unique Index
 - Clustered Index
 - NonClustered Index
@@ -112,7 +117,7 @@ SELECT * FROM tblCountry RIGHT JOIN tblState ON tblCountry.CountryId = tblState.
 # LEFT JOIN
 Retrieve rows which are common between the tables and all rows of Left hand side.
 
-SELECT * FROM tblCountry LEFT JOIN tblState ON tblConutry.CountryId = tblState.CountryId
+SELECT * FROM tblCountry LEFT JOIN tblState ON tblCountry.CountryId = tblState.CountryId
 
 +------------+--------------+----------+------------+------------+
 | Country Id | Country Name | State Id | Country Id | State Name |
@@ -148,24 +153,24 @@ SELECT * FROM tblCountry FULL JOIN tblState ON tblCountry.CountryId = tblState.C
 +------------+--------------+----------+------------+------------+
 
 
-TRIGGERS
+# TRIGGERS
 Allows execute a batch of SQL code,
 
 
-SET OPERATORS
+# SET OPERATORS
 Union, Intersect or Minus operators are called set operators
 
 
-Difference between BETWEEN and IN
+# Difference between BETWEEN and IN
 BETWEEN is used to display rows based on a range of values.
 IN is used to check for values contained in a specific set of values.
 
 
-Find by letters
+# Find by letters
 SELECT * FROM Employees WHERE EmpName LIKE 'A%'
 
 
-ACID
+# ACID
 To ensure that data transactions are processed reliably in a database system.
 A single logical operation of a data is called transaction.
 - Atomicity
@@ -174,7 +179,7 @@ A single logical operation of a data is called transaction.
 - Durability : if transaction has been commited it will remain (even when power loss)
 
 
-DISTINCT
+# DISTINCT
 The DISTINCT keyword is used to ensure that the featched value is only a non-duplicate value
 
 
