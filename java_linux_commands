@@ -31,6 +31,19 @@ jsp
 jmap -heap <java_pid_from_jsp_command> > jmap.out
 
 
+# Working with file
+tail file                       // display 10 last lines
+tail -f file                    // display lines in active mode
+less                            // inspect file page by page or line by line
+awk                             // cut the file by column
+
+top
+ps -ef
+rpm
+apt-get
+yum
+
+
 ls -lrt | grep "^l"             // list all links from directory
 touch fileName                  // create file fileName
 chmod 777 fileName              // change umask 777
@@ -52,9 +65,10 @@ find                            // Unix command to find file
 grep -c "Unix" filename         // count Unix word apperance in filename
 export                          // set environmental variable
 lsof                            // list process that using a particular file
-netstat -a | grep "port"        // check wich host are connecting to your host by particular port
+netstat -a | grep "port"        // check which host are connecting to your host by particular port
 nohup                           // run process in background, different from &, process does not stop even when user who
                                 // started process logs off
+
 watch                           // repeatedly execute commands provided with specific delay
 sed s/Unix/UNIX/g fileName      // replace word Unx to UNIX in fileName
 cut -f3 fileName                // display 3 column in fileName
@@ -72,7 +86,23 @@ Soft Links - unix softlinks are pointers to programs, files or directories locat
 Hard Links - unix hardlinks are pointers to programs and files, but NOT directories
 
 # Linux Directories
-/; /bin; /boot; /dev; /etc; /home; /lib; /media; /mnt; /opt; /root; /run; /sbin; /srv; /tmp; /usr; /var
+/
+/bin
+/boot
+/dev
+/etc
+/home
+/lib
+/media
+/mnt
+/opt
+/root
+/run
+/sbin
+/srv
+/tmp
+/usr
+/var
 
 // Dev Ops stuff
 which wget
@@ -103,7 +133,7 @@ cd /etc/systemd/service
 vi spring.service
 
 systemctl daemon-reload
-systemctl sprinf.service
+systemctl spring.service
 systemctl start spring
 tail -f /var/log/messages
 
@@ -162,6 +192,11 @@ Maven
 - XML configuration
 
 Parent pom to configuration project
+
+Mave repositories
+- local
+- central
+- remote
 
 <dependencies>
 <build>

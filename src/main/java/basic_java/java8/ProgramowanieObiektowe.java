@@ -8,11 +8,11 @@ public class ProgramowanieObiektowe {
     // W programowaniu obiektowym praca jest wykonywana przez współpracujące obiekty, których zachowanie jest definiowane przez klasy
     // do których należą.
 
-    // W języku Java zmienne nie przechowują obiuektów przechowują one referencje do obiektów
+    // W języku Java zmienne nie przechowują obiektów przechowują one referencje do obiektów
 
     // Metoa instancji jest wywoływana na obiekcie, do którego można odwołać się za pomocą referencji this.
 
-    // Korzystając z obiektów które zaimplementował ktoś iny i wywołując ich metody, nie musisz wiedzieć co dzieje się w środku.
+    // Korzystając z obiektów które zaimplementował ktoś inny i wywołując ich metody, nie musisz wiedzieć co dzieje się w środku.
     // Ta zasada nazwana hermetyzacją
 
     // W języku Java dostarczasz klasę - mechanizm pozwalający na tworzenie i wykorzystywanie obiektów zachowujących się w ten sam sposób.
@@ -25,7 +25,7 @@ public class ProgramowanieObiektowe {
     // Właściwy obiekt znajduje się w nnym miejscu, a referecja jest pewnym, zależnym od implementacji sposobem odnajdywania obiektu.
 
     // LocalDate date = null; // Teraz zmienna date nie wskazuje na żaden obiekt
-    // Lepiej jednak nie kożystać z null, lepiej wykorzystać typ Optional
+    // Lepiej jednak nie korzystać z null, lepiej wykorzystać typ Optional
 
     // Zmienne instancji
     // W języku Java korzystamy ze zmiennych instancji by opisać stan obiektu.
@@ -38,7 +38,7 @@ public class ProgramowanieObiektowe {
     // Możesz z jednego konstruktora wywołać inny konstruktor ale może być to tylko pierwsze polecenie w treści konstruktora
     // this()
 
-    // Zawsze musisz inicjalizować zmienne lokalne. Zmienne instancji niezainicjalizowane przyjmują wartości domyślne (null, o ,false)
+    // Zawsze musisz inicjalizować zmienne lokalne. Zmienne instancji niezainicjalizowane przyjmują wartości domyślne (null, 0 ,false)
 
     // Poza inicjalizacją zmiennych instancji podczas ich deklarowania możesz dołączyć dowolne bloki inijalizacyjne (initialization blocks)
     // w deklaracji klasy.
@@ -48,7 +48,7 @@ public class ProgramowanieObiektowe {
     // Zmienne instancji z modyfikatorem final
     // Zmienna z modyfikatorem final musi być zainicjalizowana przed końcem konstruktora.
     // Po inicjalizacji wartość zmiennej nie może być już modyfikowana.
-    // Modyfikator final użyty z referencją do modyfikowanego obiektu oznacza po prostu że nigdy nie zmieni sięreferencja.
+    // Modyfikator final użyty z referencją do modyfikowanego obiektu oznacza po prostu że nigdy nie zmieni się referencja.
     // Absolutnie możliwe jest modyfikowanie samego obiektu.
     // private final ArrayList<Person> friends = new ArrayList<>();
     // Metody mogą zmieniać zwartość listy ArrayList, do której odwołuje się zmienna friends, ale nigdy nie zmieniają samej referencji.
@@ -63,7 +63,7 @@ public class ProgramowanieObiektowe {
     // public static final double PI = 3.14159...;
     // private static final Random generator = new Random();
     // public static final PrintStream out;
-    // W Javie jest metoda setOut w klasie System. Jest to jeden z m=nielicznych przypadków w którym modyfikuje się zmienną finalną.
+    // W Javie jest metoda setOut w klasie System. Jest to jeden z nielicznych przypadków w którym modyfikuje się zmienną finalną.
     // Jest to metoda natywna nieimplementowana w języku Java.
 
     // Statyczne bloki inicjalizacyjne
@@ -86,7 +86,25 @@ public class ProgramowanieObiektowe {
     // Metody wytwórcze mogą też zwracać wzpółdzielone obiekty bez konieczności tworzenia nowych. Collections.emptyList() zwróci
     // współdzieloną niemodyfikowalną pustą listę.
 
+    // Pakiety
+    // Import metod statycznych
+    // import static java.lang.Math.*;
+    // pozwala na używanie metod i zmiennych statycznych klasy Math bez pisania prefiksu z nazwą klasy.
+    // Można też importować konkretne metody i zmienne
+    // import static java.lang.Math.sqrt;
+    // import static java.lang.Math.PI;
 
+    // Klasy zagnieżdżone
+    // Można umieszczać klasy w innych klasach. Taka klasa jest nazywana klasą zagnieżdżoną.
+    // Przydatne do ograniczenia widoczności i pozwala uniknąć zaciemniania pakietu ogólnymi nazwami jak Element, Node czy Item.
+
+    // Statyczne klasy zagnieżdżone
+    // Klasy wewnętrzne
+    // Metoda wewnętrznej klasy może uzyskać dostęp do zmiennych instancji klasy zewnętrznej.
+    // Każdy obiekt wewnętrznej klasy ma referencję do obiektu klasy zewnętrznej.
+    // Statyczna klasa zagnieżdżona nie ma takiej referencji (tak jak statyczna metoda nie ma referencji this).
+    // Ze statycznych klas zagnieżdżonych można korzystać, gdy instancje klas zagnieżdżonych nie muszą wiedzieć, do której instancji
+    // klasy zewnętrznej należą. Klas wewnętrznych używaj tylko w sytuacji, gdy ta informacja jest ważna.
 
 
 

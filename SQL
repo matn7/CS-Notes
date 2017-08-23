@@ -65,92 +65,81 @@ Joins are used to merge two tables or retreive data from tables. It depends on r
 - Left join
 - Full join
 
-+------------+                             +----------+
-| tblCountry |                             | tblState |
-+------------+--------------+              +----------+------------+------------+
-| Country Id | Country Name |              | State Id | Country Id | State Name |
-+------------+--------------+              +----------+------------+------------+
-|      1     |    India     |              |     1    |     1      | Maharastra |
-+------------+--------------+              +----------+------------+------------+
-|      2     |    Nepal     |              |     2    |     1      | Punjab     |
-+------------+--------------+              +----------+------------+------------+
-|      4     |    Srilanka  |              |     3    |     2      | Kathmandu  |
-+------------+--------------+              +----------+------------+------------+
-|    NULL    |    NULL      |              |     4    |    NULL    | California |
-+------------+--------------+              +----------+------------+------------+
-
 
 # INNER JOIN
-Returns rows when there is at least one match of rows between the tables.
++---------+---------+---------+
+|         |#########|         |
+|         |#########|         |
+|         |#########|         |
++---------+---------+---------+
 
-SELECT * FROM tblCountry INNER JOIN tblState ON tblCountry.CountryId = tblState.CountryId
+(INNER) JOIN: Returns records that have matching values in both tables
 
-+------------+--------------+----------+------------+------------+
-| Country Id | Country Name | State Id | Country Id | State Name |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    1     |     1      | Maharastra |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    2     |     1      |   Punjab   |
-+------------+--------------+----------+------------+------------+
-|      2     |    Nepal     |    3     |     2      |  Kathmandu |
-+------------+--------------+----------+------------+------------+
+SELECT Orders.OrderID, Customers.CustomerName
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+OrderID	CustomerName
+------------------------------
+10248	Wilman Kala
+10249	Tradição Hipermercados
+10250	Hanari Carnes
 
 
 # RIGHT JOIN
-Retrieve rows which are common between the tables and all rows of Right hand side.
++---------+---------+---------+
+|         |#########|#########|
+|         |#########|#########|
+|         |#########|#########|
++---------+---------+---------+
 
-SELECT * FROM tblCountry RIGHT JOIN tblState ON tblCountry.CountryId = tblState.CountryId
+RIGHT (OUTER) JOIN: Return all records from the right table, and the matched records from the left table
 
-+------------+--------------+----------+------------+------------+
-| Country Id | Country Name | State Id | Country Id | State Name |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    1     |     1      | Maharastra |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    2     |     1      |   Punjab   |
-+------------+--------------+----------+------------+------------+
-|      2     |    Nepal     |    3     |     2      |  Kathmandu |
-+------------+--------------+----------+------------+------------+
-|    NULL    |    NULL      |    4     |   NULL     | California |
-+------------+--------------+----------+------------+------------+
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+
+OrderID	LastName	FirstName
+------------------------------
+null    West 	    Adam
+10248 	Buchanan 	Steven
+10249 	Suyama  	Michael
 
 
 # LEFT JOIN
-Retrieve rows which are common between the tables and all rows of Left hand side.
++---------+---------+---------+
+|#########|#########|         |
+|#########|#########|         |
+|#########|#########|         |
++---------+---------+---------+
 
-SELECT * FROM tblCountry LEFT JOIN tblState ON tblCountry.CountryId = tblState.CountryId
+LEFT (OUTER) JOIN: Return all records from the left table, and the matched records from the right table
 
-+------------+--------------+----------+------------+------------+
-| Country Id | Country Name | State Id | Country Id | State Name |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    1     |     1      | Maharastra |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    2     |     1      |   Punjab   |
-+------------+--------------+----------+------------+------------+
-|      2     |    Nepal     |    3     |     2      |  Kathmandu |
-+------------+--------------+----------+------------+------------+
-|      4     |   Srilanka   |   NULL   |   NULL     |  NULL      |
-+------------+--------------+----------+------------+------------+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+CustomerName	                    OrderID
+--------------------------------------------
+Alfreds Futterkiste	                null
+Ana Trujillo Emparedados y helados	10308
+Antonio Moreno Taquería	            10365
 
 
 # FULL JOIN
-Return rows when there are mathcing rows in any one of the tables.
-All from left and right hand side of table.
++---------+---------+---------+
+|#########|#########|#########|
+|#########|#########|#########|
+|#########|#########|#########|
++---------+---------+---------+
+FULL (OUTER) JOIN: Return all records when there is a match in either left or right table
 
-SELECT * FROM tblCountry FULL JOIN tblState ON tblCountry.CountryId = tblState.CountryId
-
-+------------+--------------+----------+------------+------------+
-| Country Id | Country Name | State Id | Country Id | State Name |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    1     |     1      | Maharastra |
-+------------+--------------+----------+------------+------------+
-|      1     |    India     |    2     |     1      |   Punjab   |
-+------------+--------------+----------+------------+------------+
-|      2     |    Nepal     |    3     |     2      |  Kathmandu |
-+------------+--------------+----------+------------+------------+
-|      4     |   Srilanka   |   NULL   |   NULL     |    NULL    |
-+------------+--------------+----------+------------+------------+
-|    NULL    |     NULL     |     4    |   NULL     | California |
-+------------+--------------+----------+------------+------------+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName;
 
 
 # TRIGGERS

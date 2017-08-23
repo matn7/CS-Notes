@@ -5,7 +5,6 @@
 
 # The default single Thread is called main thread
 
-
 # Processes vs Threads
 Every program runs in its own process.
 A process can 'spawn off' multiple threads
@@ -23,6 +22,7 @@ PROCESS : THREADS :: 1 : MANY
 Runnable interface - is implemented by a class with the operations to be carried out by the other thread
 Thread - in build class objects of the thread class take in the runnable objects and run them in individual threads
 Thread.join() - the main class calls the .join() method on each thread which will wait until the thread finishes.
+
 
 # New way
 Callable interface - is implemented by a class with the operations to be carried out on other thread.
@@ -50,8 +50,10 @@ Instantiate a thread object and pass i the runnable object in the constructor
 Call the .start() method on the thread object
 Creating a Runnable object is the prefered solution because it nicely separates the thread from the task to be run on the thread.
 
+
 # Write a subclass of thread and overwrite the run method
 Call the .start() method on the thread object
+
 
 # Thread Interrupts
 Java provides a way for threads to interrupt other threads, and to check if they themselves have been interrupted.
@@ -61,10 +63,12 @@ There are two ways for thread to check if it has been interrupted
 Catch an INTERRUPTEDEXCEPTION
 Call the static 'Thread.interrupt' member function to see if the current thread has been interrupted
 
+
 # Thread Join
-The join method of a thread class ia w way of waiting until the thread finishes execution of its run method
+The join method of a thread class is a w way of waiting until the thread finishes execution of its run method
 Calling thread on another thread is similar to calling sleep on the current thread until the other thread finishes execution
 Like .sleep(), the .join() method throws an interrupted exception if the thread is interrupted before it finishes execution
+
 
 # Synchronization
 In Java threading support, threads mostly communicate with each other via shared objects or shared member variables
@@ -77,6 +81,7 @@ A thread sees a stale (inconsistent) value of variable
 Thread Contention
 Threads get in each others way and slow down or sometimes even have to be killed by Java
 
+
 # Thread Interference and memory consistency error
 If two threads access the same variable, it's possible for them to get in each others way.
 That's because Java might switch execution from one thread to another even midway through a simple seemingly atomic instruction
@@ -86,6 +91,7 @@ Restricting access to an object or a variable - akin locking the variable so onl
 is a powerful concept used widely in computer science especially in databases. The synchronized keyword
 Locking variables correctly can eliminate thread interference and memory consistency errors.
 But it slows down performance, and can lead to thread contention issues (starvation, livelock, deadlock)
+
 
 # The Synchronized keyword
 Every object in Java has a lock associated with it.
@@ -101,6 +107,7 @@ Doing so means that only one thread can be executing this member function on thi
 So if for instance the method does something to a static class variable errors can still result.
 Using right marking a method as synchronized can help eliminate thread interference and memory consistency error
 
+
 # Synchronized blocks of code
 Since every object in Java has an intrinsic lock associated with it, it is actually possible to lock
 any section of code by marking it as synchronized.
@@ -109,6 +116,7 @@ In fact making a method as synchronized is merely a shortcut to marking the enti
 on 'this'.
 Thread never gets blocked on itself, which means that one synchronized method of an object can always call
 another synchronized method of the same object without blocking.
+
 
 # Thread contention
 Deadlock
@@ -125,19 +133,24 @@ Some threads keep locks greedly. And cause other threads to be unable to get any
 Is a new interface similar to runnable. Used to specify code to run on a new thread, but with 2 major
 improvements over Runnable
 
+
 # EXECUTORS
 Are a high level abstraction for threads, this means a programmer need never directly work with thread
 objects now
+
 
 # THREAD POOLS
 Any serious threading needs a lot of threads, and in the old days programmers had to build their own
 thread Banks
 
+
 # LOCK OBJECTS
 All Java objects have an intrinsic lock but lock objects have a way to try and acquire, and back off if
 doing so would cause livelock, deadlock
 
+
 # CONCURRENT COLLECTIONS
+
 
 # ATOMIC VARIABLES
 
@@ -149,6 +162,7 @@ Callable has 2 advantages over runnable.
 1. It is a generic class tha explicitly returns the thread result (so no shared memory to be relied upon).
 2. It correctly Passes Exceptions from one thread to another
 
+
 # SUBMIT THE CALLABLE To AN EXECUTOR OBJECT, AND GET A FUTURE OBJECT AS THE RESULT
 An Executor object is an abstraction to one or more thread objects. For instance, using executors it is
 possible to submit the callable object to a thread pool (Rather than having to implement a thread pool afresh)
@@ -157,9 +171,11 @@ The future object is a generic object that will take the output of callable .cal
 Calling Future.cancel is like calling thread.interrupt in old way. Executor is an excellent abstraction for thread pools.
 Which were widely used, but easy to get wrong.
 
+
 # FUTURE.GET TO WAIT FOR THE CALLABLE TO FINISH RUNNING
 This is a blocking call, i.e. it will simply wait until the underlying callable .call has finished running.
 Future.GET will also relay on any exception thrown in the callable. This is a huge debugging aid.
+
 
 # THE SINGLETON PATTERN
 There are situations where exactly one object of particular type is needed.
@@ -181,9 +197,10 @@ a state version of the Singleton.
 Declaring a VOLATILE Java variable means the value of the variable will never be cached thread-locally. All reads
 and writes will go straight to main memory. Access to the variable acts as through it is enclosed in a synchronized block,
 synchronized on itself.
-The volatile keyword ensures a variable s never cached and only read from main memory.
+The volatile keyword ensures a variable is never cached and only read from main memory.
 Access to a variable marked volatile is 'synchronized' on the variable itself.
 Variables marked volatile are safe to use in different threads.
+
 
 # Double Checked Locking
 In software engineering, double checked locking ("double checked locking optimization") is a software design pattern

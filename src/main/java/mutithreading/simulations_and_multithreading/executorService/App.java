@@ -12,7 +12,7 @@ public class App {
         // Dynamically reuse thread. Check if threads are already working
         // Executor Service
         // - returns an executorService that can dynamically reuse threads
-        // - before starting a job, it going to check whether there are any threads that finished jo, reuse them
+        // - before starting a job, it going to check whether there are any threads that finished job, reuse them
         // - if there are no waiting thread, it is going to create another one
 
         ExecutorService executorService = Executors.newSingleThreadExecutor(); // uses single thread for jobs

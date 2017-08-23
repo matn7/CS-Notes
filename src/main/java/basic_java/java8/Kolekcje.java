@@ -10,15 +10,24 @@ import java.util.Iterator;
 public class Kolekcje {
 
     // Interfejs Collection dostarcza popularnych metod dla wszystkich kolekcji oprócz map opisywanych przez interfejs map.
+
     // Lista jest sekwencyjną kolekcją, w której każdy element ma przypisany indeks w postaci liczby całkowitej.
+
     // Zestawy są zoptymalizowane do wydajnego testowania wytrzymałości. Java zawiera implementacje HashSet i TreeSet.
-    // W przypadku map możesz wybrać implementację HashMap lub TreeMap. Implementacja LinkedHashMap zachowuje kolejność dodawania elementów.
+
+    // W przypadku map możesz wybrać implementację HashMap lub TreeMap. Implementacja LinkedHashMap zachowuje kolejność dodawania
+    // elementów.
+
     // Interfejs Collection i klasa Collections dostarczają wielu użytecznych algorytmów do ustawiania, przeszukiwania,
     // sortowania, testowania i innych.
-    // Widoki dają dostęp do danyc przechowywanych w dowolnym miejscu za pomocą standardowych interfejsów kolekcji.
 
-    // Klasa Queue zachowuje kolejność, w jakiej elementy zostały umieszczone, ale możesz umieszczać elementy jedynie na koncu
+    // Widoki dają dostęp do danych przechowywanych w dowolnym miejscu za pomocą standardowych interfejsów kolekcji.
+    // Widok kolekcji jest lekkim obiektem implementującym interfejs kolekcji ale nie przechowuje elementów.
+    // Na przykłąd metody keySet i values zwracają widoki mapy. Arrays.asList.
+
+    // Klasa Queue zachowuje kolejność, w jakiej elementy zostały umieszczone, ale możesz umieszczać elementy jedynie na końcu
     // i usuwać wyłącznie elementy znajdujące się na początku.
+
     // Klasa Dequeue implementuje kolekcję dwustronną.
 
     // Iteratory
@@ -42,15 +51,16 @@ public class Kolekcje {
         }
 
         // Zestawy
-        // Wydajnie sprawdza czy wartość jest elementem, nie zachowuje informacji o tym w jakij kolejności elementy zostały dodae.
+        // Wydajnie sprawdza czy wartość jest elementem, nie zachowuje informacji o tym w jakiej kolejności elementy zostały dodane.
 
         // Mapy
         // Przechowują połączenie klucz-wartość.
         // Aby przejść przez wszystkie klucze i wartości mapy, możesz przejść przez zestaw zwrócony przez metodę entrySet.
+
         // for (Map.Entry<String, Integer> wpis : counts.entrySet()) {
-        //  String k = wpis.getKey();
-        //  Iteger v = wpis.getValue();
-        //  ..
+        //      String k = wpis.getKey();
+        //      Iteger v = wpis.getValue();
+        //      ...
         // }
         // counts.forEach((k,v) -> {
         //      // Process k and v
@@ -74,6 +84,7 @@ public class Kolekcje {
         // w sytuacji, gdy jedna referencja do klucza istnieje w tej strukturze danych.
         // WeakReference jeżeli obiekt jest dostępny jednynie za pomocą słabej referencji, garbage collector przejmuje go i umieszcza
         // słabą referencję w kolejce związanej z obiektem WeakReference. Jeśli na obiekcie zostanie wywołana metoda
-        // , obiekt WeakHashMap sprawdza, czy w kolejce słabych referencji pojawiły się nowe elementy i usuwa związane z nmi elementy struktury.
+        // , obiekt WeakHashMap sprawdza, czy w kolejce słabych referencji pojawiły się nowe elementy i usuwa związane
+        // z nimi elementy struktury.
      }
 }

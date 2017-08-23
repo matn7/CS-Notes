@@ -17,9 +17,9 @@ public class DziedziczenieRefleksja {
 
     // Za pomocą słowa kluczowego super można wywołać metodę klasy nadrzędnej lub konstruktor.
 
-    // Metoda z modyfikatorem final nie może być przesłonięta; klasa z modyfikatorem final niemoże być rozszerzana.
+    // Metoda z modyfikatorem final nie może być przesłonięta; klasa z modyfikatorem final nie może być rozszerzana.
 
-    // Metoda bstrakcyjna nie ma implementacji; klasa abstrakcyjna nie może mieć instancji.
+    // Metoda abstrakcyjna nie ma implementacji, klasa abstrakcyjna nie może mieć instancji.
 
     // Każda klasa jest klasą podrzędną klasy Object, która zawiera metody toString, equals, hashCode i clone.
 
@@ -32,7 +32,7 @@ public class DziedziczenieRefleksja {
     // Korzystać z rzutowania i instanceof by zmienić referencję do klasy nadrzędnej na referencję kalsy podrzędnej.
 
     // Metody i klasy z modyfikatorem final
-    // Jeśli deklarujesz metodę jako final, klasa podrzędna nie może jej przesłonić na przykłąd metoda getClass klasy Object.
+    // Jeśli deklarujesz metodę jako final, klasa podrzędna nie może jej przesłonić na przykład metoda getClass klasy Object.
 
     // Aby uniemożliwić utworzenie klasy podrzędnej z jednej z klas użyj odyfikatora final w definicji klasy.
     // public final class Executive extends Manager { ... }
@@ -45,9 +45,9 @@ public class DziedziczenieRefleksja {
 
     // Nie jest możliwe utworzenie instancji klasy abstrakcyjnej.
 
-    // Protected aby umożliwić dostęp do metody jedynie do klas podrzędnych  lub że zechcesz umożliwić metodom klasy podrzędnej
+    // Protected aby umożliwić dostęp do metody jedynie do klas podrzędnych lub że zechcesz umożliwić metodom klasy podrzędnej
     // dostęp do zmiennych instancji klasy nadrzędnej.
-    // Metoda clone z klasy Object, est zadeklarowana jako protected
+    // Metoda clone z klasy Object, jest zadeklarowana jako protected
 
     // Metody klasy java.lang.Object
 
@@ -62,7 +62,8 @@ public class DziedziczenieRefleksja {
 
     // protected Object clone() - wykonuje kopię bieżącego obiektu. Domyślnie tworzona jest płytka kopia.
 
-    // protected void finalize() - ta metoda jest wywoływana, gdy obiekt jest przejmowany przez mechanizm garbage collector. Nie należy jej przesłaniać.
+    // protected void finalize() - ta metoda jest wywoływana, gdy obiekt jest przejmowany przez mechanizm garbage collector.
+    // Nie należy jej przesłaniać.
 
     // wait, notify, notifyAll
 
@@ -96,16 +97,19 @@ public class DziedziczenieRefleksja {
     // Metoda hashCode
     // Suma kontrolna to liczba całkowita identyfikująca obiekt. Sumy kontrolne powinny być zróżnicowane.
     // Jeśli x i y nie są takimi samymi obiektami, z dużym prawdopodobieństwem x.hashCode() i y.hashCode() powinny się różnić.
-    // Do bliczania sumy kontrolnej klasa String używa
+    // Do obliczania sumy kontrolnej klasa String używa
     // int hash = 0;
     // for (int i = 0; i < length(); i++) {
     //      hash = 31 * hash + charAt(i);
     // }
 
-    // Metody hashCode i equals muszą być kompatybilne. Jeśli x.equals(y) zwraca true, to musi być też spełniony warunek x.hashCode() == y.hashCode()
+    // Metody hashCode i equals muszą być kompatybilne. Jeśli x.equals(y) zwraca true, to musi być też spełniony warunek
+    // x.hashCode() == y.hashCode()
 
-    // Jeśli zmieniasz definicję metody equals, będziesz też musiał zdefiniować ponownie metodę hashCode w taki sposób, by pozostała kompatybilna z metodą equals.
-    // Jeśli tego nie zrobisz i użytkownicy Twojej klasy umieszczą obiekty w kolekcji HashSet lub tablicy HashMap, moga one zostać utracone.
+    // Jeśli zmieniasz definicję metody equals, będziesz też musiał zdefiniować ponownie metodę hashCode w taki sposób,
+    // by pozostała kompatybilna z metodą equals.
+    // Jeśli tego nie zrobisz i użytkownicy Twojej klasy umieszczą obiekty w kolekcji HashSet lub tablicy HashMap,
+    // moga one zostać utracone.
 
     // Wyliczenia
     // Sposoby wyliczania
@@ -119,7 +123,8 @@ public class DziedziczenieRefleksja {
     // Możesz dodać metody do każdej instancji typu wyliczeniowego enum
 
     // Elementy statyczne
-    // Stałe wyliczeniowe są konstruowane przez zmiennymi statycznymi, dlatego nie można kożystać ze zmiennych statycznych w konstruktorze.
+    // Stałe wyliczeniowe są konstruowane przed zmiennymi statycznymi, dlatego nie można kożystać ze zmiennych statycznych
+    // w konstruktorze.
 
     // Informacje o typie i zasobach w czasie działania programu
     // Klasa Class
@@ -133,10 +138,12 @@ public class DziedziczenieRefleksja {
     // Klasy aplikacji systemowy program wczytujący klasy (system class loader)
 
     // Refleksje
-    // Refleksje umożliwiają programowi sprawdzenie zawartości dowolnego obiektu w czasie działania i wywołania na nim dowolnych metod.
+    // Refleksje umożliwiają programowi sprawdzenie zawartości dowolnego obiektu w czasie działania
+    // i wywołania na nim dowolnych metod.
 
     // JavaBeans
-    // JavaBean to klasa z bezargumentowym konstruktorem, parami metod odczytujących i ustawiających wartości oraz dowolną liczbą innych metod.
+    // JavaBean to klasa z bezargumentowym konstruktorem, parami metod odczytujących i ustawiających wartości oraz dowolną
+    // liczbą innych metod.
     // public Type getProperty()
     // public void setProperty(Type newValue)
 

@@ -25,4 +25,4 @@ git diff
 # .gitignore #
 ##############
 Put here everything that you dont want to git track for you.
-Each file in each line.
+Each file in separate line.

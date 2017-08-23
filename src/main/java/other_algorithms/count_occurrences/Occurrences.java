@@ -19,7 +19,7 @@ public class Occurrences {
 
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == ' ') {
-                map.put(i, '_');
+                map.put(i, '_'); // In case of empty space put _ in map
             } else {
                 map.put(i, str.charAt(i));
             }

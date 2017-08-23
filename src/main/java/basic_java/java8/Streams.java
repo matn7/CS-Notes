@@ -41,7 +41,7 @@ public class Streams {
 
         // Wycinanie podstrumieni i łączenie strumieni
         Stream<Double> random2 = Stream.generate(Math::random).limit(100); // returns streams with 100 random number
-        //Stream<String> words2 = Stream.of(song.)
+        //Stream<String> words2 = Stream.of(song)
 
         // łączenie strumieni methoda concat
         Stream<String> connected = Stream.concat(letters("HELLO"), letters("WORLD"));
@@ -71,16 +71,17 @@ public class Streams {
         // Objekt Optional<T> opakowuje objekt typu T lub brak obiektu
         // Tworzy alternatywną wartość, jeżeli zwracana wartość nie istnieje, lub pobiera wartość jeżeli jest ona obecna
         Optional<String> optionalString = words.stream().findAny();
+
         //String wynik = optionalString.orElse("");
         String wynik2 = optionalString.orElseGet(() -> System.getProperty("user.dir"));
         String wynik3 = optionalString.orElseThrow(IllegalStateException::new);
+
         // Wykorzystanie wartości gdy jest obecna
         optionalString.ifPresent(v -> v.endsWith("A"));
         optionalString.ifPresent(words::add);
 
         // przetwarzanie wyniku działania funkcji
         Optional<Boolean> dodane = optionalString.map(words::add);
-
 
         // Kolekcje wyników
         // iterate, forEach
@@ -110,8 +111,8 @@ public class Streams {
         Map<Integer, Osoba> idNaOsobe = people.stream().collect(Collectors.toMap(Osoba::getId, Function.identity()));
 
         Stream<Locale> locales = Stream.of(Locale.getAvailableLocales());
-        Map<String, String> languagesNames = locales.collect(Collectors.toMap(Locale::getDisplayLanguage, Locale::getDisplayLanguage,
-                (existing, newvalue) -> existing));
+        Map<String, String> languagesNames = locales.collect(Collectors.toMap(Locale::getDisplayLanguage,
+                Locale::getDisplayLanguage, (existing, newvalue) -> existing));
         Stream<Locale> locales2 = Stream.of(Locale.getAvailableLocales());
         Map<String, Set<String>> countryLanguagesSet = locales2.collect(
                 Collectors.toMap(
@@ -134,6 +135,7 @@ public class Streams {
                 )
         );
         Stream<Locale> locales3 = Stream.of(Locale.getAvailableLocales());
+
         // Grupowanie i partycjonowanie
         Map<String, List<Locale>> countryPerLocale = locales3.collect(Collectors.groupingBy(Locale::getCountry));
         List<Locale> swissLocales = countryPerLocale.get("CH");
@@ -145,11 +147,13 @@ public class Streams {
         // Kolektory strumieniowe
         // Do dalszego przetwarzanie wartosci z mapy.
         Stream<Locale> locales5 = Stream.of(Locale.getAvailableLocales());
-        Map<String, Set<Locale>> countriesOnLocalizationSet = locales5.collect(Collectors.groupingBy(Locale::getCountry, Collectors.toSet()));
+        Map<String, Set<Locale>> countriesOnLocalizationSet = locales5.collect(Collectors.groupingBy(Locale::getCountry,
+                Collectors.toSet()));
 
         // counting zlicza ilość zebranych elementów
         Stream<Locale> locales6 = Stream.of(Locale.getAvailableLocales());
-        Map<String, Long> countriesOnLocalizationsCounter = locales6.collect(Collectors.groupingBy(Locale::getCountry, Collectors.counting()));
+        Map<String, Long> countriesOnLocalizationsCounter = locales6.collect(Collectors.groupingBy(Locale::getCountry,
+                Collectors.counting()));
         // summingInt
         //maxBy, minBy
         // mapping
@@ -161,7 +165,7 @@ public class Streams {
         value8.add(-9870);
         value8.add(Integer.MAX_VALUE);
 
-        Optional<Integer> suma =value8.stream().reduce((x,y) -> x + y);
+        Optional<Integer> suma = value8.stream().reduce((x,y) -> x + y);
 
         // Strumienie typów prostych
         IntStream od0do99 = IntStream.range(0,100);

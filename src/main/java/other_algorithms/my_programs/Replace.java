@@ -13,12 +13,12 @@ public class Replace {
 
     }
 
-    public static String replace(String str, char ch1, char ch2) {
+    public static String replace(String str, char co, char naCo) {
         char[] strChar = str.toCharArray();
 
         for (int i = 0; i < strChar.length; i++) {
-            if (strChar[i] == ch1) {
-                strChar[i] = ch2;
+            if (strChar[i] == co) {
+                strChar[i] = naCo;
             }
         }
         return String.valueOf(strChar);

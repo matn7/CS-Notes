@@ -18,7 +18,7 @@ public class App {
             @Override
             public void run() {
                 try {
-                   // produce - put item on the queue
+                    // produce - put item on the queue
                     processor.produce();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

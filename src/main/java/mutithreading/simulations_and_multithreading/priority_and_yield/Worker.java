@@ -1,4 +1,4 @@
-package mutithreading.simulations_and_multithreading.prioritity_and_yield;
+package mutithreading.simulations_and_multithreading.priority_and_yield;
 
 /**
  * Created by Mati on 11.07.2017.
