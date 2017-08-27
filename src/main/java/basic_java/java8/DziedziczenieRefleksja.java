@@ -34,7 +34,7 @@ public class DziedziczenieRefleksja {
     // Metody i klasy z modyfikatorem final
     // Jeśli deklarujesz metodę jako final, klasa podrzędna nie może jej przesłonić na przykład metoda getClass klasy Object.
 
-    // Aby uniemożliwić utworzenie klasy podrzędnej z jednej z klas użyj odyfikatora final w definicji klasy.
+    // Aby uniemożliwić utworzenie klasy podrzędnej z jednej z klas użyj modyfikatora final w definicji klasy.
     // public final class Executive extends Manager { ... }
     // Klasy final w API Java, String, LocalTime, URL
 
@@ -109,7 +109,7 @@ public class DziedziczenieRefleksja {
     // Jeśli zmieniasz definicję metody equals, będziesz też musiał zdefiniować ponownie metodę hashCode w taki sposób,
     // by pozostała kompatybilna z metodą equals.
     // Jeśli tego nie zrobisz i użytkownicy Twojej klasy umieszczą obiekty w kolekcji HashSet lub tablicy HashMap,
-    // moga one zostać utracone.
+    // mogą one zostać utracone.
 
     // Wyliczenia
     // Sposoby wyliczania

@@ -155,7 +155,7 @@ public class Streams {
         Map<String, Long> countriesOnLocalizationsCounter = locales6.collect(Collectors.groupingBy(Locale::getCountry,
                 Collectors.counting()));
         // summingInt
-        //maxBy, minBy
+        // maxBy, minBy
         // mapping
 
         // Operacje redukcji

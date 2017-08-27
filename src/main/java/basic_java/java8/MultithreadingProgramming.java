@@ -79,7 +79,7 @@ public class MultithreadingProgramming {
 
         // Bezpieczeństwo wątków
         // Widoczność
-        // Myśl o miejscch w pamięci takich jak zmienna done niczym o bitach gdzieś w tranzystorach układu RAM.
+        // Myśl o miejscch w pamięci takich jak zmienna dane niczym o bitach gdzieś w tranzystorach układu RAM.
         // Pamięci RAM są powolne - kilka razy wolniejsze niż nowoczesne procesory.
         // Procesor próbuje przechowywać potrzebne dane w rejestrach
         // lub pamięci podręcznej na płycie głównej i w ostateczności przepisuje zmieny w pamięci.

@@ -6,16 +6,13 @@ package other_algorithms.my_programs;
 public class Fibanacci {
 
     public static void main(String[] args) {
-        //for (int i = 0; i < 4; i++) {
-        System.out.println(fibanacci(1));
-        System.out.println(fibanacci(2));
-        System.out.println(fibanacci(3));
-        System.out.println(fibanacci(4));
-        //}
+        for (int i = 0; i < 8; i++) {
+        System.out.println(fibanacci(i));
+        }
     }
 
     public static int fibanacci(int num) {
-        if (num == 1 || num == 2) {
+        if (num == 0 || num == 1) {
             return 1;
         } else {
             return fibanacci(num - 1) + fibanacci(num - 2);

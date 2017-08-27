@@ -10,12 +10,13 @@ public class ProgramowanieObiektowe {
 
     // W języku Java zmienne nie przechowują obiektów przechowują one referencje do obiektów
 
-    // Metoa instancji jest wywoływana na obiekcie, do którego można odwołać się za pomocą referencji this.
+    // Metoda instancji jest wywoływana na obiekcie, do którego można odwołać się za pomocą referencji this.
 
     // Korzystając z obiektów które zaimplementował ktoś inny i wywołując ich metody, nie musisz wiedzieć co dzieje się w środku.
     // Ta zasada nazwana hermetyzacją
 
-    // W języku Java dostarczasz klasę - mechanizm pozwalający na tworzenie i wykorzystywanie obiektów zachowujących się w ten sam sposób.
+    // W języku Java dostarczasz klasę - mechanizm pozwalający na tworzenie i wykorzystywanie obiektów
+    // zachowujących się w ten sam sposób.
 
     // Metoda modyfikująca zmienia obiekt na którym jest wywoływana
     // Metoda dostępowa pozostawia obiekt niezmiennym.
@@ -29,9 +30,9 @@ public class ProgramowanieObiektowe {
 
     // Zmienne instancji
     // W języku Java korzystamy ze zmiennych instancji by opisać stan obiektu.
-    // W Języku Java wszystkie metody które nie są zadeklarowane jako statyczne są metodami instancji.
+    // W języku Java wszystkie metody które nie są zadeklarowane jako statyczne są metodami instancji.
 
-    // W Języku Java wszystkie parametry - referencje do obiektów oraz typy proste - są przekazywane przez wartość
+    // W języku Java wszystkie parametry - referencje do obiektów oraz typy proste - są przekazywane przez wartość
 
     // Metoda jest przeładowana, jeśli istnieje wiele wersji o tej samej nazwie, ale innych parametrach.
 
@@ -40,10 +41,10 @@ public class ProgramowanieObiektowe {
 
     // Zawsze musisz inicjalizować zmienne lokalne. Zmienne instancji niezainicjalizowane przyjmują wartości domyślne (null, 0 ,false)
 
-    // Poza inicjalizacją zmiennych instancji podczas ich deklarowania możesz dołączyć dowolne bloki inijalizacyjne (initialization blocks)
-    // w deklaracji klasy.
-    // Inicjalizacja zmiennych instancji oraz bloki inicjalizacyjne są wykonywane w kolejności, w jakiej pojawiają się w deklaracji klasy,
-    // ale przed treścią konstruktora.
+    // Poza inicjalizacją zmiennych instancji podczas ich deklarowania możesz dołączyć dowolne bloki inijalizacyjne
+    // (initialization blocks) w deklaracji klasy.
+    // Inicjalizacja zmiennych instancji oraz bloki inicjalizacyjne są wykonywane w kolejności, w jakiej pojawiają się w
+    // deklaracji klasy, ale przed treścią konstruktora.
 
     // Zmienne instancji z modyfikatorem final
     // Zmienna z modyfikatorem final musi być zainicjalizowana przed końcem konstruktora.
@@ -59,7 +60,8 @@ public class ProgramowanieObiektowe {
     // Inaczej jest w przypadku zmiennych instancji - każdy obiekt ma własną kopię takich zmiennych.
 
     // Stałe statyczne
-    // Modyfikowalne zmienne statyczne to rzadkość, ale stałe statyczne (czyli zmienne z modyfikatorem static final) są dość często spotykane.
+    // Modyfikowalne zmienne statyczne to rzadkość, ale stałe statyczne (czyli zmienne z modyfikatorem static final)
+    // są dość często spotykane.
     // public static final double PI = 3.14159...;
     // private static final Random generator = new Random();
     // public static final PrintStream out;
@@ -70,20 +72,23 @@ public class ProgramowanieObiektowe {
     // Czasem konieczne jest wykonanie dodatkowej inicjalizacji. Taki kod można umieścić w statcznym bloku inicjalizacyjnym.
     // Inicjalizacja statyczna jest realizowana przy pierwszym załadowaniu klasy.
     // Podobnie jak zmiene instancji, zmienne statyczne przyjmują wartości: 0, false lub null, jeśli jawnie nie przypiszesz im innej.
-    // Inicjalizacja i wykonywanie statycznych bloków przeiega w takiej samej kolejności, w jakiej polecenia są umieszczane w deklaracji klasy.
+    // Inicjalizacja i wykonywanie statycznych bloków przebiega w takiej samej kolejności,
+    // w jakiej polecenia są umieszczane w deklaracji klasy.
 
     // Metody statyczne
-    // Nie działają na obiektach. W Języku java typy proste nie są klasami. Dlatego metoda pow z klasy Math jest zadeklarowana ako statyczne
-    // (public static double pow(double base, double exponent) { ... })
-    // Innym powodem tworzenia statycznych metod jest konieczność ostarczenia dodatkowej fyunkcjonalności do klas, których nie jesteś właścicielem.
+    // Nie działają na obiektach. W Języku java typy proste nie są klasami. Dlatego metoda pow z klasy Math jest zadeklarowana
+    // jako statyczne (public static double pow(double base, double exponent) { ... })
+    // Innym powodem tworzenia statycznych metod jest konieczność dostarczenia dodatkowej fyunkcjonalności do klas,
+    // których nie jesteś właścicielem.
     // Nie możesz mieć dostępu do zmienych instancji z metod statycznych.
     // Metody statyczne mogą mieć dostęp do zmiennych statycznych w swoich klasach
 
     // Metody wytwórcze
     // factory methods. Metody statyczne które zwracają nowe instancje klas.
-    // Dlaczego zamiast nich nie używać konstruktora? Jedynym sposobem odróżnienia dwóch konstruktorów są typy przekazywanyc do nich parametró.
+    // Dlaczego zamiast nich nie używać konstruktora? Jedynym sposobem odróżnienia dwóch konstruktorów są typy przekazywanyc
+    // do nich parametró.
     // Nie możesz mieć dwóch konstruktorów bez parametrów.
-    // Metody wytwórcze mogą też zwracać wzpółdzielone obiekty bez konieczności tworzenia nowych. Collections.emptyList() zwróci
+    // Metody wytwórcze mogą też zwracać współdzielone obiekty bez konieczności tworzenia nowych. Collections.emptyList() zwróci
     // współdzieloną niemodyfikowalną pustą listę.
 
     // Pakiety

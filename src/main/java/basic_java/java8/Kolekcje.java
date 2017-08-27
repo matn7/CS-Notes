@@ -69,7 +69,7 @@ public class Kolekcje {
         // Inne kolekcje
         // Properties
         // Klasa Properties implementuje mapę, która może być łatwo zapisana i wczytywana w postaci czystego tekstu.
-        // Takie mapy są używane do przechowwania opcji konfiguracyjnych programów.
+        // Takie mapy są używane do przechowywania opcji konfiguracyjnych programów.
         // Przykłady: user.dir, os.name, os.arch
 
         // Zestawy bitów

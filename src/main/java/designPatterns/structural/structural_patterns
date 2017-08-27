@@ -35,7 +35,7 @@ A facade provides a simple interface for a larger body of complicated code. Mult
 behind the facade, however the user will see only the simple interface.
 In Java API URL to download data. Java NET library. Which manages complecity, assumes that you don't know or care how a content from
 URL are obtained. Java abstracted all that process for you, assmes that you dont know much about networking or stuff.
-Facase are in Reflection, Networking, Database access, Madia Players.
+Facasde are in Reflection, Networking, Database access, Madia Players.
 Basic point in facade is a wrapper to abstract the complexity of a group of interconnected classes.
 What motivates a Facade pattern, classes should know as little as possible about other classes they use, relay on abstractions-interface
 not implementations, loosely coupled code is preferable to tightly coupled.

@@ -179,6 +179,7 @@ There are two types of Initialization blocks.
 Code within static {} is called a static initializer. This is run only when class is first loaded.
 Only static variables can be accessed in a static initializer. Even though three instances are created static
 initializer is run only once.
+
 +---------------------------------------------------------------------+
 | public class InitializerExamples() {                                |
 |   static int count;                                                 |
@@ -540,6 +541,7 @@ Casting is used when we want to convert one data type to another. Two types of c
 
 Implicit Casting is done by compiler. Good example of implicit casting are all the automatic widening conversions
 i.e. storing smaller values in larger variables types.
+
 +------------------------------------------+
 | int value = 100;                         |
 | long number = value; // Implicit casting |
@@ -548,6 +550,7 @@ i.e. storing smaller values in larger variables types.
 
 Explicit Casting is done through code. Example are narrowing conversions - storing larger values into smaller variables.
 Explicit casting would cause truncation of value if the value stored is greater than the size of varible.
+
 +------------------------------------------+
 | long number1 = 12345;                    |
 | int x = (int) numer1; // Explicit castig |
@@ -579,7 +582,8 @@ Explicit casting would cause truncation of value if the value stored is greater 
 
 - Instance Variables (Non-Static Fields)
 - Class Variables (Static Fields) : one copy of this variable in existence.
-- Local Variables : methods stores its temporary state in local variables. Declared between {} in method. Accessible only in method declared.
+- Local Variables : methods stores its temporary state in local variables. Declared between {} in method.
+  Accessible only in method declared.
 - Parameters : classified as variables.
 
 
@@ -663,6 +667,7 @@ Java Memory - Rule
 For object passed into methods, the REFERENCE to the object is passed BY VALUE.
 "No object passed to method but rather pointer to object"
 Passing Values
+
 +--------------------------------------------------------+
 | public class Main {                                    |
 |     public static void main(String[] args) {           |
@@ -697,6 +702,7 @@ Passing Values
 # The "final" keyword
 
 Can be assigned only once
+
 +--------------------------------------+
 | final Customer c;                    |
 | c = new Customer("Mark");            |
@@ -758,7 +764,7 @@ Program VirtualGC to view some memory leaks
 
 # PermGen / MetaSpace
 
-Perm Gen is never GC
+PermGen is never GC
 On PermGen internalize String metadata of class is stored in this.
 Info about class.
 Problem to many classes or internalized strings
@@ -780,16 +786,19 @@ Max size of metaspace is your computer Space
 | Heap  |               |   |           |
 +-------+---------------+   +-----------+
 
+
 # Tuning the VM
 
 -Xmx set the maximum heap size
 -Xms set starting heap size
+
 +-------------------+
 | -Xmx512m -Xms150m |
 +-------------------+
 
 PermGen Size
 -XX:MaxPermSize
+
 +----------------------+
 | -XX:MaxPermSize=256m |
 +----------------------+
@@ -823,6 +832,7 @@ apache-jmeter
 
 WeakReferences - might not survive GC. If not variable will be equal to null.
 Soft - stronger than weak, can be destroy if GC claims that space is needed.
+
 +-------------------------------------+
 | WeakReferencs<Book> mybook = book1; |
 | SoftReference<Book> mybook = book2; |
@@ -843,7 +853,7 @@ Guava Library can make soft hash map
 You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
 collections like HashMap, HashSet
 In Map objects are stored as key and value. put(key,value) method is used to store objects in HashMap at this time
-hashCode() method is used to calculate the hash code of key object and both kay and value object is stored
+hashCode() method is used to calculate the hash code of key object and both key and value object is stored
 as map.entry, if two keys object have some hash code then only one value object is stored in the same bucket location but
 as a linked list value is stored and if hash code is different then another bucket location is created.
 While retrieving get(key) method is used at this time hash code of key object is calculated and then equals() method
@@ -957,8 +967,8 @@ A good hashCode should have the following properties:
 
 Abstract class - high level class, by whom inherits
 Data serialization allows to know about all references (extends)
-Serialized object will be read to file. They will acquire some special identification number (SerialVersionUID), object will use this
-number to other objects
+Serialized object will be read to file. They will acquire some special identification number (SerialVersionUID),
+object will use this number to other objects
 To perform serialization class need to implements Serializable interface
 Serializable marker interface (without method), safety guard to make sure you know what you are doing
 transient data that we don't want to be serialized
@@ -1036,11 +1046,12 @@ mark this variable as transient.
 
 All classes that need to be serialized have to implement Serializable interface
 
-Are the constructors in an object invoked when it is de-serialized?
+# Are the constructors in an object invoked when it is de-serialized?
 No when a class is de-serialized, initialization (constructor's initializer's) does not take place.
 The state of an object is retained as it is.
 
-Are the values of static variables stored when object is serialized?
+
+# Are the values of static variables stored when object is serialized?
 Static variables are not part of the object they are not serialized.
 
 +---------------------+
@@ -1049,7 +1060,6 @@ Static variables are not part of the object they are not serialized.
 
 
 # Different between Serializable and Externalizable
-
 Serializable is marker interface with no method defined
 Use default serialization process which can be very slow for some application
 Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the
@@ -1261,11 +1271,12 @@ Throwable is the highest level of Error Handling classes.
 | class RuntimeException extends Exception {} |
 +---------------------------------------------+
 
-Difference between Error and Exception
+# Difference between Error and Exception
 Error is used in situation where there is nothing programmer can do about an error.
 StackOverflow, OutOfMemory. Programmer can handle Exception.
 
-Difference between checked and un-checked exceptions
+
+# Difference between checked and un-checked exceptions
 Runtime Exceptions and classes that extends RuntimeException are called unchecked exception.
 Other Exception classes are called Checked Exceptions. They are Subclasses of Exception which are
 not subclass of RuntimeException. Checked exceptions should be handled or thrown.
@@ -1274,7 +1285,8 @@ not subclass of RuntimeException. Checked exceptions should be handled or thrown
 |throw new Exception("Exception 1");|
 +-----------------------------------+
 
-Create custom Exception
+
+# Create custom Exception
 By extending Exception class or RuntimeException class.
 If extends Exception class it will be checked exception.
 If extends RuntimeException it will be un-checked exception.
@@ -1283,7 +1295,8 @@ If extends RuntimeException it will be un-checked exception.
 | class CustomException extends Exception {...} |
 +-----------------------------------------------+
 
-Order of Exceptions
+
+# Order of Exceptions
 Specific Exception should be before the Generic Exception.
 
 +---------------------------------------------+
@@ -1301,7 +1314,6 @@ Specific Exception should be before the Generic Exception.
 
 
 # Checked and Unchecked Exceptions
-
 Checked Exceptions ensures that handling of exception is provided and its verified by compiler also
 For throwing unchecked exception no special provision is needed.
 
@@ -1333,7 +1345,7 @@ Make class type parameter to a class.
 
 To restrict Generics to a subclass of particular class we can use Generic Restrictions.
 "T extends Number"
-We can use the class MyListRestricted with any class extending (sub class) of Number - Float, Integer, Double
+We can use the class MyListRestricted with any class extending (subclass) of Number - Float, Integer, Double
 String is not valid substitute for "T extends Number"
 
 +--------------------------------------------+
@@ -1440,8 +1452,7 @@ PrintWriter constructor supports varied kind of arguments - Fle, String Path and
 # Collections #
 ###############
 
-
-Why need collections
+# Why need collections
 Arrays are not dynamic. Once an array of particular size is created, the size cannot be modified.
 To add new element new array have to be created with bigger size and all elements from the old array copied to new array.
 Collections are used in situations where data is dynamic. Collections allow adding an elements, deleting an elements and
@@ -1481,7 +1492,6 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 
 
 # LIST
-
 List interface extends Collection interface. It contains all methods defined in Collection interface.
 In addition List interface allows operation specifying the position of the element in the Collection.
 Any implementation of List interface would maintain the insertion order.
@@ -1498,7 +1508,8 @@ RandomAccess means random search if you know the index, LinkedList only allows s
 Adding and removing elements from middle of LinkedList is fast compared to ArrayList, because it only
 require to modify links and no other elements are rearranged.
 
-ArrayList
+
+# ArrayList
 ArrayList implements the List interface. So ArrayList stores the elements in insertion order.
 Elements can be inserted into and removed from ArrayList based on their positions.
 ArrayList can have duplicate elements.
@@ -1529,7 +1540,7 @@ We can also use Comparable interface, with method compareTo
 |   }                                                          |
 | }                                                            |
 | // Use                                                       |
-| Collections.sort(cricket, new DescendingSorter();            |
+| Collections.sort(cricket, new DescendingSorter());           |
 +--------------------------------------------------------------+
 
 Convert List to an Array
@@ -1540,17 +1551,18 @@ List<String> valueList = Arrays.asList(valueArray)
 
 
 # SET
-
 Java has implementation of HashSet and TreeSet.
 Does not allow duplicates.
 
-What is a difference between Set and SortedSet
+
+# What is a difference between Set and SortedSet
 SortedSet interface extends the Set interface. Both Set and SortedSet does not allow duplicate elements.
 SortedSet maintains its elements in a sorted order. Set interface does not guaranteed any order
 Methods of Sorted Set:
 subset(), headSet(), tailSet()
 
-HashSet
+
+# HashSet
 HashSet implements Set interface. HashSet does not allow duplicates. HashSet does not supports ordering.
 The order in which elements are inserted is not maintained.
 
@@ -1558,11 +1570,13 @@ The order in which elements are inserted is not maintained.
 | Set<String> hashSet = new HashSet<>(); |
 +----------------------------------------+
 
-LinkedHashSet
+
+# LinkedHashSet
 LinkedHashSet implements Set interface and exposes similar operations to HashSet.
 Maintains insertion order.
 
-TreeSet
+
+# TreeSet
 TreeSet implements Set, SortedSet and NavigableSet interfaces. TreeSet is similar to HashSet except
 that it stores elements in sorted order.
 Some methods:
@@ -1574,7 +1588,6 @@ lower(), floor(), higher(), ceiling()
 
 
 # MAP
-
 Map interface does not extends Collection.
 A Map interface supports Collections that use a key value pair.
 A key-value pair is a set of linked data items a key, which is a unique identifier for some item data, and the value
@@ -1591,7 +1604,8 @@ HashMap implements Map interface there by supporting key values pairs.
 TreeMap is similar to HashMap except that it stores keys in sorted order. It implements NavigableMap interface and
 SortedMap interfaces along with tha Map interface
 
-ConcurrentHashMap
+
+# ConcurrentHashMap
 Methods in atomic ways sets or replace elements if it is the same at a point of time.
 There are couple of mass operations to search, modify or look for ConcurrentHashMap.
 search, reduce, forEach.
@@ -1600,7 +1614,8 @@ ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher c
 thread safety
 ConcurrentSkipListMap
 
-Difference between Map and SortedMap
+
+# Difference between Map and SortedMap
 SortedMap interface extends Map interface. In addition, an implementation of SortedMap interface maintains
 keys in sorted order.
 Methods are available in the interface to get a ranges of values based on their keys:
@@ -1608,7 +1623,6 @@ subMap(), headMap(), tailMap(), firstKey(), lastKey()
 
 
 # QUEUES
-
 Queue interface extends Collection interface. Queue interface is typically used for implementation
 holding elements in order for some processing.
 Queue interface offers methods peek() and poll(), which get element at the head of a queue.
@@ -1616,21 +1630,20 @@ The difference is that poll() method removes the head from queue also. peek() wo
 the queue unchanged.
 offer(), remove(), pull(), element(), peek()
 
-BlockingQueue
+
+# BlockingQueue
 pool, peek methods return null to signal failure. In that reason insert null vales to them is incorrect
 LinkedBlockingQueue
 ArrayBlockingQueue
 
 
 # PriorityQueue
-
 Implements Queue interface.
 -offer() adding an element to priority queue
 -peek() get the element with highest priority
 
 
 # Iterator
-
 Iterator interface allows us to iterate (loop around) a collection. All collections define a method iterator()
 that gets an iterator of collection.
 hasNext() check if there is another elements in the collection being iterated, next() gets the next element
@@ -1644,7 +1657,6 @@ hasNext() check if there is another elements in the collection being iterated, n
 
 
 # What is the difference between synchronized and Concurrent Collections
-
 Synchronized collections are implemented using synchronized methods and synchronized blocks. Only one Thread
 can executing any of the synchronized code at given point in time. This places severe restrictions on the concurrency
 of thread - there by affecting performance of the application. All the pre Java 5 synchronized collections
@@ -1680,7 +1692,8 @@ These are called concurrent collections. Examples of new approaches are
 - Lock and Unlock
 New approaches to concurrency provide better performance in specific context
 
-Copy on Write
+
+# Copy on Write
 All collections are sorted in immutable array. A new array is created if there is any modification to the collection
 Read operations are not synchronized. Writes operations are synchronized.
 Copy on Write scenario is used where reads greatly out number writes on a collection
@@ -1688,7 +1701,8 @@ CopyOnWriteArrayList and CopyOnWriteArraySet are implementations of this approac
 Copy on Write collections are typically used in subject - observer scenario, where the observed very
 rarely change. Most frequent operations would be iteration around the observers and notifying them.
 
-What is Compare and Swap approach
+
+# What is Compare and Swap approach
 In compare and swap approach instead of synchronizing entire method, the value of member variable before
 calculation is cached. After the calculation the cache value is compared with the current value of member variable.
 If the value is not modified the calculated result is stored into the member variable.
@@ -1697,7 +1711,6 @@ ConcurrentLinkedQueue uses this approach.
 
 
 # What is a Lock? How is it different from using synchronized approach?
-
 When 10 methods are declared as synchronized, only any of them is executed by any of the threads at any point in time.
 This has severe performance impact.
 Another new approach introduced in Java 5 is to use lock and unlock methods. Lock an unlock methods are used
@@ -1706,10 +1719,10 @@ The 10 methods can be divided into different blocks which can be synchronized on
 
 
 # What is initial capacity of a HashMap?
-
 An instance of HashMap has two parameters that affect its performance initial capacity and load factor.
 The capacity is the number of buckets in the hash table, and the initial capacity is the capacity at the time the
-hash table is created. The load factor a measure of how full the hash table is allowed to get before its capacity automatically increased.
+hash table is created. The load factor a measure of how full the hash table is allowed to get before its capacity
+automatically increased.
 When the number of entries in the hash table exceeds the product of load factor and the current capacity, the hash
 table is rehashed (internal structure rebuild). So the hash table has approximately twice the number of buckets.
 As a general rule the default load factor .75 offers a good trade off between time and space cost.
@@ -1717,7 +1730,6 @@ Higher value decrease space overhead but increase the lookup cost (put and get o
 
 
 # What is a different between fail safe and fail fast
-
 Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
 This was the default behavior of the synchronized collections of pre Java 5
 Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
@@ -1725,7 +1737,6 @@ This is the default behavior of the concurrent collections, introduced since Jav
 
 
 # ConcurrentHashMap vs HashTable vs SynchronizedMap
-
 All are thread safe.
 HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
 SynchronizedMap not very different from HasTable similar performance in concurrent Java program.
@@ -1738,7 +1749,6 @@ It perform better if number of reader are greater than the number of writer thre
 
 
 # What are atomic operations in Java?
-
 In programming an atomic action is one that effectively happens all at once. An atomic action cannot stop in the middle.
 It either happens completely or it doesn't happen at all. No side effect of an atomic action are visible until the action is completed.
 Even small operation like i++ is not thread safe. Operation involves three steps:
@@ -1749,36 +1759,32 @@ In multithreaded environment there can be unexpected results. For example if thr
 and immediately after that thread 2 store the value.
 To prevent these, Java provides atomic operations. Atomic operations are performed as a single unit
 without interference from other threads ensuring data consistency.
-A good example is AtomicInteger. To implement a value of AtomicInteger we use the incrementAndGet() method Java ensures this operation is Atomic.
+A good example is AtomicInteger. To implement a value of AtomicInteger we use the incrementAndGet()
+method Java ensures this operation is Atomic.
 
 
 # What is the BlockedQueue in Java?
-
 BlockedQueue interface is introduced in Java specifically to address specific needs of some Producer Consumer scenarios.
 BlockedQueue allows the consumer to wait (for a specific time of infinitely) for an element to become available.
 
 
 # HashMap and HashTable differences
-
 HashMap is not synchronized. Faster than HashTable. Allows null keys.
 Hashtable is synchronized. Slower than HashMap. Does not allow null keys.
 
 
 # TreeSet and TreeMap differences
-
 TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
 TreeMap is an implementation of Map.
 TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
 
 
 # Vector Class
-
 Vector class has the same operations as ArrayList. However all methods in Vector are synchronized.
 We can use Vector if we share a List between two threads that we would want them synchronized.
 
 
 # What is a LinkedList
-
 LinkedList extends List and Queue interfaces. Other than operations exposed by Queue interface, LinkedList
 has the same operations as ArrayList.
 ArrayList uses an Array kind of structure to share elements. So inserting and deleting from an ArrayList are expensive operations.
@@ -1788,7 +1794,6 @@ ArrayList, but searching is slower.
 
 
 # HashMap, Collections.synchronizedMap, ConcurrentHashMap
-
 The Map object is an associative containers that store elements, formed by a
 combination of a unique identify key and a mapped value. If very highly concurrent
 application in which may want to modify or read key value in different threads then
@@ -1809,7 +1814,7 @@ Two ways to synchronize HashMap
 | concurrentHashMap = new ConcurrentHashMap<String, String>();                      |
 +-----------------------------------------------------------------------------------+
 
-ConcurrentHashMap
+# ConcurrentHashMap
 - To achieve high concurrency in project
 - Thread safe without synchronizing whole map
 - Reads happen very fast while write is done with a lock
@@ -1819,7 +1824,7 @@ ConcurrentHashMap
 - Uses multitude of locks
 
 
-SynchronizedHashMap
+# SynchronizedHashMap
 - Synchronized at object level
 - Every read/write operations need to acquire lock
 - Locking the entire collection leads to performance overhead
@@ -1832,7 +1837,6 @@ SynchronizedHashMap
 ##########
 
 # Lambda
-
 Is a block of code that you can pass to use in future once or more times
 Useful
 Pass comparison method Arrays.sort
@@ -1846,7 +1850,6 @@ FILTER, MAP and FOREACH are standard aggregate operations in functional programm
 
 
 # Functional Interfaces
-
 In Java there are a lot of interfaces that determines the action like Runnable or Comparator
 Lambda expression is compatible with this interfaces
 You can put lambda expression in all places, when you can put object that implements one abstract method
@@ -1854,7 +1857,6 @@ Such interfaces are called functional interfaces
 
 
 # Streams
-
 Process data in more abstract way, than in case of collections. In case of stream you determine what should be done
 not the way it will be executed. Processing details live on implementation.
 Example calculate average value of parameters. Your task is to determine the source of data
@@ -1880,22 +1882,26 @@ GroupingBy and partitioningBy From Collector class allows to separate stream on 
 Special streams for primitive typed like : int, long, double
 Parallel Streams automated parallel operations on streams
 
-Streams vs Collections
+# Streams vs Collections
 Streams does not store elements. They can be stored in processing by stream collection or generated on demand
 Streams operation does not modify source data. For instance filter does not delete elements from stream but returns new one
 Streams operations are lazy. They process is delay until the results are needed.
 
-Stream workflow
-Create stream
-Determine intermediate operations which process stream to different form, this process might require couple of steps (filter)
-Process end operation which generates the result. After this step stream can no longer be used
+# Stream workflow
+- Create stream
+- Determine intermediate operations which process stream to different form, this process might require couple of steps (filter)
+- Process end operation which generates the result. After this step stream can no longer be used
 
 Map method is analogous to map interface from stream. Optional value is a stream on size zero or one.
 filterMap method from stream interface. Is used to join two methods.
 
-ParallelStreams
-Stream.of(arrays).parallel()
-Map<Integer, Long> word = words.parallelStream().filter(s->s.length() < 12).collect(groupingBy(String::length));
+
+# ParallelStreams
+
++------------------------------------------------------------------------------------------------------------------+
+| Stream.of(arrays).parallel()                                                                                     |
+| Map<Integer, Long> word = words.parallelStream().filter(s->s.length() < 12).collect(groupingBy(String::length)); |
++------------------------------------------------------------------------------------------------------------------+
 
 Streams are introduced in Java. In combination with Lambda expression, they attempt to bring some of the
 important functional programming concepts to Java.
@@ -1906,11 +1912,15 @@ Consider the flow:
 - Use map function to invoke a String function
 - Use sorted function to sort array
 - Print the array using forEach
-Arrays.stream(new String[]{"Ram", "Tam", "Tam"})
-    .filter(s->s.startsWith("Ta"))
-    .map(String::toLowerCase)
-    .sorted()
-    .forEach(System.out::println);
+
++--------------------------------------------------+
+| Arrays.stream(new String[]{"Ram", "Tam", "Tam"}) |
+|    .filter(s->s.startsWith("Ta"))                |
+|    .map(String::toLowerCase)                     |
+|    .sorted()                                     |
+|    .forEach(System.out::println);                |
++--------------------------------------------------+
+
 In general any use of streams involves.
 - source : Creating or use existing stream
 - Intermediate Operations : returns new stream
@@ -1921,22 +1931,20 @@ Intermediate Operations are of two parts
 
 
 # Optional
-
 Optional object Optional<T> pack up object type T. Optional Object is safe alternative to reference to T type,
 which can accept object or null value. Use method that returns alternative value if returned value does not exists
 or take value if present.
 
-+-------------------------------------------------------------------------------------------------------+
-|String value = optionalString.orElse(""); // String or " " if not                                      |
-|String result = optionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value |
-+-------------------------------------------------------------------------------------------------------+
++--------------------------------------------------------------------------------------------------------+
+| String value = optionalString.orElse(""); // String or " " if not                                      |
+| String result = optionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value |
++--------------------------------------------------------------------------------------------------------+
 
 ifPresent method accepts function. If optional value exists, is passed to function. Else do nothing.
 Optional value is a stream of size zero or one. If value exists function is triggered.
 
 
 # Predicate<T>
-
 Function that return logical value.
 Predicate.isEqual(a) is counterpart of a::equals, but works correctly even with null values.
 Methods and, or, negate to join predicates
@@ -1947,20 +1955,23 @@ Predicate.isEqual(b) === x->b.equal(x)
 # Big-O Notation #
 ##################
 
-Complexity and the Big-O notation
+# Complexity and the Big-O notation
 Performance is a measured along resource consumption and code consumes variety of resources
 Improving code performance beyond a certain point involves Trade offs
 Consuming more of one resources can help consume less of another.
 
-Measures of performance
+
+# Measures of performance
 Time - The amount of processing or number of operations code has to perform to accomplish it's objectives
-Space - This is both the memory needed by code to store information at run-time as well as disk space needed by code for persistent storage
+Space - This is both the memory needed by code to store information at run-time as well as disk space needed by code
+for persistent storage
 Network - The bandwidth code uses to pass information to clients or other machines
 
 Performance indicates how much of these resources the code uses. Code is also more efficient when
 it uses the resources we have in plenty rather that those we lack.
 
-Complexity
+
+# Complexity
 Complexity is a measure of how resource requirements change as the size of the problem gets larger
 Affects performance. The higher the complexity the problem the lower the performance
 
@@ -2014,7 +2025,6 @@ The complexity of this operation is O(log(N))
 
 
 # Sorting
-
 Trade offs in sorting
 What is the complexity of the algorithm used
 How does it scales as the input size increases?
@@ -2041,8 +2051,7 @@ Sorting algorithms
 # Data Structure #
 ##################
 
-# Tree Data Structure
-
+# TREE DATA STRUCTURE
 Tree is a structure which is made up of nodes. Each node can point to a number of nodes
 Unlike stacks, queues, linked lists the order of elements is not important in a tree
 It is non linear data structure
@@ -2050,7 +2059,6 @@ Tree is used to represent hierarchical information
 
 
 # The Binary Tree
-
 A general tree data structure can have number of children but these trees are less useful and not very commonly used
 in data structure
 In binary tree each node can have 0, 1 or 2 children
@@ -2076,7 +2084,7 @@ Binary Tree Traversal
 Visiting nodes of a tree is called TRAVERSING TREE
 
 
-BREADTH-FIRST TRAVERSAL
+# BREADTH-FIRST TRAVERSAL
 Involves visiting nodes at every leaf before moving on to the next level
 Start at root node it is at level 0 and is the first node to visit
 Next step check whether there are other Nodes at the same level and visit them
@@ -2084,14 +2092,13 @@ Once a level is exhausted then we can move to the next level
 Continue process till every node is visited
 
 A root node is ancestor of all nodes.
-
 A Binary tree is one where every node can have a maximum of two children. The left and right
 Two binary trees are the same if
 1. Every corresponding node has the same value
 2. The structure of the tree at every corresponding node is the same
 
 
-DEPTH-FIRST TRAVERSAL
+# DEPTH-FIRST TRAVERSAL
 Depth first traversal involves going right to the leaf of the binary Tree first before moving up tree.
 Depth first can be:
 PRE-ORDER, IN_ORDER, POST-ORDER
@@ -2113,7 +2120,6 @@ LEFT-SUBTREE -> RIGHT SUBTREE -> NODE
 
 
 # The Binary Search Tree
-
 Also called an Ordered binary tree and it's a tree with some specific Characteristics.
 
 For Every Node in the TREE:
@@ -2169,9 +2175,9 @@ The Complexity for value lookup is O(logN) in average case.
 For both insertion and lookup we have the TREE we have to traverse at every step. This gives us the log(N) complexity.
 
 
-# Heaps
+# HEAPS
 
-THE PRIORITY QUEUE
+# THE PRIORITY QUEUE
 When a certain element in a collection has HIGHEST WEIGHT-AGE OR PRIORITY - A common use case is to process that first.
 The data structure to store elements where the highest priority has to be processed first can be called a
 priority queue.
@@ -2224,6 +2230,7 @@ Types of Heap:
 -MINIMUM HEAP
 Every node value should be <= value of it's children
 The node with the smallest value should be the root of the tree
+
 -MAXIMUM HEAP
 Every Node value should be >= Value of it's children.
 The node with the largest value should be the root of the tree
@@ -2248,8 +2255,7 @@ Node at index: i GetParent at index: (i-1)/2
  5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
 
 
-THE BINARY HEAP
-
+# THE BINARY HEAP
 Place a single element in the wrong place.
 Then try to find the right position for the element.
 This process is called HEAPIFY
@@ -2262,7 +2268,7 @@ This process is called HEAPIFY
   / \
  15  10
 
-SHIFT DOWN                   |SHIFT UP
+SHIFT DOWN                   | SHIFT UP
 -----------------------------+-----------------------------
 All elements in the wrong    | An element is in the wrong
 position with respect to     | position with respect to
@@ -2303,7 +2309,6 @@ It does not need additional space - space complexity is O(1)
 
 
 # THE GRAPH
-
 A Graph is used to represent relationships between entities.
 
 The entities can be anything - Graphs find applications in variety of ways in real world.
@@ -2328,11 +2333,13 @@ The Graphs are used to represent information in many real world applications
 There are many algorithms to optimize different problems represented using graphs
 
 A Graph is a SET of VERTICES and EDGES
+
 +---+                    +---+
 | A +--------------------+ B | (V,E)
 +---+                    +---+
 
 Two Vertices and A single Edge is also a valid graph
+
 +---+   Edge             +---+
 | A +--------------------+ B | (V,E)
 +---+                    +---+
@@ -2408,6 +2415,7 @@ A Connected graph with no cycles. This is a connected graph
           C     G   H
          /
         E
+
 Graph with no cycle is tree
 
 
@@ -2426,6 +2434,7 @@ DIRECTED GRAPH
 +-+-+         +---+         +-+-+
 | C +-------->+ E +-------->+ G |
 +---+         +---+         +---+
+
 Nodes A,B,D,A form a cycle
 
 
@@ -2619,8 +2628,7 @@ It is an ordering of vertices in DIRECTED ACYCLIC GRAPH i which each node comes 
 Nodes to which It has outgoing EDGES
 
 
-# Stack Data Structure
-
+# STACK DATA STRUCTURE
 A stack is data structure to hold elements such that the last element you add to the stack is first one you access
 LIFO list in first out
 Major operations that you performed on the stack are always focused on one end of the stack, called the TOP
@@ -2672,8 +2680,7 @@ Holding the memory for recursive calls in a programing language
 +-------+------+-----+------+--------+---------+------+
 
 
-# Queue Data Structure
-
+# QUEUE DATA STRUCTURE
 Queue is a Data Structure where you add elements to the End of the Queue and remove elements
 from the beginning of the QUEUE.
 
@@ -2743,8 +2750,8 @@ Order processing system E-Commerce websites or bank transactions.
 Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
 live object = reachable (referenced by someone else)
 dead object = unreachable (unreferenced)
-Objects are allocated in the "heap" of java memory
-static members, class definition are stored in "method area" PermGen/Metaspace
+- Objects are allocated in the "heap" of java memory
+- Static members, class definition are stored in "method area" PermGen/Metaspace
 Garbage Collection is carried out by a daemon thread called "Garbage Collector"
 Force GC to happened System.gc (no guaranteed)
 When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
@@ -2784,7 +2791,6 @@ to the object created in the method. JVM recognizes this and removes the object 
 
 
 # When Garbage Collection is run
-
 Based on fancies of JVM. Possible situations
 - When available memory on he heap is low
 - When CPU is free
@@ -2804,7 +2810,6 @@ wait and notify for inter thread communication. Must be called from synchronized
 
 
 # Process and threads
-
 In concurrent programming two units of execution process and treads.
 Processing time for a single core is shared among processes and threads, time slicing
 
@@ -2825,7 +2830,6 @@ and waits for it next turn.
 
 
 # Start Thread
-
 Extends Thread - override run() method
 
 Implements Runnable - override run() method, pass Runnable object to Thread class constructor. Call start method
@@ -2845,7 +2849,7 @@ Executor Service - dynamically reuse thread. Check if threads are already workin
 
 # Concurrent Collections
 
-ConcurrentHashMap
+# ConcurrentHashMap
 Full concurrency during retrieval
 Reads can happen fast, while writes require lock
 Whole table is not locked only segment is locked
@@ -2853,18 +2857,20 @@ Iterations do not throw concurrent modification exception
 Null key not allowed
 Operations are atomic
 
-BlockingQueue
+
+# BlockingQueue
 Interface that represents a queue that is thread safe. put(), take()
 
-DelayQueue
+
+# DelayQueue
 Like BlockingQueue that implements Delay interface. Cannot put null into it.
 
-PriorityBlockingQueue
+
+# PriorityBlockingQueue
 Implements Comparable interface. Determine what will be the order of a Queue.
 
 
 # Threads complications
-
 Thread interference and memory consistency errors
     - If two thread access the same variable, it is possible for them to get in each others way
       For example two threads incrementing the same variable at the same time
@@ -2878,7 +2884,6 @@ Thread Contention
 
 
 # Semaphores
-
 Variables that are used to controlling access to common resources, important in OS
 is a record of how many units of particular resource are available
 Semaphores track how many resources are free, it does not keep track of which of the resources are free
@@ -2887,12 +2892,10 @@ Methods acquire() if permit is available take it, release() add a permit
 
 
 # Callable and Future
-
 Returns something from a thread implements Callable instead of Runnable
 
 
 # Thread States
-
 Runnable - create a new thread and call start method
 Blocked - enter synchronized block, lock
 Waiting - after wait()
@@ -2901,22 +2904,24 @@ Terminated - run method is over
 
 # Concurrent Libraries
 
-    - CountDownLatch : Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations
-      being performed by other tasks. Give initial count to count down latch object and task that calls await() on that
-      object will block until count reaches zero. The count cannot be reset. Typically use is to divide a problem into "n"
-      independently solve able tasks and create a CountDownLatch with value of "n"
-      When each task is finished it calls countDown on Latch. Task waiting to solve call await() on the Latch to hold
-      themselves back until it is completed
+# CountDownLatch
+Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations
+being performed by other tasks. Give initial count to count down latch object and task that calls await() on that
+object will block until count reaches zero. The count cannot be reset. Typically use is to divide a problem into "n"
+independently solve able tasks and create a CountDownLatch with value of "n"
+When each task is finished it calls countDown on Latch. Task waiting to solve call await() on the Latch to hold
+themselves back until it is completed
 
-    - CyclicBarrier : Used in situation where you want to create a group of tasks to perform work in parallel plus wait
-      until they are still finished before moving on to the next step, like join or countDownLatch.
-      Can be reused.
+
+# CyclicBarrier
+Used in situation where you want to create a group of tasks to perform work in parallel plus wait
+until they are still finished before moving on to the next step, like join or countDownLatch.
+Can be reused.
 
 
 # From Java 8 Book
 
 # Concurrent Programming
-
 Runnable describes task that might be executed asynchronously
 Executor plans execute runnable instance
 Callable tasks that return results or throw exception
@@ -2946,7 +2951,7 @@ To acquire number of thread based on number of processors
 +--------------------------------------------------------------+
 
 Objects Future and Executor
-Callable - Method call() opposite to method run() from Runnable interface returns value or throw an Exceptions
+Callable - Method call() oposite to method run() from Runnable interface returns value or throw an Exceptions
 To execute callable there is a need for ExecutorService instance
 
 +---------------------------------------------------------------+
@@ -2985,7 +2990,6 @@ Implement immutable class
 - non method can modify data
 - do not allow to leak modification
 - do not allow to "this" reference pass outside constructor
-
 
 Concurrent Algorithms
 Parallel Streams
@@ -3053,7 +3057,6 @@ Code usually calls libraries and is often called by frameworks, but is structure
 
 
 # Creational
-
 How objects are constructed
 Decouple the construction of an action from its use
 Hide implementation of an object only reveal its interface
@@ -3063,7 +3066,6 @@ Allow creation of finite number of instances
 
 
 # Behavioral
-
 How do objects behave and interact with each other
 How logical unit (classes) as whole interacts with the outside world
 Iterator pattern - here logical unit includes one class Iterator class. This pattern governs how the
@@ -3071,7 +3073,6 @@ is used by the client (the outside world)
 
 
 # Structural
-
 How classes within the logical unit interacts with each other
 MVC pattern - logical unit includes 3 classes model, view, controller
 The pattern governs how the Model, View, Controller interact with each other
@@ -3079,7 +3080,6 @@ If the interaction between the M, V, C were change, the UI would not look or beh
 
 
 # Design Principle #1 : Relay on Interfaces, not implementation
-
 "Program to an interface not implementation" decorator, iterator, adapter
 
 Interface is a surface that a unit offers to outside world
@@ -3087,12 +3087,12 @@ That unit could be a single class, or even be a collection of classes
 The implementation is a guts of that unit
 Never get assumption about content of any unit
 
-ArrayList<String> list = new ArrayList<>(), wrong
-List<String> list = new ArrayList<>(), correct
-
++------------------------------------------------------+
+| ArrayList<String> list = new ArrayList<>(); // wrong |
+| List<String> list = new ArrayList<>(); // correct    |
++------------------------------------------------------+
 
 # Design Principle #2 : The Open / Close Principle
-
 "Classes should be open for extension but closed for modification"
 
 Once you have written a class, it's done. Never add anything to it after that
@@ -3111,33 +3111,33 @@ Composition, strategy pattern
 
 
 # Design Principle #3 : Principle of Least Knowledge
-
 "Only talk to friends, don't talk to strangers"
 
 Only make method calls to friends
 friends - object passed in as parameter to methods of your classes. Object created inside your class
 Code should never include multiple '.' operators in the same function call
-int friendNumber = media.getRelatives().getFriend(), not OK
-int friendNumber = media.getFriend(), OK
+
++----------------------------------------------------------------+
+| int friendNumber = media.getRelatives().getFriend(); // not OK |
+| int friendNumber = media.getFriend(); // OK                    |
++----------------------------------------------------------------+
+
 But this rule is not always a case
 Summarized, each unit should have only limited knowledge about other units. Each unit should only talk to its friend
 
 
 # Design Principle #4 : Dependency Injection
-
 "Depend on abstraction never on details"
 Used technique to set member variables of objects on the fly.
 
 
 # Design Principle #5 : Hollywood Principle
-
 "Don't call us we will call you"
 Class notifies other class of changes when they occurs via events or messages.
 Idea high-level component calling low-level is used components in frameworks.
 
 
 # MVC Paradigm
-
 Model View Controller is an architectural pattern. In Java API Swing
 Basic idea of MVC is to separate data from its representation, separating data from its manipulation,
 allowing different simultaneous representations of the same data
@@ -3147,22 +3147,18 @@ User sees the model through a view, and manipulates it via the controller
 
 
 # What is a basic point of observer pattern
-
 An object announces updates to its value, and other objects can read to these updates
 
 
 # When a publisher fires an update, how do subscriber become aware of it
-
 The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified
 
 
 # How are properties and bindings different from each other
-
 Properties are ONE:ONE, bindings are ONE:MANY
 
 
 # How Observer and MVC related
-
 The View act as publisher, controller as subscriber
 
 

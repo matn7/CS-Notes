@@ -80,7 +80,8 @@ Subscriber/observer - The object that wait for something to happen. The object t
 Part of controllers and model in MVC.
 Publisher - The object that announces that somethig has happened. Are part of views.
 Event - The something that happens.
-Observer pattern and command pattern are related, the publisher maintains a list of command objects and executes their code when an event occurs.
+Observer pattern and command pattern are related, the publisher maintains a list of command objects and executes
+their code when an event occurs.
 The command objects are part of the controller, and the observer objects are part of the view.
 
 - If object change state it notifies other object about this
@@ -113,7 +114,8 @@ Anonymous classes (listeners, threads) are an excellent way to encapsulate littl
 Very high proportion of anonymous classes simply consisted of - objects that implement an interface with just one function.
 Example anonymous class Comparator is an interface with a single method, compare.
 Such interfaces are called "Functional Interfaces" or "Single Abstract Method Interfaces".
-Interfaces with just one method can actually be encapsulated using single functions - no real need for them to be encapsulated using classes.
+Interfaces with just one method can actually be encapsulated using single functions - no real need for them to be
+encapsulated using classes.
 
 LAMBDA FUNCTIONS ARE SIMPLY ANONYMOUS FUNCTIONS.
 These anonymous function objects are often called "closures".

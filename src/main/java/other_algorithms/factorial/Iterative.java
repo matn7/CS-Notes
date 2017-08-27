@@ -6,7 +6,7 @@ package other_algorithms.factorial;
 public class Iterative {
 
     public static void main(String[] args) {
-        System.out.println(factorial(0));
+        System.out.println(factorial(2));
     }
 
     public static int factorial(int num) {

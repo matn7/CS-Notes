@@ -17,7 +17,7 @@ public class Singleton {
     // It is possible that 2 different threads might
     // enter this method simultaneously and create
     // more than one instance of the object
-    public synchronized Singleton getInstance() {
+    public static synchronized Singleton getInstance() {
         if (singleton == null) {
             // This is the first time someone ask for Singleton
             // it will be instantiated - this is the first and last

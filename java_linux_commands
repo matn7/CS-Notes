@@ -43,6 +43,8 @@ rpm
 apt-get
 yum
 
+ifconfig
+
 
 ls -lrt | grep "^l"             // list all links from directory
 touch fileName                  // create file fileName
@@ -88,7 +90,7 @@ Hard Links - unix hardlinks are pointers to programs and files, but NOT director
 # Linux Directories
 /
 /bin
-/boot
+/boot       // Contains files required to boot Linux $ls -F /boot
 /dev
 /etc
 /home
@@ -103,6 +105,135 @@ Hard Links - unix hardlinks are pointers to programs and files, but NOT director
 /tmp
 /usr
 /var
+
+// systemd
+cd /lib/systemd/system
+ls -l runlevel5.target
+systemctl set-default graphical.target
+
+// Changing runlevels or targets
+telinit 5
+systemctl isolate graphical.target
+
+// Rebooting
+telinit 6
+systemctl isolate reboot.target
+reboot
+shutdown -r now
+
+// Power Off
+telinit 0
+systemctl isolate poweroff.target
+poweroff
+
+// Linux Boot Process-Demo
+shutdown -r 5 "rebooting soon..."
+reboot
+
+dmesg | less
+dmesg -T
+cat /var/log/dmesg
+cat /etc/inittab
+systemctl get-default
+systemctl set-default graphical.target
+systemctl isolate graphical.target
+
+// System logging
+/etc/rsyslog.conf
+/var/log/mail
+/var/log/mail.info, mail.warn, mail.err
+/var/log/auth.log
+/var/log/sysog
+/var/log/messages
+
+logger -p mail.info -t mailtest "test"
+sudo tail -1 /var/log/mail.log
+
+/etc/logrotate.conf
+logrotate -fv /etc/logrotate.conf
+
+
+// Disk Management
+// Partitioning
+df -h
+
+
+// Mount Point
+/
+/home/jason
+mkdir /home/sarah
+mount /dev/sdb2 /home // you cannot see /home/sarah now
+unmount /home         // you can now see /home/sarah
+
+// fdisk
+fdisk -l
+fdisk /dev/sdb
+fdisk /dev/sdc
+fdisk -l | less
+
+
+// file systems
+// ext - extended file system, ext2, ext3, ext4
+// other file systems: ReiserFS, JFS, XFS, Btrfs
+mkfs -t ext3 /dev/sdb2
+mkfs -t ext4 /dev/sdb3
+mkfs.ext4 /dev/sdb3
+ls -l /sbin/mkfs*
+
+
+// Mounting device
+mount /dev/sdb3 /opt
+df -h
+/etc/fstab // make mounts persist between reboots
+unmount /opt
+unmount /dev/sdb3
+
+
+// Preparing swap space
+mkswap /dev/sdb1
+swapon /dev/sdb1
+swapon -s
+lsblk -f
+blkid
+
+
+// User Management
+// /etc/passwd - format for password, username:password:uid:gid:comments:home_dir:shell
+ps -fu joe
+
+// Passwords are stored in /etc/shadow
+// Encrypted password used to be stored in /etc/passwd
+// uid is configured in /etx/login.dfs
+newgrp // switch group
+/etc/shells // list of available shells
+
+useradd -c "Grant Majki" -m -s /bin/bash grant    // add user
+passwd grant                                // create password
+tail -1 /etc/passwd
+tail -1 /etc/shadow
+useradd -c "Apache Web Server User" -d /opt/apache -r -s /usr/sbin/nologin apache
+tail -1 /etc/passwd
+
+userdel -r grant
+
+usermod -c "MySQL User" mysql
+
+
+// User Groups
+// /etc/group
+groups root
+groupadd web
+tail -1 /etc/group
+groupadd -g 2500 db
+tail -1 /etc/group
+
+groupdel db
+
+groupmod -g 1234 web
+grep web /etc/group
+groupmod -n http web
+grep http /etc/group
+
 
 // Dev Ops stuff
 which wget

@@ -2,7 +2,6 @@
 # Java Multithreading #
 #######################
 
-
 # The default single Thread is called main thread
 
 # Processes vs Threads
@@ -17,6 +16,7 @@ PROCESS : THREADS :: 1 : MANY
 
 
 # The command pattern in action threading
+
 
 # Old way
 Runnable interface - is implemented by a class with the operations to be carried out by the other thread
@@ -65,7 +65,7 @@ Call the static 'Thread.interrupt' member function to see if the current thread 
 
 
 # Thread Join
-The join method of a thread class is a w way of waiting until the thread finishes execution of its run method
+The join method of a thread class is a way of waiting until the thread finishes execution of its run method
 Calling thread on another thread is similar to calling sleep on the current thread until the other thread finishes execution
 Like .sleep(), the .join() method throws an interrupted exception if the thread is interrupted before it finishes execution
 
@@ -166,7 +166,7 @@ Callable has 2 advantages over runnable.
 # SUBMIT THE CALLABLE To AN EXECUTOR OBJECT, AND GET A FUTURE OBJECT AS THE RESULT
 An Executor object is an abstraction to one or more thread objects. For instance, using executors it is
 possible to submit the callable object to a thread pool (Rather than having to implement a thread pool afresh)
-If tou need to interrupt THE OPERATION MIDWAY, CALL FUTURE.CANCEL
+If you need to interrupt THE OPERATION MIDWAY, CALL FUTURE.CANCEL
 The future object is a generic object that will take the output of callable .call and send it back to the main thread.
 Calling Future.cancel is like calling thread.interrupt in old way. Executor is an excellent abstraction for thread pools.
 Which were widely used, but easy to get wrong.
@@ -204,7 +204,8 @@ Variables marked volatile are safe to use in different threads.
 
 # Double Checked Locking
 In software engineering, double checked locking ("double checked locking optimization") is a software design pattern
-used to reduce the overhead of acquiring a lock by first testing the locking creation (the lock hint) without actually acquiring the lock.
+used to reduce the overhead of acquiring a lock by first testing the locking creation (the lock hint)
+without actually acquiring the lock.
 
 A Java Class loader is a part of the Java Virtual Machine. Technically namespaces are unique per class loader.
 Usually there is just 1 class loader per program. Enums are quaranteed to be instantiated exactly once.

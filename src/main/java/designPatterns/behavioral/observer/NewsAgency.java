@@ -13,7 +13,7 @@ public class NewsAgency extends Observable implements Publisher {
     // Add List of Observers in our case Radio and TV
     private List<Observer> channels = new ArrayList<>();
 
-    // Add some news. NewsAgency is kind of outermost things that delegates news to different providers (TV, Radio)
+    // Add some news. NewsAgency is kind of things that delegates news to different providers (TV, Radio)
     public void addNews(String newsItem) {
         notifyOberver(newsItem);
     }

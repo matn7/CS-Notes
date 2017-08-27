@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static designPatterns.creational.factory_3_abstract.PlaneType.SPITFIRE;
+import static designPatterns.creational.factory_3_abstract.PlaneType.LANCASTER;
 
 /**
  * Created by Mati on 09.08.2017.
@@ -21,7 +22,8 @@ public class Main {
     // Actual implementation of AbstractFactory that Client uses is determined at runtime
 
     // Client is totally decoupled from concrete product.
-    // New product families can be easily added into system, by just adding in a new type of ConcreteFactory that implements AbstractFactory.
+    // New product families can be easily added into system, by just adding in a new type of ConcreteFactory that
+    // implements AbstractFactory.
 
     // Use when your system needs to create multiple families of products.
     // In Java UI toolkit different versions based on OS, Windows, OSX, LINUX
@@ -32,15 +34,16 @@ public class Main {
         PlaneBuilder builder = new PlaneBuilder();
         AbstractPlaneFactory planeFactory = null;
 
-        Scanner scanner = new Scanner(System.in);
+/*        Scanner scanner = new Scanner(System.in);
         List<PlaneType> planeModels = new ArrayList<>();
         planeModels.add(PlaneType.SPITFIRE);
         planeModels.add(PlaneType.LANCASTER);
         System.out.println("Choose plane: 1 - Spitfire, 2 - Lancaster");
-        int num = scanner.nextInt() - 1;
+        int num = scanner.nextInt() - 1;*/
 
+        PlaneType planetype = PlaneType.LANCASTER;
 
-        switch (planeModels.get(num)) {
+        switch (planetype) {
             case SPITFIRE:
                 planeFactory = new SpitfirePlaneFactory();
                 break;
