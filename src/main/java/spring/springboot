@@ -1,0 +1,505 @@
+# Spring boot fundamentals
+Bean Configuration
+Beans - object backbones of App manage by spring
+DI - Process of write a object define their dependencies that is the other object they work with we do that through
+constructor, setters, properties
+Bean configuration
+    - xml
+    - annotations
+    - Java Beans Configuration
+    - Groovy beans Configuration
+
+# Bean Scope
+Singleton - single instance of bean
+Prototype - return new instance every time it's required
+Request - new instance every HTTP request
+Session - new HTTP session, new instance
+Global session - single instance per global HTTP session
+
+
+# Application Properties & YAML Configuration
+Property source
+- Command line arguments
+- JNDI attributes from java:comp/env
+- Java System Properties (System.getProperties())
+- OS Environmental variables
+- A RandomValuePropertySource that only has properties in random.*
+- Profile-Specific application properties outside of your package jar applcation[{profile}.properties
+- Application properties outside of your packaged jar (application.properties)
+- Application properties inside your jar
+- @PropertySource annotations on your @Configuration classes
+- Default properties (specified using SpringApplication.setDefaultProperties())
+
+
+# Configuration properties
+Mapping properties to POJO
+@EnableConfiguratioProperties
+Type safe
+IDE Support
+Validation @Valid
+
+
+# Auto Configuration
+- @SpringBootApplication includes @EnableAutoConfiguration
+- @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+- How Application works
+    Where to find them: /META-INF/spring.factories
+    When to use them: @Conditional
+- Displayed in the auto-configuration report
+    Debug logs and auto-configuration report
+
+                         @Configuration
+                       /
+@SpringBootApplication -- @EnableAutoConfiguration
+                       \
+                         @ComponentScan
+
+
+# Developing Web Applications
+
+@RestController
+public class GreetingController {
+    @RequestMapping("/")
+    public String home() {
+        return "Hello";
+    }
+}
+
+@RestController - override static index.html, write data directly to http response
+@SpringBootApplication contains: @EnableAutoConfiguration, @ComponentScan, @Configuration
+
+
+# Web Jars
+Explicitly and easily manage the client-side dependencies in JVM-based web appications
+Use JVM-based build tools Maven, Gradle to download your client-side dependencies
+Know which client-side dependencies you are using
+Transitive dependencies are automatically resolved and optionaly loaded via Require JS
+Deployed on Maven Central
+maven dependencies add jquery, bootstrap
+
+
+# Template Engines
+FreeMaker, Groovy, Thymeleaf, Velocity, Mustache, GSP
+
+
+# Error Handling
+- White label error page
+- Custom Error pages
+    - creating your own error page
+    - 400/404/500
+- Controller Exception Handler
+- Global Controller Exception Handler
+    - HandlerExceptionResolver
+    - Controller Advice
+
+@Controller
+public class CustomErrorController implements ErrorController {
+    @RequestMapping("/404")
+    public String pageNotFound(Model model, HttpServletRequest request) {
+        model.addAttribute("error", getErrorAttribute(request, true));
+        return "404";
+    }
+}
+
+
+# Exception Handling
+@Controller
+@RequestMapping("/posts")
+public class PostController {
+    @RequestMapping("/get/{slug}")
+    public String getPost(@PathVariable(value="slug) String slug) throws Exception {
+        Post post = null;
+        if (post == null)
+            throw new Exception("We could not find it " + slug);
+        return "post";
+    }
+}
+
+@ControllerAdvice
+public class ExceptionControllerAdvice {
+    @ExceptionHandler(Exceptio.class)
+    public String exception(Exception exception, Model model) {
+        model.addAttribute("exception", exception);
+        retun "errorHandler";
+    }
+}
+
+
+# Data Access with Spring Boot
+
+# Creating Entities and Repositories
+
+@SpringBootApplication
+pulic class DemoApplication {
+    @Autowired
+    PostRepository postRepository;
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+
+@Entity
+public class Author {
+    @Id
+    @GeneratedValue
+    private Long id;
+    ...
+    @OneToMany(mappedBy="author")
+    private List<Post> posts;
+    // getters, setters
+}
+
+@Entity
+public class Post {
+    @Id
+    @GeneratedValue
+    private Long id;
+    ...
+    @ManyToOne
+    private Author author;
+    // getterc setters
+}
+
+@Repository
+public interface PostRepository extends CrudRepository<Post, Long> {
+}
+
+@Repository
+public interface AuthorRepository extends CrudRepository<Author, Long> {
+}
+
+@Entity - mark domain object as entity
+@Id - in JPA mark object as primary key
+JPA requires a private no argument constructor
+
+@Service
+public class DataLoader {
+    privare PostRepository postRepository;
+    private AuthorRepository authorRepository;
+    ...
+}
+
+@Controller
+public class HomeController {
+    private PostService postService;
+    @Autowired
+    public HomeController(PostService postService) {
+        this.postService = postService;
+    }
+    @RequestMapping("/")
+    public String home(Model model) {
+        model.addAttribute("post", postService.getLatestPost());
+        return "index";
+    }
+}
+
+
+# Spring Data JDBC
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+
+Create schema, insert data, domain object no longer entities
+
+
+# NoSQL
+Store data in document like JSON
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-boot-mongodb</artifactId>
+</dependency>
+
+
+# Spring data JPA creating queries
+@Repository
+public interface PostRepository extends CrudRepository<Post, Long> {
+    // Author
+    List<Post> findAllByAuthorFirstName(String first);
+    List<Post> findAllByAuthorFirstNameAndAuthorLastName(String first, String last);
+
+    // Active
+    List<Post> findAllByActiveTrue();
+
+    // Query
+    @Query("SELECT p FROM Post p WHERE p.slug = ?1")
+    Post findPostBySlug(String slug);
+    @Query("SELECT p FROM Post p WHERE p.slug = :slug")
+    Post findPostBySlugNameParam(@Param("slug") String slug);
+}
+
+
+# Security
+Spring Security
+Basic Authentication
+CSS/JS/IMAGES
+Security Events
+Security Headers
+    - HSTF (HTTP Strict Transport Security)
+    - XSS (Cross-Site Scripting)
+    - CSRF (Cross-Site Request Forgery)
+    - Cache control
+Full Customizable
+Related Projects
+    - Spring LDAP
+    - Spring Security OAuth
+    - Spring Security Grails
+    - Spring Security SAML
+    - Spring Security Kerberos
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+# Security custom configuration
+@Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+}
+
+@Secured("ROLE_ADMIN")
+
+@Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
+        auth.isMemoryAuthentication()
+            .withUser("dan")
+            .password("password")
+            .roles("ADMIN");
+    }
+}
+
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-jar</artifactId>
+</dependency>
+
+
+# Building REST APIs
+
+# HTTP verbs
+GET http://www.panda.com/contact
+POST http://www.panda.com/contact
+
+HTTP Methods        PATH        DESCRIPTION
+-----------------------------------------------------------------------
+GET                 /posts      GETS all of the posts in the repository
+GET                 /posts/1    GET the post that has an id of 1
+POST                /posts      Creates a new post
+PUT                 /posts/1    Updates an existing post
+DELETE              /posts/1    Deletes an existing post
+
+# HTTP status codes
+STATUS CODE     DESCRIPTION
+-----------------------------
+1xx             Informational
+2xx             Success
+3xx             Redirection
+4xx             Client error
+5xx             Server error
+
+2xx status codes
+----------------
+200 OK          The request has succeeded
+201 CREATED     The request has been fulfilled and resulted in a new resource being created
+204 NO CONTENT  The server has fulfilled the request but does not need to return a entity-body and might want to return updated
+                meta information
+
+3xx status codes
+----------------
+301 MOVED PERMANENTLY
+304 NOT MODIFIED
+307 TEMPORARY REDIRECT
+
+4xx status codes
+----------------
+400 BAD REQUEST
+401 UNAUTHORIZED
+403 FORBIDDEN
+404 NOT FOUND
+
+5xx status codes
+----------------
+500 INTERNAL SERVER ERROR
+502 BAD GATEWAY
+
+
+# Content Negotiation
+Content negotiation is a mechanism defined in the HTTP specification that makes it possible to serve
+different versions of a document (or more generally, a resource representation) at the same URI,
+so that user agents can specify which version fit their capabilities best.
+
+# HTTP Client
+
+@RestController
+@RequestMapping("/posts")
+public class PostController {
+    private PostService postService;
+    @Autowired
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    @RequestMapping(value="/", method = RequestMethod.GET)
+    public Iterable<Post> list() {
+        return postService.list();
+    }
+
+    @RequestMapping(value="/", method = RequestMethod.POST)
+    public Post create(@RequestBody Post post) {
+        return postService.list(post);
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    public Post read(@PathVariable(value = "id") Long id) {
+        return postService.read(id);
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    public Post update(@PathVariable(value = "id") Long id, @RequestBody Post post) {
+        return postService.update(id, post);
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable(value = "id") Long id) {
+        return postService.delete(id);
+    }
+}
+
+# CURL
+curl -v http://localhost:8080/posts
+curl -v -H "Accept: application/xml" http://localhost:8080/posts
+curl -help
+
+# Building a REST API
+@RestController = @ResponseBody in all methods
+@RequestBody = get JSON and convert to POST
+Content-type describes the data we are sending
+Accept describes the type of data we are looking to get back
+
+# Error Handling
+@ExceptionHandler(PostNotFoundException.class)
+public void handlePostNotFound(PostNotFoundException exception, HttpServletResponse response)throws IOException {
+    response.sendError(HttpStatus.NOT_FOUND.value(), exception.getMessage());
+}
+
+@CotrollerAdvice
+
+
+# Hypermedia
+Spring Data + REST = Hypermedia
+What is Spring Data REST?
+    - Collections/Item Resources
+    - Association Resources
+    - Search Resources
+    - Projections -> way to segment our data, paging, sorting, API
+Supports
+    - JPA, MongoDB, Neo4j
+    - GemFire, Cassandra
+
+# spring-boot-starter-data-rest
+Modul                   Description
+-------------------------------------------------------------------------
+Spring Web MVC          Contains Spring Components
+Spring HATEOAS          Supplements Spring's REST support with Hypermedia
+Jackson2                JSON Serialization & deserialization library
+
+curl -i http://localhost:8080
+
+HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Content-Type: application /hal + json; charset=UTF-8
+Transfer-Encoding: chunked
+Date:
+{
+    "_links" : {
+        "href" : "http://localhost:8080/authors",
+        "templated" : true
+    },
+    "posts" : {
+        "href" : "http://localhost:8080/posts",
+        "templated" : true
+    },
+    "profile" : {
+        "href" : "http://localhost:8080/profile"
+    }
+}
+
+# RESTful standard
+Standards
+    - HAL -> default media type Hypermedia as language
+    - ALPS
+    - URI templates
+    - text/uri-list media type
+    - profile link relation
+
+# HAL
+Hypertext Application Language
+A lean hypermedia type
+application/hal + json
+HAL Browser
+
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-rest-hal-browser</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-rest</artifactId>
+</dependency>
+
+curl -i localhost:8080
+curl -i localhost:8080/authors
+curl -i localhost:8080/posts
+
+@Repository
+public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
+    List<Post> findByTitleContaining(@Param("title") String title);
+}
+
+curl -i localhost:8080
+curl -i localhost:8080/posts?size=1
+curl -i localhost:8080/posts/search
+curl -i localhost:8080/posts/search/findByTitleContaining?title="REST"
+
+Default view in domain model
+@Proection(name="teaser", types={Post.class})
+public interface Teaser {
+    String getTitle();
+    String getSlug();
+    String getTeaser();
+}
+
+curl localhost:8080
+curl localhost:8080/posts/2?projection=teaser
+
+# REST Template
+@RequestMapping("/")
+public Weather home() {
+    RestTemplate restTemplate = new RestTemplate();
+    Weather weather = restTemplate.getForObject("http://localhost:8080/data/weather.json", Weather.class);
+    return weather;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

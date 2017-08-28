@@ -322,9 +322,88 @@ Maven
 - Plugin based architecture
 - XML configuration
 
-Parent pom to configuration project
 
-Mave repositories
+# Parent pom to configuration project:
+Maven users can inherit from the spring-boot-starter-parent project to obtain sensible defalts.
+A dependency management section, allowing you to ommit <version> tags for commin dependencies
+inherited from the spring-boot-dependencies POM.
+
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.2.6.RELEASE</version>
+</parent>
+
+
+# Project dependencies
+Declare your dependencies
+
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+</dependencies>
+
+
+# Spring boot maven plugin
+Spring Boot includes a Maven plugin that can package the project as an executable jar.
+Add the plugin to your <plugins> section if you want to use it.
+If you use the Spring Boot starter parent POM, you only need to add the plugin, there is no need
+for to configure it unless you want to change the settings defned in the project
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
+
+mvn spring-boot:run
+
+
+# Starter POM
+Set of convenient dependency description
+Avoid copy/paste
+spring-boot-starter-*
+
+
+# Executable JARs
+Sometimes called fat jars
+Executable Jar and Java
+Spring CLI spring jar command
+Maven using spring-boot-maven-plugin
+> mvn package
+> /target/myproject-0.0.1-SNAPSHOT.jar
+
+spring jar my-app.jar
+jar tf my-app.jar
+mvn clean package
+java -jar demo-0.0.1-SNAPSHOT.jar
+
+
+# Spring DevTools & LiveReload
+Spring boot 1.3+
+Spring-boot-devtools
+Property defaults
+    - spring.thymeleaf.cache
+Automatic restart
+    - spring loaded & JRebel
+Live Reload
+Remote Debug Tunneling
+
+pom.xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+</dependency>
+
+
+
+
+Maven repositories
 - local
 - central
 - remote

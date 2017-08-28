@@ -75,9 +75,11 @@ Joins are used to merge two tables or retreive data from tables. It depends on r
 
 (INNER) JOIN: Returns records that have matching values in both tables
 
-SELECT Orders.OrderID, Customers.CustomerName
-FROM Orders
-INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
++-------------------------------------------------------------------+
+| SELECT Orders.OrderID, Customers.CustomerName                     |
+| FROM Orders                                                       |
+| INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID; |
++-------------------------------------------------------------------+
 
 OrderID	CustomerName
 ------------------------------
@@ -95,10 +97,12 @@ OrderID	CustomerName
 
 RIGHT (OUTER) JOIN: Return all records from the right table, and the matched records from the left table
 
-SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
-FROM Orders
-RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
-ORDER BY Orders.OrderID;
++------------------------------------------------------------------+
+| SELECT Orders.OrderID, Employees.LastName, Employees.FirstName   |
+| FROM Orders                                                      |
+| RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID |
+| ORDER BY Orders.OrderID;                                         |
++------------------------------------------------------------------+
 
 OrderID	LastName	FirstName
 ------------------------------
@@ -116,10 +120,12 @@ null    West 	    Adam
 
 LEFT (OUTER) JOIN: Return all records from the left table, and the matched records from the right table
 
-SELECT Customers.CustomerName, Orders.OrderID
-FROM Customers
-LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-ORDER BY Customers.CustomerName;
++--------------------------------------------------------------+
+| SELECT Customers.CustomerName, Orders.OrderID                |
+| FROM Customers                                               |
+| LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID |
+| ORDER BY Customers.CustomerName;                             |
++--------------------------------------------------------------+
 
 CustomerName	                    OrderID
 --------------------------------------------
@@ -136,11 +142,12 @@ Antonio Moreno Taquería	            10365
 +---------+---------+---------+
 FULL (OUTER) JOIN: Return all records when there is a match in either left or right table
 
-SELECT Customers.CustomerName, Orders.OrderID
-FROM Customers
-FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
-ORDER BY Customers.CustomerName;
-
++------------------------------------------------------------------+
+| SELECT Customers.CustomerName, Orders.OrderID                    |
+| FROM Customers                                                   |
+| FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID |
+| ORDER BY Customers.CustomerName;                                 |
++------------------------------------------------------------------+
 
 # TRIGGERS
 Allows execute a batch of SQL code,
