@@ -37,7 +37,7 @@ public class App {
         //future.isDone();
 
         try {
-            // get method return result when it appears or throw exception id timeout
+            // get method return result when it appears or throw exception if timeout
             System.out.println("Result is: " + future.get());
         } catch (InterruptedException e) {
             e.printStackTrace();

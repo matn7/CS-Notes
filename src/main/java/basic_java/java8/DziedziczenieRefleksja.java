@@ -91,7 +91,7 @@ public class DziedziczenieRefleksja {
 
     */
 
-    // Jeśli definiujesz metodę equas dla klasy podrzędnej, najpierw wykonaj equals dla klasy nadrzędnej.
+    // Jeśli definiujesz metodę equals dla klasy podrzędnej, najpierw wykonaj equals dla klasy nadrzędnej.
     // Jeśli ten test nie będzie pozytywny, obiekty nie mogą być równe.
 
     // Metoda hashCode
@@ -123,7 +123,7 @@ public class DziedziczenieRefleksja {
     // Możesz dodać metody do każdej instancji typu wyliczeniowego enum
 
     // Elementy statyczne
-    // Stałe wyliczeniowe są konstruowane przed zmiennymi statycznymi, dlatego nie można kożystać ze zmiennych statycznych
+    // Stałe wyliczeniowe są konstruowane przed zmiennymi statycznymi, dlatego nie można korzystać ze zmiennych statycznych
     // w konstruktorze.
 
     // Informacje o typie i zasobach w czasie działania programu

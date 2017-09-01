@@ -67,12 +67,12 @@ reference the same underlying immutable object.
 
 Multithreading
 Flyweight Pattern must be used carefully in multithreading code else two thread might simultaneously create
-flyweight for the same distinct value without knowing about eac others instance.
+flyweight for the same distinct value without knowing about each others instance.
 Place the instantiation of flyweight in a single threaded bit of code, for instance by using synchronized keyword.
 This might cause performance hit. You can choose to simply allow multiple flyweights for the same distinct value.
 But be sure to override "EQUALS" function in the flyweight so that it compares value, and not object identity.
 By default "EQUALS" method test for object identity it return true if and only if the 2 objects are literally the same
-(point to the same location in mory).
+(point to the same location in memory).
 In flyweight we need this method to return true if the 2 objects have the same value, even if they are
 actually different objects.
 

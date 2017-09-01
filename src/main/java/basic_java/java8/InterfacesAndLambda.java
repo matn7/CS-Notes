@@ -49,7 +49,7 @@ public class InterfacesAndLambda {
 
     // Każda zmienna zdefiniowana w interfejsie automatycznie otrzymuje atrybuty "public static final"
 
-    // Nie możesz umieścić w interfejsie zmiennych instancji. Interfejs określa zachowanie a nie sta obiektu.
+    // Nie możesz umieścić w interfejsie zmiennych instancji. Interfejs określa zachowanie a nie stan obiektu.
 
     // Metody statyczne i domyślne
     // Dawniej wszystkie metody interfejsu musiały być abstrakcyjne (bez implementacji).
@@ -85,7 +85,7 @@ public class InterfacesAndLambda {
 
     // Wywołanie zwrotne UI
     // Akcja w GUI jaka ma być wykonana po interakcji użytkownika (kliknięcie, przesunięcie).
-    // Są to wywołąnia zwrotne (callback), fragment kodu jest wywoływany w odpowiedzi na działanie użytkownika.
+    // Są to wywołania zwrotne (callback), fragment kodu jest wywoływany w odpowiedzi na działanie użytkownika.
     // Przykłąd EventHandler
 
     // Wyrażenie Lambda

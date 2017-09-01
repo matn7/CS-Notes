@@ -1,3 +1,329 @@
+# What is Spring boot
+Radically faster getting started experience
+Opinionated approach to configuration defaults
+    - intelligent defaults
+    - gets out of way quickly
+It involves easire dependency management
+Automatic configuration, reasonable defaults
+Different build deployment options
+
+Boiler plate project structure
+    - Mostly folder structure
+    - Application class + test
+    - Maven POM
+
+@ Spring Application
+Create Spring Application context
+@SpringBootApplication
+    - Combination of @Configuration
+        - Marks a configuration file
+        - Java equivalent of <beans> file
+    - and @ComponentScan
+        - Looks for @Component
+    - and @EnableAutoConfiguration
+        - Master runtime switch for Spring Boot
+        - Examines ApplicationContext & class path
+        - Creates missing beans based on intelligent defaults
+
+# Adding Web
+spring-boot-starter-web Dependency
+    - Adds spring-web, spring-mvc jars
+    - Adds embedded Tomcat jars
+When application starts
+    - Your bean are created
+    - @EnabledAutoConfiguration looks for 'missing' beans
+        - Based on your beans + classpath
+        - Notices @Controller/Spring MVC jars
+    - Automatically creates MVC beans
+        - DispatcherServlet, HandlerMapping, Adapters, ViewResolvers
+    - Launches embededded Tomcat instances.
+
+# Convert JAR to WAR
+Change POM packaging
+Extend SpringBootServletInitializer
+public class Application extends SpringBootServletInitializer {
+    ...
+}
+
+<packaging>war</packaging>
+
+# View Pages
+InternalResourceViewResolver for JSP
+ThymeleafViewResolver
+    - If thymeleaf is on classpath
+
+spring-boot-starter-thymeleaf
+    - Brought in required jars
+    - Automatically configured ThymeleafViewResolver
+Controller returned a 'logical view name'
+ViewResolver found a matching template
+Render
+
+# Spring & Rest
+REST capability is built in to Spring MVC
+    - Simply use domain objects as parameters, return values
+    - Mark with @RequestBody, @ResponseBody
+    - Spring MVC automatically handles XML / JSON conversion
+        - Based on converters available in classpath
+
+public class Team {                 public class Player {
+    String name;                        String name;
+    String location;                    String position;
+    String mascotte;                    public Player(String name, String position) {
+    Set<Player> player;                     this();
+    ...                                     this.name = name;
+}                                           this.position = position;
+                                        }
+                                        ...
+                                     }
+
+@Controller
+public class WhatIWant {
+    private Team team;
+    @PostConstruct
+    public void init() {
+        Set<Player> players = new HashSet<>();
+        players.add(new Player("Mike", "pitch");
+        players.add(new Player("Snappy", "short");
+        team = new Team("California", "Peanuts", players);
+    }
+    @RequestMapping("/hello")
+    public @ResponseBody Team hiThere() {
+        return team;
+    }
+}
+
+RESULT
+{
+    name: "Peanuts",
+    location: "California",
+    _players: [
+        _{
+            name: "Mike",
+            position: "shortspan"
+        },
+        _{
+            name: "Charlie",
+            position: "pitcher"
+        }
+    ]
+}
+
+Controller return a domain object
+    - Not a logical view name (page)
+Spring MVC noticed @ResponseBody
+    - Or @RestController
+Invoke correct HttpMessageConverter based on -> Request Format -> Jars on classpath
+
+# If XML is wanted
+Annotate domain class with JAXB annotations
+    - JAXB slready part of Java SE
+When App Starts
+    - Spring creates HttpMessageConverter for JAXB
+        - Based on classpath converts
+XML or JSON returned
+    - Based on request format
+
+@XmlRootElement
+public class Team {
+    String name;
+    String location;
+    String mascotte;
+    Set<Player> players;
+    ...
+}
+
+http://localhost:8080/demo/hi.json hi.xml
+Method GET
+Headers: Accept application/json
+                application/xml
+
+# Adding JPA Capabilities
+Adding the spring-boot-starter-data-jpa dependency
+    - Adds Spring JDBC / Transaction Management
+    - Adds Spring ORM
+    - Adds Hibernate / entity manager
+    - Adds Spring Data JPA sibproject
+Does not add a Database Driver
+
+# Spring Data JPA
+- Typical web application architecture
+- REST controllers Provide CRUD interface to client
+- DAO provide CRUD interface to DB
+
+        JSON/XML
+                         |
+                 +-------+-------+
+                 | Controllers   |
+                 +---------------+
+                 | Services      |
+                 +---------------+
+                 | DAO           |
+                 +-------+-------+
+                         |
+                        DB
+
+# Spring Data Instance Repository
+- Spring Data provides dynamic repository
+- You provide the interface, Spring Data dynamically implements
+    - JPA, MongoDB, GemFire
+- Service Layer, Controllers have almost no logic
+
+        JSON/XML
+            |
+    +-------+---------------+
+    | Controllers           |
+    +-----------------------+
+    | Services              |
+    +-----------------------+
+    | Spring Data Repository|
+    +-------+---------------+
+            |
+           DB
+
+spring-boot-starter-data-jpa
+
+@XmlRootElement
+@Entity
+public class Team {
+    @Id
+    @GeneratedValue
+    Long id;
+    String name;
+    String location;
+    String mascotte;
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="teamId")
+    Set<Player> players;
+    ...
+}
+
+@Entity
+public class Player {
+    @Id
+    @GeneratedValue
+    Long id;
+    String name;
+    String position;
+    ...
+}
+
+public interface TeamDao extends CrudRepository<Team, Long> {
+    List<Team> findAll();
+    Team findByName(String name);
+}
+
+@RestController
+public class WhateverIWant {
+    @Autowired
+    TeamDao teamDao;
+    @RequestMapping("/teams/{name}")
+    public Team hello(@PathVariable String name) {
+        return teamDao.findByName(name);
+    }
+}
+
+# Adding Spring Data JPA
+- Added dependencies for spring-boot-starter-data-jpa and hsqldb
+- Annotated domain objects with plain JPA annotations
+- Added an interface for Spring Data JPA
+- Dependency injected into controller
+
+When Application starts
+- Spring Data dynamically implements repositories
+    - find*(), delete(), save() methods implemented
+- Data Source, Transaction Management, all handled
+
+
+# Spring Data REST
+- Often applications simply expose DAO methods as REST resources
+- Spring Data REST handles this automatically
+
+        JSON/XML
+            |
+    +-----------------------+
+    | Spring Data REST      |
+    +-----------------------+
+    | Spring Data Repository|
+    +-------+---------------+
+            |
+           DB
+
+# Adding Spring Data REST
+- Plugs into dynamic repositories
+- Generates RESTful interface
+    - GET, PUT, POST, DELETE
+- Code needed only to override defaults
+
+spring-boot-starter-data-rest
+
+@RestResource(path="teams", rel="teams")
+public interface TeamDao extends CrudRepository<Team, Long> {
+    List<Team> findAll();
+    Team findByName(String name);
+}
+
+@RestController
+public class WhateverIWant {
+    @Autowired
+    TeamDao teamDao;
+    @RequestMapping("/hi/{name}")
+    public Team hiThere(@PathVariable String name) {
+        return teamDao.findByName(name);
+    }
+}
+
+When application starts
+- @RestResource annotatios interpreted
+- @Controllers beans created
+- @RequestMappigs created
+
+# Adding HATEOAS
+- Spring Data Rest simply returns RESTful resources
+    - Conversion handled by Jackson or JAXB
+- Underlying Data Relationships used to build Links
+    - If matching repositories exists
+- Consider the team -> Player relationship
+- Player repository needed to force link creation
+
+@RestResource(path="players", rel="players")
+public interface PlayerDao extends CrudRepository<Player, Long> {
+}
+
+{
+    name: "Peanuts",
+    location: "California",
+    _links: [
+        _self{
+            href: "localhost:8080/demo/teams/1"
+        },
+        _players{
+            href: "localhost:8080/demo/teams/1/players"
+        }
+    ]
+}
+
+# HATEOAS
+- Spring Data REST noticed two repositories
+    - The relationship between entities is known via JPA annotations
+- Spring automatically represents the childern as links
+    - @RestResource determines names of links
+
+Spring Boot Makes it easy to start projects
+    - And easy find feature sets to projects
+    - opinionated approach
+    - Runs as JAR or WAR
+    - Web Applications (JSP, Thymeleaf)
+
+REST
+- Automatically resource conversion
+Spring Data JPA
+- Automatic repository implementation
+Spring Data REST
+- Automatic REST controllers
+
+
+
 # Spring boot fundamentals
 Bean Configuration
 Beans - object backbones of App manage by spring
@@ -488,6 +814,67 @@ public Weather home() {
 }
 
 
+# CRUD
+
+# Read
+@Controller
+@Secured("ROLE_ADMIN")
+public class AdminPostController {
+    private PostService postService;
+    @Autowired
+    public AdminPostController(PostService postService) {
+        this.postService = postService;
+    }
+    @RequestMapping("/admin/post")
+    public String list(Model model) {
+        model.addAttribute("posts", postService.list());
+        return "admin/post/list";
+    }
+    @RequestMapping("/admin/post/{id}")
+    public String view(@PathVariable long id, Model model) {
+        model.addAttribute("post", postService.get(id));
+        return "admin/post/view";
+    }
+
+    // #Create
+    // create save
+    @RequestMapping("/admin/post/create")
+    public String create(Model model) {
+        model.addAttribute("post", newPost());
+        model.addAttribute("authors", authorService.list());
+        return "/admin/post/postForm";
+    }
+    @RequestMapping(value="/admin/post/save", method=RequestMethod.POST)
+    public String save(Post post) {
+        Post savedPost = postService.save(post);
+        return "redirect:/admin/post/"+savedPost.getId();
+    }
+    @RequestMapping(value="/admin/postSave", method=RequestMethod.POST)
+    public String save(@Valid Post post, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("authors", authorService.list());
+            return "admin/post/postForm";
+        } else {
+            return "redirect:/admin/post/"+savedPost.getId();
+        }
+    }
+
+    // #Edit
+    @RequestMapping("/admin/post/edit/{id}")
+    public String edit(@PathVariable long id, Model model) {
+        model.addAttribute("post", postService.get(id));
+        model.addAttribute("authors",authorsService.list());
+        return "admin/post/postForm";
+    }
+
+    // #Delete
+    @RequestMapping("/admin/post/delete/{id}")
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttrs) {
+        postService.delete(id);
+        redirectAttributes("message", "Post was deleted");
+        return "redirect:/admin/posts";
+    }
+}
 
 
 

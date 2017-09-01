@@ -49,7 +49,7 @@ by first testing the locking creation, without actually acquiring the lock.
 Singleton classes should never be subclassed or extended.
 
 Make sure your singleton object can't be cloned. Make sure that singleton class does not implement cloneable, or if
-it does override the clone() method to throw Exception.
+it does override the clone() method or throw Exception.
 
 
 # Builder Pattern

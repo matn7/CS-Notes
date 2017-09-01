@@ -74,12 +74,12 @@ Like .sleep(), the .join() method throws an interrupted exception if the thread 
 In Java threading support, threads mostly communicate with each other via shared objects or shared member variables
 within the same object.
 Three types of complications can arise from this
-Thread interference
-Different thread access the same data.
-Memory consistency Error
-A thread sees a stale (inconsistent) value of variable
-Thread Contention
-Threads get in each others way and slow down or sometimes even have to be killed by Java
+- Thread interference
+    -Different thread access the same data.
+- Memory consistency Error
+    - A thread sees a stale (inconsistent) value of variable
+- Thread Contention
+    - Threads get in each others way and slow down or sometimes even have to be killed by Java
 
 
 # Thread Interference and memory consistency error
@@ -97,7 +97,7 @@ But it slows down performance, and can lead to thread contention issues (starvat
 Every object in Java has a lock associated with it.
 This lock is called the INTRINSIC lock or MONITOR
 This lock is usually always open i.e. any number of threads can access the object simultaneously.
-But it's possible to specify that a thread can only execute a section of code once it has acquired th lock
+But it's possible to specify that a thread can only execute a section of code once it has acquired the lock
 on same object.
 If some other thread currently holds that lock, the current thread must wait it's turn.
 This is achieved using the synchronized keyword.
@@ -119,12 +119,12 @@ another synchronized method of the same object without blocking.
 
 
 # Thread contention
-Deadlock
-Two threads each is blocked on a lock hold by the other
-Livelock
-Two threads don't deadlock but keep blocking on locks held by each other. Neither really can progress
-Starvation
-Some threads keep locks greedly. And cause other threads to be unable to get anything Done.
+- Deadlock
+    - Two threads each is blocked on a lock hold by the other
+- Livelock
+    - Two threads don't deadlock but keep blocking on locks held by each other. Neither really can progress
+- Starvation
+    - Some threads keep locks greedly. And cause other threads to be unable to get anything Done.
 
 
 # NEW SCHOOL LIBRARIES - CALLABLES, EXECUTORS
@@ -159,7 +159,7 @@ doing so would cause livelock, deadlock
 
 # IMPLEMENT THE CALLABLE INTERFACE
 Callable has 2 advantages over runnable.
-1. It is a generic class tha explicitly returns the thread result (so no shared memory to be relied upon).
+1. It is a generic class that explicitly returns the thread result (so no shared memory to be relied upon).
 2. It correctly Passes Exceptions from one thread to another
 
 

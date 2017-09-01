@@ -76,7 +76,7 @@ public class Kolekcje {
         // BitSet przechowuje sekwencje bitów.
 
         // Stosy, kolejki
-        // Stos to struktura danych pozwalająca na dodawanie i usuwanie elementów z jenego końca wierzchołka stosu.
+        // Stos to struktura danych pozwalająca na dodawanie i usuwanie elementów z jednego końca wierzchołka stosu.
         // Kolejka pozwala wydajnie dodawać elementy po jednej stronie i usuwać z drugiej strony.
 
         // Klasa WeakHashMap

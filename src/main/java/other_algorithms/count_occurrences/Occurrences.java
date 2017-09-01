@@ -27,7 +27,7 @@ public class Occurrences {
             // second loop count occurrences
             for (int j = 0; j < str.length(); j++) {
                 if (map.get(i) == map.get(j)) {
-                    mapNum.put(map.get(i), ++k); // character is a key
+                    mapNum.put(map.get(i), ++k); // character is a key, which must be unique
                 }
             }
         }

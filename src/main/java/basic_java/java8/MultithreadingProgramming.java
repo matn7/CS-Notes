@@ -31,12 +31,12 @@ public class MultithreadingProgramming {
 
     // ConcurrentHashMap to bezpieczna dla wątków tablica skrótów pozwalająca aktualizować elementy za pomocą operacji atomowych
 
-    // Możesz użyć klasyAtomicLong jako współdzielonego licznika bez konieczości tworzenia blokad lub wykorzystać LongAdder
+    // Możesz użyć klasy AtomicLong jako współdzielonego licznika bez konieczości tworzenia blokad lub wykorzystać LongAdder
     // w przypadku dużej rywalizacji.
 
     // Blokada zapewnia, że tylko jeden wątek w danej chwili wykonuje krytyczny fragment kodu.
 
-    // Zadanie, które można przerwać powinno konczyć działanie gdy ustawiona jest flaga interrupted lub pojawi się
+    // Zadanie, które można przerwać powinno kończyć działanie gdy ustawiona jest flaga interrupted lub pojawi się
     // wyjątek InterruptedException.
 
     // Klasa Process pozwala wykonywać polecenia w oddzielnych procesach oraz wchodzić w interakcję ze
@@ -116,7 +116,7 @@ public class MultithreadingProgramming {
          rejestr1 = licznik + 1; // Wątek 1 oblicza licznik + 1
          ..// Wątek 1 jest wywłaszczany
          rejestr2 = licznik + 1; // Wątek 2 oblicza licznik + 1
-         licznik = rejestr2; // Wątek 2 zapisuje 1 e licznik
+         licznik = rejestr2; // Wątek 2 zapisuje 1 w licznik
          // Wątek 1 zaczyna ponownie działąnie
          licznik = rejestr1; // Wątek 1 zapisuje 1 w licznik
          */
@@ -127,7 +127,7 @@ public class MultithreadingProgramming {
         // Strategie bezpiecznego korzystania ze współbieżności
 
         // Ograniczenie: unikaj współdzielenia danych pomiędzy zadaniami. Na przykład gdy Twoje zadania muszą coś zliczyć,
-        // utwórz w każdymz nich oddzielny licznik, zamiast aktualizować wspólny liczik.
+        // utwórz w każdym z nich oddzielny licznik, zamiast aktualizować wspólny liczik.
         // Gdy zadania zakończą działanie niech przekażą swoje wyniki do innego zadania które je połączy.
 
         // Korzystanie z obiektów niemodyfikowalnych.

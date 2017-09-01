@@ -23,7 +23,7 @@ public class ProgramowanieObiektowe {
 
     // Referencje do obiektu
     // W języku Java zmienna może przechowywać referencje do obiektu.
-    // Właściwy obiekt znajduje się w nnym miejscu, a referecja jest pewnym, zależnym od implementacji sposobem odnajdywania obiektu.
+    // Właściwy obiekt znajduje się w innym miejscu, a referecja jest pewnym, zależnym od implementacji sposobem odnajdywania obiektu.
 
     // LocalDate date = null; // Teraz zmienna date nie wskazuje na żaden obiekt
     // Lepiej jednak nie korzystać z null, lepiej wykorzystać typ Optional
@@ -86,7 +86,7 @@ public class ProgramowanieObiektowe {
     // Metody wytwórcze
     // factory methods. Metody statyczne które zwracają nowe instancje klas.
     // Dlaczego zamiast nich nie używać konstruktora? Jedynym sposobem odróżnienia dwóch konstruktorów są typy przekazywanyc
-    // do nich parametró.
+    // do nich parametrów.
     // Nie możesz mieć dwóch konstruktorów bez parametrów.
     // Metody wytwórcze mogą też zwracać współdzielone obiekty bez konieczności tworzenia nowych. Collections.emptyList() zwróci
     // współdzieloną niemodyfikowalną pustą listę.
