@@ -45,7 +45,7 @@ The same method name with exactly the same arguments
 dynamic binding
 
 We cannot override private methods in Java as if we declare any variable, method as private that variable or method
-will be visited for that class only and also if we declare any method as private than they are bounded with class at compile
+will be visible for that class only and also if we declare any method as private than they are bounded with class at compile
 time not in runtime so we can't reference those method using any object
 
 You cannot override static method in Java because method overriding is based upon dynamic binding at runtime
@@ -90,6 +90,7 @@ JVM uses class loader to find the classes.
 
 When JVM needs to find a class, it starts with System Class Loader. If it is not found, it checks with Extension Class Loader.
 If it not found, it goes to the Bootstrap Class Loader. If class is still not found, a ClassNotFoundException is thrown.
+
 +---------------------------------------------------------------------------------------------------+
 | System Class Loader -> Extension Class Loader -> Bootstrap Class Loader -> ClassNotFoundException |
 +---------------------------------------------------------------------------------------------------+
@@ -104,6 +105,7 @@ Auto boxing helps in saving memory by reusing already created wrapper objects. H
 created using new are not reused.
 
 Two wrapper objects created using new are not same object
+
 +--------------------------------------------------+
 | Integer nineA = new Integer(9);                  |
 | Integer nineB = new Integer(9);                  |
@@ -112,6 +114,7 @@ Two wrapper objects created using new are not same object
 +--------------------------------------------------+
 
 Two wrapper objects created using boxing are same object
+
 +--------------------------------------------------+
 | Integer nineC = 9;                               |
 | Integer nineD = 9;                               |
@@ -145,7 +148,7 @@ Static methods belongs to class rather than object of class.
 Can be invoked without creating an instance of class.
 'this' and 'super' cannot be used in static context.
 
-Why java main method is static?
+# Why java main method is static?
 Because object is not required to call static method if it were non static method, jvm create object first
 then call main() method that will lead the problem of extra memory allocation.
 
@@ -156,6 +159,7 @@ Factories methods - static methods that returns new class instance.
 You cannot override static method in Java because they are resolved at compile time rather than runtime
 
 In Java6 it was possible to run program without main method by using static initialization block. It is not a case anymore.
+
 +-----------------------------------------+
 | public class Foo {                      |
 |     static {                            |
@@ -176,7 +180,7 @@ There are two types of Initialization blocks.
 
 # What is static initializer
 
-Code within static {} is called a static initializer. This is run only when class is first loaded.
+Code within static '{}' is called a static initializer. This is run only when class is first loaded.
 Only static variables can be accessed in a static initializer. Even though three instances are created static
 initializer is run only once.
 
@@ -206,12 +210,14 @@ Java classes:
 # Enum
 
 Sometimes you need to define connected constants like
+
 +------------------------------------+
 | public static final int MONDAY = 0 |
 +------------------------------------+
 
 You can do this using enum
 Now weekday is data type with values Weekday.MON
+
 +--------------------------+
 | enum Weekday {MON, TUE}; |
 +--------------------------+
@@ -255,11 +261,11 @@ Variable arguments allow calling method with different number of parameters.
 # String
 
 Immutable and final
-Thread safe - prevent from change cache
-String pool cache (optimization)
-Hash codes - keys in hashCodes are Strings
+- Thread safe : prevent from change cache
+- String pool cache : (optimization)
+- Hash codes : keys in hashCodes are Strings
 
-Why String is immutable.
+# Why String is immutable?
 Value of a String once created cannot be modified. Any modification on a String object creates a new object.
 
 +--------------------------------------+
@@ -275,7 +281,7 @@ The result should be assigned to a new reference variable (or some variable can 
 | System.out.println(concat); // string1string2 |
 +-----------------------------------------------+
 
-Where are String literals store in memory?
+# Where are String literals store in memory?
 All strings literals are stored in "String constant pool". If compiler finds a String literal, it checks if
 it exists, it is reused.
 Following statement creates 1 String object (created on pool) and 1 referenced variable
@@ -284,7 +290,7 @@ Following statement creates 1 String object (created on pool) and 1 referenced v
 | String str1 = "Value"; |
 +------------------------+
 
-However if new operator is used to create String object, the new object is created on heap.
+However if 'new' operator is used to create String object, the new object is created on heap.
 Following piece of code created 2 objects
 
 +----------------------------------------------------------------------+
@@ -309,8 +315,8 @@ It prints hashCode and class name. If is overridden new content is printed
 
 # Interfaces
 
-All methods public abstract (Since Java8 can also be static and default methods)
-All properties public static final
+- All methods public abstract (Since Java8 can also be static and default methods)
+- All properties public static final
 
 Implement interfaces, want to imitate behavior of class
 Use to impose behavior on other classes
@@ -319,7 +325,7 @@ You can implements more than one interface (impose behavior), example implements
 to extort sorting behavior.
 
 You cannot put instance variables. Interface determines behavior not state of object.
-You can provide default implementation of interface. Mark such method with default modifier
+You can provide default implementation of interface. Mark such method with 'default' modifier
 
 +-----------------------------------------------+
 | public interface IntSequence {                |
@@ -332,16 +338,16 @@ Comparable interface when class want to allow sort their elements Comparable.
 Callback - code fragment is call as a result on user response
 Interface is used heavily in API to define contract of a class.
 You cannot create non abstract method in interface. All methods are for default abstract.
-Since Java8 methods in interfaces can contain default methods, static and abstract.
+Since Java8 methods in interfaces can contain 'default'. 'static' and 'abstract' methods.
 
 
 # Class Object
 
 Parent class of all classes
-hashCode
-equals
-toString - representation of object as String by default class name plus hash
-clone
+- hashCode
+- equals
+- toString - representation of object as String by default class name plus hash
+- clone
 
 
 # Abstract class and methods
@@ -354,10 +360,10 @@ Additional responsibilities added to class
 
 # OOP
 
-Objects - containers that keep variables functions thematically connected to each others, to use it easier later
-Classes - frame to build instances of objects
+- Objects : containers that keep variables functions thematically connected to each others, to use it easier later
+- Classes : frame to build instances of objects
 Objects have, properties, methods
-Constructor - reserve space in memory for object
+- Constructor : reserve space in memory for object
 Creating an object from a class is called instantiation
 
 Constructor references
@@ -379,8 +385,8 @@ Encapsulation - use of objects implemented by someone else, use their methods wi
 Instance variable are in default initialized
 Local variables need to be explicitly initialized
 
-If part can exists without whole then relationship between two class is known as aggregation
-If part cannot exists without whole the relationship between two class is known as composition
+If part can exists without whole then relationship between two class is known as 'aggregation'
+If part cannot exists without whole the relationship between two class is known as 'composition'
 
 
 # What is the difference between composition and inheritance ?
@@ -561,6 +567,7 @@ Explicit casting would cause truncation of value if the value stored is greater 
 
 - Member object and static class variables are always initialized with default values
 - Local/block variables are NOT initialized by complier
+
 +-----------------------------------------------------------+
 | public class VariableInit {                               |
 |   public static void main(String[] args) {                |
@@ -580,7 +587,7 @@ Explicit casting would cause truncation of value if the value stored is greater 
 
 # Variables in JAVA
 
-- Instance Variables (Non-Static Fields)
+- Instance Variables (Non-Static Fields), declared outside a method but inside a class
 - Class Variables (Static Fields) : one copy of this variable in existence.
 - Local Variables : methods stores its temporary state in local variables. Declared between {} in method.
   Accessible only in method declared.
@@ -631,9 +638,9 @@ String name = "Hello";
    Stack
 +----------+            +----------------------+
 |+--------+|            |   +------+           |
-||  name  ++---------\  |   |String|           |
+||  name  ++---------+  |   |String|           |
 |+--------+|          \ | +-+------+-+         |
-|+--------+|           \+>+  Hello   |         |
+|+--------+|           ++>+  Hello   |         |
 || age=21 ||            | +----------+         |
 |+--------+|            |                      |
 |          |            |                      |
@@ -686,7 +693,7 @@ Passing Values
 +-----+     |      | Customer |           +--------+    |
 |+---+|     |    +-+----------+-+         | String |    |
 || c |+-----+--->+  +------+    |       +-+--------+-+  |
-|+---+|     |    |  | name |----+------>+ Grazyna    |  |
+|+---+|     |    |  | name +----+------>+ Grazyna    |  |
 |     |     |    |  +------+    |       +------------+  |
 +-----+     |    +-----+--------+                       |
             |          X (break this reference)         |
@@ -716,9 +723,10 @@ Can be assigned only once
 Collections.unmodifableMap()
 Collections.unmodifableList()
 
-String three = new Integer(67).toString().intern(); // JVM optimizes of building object
-String four = "67";
-
++-----------------------------------------------------------------------------------------+
+| String three = new Integer(67).toString().intern(); // JVM optimizes of building object |
+| String four = "67";                                                                     |
++-----------------------------------------------------------------------------------------+
 
 # Garbage Collector
 
@@ -783,8 +791,9 @@ Max size of metaspace is your computer Space
 |       |               |   |           |
 |       |               |   |           |
 |       |               |   |           |
-| Heap  |               |   |           |
+|       |               |   |           |
 +-------+---------------+   +-----------+
+Heap
 
 
 # Tuning the VM
@@ -803,7 +812,7 @@ PermGen Size
 | -XX:MaxPermSize=256m |
 +----------------------+
 
--verbose:gc print to the console when garbage collection takes place
+-verbose:gc // print to the console when garbage collection takes place
 
 -Xmx10m -verbose:gc // print garbage collection
 
@@ -839,6 +848,7 @@ Soft - stronger than weak, can be destroy if GC claims that space is needed.
 +-------------------------------------+
 
 WeakHashMap - reference between key and values are weak.
+
 +--------------------------------------------------------+
 | Map<Book, BookImage> imageCache = new WeakHashMap<>(); |
 +--------------------------------------------------------+
@@ -889,7 +899,7 @@ Important things to consider when implementing equals method.
 - Reflexive: For any reference value x, x.equals(x) return true
 - Symmetric: For any reference values x and y, if x.equals(y) should return true if and only if y.equals(x) returns true.
 - Transitive: For any reference values x, y and z, if x.equals(y) returns true and y.equals(z) returns true,
-    then x.equals(z) must retun true
+    then x.equals(z) must return true
 - Consistent: For any reference values x and y, multiple invocations of x.equals(y) consistently return true
     if no information used in equals is modified
 - For any non-null reference value x, x.equals(null) should return false
@@ -1000,8 +1010,8 @@ can be sent over a network or stored in a file.
                                           +--------+
 
 Serialization helps us to save and retreive state of an object.
--Serialization: convert object state to some internal object representation
--Deserialization: To reverse convert internal representation to object
+-Serialization : convert object state to some internal object representation
+-Deserialization : To reverse convert internal representation to object
 
 Two important methods
 -ObjectOutputStream.writeObject(): serialize and write to file
@@ -1023,7 +1033,9 @@ Create new Rectangle object and serializing it to a file Rectangle.ser.
 |   int breadth;                                                       |
 |   int area;                                                          |
 | }                                                                    |
-+----------------------------------------------------------------------++
++----------------------------------------------------------------------+
+
++-----------------------------------------------------------------------+
 | FileOutputStream fileStream = new FileOutputStream("Rectangle.ser");  |
 | ObjectOutputStream objectStream = new ObjectOutputStream(fileStream); |
 | objectStream.writeObject(new Rectangle(5,6));                         |
@@ -1045,6 +1057,7 @@ Transient attributes in an object are not serialized. As we don't need to serial
 mark this variable as transient.
 
 All classes that need to be serialized have to implement Serializable interface
+
 
 # Are the constructors in an object invoked when it is de-serialized?
 No when a class is de-serialized, initialization (constructor's initializer's) does not take place.
@@ -1125,7 +1138,7 @@ scores.put("SWORD",99);                         | 2 |--> KNIGHT | 64205538 | 100
 scores.put("GALLEON",80);                       +---+
 scores.put("WALL",70);                          | 3 |
                                                 +---+
-+------------------------+                      | 4 |--> QUEEN | 2306996 | 120 | - |--> CASTLE | 63281940 | 10 | - |--> GALLEON | 2656852 | 80 | null
++------------------------+                      | 4 |--> QUEEN | 2306996 | 120 | * --> CASTLE | 63281940 | 10 | * --> GALLEON | 2656852 | 80 | null
 | put(K k, V v)          |                      +---+
 |   hash(k)              |                      | 5 |
 |                        |                      +---+
@@ -1210,7 +1223,7 @@ In Java 8, when we have too many unequal keys which gives some hashcode(index)
 - when the number of items in a hash bucket grows beyond threshold(TREEIFY_TRESHOLD = 8), content of that bucket
 switches from using linked list of Entry objects to a balanced tree. This theoretically improves the worst-case
 performance from O(n) to O(log n).
-Balanced search tree, where leaf nodes have lesser weight(HashCode or Comparable result) for the Keys involved.
+Balanced search tree, where leaf nodes have lesser weight (HashCode or Comparable result) for the Keys involved.
 
 
 ######################
@@ -1229,7 +1242,7 @@ When an exception happens the code after the line throwing exception is not exec
 If code like closing connection is present in these lines of code, it is not executed.
 This leads to connection and other resource leaks.
 Code written in finally block is executed even when there is an exception.
-dangling unclosed connection. Finally block is used when code needs to be executed irrespective
+Dangling unclosed connection. Finally block is used when code needs to be executed irrespective
 of whether an exception is thrown.
 
 +--------------------------+
@@ -1253,7 +1266,7 @@ try without catch block is allowed for instance since Java 7
 | }           |
 +-------------+
 
-With Java 7 try with resources (automatic resource management)
+Java 7 try with resources (automatic resource management)
 
 +-----------------------------------------------------------------+
 | try (FileInputStream input = new FileInputStream("file.txt")) { |
@@ -1463,7 +1476,8 @@ add, remove, size, isEmpty, clear, contains, containsAll, retainAll
 
 Collection interface provides methods for all collections except Map which are provided by Map interface
 
-Thread safe data structures
+
+# Thread safe data structures
 In such collections iterators presents elements which exists on the beginning of iteration but can reflect
 all modifications that being processed after their creation. Such iterator does not throw ConcurrentModificationException.
 In multithreading Java application synchronized collection classes like HashTable and Vector quickly becomes
@@ -1471,7 +1485,7 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 
 +------+--------------+-----------------------+
 |      | Collection   | Cononcurrent          |
-|      |              | Thread Sefe           |
+|      |              | Thread Safe           |
 +------+--------------+-----------------------+
 | List | ArrayList    | CopyOnWriteArrayList  |
 |      | LinkedList   | Vector                |
@@ -1492,6 +1506,7 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 
 
 # LIST
+
 List interface extends Collection interface. It contains all methods defined in Collection interface.
 In addition List interface allows operation specifying the position of the element in the Collection.
 Any implementation of List interface would maintain the insertion order.
@@ -1510,6 +1525,7 @@ require to modify links and no other elements are rearranged.
 
 
 # ArrayList
+
 ArrayList implements the List interface. So ArrayList stores the elements in insertion order.
 Elements can be inserted into and removed from ArrayList based on their positions.
 ArrayList can have duplicate elements.
@@ -1551,11 +1567,12 @@ List<String> valueList = Arrays.asList(valueArray)
 
 
 # SET
+
 Java has implementation of HashSet and TreeSet.
 Does not allow duplicates.
 
 
-# What is a difference between Set and SortedSet
+# What is a difference between Set and SortedSet?
 SortedSet interface extends the Set interface. Both Set and SortedSet does not allow duplicate elements.
 SortedSet maintains its elements in a sorted order. Set interface does not guaranteed any order
 Methods of Sorted Set:
@@ -1563,6 +1580,7 @@ subset(), headSet(), tailSet()
 
 
 # HashSet
+
 HashSet implements Set interface. HashSet does not allow duplicates. HashSet does not supports ordering.
 The order in which elements are inserted is not maintained.
 
@@ -1572,11 +1590,13 @@ The order in which elements are inserted is not maintained.
 
 
 # LinkedHashSet
+
 LinkedHashSet implements Set interface and exposes similar operations to HashSet.
 Maintains insertion order.
 
 
 # TreeSet
+
 TreeSet implements Set, SortedSet and NavigableSet interfaces. TreeSet is similar to HashSet except
 that it stores elements in sorted order.
 Some methods:
@@ -1588,6 +1608,7 @@ lower(), floor(), higher(), ceiling()
 
 
 # MAP
+
 Map interface does not extends Collection.
 A Map interface supports Collections that use a key value pair.
 A key-value pair is a set of linked data items a key, which is a unique identifier for some item data, and the value
@@ -1606,6 +1627,7 @@ SortedMap interfaces along with tha Map interface
 
 
 # ConcurrentHashMap
+
 Methods in atomic ways sets or replace elements if it is the same at a point of time.
 There are couple of mass operations to search, modify or look for ConcurrentHashMap.
 search, reduce, forEach.
@@ -1616,6 +1638,7 @@ ConcurrentSkipListMap
 
 
 # Difference between Map and SortedMap
+
 SortedMap interface extends Map interface. In addition, an implementation of SortedMap interface maintains
 keys in sorted order.
 Methods are available in the interface to get a ranges of values based on their keys:
@@ -1623,6 +1646,7 @@ subMap(), headMap(), tailMap(), firstKey(), lastKey()
 
 
 # QUEUES
+
 Queue interface extends Collection interface. Queue interface is typically used for implementation
 holding elements in order for some processing.
 Queue interface offers methods peek() and poll(), which get element at the head of a queue.
@@ -1632,18 +1656,21 @@ offer(), remove(), pull(), element(), peek()
 
 
 # BlockingQueue
+
 pool, peek methods return null to signal failure. In that reason insert null vales to them is incorrect
 LinkedBlockingQueue
 ArrayBlockingQueue
 
 
 # PriorityQueue
+
 Implements Queue interface.
 -offer() adding an element to priority queue
 -peek() get the element with highest priority
 
 
 # Iterator
+
 Iterator interface allows us to iterate (loop around) a collection. All collections define a method iterator()
 that gets an iterator of collection.
 hasNext() check if there is another elements in the collection being iterated, next() gets the next element
@@ -1656,7 +1683,7 @@ hasNext() check if there is another elements in the collection being iterated, n
 +--------------------------------+
 
 
-# What is the difference between synchronized and Concurrent Collections
+# What is the difference between synchronized and Concurrent Collections?
 Synchronized collections are implemented using synchronized methods and synchronized blocks. Only one Thread
 can executing any of the synchronized code at given point in time. This places severe restrictions on the concurrency
 of thread - there by affecting performance of the application. All the pre Java 5 synchronized collections
@@ -1693,7 +1720,7 @@ These are called concurrent collections. Examples of new approaches are
 New approaches to concurrency provide better performance in specific context
 
 
-# Copy on Write
+# Copy on Write?
 All collections are sorted in immutable array. A new array is created if there is any modification to the collection
 Read operations are not synchronized. Writes operations are synchronized.
 Copy on Write scenario is used where reads greatly out number writes on a collection
@@ -1702,7 +1729,7 @@ Copy on Write collections are typically used in subject - observer scenario, whe
 rarely change. Most frequent operations would be iteration around the observers and notifying them.
 
 
-# What is Compare and Swap approach
+# What is Compare and Swap approach?
 In compare and swap approach instead of synchronizing entire method, the value of member variable before
 calculation is cached. After the calculation the cache value is compared with the current value of member variable.
 If the value is not modified the calculated result is stored into the member variable.
@@ -1729,7 +1756,7 @@ As a general rule the default load factor .75 offers a good trade off between ti
 Higher value decrease space overhead but increase the lookup cost (put and get operations).
 
 
-# What is a different between fail safe and fail fast
+# What is a different between fail safe and fail fast?
 Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
 This was the default behavior of the synchronized collections of pre Java 5
 Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
@@ -1743,7 +1770,7 @@ SynchronizedMap not very different from HasTable similar performance in concurre
 You can create synchronized Map version by using Collections.synchronizedMap().
 ConcurrentHashMap is specially designed for concurrent use i.e. more than one thread.
 By default it simultaneously allows 16 threads to read and write from Map without any external synchronization.
-It is very scalable because of stripped locking technique used i the internal implementation of ConcurrentHashMap class.
+It is very scalable because of stripped locking technique used in the internal implementation of ConcurrentHashMap class.
 Unlike HashTable and Synchronized Map, it never locks whole Map, instead, it divides the Map into segments and locking is done on those.
 It perform better if number of reader are greater than the number of writer threads.
 
@@ -1768,12 +1795,12 @@ BlockedQueue interface is introduced in Java specifically to address specific ne
 BlockedQueue allows the consumer to wait (for a specific time of infinitely) for an element to become available.
 
 
-# HashMap and HashTable differences
+# HashMap and HashTable differences?
 HashMap is not synchronized. Faster than HashTable. Allows null keys.
 Hashtable is synchronized. Slower than HashMap. Does not allow null keys.
 
 
-# TreeSet and TreeMap differences
+# TreeSet and TreeMap differences?
 TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
 TreeMap is an implementation of Map.
 TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
@@ -1850,13 +1877,15 @@ FILTER, MAP and FOREACH are standard aggregate operations in functional programm
 
 
 # Functional Interfaces
+
 In Java there are a lot of interfaces that determines the action like Runnable or Comparator
-Lambda expression is compatible with this interfaces
+Lambda expression is compatible with these interfaces
 You can put lambda expression in all places, when you can put object that implements one abstract method
 Such interfaces are called functional interfaces
 
 
 # Streams
+
 Process data in more abstract way, than in case of collections. In case of stream you determine what should be done
 not the way it will be executed. Processing details live on implementation.
 Example calculate average value of parameters. Your task is to determine the source of data
@@ -1882,12 +1911,16 @@ GroupingBy and partitioningBy From Collector class allows to separate stream on 
 Special streams for primitive typed like : int, long, double
 Parallel Streams automated parallel operations on streams
 
+
 # Streams vs Collections
+
 Streams does not store elements. They can be stored in processing by stream collection or generated on demand
 Streams operation does not modify source data. For instance filter does not delete elements from stream but returns new one
 Streams operations are lazy. They process is delay until the results are needed.
 
+
 # Stream workflow
+
 - Create stream
 - Determine intermediate operations which process stream to different form, this process might require couple of steps (filter)
 - Process end operation which generates the result. After this step stream can no longer be used
@@ -1931,6 +1964,7 @@ Intermediate Operations are of two parts
 
 
 # Optional
+
 Optional object Optional<T> pack up object type T. Optional Object is safe alternative to reference to T type,
 which can accept object or null value. Use method that returns alternative value if returned value does not exists
 or take value if present.
@@ -1945,6 +1979,7 @@ Optional value is a stream of size zero or one. If value exists function is trig
 
 
 # Predicate<T>
+
 Function that return logical value.
 Predicate.isEqual(a) is counterpart of a::equals, but works correctly even with null values.
 Methods and, or, negate to join predicates
@@ -2353,7 +2388,7 @@ SOURCE                  DESTINATION
 The Arrow on the Edge. This means that the relationship between two vertices is directed - THE EDGE is a DIRECTED EDGE
 
 +---+                    +---+ | UNDIRECTED edges represent
-| A +--------------------+ B | | 2 - way relationship such as:
+| A +--------------------+ B | | two - way relationship such as:
 +---+                    +---+ | 1. Two way road
                                | 2. I am his friend and he is mine
 -------------------------------+----------------------------------
@@ -2506,7 +2541,7 @@ If a vertex V has an Edge leading to Another Vertex U
 Then U is present in V's LinkedList
 
 +---+     +---+                   DIRECTED GRAPH
-| A +---->+ B |               A -> B -> c
+| A +---->+ B |               A -> B -> C
 +-+-+     +-+-+               B -> D
   |         A   V             C -> E
   |         |    +---+        D
@@ -2800,7 +2835,7 @@ Based on fancies of JVM. Possible situations
 # Concurrency #
 ###############
 
-fail-safe do not throw ConcurrentModificationException
+fail-safe does not throw ConcurrentModificationException
 fail-fast throw ConcurrentModificationException
 volatile - value read always from main memory no cache
 synchronized - acquire intrinsic lock on object. Only one object can execute this part of code
@@ -3057,6 +3092,7 @@ Code usually calls libraries and is often called by frameworks, but is structure
 
 
 # Creational
+
 How objects are constructed
 Decouple the construction of an action from its use
 Hide implementation of an object only reveal its interface
@@ -3066,6 +3102,7 @@ Allow creation of finite number of instances
 
 
 # Behavioral
+
 How do objects behave and interact with each other
 How logical unit (classes) as whole interacts with the outside world
 Iterator pattern - here logical unit includes one class Iterator class. This pattern governs how the
@@ -3073,6 +3110,7 @@ is used by the client (the outside world)
 
 
 # Structural
+
 How classes within the logical unit interacts with each other
 MVC pattern - logical unit includes 3 classes model, view, controller
 The pattern governs how the Model, View, Controller interact with each other
@@ -3080,6 +3118,7 @@ If the interaction between the M, V, C were change, the UI would not look or beh
 
 
 # Design Principle #1 : Relay on Interfaces, not implementation
+
 "Program to an interface not implementation" decorator, iterator, adapter
 
 Interface is a surface that a unit offers to outside world
@@ -3092,12 +3131,14 @@ Never get assumption about content of any unit
 | List<String> list = new ArrayList<>(); // correct    |
 +------------------------------------------------------+
 
+
 # Design Principle #2 : The Open / Close Principle
+
 "Classes should be open for extension but closed for modification"
 
 Once you have written a class, it's done. Never add anything to it after that
 No new member variables, no new methods, no new interfaces implemented, No modification
-But other code should be able to use your class in new ways, New applications via extension
+But other code should be able to use your class in new ways. New applications via extension
 
 Inheritance, template pattern
     - If you structure your code into abstract base class, other classes can find
@@ -3111,6 +3152,7 @@ Composition, strategy pattern
 
 
 # Design Principle #3 : Principle of Least Knowledge
+
 "Only talk to friends, don't talk to strangers"
 
 Only make method calls to friends
@@ -3127,17 +3169,20 @@ Summarized, each unit should have only limited knowledge about other units. Each
 
 
 # Design Principle #4 : Dependency Injection
+
 "Depend on abstraction never on details"
 Used technique to set member variables of objects on the fly.
 
 
 # Design Principle #5 : Hollywood Principle
+
 "Don't call us we will call you"
 Class notifies other class of changes when they occurs via events or messages.
 Idea high-level component calling low-level is used components in frameworks.
 
 
 # MVC Paradigm
+
 Model View Controller is an architectural pattern. In Java API Swing
 Basic idea of MVC is to separate data from its representation, separating data from its manipulation,
 allowing different simultaneous representations of the same data
@@ -3146,19 +3191,19 @@ to be played in a media player app. View the area of the media-player app that a
 User sees the model through a view, and manipulates it via the controller
 
 
-# What is a basic point of observer pattern
+# What is a basic point of observer pattern?
 An object announces updates to its value, and other objects can read to these updates
 
 
-# When a publisher fires an update, how do subscriber become aware of it
+# When a publisher fires an update, how do subscriber become aware of it?
 The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified
 
 
-# How are properties and bindings different from each other
+# How are properties and bindings different from each other?
 Properties are ONE:ONE, bindings are ONE:MANY
 
 
-# How Observer and MVC related
+# How Observer and MVC related?
 The View act as publisher, controller as subscriber
 
 

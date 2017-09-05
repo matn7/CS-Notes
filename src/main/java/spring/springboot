@@ -22,13 +22,13 @@ Create Spring Application context
         - Looks for @Component
     - and @EnableAutoConfiguration
         - Master runtime switch for Spring Boot
-        - Examines ApplicationContext & class path
+        - Examines ApplicationContext and class path
         - Creates missing beans based on intelligent defaults
 
 # Adding Web
 spring-boot-starter-web Dependency
     - Adds spring-web, spring-mvc jars
-    - Adds embedded Tomcat jars
+    - Adds embedded Tomcat jars (undertow, jetty)
 When application starts
     - Your bean are created
     - @EnabledAutoConfiguration looks for 'missing' beans
@@ -59,23 +59,31 @@ Controller returned a 'logical view name'
 ViewResolver found a matching template
 Render
 
-# Spring & Rest
+# Spring and Rest
 REST capability is built in to Spring MVC
     - Simply use domain objects as parameters, return values
     - Mark with @RequestBody, @ResponseBody
     - Spring MVC automatically handles XML / JSON conversion
         - Based on converters available in classpath
 
-public class Team {                 public class Player {
-    String name;                        String name;
-    String location;                    String position;
-    String mascotte;                    public Player(String name, String position) {
-    Set<Player> player;                     this();
-    ...                                     this.name = name;
-}                                           this.position = position;
-                                        }
-                                        ...
-                                     }
+public class Team {
+    String name;
+    String location;
+    String mascotte;
+    Set<Player> player;
+    ...
+}
+
+public class Player {
+    String name;
+    String position;
+    public Player(String name, String position) {
+        this();
+        this.name = name;
+        this.position = position;
+    }
+    ...
+}
 
 @Controller
 public class WhatIWant {
@@ -83,8 +91,8 @@ public class WhatIWant {
     @PostConstruct
     public void init() {
         Set<Player> players = new HashSet<>();
-        players.add(new Player("Mike", "pitch");
-        players.add(new Player("Snappy", "short");
+        players.add(new Player("Mike", "pitch"));
+        players.add(new Player("Snappy", "short"));
         team = new Team("California", "Peanuts", players);
     }
     @RequestMapping("/hello")
@@ -117,7 +125,7 @@ Invoke correct HttpMessageConverter based on -> Request Format -> Jars on classp
 
 # If XML is wanted
 Annotate domain class with JAXB annotations
-    - JAXB slready part of Java SE
+    - JAXB already part of Java SE
 When App Starts
     - Spring creates HttpMessageConverter for JAXB
         - Based on classpath converts
@@ -143,7 +151,7 @@ Adding the spring-boot-starter-data-jpa dependency
     - Adds Spring JDBC / Transaction Management
     - Adds Spring ORM
     - Adds Hibernate / entity manager
-    - Adds Spring Data JPA sibproject
+    - Adds Spring Data JPA subproject
 Does not add a Database Driver
 
 # Spring Data JPA
@@ -443,7 +451,7 @@ public class PostController {
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {
-    @ExceptionHandler(Exceptio.class)
+    @ExceptionHandler(Exception.class)
     public String exception(Exception exception, Model model) {
         model.addAttribute("exception", exception);
         retun "errorHandler";

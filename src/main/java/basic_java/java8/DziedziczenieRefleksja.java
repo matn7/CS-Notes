@@ -119,7 +119,7 @@ public class DziedziczenieRefleksja {
     // Konstruktory metody i pola
     // Konstruktor typu wyliczeniowego jest zawsze prywatny.
 
-    // Zawartość elementó
+    // Zawartość elementów
     // Możesz dodać metody do każdej instancji typu wyliczeniowego enum
 
     // Elementy statyczne

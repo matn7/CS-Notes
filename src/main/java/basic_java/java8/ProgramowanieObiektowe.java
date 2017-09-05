@@ -78,7 +78,7 @@ public class ProgramowanieObiektowe {
     // Metody statyczne
     // Nie działają na obiektach. W Języku java typy proste nie są klasami. Dlatego metoda pow z klasy Math jest zadeklarowana
     // jako statyczne (public static double pow(double base, double exponent) { ... })
-    // Innym powodem tworzenia statycznych metod jest konieczność dostarczenia dodatkowej fyunkcjonalności do klas,
+    // Innym powodem tworzenia statycznych metod jest konieczność dostarczenia dodatkowej funkcjonalności do klas,
     // których nie jesteś właścicielem.
     // Nie możesz mieć dostępu do zmienych instancji z metod statycznych.
     // Metody statyczne mogą mieć dostęp do zmiennych statycznych w swoich klasach

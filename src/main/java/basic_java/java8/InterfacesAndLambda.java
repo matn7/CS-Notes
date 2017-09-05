@@ -129,7 +129,7 @@ public class InterfacesAndLambda {
         // - wykonanie kodu we właściwym miejscu algorytmu
         // - wykonanie kodu w reakcji na zdarzenie
         // - wykonanie kodu tylko w razie potrzeby
-        repeat(10, () -> System.out.println("WItaj świecie"));
+        repeat(10, () -> System.out.println("Witaj świecie"));
 
         // Predicate<T> funkcja zwracająca wartość logiczną. and, or, negate, isEqual
         // Predicate.isEqual(a) jest odpowiednikiem a::equals ale działa również w sytuacji gdy a ma wartość null.
@@ -140,7 +140,7 @@ public class InterfacesAndLambda {
         // Lokalne klasy wewnętrzne
         // Możesz definiować klasę wewnątrz metody. Taka klasa jest nazywana klasą lokalną.
         // Klasa lokalna nie jest deklarowana jako publiczna lub prywatna, ponieważ nie jest dostępna spoza metody.
-        // Zalety nazwa klasy ukryta wewnątrz metody. metody klasy mogą zyskiwać dostęp do zmiennych zewnętrznych, tak
+        // Zalety nazwa klasy ukryta wewnątrz metody. metody klasy mogą uzyskiwać dostęp do zmiennych zewnętrznych, tak
         // jak w przypadku wyrażeń Lambda.
     }
 
