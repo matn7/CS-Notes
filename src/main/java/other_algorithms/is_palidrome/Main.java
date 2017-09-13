@@ -29,7 +29,7 @@ public class Main {
                 reverseChar = testString.charAt(lastIndex);
             }
 
-            if (forwardChar != reverseChar) {
+            if (forwardChar != reverseChar) { // if during some iterations the values are different then return false
                 return false;
             }
             index++;

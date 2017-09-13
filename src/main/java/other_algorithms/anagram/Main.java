@@ -37,6 +37,7 @@ public class Main {
     }
 
     public static List<String> findAnagrams(String word) {
+        // If word is one letter just return this letter
         if (word.length() == 1) {
             List<String> potentialAnagrams = new ArrayList<>();
             potentialAnagrams.add(word);

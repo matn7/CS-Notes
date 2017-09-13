@@ -26,7 +26,8 @@ public class Occurrences {
             int k = 0;
             // second loop count occurrences
             for (int j = 0; j < str.length(); j++) {
-                if (map.get(i) == map.get(j)) {
+                if (map.get(i) == map.get(j)) { // for first index from map compare with rest, then go to second compare with rest
+                                                // N * N complexity
                     mapNum.put(map.get(i), ++k); // character is a key, which must be unique
                 }
             }
