@@ -172,7 +172,7 @@ A single logical operation of a data is called transaction.
 - Atomicity
 - Consistency : data must meet all validation rules
 - Isolation : concurrent property of execution should not be met. Concurrency control.
-- Durability : if transaction has been commited it will remain (even when power loss)
+- Durability : if transaction has been committed it will remain (even when power loss)
 
 
 # DISTINCT

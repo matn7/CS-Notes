@@ -5,7 +5,7 @@
 # The default single Thread is called main thread
 
 # Processes vs Threads
-Every program runs in its own process.
+Every program runs on its own process.
 A process can 'spawn off' multiple threads
 Even if process does not create any threads, it still has the main default thread which is being executed.
 In a program different threads have instructions that maybe executed simultaneously
@@ -48,7 +48,7 @@ The static thread.getCurrentThread() method will return the currently executing 
 # Write a class that implements the runnable interface
 Instantiate a thread object and pass i the runnable object in the constructor
 Call the .start() method on the thread object
-Creating a Runnable object is the prefered solution because it nicely separates the thread from the task to be run on the thread.
+Creating a Runnable object is the preferred solution because it nicely separates the thread from the task to be run on the thread.
 
 
 # Write a subclass of thread and overwrite the run method
@@ -208,7 +208,7 @@ used to reduce the overhead of acquiring a lock by first testing the locking cre
 without actually acquiring the lock.
 
 A Java Class loader is a part of the Java Virtual Machine. Technically namespaces are unique per class loader.
-Usually there is just 1 class loader per program. Enums are quaranteed to be instantiated exactly once.
+Usually there is just 1 class loader per program. Enums are guaranteed to be instantiated exactly once.
 
 
 
