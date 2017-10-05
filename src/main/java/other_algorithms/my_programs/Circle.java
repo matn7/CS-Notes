@@ -9,6 +9,7 @@ public class Circle {
 
     public static void main(String[] args) {
         System.out.println(circle(5));
+        /*System.out.println(hashCodeA("michal"));*/
     }
 
     public static double circle(int radius) {
@@ -28,8 +29,12 @@ public class Circle {
 
     }
 
-    @Override
-    public int hashCode() {
-        return michal != null ? michal.hashCode() : 0;
-    }
+/*    public static int hashCodeA(String michal) {
+        int result = 1;
+        int prime = 31;
+        for (int i = 0; i < michal.length(); i++) {
+            result += prime * michal.charAt(i);
+        }
+        return result;
+    }*/
 }
