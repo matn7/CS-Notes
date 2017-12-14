@@ -1,4 +1,5 @@
 .idea/
 Sortowanie.iml
 out/
-target/
+target/classes/
+target/test-classes/
