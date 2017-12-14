@@ -1,8 +1,7 @@
 .idea/
 Sortowanie.iml
 out/
-target/
+*/target/**
+*/target/*
 target
-/target/
-/*/target/
-/*/*/target/
+.target
