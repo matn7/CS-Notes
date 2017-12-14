@@ -33,6 +33,7 @@ public class SortNumbers {
             } else {
                 resultArray[i] = 1;
             }
+
         }
 
         return resultArray;
