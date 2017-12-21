@@ -14,6 +14,9 @@ public class EratostenesSieve {
         }
 
         for (i = 2; i <= ile; i++) {
+            if ((i != 2) && (i % 2 == 0)) {
+                i++;
+            }
             w = i + i;
             while (w <= ile) {
                 tab[w] = false;
