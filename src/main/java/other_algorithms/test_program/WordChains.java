@@ -13,8 +13,6 @@ import java.util.concurrent.*;
  */
 public class WordChains {
     public static void main(String[] args) {
-
-        //Callable<String> readResources = new ReadFromFile("file.txt", "cat".length(), "Cats", "Catt");
         Callable<String> readResources = new ReadFromURL("http://codekata.com/data/wordlist.txt", "cat".length(), "cat", "dog");
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());

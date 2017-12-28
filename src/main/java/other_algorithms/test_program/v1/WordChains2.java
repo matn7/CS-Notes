@@ -13,7 +13,6 @@ public class WordChains2 {
 
         Map<Character, Integer> mapa = null;
 
-        //Callable<List<String>> readResources = new ReadFromFile("file.txt", "cat".length(), "COBOL", "Caine");
         Callable<List<String>> readResources = new ReadFromURL("http://codekata.com/data/wordlist.txt", "cat".length(), "cat", "dog");
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
