@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class LinearSearchTest {
 
+    private LinearSearch linearSearch = new LinearSearch();
+
     @Test
     public void findMinMax() {
-        LinearSearch linearSearch = new LinearSearch();
+        linearSearch = new LinearSearch();
         int[] tab = {89, 900, -875, -9, 0};
         int[] result = linearSearch.findMinMax(tab);
         int[] expected = {-875, 900};

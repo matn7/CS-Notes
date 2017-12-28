@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class SearchArrTest {
 
+    private SearchArr searchArr = new SearchArr();
+
     @Test
     public void search() {
-        SearchArr searchArr = new SearchArr();
+        searchArr = new SearchArr();
         int[] tab = {900,876,-876,90,23};
         int val = 90;
         int result = searchArr.findIndex(tab, val);
@@ -21,7 +23,7 @@ public class SearchArrTest {
 
     @Test
     public void searchNegative() {
-        SearchArr searchArr = new SearchArr();
+        searchArr = new SearchArr();
         int[] tab = {900,876,-876,90,23};
         int val = 190;
         int result = searchArr.findIndex(tab, val);

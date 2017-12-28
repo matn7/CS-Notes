@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class RomanTest {
 
+    private Roman roman = new Roman();
+
     @Test
     public void convertToRoman() {
-        Roman roman = new Roman();
+        roman = new Roman();
         int number = 1420;
         String[] result = roman.convert(number);
         String[] expected = {"M","CD","X","X"};

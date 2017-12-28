@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class ReverseTest {
 
+    private Reverse reverse = new Reverse();
+
     @Test
     public void reverse() {
-        Reverse reverse = new Reverse();
+        reverse = new Reverse();
         String word = "china";
         String result = reverse.reverseWord(word);
         String expected = "anihc";

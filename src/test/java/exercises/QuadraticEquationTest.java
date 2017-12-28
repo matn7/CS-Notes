@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class QuadraticEquationTest {
 
+    private QuadraticEquation quadraticEquation = new QuadraticEquation();
+
     @Test
     public void calculateDelta() {
-        QuadraticEquation quadraticEquation = new QuadraticEquation();
+        quadraticEquation = new QuadraticEquation();
         // delta = b ^ 2 - 4 * a * c)
         int a = 1;
         int b = -5;
@@ -23,7 +25,7 @@ public class QuadraticEquationTest {
     @Test
     public void calculateQuadraticFormula() {
         // delta > 0
-        QuadraticEquation quadraticEquation = new QuadraticEquation();
+        quadraticEquation = new QuadraticEquation();
         // x1 = (-b - Math.sqrt(delta))/2*a
         int a = 1;
         int b = -5;

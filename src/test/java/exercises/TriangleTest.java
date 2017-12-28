@@ -7,9 +7,12 @@ import org.junit.Test;
  * Created by Mati on 24.12.2017.
  */
 public class TriangleTest {
+
+    private Triangle triangle = new Triangle();
+
     @Test
     public void trinaglePositive() {
-        Triangle triangle = new Triangle();
+        triangle = new Triangle();
         // a < b + c
         // b < a + c
         // c < a + b
@@ -23,7 +26,7 @@ public class TriangleTest {
 
     @Test
     public void trinagleNegative() {
-        Triangle triangle = new Triangle();
+        triangle = new Triangle();
         int a = 1;
         int b = 1;
         int c = 2;

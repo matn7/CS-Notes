@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class RectangleTest {
 
+    private Rectangle rectangle = new Rectangle();
+
     @Test
     public void checkTrue() {
-        Rectangle rectangle = new Rectangle();
+        rectangle = new Rectangle();
         int a = 3;
         int b = 4;
         int c = 5;
@@ -20,7 +22,7 @@ public class RectangleTest {
 
     @Test
     public void checkFalse() {
-        Rectangle rectangle = new Rectangle();
+        rectangle = new Rectangle();
         int a = 3;
         int b = 4;
         int c = 4;

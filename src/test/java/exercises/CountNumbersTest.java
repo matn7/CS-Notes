@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class CountNumbersTest {
 
+    private CountNumbers countNumbers = new CountNumbers();
+
     @Test
     public void countNum() {
-        CountNumbers countNumbers = new CountNumbers();
+        countNumbers = new CountNumbers();
         int number = 1234567;
         int result = countNumbers.countNum(number);
         int expected = 7;

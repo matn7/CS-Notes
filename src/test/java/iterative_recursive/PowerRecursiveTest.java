@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class PowerRecursiveTest {
 
+    private PowerRecursive powerRecursive = new PowerRecursive();
+
     @Test
     public void calculatePower() {
-        PowerRecursive powerRecursive = new PowerRecursive();
+        powerRecursive = new PowerRecursive();
         int wykladnik = 2;
         powerRecursive.setPodstawa(10);
 

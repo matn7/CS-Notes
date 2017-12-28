@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class AbsoluteValueTest {
 
+    private AbsoluteValue absoluteValue = new AbsoluteValue();
+
     @Test
     public void absolute() {
-        AbsoluteValue absoluteValue = new AbsoluteValue();
+        absoluteValue = new AbsoluteValue();
         int num = -90;
         int result = absoluteValue.absolute(num);
         int expected = 90;

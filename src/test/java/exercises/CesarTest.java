@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class CesarTest {
 
+    private Cesar cesar = new Cesar();
+
     @Test
     public void encrypt() {
-        Cesar cesar = new Cesar();
+        cesar = new Cesar();
         String text = "ABCXYZ";
         int index = 3; // cesar index, A -> D, Z -> C
         char[] result = cesar.encrypt(text, index);
@@ -22,7 +24,7 @@ public class CesarTest {
 
     @Test
     public void decrypt() {
-        Cesar cesar = new Cesar();
+        cesar = new Cesar();
         String text = "DEFABC";
         int index = 3; // cesar index, A -> D, Z -> C
         char[] result = cesar.decrypt(text, index);

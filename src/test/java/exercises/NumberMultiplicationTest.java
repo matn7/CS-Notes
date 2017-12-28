@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class NumberMultiplicationTest {
 
+    private NumberMultiplication numberMultiplication = new NumberMultiplication();
+
     @Test
     public void multiplication() {
-        NumberMultiplication numberMultiplication = new NumberMultiplication();
+        numberMultiplication = new NumberMultiplication();
         int num1 = 3;
         int num2 = 27;
         boolean result = numberMultiplication.multiplication(num1, num2);

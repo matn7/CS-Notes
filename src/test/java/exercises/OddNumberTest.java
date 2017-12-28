@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class OddNumberTest {
 
+    private OddNumbers oddNumbers = new OddNumbers();
+
     @Test
     public void calculateOddNumber() {
-        OddNumbers oddNumbers = new OddNumbers();
+        oddNumbers = new OddNumbers();
         int num = 5;
         int[] result = oddNumbers.odd(num);
         int[] expected = {1,3,5,7,9};

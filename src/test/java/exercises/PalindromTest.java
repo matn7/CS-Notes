@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class PalindromTest {
 
+    private Palindrom palindrom = new Palindrom();
+
     @Test
     public void palindrom() {
-        Palindrom palindrom = new Palindrom();
+        palindrom = new Palindrom();
         String word = "radar";
         boolean result = palindrom.checkPalindrom(word);
 
@@ -19,7 +21,7 @@ public class PalindromTest {
 
     @Test
     public void palindromNegative() {
-        Palindrom palindrom = new Palindrom();
+        palindrom = new Palindrom();
         String word = "radarr";
         boolean result = palindrom.checkPalindrom(word);
 
@@ -28,7 +30,7 @@ public class PalindromTest {
 
     @Test
     public void palindromRecursive() {
-        Palindrom palindrom = new Palindrom();
+        palindrom = new Palindrom();
         String word = "radarradar";
         boolean result = palindrom.checkRecursive(word);
 
