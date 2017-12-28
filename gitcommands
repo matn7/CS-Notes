@@ -23,10 +23,9 @@ git diff
 
 # multiple commits into one
 git reset --soft "HEAD~n" # n - number of commits to uncommit
-git commit --amend 
+git commit --amend
 
 ##############
 # .gitignore #
 ##############
-Put here everything that you dont want to git track for you.
 Each file in separate line.
