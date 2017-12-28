@@ -21,6 +21,10 @@ git checkout master                             # go back to master branch
 
 git diff
 
+# multiple commits into one
+git reset --soft "HEAD~n" # n - number of commits to uncommit
+git commit --amend 
+
 ##############
 # .gitignore #
 ##############
