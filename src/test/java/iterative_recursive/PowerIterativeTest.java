@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class PowerIterativeTest {
 
+    private PowerIterative powerIterative = new PowerIterative();
+
     @Test
     public void calculatePower() {
-        PowerIterative powerIterative = new PowerIterative();
+        powerIterative = new PowerIterative();
         int a = 9;
         int b = 2;
         int result = powerIterative.calculate(a, b);

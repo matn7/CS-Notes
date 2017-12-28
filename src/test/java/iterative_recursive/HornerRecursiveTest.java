@@ -8,10 +8,12 @@ import org.junit.Test;
  */
 public class HornerRecursiveTest {
 
+    private HornerRecursive hornerRecursive = new HornerRecursive();
+
     @Test
     public void calculateHornerScheme() {
         int polydeg = 3; // x ^ 3
-        HornerRecursive hornerRecursive = new HornerRecursive();
+        hornerRecursive = new HornerRecursive();
         int result = hornerRecursive.calculate(polydeg);
         int expected = 2672;
         Assert.assertEquals(expected, result);

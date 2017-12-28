@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class FibonacciRecursiveTest {
 
+    private FibonacciRecursive fibonacci = new FibonacciRecursive();
+
     @Test
     public void calculateFionacci() {
-        FibonacciRecursive fibonacci = new FibonacciRecursive();
+        fibonacci = new FibonacciRecursive();
         int number = 4;
         int result = fibonacci.calculateFibo(number);
         int expected = 3;
@@ -20,7 +22,7 @@ public class FibonacciRecursiveTest {
 
     @Test
     public void calculateFiboArr() {
-        FibonacciRecursive fibonacci = new FibonacciRecursive();
+        fibonacci = new FibonacciRecursive();
         int number = 5;
         int[] result = fibonacci.calculateFiboArr(number);
         int[] expected = {0,1,1,2,3};

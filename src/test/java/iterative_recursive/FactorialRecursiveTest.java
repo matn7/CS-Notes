@@ -8,9 +8,11 @@ import org.junit.Test;
  */
 public class FactorialRecursiveTest {
 
+    private FactorialRecursive factorialRecursive = new FactorialRecursive();
+
     @Test
     public void calculateFactorial() {
-        FactorialRecursive factorialRecursive = new FactorialRecursive();
+        factorialRecursive = new FactorialRecursive();
         int num = 5;
         int result = factorialRecursive.calculate(num);
         int expected = 120;
