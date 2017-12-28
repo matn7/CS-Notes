@@ -8,10 +8,12 @@ import org.junit.Test;
  */
 public class EratostenesSieveTest {
 
+    // commit1
+    private EratostenesSieve sieve = new EratostenesSieve();
 
     @Test
     public void fillArray() {
-        EratostenesSieve sieve = new EratostenesSieve();
+        sieve = new EratostenesSieve();
         int ile = 4;
         boolean[] result = sieve.fillArray(ile);
         boolean[] expected = {false, false, true, true, true};
@@ -21,7 +23,7 @@ public class EratostenesSieveTest {
 
     @Test
     public void doSieve() {
-        EratostenesSieve sieve = new EratostenesSieve();
+        sieve = new EratostenesSieve();
         int ile = 4;
         boolean[] result = sieve.doSieve(ile);
         boolean[] expected = {false, false, true, true, false};

@@ -10,10 +10,13 @@ import java.util.List;
  */
 public class PrimeNumbersTest {
 
+    // commit3
+    private PrimeNumbers primeNumbers = new PrimeNumbers();
+
     @Test
     public void checkPrimeNumberNegativeCase() {
 
-        PrimeNumbers primeNumbers = new PrimeNumbers();
+        primeNumbers = new PrimeNumbers();
         int testNumber = 4;
         boolean prime = primeNumbers.checkPrime(testNumber);
         boolean expected = false;
@@ -24,7 +27,7 @@ public class PrimeNumbersTest {
 
     @Test
     public void checkPrimeNumberPositiveCase() {
-        PrimeNumbers primeNumbers = new PrimeNumbers();
+        primeNumbers = new PrimeNumbers();
         int testNumber = 7;
         boolean prime = primeNumbers.checkPrime(testNumber);
         boolean expected = true;
@@ -34,7 +37,7 @@ public class PrimeNumbersTest {
 
     @Test
     public void checkNegativeNumberAndOne() {
-        PrimeNumbers primeNumbers = new PrimeNumbers();
+        primeNumbers = new PrimeNumbers();
         int testNumber = -9;
         boolean prime = primeNumbers.checkPrime(testNumber);
         boolean expected = false;
@@ -48,7 +51,7 @@ public class PrimeNumbersTest {
 
     @Test
     public void listOfPrimes() {
-        PrimeNumbers primeNumbers = new PrimeNumbers();
+        primeNumbers = new PrimeNumbers();
         int limit = 5;
         int[] arrOfPrimes = primeNumbers.generateListOfPrimes(limit);
         int[] expected = {2,3,5,7,11};
