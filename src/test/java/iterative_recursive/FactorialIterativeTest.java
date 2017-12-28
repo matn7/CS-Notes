@@ -7,9 +7,12 @@ import org.junit.Test;
  * Created by Mati on 21.12.2017.
  */
 public class FactorialIterativeTest {
+
+    private FactorialIterative factorial = new FactorialIterative();
+
     @Test
     public void calculateFactorial() {
-        FactorialIterative factorial = new FactorialIterative();
+        factorial = new FactorialIterative();
         int num = 5;
         int result = factorial.calculate(num);
         int expected = 120;
@@ -24,7 +27,7 @@ public class FactorialIterativeTest {
 
     @Test
     public void calculateFactorialArray() {
-        FactorialIterative factorial = new FactorialIterative();
+        factorial = new FactorialIterative();
         int num = 5;
         int[] result = factorial.generateFactArr(num);
         int[] expected = {1,2,6,24,120};
