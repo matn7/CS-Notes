@@ -11,11 +11,15 @@ public class MainCalendar {
         calendar.set(Calendar.YEAR, 2017);
         calendar.set(Calendar.DAY_OF_YEAR, 180);
 
+
         Calendar cal2 = Calendar.getInstance();
         cal2.set(Calendar.YEAR, 2018);
-        cal2.set(Calendar.MONTH, 0);
+        cal2.set(Calendar.MONTH, 4); // 0,1 -> styczen
+        cal2.set(Calendar.DAY_OF_MONTH, 1);
+
         System.out.println("Check");
         System.out.println(cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
+        System.out.println("First: " + cal2.getFirstDayOfWeek());
         System.out.println(cal2.get(Calendar.DAY_OF_WEEK));
 
         int monthDuration = cal2.getActualMaximum(Calendar.DAY_OF_MONTH);
