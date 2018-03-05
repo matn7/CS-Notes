@@ -34,6 +34,9 @@ public class PalindromTest {
         String word = "radarradar";
         boolean result = palindrom.checkRecursive(word);
 
+        System.out.println(word.substring(1,word.length()-1));
+        System.out.println(word.substring(2,word.length()-2));
+
         Assert.assertTrue(result);
     }
 

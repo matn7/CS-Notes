@@ -15,11 +15,11 @@ public class NewsAgency extends Observable implements Publisher {
 
     // Add some news. NewsAgency is kind of things that delegates news to different providers (TV, Radio)
     public void addNews(String newsItem) {
-        notifyOberver(newsItem);
+        notifyObserver(newsItem);
     }
 
     // Observer is registered media.
-    public void notifyOberver(String newsItem) {
+    public void notifyObserver(String newsItem) {
         for (Observer outlet : this.channels) {
             outlet.update(this, newsItem);
         }
