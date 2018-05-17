@@ -58,3 +58,69 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 <c:out />
 <c:forEach />
 ```
+
+## Introduction to Spring Farmework
+
+- Spring advocates the POJO programming model. POJO avoid the need for a dedicated application server for deployment.
+- Spring is modular
+- Using existing frameworks: ORM, Logging
+
+### Spring modules
+
+- Data Access / Integration
+    - JDBC
+    - ORM
+    - OXM
+    - JMS
+    - Transactions
+
+- WEB
+    - WebSocket
+    - Servlet
+    - Web
+    - Partlet
+
+- AOP
+- Aspects
+- Instrumentation
+- Messaging
+
+- Core Container
+    - Beans
+    - Core
+    - Context
+    - SpEL
+
+- Test
+
+- ** Core container **
+    - Beans and Core - provides IoC (Inversion of Control) / DI (Dependency Injection)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
