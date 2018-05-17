@@ -44,7 +44,7 @@ A Servlet is a server side technology used to create web apps.
 A Servlet is a Java class that extend the capabilities of web server.
 It intercepts incomming requests and responds accordingly.
 A servlet is a JEE component that can be deployed on the server to create dynamic web pages.
-**HttpServlet* class gives ability to create a Servlet.
+**HttpServlet** class gives ability to create a Servlet.
 It provides HTTP Specific methods such as doGet, doPost, doHead, doTrace, which are used at a low level in web apps.
 
 Two commonly used methods for a request - response between a client and server are: GET and POST.
@@ -93,8 +93,22 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 
 - Test
 
-- ** Core container **
-    - Beans and Core - provides IoC (Inversion of Control) / DI (Dependency Injection)
+
+- Core container
+    - Beans and Core - provides IoC (Inversion of Control) / DI (Dependency Injection).
+      IoC is famous design pattern where the responsibility of object creation is transferred to an object factory
+    - Context - provides the means to access objects in framework style
+    - SpEL - expression language for quering and managing objects.
+- AOP
+    - Enables modularization of concerns such as logging, security, across multiple types of objects.
+- Aspects
+    - Separate module that provide integration with AspectJ (AOP framework)
+- Instrumentation
+    - Class loader implementations.
+- Messaging
+    - For messaging based app
+- Data Access / Integration Layer
+    - OXM - Allows object/xml mapping implementation and integration with software such as JAXB, Castor.
 
 
 
