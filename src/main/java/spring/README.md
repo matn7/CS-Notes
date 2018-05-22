@@ -112,8 +112,8 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 
 ## Spring Framework vs JEE
 
-             | Java EE | Spring
------------- | ------- | ------
+             | First Header | Second Header
+------------ | ------------ | -------------
 DI | EJB, CDI | Spring IoC
 AOP | Interceptor | Spring AOP, AspectJ
 Persistence | JPA | JPA, JDBC
