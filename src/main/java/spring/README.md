@@ -93,24 +93,28 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 
 - Test
 
->
-Core container
+
+#### Core container
     - Beans and Core - provides IoC (Inversion of Control) / DI (Dependency Injection).
       IoC is famous design pattern where the responsibility of object creation is transferred to an object factory
     - Context - provides the means to access objects in framework style
     - SpEL - expression language for quering and managing objects.
-AOP
+#### AOP
     - Enables modularization of concerns such as logging, security, across multiple types of objects.
-Aspects
+#### Aspects
     - Separate module that provide integration with AspectJ (AOP framework)
-Instrumentation
+#### Instrumentation
     - Class loader implementations.
-Messaging
+#### Messaging
     - For messaging based app
-Data Access / Integration Layer
+#### Data Access / Integration Layer
     - OXM - Allows object/xml mapping implementation and integration with software such as JAXB, Castor.
->
 
+## Spring Framework vs JEE
+
+| JavaEE | Spring
+DI | EJB, CDI | Spring IoC
+AOP | Interceptor | Spring AOP, AspectJ
 
 
 
