@@ -125,6 +125,11 @@ Testing      | N/A          | Spring Testing
 
 
 
+|   | JavaEE  | Spring  |   |   |
+|---|---|---|---|---|
+| DI  | EJB, CDI   | Spring IoC   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 
 
 
