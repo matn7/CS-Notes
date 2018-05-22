@@ -125,15 +125,15 @@ Testing      | N/A          | Spring Testing
 
 
 
-|   | JavaEE  | Spring  |   |   |
-|---|---|---|---|---|
-| DI  | EJB, CDI   | Spring IoC   |   |   |
-| AOP  | Interceptor  | Spring AOP, AspectJ   |   |   |
-| Persistence  | JPA   | JPA, JDBC   |   |   |
-| UI  | JSF2  | Spring MVC, JSF2    |   |   |
-| WS  | JAX-RS,JAX-WS  | Rest Support Spring MK, Contact-first SOAP WS  |   |   |
-| Security  | Java EE Security  | Spring Security   |   |   |
-| Testing  | N/A  | Spring Testing  |   |   |
+|   | JavaEE  | Spring  |
+|---|---|---|
+| DI  | EJB, CDI   | Spring IoC   |
+| AOP  | Interceptor  | Spring AOP, AspectJ   |
+| Persistence  | JPA   | JPA, JDBC   |
+| UI  | JSF2  | Spring MVC, JSF2    |
+| WS  | JAX-RS,JAX-WS  | Rest Support Spring MK, Contact-first SOAP WS  |
+| Security  | Java EE Security  | Spring Security   |
+| Testing  | N/A  | Spring Testing  |
 
 
 
