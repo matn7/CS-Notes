@@ -128,8 +128,12 @@ Testing      | N/A          | Spring Testing
 |   | JavaEE  | Spring  |   |   |
 |---|---|---|---|---|
 | DI  | EJB, CDI   | Spring IoC   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
+| AOP  | Interceptor  | Spring AOP, AspectJ   |   |   |
+| Persistence  |   |   |   |   |
+| UI  |   |   |   |   |
+| WS  |   |   |   |   |
+| Security  |   |   |   |   |
+| Testing  |   |   |   |   |
 
 
 
