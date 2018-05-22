@@ -112,10 +112,10 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 
 ## Spring Framework vs JEE
 
-First Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+    | JavaEE | Spring
+--- | ------ | ------
+DI | EJB, CDI | Spring IoC
+AOP | Content in the second column |
 
 
 
