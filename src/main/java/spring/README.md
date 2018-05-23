@@ -112,19 +112,6 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 
 ## Spring Framework vs JEE
 
-             | First Header | Second Header
------------- | ------------ | -------------
-DI           | EJB, CDI     | Spring IoC
-AOP          | Interceptor  | Spring AOP, AspectJ
-Persistence  | JPA          | JPA, JDBC
-UI           | JSF2         | Spring MVC, JSF2
-WS           | JAX-RS,JAX-WS| Rest Support Spring MK, Contact-first SOAP WS
-Security     | Java EE Security | Spring Security
-Testing      | N/A          | Spring Testing
-
-
-
-
 |   | JavaEE  | Spring  |
 |---|---|---|
 | DI  | EJB, CDI   | Spring IoC   |
@@ -136,13 +123,110 @@ Testing      | N/A          | Spring Testing
 | Testing  | N/A  | Spring Testing  |
 
 
+## Spring IoC Container
 
+- A Spring IoC Container is a component of the Spring framework that contains the "beans" and manages their lifecycle.
+- The ApplicationContext interface represents the Spring IoC container and is responsible for instantiatiog, configuring
+and assembling the beans. The container gets its instructions on what objects to instantiate, configure and assemble by reading configuration metadata.
+- The configuration metadata can be represented in XML or Annotations.
+- Several implementations of the ApplicationContext
+    - ClassPathXmlApplicationContext
+    - FileSystemXmlApplicationContext
 
+## Introduction Spring MVC
 
+*SpringMvcDemo-Servlet.xml*
+```xml
+<context:component-scan base-package="com.panda.springdemo.controller" />
+</context:component-scan>
+<mvc:annotation-driven></mvc:annotation-driven> <!-- Explicitly supports annotations -->
 
+<bean id="welcomeService" class="com.panda.service.demo.WelcomeService"></bean>
 
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/views/"></property>
+    <property name="suffix" value=".jsp"></property>
+</bean>
+```
 
+- The request comes from the client - Browser is a client
+- The container loads the DispatcherServlet as per the <load-on-startup> instruction in web.xml
+- The DispatcherServlet intercepts the request and examines the URL pattern of the request as provided in <url-pattern> in web.xml.
+  URL pattern is "/" for the base url ike http://localhost:8080/spring-app
+- The DispatcherServlet routes the request to WelcomeController since it has a handler method welcome() with @RequestMapping of "/"
+- The handler constructs the model of data welcom message and sets it up with the help of the welcome service injected by container after reading the bean
+  declaration in the config file SpringMvcDemo-Servlet.xml.
+- The WelcomeController returns the view name welcome which in turn is resolved by InternalResourceViewResolver in SpringMvcDemo-Servlet.xml
+  with the required prefix and suffix. Ultimately InternalResourceViewResolver makes an internal call to RequestDispatcher to forward the request to the resolved view
+  welcome.jsp.
+- Finally welcome.jsp dynamically renders the model welcomeMessage after doing necessary processing.
 
+## Bean Configuration
+**Bean Scope Introduction**
+Recipe is a kind of template. From a single recipe you can create different instances or objects with relevant configurations.
+- One configuration is the scope of an object. This configuration helps to avoid hard coding the scope of an object at the Java class level.
+- In the Spring framework it is possible to define five scopes )of which three are available only if you are using web-aware ApplicationContext).
+
+### Singleton
+This is single bean definition that limits the scope to a single object instance per Spring IoC container.
+
+### Prototype
+This is a single bean definition allowing any number of oject instances without limit.
+
+### Request
+This is a single bean definition whch limits the scope to the lifecycle of a single HTTP request.
+This means each and every HTTP request will create its own instance of a bean for a single bean definition.
+
+### Session
+This is a single bean definition which the scope to the lifecycle of a HTTP session.
+"A user session contains information about the user across multiple HTTP requests.
+Wen a user accesses a site for the first time, the user is assigned a unique ID to identify session.
+This session ID is usually stored in a cookie or in a request parameter."
+
+### Global Session
+This is a single bean definition which limits the scope to the lifecycle of a global HTTP Session. Typisally only valid when used in a partlet context.
+
+## Configuring Spring with Annotations
+
+Spring Configuration Annotation vs XML
+
+### XML Based Configuration
+
+#### PROS
+- XML configuration is outside of Java classes.
+- If configuation need to be changed the code does not need to go through the process of recompilation.
+- Centralzed configuration metadata.
+
+#### CONS
+- XML typing error prone and difficult to debug.
+- Type safety is not present in XML.
+
+### Annotation based cnfiguration
+
+#### PROS
+- More concise and shorter compared to XML.
+- Dependency wiring closer to the source.
+- Anotations ensure type safety.
+
+#### CONS
+- Annotation reside in source code.
+- More decentralized configuration of metadata. Less contrl over the configuration information.
+- If change, add or delete annotations, it requires code recompilation.
+
+### XML based conf
+
+```xml
+<context:component-scan base-package="com.panda.springdemo.controller" />
+</context:component-scan>
+<mvc:annotation-driven></mvc:annotation-driven> <!-- Explicitly supports annotations -->
+
+<bean id="welcomeService" class="com.panda.service.demo.WelcomeService"></bean>
+
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/views/"></property>
+    <property name="suffix" value=".jsp"></property>
+</bean>
+```
 
 
 
