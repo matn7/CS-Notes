@@ -216,20 +216,64 @@ Spring Configuration Annotation vs XML
 ### XML based conf
 
 ```xml
-<context:component-scan base-package="com.panda.springdemo.controller" />
-</context:component-scan>
-<mvc:annotation-driven></mvc:annotation-driven> <!-- Explicitly supports annotations -->
-
-<bean id="welcomeService" class="com.panda.service.demo.WelcomeService"></bean>
-
-<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="/WEB-INF/views/"></property>
-    <property name="suffix" value=".jsp"></property>
+<bean id="myorg" class="com.panda.spring.demo.Organization">
+    <constructor-arg value="${org.companyname} name="companyName"></constructor-arg>
+    <constructor-arg value="${org.incorporatedYear} name="incorporatedYear"></constructor-arg>
+    <property value="${org.employees}" name="employeeCount"></property>
 </bean>
 ```
 
+- Elaborate bean definition, with tags and package definition.
+- Value attribute for property value injected from separate file and elaborate constructor argument declaration.
 
+### Annotation based configuration
 
+```java
+@Component("myorg")
+public class Organization {
+    @Value("${nameOfCompany}")
+    private String companyName;
+
+    @Value("${startUpYear}")
+    private int yearOfIncorporation;
+
+    @Value("${employeeCount:3980}")
+    private int employeeCount;
+}
+```
+- What the bean definition with <bean> tag does above, is expressed using the `@Component` annotation.
+- Precise `@Value` annotations for property value injected (from a separate file) and no elaborate constructor argumants.
+
+By using `@Configuration` annotation we can build java based configuration class where we can centralize most of our annoatatopm configurations.
+This will provide type safety as well as clean separation of concerns that xml gives us.
+
+- Stereotype annotations are markers for any class that fullfills a role within an application
+- `@Component` is generic stereotype for any Spring managed component.
+- `@Repository`, `@Service` and `@Controller` are specializations of `@Component` for more specific use cases.
+
+*PropertyConf.java*
+```java
+@Configuration
+@ComponentScan(basePackages="com.panda.spring")
+@PropertySource(value={"classpath:properties/organization.properties"})
+public class PropertyConfig {
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+}
+```
+
+**Application context**
+```java
+    //...
+    ApplicationContext ctx = new AnnotationConfigApplicationContext(PropertyConf.class);
+    Organization org = (Organization) ctx.getBean("myorg");
+
+    ((AnnotationConfigApplicationContext) ctx).close();
+
+    //...
+```
 
 
 
