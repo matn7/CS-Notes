@@ -217,8 +217,8 @@ Spring Configuration Annotation vs XML
 
 ```xml
 <bean id="myorg" class="com.panda.spring.demo.Organization">
-    <constructor-arg value="${org.companyname} name="companyName"></constructor-arg>
-    <constructor-arg value="${org.incorporatedYear} name="incorporatedYear"></constructor-arg>
+    <constructor-arg value="${org.companyname}" name="companyName"></constructor-arg>
+    <constructor-arg value="${org.incorporatedYear}" name="incorporatedYear"></constructor-arg>
     <property value="${org.employees}" name="employeeCount"></property>
 </bean>
 ```
@@ -275,10 +275,117 @@ public class PropertyConfig {
     //...
 ```
 
+## Data Bases
+
+### Spring JdbcTemplate
+Spring JdbcTemplate is a powerful mechanism to connect to a database and execute SQL queries.
+With the JdbcTemplate, we don't need to create and manage boilerplate code like creating connections, closing resultsets and connections.
+- Exception handling in more informative hierarchy
+- Hides connection pooling and transaction management related issues from database application code.
+    - Connection pools dramatically improve the performance of a database application.
+A connection pool is a cache of database connections maintained so that the connections can e reused when future requests to the
+database are required.
+
+```java
+@Repository("myorgdao")
+pulic class OrganizationDaoImpl implements OrganizationDao {
+    @Autowired
+    private DataSource dataSource;
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void setDataSource(DataSource ds) {
+        jdbcTemplate = new JdbcTemplate(ds);
+    }
+
+    // more code
+
+    public List<Organization> listOrganizations() {
+        String sqlQuery = "SELECT * FROM organization";
+        List<Organization> orgList = jdbcTemplate.query(sqlQuery, new OrganizationRowMapper());
+        return orgList;
+    }
+}
+```
+
+#### Three Templated
+- JdbcTemplate
+- NamedParameterJdbcTemplate
+- SimpleJdbcTemplate
+
+### DAO PATTERN
+DAO (Data Access Object) is a design pattern. The DAO pattern is now a widely accepted mechanism to abstract away the details of
+persistence in application.
+The idea is that instead of having the domain logic comminicate directly with the database, file system, web service or whatewer
+persistence mechanism your application uses, the domain logic speaks to a DAO layer instead.
+                        +--------------------------------------+
++-------------------+   |  +-----------+    +------+           |
+| Application       +---+--+ DAO       +<-->+ DAO  |           | JDBC
+| Persistence Layer +<--+--+ Interface +<-->+ Impl +<----------+-------> DB
++-------------------+   |  +-----------+    +------+ DAO Layer |
+                        +--------------------------------------+
+
+## Spring MVC in depth
+
+### JNDI Data Source
+JNDI - Java Naming and Directory Interface.In computing a directory service or name service maps the names of network resources
+to their respective network addresses.
+Using JNDI applications ca store and retrieve named Java objects of any type.
+JNDI is an API to uniformly access naming and directory services.
+
+Examples of directory services
+- LDAP - Lightweight Directory Access Protocol
+- CORBA - Common Object Request Broker Architecture
+- RMI - Remote Method Invocation
+- EJB - Enterprise Java Beans
+
+### Handler Mapping
+- The DispatcherServlet acts as a front controller in Spring MVC. It receives all incoming HTTP requests and
+process them. The processing occurs by passing on the request to the relevant components. These relevant components
+are selected by HandlerMapping.
+RequestMappingHandlerMapping looks for `@RequestMapping` annotations on all `@Controller` beans.
+
+### Handler Adapter
+- HandlerAdapter is used in conjuction with HandlerMapping, which maps handler method to a specific URL.
+- HandlerMapping informs the DispatcherServlet, which handler (i.e. controller) method to invoke based on the request URL.
+- The DispatcherServlet delegates the task of invoking the right handler method to HandlerAdapter.
+
+### Handler Interface
+- preHandle
+- postHandle
+- afterCompletion
+
+### WebMvcConfig
+- addViewController
+- addInterceptor
+
+## Logging API
+- using slf4j
+- using log4j
+
+- log4j components
+    - loggers
+    - appenders
+    - layouts
+- supports internatioalization
+- can be set at runtime using a configuration file.
+- Use multiple levels: ALL, TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+
+### log4j configuration
+*log4j.properties* is a log4j configuration file which keeps properties in key-value pairs.
+log4j has three main components: loggers, appenders and layouts
+- level DEBUG, INFO, WARN, ERROR, FATAL
+- conversion pattern
+
+```properties
+log4j.rootlogger=DEBUG,X
+log4j.appender.X = org.apache.log4j.FileAppender
+log4j.appender.X.layout = org.apache.log4j.PatternLayout
+log4j.appender.X.layout.conversionPattern = %m%n
 
 
-
-
+```
 
 
 

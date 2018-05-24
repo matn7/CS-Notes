@@ -3205,23 +3205,3 @@ Properties are ONE:ONE, bindings are ONE:MANY
 
 # How Observer and MVC related?
 The View act as publisher, controller as subscriber
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
