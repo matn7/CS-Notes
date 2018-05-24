@@ -383,10 +383,49 @@ log4j.rootlogger=DEBUG,X
 log4j.appender.X = org.apache.log4j.FileAppender
 log4j.appender.X.layout = org.apache.log4j.PatternLayout
 log4j.appender.X.layout.conversionPattern = %m%n
-
-
 ```
 
+### RequestMapping
+`@RequestMapping` annotation is typically used to map URLs such as employeedetails.
+Applied At:
+- Method level
+- Class level
+
+`@RequestParam` annotation parameters are used to access specific Servlet request parameters.
+
+### @ModelAttribute
+
+- Add one attribute
+- The return value of the method is added to the model under the name "employee"
+
+```java
+@ModelAttribute
+public Employee addEmployee(@RequestParam String empId) {
+    return employeeManager.findEmployee(empId);
+}
+
+// Add model attributes
+@ModelAttribute
+public void populateModel(@RequestParam String empId, Model model) {
+    model.addAttribute(employeeManager.findEmployee(empId));
+    // ...
+}
+
+@RequestMapping("/employees/employee")
+public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+    // ...
+}
+```
+
+- Use `@ModelAttribute` when a method can be used to add one or more model attributes.
+These methods support some argument types as `@RequestMapping` methods, but they cannot be mapped directly to requests.
+- In a controller `@ModelAttribute` annotated methods are invoked before `@RequestMapping` methods are invoked.
+
+`@ModelAttribute` on a method feature and usage
+- To populate the model with commonly needed attributes, filling drop-down with postal codes.
+
+#### How does Spring MVC determine the view name?
+- The RequestToViewNameTranslator interface.
 
 
 

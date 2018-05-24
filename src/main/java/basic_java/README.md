@@ -1,4 +1,6 @@
-# ClassCastException
+# Basic Java
+
+## ClassCastException
 
 - When references to objects points to objects different classes
 - When argument is wrong type, method compareTo should throw ClassCastException
@@ -7,38 +9,37 @@
 - SerialVersionUID
 
 
-# Constructor Chaining
+## Constructor Chaining
 
 Call in the same class this()
 Call from parent class super()
 Use to execute more tasks in one constructor
 Improve readability of code
 
-+-----------------------------------------+
-| public Temporary(int x, int y) {//23,34 |
-|    this(5);                             |
-|    System.out.print(" " + x * y + " "); |
-| }                                       |
-| public Temporary(int x) {     //5       |
-|     this();                             |
-|     System.out.print(" " + x + " ");    |
-| }                                       |
-| public Temporary() {                    |
-|     System.out.print(" Default ");      |
-| }                                       |
-|//Temporary temp = new Temporary(23, 34);|
-|-> Default  5  782                       |
-+-----------------------------------------+
+```java
+public Temporary(int x, int y) {//23,34
+   this(5);
+   System.out.print(" " + x * y + " ");
+}
+public Temporary(int x) {     //5
+    this();
+    System.out.print(" " + x + " ");
+}
+public Temporary() {
+    System.out.print(" Default ");
+}
+//Temporary temp = new Temporary(23, 34);
+//-> Default  5  782
+```
 
-
-# Overloading
+## Overloading
 
 Compile time polymorphism
 Use the same method name but with different arguments
 static binding binds private, final, static method, fields, class, variables
 
 
-# Overriding
+## Overriding
 
 Runtime polymorphism
 The same method name with exactly the same arguments
@@ -52,7 +53,7 @@ You cannot override static method in Java because method overriding is based upo
 and static method are bounded using static binding at compile time
 
 
-# final
+## final
 
 Value of member variable cannot be changed
 Object reference cannot be changed
@@ -60,25 +61,25 @@ Class cannot be inherited
 Method cannot be Overriding
 
 
-# finally
+## finally
 
 Try, catch block. Stuff in finally always be executed, even when in try return statement
 Finally does't execute in cases like
 program crash before go to this block or System.exit(0) in try
 
 
-# finalize
+## finalize
 
 JVM call this method when GC is about to be called
 
 
-# == vs equals
+## == vs equals
 
 == check whether object are the same (point to the same place in memory, the same object)
 .equals() when compare content of objects
 
 
-# Class Loaders
+## Class Loaders
 
 A Java class is made up of a number of custom classes (written by programmers) and core classes
 (which come pre-packed with Java). When program is executed, JVM needs to load the content of the needed class.
@@ -91,12 +92,12 @@ JVM uses class loader to find the classes.
 When JVM needs to find a class, it starts with System Class Loader. If it is not found, it checks with Extension Class Loader.
 If it not found, it goes to the Bootstrap Class Loader. If class is still not found, a ClassNotFoundException is thrown.
 
-+---------------------------------------------------------------------------------------------------+
-| System Class Loader -> Extension Class Loader -> Bootstrap Class Loader -> ClassNotFoundException |
-+---------------------------------------------------------------------------------------------------+
+
+System Class Loader -> Extension Class Loader -> Bootstrap Class Loader -> ClassNotFoundException
 
 
-# Autoboxing
+
+## Autoboxing
 
 Autoboxing is the automatic conversion that the Java compiler makes between the primitive types and their
 corresponding object wrapper classes. For example, converting an int to an Integer, double to a Double.
@@ -106,39 +107,39 @@ created using new are not reused.
 
 Two wrapper objects created using new are not same object
 
-+--------------------------------------------------+
-| Integer nineA = new Integer(9);                  |
-| Integer nineB = new Integer(9);                  |
-| System.out.println(nineA == nineB); // false     |
-| System.out.println(nineA.equals(nineB)); // true |
-+--------------------------------------------------+
+```java
+Integer nineA = new Integer(9);
+Integer nineB = new Integer(9);
+System.out.println(nineA == nineB); // false
+System.out.println(nineA.equals(nineB)); // true
+```
 
 Two wrapper objects created using boxing are same object
 
-+--------------------------------------------------+
-| Integer nineC = 9;                               |
-| Integer nineD = 9;                               |
-| System.out.println(nineC == nineD); // true      |
-| System.out.println(nineC.equals(nineD)); // true |
-+--------------------------------------------------+
+```java
+Integer nineC = 9;
+Integer nineD = 9;
+System.out.println(nineC == nineD); // true
+System.out.println(nineC.equals(nineD)); // true
+```
 
 Wrapper classes are final and immutable.
 
 
-# SerialVersionUID
+## SerialVersionUID
 
 Mark added to class to during deserialization, reconstruct proper class (unique identifier).
 Useful when there is some complex class hierarchies parent class, child class.
 
 
-# this
+## this
 
 Can separate local variables from instance variables.
 'this' determines instance variables.
 Use this reference when instance and local variables have the same name.
 
 
-# static
+## static
 
 For specified class can be only one static variable.
 Initialization is during class loading. Static method does not work on objects. Math.pow(x,a)
@@ -148,7 +149,7 @@ Static methods belongs to class rather than object of class.
 Can be invoked without creating an instance of class.
 'this' and 'super' cannot be used in static context.
 
-# Why java main method is static?
+## Why java main method is static?
 Because object is not required to call static method if it were non static method, jvm create object first
 then call main() method that will lead the problem of extra memory allocation.
 
@@ -160,17 +161,17 @@ You cannot override static method in Java because they are resolved at compile t
 
 In Java6 it was possible to run program without main method by using static initialization block. It is not a case anymore.
 
-+-----------------------------------------+
-| public class Foo {                      |
-|     static {                            |
-|          System.out.println("Message"); |
-|          System.exit(0);                |
-|     }                                   |
-| }                                       |
-+-----------------------------------------+
+```java
+public class Foo {
+    static {
+         System.out.println("Message");
+         System.exit(0);
+    }
+}
+```
 
 
-# What are Initialization Blocks
+## What are Initialization Blocks
 
 Initialization blocks - code which runs when an object is created or class is loaded.
 There are two types of Initialization blocks.
@@ -178,27 +179,26 @@ There are two types of Initialization blocks.
 - Instance Initializer : Code runs when a new object is created
 
 
-# What is static initializer
+## What is static initializer
 
 Code within static '{}' is called a static initializer. This is run only when class is first loaded.
 Only static variables can be accessed in a static initializer. Even though three instances are created static
 initializer is run only once.
 
-+---------------------------------------------------------------------+
-| public class InitializerExamples() {                                |
-|   static int count;                                                 |
-|   int i;                                                            |
-|   static {                                                          |
-|       // Static initializer is run only when class is first loaded. |
-|       // only static vars can be accessed                           |
-|       // i = 6; // ERROR                                            |
-|       count = 2; // OK                                              |
-|   }                                                                 |
-| }                                                                   |
-+---------------------------------------------------------------------+
+```java
+public class InitializerExamples() {
+  static int count;
+  int i;
+  static {
+      // Static initializer is run only when class is first loaded.
+      // only static vars can be accessed
+      // i = 6; // ERROR
+      count = 2; // OK
+  }
+}
+```
 
-
-# What is Regular Expression
+#@ What is Regular Expression
 
 Regular Expression makes parsing, scanning and splitting a String very easy.
 Java classes:
@@ -207,24 +207,17 @@ Java classes:
 - Scanner
 
 
-# Enum
+## Enum
 
 Sometimes you need to define connected constants like
 
-+------------------------------------+
-| public static final int MONDAY = 0 |
-+------------------------------------+
+public static final int MONDAY = 0
 
 You can do this using enum
 Now weekday is data type with values Weekday.MON
 
-+--------------------------+
-| enum Weekday {MON, TUE}; |
-+--------------------------+
-
-+--------------------------------------------+
-| public Enum Size { SMALL, MEDIUM, LARGE; } |
-+--------------------------------------------+
+enum Weekday {MON, TUE};
+public Enum Size { SMALL, MEDIUM, LARGE; }
 
 Named constants. No need to use equals method. No need to override toString.
 Thread safe.
@@ -238,57 +231,49 @@ static import now can use SMALL instead of Size.SMALL
 Enum alows specifying a list of values for a Type.
 Example below declares an enum Season with 4 possible values
 
-+--------------------------------+
-| enum Season {                  |
-|   WINTER, SPRING, SUMMER, FALL |
-| };                             |
-+--------------------------------+
+
+enum Season {
+  WINTER, SPRING, SUMMER, FALL
+};
+
 
 Value of enums can be compared using == or equals function.
 
 
-# Variable arguments
+## Variable arguments
 
 Variable arguments allow calling method with different number of parameters.
 
-+----------------------------------+
-| public int sum(int... numbers) { |
-|   ...                            |
-| }                                |
-+----------------------------------+
+public int sum(int... numbers) {
+ ...
+}
 
 
-# String
+## String
 
 Immutable and final
 - Thread safe : prevent from change cache
 - String pool cache : (optimization)
 - Hash codes : keys in hashCodes are Strings
 
-# Why String is immutable?
+## Why String is immutable?
 Value of a String once created cannot be modified. Any modification on a String object creates a new object.
 
-+--------------------------------------+
-| String str3 = "string1";             |
-| str3.concat("string2");              |
-| System.out.println(str3); // string1 |
-+--------------------------------------+
+String str3 = "string1";
+str3.concat("string2");
+System.out.println(str3); // string1
 
 The result should be assigned to a new reference variable (or some variable can be reused)
 
-+-----------------------------------------------+
-| String concat = str3.concat("string2");       |
-| System.out.println(concat); // string1string2 |
-+-----------------------------------------------+
+String concat = str3.concat("string2");
+System.out.println(concat); // string1string2
 
-# Where are String literals store in memory?
-All strings literals are stored in "String constant pool". If compiler finds a String literal, it checks if
+## Where are String literals store in memory?
+All strings literals are stored in `String constant pool`. If compiler finds a String literal, it checks if
 it exists, it is reused.
 Following statement creates 1 String object (created on pool) and 1 referenced variable
 
-+------------------------+
-| String str1 = "Value"; |
-+------------------------+
+String str1 = "Value";
 
 However if 'new' operator is used to create String object, the new object is created on heap.
 Following piece of code created 2 objects
