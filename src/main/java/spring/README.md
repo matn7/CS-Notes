@@ -634,6 +634,58 @@ So {6} means the mathcing string can repeat 6 times or can have a max length of 
 - Cross Site Scrption `XSS` protection
 - Password encoding via hash and salt
 
+### Spring Security Streangths
+- Familiar Spring approach
+- Annotation based security
+- Integration with Spring MVC
+- Testing Support
+- Global and Layered security approach
+
+### Security Principles
+
+#### Authentication
+- Process of identyfying an individual using credentials
+    - Username & password
+    - Tokens
+    - Biometrics
+
+#### Authorization
+- Process of granting someone access to a resource
+    - Files
+    - Records
+    - Databases
+
+#### Real life examples
+- ATM
+- Email
+- Air travel
+- Workspace security (Token & Pin)
+
+## Spring Security Basics
+
+**MAVEN**
+spring-security-web
+spring-security-config
+
+### Basic XML Configuration
+
+*web.xml*
+```xml
+<filter>
+    <filter-name>SpringSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>SpringSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+<context-param>
+    <param-name>ContextConfiguration</param-name>
+    <param-value>
+        /WEB-INF/Spring/Security-context.xml
+    </param-value>
+</context-param>
+```
 
 
 

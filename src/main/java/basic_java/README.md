@@ -278,12 +278,12 @@ String str1 = "Value";
 However if 'new' operator is used to create String object, the new object is created on heap.
 Following piece of code created 2 objects
 
-+----------------------------------------------------------------------+
-| // 1. String Literal "Value" - created in the "string constant pool" |
-| // 2. String object - created on the heap                            |
-| String str1 = "Value"                                                |
-| String str2 = new String("Value");                                   |
-+----------------------------------------------------------------------+
+```java
+// 1. String Literal "Value" - created in the "string constant pool"
+// 2. String object - created on the heap
+String str1 = "Value"
+String str2 = new String("Value");
+```
 
 Some methods:
 .charAt()
@@ -292,13 +292,13 @@ Some methods:
 .substring()
 
 
-# toString method
+## toString method
 
 Is used to print a content of an object. If not overridden default implementation is printed.
 It prints hashCode and class name. If is overridden new content is printed
 
 
-# Interfaces
+## Interfaces
 
 - All methods public abstract (Since Java8 can also be static and default methods)
 - All properties public static final
@@ -312,11 +312,11 @@ to extort sorting behavior.
 You cannot put instance variables. Interface determines behavior not state of object.
 You can provide default implementation of interface. Mark such method with 'default' modifier
 
-+-----------------------------------------------+
-| public interface IntSequence {                |
-|     default boolean hasNext() {return true; } |
-| }                                             |
-+-----------------------------------------------+
+```java
+public interface IntSequence {
+    default boolean hasNext() {return true; }
+}
+```
 
 Keyword super allows to call super type methods
 Comparable interface when class want to allow sort their elements Comparable.
@@ -326,7 +326,7 @@ You cannot create non abstract method in interface. All methods are for default 
 Since Java8 methods in interfaces can contain 'default'. 'static' and 'abstract' methods.
 
 
-# Class Object
+## Class Object
 
 Parent class of all classes
 - hashCode
@@ -335,7 +335,7 @@ Parent class of all classes
 - clone
 
 
-# Abstract class and methods
+## Abstract class and methods
 
 Cannot instantiate abstract class
 Are needed during inheritance
@@ -343,7 +343,7 @@ Want something to be overridden to not forget about it later
 Additional responsibilities added to class
 
 
-# OOP
+## OOP
 
 - Objects : containers that keep variables functions thematically connected to each others, to use it easier later
 - Classes : frame to build instances of objects
@@ -374,14 +374,14 @@ If part can exists without whole then relationship between two class is known as
 If part cannot exists without whole the relationship between two class is known as 'composition'
 
 
-# What is the difference between composition and inheritance ?
+## What is the difference between composition and inheritance ?
 
 Composition refers to defining behavior by member variables a class includes
 Inheritance refers to defining behavior by the interfaces or classes that a class inherits from
 Composition = "has-a", Inheritance = "is-a"
 
 
-# Association
+## Association
 
 The Association relationship indicates that class know about and holds reference to another class.
 Association can be described as "has-a" relationship
@@ -397,50 +397,50 @@ Association can be described as "has-a" relationship
 +-------------------------+           +----------------------------+
 
 
-# Aggregation
+## Aggregation
 
 One object is User of another object.
 
-+-----------------------------+       +----------------------------+
-| public class Organization { |       | public class Person {      |
-|   private List employees;   +-----<>+   private String name;     |
-| }                           |       | }                          |
-+-----------------------------+       +----------------------------+
+    +-----------------------------+       +----------------------------+
+    | public class Organization { |       | public class Person {      |
+    |   private List employees;   +-----<>+   private String name;     |
+    | }                           |       | }                          |
+    +-----------------------------+       +----------------------------+
 
 
-# Composition
+## Composition
 
 One object is an owner of another.
 
-+---------------------------------------------+         +------------------------+
-| public class Car {                          |         | class Engine {         |
-|   // final make sure that will be initiated +------<*>+   private String type; |
-|   private final Engine engine;              |         | }                      |
-|   public Car() {                            |         +------------------------+
-|       engine = new Engine();                |
-|   }                                         |
-| }                                           |
-+---------------------------------------------+
+    +---------------------------------------------+         +------------------------+
+    | public class Car {                          |         | class Engine {         |
+    |   // final make sure that will be initiated +------<*>+   private String type; |
+    |   private final Engine engine;              |         | }                      |
+    |   public Car() {                            |         +------------------------+
+    |       engine = new Engine();                |
+    |   }                                         |
+    | }                                           |
+    +---------------------------------------------+
 
 Relations between objects only differ in their strength. Composition strongest relationship, ASSOCIATION the most general.
 
-+-------------------------------+
-|   ASSOCIATION                 |
-|   +-------------------------+ |
-|   |   AGGREGATION           | |
-|   |   +-------------------+ | |
-|   |   |   COMPOSITION     | | |
-|   |   +-------------------+ | |
-|   +-------------------------+ |
-+-------------------------------+
+    +-------------------------------+
+    |   ASSOCIATION                 |
+    |   +-------------------------+ |
+    |   |   AGGREGATION           | |
+    |   |   +-------------------+ | |
+    |   |   |   COMPOSITION     | | |
+    |   |   +-------------------+ | |
+    |   +-------------------------+ |
+    +-------------------------------+
 
 
-# How are the Strategy Pattern and Dependency Injection related ?
+## How are the Strategy Pattern and Dependency Injection related ?
 
 Each defines behavior by setting member variables of a class
 
 
-# Reflection
+## Reflection
 
 Reflection is a way to invoke methods of objects on the fly at run-time
 Reflection is slow and complicated. Method call via reflection may take 10x longer than usual
@@ -454,7 +454,7 @@ Reflection drawbacks: complexity, performance overhead, security consideration, 
 Reflection is good for unit testing jUnit
 
 
-# Volatile
+## Volatile
 
 Declaring variable volatile means the value of this variable will never be cached thread locally
 All reads and writes will go straight to main memory. Access to the variable acts as through it is
@@ -469,7 +469,7 @@ Only applicable to field or properties of class.
 You cannot use volatile keyword during class or method declaration in Java
 
 
-# Synchronized
+## Synchronized
 
 Every objects in Java has a lock associated with it
 This lock is called the intrinsic lock or monitor. It is possible to specify that only one thread can
@@ -482,7 +482,7 @@ Making method synchronized is a shortcut to making the entire body of the method
 If we use synchronized we don't need to use volatile keyword
 
 
-# Enumerator and Iterator differences
+## Enumerator and Iterator differences
 
 Iterator allows you to remove elements from collection. Methods for iterator hasNext(), next()
 Iterator does not allow other thread to modify the collection object while some thread is iterating over it and throws
@@ -491,14 +491,14 @@ ConcurrentModificationException
 Enumerator hasMoreElements(). For Collections read only
 
 
-# What is load factor of HashMap
+## What is load factor of HashMap
 
 HashMap performance depends on two things initial capacity and load factor.
 Whenever create HashMap initial capacity number of buckets is created initially and load factor is criteria
 to decide when we have to increase the size of HashMap when its about to get full
 
 
-# Why wait and notify is declared in Object class instead Thread?
+## Why wait and notify is declared in Object class instead Thread?
 
 Both are communication mechanism between two threads in Java
 Object class makes them available for every object if this mechanism is not available via any Java keyword like
@@ -507,7 +507,7 @@ Locks are available on per Object basis, which is another reason wait and notify
 rather than Thread class
 
 
-# Why wait and notify called from synchronized method in Java?
+## Why wait and notify called from synchronized method in Java?
 
 To avoid:
 - IllegalMonitorStateException which will occur if we don't call wait(), notify() or notifyAll() method
@@ -515,7 +515,7 @@ from synchronized context
 - Any potential race condition between wait and notify method in Java
 
 
-# What will happen if we put a key object in a HashMap which is already there?
+## What will happen if we put a key object in a HashMap which is already there?
 
 It will replace the old mapping because HashMap doesn't allow duplicate keys
 The same key will result in the same hashcode and will end up at the same position in the bucket
@@ -524,7 +524,7 @@ Now Java will take the Key object from each entry and compare with this new key 
 that return true then value object in that entry will be replaced by new value
 
 
-# Casting
+## Casting
 
 Casting is used when we want to convert one data type to another. Two types of casting:
 - Implicit casting
@@ -533,44 +533,44 @@ Casting is used when we want to convert one data type to another. Two types of c
 Implicit Casting is done by compiler. Good example of implicit casting are all the automatic widening conversions
 i.e. storing smaller values in larger variables types.
 
-+------------------------------------------+
-| int value = 100;                         |
-| long number = value; // Implicit casting |
-| float f = 100; // Implicit casting       |
-+------------------------------------------+
+```java
+int value = 100;
+long number = value; // Implicit casting
+float f = 100; // Implicit casting
+```
 
 Explicit Casting is done through code. Example are narrowing conversions - storing larger values into smaller variables.
 Explicit casting would cause truncation of value if the value stored is greater than the size of varible.
 
-+------------------------------------------+
-| long number1 = 12345;                    |
-| int x = (int) numer1; // Explicit castig |
-+------------------------------------------+
+```java
+long number1 = 12345;
+int x = (int) numer1; // Explicit castig
+```
 
 
-# Variables initialization in Java
+## Variables initialization in Java
 
 - Member object and static class variables are always initialized with default values
 - Local/block variables are NOT initialized by complier
 
-+-----------------------------------------------------------+
-| public class VariableInit {                               |
-|   public static void main(String[] args) {                |
-|       Player player = new Player();                       |
-|       // score is an int variable default 0               |
-|       System.out.println(player.score); // 0              |
-|       // name is a member reference variable default null |
-|       System.out.println(player.name); // null            |
-|       int local; // not initialized                       |
-|       // System.out.println(local); // ERROR              |
-|       String value = null; // initialized                 |
-|       System.out.println(value); // null                  |
-|   }                                                       |
-| }                                                         |
-+-----------------------------------------------------------+
+```java
+public class VariableInit {
+  public static void main(String[] args) {
+      Player player = new Player();
+      // score is an int variable default 0
+      System.out.println(player.score); // 0
+      // name is a member reference variable default null
+      System.out.println(player.name); // null
+      int local; // not initialized
+      // System.out.println(local); // ERROR
+      String value = null; // initialized
+      System.out.println(value); // null
+  }
+}
+```
 
 
-# Variables in JAVA
+## Variables in JAVA
 
 - Instance Variables (Non-Static Fields), declared outside a method but inside a class
 - Class Variables (Static Fields) : one copy of this variable in existence.
@@ -579,20 +579,20 @@ Explicit casting would cause truncation of value if the value stored is greater 
 - Parameters : classified as variables.
 
 
-##########################
-# Java Memory Management #
-##########################
 
-# Stack
+# Java Memory Management
 
-The stack
-+----+
-|+---++
-||+---++  PUSH  +---+   +     +    +---+  PULL, POP
-|||    |  --->  |   |   |     |    |   |  --->      FILO
-+||    |        +---+   |     |    +---+
- +|    |                |     |
-  +----+                +-----+
+
+## Stack
+
+    The stack
+    +----+
+    |+---++
+    ||+---++  PUSH  +---+   +     +    +---+  PULL, POP
+    |||    |  --->  |   |   |     |    |   |  --->      FILO
+    +||    |        +---+   |     |    +---+
+     +|    |                |     |
+      +----+                +-----+
 
   every threads has
   its own stack
