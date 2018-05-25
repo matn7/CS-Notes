@@ -593,6 +593,46 @@ The pattern defined by the regex may match one or several times or not at all fo
 
 **^**: asserts start of string
 **[]**: enclose a set of characters to match in a single regex. Part of a pattern that is in square brackets is called a character class.
+"character class" matches only one out of several characters. To match an **a** or **e**, use `[ae]`. Use regex `gr[ae]y` to match either
+`gray` or `grey`. Regex `gr[ae]y` does not match `greay`, `graey`. The order of the characters inside a character class does not matter.
+
+`[xyz]` matches any one of the characters **x**, **y** or **z**
+`[c-n]` matches any one of the characters in the range c to n. You can use a hyphen inside a character class to specify a range of characters.
+`[B-Pk-y]` matches any one of the characters in range B to P and k to y.
+`[a-z0-9]` matches any single lowercase letter or any digit
+
+- Hence the regex `[a-zA-Z-0-9]` means a trrough z or A through Z or 0 to 9
+
+**{}** acts as a qualifier and indicates the number of occrrences of preceding regex to match.
+So {6} means the mathcing string can repeat 6 times or can have a max length of 6 characters.
+
+# Spring Security
+
+## Spring Security Features
+- Provides a portable security mechanism for Java enterprise apps.
+    - Security features of Java EE servlet apps are not portable at EAR or WAR.
+    - Environment migrations often require app reconfiguration.
+
+### AUTHENTICATION & AUTHORIZATION
+- Authentication - ensuring a user wo they claim to be.
+    - Integrates with third parties and standard based mechanisms.
+    - HTTP asic, Form Based, LDAP, OpenID, X.509
+- Authorization - deterniming if a user is allowed to perfrm an action.
+
+### Expanding security capabilities
+- Protection web resources
+    - Requires specific roles to access URLs
+- Authorizing method invocations
+    - Requiring specific roles to access methods
+- Restricting entity access
+    - Costantly Access Lists (CAL) to detrmine domain object access
+
+### Addtional Features
+- Cross Site Request Forgery `CSRF` protection
+- Session Fixation Protection
+- Clickjacking protection
+- Cross Site Scrption `XSS` protection
+- Password encoding via hash and salt
 
 
 
