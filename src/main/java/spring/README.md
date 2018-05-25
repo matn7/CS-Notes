@@ -428,6 +428,202 @@ These methods support some argument types as `@RequestMapping` methods, but they
 - The RequestToViewNameTranslator interface.
 
 
+### `@SessionAttributes`
+
+- The `@SessionAttribute` annotation is used at the class level.
+- Typically it's used on the `@Controller`.
+- The 'value' and 'name' element of `@SessionAttribute` is of type String[].
+
+`@SessionAttributes("product")`
+`@SessionAttributes(names={"product", "price"})`
+
+```java
+@Controller
+@SessionAttributes("product")
+@RequestMapping("/products")
+public class ProductController {
+    @ModelAttribute("product")
+    public Product getProduct() {
+        return new Product();
+    }
+
+    @RequestMapping("/productCatalog")
+    public String processProduct(@ModelAttribute("product") Product aProduct,
+        Model model, HttpServletRequest request) {
+        // ...
+    }
+    // ...
+}
+```
+
+When handler method processProduct is invoked, String will find the `@SessionAttributes("product")` at the top of the file
+and will look for an attribute "product" in the session javax.servlet.http.HttpSession.
+If "product" is absent in the session, Spring will try to invoke the `@ModelAttribute` method getProduct, becouse it has a model attribute also
+named "product". Spring will populate the session attribute product with the value of the model attribute "product", which is from
+the return value of getProduct.
+
+**Spring's `@SessionAttributes` annotation is used on a controller to designate which model attributes should be stored in the session.**
+
+## GET and POST
+
+- We cannot mix GET and POST in a handler method and spring form.
+- When we don't explicitly specify GET or POST in the handler method, it means the method can be used for either GET and POST.
+- POST in Spring form-tag is default.
+
+`@SessionAttribute`
+This annotation has 3 parameters
+- name
+- value
+- required
+
+```java
+@Controller
+public class ProductController {
+    @RequestMapping("/")
+    public String calculatePrice(@SessionAttribute(name = "prodPrice") ProductPrice price) {
+        // ...
+    }
+}
+```
+
+`@RequestAttribute`
+- This annotation can be used to bind a request attribute to handler method parameter.
+- This annotation has 3 parameters
+    - name
+    - value
+    - required
+
+```java
+@Controller
+public class ProductController {
+    @RequestMapping("/")
+    public String findProduct(@RequestAttribute(name = "productId") ProductId id) {
+        // ...
+    }
+}
+```
+
+## Validation API specification
+
+```java
+public class User {
+    @NotNull(message = "Name cannot be null")
+    private String name;
+
+    @Min(value = 18, message = "Age should not be less than 18")
+    @Max(value = 120, message = "Age should not be greater then 120")
+    private int age;
+
+    // ..
+}
+```
+
+User is domain object, name and age are fields of User, declarative vaidation constraints @NotNull, @Min, @Max.
+
+- Hibernate Validator
+- Apache BVal
+- org.springframework.validation.Validator interface API
+
+### `@NotNull`, `@NotEmpty` and `@NotBlank`
+- `@NotNull` - The CharSequence, Collection, Map or Array object cannot be **null**, hovever can be **empty**
+- `@NotEmpty` - The CharSequence, Collection, Map or Array object cannot be **null** or **empty**.
+If it has just empty spaces, it will allow it as not empty.
+- `@NotBlank` - The CharSequence, Collection, Map or Array object cannot be **null** or **empty**, trims the value first.
+It means that, it won't allow just empty spaces.
+
+
+## Annotations
+
+@NotBlank(message = "*First Name: cannot be blank")
+
+- Annotation starts with `@` which signals to the compiler that this is annotation.
+- Java annotations can have elements (message here) for whic you can set values Element is like an attribute parameter.
+- Java annotations are typically used to provide:
+    - Compiler instructions
+    - Build time instructions
+    - Runtime instructions
+- Java annotations ca be placed above classes, interfaces, methods, methods parameters, fields and local variables.
+
+```java
+@Constraint(validatedBy = ContactNumberValidator.class)
+@Target({ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface PhoneValidate {
+    String message default "Invalid phone number";
+    String value();
+    Class<?>[] groups() default{};
+    Class<? extends Payload>[] payload() default {};
+}
+```
+
+`@Constraint` - is used to indicate the Validator class. A Validator class contains the business logic that enforces the
+functionality of the custom annotation.
+
+`@Target` - is used to indicate the level or levels at which annotation is ment to be used. Method and field levels.
+ElementType.ANNOTATION_TYPE
+ElementType.CONSTRUCTOR
+
+`@Retention(RetentionPolicy.RUNTIME)` - signals the Java compiler and JVM that the annotation should be availale via reflection at runtime
+with method calls such as getAnnotations().
+- RetentionPolicy.CLASS
+- RetentionPolicy.SOURCE
+
+`@Documented` - your custom annotation has to be made visible in the JavaDoc for classes using your custom annotation.
+
+`@interface` - indicates that this class is annotation
+
+`groups` - lets a constraint declaration define the subset of constraint, it participates to.
+Groups enable partial validation and ordered validation.
+
+`payload` - can be used by clients for the bean Validation API to assign custom payload objects to a constraint.
+
+
+## @Pattern
+
+- Regular Expressions are set of characters and/or meta characters that match )of specify) patterns and can be used
+to search, edit and manipulate text.
+- "[abc]" regular expression that matches any one of the characters a, b, c.
+- A regex is a String of characters. Those characters that have an interpolation above and beyond their literal meaning are called
+metacharacters. For example ^ is a metacharacter.
+- A regex can be anything from a String character, a fixed string or complex expression containing special characters describing the pattern.
+The pattern defined by the regex may match one or several times or not at all for a given string.
+
+"^[a-zA-Z-0-9]{6}"
+
+**^**: asserts start of string
+**[]**: enclose a set of characters to match in a single regex. Part of a pattern that is in square brackets is called a character class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
