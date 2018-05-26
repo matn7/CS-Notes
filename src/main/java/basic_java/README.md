@@ -602,34 +602,34 @@ No more data after last }. Tide scoping.
 Local variable short lifetime.
 
 
-# Heap
+## Heap
 
 Longer lifetime store data
 Objects are in Heap. Huge area of storing data. All memory from your application except data on stack.
 One heap for all threads, number of stacks for each Thread.
 
-The stack               The Heap
-+-------+              +---------------------+
-|+------++             | String              |
-||+------++            | Integer             |
-||| int   |            |                     |
-+|| double|            |                     |
- +|       |            |                     |
-  +-------+            +---------------------+
+    The stack               The Heap
+    +-------+              +---------------------+
+    |+------++             | String              |
+    ||+------++            | Integer             |
+    ||| int   |            |                     |
+    +|| double|            |                     |
+     +|       |            |                     |
+      +-------+            +---------------------+
 
 int age = 21;
 String name = "Hello";
 
-   Stack
-+----------+            +----------------------+
-|+--------+|            |   +------+           |
-||  name  ++---------+  |   |String|           |
-|+--------+|          \ | +-+------+-+         |
-|+--------+|           ++>+  Hello   |         |
-|| age=21 ||            | +----------+         |
-|+--------+|            |                      |
-|          |            |                      |
-+----------+            +----------------------+
+       Stack
+    +----------+            +----------------------+
+    |+--------+|            |   +------+           |
+    ||  name  ++---------+  |   |String|           |
+    |+--------+|          \ | +-+------+-+         |
+    |+--------+|           ++>+  Hello   |         |
+    || age=21 ||            | +----------+         |
+    |+--------+|            |                      |
+    |          |            |                      |
+    +----------+            +----------------------+
 
 Java Memory - Rule
 - Objects are stored on the heap
@@ -637,83 +637,83 @@ Java Memory - Rule
 - Local variables are stored on the stack
 
 
-# Passing variables by value
+## Passing variables by value
 
-+--------------------------------------------------+
-| class Main {                                     |
-|    public static void main(String[] args) {      |
-|        int localValue = 5;                       |
-|        calculate(localValue);                    |
-|        System.out.println(localValue); // 5      |
-|    }                                             |
-|    // copy of local variable                     |
-|    public static void calculate(int calcValue) { |
-|        calcValue = calcValue * 100;              |
-|    }                                             |
-| }                                                |
-+--------------------------------------------------+
+```java
+class Main {
+   public static void main(String[] args) {
+       int localValue = 5;
+       calculate(localValue);
+       System.out.println(localValue); // 5
+   }
+   // copy of local variable
+   public static void calculate(int calcValue) {
+       calcValue = calcValue * 100;
+   }
+}
+```
 
 
-# How objects are passed
+## How objects are passed
 
 For object passed into methods, the REFERENCE to the object is passed BY VALUE.
 "No object passed to method but rather pointer to object"
 Passing Values
 
-+--------------------------------------------------------+
-| public class Main {                                    |
-|     public static void main(String[] args) {           |
-|         Customer c = new Customer("Betty");            |
-|         renameCustomer(c);                             |
-|         System.out.println(c.getName()); // Grazyna    |
-|     }                                                  |
-|     public static void renameCustomer(Customer cust) { |
-|         cust.setName("Grazyna");                       |
-|     }                                                  |
-| }                                                      |
-+--------------------------------------------------------+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Customer c = new Customer("Betty");
+        renameCustomer(c);
+        System.out.println(c.getName()); // Grazyna
+    }
+    public static void renameCustomer(Customer cust) {
+        cust.setName("Grazyna");
+    }
+}
+```
 
-            +-------------------------------------------+
-            |      +----------+                         |
-+-----+     |      | Customer |           +--------+    |
-|+---+|     |    +-+----------+-+         | String |    |
-|| c |+-----+--->+  +------+    |       +-+--------+-+  |
-|+---+|     |    |  | name +----+------>+ Grazyna    |  |
-|     |     |    |  +------+    |       +------------+  |
-+-----+     |    +-----+--------+                       |
-            |          X (break this reference)         |
-            |          V                                |
-            |    +-----+--+                             |
-            |    | String |                             |
-            |    +--------+                             |
-            |    | Betty  |                             |
-            |    +--------+                             |
-            +-------------------------------------------+
+                +-------------------------------------------+
+                |      +----------+                         |
+    +-----+     |      | Customer |           +--------+    |
+    |+---+|     |    +-+----------+-+         | String |    |
+    || c |+-----+--->+  +------+    |       +-+--------+-+  |
+    |+---+|     |    |  | name +----+------>+ Grazyna    |  |
+    |     |     |    |  +------+    |       +------------+  |
+    +-----+     |    +-----+--------+                       |
+                |          X (break this reference)         |
+                |          V                                |
+                |    +-----+--+                             |
+                |    | String |                             |
+                |    +--------+                             |
+                |    | Betty  |                             |
+                |    +--------+                             |
+                +-------------------------------------------+
 
 
-# The "final" keyword
+## The "final" keyword
 
 Can be assigned only once
 
-+--------------------------------------+
-| final Customer c;                    |
-| c = new Customer("Mark");            |
-| c = new Customer("Amanda"); // ERROR |
-| c.setName("Robert"); // OK           |
-+--------------------------------------+
+```java
+final Customer c;
+c = new Customer("Mark");
+c = new Customer("Amanda"); // ERROR
+c.setName("Robert"); // OK
+```
 
 
-# Immutable collections
+## Immutable collections
 
 Collections.unmodifableMap()
 Collections.unmodifableList()
 
-+-----------------------------------------------------------------------------------------+
-| String three = new Integer(67).toString().intern(); // JVM optimizes of building object |
-| String four = "67";                                                                     |
-+-----------------------------------------------------------------------------------------+
+```java
+String three = new Integer(67).toString().intern(); // JVM optimizes of building object
+String four = "67";
+```
 
-# Garbage Collector
+## Garbage Collector
 
 In other languages you must state when an object is no longer needed by calling a method like free().
 Object that are not freed continue to consume memory ... this is a memory leak.
@@ -738,15 +738,15 @@ Generational Garbage Collection
 - Most object's don't live for long
 - If an object survives it is likely for live forever
 
-                    minor    major collection
-+---------+        +-------+----------------+
-|         |        | young | old generation |
-|         |        |       |  +--------+    |
-|         |        |       |  | String |    |
-| +-----+ |        |       |  +--------+    |
-| |name |-+--------+-------+->| John   |    |
-| +-----+ |        |       |  +--------+    |
-+---------+        +-------+----------------+
+                        minor    major collection
+    +---------+        +-------+----------------+
+    |         |        | young | old generation |
+    |         |        |       |  +--------+    |
+    |         |        |       |  | String |    |
+    | +-----+ |        |       |  +--------+    |
+    | |name |-+--------+-------+->| John   |    |
+    | +-----+ |        |       |  +--------+    |
+    +---------+        +-------+----------------+
 
 GC young generation deletes unused objects
 After that String John go to old generation.
@@ -755,7 +755,7 @@ Actually it can be 8 GC, but the VM changes the number of generations based on t
 Program VirtualGC to view some memory leaks
 
 
-# PermGen / MetaSpace
+## PermGen / MetaSpace
 
 PermGen is never GC
 On PermGen internalize String metadata of class is stored in this.
@@ -771,31 +771,31 @@ Java 8
 Remove PermGen introduce metaspace where all metadata of classes are placed. No part of heap.
 Max size of metaspace is your computer Space
 
-+-------+---------------+   +-----------+
-| young | old           |   | Metaspace |
-|       |               |   |           |
-|       |               |   |           |
-|       |               |   |           |
-|       |               |   |           |
-+-------+---------------+   +-----------+
-Heap
+    +-------+---------------+   +-----------+
+    | young | old           |   | Metaspace |
+    |       |               |   |           |
+    |       |               |   |           |
+    |       |               |   |           |
+    |       |               |   |           |
+    +-------+---------------+   +-----------+
+    Heap
 
 
-# Tuning the VM
+## Tuning the VM
 
 -Xmx set the maximum heap size
 -Xms set starting heap size
 
-+-------------------+
-| -Xmx512m -Xms150m |
-+-------------------+
+
+     -Xmx512m -Xms150m
+
 
 PermGen Size
 -XX:MaxPermSize
 
-+----------------------+
-| -XX:MaxPermSize=256m |
-+----------------------+
+
+     -XX:MaxPermSize=256m
+
 
 -verbose:gc // print to the console when garbage collection takes place
 
@@ -806,12 +806,12 @@ Young generation = 1/3 heap size
 -Xms256m
 
 
-# Generating heap dumps
+## Generating heap dumps
 
 -XX:HeapDumpOnOutOfMemory // creates a heap dump file "hprof"
 
 
-# Choosing a GC
+## Choosing a GC
 
 Types of GC:
 - Serial : -XX:+UseSerialGC
@@ -827,23 +827,23 @@ apache-jmeter
 WeakReferences - might not survive GC. If not variable will be equal to null.
 Soft - stronger than weak, can be destroy if GC claims that space is needed.
 
-+-------------------------------------+
-| WeakReferencs<Book> mybook = book1; |
-| SoftReference<Book> mybook = book2; |
-+-------------------------------------+
+```java
+WeakReferencs<Book> mybook = book1;
+SoftReference<Book> mybook = book2;
+```
 
 WeakHashMap - reference between key and values are weak.
 
-+--------------------------------------------------------+
-| Map<Book, BookImage> imageCache = new WeakHashMap<>(); |
-+--------------------------------------------------------+
+```java
+Map<Book, BookImage> imageCache = new WeakHashMap<>();
+```
 
 Guava Library can make soft hash map
 
 
-##############################
-# hashCode, equals, toString #
-##############################
+
+# hashCode, equals, toString
+
 
 You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
 collections like HashMap, HashSet
@@ -855,7 +855,7 @@ While retrieving get(key) method is used at this time hash code of key object is
 is called to compare value object.
 
 
-# equals
+## equals
 
 Check whether one object can be equal to another.
 Equals method implemented in Object class, check whether two references to object are identical.
