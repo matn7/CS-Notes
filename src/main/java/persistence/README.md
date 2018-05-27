@@ -110,7 +110,7 @@ Java objects as representation of data.
 `**Session**` - Hibernate provides session object that represents a **conversation between an application and database**.
 Use session object to persist a state of object into table.
 
-    Configuration   :arrow_backward:    SessionFactory  :arrow_backward:    **Session**
+Configuration   :arrow_backward:    SessionFactory  :arrow_backward:    **Session**
 
 `**Configuration**` configuration to build SessionFactory
 
@@ -426,7 +426,7 @@ public class Address {
 }
 ```
 
-An object of **entity** type ** has its own database identity (primary key).**
+An object of **entity** type **has its own database identity (primary key).**
 
 An object of **value type** has **no database identity (primary key)** it belongs to an entity.
 
@@ -546,25 +546,30 @@ Hibernate uses reasonable default values not only for XML-based mapping metadata
 
 ### `@ManyToOne`
 
-Many side  :arrow_forward:             One Side
-| Student |                     | Guide |
-|---|                           |---|
-| id: Long |                    | id: Long |
-| enrId: String |               | staffId: String |
-| name: String |                | name: String |
-                                | salary: Integer |
+Many side
+| Student |
+|---|
+| id: Long |
+| enrId: String |
+| name: String |
+
+One Side
+| Guide |
+|---|
+| id: Long |
+| staffId: String |
+| name: String |
+| salary: Integer |
 
 Each **Student** has a **Guide**
 
 Student
 | id :key: | enr_id | name | quide_id |
 |---|---|---|---|
-| | | | |
 
 Guide
 | id :key: | staff_id | name | salary |
 |---|---|---|---|
-| | | | |
 
 *Guide.java*
 ```java
@@ -782,6 +787,94 @@ public class Passport {
 
 To declare a side as **not** responsible for the relationship, the attribute **mappedBy** is used.
 The owner of the relationship is responsible for the association columns updates.
+
+## Many to Many Relationship
+
+*Book.java*
+```java
+@Entity
+public class Book {
+    @Id
+    @GenerationValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    private String name;
+
+    @ManyToMany
+    @JoinTable(
+        name="book_author",
+        joinColumns={@JoinColumn(name="book_id")},
+        inverseJoinColumns={@JoinColumn(name="author_id")})
+    private Set<Author> authors = new HashSet<>();
+
+    public Set<Author> getAuthors() {
+        return author;
+    }
+
+    // ...
+}
+```
+
+*Author.java*
+```java
+@Entity
+public class Author {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    private String name;
+
+    @ManyToMany(mappedBy="authors")
+    private Set<Book> books = new HashSet<>();
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+    // ...
+}
+```
+
+To declare side as not responsible for the relationship, the attribute `**mappedBy**` is used.
+
+*hibernate.cfg.xml*
+```xml
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="entity.Book"/>
+        <mapping class="entity.Author"/>
+    </session-factory>
+</hibernate-configuration>
+```
+
+## Mapping Enums
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
