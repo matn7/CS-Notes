@@ -463,12 +463,170 @@ public string authorized() {
 <security:global-method-security pre-post-annotations="enabled"/>
 ```
 
+`@PostAuthorize`
 
+```java
+@RequestMapping("/{id}")
+@PostAuthorize("return='checkout'")
+public String getCheckout(@PathVariable("checkout") long id, Model model) {
+    Checkout checkout = checkoutRepo.findOne(id);
+    model.addAttribute("checkout", checkout);
+    return "checkout";
+}
+```
 
+`@RolesAllowed`
+*dispatcher-servlet.xml*
+```xml
+<security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled"/>
+```
 
+```java
+@ResponseBody
+@RequestMapping("/admin")
+@RolesAllowed("ROLE_ADMIN")
+public String adminPage() {
+    return "admin";
+}
+```
 
+`@PreFilter`
+```java
+@PreFilter("principal.userid=object.user.userid")
+public String save(checkout);
+```
 
+`@PostFilter`
+```java
+@ResponseBody
+@RequestMapping("/checkouts")
+@PostFilter("principal.userid=object.user.userid")
+public List<CHeckout> getCheckouts(Authentication authentication) {
+    return this.checkoutRepository.findAll();
+}
+```
 
+## Access Control
+
+`acl_sid` - store info about principals or authorities
+`acl_class` - qualified class name
+`acl_object_identity` - protected object instances
+`acl_entry` - entries
+
+MAVEN
+**spring-security-acl**
+**ehcache**
+
+*dispatcher-servlet.xml*
+```xml
+<bean id="expressionHandler" class="org.springframework....DefaultMethodSecurityExpressionHandler">
+    <property name="permissionEvaluator" ref="permissionEval"/>
+    <property name="permissionCacheOptimizer" ref="permissioCacheOpt"/>
+</bean>
+<bean id="permissioCacheOpt" class="org.springframework.security.acl.AclPermissionCacheOptimizer">
+    <constructor-arg ref="aclService"/>
+</bean>
+<bean id="permissionEval" class="org.springframework.acls.AclPermissionEvaluator">
+    <constructor-arg ref="aclService"/>
+</bean>
+<bean id="aclService" class="org...JdbcMutableAclService">
+    <!-- ... -->
+</bean>
+<security:global-method-security jsr-annotations="enabled" pre-post-annotations="enabled">
+    <security:expression-handler ref="expressionHandler"/>
+</security:global-method-security>
+```
+
+## Advanced
+
+### HTTP channel Security
+Create public key using `keytool`
+
+*server.xml*
+```xml
+<connector SSLEnabled="true" KeyStoreFile=".../keystore.jks" kaystorePass="pwd" scheme="https" secure="true" clientAuth="false"
+    sslProtocol="TLSv1" ... />
+```
+
+*security-context.xml*
+```xml
+<security:intercept-url pattern="/checkouts/*" access="ROLE_ADMIN" requires-channel="https"/>
+```
+
+### CSRF
+Script rely upon session after click on melicious script.
+
+```html
+<div>
+    <input type="hidden" value="<TOKEN>" name="_csrf">
+</div>
+```
+
+*security-context.xml*
+```xml
+<security:csrf disabled="true"/>
+```
+
+### Authentication tag
+
+```jsp
+<%@ taglib uri="http://www.springframework.org/security/tags/" prefix="sec"%>
+<!-- ... -->
+    <sec:authorize access="isAuthenticated()">
+        <sec:authentication property="principal.username"/>
+    </sec:authorize>
+<!-- ... -->
+```
+
+### Remember me
+
+```jsp
+<div class="form-group">
+    <label for="remember">Remember Me</label>
+    <input type="checkbox" id="remember" name="remember-me"/>
+</div>
+```
+
+*security-context.xml*
+```xml
+<security:remember-me key="rememberme"/>
+```
+
+### Java Configuration
+
+*SecurityConfig.java*
+```java
+@Configuration
+@EnableWebSecurity
+@ImportResource("/WEB-INF/application-context.xml")
+@ComponentScan("com.panda.security")
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    protected void configure(AuthenticationManagerBuilder authentication) throws Exception {
+        authentication.jdbcAuthentication().dataSource(dataSource);
+        authentication.userDetailsService(userDetailsService);
+    }
+
+    protected void configure(HttpSecurity http) throws Exception {
+        http.formLogin().loginPage("/login").loginProcessingUrl("/login")
+            .usernameParameters("username").passwordParameters("password");
+    }
+}
+```
+
+*SecurityAppInitializer.java*
+```java
+public class SecurityAppInitializer extends AbstractSecurityWebApplicationInitializer {
+    public SecurityAppInitializer() {
+        super(SecurityConfig.class);
+    }
+}
+```
 
 
 
