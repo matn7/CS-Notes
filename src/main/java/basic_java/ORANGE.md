@@ -115,6 +115,12 @@ public static int binarySearch(int[] list, int number) {
 }
 ```
 
+# Recursion
+Iterative solutions involves loops.
+The recursive solutions involves functions that call themselves.
+By halving the search area every step, binary search works much faster than binary search.
+**O(Log(N))**
+- Better space complexity comparing iterative binary search
 
 
 

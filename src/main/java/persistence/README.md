@@ -849,7 +849,76 @@ To declare side as not responsible for the relationship, the attribute `**mapped
 
 ## Mapping Enums
 
+| :key: id | employee_id | employee_status | name |
+|---|---|---|---|
+| 1 | AF67 | FULL_TIME | Brajan |
+| 2 | AC68 | CONTRACT | Amanda |
+| 3 | AP89 | PART_TIME | Rebeca |
 
+*Employee.java*
+```java
+@Entity
+public class Employee {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    private String name;
+
+    @Column(name="employee_id", unique=true)
+    private String employeeId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="employee_statue")
+    private EmployeeStatus employeeStatus;
+
+    // constructors, getters, setters
+}
+```
+
+*EmployeeStatus.java*
+```java
+public enum EmployeeStatus {
+    FULL_TIME,
+    PART_TIME,
+    CONTRACT
+}
+```
+
+#HelloWorld.java*
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.getTransaction();
+        try {
+            transaction.begin();
+            Employee employee1 = new Employee("Brajan", "AF67", EmployeeStatus.FULL_TIME);
+            Employee employee2 = new Employee("Amanda", "AC68", EmployeeStatus.CONTRACT);
+            Employee employee3 = new Employee("Rebeca", "AP89", EmployeeStatus.PART_TIME);
+
+            session.persist(employee1);
+            session.persist(employee2);
+            session.persist(employee3);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback(); // Catch exception rollback transaction
+            }
+        } finally {
+            if (session != null) {
+                session.close(); // if active session close it
+            }
+        }
+    }
+}
+```
+**Retrieving**
+```java
+Employee employee = (Employee) session.get(Employee.class, 2L);
+System.out.println(employee);
+```
 
 
 
