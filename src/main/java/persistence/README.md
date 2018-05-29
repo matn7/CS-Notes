@@ -107,12 +107,12 @@ Java objects as representation of data.
 
 ## Hibernate + JPA Hello World
 
-`**Session**` - Hibernate provides session object that represents a **conversation between an application and database**.
+**Session** - Hibernate provides session object that represents a **conversation between an application and database**.
 Use session object to persist a state of object into table.
 
 Configuration   :arrow_backward:    SessionFactory  :arrow_backward:    **Session**
 
-`**Configuration**` configuration to build SessionFactory
+**Configuration** configuration to build SessionFactory
 
 *hibernate.cfg.xml*
 ```xml
@@ -246,7 +246,7 @@ log4j.logger.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 ```
 
-`**Transactions**`
+**Transactions**
 A transaction is a group of operations that are run as a single unit of work.
 
     start transaction;
@@ -267,7 +267,7 @@ A transaction is a group of operations that are run as a single unit of work.
 
 ### Finding Objects
 
-#HelloWorld.java*
+*HelloWorld.java*
 ```java
 public class HelloWorld {
     public static void main(String[] args) {
@@ -292,7 +292,7 @@ public class HelloWorld {
 
 ### Updating objects
 
-#HelloWorld.java*
+*HelloWorld.java*
 ```java
 public class HelloWorld {
     public static void main(String[] args) {
@@ -318,7 +318,7 @@ public class HelloWorld {
 
 ### Deleting objects
 
-#HelloWorld.java*
+*HelloWorld.java*
 ```java
 public class HelloWorld {
     public static void main(String[] args) {
@@ -405,7 +405,7 @@ public class User {
 
 ```
 
-`**Entity**`
+**Entity**
 ```java
 public class User {
     private Long id;
@@ -417,7 +417,7 @@ public class User {
 }
 ```
 
-`**Value Type**`
+**Value Type**
 ```java
 public class Address {
     private String homeStreet;
@@ -504,7 +504,7 @@ public class Address {
 </hibernate-configuration>
 ```
 
-#HelloWorld.java*
+*HelloWorld.java*
 ```java
 public class HelloWorld {
     public static void main(String[] args) {
@@ -627,11 +627,11 @@ public class Student {
 
 ```java
 session.persist(student);
-``
+```
 
-Cascading the `**PERSIST**` operation
+Cascading the **PERSIST** operation
 
-`**CascadeType.PERSIST**`
+**CascadeType.PERSIST**
 session.persist(student) - persist the whole object graph of Student
 
 *Student.java*
@@ -658,7 +658,7 @@ public class Student {
 ```
 
 
-#HelloWorld.java*
+*HelloWorld.java*
 ```java
 public class HelloWorld {
     public static void main(String[] args) {
@@ -683,7 +683,7 @@ public class HelloWorld {
 }
 ```
 
-`**CascadeType.REMOVE**`
+**CascadeType.REMOVE**
 session.delete(student) - deletes the whole object graph of Student
 
 *Student.java*
@@ -885,7 +885,7 @@ public enum EmployeeStatus {
 }
 ```
 
-#HelloWorld.java*
+*HelloWorld.java*
 ```java
 public class HelloWorld {
     public static void main(String[] args) {
@@ -920,17 +920,236 @@ Employee employee = (Employee) session.get(Employee.class, 2L);
 System.out.println(employee);
 ```
 
+## Mapping Collections of Value Types
+
+| Friend |
+|---|
+| id: Long |
+| name: String |
+| email: String |
+| nickNames: Collection<String> |
+
+name : "Majki"
+email: "majki@maki.com"
+nicknames               :arrow_right:       {0, :arrow_right: Majko
+                                             1, :arrow_right: Maki
+                                             2} :arrow_right: Mak
+
+**Friend_nickname** Collection table
+| :key: nickname | friend_id |
+|---|---|
+| Majko | 1 |
+| Maki | 1 |
+| Mak | 1|
+
+**Friend**
+| :key: id | name | email |
+|---|---|---|
+| 1 | Majki | majki@maki.com |
 
 
+```java
+@Entity
+public class Friend {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+    private String name;
+    private String email;
 
+    @ElementCollection
+    @CollectionTable(name="Friend_nickname", joinColumn(name="friend_id"))
+    @Column(name="nickname")
+    private Collection<String> nicknames = new ArrayList<String>();
 
+    // constructors, getters, setters
+    public Collection<String> getNicknames() {
+        return nicknames;
+    }
+}
+```
 
+*HelloWorld.java*
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.getTransaction();
+        try {
+            transaction.begin();
+            Friend friend = new Friend("Pamela", "Majka");
+            friend.getNicknames().add("Pam");
+            friend.getNicknames().add("Pami");
 
+            session.persist(friend);
 
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback(); // Catch exception rollback transaction
+            }
+        } finally {
+            if (session != null) {
+                session.close(); // if active session close it
+            }
+        }
+    }
+}
+```
 
+**Composite primary key**
+```sql
+ALTER TABLE friend_nickname ADD PRIMARY_KEY(friend_id, nickname);
+```
 
+## Composite Keys
+### Composite Primary Key
+A combination of more than 1 table column that identifies the uniqueness of a record (database table row)
 
+| :key" firstname | :key: lastname |
+|---|---|
+|||
+------------------------------------------------------------------------------
+address of parent1 in heap memory           Address of parent2 in heap memory
+:arrow_up:                                  :arrow_up:
+a47ex0x71                                   b89q3a87
+---------                                   --------
+firstname: Paul                             firstname: Paul
+lastname: Sharp                             lastname: Sharp
+----------------------------| Java Memory Heap |-------------------------------
 
+No matter how good or natural a composite primary key is, it is **not recommended for uniquely identyfying a record**
+
+```java
+@Entity
+public class Parent {
+    @EmbeddedId
+    private ParentPrimaryKey parentPrimaryKey;
+
+    public Parent() {}
+
+    // conextructor, getters, setters
+}
+```
+
+```java
+@Embeddable
+public class ParentPrimaryKey implements Serializable {
+    private String firstname;
+    private String lastname;
+
+    public ParentPrimaryKey() {}
+
+    public ParentPrimaryKey(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    @Override
+    public int hashCode() {
+        // ...
+    }
+
+    @Override
+    public boolean equals() {
+        // ...
+    }
+}
+```
+
+```xml
+<hibernate-configuration>
+    <session-factory>
+        <!-- ... --->
+        <mapping class="entity.Parent"/>
+    </session-factory>
+</hibernate-configuration>
+```
+
+*HelloWorld.java*
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.getTransaction();
+        try {
+            transaction.begin();
+            // persistiog
+            ParentPrimaryKey parentPrimaryKey = new ParentPrimaryKey("Gavin", "Gibson");
+            Parent parent = new Parent(parentPrimaryKey);
+
+            session.persist(parent);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback(); // Catch exception rollback transaction
+            }
+        } finally {
+            if (session != null) {
+                session.close(); // if active session close it
+            }
+        }
+    }
+}
+```
+
+Not only composite key even **business key (e.g. ISBN)** are nt reccomended fr uniqely identify a record.
+
+A Business key is also called **Natural key**
+
+A business key is not just a unique identifier but it also has a business meaning associated with it.
+
+```java
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue
+    private Long id; // synthetic identifier
+
+    private String isbn;
+
+}
+```
+
+```java
+@Entity
+public class Person {
+    @Id
+    @GeneratedValue
+    private Long id; // synthetic identifier
+
+    private String socialNumber;
+
+}
+```
+
+**A synthetic** identifier is an identifier with no **business meaning**
+
+### Composite Foreign Key
+
+Composite foreign key are defined on associations using @JoinColumns.
+
+```java
+@Entity
+public class Child {
+    @Id
+    @GeneratedValue(strategy=GeneratedType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name="firstname_fk", referencedColumnName="firstname"),
+        @JoinColumn(name="lastname_fk", referencedColumnName="lastname")
+    })
+    private Parent parent;
+
+    public Child() {}
+
+    // constructors, getters, setters
+
+}
+```
 
 
 

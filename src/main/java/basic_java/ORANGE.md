@@ -122,10 +122,74 @@ By halving the search area every step, binary search works much faster than bina
 **O(Log(N))**
 - Better space complexity comparing iterative binary search
 
+# Binary Tree
+- A binary tree is one where every node can have maximum od two children
+    - Left children and right children
+- Two binary trees are the same if:
+1. Every corresponding node has the same value.
+2. The structure of the tree at every corresponding node is the same
 
+**Complexity O(N)**
 
+        +---+
+        | N |
+        +---+
+       /     \
+    +---+   +---+
+    | L |   | R |
+    +---+   +---+
 
+```java
+public static class Node {
+    private int id;
+    private Node left;
+    private Node right;
 
+    public Node(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void addChildren(Node left, Node right) {
+        this.left = left;
+        this.right = right;
+    }
+
+    public Node getLeft() {
+        return left;
+    }
+
+    public NOde getRight() {
+        return right;
+    }
+}
+```
+
+**Check whether trees are the same**
+```java
+public static boolean sameTree(Node head1, Node head2) {
+    if (head1 == null && head2 == null) {
+        return true;
+    }
+
+    if (head1 == null) {
+        return false;
+    }
+
+    if (head2 == null) {
+        return false;
+    }
+
+    if (sameTree(head1.getLeft(),head2.getLeft()) && sameTree(head1.getRight(), head2.getRight()) {
+        return head1.getId() == head2.getId();
+    }
+
+    return false;
+}
+```
 
 
 
