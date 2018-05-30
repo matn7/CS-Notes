@@ -1151,9 +1151,53 @@ public class Child {
 }
 ```
 
+## JPA (Java Persistence Api)
+JPA is a Java specification for accessing, persisting and managing data between Java objects and a relational database.
+JPA provides guidlines that a framework can implement to be considered JPA capable.
 
+JPA Api
+```java
+public interface JPA {
+    public void persist(Object object);
+    public Object find(Object identifier);
+    public void remove(Object object);
+}
+```
 
+Hibernate Api
+```java
+public interface Hibernate {
+    public void save(Object object);
+    public Object get(Object identifier);
+    public void saveOrUpdate(Object object);
+    public void delete(Object object);
+}
+```
 
+```java
+public class HibernateJPAProviderImpl implements JPA {
+    // Hibernate provding an implementation of JPA
+}
+```
+
+        Hibernate
+
+        +-------------+
+        | Java        |
+        | Persistence |
+        | API         |
+        +-------------+
+
+In addition to it's own "native" API, Hibernate is also an implementation of
+Java Persistence API (JPA) specification.
+
+                    Application
+                        |
+                        JPA
+                        |
+               +--------+--------+
+               |        |        |
+           Hibernate  OpenJPA  EclipseLink
 
 
 

@@ -115,8 +115,23 @@ public class JdbcConne {
 
 ## Singleton vs GOF singleton
 - GOF singleton - one singleton per JVM
-- Siprin singleton - one singleton per Application Context
+- Sipring singleton - one singleton per Application Context
 
+
+## COMPONENT SCAN
+```java
+@SpringBootApplication
+@ComponentScan("com.spring.basics.componentscan")
+public class ComponentScanApplication {
+    // ...
+}
+```
+
+## THE LIFECYCLE OF THE BEAN
+- As soon as bean is created post construct will be called. Initialize content of bean.
+`@PostConstruct`
+- Called just before bean is removed.
+`@PreDestroy`
 
 
 

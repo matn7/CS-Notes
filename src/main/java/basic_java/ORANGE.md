@@ -191,6 +191,52 @@ public static boolean sameTree(Node head1, Node head2) {
 }
 ```
 
+# Stack and Queues
+- The stack last in first out `LIFO`
+- **PUSH** adding element at the top of stack   **O(1)**
+- **POP** removing element from the top of stack **O(1)**
+- **PEEK** see what element at top of the stack is. Does not change data structure.
+
+- **ISEMPTY O(1)**
+- **ISFULL O(1)**
+- **SIZE O(1)**
+
+StackOverflowException - pushing into full stack
+StackUnderflowException - popping or peeking empty element
+
+*LinkedList is used to build a stack*
+Stack is used to implementing undo, back button
+
+```java
+// SINGLE ELEMENT IN LINKED LIST
+public static class Element<T> {
+    private T data;
+    private Element next;
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public Element getElement() {
+        return element;
+    }
+
+    publio void setElement(Element next) {
+        this.next = next;
+    }
+
+    public Element(T data, Element next) {
+        this.data = data;
+        this.element = element;
+    }
+
+}
+```
+
 
 
 
