@@ -192,6 +192,7 @@ public static boolean sameTree(Node head1, Node head2) {
 ```
 
 # Stack and Queues
+## Stack
 - The stack last in first out `LIFO`
 - **PUSH** adding element at the top of stack   **O(1)**
 - **POP** removing element from the top of stack **O(1)**
@@ -237,6 +238,16 @@ public static class Element<T> {
 }
 ```
 
+## Queue
+Add element to the End of the Queue and remove elements from the begining of the queue. FIFO, LIFO.
+Removal at beginning, addition at the end.
+- ENQUEUE - adding new elment at the end of the queue **O(1)**
+- DEQUEUE - removing an element from the begining of the queue **O(1)**
+- PEEK - see first element. Does not change data structure
+- OFFER - add to a queue if space is available
+- ISEMPTY
+- ISFULL
+Linked List with pointer to the head and tail works well, or stack (2 stacks)
 
 
 

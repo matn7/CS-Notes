@@ -1199,7 +1199,88 @@ Java Persistence API (JPA) specification.
                |        |        |
            Hibernate  OpenJPA  EclipseLink
 
+## Hibernate as JPA Provider
 
+```java
+@Entity
+@Table(name="message")
+public class Message {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="ID")
+    private Long id;
+
+    @Column(name="TEXT")
+    private String text;
+
+    public Message() {}
+
+    public Message(String text) {
+        this.text = text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+}
+```
+
+### Hibernate
+```java
+// ...
+SessionFactory sf = HibernateUtil.getSessionFactory();
+Session session = sf.openSession();
+Transaction txn = session.getTransaction();
+try {
+    txn.begin();
+    Message msg = new Message("Hello Hibernate");
+    session.persist(msg);
+} catch (Exception e) {
+    if (txn != null) {
+        txn.rollback();
+    }
+} finally {
+    if (session != null) {
+        session.close();
+    }
+}
+```
+
+### JPA
+```java
+// ...
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello-world");
+EntityManager entityManager = emf.createEntityManager();
+EntityTransaction txn = entityManager.getTransaction();
+try {
+    txn.begin();
+    Message msg = new Message("Hello Hibernate");
+    entityManager.persist(msg);
+    thx.commit();
+} catch (Exception e) {
+    if (txn != null) {
+        txn.rollback();
+    }
+} finally {
+    if (entityManager != null) {
+        entityManager.close();
+    }
+}
+```
+
+```xml
+<persistence ...>
+    <persistence-unit name="hello-world" transaction_type="RESOURCE_LOCAL">
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hello-world"/>
+            <property name="javax.persistence.jdbc.password" value="password:/>
+            <!-- ... -->
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+```
 
 
 

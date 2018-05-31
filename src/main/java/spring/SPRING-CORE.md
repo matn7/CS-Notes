@@ -134,11 +134,120 @@ public class ComponentScanApplication {
 `@PreDestroy`
 
 
+## CDI
+JavaEE Dependency Injection Standard (JRS-330)
+- @Inject (`@Autowired`)
+- @Named (`@Component & @Qualifier`)
+- @Singleton
+```java
+// @Component
+@Named
+public class SomeCDIBusiness {
+    //@Autowired
+    @Inject
+    private SomeCdiDao someCdiDao;
 
+    public SomeCdiDao getSomeCdiDao() {
+        return someCdiDao;
+    }
 
+    public void setSomeCdiDao(SomeCdiDao someCDIDAO) {
+        this.someCdiDao = someCDIDAO;
+    }
+}
+```
 
+```java
+//@Component
+@Named
+public class SomeCdiDao {
+}
+```
 
+## Spring Configuration
+*pom.xml*
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+	<artifactId>spring-core</artifactId>
+</dependency>
 
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-context</artifactId>
+</dependency>
+```
+
+```java
+//@SpringBootApplication
+@Configuration
+@ComponentScan("com.panda.spring.basics")
+public class BasicApplication {
+    // ...
+    AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BasicApplication.class);
+    // ...
+    applicationContext.close();
+
+    // Or use try with resources to close application context
+    /*
+    try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BasicApplication.class)) {
+        // ...
+    }
+    */
+}
+```
+
+## Application Context using xml
+
+```xml
+<context:component-scan base-package="com.panda.spring.basics"></context:component-scan>
+
+<bean id="xmlJdbcConnection"
+    class="com.panda.spring.basics.xml.XmlJdbcConnection">
+</bean>
+
+<bean id="xmlPersonDAO" class="com.panda.spring.basics.xml.XmlPersonDAO">
+    <property name="xmlJdbcConnection" ref="xmlJdbcConnection"></property>
+</bean>
+```
+
+```java
+// ...
+try (ClassPathXmlApplicationContext applicationContext =
+					 new ClassPathXmlApplicationContext("applicationContext.xml")) {
+    // ...
+}
+// ...
+```
+
+## Wrap up IOC, Application Context and BeanFactory
+
+- IOC Container - Manages beans. Create instance of WelcomeService. Creates beans for WelcomeController.
+Autowires WelcomeService bean into the WelcomeController.
+Wireing, creation of beans.
+
+- Application Context - implementation of IOC
+- Bean Factory - implementation of IOC
+
+- ApplicationContext = Bean Factory enchanced
+    - Spring AOP features
+    - I18n capabilities
+    - WebApplicationContext for web app
+
+| No Spring | With Spring |
+|---|---|
+| @RestController                       | @Component                        |
+| public class WelcomeController {      | public class WelcomeService {}    |
+|   private WelcomeService service =    |                                   |
+|       new WelcomeService();           | @RestController                   |
+|   @RequestMapping("/welcome")         | public class WelcomeController {  |
+|   public String welcome() {           |   @Autowired                      |
+|       return service.retrieveMsg();   |   private WelcomeService service; |
+|   }                                   |                                   |
+| }                                     |   @RequestMapping("/welcome")     |
+|                                       |   public String welcome() {       |
+|                                       |      return service.retrieveMsg();|
+|                                       |   }                               |
 
 
 
