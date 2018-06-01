@@ -1274,13 +1274,212 @@ try {
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hello-world"/>
-            <property name="javax.persistence.jdbc.password" value="password:/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
             <!-- ... -->
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>
 ```
+
+## Working with objects
+
+```java
+//...
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello-world");
+EntityManager em = emf.createEntityManager();
+em.getTransaction().begin();
+
+Message message = new Message("Hello"); // Transient state
+
+em.persist(message);    // persistent state - bound to session
+
+em.getTransaction().commit();
+
+em.close(); // once em is closed the message object becomes detached
+
+message.setText("Hello"); // detached
+
+```
+
+- Transient state - object does not associated with any table row
+- Persistent - Object with database identify. Primary key is set as database identifier.
+- Detached - no longer managed by EntityManager. setText will only change state in JVM memory.
+
+
+An EntityManager has a persisting context = **first level cache**
+A **cache** is a copy of data meaning pulled from but living outside the database
+
+```java
+EntityManager em2 = emf.createEntityManager();
+em2.getTransaction().begin();
+
+Message message = em2.merge(message);
+
+em2.getTransaction().commit();
+em2.close();
+```
+
+**The merge** copies all values to a persistence instace in the session. The merge will work fine when the same object
+exists in the session.
+
+
+## Caching Objects
+A code is a copy of data, copy meaning pulled from but living outside database.
+
+```java
+public class HelloWorldClient {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManager("hello-world");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Message message1 = em.find(Message.class, 8L); // issue SQL select
+        Message message2 = em.find(Message.class, 8L); // does not issue SQL select
+
+        em.getTransaction().commit();
+        em.close();
+    }
+}
+
+```
+```sql
+select
+    message0.ID as ID1_10_0_,
+    message0.TEXT as TEXT2_10_0_
+from
+    message message0_
+where
+    message0_.ID=?
+```
+
+    +----------+     +----------------------------------------+
+    | Client   |     |  +---------------------------------+   |
+    |          |     |  | +-------+                       |   |  Database Connection
+    | message1 +<----+--+-+ 8L    |                       +<--+-----------------------| DB |
+    | message2 +<----+--+-+ Hello |                       |   |
+    |          |     |  | +-------+                       |   |
+    +----------+     |  | Message Object    EntityManager +---+----> Persistence Context
+                     |  +---------------------------------+   |         (and therefore cache)
+                     |      JVM                               |
+                     +----------------------------------------+
+
+
+EntityManager == first level cache
+2 EntityManager 2 caches, hibernate does not cache persistence objects across 2 entity managers.
+
+**Second-level-cache** : cache entity manager factory
+
+**First level cache** - scope EntityManager
+**Second level cache** - scope EntityManagerFactory
+
+## SQL Joins
+
+### SQL Joins, Inner Join or Join
+
+*TableA*
+| id | name |
+|---|---|
+| 1 | Panda |
+| 2 | Tiger |
+| 3 | Dog |
+| 4 | Hamster |
+
+*TableB*
+| id | name |
+|---|---|
+| 1 | Bull |
+| 2 | Panda |
+| 3 | Lion |
+| 4 | Dog |
+
+```sql
+SELECT * FROM Table! INNER JOIN TableB ON TableA.name = TableB.name
+```
+
+| id | name | id | name |
+|---|---|---|---|
+| 1 | Panda | 2 | Panda |
+| 3 | Dog | 4 | Dog |
+
+**INNER JOIN keyword returns only the rows that match in both TableA and TableB**
+
+### Left Outer Join or Left Join
+
+```sql
+SELECT * FROM TableA LEFT OUTER JOIN TableB ON TableA.name = TableB.name
+```
+
+| id | name | id | name |
+|---|---|---|---|
+| 1 | Panda | 2 | Panda |
+| 2 | Tiger | null | null |
+| 3 | Dog | 4 | Dog |
+| 4 | Hamster | null | null |
+
+**The LEFT OUTER JOIN keyword returns all the rows from the left table (TableA),
+with the matching rows (where available) in the right table (Table).
+If there is no match, the right side will contain null.**
+
+## Lazy Fetching
+- A collection is fetched when the application invokes an operation upon the collection.
+- By default, collection associations `@OneToMany` and `@ManyToMany` are **lazily** fetched
+
+- LazyInitializationException - when try to lazy load a data ut entity manager is closed.
+
+- FetchType.EAGER data will be loaded along with Guide object
+
+*Student.java*
+```java
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    @Column(name="enr_id", nullable=false)
+    private String enrId;
+
+    @ManyToOne(cascade={CascadeType.PERSIST,
+                        CascadeType.REMOVE})
+    @JoinColumn(name="guide_id")
+    private Guide guide;
+
+    // constructors, getters
+}
+```
+
+*Guide.java*
+```java
+@Entity
+public class Guide {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    @Column(name="staff_id", nullable=false)
+    private String staffId;
+
+    private String name;
+    private Integer salary;
+
+    @OneToMany(mappedBy="guide", cascade={CascadeType.PERSIST},
+               fetch=FetchType.EAGER)
+    private Set<Student> students = new Set<>();
+
+    // constructors, getters
+}
+```
+
+By default single point associations (`@OneToOne` and `@ManyToOne`) are **eagerly** fetched.
+
+
+
+
+
+
+
+
 
 
 

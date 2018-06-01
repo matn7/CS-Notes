@@ -250,6 +250,88 @@ Wireing, creation of beans.
 |                                       |   }                               |
 
 
+## Component Annotations
+-`@Component` - generic component
+-`@Repository` - encapsulating storage, retrieval, typical for relational databases
+-`@Service` - Business serice facade
+-`@Controller` - Controller in MVC design pattern
+
+Classify components to different categories. Apply different logic for each category.
+
+## Read from properties file
+*app.properties*
+```properties
+external.service.url = http://server.com/service
+```
+
+*ExternalService.java*
+```java
+@Component
+public class ExternalService {
+    // from property file
+    @Value("${external.service.url}")
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+}
+```
+*PropertiesApplication.java*
+```java
+@Configuration
+@ComponentScan("com.panda.spring.properties")
+@PropertySource("classpath:app.properties")
+public class PropertiesApplication {
+
+	private static Logger LOGGER = LoggerFactory.getLogger(PropertiesApplication.class);
+
+	public static void main(String[] args) {
+
+		try (AnnotationConfigApplicationContext applicationContext =
+					 new AnnotationConfigApplicationContext(PropertiesApplication.class)) {
+
+			SomeExternalSerice serice = applicationContext.getBean(SomeExternalSerice.class);
+			LOGGER.info(" ===> {}", serice.returnServiceURL());
+		}
+	}
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -249,6 +249,43 @@ Removal at beginning, addition at the end.
 - ISFULL
 Linked List with pointer to the head and tail works well, or stack (2 stacks)
 
+# Trees
+## Binary Tree
+- Tree is a data structure which is made up of nodes.
+The order of element is not important in a Tree. Non-linear data structure (data organized without any sequence).
+- In binary tree
+In binary tree each node can have 0, 1 or 2 children.
+ROOT - parent node
+EDGE - Link from parent to leaf
+LEAF - border Nodes no children
+SIBLINGS - Nodes at the same level
+```java
+public static class Node<T> {
+    private T data;
+    private Node<T> leftChild;
+    private Node<T> rightChild;
+    public Node(T data) {
+        this.data = data;
+    }
+    // getters, setters
+}
+```
+
+### Binary Tree traversal
+- Breadth-First : Visit node at every level before moving the next level.
+- Depth-First : Involves going right to the leaf of the binary tree first before moving up the tree.
+  - PRE-ORDER : NODE -> LEFT SUBTREE -> RIGHT SUBTREE
+  - IN-ORDER : LEFT SUBTREE -> NODE -> RIGHT SUBTREE
+  - POST-ORDER : LEFT SUBTREE -> RIGHT SUBTREE -> NODE
+
+### Binary search tree
+Each node in the left subtree of Node has a value less than or equal to the value of the Node.
+Each node in the right subtree of Node has a value greater than the value of the Node.
+Binary search tree are typically used for **Fast insertion and fast lookup**
+- INSERTION O(Log(N))
+- LOOKUP O(LOG(N))
+Complexity is based on shape. For example if only right or left child both insertion and lookup O(N)
+
 
 
 
