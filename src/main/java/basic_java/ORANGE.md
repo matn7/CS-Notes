@@ -286,10 +286,49 @@ Binary search tree are typically used for **Fast insertion and fast lookup**
 - LOOKUP O(LOG(N))
 Complexity is based on shape. For example if only right or left child both insertion and lookup O(N)
 
+# Heaps
+## Priority Queue
+The highest priority element has to be processed first.
+INSERT
+ACCESS - the highest priority element
+REMOVE - the highest priority element
 
+| operation| Array or List unordered | Array or List ordered | Balanced binary search tree | The binary heap |
+|---|---|---|---|---|
+| insertion | O(1) | O(N) | O(Log(N)) | O(Log(N)) |
+| ACCESS | O(N) | O(1) | O(Log(N)) | O(1) |
+| REMOVE | O(N) | O(1) | O(Log(N)) | O(Log(N)) |
 
+## The Binary Heap
+A heap is a tree with special properties or constraints on the values of it's nodes. Heap property.
+Two types of Heaps
+- MINIMUM HEAP - node with smallest value is root.
+- MAXIMUM HEAP - node with largest value is root.
+Operations travels upwards (leaf -> root), trawels downwards (root -> leaf).
+Heaps can be represented using tree or array
 
+**GET PARENT**
+Node at index: i -> has parent at index (i-1)/2
 
+**GET LEFT CHILD**
+Node at index: (2*i + 1)
+
+**GET RIGHT CHILD**
+Node at index: (2*i + 2)
+
+             5
+           /   \
+          8     6
+         / \   /  \
+        9  12 11   7
+       / \
+      15  10
+
+{5,8,6,9,12,11,7,15,10}
+
+- Heapify : which is the right position of element
+    - SIFT DOWN
+    - SIFT UP
 
 
 

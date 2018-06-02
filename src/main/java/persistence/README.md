@@ -1473,6 +1473,391 @@ public class Guide {
 
 By default single point associations (`@OneToOne` and `@ManyToOne`) are **eagerly** fetched.
 
+## Equals and Hashcode
+
+```java
+// ...
+EntityManagerFactory emf = Persistence.createEntityManager("hello-world");
+EntityManager em = emf.createEntityManager();
+EntityTransaction txn = em.getTransaction();
+try {
+    txn.begin();
+    Student student1 = new Student("2013HG", "Mikey");
+    Student student2 = new Student("2013HG", "Mikey");
+    System.out.println(student1.equals(student2));
+    txn.commit();
+} catch(Exception e) {
+    if (txn != null) {
+        txn.rollback();
+    }
+    e.printStackTrace();
+} finally {
+    if (em != null) {
+        em.close();
+    }
+}
+```
+
+------------- Java Heap Memory -------------
+|a47e0b87|                      |b89a3a42|   ----->  Addresses in heap memory
+  Mikey                           Mikey
+student1                        student2
+--------------------------------------------
+
+- By default equals comparing a object by comparing their address in memory
+
+```java
+@Entity
+public class Student {
+
+    // ...
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Student)) return false;
+        Student other = (Student) obj;
+        return new EqualsBuilder().append(enrId, other.enrId).isEquals();
+    }
+
+}
+```
+
+HashCode if two objects are equals then their hashCode values should be equals as well,
+so if implement just equals method and leave hashCode unimplemented the hashCode will always
+**create 2 students** objects as if they are different objects. Even whentheir enrId are the same.
+
+```java
+// ...
+Student student1 = new Student("2013HG", "Mikey");
+Student student2 = new Student("2013HG", "Mikey");
+Set<Student> students = new HashSet<>();
+students.add(student1);
+System.out.println(students.contains(student2)); // false - before override hashCode
+// ...
+```
+- Set function check first whether hashCode are the same.
+
+**If two objects are equal, then their hashCode values must also be equal.**
+Whenever you implement **equals(Object)**, you must also implement hashCode().
+
+```java
+@Entity
+public class Student() {
+    // ...
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(enrId).toHashCode();
+    }
+    // ...
+}
+```
+
+For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return.
+If your entity will be part of a Set collection, override its equals and hashCode methods.
+
+**Busness keys - enrId**
+
+## Query language
+
+### **HQL : Hibernate Query Language**
+A JPQL query is always a valid HQL query, the reverse is not true.
+
+```java
+// ...
+try {
+    txn.begin();
+    Query query = em.createQuery("SELECT guide FROM Guide AS guide");
+    List<Guide> quides = query.getResultList();
+    for (Guide guide : gides) {
+        System.out.println(guide);
+    }
+    txn.commit();
+} catch(Exception e) {
+    if (txn != null) {
+        txn.rollback();
+    }
+    e.printStackTrace();
+} finally {
+    if (em != null) {
+        em.close();
+    }
+}
+```
+
+**Filtering Results** "SELECT guide FROM Guide guide WHERE guide.salary = 1000"
+
+### **Reporiting Queries**
+```java
+Query query = em.createQuery("SELECT guide.name, guide.salary FROM Guide guide");
+List<Object[]> returnList = query.getResultList();
+```
+- The result list will contain elements of **Object[]**
+
+### **Dynamic query**
+```java
+// ...
+String name="Mikey";    // symulating dyamic parameter
+Query query = em.createQuery("SELECT guide FROM Guide guide WHERE guide.name = '" + name "'");
+Guide guide = (Guide) query.getSingleResult();
+// ...
+```
+
+### **named parameters**
+```java
+// ...
+Query query = em.createQuery("SELECT guide FROM Guide guide WHERE guide.name = :name");
+query.setParameter("name", "Mikey");
+Guide guide = (Guide) query.getSingleResult();
+// ...
+```
+
+### **Wildcards**
+```java
+// ...
+Query query = em.createQuery("SELECT guide FROM Guide guide WHERE guide.name like 'M%'");
+List<Guide> guides = query.getResultList();
+// ...
+```
+
+Like : checks if a specified string matches a specified pattern.
+% : wildcard a substitute for zero or more characters
+
+### **Native SQL Query**
+```java
+// ...
+Query query = em.createNativeQuery("SELECT * FROM guide", Guide.class);
+List<Guide> guides = query.getResultList();
+// ...
+```
+### **Named Query**
+```java
+List<Guide> guides = (Guide) em.createNamedQuery("findByGuide").setParameter("name", "Mikey").getResultList();
+```
+
+*orm.xml*
+```xml
+<entity-mappings ...>
+    <entity class="entity.Guide">
+        <named-query name="findByGuide">
+            <query>
+                <!CData[[
+                    select g from Guide g where g.name = :name
+                ]]>
+            </query>
+        </named-query>
+    </entity>
+</entity-mappings>
+```
+<!CData[[ ]]> - clear data block, avoid conflict with special xml characters
+
+### **Aggregate Functions**
+```java
+// ...
+int numOfGuides = em.createQuery("select guide from Guide guide").getResultList().size();
+```
+
+This approach comes with the overload of work needed in converting the result set into Guide objects.
+
+```java
+// ...
+Query query = em.createQuery("SELECT COUNT(guide) FROM Guide guide");
+Long num = (Long) query.getSingleResult();
+```
+
+### **Joining Associations**
+**Join (Inner Join)**
+```java
+// ...
+Query query = em.createQuery("SELECT student FROM Student student JOIN student.guide guide");
+List<Student> students = query.getResultList();
+```
+
+```java
+@Entity
+public class Student {
+    // ...
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name="guide_id")
+    private Guide guide;
+}
+```
+
+```sql
+SELECT student,guide FROM Student student LEFT JOIN student.guide guide
+```
+| objects | object[0] | object[1] |
+|---|---|---|
+| Object[] | entity.Student@cb3346 | entity.Guide@98e4da |
+| Object[] | entity.Student@889900 | entity.Guide@98e4da |
+| Object[] | entity.Student@111aaa | null |
+
+```sql
+SELECT student,guide FROM Student student RIGHT JOIN student.guide guide
+```
+| objects | object[0] | object[1] |
+|---|---|---|
+| Object[] | entity.Student@cb3346 | entity.Guide@98e4da |
+| Object[] | entity.Student@889900 | entity.Guide@98e4da |
+| Object[] | null | entity.Guide@85ab8ee |
+
+### **Fetching Associations**
+
+```java
+@Entity
+public class Guide {
+    // ...
+    @OneToMany(mappedBy="guide", cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
+    private Set<Student> students = new HashSet<>();
+}
+```
+
+**inner join fetch**
+```java
+// ...
+Query query = em.createQuery("SELECT guide FROM Guide guide FROM FETCH guide.students student");
+List<Guide> guides = query.getResultList();
+```
+
+## Inheritance Mapping and Polymorphic Queries
+
+        +-------------------+
+        | Animal            |
+        +-------------------+
+        | - id: Long        |
+        | - name: String    |
+        +-------------------+
+        | + noise(): String |
+        +---+----------+----+
+            |          |
+           Cat        Dog
+
+### JOINED
+
+    +----------------+                               +----------------+
+    | Cat            |                               | Dog            |
+    +----------------+                               +----------------+
+    | id [BIGINT PK] |                               | id [BIGINT PK] |
+    +------+---------+                               +------+---------+
+           |                                                |
+           |                                                |
+           |        +------------------------------+        |
+           |        |   Animal                     |        |
+           |        +------------------------------+        |
+           +------->+ id [BIGINT PK]               +<-------+
+                    | name [VARCHAR(255) Nullable] |
+                    +------------------------------+
+
+### SINGLE_TABLE
+
+        +------------------------------+
+        | Animal                       |
+        +------------------------------+
+        | DTYPE [VARCHAR(31)]          |
+        | id [BIGINT PK]               |
+        | name [VARCHAR(255) Nullable] |
+        +------------------------------+
+
+### TABLE_PER_CLASS (Table per concrete class)
+
+
+    +---------------------+                      +---------------------+
+    | Cat                 |                      | Dog                 |
+    +---------------------+                      +---------------------+
+    | id [BIGINT PK]      |                      | id [BIGINT PK]      |
+    | name [VARCHAR(255)] |                      | name [VARCHAR(255)] |
+    +---------------------+                      +---------------------+
+
+**PERSIST**
+- Return type void
+- Can be used only within transaction
+- Persist for detached object will throw Exception
+- Takes less time to execute comparing to **save**
+
+
+### Inheritance (SINGLE_TABLE)
+
+*Animal.java*
+```java
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+public abstract class Animal {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public abstract String noise();
+
+    // ...
+}
+```
+
+*Dog.java*
+```java
+@Entity
+public class Dog extends Animal {
+    @Override
+    public String noise() {
+        return "Hau";
+    }
+}
+```
+
+*Cat.java*
+```java
+@Entity
+public class Cat extends Animal {
+    @Override
+    public String noise() {
+        return "Meow";
+    }
+}
+```
+
+- The class hierarchy is represented in one table
+- A discriminator column identifies the type of subclass
+
+```java
+// ...
+txn.begin();
+Cat cat = new Cat();
+cat.setName("Rebeca");
+
+Dog dog = new Dog();
+dog.setName("Majki");
+
+em.persist(cat);
+em.persist(dog);
+
+txn.commit();
+// ...
+```
+
+*Animal*
+| DTYPE | id | name |
+|---|---|---|
+| Cat | 1 | Rebeca |
+| Dog | 2 | Majki |
+
+```java
+// ...
+Query query = em.createQuery("SELECT animal FROM Animal animal");
+List<Animal> animals = query.getResultList();
+// ...
+```
+
+- **Good performance** for derived class queries, no joins required
+- All the properties in subclass must not have **not-null** constraint
+
+
+
+
+
 
 
 
