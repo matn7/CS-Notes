@@ -1498,11 +1498,11 @@ try {
 }
 ```
 
-------------- Java Heap Memory -------------
-|a47e0b87|                      |b89a3a42|   ----->  Addresses in heap memory
-  Mikey                           Mikey
-student1                        student2
---------------------------------------------
+    ------------- Java Heap Memory -------------
+    |a47e0b87|                      |b89a3a42|   ----->  Addresses in heap memory
+      Mikey                           Mikey
+    student1                        student2
+    --------------------------------------------
 
 - By default equals comparing a object by comparing their address in memory
 
@@ -1839,6 +1839,7 @@ txn.commit();
 ```
 
 *Animal*
+
 | DTYPE | id | name |
 |---|---|---|
 | Cat | 1 | Rebeca |
@@ -1855,19 +1856,241 @@ List<Animal> animals = query.getResultList();
 - All the properties in subclass must not have **not-null** constraint
 
 
+### Inheritance (JOINED)
+
+```java
+@Entity
+@Inheritance(strategy=InheritanceType.JOINED)
+public abstract class Animal {
+
+    // ...
+
+}
+```
+
+The superclass has a table and each subclass has a table that contains only un-inherited properties
+the subclass tables have a primary key that is a foreign key of the superclass.
+
+     Cat
+    +----+
+    | id |
+    +----+
+    | 1  |                  Animal
+    +----+             +----+--------+
+                       | id | name   |
+                       +----+--------+
+     Dog               | 1  | Rebeca |
+    +----+             +----+--------+
+    | id |             | 2  | Majki  |
+    +----+             +----+--------+
+    | 2  |
+    +----+
+
+- Poor performence for polymorphic queries.
+- All the properties in subclass may have not-null constraint
+- Not bad performence for derived class queries.
 
 
+### Inheritance (TABLE_PER_CLASS)
+
+*Animal.java*
+```java
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public abstract class Animal {
+    @Id
+    @GeneratedValue(strategy=GenerationType.TABLE_PER_CLASS)
+    private Long id;
+
+   // ...
+
+}
+```
+
+- Each table contains all the properties of the concrete class and also the properties that are inherited from its superclass.
+- The database identifier and its mapping have to be present in the superclass, to be shared in all subclasses and their tables.
+- Not good for polymorphic query. Good performance for derived queries.
+
+**SQL UNION**
+- The union operator is used to combine the result-set of two or more SELECT statement.
+- Each SELECT statement within UNION should have sae number of columns.
+- The column in each SELECT statement should be in same order and have same data types.
+- The UNION operator selects only distinct values by default.
 
 
+## N + 1 Selects Problem
+
+- By default, single point associations @OnetoOne and @ManyToOne are **eagerly** fetched.
+- By default, collection associations @OneToMany and @ManyToMany are **lazily** fetched.
+
+- N + 1 Selects
+    - **1 Select for all the parant objects**
+    - **1 select for each child object**
+
+:one:
+```java
+@MantToOne(cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
+@JoinColumn(name="guide_id")
+private Guide guide;
+```
+
+Switch the fetching strategy of single point associations (@OneToOne and @ManyToOne) from EAGER to LAZY.
+
+```java
+@Entity
+public class Student {
+    @MantToOne(cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
+    @JoinColumn(name="guide_id")
+    private Guide guide;
+}
+```
+Change the fetching strategy of your single point associations from EAGER to LAZY.
+
+:two:
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        Query query = em.createQuery("SELECT Student FROM Student student LEFT JOIN FETCH student.guide");
+    }
+}
+```
+Write the query based on the requirements (e.g. using left fetch join) to load the child object eagerly.
 
 
+## Batch Fetching
+
+```java
+@Entity
+public class Student {
+    // ...
+    @ManyToOne(cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
+    @JoinColumn(name="guide_id")
+    private Guide guide;
+}
+```
+
+```java
+@Entity
+@BatchSize(size=4)
+public class Guide {
+    // ...
+    @OneToMany(mappedBy="guide", cascase={CascadeType.PERSIST}, fetch=FetchType.LAZY)
+    private Set<Student> students = new HashSet<>();
+}
+```
+
+```java
+Query query = em.createQuery("SELECT student FROM Student student");
+List<Student> students = query.getResultList();
+// ...
+```
+
+- Using Batch Fetching, Hibernate can load several uninitialized proxies, even if just one proxy is accessed.
 
 
+## Merging Detached Objects
 
+      Loading objects | Modyfying loaded objects | Storing loaded objects |
+    |---------------->|------------------------->|----------------------->|
 
+        Persistence         Detached Objects        Persistence
+    ------------------>                          ------------------>
+          Context                                     Context
+                                    merge --------->
 
+*Student.java*
 
+```java
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
 
+    @Column(name="enr_id", nullable=false)
+    private String enrId;
+
+    private String name;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="guide_id")
+    private Guide guide;
+
+    // constructors, getters, setters
+}
+```
+
+*Guide.java*
+
+```java
+@Entity
+public class Guide {
+    // ...
+    @OneToMany(name="stuff_id", nullable=false)
+    private Set<Student> students = new HashSet<>();
+    // ...
+}
+```
+
+```java
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello-world");
+EntityManager em1 = emf.createEntityManager();
+em1.getTransaction().begin();
+
+Guide guide = em1.find(Guide.class, 2L);
+Set<Student> students = guide.getStudents();
+int num = students.size();
+
+Student student = null;
+for (Student next : students) {
+    if (next.getId() == 1L) {
+        student = next;
+    }
+}
+
+em1.getTransaction().commit();
+em1.close();
+
+guide.setSalary(4567);
+student.setName("Mike");
+
+EntityManager em2 = emf.createEntityManager();
+em2.getTransaction().begin();
+Guide mergedGuide = em2.merge(guide);
+em2.getTransaction().commit();
+em2.close();
+```
+
+*Guide.java*
+```java
+@Entity
+public class Guide {
+    @OneToMany(mappedBy="guide",cascade={CascadeType.MERGE})
+    private Set<Student> students = new HashSet<>();
+}
+```
+            Persistence Context
+    ------------------------------------------------------------>
+
+    ------------------------>           ------------------------>
+    txn1#begin    txn1#commit           txn2#begin    txn2#commit
+
+**CascadeType.MERGE**
+
+```java
+em.getTransaction().begin();
+// ...
+em.getTransaction().commit();
+em.close();
+
+guide.setSalary(4567);
+student.setName("Mikey");
+
+em2.getTransaction().begin();
+//  merging not needed
+em2.getTransaction().commit();
+em2.close();
+```
 
 
 

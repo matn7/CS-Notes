@@ -330,6 +330,125 @@ Node at index: (2*i + 2)
     - SIFT DOWN
     - SIFT UP
 
+## Heap Sort
+- Use Heap to help sort elements in ascending or descending order.
+- Use the heap to access the maximum element and put it in right position in array.
+- O(1) access to smallest and highest element
+- Complexity O(N(Log(N)))
+- Space complexity O(1)
+
+# GRAPH
+- Graph is used to represent relationship between entities.
+    - VERTEX
+    - EDGE
+- Graphs is set of vertices and edges
+
+            Edge
+   | A | -------------- | B |       UNDIRECTED - 2 way relationship
+  Vertex                Vertex
+
+
+            Edge
+   | A | -------------> | B |       DIRECTED - 1 way relationship
+  Vertex                Vertex
+
+
+- A and B are **Adjacent** Nodes
+
+
+    | B | ----- | F | ----- | H |           - 3 edges are INDICENT of vertex F
+                  |                         - F is said to have a degree of 3
+                  |
+                | G |
+
+- Series of edges is called **PATH**
+
+## UNDIRECTED ACYCLIC GRAPH
+A connected graph with no cycles is a TREE
+    +---+         +---+         +---+
+    | A +---------+ B +---------+ F |
+    +-+-+         +---+         +-+-+
+      |          /                |  \
+      |         /                 |   \
+      |    +---+                  |    +---+
+      |    | D |                  |    | H |
+      |    +---+                  |    +---+
+      |                           |
+      |                           |
+    +-+-+         +---+         +-+-+
+    | C +---------+ E |         | G |
+    +---+         +---+         +---+
+
+## DIRECTED ACYCLIC GRAPH (DAG)
+
+    +---+         +---+         +---+
+    | A +-------->+ B +-------->+ F |
+    +-+-+         +---+         +-+-+
+      |  A                        A  \
+      |   \                       |   V
+      |    +---+                  |    +---+
+      |    | D |                  |    | H |
+      |    +---+                  |    +---+
+      |         \                 |
+      V          V                |
+    +-+-+         +---+         +-+-+
+    | C +-------->+ E +-------->+ G |
+    +---+         +---+         +---+
+
+- 3 ways to represent Graph
+    - Adjacency matrix
+    - Adjacency list
+    - Adjecencey set
+
+### ADJACENCY MATRIX
+Use a metrix with ROWS and COLUMNS a matrix is table
+The Row labels and the column labels represent the Vertices
+Each cell represent relationship between the vertices i.e. the EDGES
+
+    +---+     +---+                   A  B  C  D  E
+    | A +---->+ B |                 +----------------
+    +-+-+     +-+-+               A | 0  1  1  0  0
+      |         A   V             B | 0  0  0  1  0
+      |         |    +---+        C | 0  0  0  0  1
+      |         |    | D |        D | 0  0  0  0  0
+      |         |    +---+        E | 0  1  0  1  0
+      V         |  A
+    +-+-+     +-+-+
+    | C +---->+ E |
+    +---+     +---+
+
+### ADJACENCY LIST
+- Each vertex is a node.
+- Each vertex has a pointer to LinkedList
+- Problem : deleting node need to go through all data structure
+
+### ADJACENCY SET
+- Instead of List use Set
+
+## Graph representation
+
+- E = Number of Edges
+- V = Number of Vertices
+
+| ... | Adjacency Matrix | Adjacency List | Adjacency Set |
+|---|---|---|---|
+| SPACE | V^2 | E + V | E + V |
+| IS EDGE PRESENT | 1 | Degree of V | log(Degree of V) |
+| ITERATE OVER EDGES ON VERTEX | V | Degree of V | Degree of V |
+
+## Graph Traversal
+- Depth First
+- Breadth First
+
+In a tree is usualy one path from root to a specific Node.
+In graph multiple paths can lead from one node to another. Graph can have cycles.
+
+## Graph Algorithms
+- Topological Sort : Directed Acyclic Graph
+If no vertices with in degree of 0 no topological sort
+
+- Running time O(V + E)
+
 
 
 

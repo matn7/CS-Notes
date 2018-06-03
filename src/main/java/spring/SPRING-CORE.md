@@ -298,9 +298,49 @@ public class PropertiesApplication {
 }
 ```
 
+## Spring Boot Auto Configuration
+
+`@SpringBootApplication`
+- Spring Context
+- Auto Configuration
+- Component Scan
+
+Spring boot looks at a) Frameworks available on CLASSPATH, b) Existing configuration for the application based on these,
+Spring boot provides basic configuration needed to configure the application with these framework. This is called
+`Auto Configuration`.
 
 
+## Spring Boot, Spring, Spring MVC
 
+`Spring Framework`
+- Most important feature of Spring Framework is Dependency Injection. At the core all Spring Modules is
+Dependency Injection or IOC Inversion of Control.
+- Reduce duplication, plumbing code.
+- Integration with other framework
+
+`Spring MVC`
+- Spring MVC framework provides decoupled way of developing web applications. With simple concepts like
+Dispatcher Servlet, ModelAndView and iewResolver, it makes it easy to develop web applications.
+
+## Spring boot
+
+*pom.xml*
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId> <!-- monitor application health -->
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId> <!-- Restart quickly -->
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-rest-hal-browser</artifactId>
+</dependency>
+```
 
 
 
