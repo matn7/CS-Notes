@@ -449,12 +449,35 @@ If no vertices with in degree of 0 no topological sort
 
 - Running time O(V + E)
 
+# MVC
+- Separating data from its visual represatnation
+- Separating data from its manipulation
+- Allowing different simultaneous representations of the same data
+- The user "sees" the model through the view, and "manipulates" it via controller
+
+**Charts**
+- Charts and tables are views
+- Numeric data are model
+- Controller -> A slider to adjust volume in a media player app
+- Model -> The MP$ file of a movie to be played in a media-player app
+- View -> The area of the media player app that actually displays video
+
+# Synchronized
+
+    public class SameClass {                        public class SomeClass {
+        synchronized static void foo() {}   ===         static void foo() {
+    }                                                       synchronized(SomeClass.class) {}
+                                                        }
+                                                     }
 
 
+    -------------------------------------------------------------------------------------------
 
-
-
-
+    public class SameClass {                  public class SomeClass {
+        synchronized void foo() {}   ===        void foo() {
+    }                                               synchronized(this) {}
+                                                }
+                                              }
 
 
 

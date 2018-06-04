@@ -2092,6 +2092,257 @@ em2.getTransaction().commit();
 em2.close();
 ```
 
+## Optimistic Locking and Versioning
+
+**Versioning**
+SQL for adding a new column "version" to the table
+
+```sql
+ALTER TABLE 'guide' ADD 'version' INT(11) NOT NULL DEFAULT '0';
+```
+
+```java
+@Entity
+public class Guide {
+    @Version
+    private Integer version;
+}
+```
+
+*guide*
+| :key: id | name | version |
+|---|---|---|
+| ... | ... | ... |
+| 654 | Samara | 0 |
+
+- Hibernate is going to check for the version number at each update.
+    - An Exception will be thrown, to prevent a lost update, if Hibernate doesn't find the In-memory version of an entity
+      to be same as the database version (current version)
+
+- Exception in thread "main" javax.persistence.OptimisticLockException:
+Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect):[entity.Guide#2]
+
+- Implementing a business process that spans through multiple transactions should be done using the versioning
+strategy to prevent lost updates.
+
+```java
+EntityManager em2 = emf.createEntityManager();
+EntityTransaction txn2 = em2.getTransaction();
+try {
+    txn2.begin();
+    Guide mergedGuide = em2.merge(guide);
+    txn2.commit();
+} catch (OptimisticLockingException ole) {
+    if (txn2 != null) {
+        txn2.rollback();
+    }
+} finally {
+    if (em2 != null) {
+        em2.close();
+    }
+}
+```
+
+**Optimistic locking** - official name of versioning strategy to prevent lost updates. **No database locking**
+
+### Pessimistic Locking (Database locking)
+Could be user only within single transaction
+
+
+```java
+EntityManager em1 = emf.createEntityManager();
+em1.getTranscation().begin();
+
+Guide guide = em1.find(Guide.class, 2L);
+em1.getTransaction().commit();
+em1.close();            // Lock database
+
+guide.setSalary(7654);  // guide object is in detached state
+
+EntityManager em2 = emf.createEntityManager();
+em2.getTranscation().begin();
+Guide mergedGuide = em2.merge(guide);
+em2.getTransaction().commit();
+em2.close();
+```
+
+- **Use Versionng Strategy (Optimistic Locking)** to prevent lost updates when implementing a conversation
+(multiple transactions/[request, response cycles])
+- Pessimistic Locking (Database Locking) is usable only within a **single transaction**
+
+- **When to use Pessimistic Locking?**
+    - When you've got multiple database queries being executed on the same data, within a single transaction
+
+```java
+List<Object[]> resultList = em.createQuery("SELECT guide.name, guide.salary FROM Guide AS guide")
+    .setLockMode(LockModeType.PESSIMISTIC_READ)
+    .getResultList();
+```
+
+## Isolation Rules
+
+- Rules for Isolation Levels
+    - Isolation level defines the extent to which a transaction is visible to other transactions.
+    - How and when the changes made by one transaction are made visible to other transactions.
+
+
+    SERIALIZABLE ---> REPEATABLE_READ ---> READ_COMMITED ---> READ_UNCOMMITED
+
+    -------------------- Lesser Isolation ---------------------------------->
+
+
+    -------------------- Better Performance -------------------------------->
+
+
+### Isolation Level - SERIALIZABLE
+TRUE ISOLATION - Slow Performance
+
+    ------------ User 1 ----------------------------- User 2 ----------------
+    start transaction                   |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  4900                        |
+                                        | start transaction
+                                        | update guide set salary = 9999 where id=3;
+                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
+                                        | commit;
+                                        |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  4900                        |
+                                        |
+    commit;                             |
+
+
+### Isolation Level - REPEATABLE_READ
+Phantom reads are possible
+Softer isolation
+
+    ------------ User 1 ----------------------------- User 2 ----------------
+    start transaction                   |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  4900                        |
+                                        | start transaction
+                                        | update guide set salary = 9999 where id=3;
+                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
+                                        | commit;
+                                        |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  4900                        |
+    Brajan  7899                        |
+
+
+### Isolation Level - READ_COMMITED
+Un repeatable reads are possible.
+Softer isolation level.
+
+    ------------ User 1 ----------------------------- User 2 ----------------
+    start transaction                   |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  4900                        |
+                                        | start transaction
+                                        | update guide set salary = 9999 where id=3;
+                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
+                                        | commit;
+                                        |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  9999                        |
+    Brajan  7899                        |
+
+
+### Isolation Level - READ_UNCOMMITED
+Dirty reads are possible
+Softer isolation level
+
+    ------------ User 1 ----------------------------- User 2 ----------------
+    start transaction                   |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  4900                        |
+                                        | start transaction
+                                        | update guide set salary = 9999 where id=3;
+                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
+                                        |
+    select name, salary from guide;     |
+                                        |
+    name    salary                      |
+    ---------------                     |
+    Mikey   1000                        |
+    Rebeca  3000                        |
+    Samara  9999                        |
+    Brajan  7899                        |
+                                        |  rollback;
+
+
+- MySQL supports all 4 isolation levels
+    - REPEATABLE_READ (default)
+
+- Oracle supports
+    - SERIABLIZABLE
+    - READ_COMMITED (default)
+
+```sql
+select @@tx_isolation;
+set global transaction isolation level SERIALIZABLE;
+```
+
+*persistence.xml*
+```xml
+<properties>
+    <property name="hibernate.connection.isolation" value="2"/>
+    <!-- 1: READ UNCOMMITED, 2: READ COMMITED, 4: REPEATABLE_READ, 8: SERIALIZABLE -->
+</properties>
+```
+
+## Caching and object identity
+
+**A Cache is ID based**
+Hibernate to be able to look for an object in a cache, it needs to know the ID of that object.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
