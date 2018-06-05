@@ -2332,8 +2332,271 @@ set global transaction isolation level SERIALIZABLE;
 Hibernate to be able to look for an object in a cache, it needs to know the ID of that object.
 
 
+## Second Level Caching
+
+- By default, Hibernate does not cache the persistent objects across different Entity Managers
+
+First Level :arrow_right: EntityManager
+
+Second Level Cache :arrow_right: EntityManagerFactory
+
+```java
+EntityManager em1 = emf.createEntityManager();
+em1.getTransaction().begin();
+
+Guide guide1 = em1.find(Guide.class, 2L);
+
+em1.getTransaction().commit();
+em1.close();
+
+EntityManager em2 = emf.createEntityManager();
+em2.getTransaction().begin();
+
+Guide guide2 = em2.find(Guide.class, 2L);
+
+em2.getTransaction().commit();
+em2.close();
+```
+
+Hibernate stores data in second level ache as Dehydrated (key-value pairs) format.
+
+- JVM
+    - L2 Cache
+        - Entity Data Cache
+        - Collection Cache
+        - Query Result Cache
+
+**L2 Cache Implementation**
+- EHCache - Single JVM
+= TreeCache from JBoss
+
+```xml
+<persistence>
+    <persistence-unit>
+        <properties>
+            <property name="javax.persistence.sharedCache.mode" value="ENABLED_SELECTIVE"/>
+            <property name="hiberate.cache.region.factory_class" value="org.hibernate.cache.ehcacheEhCacheRegionFactory"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+```
+
+```java
+@Entity
+@Cacheable
+public class Guide {
+    // ...
+}
+```
+
+*ehcache.cml*
+```java
+<ehcache>
+    <cache name="entity.Guide"
+        maxElementInMemory="1000"
+        eternal="true"
+        overflowToDisk="false"
+    />
+</ehcache>
+```
+
+**L2 cache enabled**
+```java
+EntityManager em1 = emf.createEntityManager();
+em1.getTransaction().begin();
+
+Guide guide1 = em1.find(Guide.class, 2L);
+
+em1.getTransaction().commit();
+em1.close();
+
+EntityManager em2 = emf.createEntityManager();
+em2.getTransaction().begin();
+
+Guide guide2 = em2.find(Guide.class, 2L);
+
+em2.getTransaction().commit();
+em2.close();
+
+Guide guide2 = em2.find(Guide.class, 2L);
+guide2.setSalary(4000);
+em2.getTransaction().commit();
+em2.close();
+```
+
+- When entities cache in the second-level cache are updates Hibernate invalidates them.
+- Manually invalidating the cached data of a persistence class emf.evictEntity(Guide.class);
+
+**Statistics API** to examine performance of second level cache
+
+**Cache Concurrency Strategy**
+A cache concurrency strategy defines a transaction isolation level for an entity in cache region.
+
+    TRANSCTIONAL            - read mostly data, similar to REPEATABLE_READ
+    READ_WRITE              - read mostly data, similar to READ_COMMITED
+    NONSTRICT_READ_WRITE    - data hardly ever changes
+    READ_ONLY               - data never modified example country code
+
+```java
+@Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Guide {
+    // ...
+}
+```
+
+**Second Level Cache**
+- Caching associations in second level cache
+- By default assoctated ojects aren't cached
+
+```java
+@Entity
+public class Student {
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="guide_id")
+    private Guide guide;
+
+    // ...
+}
+```
 
 
+```java
+@Entity
+@Cacheable
+public class Guide {
+    @OneToMany(mappedBy="guide",
+        cascade={CascadeType.PERSIST})
+    private Set<Student> students = new HashSet<>();
+    // ...
+}
+```
+
+## Best Practies
+### Declare identifier properties on persistence class
+
+| :key: ID | TEXT |
+|---|---|
+|||
+
+```java
+@Entity
+@Table(name="message")
+public class Message {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="ID")
+    private long id;
+
+    @Column(name="TEXT")
+    private String text;
+}
+```
+
+### Identofy natural / business keys
+```java
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private long id;
+
+    @Column(name="enr_id", nullable=false)
+    private String enrId;       // natural / business keys
+
+    private String name;
+
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColun(name="guide_id")
+    private Guide guide;
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(enrId).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Student)) return false;
+        Student other = (Student) obj;
+        return new EqualsBuilder().append(enrId, other.enrId).isEquals();
+    }
+}
+```
+
+### Do not treat exceptions as recoverable
+
+```java
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello-world");
+EntityManager entityManager = emf.createEntityManager();
+EntityTransaction txn = em.getTransaction();
+try {
+    txn.begin();
+    Message msg = new Message("Exception");
+    entityManager.persist(msg);
+    txn.commit();
+} catch (Exception e) {
+    if (txn != null) {
+        txn.rollback();
+    }
+} finally {
+    if (entityManager != null) {
+        entityManager.close();
+    }
+}
+```
+
+### Prefer lazy fetching for associations*
+
+```java
+@Entity
+public class Student {
+    @ManyToOne          // default FetchType.EAGER
+    @JoinColumn(name="guide_id")
+    private Guide guide;
+}
+```
+
+```java
+@Entity
+public class Guide {
+    @OneToMany(mappedBy="guide")
+    private Set<Student> students = new HashSet<>();
+}
+```
+
+### Prefer bidirectional associations
+```java
+@ManyToOne
+@JoinColumn(name="guide_id")
+private Guide guide;
+```
+
+```java
+@OneToMany(mappedBy="guide", cascade={CascadeType.PERSIST})
+private Set<Student> students = new HashSet<>();
+```
+
+In large application, almost all associations must be navigable in both directio gueries
+
+### Use bind variables
+```sql
+SELECT * FROM Guide guide WHERE guide.name = ?
+```
+In JDBC always replace non-constraint values by "?"
+
+### Using Second Level Cache
+
+- Good candidates
+    - Data that change rarely
+    - Noncritical data
+    - Data that's local to the application and not modified by other applications
+
+- Bad candidates
+    - Data that is updated often
+    - Financial data, where decisions must be based on latest update
+    - Daa that is shared with and / or written by other applications
 
 
 

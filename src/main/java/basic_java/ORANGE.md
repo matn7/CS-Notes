@@ -479,6 +479,67 @@ If no vertices with in degree of 0 no topological sort
                                                 }
                                               }
 
+@ Questions
+1. How to interrupt thread.
+```java
+} catch (InterruptedException e) {
+    Thread.currentThread().interupt();
+}
+```
+
+2. Sleep current thread
+```java
+TimeUnit.SECONDS.sleep(1);
+```
+
+3. What happend if extends String
+Failed String is final so cannot be extended.
+
+4. Why private constructor in inner class
+???
+
+5. When apply synchronization
+- Methods
+- Code blocks
+
+6. Remote exception
+Super class for exception related to remote method execution.
+
+7. Ways to parse XML in Java
+- DOM : entire XML structure in tree.
+- SAX : parse line after line  and triggers events while meet elements like open tag, close tag etc.
+
+8. Iterate through enum values
+```java
+public enum NUmers {
+    ONE("One"),
+    TWO("Two"),
+    THREE("Three");
+}
+
+for (NUmbers n : Numbers.values()) {
+    System.out.println(n.getName());
+}
+```
+
+9. Class to work with dates
+java.time.Date, Duration, LocalDateTime, TemporalAdjuster
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
