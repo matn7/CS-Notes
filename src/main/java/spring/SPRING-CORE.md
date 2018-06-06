@@ -234,27 +234,41 @@ Wireing, creation of beans.
     - I18n capabilities
     - WebApplicationContext for web app
 
-| No Spring | With Spring |
-|---|---|
-| @RestController                       | @Component                        |
-| public class WelcomeController {      | public class WelcomeService {}    |
-|   private WelcomeService service =    |                                   |
-|       new WelcomeService();           | @RestController                   |
-|   @RequestMapping("/welcome")         | public class WelcomeController {  |
-|   public String welcome() {           |   @Autowired                      |
-|       return service.retrieveMsg();   |   private WelcomeService service; |
-|   }                                   |                                   |
-| }                                     |   @RequestMapping("/welcome")     |
-|                                       |   public String welcome() {       |
-|                                       |      return service.retrieveMsg();|
-|                                       |   }                               |
+### Without Spring
+```java
+@RestController
+public class WelcomeController {
+  private WelcomeService service =
+      new WelcomeService();
+  @RequestMapping("/welcome")
+  public String welcome() {
+      return service.retrieveMsg();
+  }
+}
+```
+### With Spring
+```java
+@Component
+public class WelcomeService {}
+
+@RestController
+public class WelcomeController
+    @Autowired
+    private WelcomeService service;
+
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return service.retrieveMsg();
+    }
+}
+```
 
 
 ## Component Annotations
--`@Component` - generic component
--`@Repository` - encapsulating storage, retrieval, typical for relational databases
--`@Service` - Business serice facade
--`@Controller` - Controller in MVC design pattern
+- `@Component` - generic component
+- `@Repository` - encapsulating storage, retrieval, typical for relational databases
+- `@Service` - Business serice facade
+- `@Controller` - Controller in MVC design pattern
 
 Classify components to different categories. Apply different logic for each category.
 
@@ -344,18 +358,118 @@ Dispatcher Servlet, ModelAndView and iewResolver, it makes it easy to develop we
 
 ## AOP
 
+### `@Before`
+
+```java
+package com.panda.spring.aop.business;
+
+import com.panda.spring.aop.data.DaoRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class Business1 {
+
+    @Autowired
+    private DaoRepo daoRepo;
+
+    public String calculate() {
+        return daoRepo.retrieveMessage();
+    }
+}
+```
+
+```java
+@Repository
+public class DaoRepo {
+    public String retrieveMessage() {
+        return "DaoRepo";
+    }
+}
+```
+
+```java
+
+@Aspect
+@Configuration
+public class BeforeAspect {
+
+    org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Before("execution(* com.panda.spring.aop.business.*.*(..))")
+    public void before(JoinPoint joinPoint) {
+        // Advice : do this
+        logger.info("Validation before method call");
+        logger.info("Intercepted method call - {}", joinPoint);
+    }
+}
+```
+
+#### Join Point (pointcut)
+- "execution(* com.panda.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
+
+#### Advice
+logger.info("Validation before method call");
+logger.info("Intercepted method call - {}", joinPoint);
+
+- what should I do when I do interception
+
+#### Aspect
+- Combination of **Pointcut** and **Advice**
+
+#### JoinPoint
+- Specific interception of method call. Specific execution instatce. If called 100 method calls they will be
+100 joinPoints.
+
+- Process where this whole thing gets executed is called
+**Weaving** - process of implementing AOP around your method calls
+**Weaver** - framework which implements Weaving
 
 
+### `@After`
+`@After` = `@AfterReturning` + `@AfterThrowing`
 
+```java
+    // When succeed. Intercept return value
+    @AfterReturning(
+            value = "execution(* com.panda.spring.aop.business.*.*(..))",
+            returning = "result")
+    public void afterReturning(JoinPoint joinPoint, Object result) {
+        logger.info("{} returned with value {}", joinPoint, result);
+    }
 
+    // When failed. Intercept any thrown exception
+    @AfterThrowing(
+            value = "execution(* com.panda.spring.aop.business.*.*(..))",
+            throwing = "exception")
+    public void afterThrowing(JoinPoint joinPoint, Object exception) {
+        logger.info("{} throw exception {}", joinPoint, exception);
+    }
+```
 
+### `@Around`
 
+```java
+    @Around("execution(* com.panda.spring.aop.business.*.*(..))")
+    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        joinPoint.proceed();
+        long entTime = System.currentTimeMillis() - startTime;
+        logger.info("Time taken by this {} is {}", joinPoint, entTime);
+    }
+```
 
+### Best practices
+```java
+public class CommonJoinpointConfig {
+    @Pointcut("execution(* com.panda.spring.aop.business.*.*(..))")
+    public void dataLayer() {}
+}
 
-
-
-
-
+    // Before
+    @Before("com.panda.spring.aop.aspect.CommonJoinpointConfig.dataLayer()")
+        public void before(JoinPoint joinPoint) {
+```
 
 
 

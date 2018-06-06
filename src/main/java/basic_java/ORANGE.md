@@ -526,7 +526,33 @@ for (NUmbers n : Numbers.values()) {
 java.time.Date, Duration, LocalDateTime, TemporalAdjuster
 
 
+10. Iterator and how it works
+Mechanism to process elements n order.
+Iterable<T> interface defines Iterator<T> iterator() method which returns an iterator, which can be used to visit all
+elements in collection.
 
+11. How parallel streams works in Java?
+Stream is splitted and then each parts are processed and then join.
+When task last for long time it blocks all threads in pools. As a result it block rest of task that uses parallelStream.
+
+12. Stream API in Java8
+Java use Fork Join Framework.
+ParallelStream split big task on small subtask process them and then join together.
+Java8 Streams is based on convert collection to streams.
+
+13. Collections vs Streams
+Collections in memory data structures. Each element is calculated before become part of collection.
+Streams are computed o emand.
+Streams can be defined as sequences of elements that supports aggregate operations like:
+filter, map, reduce, find.
+Streams don't have methods like foreach which internally iterate through elements. Code is unaware iteration logic.
+
+14. How map and filter works in Java
+- map : process data to stream
+- filter : argument of filter is Predicate<T>, function that converts T to boolean
+
+List<String> names = students.steram().map(student::getName).filter(name->name.startsWith("A"))
+    .collect(Collectors.toList());
 
 
 

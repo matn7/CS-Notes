@@ -546,14 +546,16 @@ Hibernate uses reasonable default values not only for XML-based mapping metadata
 
 ### `@ManyToOne`
 
-Many side
+**Many side**
+
 | Student |
 |---|
 | id: Long |
 | enrId: String |
 | name: String |
 
-One Side
+**One Side**
+
 | Guide |
 |---|
 | id: Long |
@@ -563,11 +565,13 @@ One Side
 
 Each **Student** has a **Guide**
 
-Student
+**Student**
+
 | id :key: | enr_id | name | quide_id |
 |---|---|---|---|
 
-Guide
+**Guide**
+
 | id :key: | staff_id | name | salary |
 |---|---|---|---|
 
@@ -936,6 +940,7 @@ nicknames               :arrow_right:       {0, :arrow_right: Majko
                                              2} :arrow_right: Mak
 
 **Friend_nickname** Collection table
+
 | :key: nickname | friend_id |
 |---|---|
 | Majko | 1 |
@@ -943,6 +948,7 @@ nicknames               :arrow_right:       {0, :arrow_right: Majko
 | Mak | 1|
 
 **Friend**
+
 | :key: id | name | email |
 |---|---|---|
 | 1 | Majki | majki@maki.com |
@@ -1006,7 +1012,7 @@ ALTER TABLE friend_nickname ADD PRIMARY_KEY(friend_id, nickname);
 ### Composite Primary Key
 A combination of more than 1 table column that identifies the uniqueness of a record (database table row)
 
-| :key" firstname | :key: lastname |
+| :key: firstname | :key: lastname |
 |---|---|
 |||
 ------------------------------------------------------------------------------
@@ -2110,9 +2116,9 @@ public class Guide {
 ```
 
 *guide*
+
 | :key: id | name | version |
 |---|---|---|
-| ... | ... | ... |
 | 654 | Samara | 0 |
 
 - Hibernate is going to check for the version number at each update.
@@ -2186,12 +2192,12 @@ List<Object[]> resultList = em.createQuery("SELECT guide.name, guide.salary FROM
     - How and when the changes made by one transaction are made visible to other transactions.
 
 
-    SERIALIZABLE ---> REPEATABLE_READ ---> READ_COMMITED ---> READ_UNCOMMITED
+    SERIALIZABLE :arrow_right: REPEATABLE_READ :arrow_right: READ_COMMITED :arrow_right: READ_UNCOMMITED
 
-    -------------------- Lesser Isolation ---------------------------------->
+    :arrow_right: Lesser Isolation :arrow_right:
 
 
-    -------------------- Better Performance -------------------------------->
+    :arrow_right: Better Performance :arrow_right:
 
 
 ### Isolation Level - SERIALIZABLE
