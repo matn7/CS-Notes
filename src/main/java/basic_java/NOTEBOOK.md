@@ -140,7 +140,68 @@ for (Map.Entry<String, Integer> wpis : counts.entrySet()) {
 }
 ```
 
+## equals
 
+```java
+public class Item {
+    private String desc;
+    private double price;
+
+    public boolean equals(Object otherObject) {
+        // check whether objects are equals
+        if (this == otherObject) return true;
+
+        // Must return false if parametr is null
+        if (otherObject == null) return false;
+
+        // Check whether object is instance of Item class
+        if (getClass() != otherObject.getClass()) return false;
+
+        // Check value
+        Item other = (Item) otherObject;
+        return Object.equals(desc == other.desc && price == other.price);
+    }
+}
+```
+
+## Constructor chaining
+
+```java
+public class Temporal {
+    public Temporal(int x, int y) {
+        this(5);
+        System.out.println(x * y);
+    }
+
+    public Temporal(int x) {
+        this();
+        System.out.println(x);
+    }
+
+    public Temporal() {
+        System.out.println("Default");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Temporal temp = new Temporal(23,34); // output : "Default", "5", "782"
+    }
+```
+
+## Some
+- An object of **entity type** has its own DB identity primary key
+- An object of **value type** has no DB identity, it belongs to an entity
+- By default equals comparing an object by comparing their address in memory
+- Leave unimplemeted hashCode will always create new object as if they different objects
+
+## Hash Table vs HashMap
+
+| HashTable | HashMap |
+|---|---|
+| synchronized | not synchronized |
+| null key or values not allowed | Allows one NULL kay and any number of NUL values |
+| | Subclass is LinkedHashMap (maintein insertion order) |
 
 
 

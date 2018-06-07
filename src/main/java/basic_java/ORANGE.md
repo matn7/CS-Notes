@@ -554,8 +554,20 @@ Streams don't have methods like foreach which internally iterate through element
 List<String> names = students.steram().map(student::getName).filter(name->name.startsWith("A"))
     .collect(Collectors.toList());
 
+15. How Optional works?
+It helps work with null pointers.
+OfNullable - create optional value if exists
+ifPresent - is triggered when Optional is null
 
+16. Default methods in interfaces.
+It is possible to provide default implementation of method in interface.
 
+```java
+public interface IntSeq {
+    default boolean hasNext() { return true; }
+}
+```
+Class that implements this interface can override this method or provide new implemetation.
 
 
 

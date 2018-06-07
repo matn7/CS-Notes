@@ -471,6 +471,74 @@ public class CommonJoinpointConfig {
         public void before(JoinPoint joinPoint) {
 ```
 
+### Create annototion
+
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Stoper {
+}
+
+@Repository
+public class DaoRepo {
+
+    @Stoper
+    public String retrieve() {
+        return "DaoRepo";
+    }
+}
+
+public class CommonJoinpoint {
+    @Pointcut("@annotation(com.panda.spring.aop.aspect.Stopper)")
+    public void stopper() {
+    }
+}
+
+@Aspect
+@Configuration
+public class AroundAspect {
+
+    org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Around("com.panda.spring.aop.aspect.CommonJoinpoint.trackTimeAnnotation()")
+    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        joinPoint.proceed();
+        long endTime = System.currentTimeMillis() - startTime;
+        logger.info("Time taken by this {} is {}", joinPoint, endTime);
+    }
+
+}
+```
+
+## ConcurrentHashMap
+- Provides thread safety and memory consistent atomic operations.
+- getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge
+- ConcurrentMap does not allow null key or value
+
+## Garbage collectors
+### Serial GC
+- One thread on single CPU.
+- Stop application execution.
+- Small apps up to 100MB, that do not have low pause time requirements
+
+### Parallel GC
+- Multiple threads on multiple CPU.
+- Faster GC through use multiple CPU
+- Do not want to stop application, performance of application is key
+
+### Parallel Compaction Collector
+- Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint
+
+### Concurrent Mark-Sweep Collector CMS
+- CMS has algorithm which service big collections whic results in long pauses.
+- Reply time is more important than throughput
+
+### Garbage first G1 Collector
+- Multi processors machines with vast memory.
+- Server style GC, hight time probaility and high throughput.
+- Late heap operations Global Marking sre executed parallely with application thread.
+
 
 
 
