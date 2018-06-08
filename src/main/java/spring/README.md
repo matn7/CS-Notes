@@ -319,12 +319,13 @@ DAO (Data Access Object) is a design pattern. The DAO pattern is now a widely ac
 persistence in application.
 The idea is that instead of having the domain logic comminicate directly with the database, file system, web service or whatewer
 persistence mechanism your application uses, the domain logic speaks to a DAO layer instead.
-                        +--------------------------------------+
-+-------------------+   |  +-----------+    +------+           |
-| Application       +---+--+ DAO       +<-->+ DAO  |           | JDBC
-| Persistence Layer +<--+--+ Interface +<-->+ Impl +<----------+-------> DB
-+-------------------+   |  +-----------+    +------+ DAO Layer |
-                        +--------------------------------------+
+
+                            +--------------------------------------+
+    +-------------------+   |  +-----------+    +------+           |
+    | Application       +---+--+ DAO       +<-->+ DAO  |           | JDBC
+    | Persistence Layer +<--+--+ Interface +<-->+ Impl +<----------+-------> DB
+    +-------------------+   |  +-----------+    +------+ DAO Layer |
+                            +--------------------------------------+
 
 ## Spring MVC in depth
 

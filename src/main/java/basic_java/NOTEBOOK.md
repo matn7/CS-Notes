@@ -204,6 +204,62 @@ public class Main {
 | | Subclass is LinkedHashMap (maintein insertion order) |
 
 
+- To declare side as not responsible for relationship the attribute mapped by is used.
+- A Business Key is also called natural key
+- Synthetic identifier is an identifier with no usiness meaning.
+- TRANSIENT STATE : object don't associated with any table row
+- PERSISTENT STATE : object with database identity. Primary key is set of database identity
+- DETACHED : no longer manage by Entity Manager
+
+##. No argument constructor
+No argument constructor for hibernate to be able to instantiate objects using Java Reflection
+
+- Owner is the entity that is persisted to the table that has the foreign key column.
+
+| Hibernate | JPA |
+|---|---|
+| SessionFactory | EntityManagerFactory |
+| Session | EntityManager |
+| Transaction | EntityTransaction |
+
+##. LazyInitializationException
+When we try to Lazy Load data but entity manager is closed
+
+##. Optimistic Locking
+Official name of the versioning. Strategy to prevent lost updates. No database locking.
+
+## When to use pesimistic locking
+When you've got multiple database queries being executed on the same data within a single transaction.
+
+
+##. ConcurrentHashMap
+- Provides thread safety and memory consistent atomic operations.
+- getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge
+- ConcurrentMap does not allow null key or value
+
+##. Garbage collectors
+- Serial GC
+    - One thread on single CPU.
+    - Stop application execution.
+    - Small apps up to 100MB, that do not have low pause time requirements
+
+- Parallel GC
+    - Multiple threads on multiple CPU.
+    - Faster GC through use multiple CPU
+    - Do not want to stop application, performance of application is key
+
+- Parallel Compaction Collector
+    - Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint
+
+- Concurrent Mark-Sweep Collector CMS
+    - CMS has algorithm which service big collections whic results in long pauses.
+    - Reply time is more important than throughput
+
+- Garbage first G1 Collector
+    - Multi processors machines with vast memory.
+    - Server style GC, hight time probaility and high throughput.
+    - Late heap operations Global Marking sre executed parallelly with application thread.
+
 
 
 

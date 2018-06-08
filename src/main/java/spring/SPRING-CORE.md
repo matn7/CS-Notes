@@ -32,7 +32,7 @@ public class HomeDataService {
 
 ## AUTOWIRING
 
-### By name
+### 1. By name
 ```java
 @Component
 public class SortServiceImpl {
@@ -41,7 +41,7 @@ public class SortServiceImpl {
 }
 ```
 
-### By `@Primary` higher priority than by name
+### 2. By `@Primary` higher priority than by name
 ```java
 @Component
 @Primary
@@ -50,7 +50,7 @@ public class BubbleSortAlgorithm implements SortAlgorithm {
 }
 ```
 
-### `@Qualifier` (highest priority)
+### 3. `@Qualifier` (highest priority)
 ```java
 @Component
 @Qualifier("quick")
@@ -238,8 +238,7 @@ Wireing, creation of beans.
 ```java
 @RestController
 public class WelcomeController {
-  private WelcomeService service =
-      new WelcomeService();
+  private WelcomeService service = new WelcomeService();
   @RequestMapping("/welcome")
   public String welcome() {
       return service.retrieveMsg();
@@ -409,8 +408,10 @@ public class BeforeAspect {
 - "execution(* com.panda.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
 
 #### Advice
+```java
 logger.info("Validation before method call");
 logger.info("Intercepted method call - {}", joinPoint);
+```
 
 - what should I do when I do interception
 
@@ -511,33 +512,7 @@ public class AroundAspect {
 }
 ```
 
-## ConcurrentHashMap
-- Provides thread safety and memory consistent atomic operations.
-- getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge
-- ConcurrentMap does not allow null key or value
 
-## Garbage collectors
-### Serial GC
-- One thread on single CPU.
-- Stop application execution.
-- Small apps up to 100MB, that do not have low pause time requirements
-
-### Parallel GC
-- Multiple threads on multiple CPU.
-- Faster GC through use multiple CPU
-- Do not want to stop application, performance of application is key
-
-### Parallel Compaction Collector
-- Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint
-
-### Concurrent Mark-Sweep Collector CMS
-- CMS has algorithm which service big collections whic results in long pauses.
-- Reply time is more important than throughput
-
-### Garbage first G1 Collector
-- Multi processors machines with vast memory.
-- Server style GC, hight time probaility and high throughput.
-- Late heap operations Global Marking sre executed parallely with application thread.
 
 
 

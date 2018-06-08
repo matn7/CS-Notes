@@ -479,6 +479,8 @@ If no vertices with in degree of 0 no topological sort
                                                 }
                                               }
 
+
+
 @ Questions
 1. How to interrupt thread.
 ```java
@@ -569,6 +571,91 @@ public interface IntSeq {
 ```
 Class that implements this interface can override this method or provide new implemetation.
 
+15. BigO notation
+What is a resource requirements as input of a problem gets larger
+
+- Access to element in table : O(N)
+- Access to element in sorted table : O(1)
+- Access to element in hashTable : O(N)
+- Access to element in tree (binary tree) : O(log(N)) or O(N)
+- Quick Sort : O(N(log(N)))
+- Bubble Sort : O(N^2)
+
+16. Stability of sorting algorithm
+- Elements with the same hashCode stays on the same position after sorting. For example in bubble sort, panda, panda, pies.
+panda would change position with other panda in even though of a fact that they have the same hashCode.
+
+17. In what format keep prices
+- BigDecimal
+
+18. Factorial
+
+```java
+public class Factorial {
+    public static void main(String[] args) {
+        System.out.println(factorial(5));
+    }
+
+    public static int factorial(int num) {
+        int result = 1;
+        if (num == 0 || num == 1) {
+            return result;
+        } else {
+            for (int i = 2; i < num; i++) {
+                result *= i;
+            }
+            return result;
+        }
+    }
+}
+```
+
+19. Fibonacci
+```java
+public class FibonacciIterative {
+    public int calculateFibo(int number) {
+        int result = 0;
+        int a = 1; // for 1
+        int b = 1; // for 2
+        if (number == 0) {
+            return 0;
+        } else if (number == 1 || number == 2) {
+            return 1;
+        } else {
+            for (int i = 3; i <= number; i++) {
+                result = a + b;
+                a = b;
+                b = result;
+            }
+        }
+        return result;
+
+    }
+
+    public int[] calculateFiboArr(int number) {
+        int[] result = new int[number];
+        for (int i = 0; i < number; i++) {
+            result[i] = calculateFibo(i);
+        }
+        return result;
+    }
+}
+```
+
+20. Is power of
+```java
+public class IsPowerOf {
+    public boolean check(int num, int power) {
+        int j = power;
+        for (int i = 1; i < 10; i++) {
+            if (Math.pow(j, 1.0/i) == power) {
+                System.out.pritnln(j + " is power of " + power);
+            }
+            j *= power;
+        }
+    }
+}
+```
 
 
 
