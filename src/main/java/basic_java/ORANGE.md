@@ -657,6 +657,117 @@ public class IsPowerOf {
 }
 ```
 
+21. Reverse String
+
+```java
+public class ReverseString {
+    public static void main(String[] args) {
+        reverseString("Panda");
+    }
+
+    public static void reverseString(String str) {
+        char[] strChar = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            strChar[i] = str.charAt(str.length()-i-1);
+        }
+        String strValue = String.valueOf(strChar);
+        System.out.println(strValue);
+    }
+}
+```
+
+22. Big or small
+
+```java
+public class BigOrSmall {
+    public static void main(String[] args) {
+        Scaner scanner = new Sacnner(System.in);
+        String str = scanner.nextLine();
+        char ch = str.charAt(0);
+        // check unicode
+        if (ch >= 65 || ch < 90) {
+            System.out.println("First letter is Big");
+        } else {
+            System.out.println("First letter is small");
+        }
+    }
+}
+```
+
+23. hashCode
+- If objects are equal by equals, they also need to have the same hashCode.
+- If hashCode has following implementation
+```java
+public int hashCode() { return 42; }
+```
+Then all objects are signed to the same bucket and hash table will degrade to normal list
+
+24. Palidrome
+```java
+public class Palidrome {
+    public static boolean isPalidrome(String str) {
+        if (str.length() == 0 || str.length() == 1) {
+            return true;
+        }
+        if (str.charAt(0) == str.charAt(str.length() - 1) {
+            return isPalidrome(str.substring(1,str.length()-1));
+        }
+        return false;
+    }
+}
+
+// ABCDCBA ==> true
+// BCDCB   ==> true
+// CDC     ==> true
+// D       ==> true
+```
+
+25. First not repeat
+```java
+public class FirstNonRepeat {
+    public static Character firstNonRepeat(String str) {
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            if (map.contains(str.charAt(i)) {
+                map.put(str.charAt(i), map.get(str.charAt(i)) + 1);
+            } else {
+                map.put(str.charAt(i), 1);
+            }
+        }
+
+        for (int i = 0; i < str.length(); i++) {
+            if (map.get(str.charAt(i)) == 1) {
+                return str.charAt(i);
+            }
+        }
+        return null;
+    }
+}
+```
+
+26. Bigger and Smaller
+```java
+public class BiggerAndSmaller {
+    private int bigger = Integer.MIX_VALUE;
+    private int smaller = Integer.MAX_VALUE;
+
+    public void find(int[] numbers) {
+        for (int next : numbers) {
+            if (next > bigger) bigger = next;
+            if (next < smaller) smaller = next;
+        }
+    }
+
+    public int getBigger() {
+        return bigger;
+    }
+
+    public int getSmaller() {
+        return smaller;
+    }
+}
+```
 
 
 

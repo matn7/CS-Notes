@@ -7,5 +7,4 @@ public interface Order {
     // Decorated class must implmets this interface
     double getPrice();
     String getLabel();
-
 }

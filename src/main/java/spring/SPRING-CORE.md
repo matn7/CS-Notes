@@ -512,20 +512,94 @@ public class AroundAspect {
 }
 ```
 
+## Spring Boot Autoconfiguration
+
+Some examples loaded by app context for us:
+
+   DataSourceAutoConfiguration.EmbeddedDatabaseConfiguration:
+      Did not match:
+         - EmbeddedDataSource found supported pooled data source (DataSourceAutoConfiguration.EmbeddedDatabaseCondition)
+
+   DataSourceTransactionManagerAutoConfiguration.DataSourceTransactionManagerConfiguration#transactionManager:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.transaction.PlatformTransactionManager; SearchStrategy: all) found beans of type 'org.springframework.transaction.PlatformTransactionManager' transactionManager (OnBeanCondition)
+
+   H2ConsoleAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.h2.server.web.WebServlet'; @ConditionalOnMissingClass did not find unwanted class (OnClassCondition)
+      - found ConfigurableWebEnvironment (OnWebApplicationCondition)
+      - @ConditionalOnProperty (spring.h2.console.enabled=true) matched (OnPropertyCondition)
 
 
+## JPA
+*Person.java*
+```java
+@Entity
+@Table(name="person")
+@NamedQuery(name="finad_all", query = "select p from Person p")
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
+    @Column(name = "name")
+    private String name;
 
+    @Column(name = "location")
+    private String location;
 
+    // ...
+}
+```
 
+*PersonRepository.java*
+```java
+@Repository
+@Transactional
+public class PersonRepository {
 
+    @PersistenceContext
+    EntityManager entityManager;
 
+    public List<Person> findAll() {
+        TypedQuery<Person> namedQuery = entityManager.createNamedQuery("finad_all", Person.class);
+        return namedQuery.getResultList();
+    }
 
+    public Person findById(int id) {
+        return entityManager.find(Person.class, id);
+    }
 
+    public Person update(Person person) {
+        return entityManager.merge(person);
+    }
 
+    public Person insert(Person person) {
+        return entityManager.merge(person);
+    }
 
+    public void deleteById(int id) {
+        Person person = findById(id);
+        if (person != null) {
+            entityManager.remove(person);
+        }
+    }
+}
+```
 
+## Spring Data JPA
 
+*SpringDataRepository.java*
+```java
+public interface SpringDataRepository extends JpaRepository<Person, Integer> {
+}
+```
+*Use*
+```java
+repository.findById(12);
+repository.save(new Person("Panda", "China", new Date());
+repository.findAll();
+repository.deleteBYId(12);
+```
 
 
 
