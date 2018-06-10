@@ -151,19 +151,20 @@ public class SampleController {
 
     USER ---> Security Interceptor ---> Authenticated   --- yes ---> Controller
 
-                                          :arrow_lower_right:
+
 
     Authentication      Authentication      Authentication      UserDetails     SecurityContextHolder
                             Manager             Provider            Service
 
 ### Security Context Holder
 
-``java
+```java
 SecurityContextHolder.getContext().getAuthentication().getName();
 UserEntity user = this.autoUserRepository.findByUsername(username);
 ```
 
 ### UserDetails
+
 *UserEntity.java*
 ```java
 @Entity

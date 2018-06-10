@@ -162,6 +162,67 @@ Composition = "has-a", Inheritance = "Is-a"
 Each defines behavior by setting member variables of a class
 
 # Creational Pattern
+Factory
+## Factory Pattern
+Creational pattern provides one of the best ways to create an object. In factory we create object without exposing the creaction logic to
+the client and refer to newly created object using a common interface.
+
+- The factory object reads in the name of the class to instantiate from a config file, and uses
+reflection to istantiate the correct object.
+A config file is simply a text file used to specify inputs that application uses at runtime.
+If config file is changing, it does not need to be changed and re-released.
+
+- What is the basic idea of Factory Pattern?
+    - Decouple instantiation of a class from its use
+    - Create a mechanism for many alternative implementations to be instantiated from a single method.
+
+**Implementing Factory Pattern**
+*Plane.java*
+```java
+public interface Plane {
+    // Any Plane that factory returns must implement this interface
+    void model();
+}
+```
+*Junkers.java*
+```java
+public class Junkers implements Plane {
+    // Concrete Plane implementation
+    @Override
+    public void model() {
+        System.out.println("Junkers Ju 87 Stuka produced");
+    }
+}
+```
+*PlaneFactory.java*
+```java
+public class PlaneFactory {
+    // Factory says that it returns something that implements plane
+    public static Plane getPlane(PlaneType planeType) {
+        switch (planeType){
+            case HEINKEL:
+                return new Heinkel();
+            case JUNKERS:
+                return new Junkers();
+            case MESSERSCHMITT:
+                return new Messerschmitt();
+        }
+        return null;
+    }
+}
+```
+
+*USE*
+```java
+public class Main {
+
+    public static void main(String[] args) {
+        Plane plane = PlaneFactory.getPlane(PlaneType.JUNKERS);
+        plane.model();
+    }
+}
+```
+
 
 # Structural Pattern
 Decorator,

@@ -232,12 +232,12 @@ Official name of the versioning. Strategy to prevent lost updates. No database l
 When you've got multiple database queries being executed on the same data within a single transaction.
 
 
-##. ConcurrentHashMap
+## ConcurrentHashMap
 - Provides thread safety and memory consistent atomic operations.
 - getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge
 - ConcurrentMap does not allow null key or value
 
-##. Garbage collectors
+## Garbage collectors
 - Serial GC
     - One thread on single CPU.
     - Stop application execution.

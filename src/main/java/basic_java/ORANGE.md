@@ -1,4 +1,5 @@
-# Complexity - is a measure of how resource requirements change as the size of problem gets larger
+# Complexity
+Is a measure of how resource requirements change as the size of problem gets larger
 
 ## Big O Notation - allows express complexity as a resource of input size
 
@@ -343,57 +344,57 @@ Node at index: (2*i + 2)
     - EDGE
 - Graphs is set of vertices and edges
 
-            Edge
-   | A | -------------- | B |       UNDIRECTED - 2 way relationship
-  Vertex                Vertex
+                Edge
+       | A | -------------- | B |       UNDIRECTED - 2 way relationship
+      Vertex                Vertex
 
 
-            Edge
-   | A | -------------> | B |       DIRECTED - 1 way relationship
-  Vertex                Vertex
+                Edge
+       | A | -------------> | B |       DIRECTED - 1 way relationship
+      Vertex                Vertex
 
 
 - A and B are **Adjacent** Nodes
 
 
-    | B | ----- | F | ----- | H |           - 3 edges are INDICENT of vertex F
-                  |                         - F is said to have a degree of 3
-                  |
-                | G |
+        | B | ----- | F | ----- | H |           - 3 edges are INDICENT of vertex F
+                      |                         - F is said to have a degree of 3
+                      |
+                    | G |
 
 - Series of edges is called **PATH**
 
 ## UNDIRECTED ACYCLIC GRAPH
-A connected graph with no cycles is a TREE
-    +---+         +---+         +---+
-    | A +---------+ B +---------+ F |
-    +-+-+         +---+         +-+-+
-      |          /                |  \
-      |         /                 |   \
-      |    +---+                  |    +---+
-      |    | D |                  |    | H |
-      |    +---+                  |    +---+
-      |                           |
-      |                           |
-    +-+-+         +---+         +-+-+
-    | C +---------+ E |         | G |
-    +---+         +---+         +---+
+    A connected graph with no cycles is a TREE
+        +---+         +---+         +---+
+        | A +---------+ B +---------+ F |
+        +-+-+         +---+         +-+-+
+          |          /                |  \
+          |         /                 |   \
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |                           |
+          |                           |
+        +-+-+         +---+         +-+-+
+        | C +---------+ E |         | G |
+        +---+         +---+         +---+
 
 ## DIRECTED ACYCLIC GRAPH (DAG)
 
-    +---+         +---+         +---+
-    | A +-------->+ B +-------->+ F |
-    +-+-+         +---+         +-+-+
-      |  A                        A  \
-      |   \                       |   V
-      |    +---+                  |    +---+
-      |    | D |                  |    | H |
-      |    +---+                  |    +---+
-      |         \                 |
-      V          V                |
-    +-+-+         +---+         +-+-+
-    | C +-------->+ E +-------->+ G |
-    +---+         +---+         +---+
+        +---+         +---+         +---+
+        | A +-------->+ B +-------->+ F |
+        +-+-+         +---+         +-+-+
+          |  A                        A  \
+          |   \                       |   V
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |         \                 |
+          V          V                |
+        +-+-+         +---+         +-+-+
+        | C +-------->+ E +-------->+ G |
+        +---+         +---+         +---+
 
 - 3 ways to represent Graph
     - Adjacency matrix
@@ -405,17 +406,17 @@ Use a metrix with ROWS and COLUMNS a matrix is table
 The Row labels and the column labels represent the Vertices
 Each cell represent relationship between the vertices i.e. the EDGES
 
-    +---+     +---+                   A  B  C  D  E
-    | A +---->+ B |                 +----------------
-    +-+-+     +-+-+               A | 0  1  1  0  0
-      |         A   V             B | 0  0  0  1  0
-      |         |    +---+        C | 0  0  0  0  1
-      |         |    | D |        D | 0  0  0  0  0
-      |         |    +---+        E | 0  1  0  1  0
-      V         |  A
-    +-+-+     +-+-+
-    | C +---->+ E |
-    +---+     +---+
+        +---+     +---+                   A  B  C  D  E
+        | A +---->+ B |                 +----------------
+        +-+-+     +-+-+               A | 0  1  1  0  0
+          |         A   V             B | 0  0  0  1  0
+          |         |    +---+        C | 0  0  0  0  1
+          |         |    | D |        D | 0  0  0  0  0
+          |         |    +---+        E | 0  1  0  1  0
+          V         |  A
+        +-+-+     +-+-+
+        | C +---->+ E |
+        +---+     +---+
 
 ### ADJACENCY LIST
 - Each vertex is a node.
@@ -481,7 +482,7 @@ If no vertices with in degree of 0 no topological sort
 
 
 
-@ Questions
+# Questions
 1. How to interrupt thread.
 ```java
 } catch (InterruptedException e) {
@@ -768,6 +769,294 @@ public class BiggerAndSmaller {
     }
 }
 ```
+
+27. Linked List
+Sequence of elements in which every element links to next element.
+Can contain any type of data.
+Elements Unsorted, Sorted, Duplicates, Unique
+
+DISADVANTEGER
+- Slow to get k th element O(N)
+
+ADVANTAGES
+- insert and delete can be quick O(1) prepend, O(n) append
+
+28. Stacks and Queues
+- Linear data structure
+- Flexible sizes
+
+    | Q | U | E | U | E | S |
+
+    | S |
+    | T |
+    | A |
+    | C |
+    | K |
+    | S |
+
+29. Heap
+
+                    | 2 |                       | 2 |
+                   /     \                      | 4 |
+              | 4 |       | 8 |                 | 8 |
+             /     \    10     \                | 9 |
+        | 9 |       | 7 |       | 9 |           | 7 |
+       /     \   13                             | 10|
+ | 15 |       | 10 |                            | 9 |
+                                                | 15|
+                                                | 10|
+                                                | 13|
+
+            | PARENT | (index - 2) / 2
+                |
+             | index |
+            /         \
+    | LEFT |           | RIGHT |
+    index*2 + 1         index*2 + 2
+
+30. Tree
+
+        ROOT
+       /    \
+    LEAF   CHILD
+                \
+                LEAF
+
+
+The binary TREE
+o to 2 child nodes (left, right)
+
+The binary tree
+- Left node is less than root node
+
+Insert like find
+
+    BALANCED                    UNBALANCED
+
+         4                           1
+       /   \                          \
+      2     5                          2
+    /   \    \                          \
+  1      3    6                          3
+
+    insert: O(log(N))                insert: O(N)
+    find: O(log(N))                  find: O(N)
+
+TRAVERSING
+INORDER                         PREORDER                    POSTORDER
+left -> root -> right       root -> left -> right       left -> right -> root
+
+31. Big O Notation
+Equation that describes how the run time change with respect to input
+1. Different steps got added                    O(a + b)
+2. Drop constants                               O(2N) => O(N)
+3. Differnet inputs => different variables      O(a * b)
+4. Drop non dominate terms                      O(N + N^2) => O(N^2)
+
+32. Algorithm efficiencies
+
+| Algorithm | Concrete Type | Time |
+|---|---|---|
+| get, set | ArrayList | O(1) |
+| add, remove | ArrayList | O(N) |
+| contains, index of | ArrayList | O(N) |
+| get, put, remove, contains key | HashMap | O(1) |
+| add, remove, contains | HashSet | O(1) |
+| add, remove, contains | LinkedHashSet | O(1) |
+| get, set, add, remove (from either end) | LinkedList | O(1) |
+| get, set, add, remove (from index) | LinkedList | O(N) |
+| contains, index of | LinkedList | O(N) |
+| peek | PriorityQueue | O(1) |
+| add, remove | PriorityQueue | O(log(N)) |
+| remove, get, put, contains key | TreeMap | O(log(N)) |
+| add, remove, contains | TreeSet | O(log(N)) |
+
+**Big O notation** is used to indicate time efficiencies, where n is the number of elements
+
+| Notation | Description |
+|---|---|
+| O(1) | Time is constant, regardles of the number of element |
+| O(N) | Time is linear to the number of elements |
+| O(log(N)) | Time is logarithmic to the number of elements |
+| O(Nlog(N)) | Time is linearithmic to the number of elements |
+
+33. Collections
+The Collections are objects that group multiple elements and store, retrieve and manipulate these objects.
+The Collection interface is the root of the Collection hierarchy.
+Subinterfaces of Collection include List, Queue and Set
+
+| Interface | Ordered | Duplications | Notes |
+| List | Yes | Yes | Positional access, element insertion control |
+| Map | Can be | No | Unique keys, one value mapping max per key |
+| Queue | Yes | Yes | Holds elements, usually FIFO |
+| Set | Can be | No | Unique matters |
+
+Collection.stream() returns a sequential stream with the context collection as its source.
+Collection.parallelStream() returns a parallel stream with the context collection as its source
+Collection.addAll(), .max(), .min(), .remove(), .rotate()
+
+
+34. Garbage Collector
+
+    Young generation    Old Generation      Permanant Generation
+    +-----------------+-----------------+---------------------------+
+    | Eden            | Tenured         | Perm                      |
+    +-----------------+-----------------+---------------------------+
+
+Permanant generation is used to store metadata. Store String pool also.
+
+- Types of Garbage collectors:
+    - Throughput GC - parallel version young generation     -XX:+UseParallelGC
+    - Concurrent low pause collector                        -XX:+UseConcMarkSweepGC
+      Most GC is executed multithreaded at the same time app is executed
+    - Incremented low pause collector                       -XX:+UseTrainGC
+
+- Full GC Concurrent GC
+    - Executed on single GC thread, which executes with app thread to execute before tenured generation.
+    - Full GC, appication is stopped and GC is executed as all application thread is stopped
+
+35. How XML DOM parser works
+- DOM standard to access and manipulate XML document.
+
+36. How SAX parser works
+- Streaming API
+- Read only no for creating XML
+- Event based parser
+- Faster and uses less memory than tree based processors
+- Push parser: pusher data into callback methods
+- Works on Android
+- Entire document does not need to e put in memory
+- One way impossible to parse from end to begin of document
+
+| Data Event | Error Handling Events | Other Events |
+|---|---|---|
+| StartDocument | Warning | Notation Detected |
+| EndDocument | Error | IgnoreWhiteSpaces |
+| StartElement | Fatal Error | |
+| EndElement | | |
+| Characters | | |
+
+37. How to build own annotation
+*TrackTimer.java*
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TrackTime {
+}
+```
+
+*JoinpointConfig.java*
+```java
+public class JoinpointConfig {
+    @Pointcut("@annotation(com.panda.spring.aop.aspect.TrackTime)")
+    public void trackTime() {
+    }
+}
+
+```
+
+*AroundAspect.java*
+```java
+@Aspect
+@Configuration
+public class AroundAspect {
+
+    @Around("com.panda.spring.aop.aspect.JoinpointConfig.trackTime()")
+    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        joinPoint.proceed();
+        long entTime = System.currentTimeMillis() - startTime;
+        logger.info("Time taken by this {} is {}", joinPoint, entTime);
+    }
+
+}
+```
+
+*Use*
+```java
+@Repository
+public class Dao1 {
+
+    @TrackTime
+    public String retrieve() {
+        return "Dao Repo";
+    }
+}
+```
+
+38. Thread Local
+- Allow to build variables that can be saved and read through the same thread. Thus ever through two threads
+are executed the same code, and it has a reference to thread local, as a result both threads cannot see
+their ThreadLocal variables.
+
+```java
+private ThreadLocal myThreadLocal = new ThreadLocal();
+myThreadLocal.set("A thread local");
+String myThreadLocalValue = (String) myThreadLocal.get();
+```
+
+39. How Garbage Collector works?
+- Objects are created on Heap
+- Class variables are on method area
+- Before destroy object from memory GC thread start finalize() method as a result needed cleanup operation can be executed.
+- Ergonomics to allow good performance JVM with minimal code lines to tunning.
+
+40. When object is candidate to GC?
+- All reference to this object are set to null
+- Object was created in block which range changed after leave block
+- Parent objct set to null
+- Object has only weak reference via WeakHashMap
+
+41. Hap Generations
+- Heap is separated with three parts
+    - Young Generation, (Tenured or Old Generation), Perm Area
+- Generation are then separated on 3 parts
+    - Eden Space
+    - Survivor 1
+    - Survivor 2
+- New object is then created on heap in new generation in Eden space, and after few GC it goes to Survivor1 and then
+to Survivor2.
+
+42. WSDL file?
+Web service description language.
+- Determines what is required in service
+- How to consume and how to deliver then
+
+    definitions
+        types           binding
+        messages        service
+        operation
+        prototype
+
+43. What is RMI?
+Remote execute object methods. Object can be placed in differnet JVM on other computers.
+
+44. XML Schema
+- Grammar, blueprint to xml document
+- XSD extension
+    - deliver contract between 2 users (to not send unnecesary informations).
+    - if xml follows scheme that means it is valid document
+    <xsd:schema>            - root element
+        <xsd:restrction>    - restrykcyjne dane
+        <xsd:sequence>      - elements order assured
+
+45. HTTP errors protocols qualification
+- 1xx : information
+- 2xx : seccess 201 created, 200 OK, 204
+- 3xx : redirection
+- 4xx : client error, 404, 400, 403 forbidden, 401 unauthorized
+- 5xx : server error
+
+
+
+
+
+
+
+
+
+
+
 
 
 

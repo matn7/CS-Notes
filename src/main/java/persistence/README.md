@@ -789,7 +789,7 @@ public class Passport {
 }
 ```
 
-To declare a side as **not** responsible for the relationship, the attribute **mappedBy** is used.
+To declare a side as not responsible for the relationship, the attribute **mappedBy** is used.
 The owner of the relationship is responsible for the association columns updates.
 
 ## Many to Many Relationship
@@ -839,7 +839,7 @@ public class Author {
 }
 ```
 
-To declare side as not responsible for the relationship, the attribute `**mappedBy**` is used.
+To declare side as not responsible for the relationship, the attribute **mappedBy** is used.
 
 *hibernate.cfg.xml*
 ```xml
@@ -1014,15 +1014,16 @@ A combination of more than 1 table column that identifies the uniqueness of a re
 
 | :key: firstname | :key: lastname |
 |---|---|
-|||
-------------------------------------------------------------------------------
-address of parent1 in heap memory           Address of parent2 in heap memory
-:arrow_up:                                  :arrow_up:
-a47ex0x71                                   b89q3a87
----------                                   --------
-firstname: Paul                             firstname: Paul
-lastname: Sharp                             lastname: Sharp
-----------------------------| Java Memory Heap |-------------------------------
+| | |
+
+    ------------------------------------------------------------------------------
+    address of parent1 in heap memory           Address of parent2 in heap memory
+    :arrow_up:                                  :arrow_up:
+    a47ex0x71                                   b89q3a87
+    ---------                                   --------
+    firstname: Paul                             firstname: Paul
+    lastname: Sharp                             lastname: Sharp
+    ----------------------------| Java Memory Heap |-------------------------------
 
 No matter how good or natural a composite primary key is, it is **not recommended for uniquely identyfying a record**
 
