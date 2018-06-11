@@ -1048,7 +1048,54 @@ Remote execute object methods. Object can be placed in differnet JVM on other co
 - 5xx : server error
 
 
+## Multithreading
+- Access to variable marked volatile is synchronized on the variable itself.
+- Variable marked as volatile are safe to use in different thread.
+- The default single thread is called the main thread
+- Command Pattern : Separates execution of an action from an action itself.
+    - In Threading we define the action that we would like to new thread to undertake
+- The volatile keyword ensures a variable is never cached, and only read from main memory, and wraps the action in the body of an object
+that implements an interface with just one method.
 
+- Threads are controlled y process
+    - PROGRAM : PROCESS :: 1 : 1
+    - PROCESS : THREADS :: 1 : MANY
+
+    CALLABLE        LOCK OBJECTS
+    EXECUTORS       CONCURRENT COLLECTIONS
+    THREAD POOLS    ATOMIC VARIABLES
+
+- Synchronization problems:
+    - Thread interference : Fifferent thread access the same data
+    - Memory consistency error : inconsistent value of variable
+    - Thread contention : Threads get in each other way and slow down or even have to be killed by java, starvation, livelock, deadlock
+
+- Completion Service : Returns the queue of feature objects in the order in which they finish
+- Callable : It's a generic class that explicitly returns the thread results. Correctly passes exception from one thread to another.
+Submit the callable to an Executor object and get a Future object as the result.
+Future.cancel() interrupt operation midway
+Future.get() to wait for the callable to finish running
+
+    OLD-SCHOOL              NEW-SCHOOL
+    Runnable Interface      CALLABLE INTERFACE
+    THREAD CLASS            EXECUTORS IN BUILD CLASS
+    Thread.join()           Future.get()
+
+Future<Integer> oneFuture = executor.submit(oneCallable);
+
+To interrupt another thread, call the .interrupt() member function on thet thread
+
+- Calling Future.cancel() is like calling thread.interrupt()
+- Two ways for a thread to check if it has been interrupted
+    - Catch an InterruptedException
+    - Thread.interrupt() static method
+
+| Process | Thread |
+|---|---|
+| Self execution environment | Fewer resources |
+| Run-time resources provide | Exists within process |
+| Own memory space | Share process resources |
+| IPC Process Builder | |
 
 
 

@@ -162,7 +162,7 @@ Composition = "has-a", Inheritance = "Is-a"
 Each defines behavior by setting member variables of a class
 
 # Creational Pattern
-Factory
+Factory, Abstract Factory
 ## Factory Pattern
 Creational pattern provides one of the best ways to create an object. In factory we create object without exposing the creaction logic to
 the client and refer to newly created object using a common interface.
@@ -223,6 +223,19 @@ public class Main {
 }
 ```
 
+## Abstract Factory
+
+- Reflection : is a way to invoke methods of objects on the fly (at run-time)
+- Reflection is slow and complicated
+    - A method call via reflection may take 10 x longer than usual
+- The implementation details of how an object of database type is instantiated in Abstract Factory, is completly
+hidden and decoupled from the user.
+Use abstract factory to create families of related classes.
+
+- Who are the Factory and the Abstract Factory pattern related?
+    - The Factory Pattern is a way to create any one of bunch of classes that implement the same interface,
+      while the abstract factory pattern is a way to create groups of related classes that implements different interfaces.
+    - Abstract factory objects create entire families of classes, Factory objects create a single family of classes
 
 # Structural Pattern
 Decorator,
