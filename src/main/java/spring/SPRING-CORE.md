@@ -601,8 +601,46 @@ repository.findAll();
 repository.deleteBYId(12);
 ```
 
+## Dpring MVC
+*web.xml*
+```xml
+<web-app>
 
+    <!-- Front Controller -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/todo-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/spring-mvc/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
+
+*todo-servlet.xml*
+```xml
+<beans>
+    <context:component-scan base-package="com.panda" />
+    <mvc:annotation-driven />
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/views/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+</beans>
+```
 
 
 
