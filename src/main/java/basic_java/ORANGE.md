@@ -1097,6 +1097,75 @@ To interrupt another thread, call the .interrupt() member function on thet threa
 | Own memory space | Share process resources |
 | IPC Process Builder | |
 
+## Concurrency
+- Threads in Java allow the use of multiple processors or multiple cores in one processor more efficiently.
+On a single processor, threads provide for concurrent options such as overlapping I/O with processing.
+Java supports it with the Thread class or Runnable interface.
+
+### Creating threads
+- extends Thread class
+- implements Runnable interface : a single RUnnable instance can be processed to multiple thread objects.
+
+### Thread states
+Enumerated Thread.state provides siz thread states
+| State | Description |
+|---|---|
+| New | A thread that is created but not started |
+| RUNNABLE | A thread state that is available to run |
+| BLOCKED | An alive thread that is blocked waiting for a monitor lock |
+| WAITING | An alive thread that calls its own wait() and join() while waiting on another thread |
+| THREAD_WAITING | An alive thread that is waiting on another thread for a specified period of time, sleeping |
+| TERMINATED | A thread that is completed |
+
+### Thread priorities
+MIN_PRIORITY, NORM_PRIORITY, MAX_PRIORITY
+Lower priority threads yield to higher priority thread
+
+### Common methods
+- getPriority()
+- getState()
+- interrupt()
+- isAlive()
+- isInterrupted()
+- join() : causes the thread that invokes this method to wait for the thread that this object represents to finish
+
+### Common methods used for threads from the Object class
+- notify() : tells the thread to wake up and run
+- notifyAll() : Tells threads that are waiting on a thread or resource to wake up, and then the scheduler will
+select one of the thread to run
+- wait() : Pauses a thread in a wait state until another thread calls notify or notifyAll
+
+- Common static methods used for threads from Thread class activeCount(), concurrentThread(), interrupted(), sleep()
+- yield() : Pauses the current thread to allow other thread to run
+- Synchronization : Apply locks to blocks and mwthods. A lock is also known as monitor or mutex (mutually exclusive lock)
+
+### Concurrent utilities
+Executors
+ThreadPoolExecutor as well as its subclass ScheduledThreadPoolExecutor implements the Executor
+interface to provide configuable, flexible thread pools.
+
+|Concurrent Collectios | |
+|---|---|
+| HashMap | ConcurrentHashMap |
+| TreeMap | ConcurrentSkipListMap |
+| TreeSet | ConcurrentSkipListSet |
+| Map sub types | ConcurrentMap |
+| List sub types | CopyOnWriteArrayList |
+| Set sub types | CopyOnWriteArraySet |
+| PriorityQueue | PriorityBlockingQueue |
+| Dequeue | BlockingDequeue |
+| Queue | BlockingQueue |
+
+### Synchronizers
+Special purpose synchronization tools
+| Semaphore | Maintain a Set of permits |
+|---|---|
+| CountDownLatch | Implements waits against sets of operations being performed |
+| CyclicBarier | Implements waits against common barier parts |
+| Exchanger | Synchronization point where threads can exchange elements |
+
+
+
 
 
 
