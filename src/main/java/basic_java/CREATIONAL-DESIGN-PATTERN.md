@@ -110,12 +110,161 @@ public class Singleton {
     - Private constructor
     - Synchronized getter for the singleton
 
+### Double check locking
+- Synchroized ca lead to quite a performance hit, to get around this.
+    - Eagerly instantiate the singleton
+    - Double check locking. Mark the member variable as "VOLATILE"
 
+1. Eagerly instantiate the Singleton
+```java
+public class Singleton {
+    // Instantiate this member variable eagerly, to make sure that this happens
+    // exactly once, and the getter then need not to be synchronized
+    private volatile static Singleton singleton = new Singleton();
 
+    private Singleton() {}
 
+    public static Singleton getSingleton() {
+        return singleton;
+    }
+}
+```
 
+2. Double check locking
+```java
+public class Singleton {
+    // mark the member variable as volatile, so each access this variable is a fresh read from memory
+    private volatile static Singleton singleton;
 
+    private Singleton() {}
 
+    public static Singleton getInstance() {
+        if (singleton == null) {
+            synchronized(Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+```
+
+**DOUBLE CHECKED LOCKING**
+In software engineering, double checked locking is a software design pattern used t reduce overhead of acquiring a lock.
+By first testing the lock creation without actualy acquiring a lock.
+
+```java
+// check 1 of the double checked lock
+if (singleton == null) {
+    // lock in-between
+    snchronized(Singleton.class) {
+        // check 2 of the double checked lock
+        if (singleton == null) {
+            singleton = new Singleton();
+        }
+    }
+}
+```
+
+- Declaring a volatile Java variable means the value of this variable will never be called
+thread-locally all reads and writes will go straight to "main memory". Access to the variable
+acts as through it is enclosed in a synchronized block, synchronized on itself.
+
+- A class loader is a part of JVM. Technically namespaces are unique per class loader.
+Usually there is just 1 class loader per program.
+
+- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables
+with the same oject.
+    - Thread interference : different thread access the same data
+    - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
+    - Thread Contention : Thread get in each other's way, and slow down-or sometimes even have to be killed in Java
+
+- Thread interference and memory consistency errors
+    - If two thread access the same variable,it's possible for them to get in each other's way
+      That's becouse Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction.
+    - For example two threads incrementing the same variable could simply lose one of the two increments.
+    - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
+      is a powerful concept used widely in computer science especially in databases.
+    - Locking variables correctly can eliminate thread interference and memory consistency error
+        - But it slows down performance and can lead to thread contention issues (starvatio, livelock, deadlock)
+
+- What is the best way to subclass Singleton?
+Singleton classes should never be subclassed or extended
+
+- Every object in Java has a lock associated with it.
+This lock is called the intristic lock or monitor.
+This lock is usually always open, any number of threads can access the object simultaneously.
+It is possible to specify that a thread can only execute a section of code once it has acquired the lock
+on source object.
+If some other thread currently holds that lock, the current thread must wait its turn
+**This is achieved using the Synchronized keyword**
+
+#### Synchronized methods
+- Any method in java can be marked as synchronized
+- only one thread at a time only applies to the same method of the same object
+- only one thread can be executingthis member function on this object at a given point in time
+- so for instance if the same method does something to a static class variable (not an object variable), errors can still result
+- Used right making a method as synchronized can help eliminate thread interference and emory consistency error.
+
+```java
+public class SynchronizedCounter {
+    private int c = 0;
+    public synchronized void increment() {
+        c++;
+    }
+
+    public synchronized void decrement() {
+        c--;
+    }
+
+    public synchronized int value() {
+        return c;
+    }
+}
+```
+#### Synchronized blocks of code
+- Since every object in Java has an intrinstic lock associated with it, it is possible to lock
+  any section of code by making it as synchronized.
+- Any object can be used as lock using a synchronized statement
+```java
+public void addName(String name) {
+    synchronized(this) {
+        lastName = name;
+        nameCount++;
+    }
+    nameList.add(name);
+}
+```
+- Threads never gets blocked on itself which means that one synchronized method of an object can always call
+  another synchronized method of the same object without blocking.
+- Making method as synchronized is a shortcut to making the entire body of the method as synchronized
+  on "THIS"
+#### Thread Contention
+| Deadlock | Two thread each is blocked on a lock held by the other |
+|---|---|
+| Livelock | Two thread don't deadlock, but keep blocking on locks held by each other, neither really can progress |
+| Starvation | Some threads keep acquiring locks greedly. And cause other threads to be unable to get anything done |
+
+**Make sure your singleton objects can't be cloned**
+1. The .clone method belongs to object class (every object has this method), when it ought to belong to cloneable interface
+2. Object have a clone method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
+3. So make sure that your singleton class does not implement colneable - or if for some reason it does
+Override the clone() method to thrown an exception.
+
+- Which of following is true?
+    - The clone method is in the Object class, which means all objects have a .clone method
+    - Singletons should never implement cloneable
+    - Calling .clone() on an object thet does not explicitly implement the method result in an exception
+
+    - The volatile keyword ensures a variable is never cached, and only read from main memory
+    - Access to variable marked volatile is synchronized on the variable itself
+    - Variable marked volatile are safe to use in different threads
+
+    - The .clone() method is in object class, which eans all objects have a .clone() method
+    - The .clone() method sits in the cloneable interface, so objects that implement this interfae posses a .clone()
+    - Calling .clone() on an object that does not explicitly implement the method result in an exception
 
 
 

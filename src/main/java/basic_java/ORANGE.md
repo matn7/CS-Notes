@@ -1047,6 +1047,29 @@ Remote execute object methods. Object can be placed in differnet JVM on other co
 - 4xx : client error, 404, 400, 403 forbidden, 401 unauthorized
 - 5xx : server error
 
+46. SOLID
+- Single Responsible Principle : One class should have one and only one responsibility
+- Open closed principle : Software component should be open for extension, but closed for modification
+- Lisko'v substitution principle : Derived type must be completely substituable for their base type
+- Interface segragation principle : Client should not be forced toimplement unnecesary methods which they will not use
+- Dependency Inversion principle : Dependent on abstraction not on concretion
+
+47. ACID
+- Atomic
+- Consistency : data must follows validation rules
+- Isolation : concurrency control
+- Durability : commited transaction stays commited even in case of power loss
+
+48. What is a primary key?
+A primary key is a combination of fields which uniquely specify a row. This is a special kind of unique key, and
+it has implicit not null constraint. It means, primary value cannot be null.
+
+49. What is a unique key?
+A unique key constraint uniquely identified each record in the db
+
+50. What is a foreign key?
+A foreign key is one table which can be related to the primary key of another table.
+
 
 ## Multithreading
 - Access to variable marked volatile is synchronized on the variable itself.
