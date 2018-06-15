@@ -1070,6 +1070,28 @@ A unique key constraint uniquely identified each record in the db
 50. What is a foreign key?
 A foreign key is one table which can be related to the primary key of another table.
 
+51. What is a view?
+A view is a virtual table which consists of subset of data contained in a table. View are not virtually stored, and it
+takes less space to store.
+
+52. What is an index?
+An index is performance tuning method of allowing faster retrieval of records from the table. An index creates an
+entry for each value and it will be faster to retrieve data.
+
+53. What is cursor?
+Is a control which enables traversal over the rows or records in the table.
+
+54. What is a trigger?
+Code or programs that automatically execute with response to some event on a table or view in a database.
+Mainly trigger helps to maintain the integrity of the database. Student is added to DB, new record should be created in
+related tables like Exams, Score.
+
+55. What is constraint?
+Not Null, Check, Default, Unique, Primary Key, Foreign Key
+
+56. What is Union?
+Union operator is used to combine the results of two tables, and it eliminates duplicate row from the table.
+
 
 ## Multithreading
 - Access to variable marked volatile is synchronized on the variable itself.

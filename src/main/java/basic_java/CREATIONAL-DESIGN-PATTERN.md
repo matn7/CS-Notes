@@ -267,7 +267,67 @@ Override the clone() method to thrown an exception.
     - Calling .clone() on an object that does not explicitly implement the method result in an exception
 
 
+## Builder
 
+```java
+public class User {
+    // final so you can declare it in constructor
+    private final String firstName; // required
+    private final String lastName; // required
+    private final int age;
+    private final String phone;
+    private final String address;
+
+    private User(UserBuilder builder) {
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.age = builder.age;
+        this.phone = builder.phone;
+        this.address = builder.address;
+    }
+    // getters, toString
+
+    public static class UserBuilder {
+        private final String firstName; // Must be declared in constructor
+        private final String lastName;
+        private int age;
+        private String phone;
+        private String address;
+
+        public UserBuilder(String firstName, String lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        public UserBuilder age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public UserBuilder phone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public UserBuilder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        User user = new User.UserBuilder("Polar", "Bear").age(8).address("Tier Garten Berlin").phone("990").build();
+        System.out.println(user.toString());
+    }
+}
+
+```
 
 
 

@@ -136,9 +136,11 @@ public class ComponentScanApplication {
 
 ## CDI
 JavaEE Dependency Injection Standard (JRS-330)
-- @Inject (`@Autowired`)
-- @Named (`@Component & @Qualifier`)
+- @Inject `@Autowired`
+- @Named `@Component & @Qualifier`
 - @Singleton
+
+*SomeCDIBusiness.java*
 ```java
 // @Component
 @Named
@@ -156,7 +158,7 @@ public class SomeCDIBusiness {
     }
 }
 ```
-
+*SomeCdiDao.java*
 ```java
 //@Component
 @Named
@@ -333,7 +335,7 @@ Dependency Injection or IOC Inversion of Control.
 
 `Spring MVC`
 - Spring MVC framework provides decoupled way of developing web applications. With simple concepts like
-Dispatcher Servlet, ModelAndView and iewResolver, it makes it easy to develop web applications.
+`Dispatcher Servlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop web applications.
 
 ## Spring boot
 
@@ -375,7 +377,8 @@ public class Business1 {
     public String calculate() {
         return daoRepo.retrieveMessage();
     }
-}
+}CommonJoinpoint.trackTimeAnnotation()
+
 ```
 
 ```java
@@ -501,7 +504,7 @@ public class AroundAspect {
 
     org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Around("com.panda.spring.aop.aspect.CommonJoinpoint.trackTimeAnnotation()")
+    @Around("com.panda.spring.aop.aspect.CommonJoinpoint.stoper()")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         joinPoint.proceed();

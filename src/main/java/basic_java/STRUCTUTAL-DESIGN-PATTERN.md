@@ -125,3 +125,92 @@ public class Main {
 
 }
 ```
+## Adapter Pattern
+- An adapter takes in an object that implements an interface, and gives out object that
+implements a differnet interface
+
+                 +-----------+
+        List Out | List      | Array In
+        <--------+ +-------+ +<--------
+                 | | Array | |
+                 | +-------+ |
+                 +-----------+
+
+- What is the basic point of the Adapter pattern?
+Convert an object from one inetrface to another.
+
+
+## Facade Pattern
+A facade provides a simple interface for a larger body of complicated code. Multiple systems can and work together
+behind a facade, however the user will see only the simple interface.
+
+*Code in Java to download URL*
+```java
+URL url = new URL("panda.com");
+BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+String line;
+
+while ((line = reader.readLine()) != null) {
+    System.out.println(line);
+}
+reader.close();
+```
+
+*Code in C very complicated*
+
+- The Java NET library which manages complexity assures that you neither know nor care how exactly
+the contents of url are obtained.
+
+**The principle of least knowledge**
+Design guideline for developing software, particulary object-oriented programs. Specify case of loose coupling.
+- Each unit should have only limited knowledge about other units; only unit closely related to current unit
+- Each unit should only tolk to its friends
+- Only talk to your immediate friends
+
+Facad pattern is in:
+- Reflection, networking, database access, file access
+
+However complicated your classes and their interactions, offer up a very simple interface to use them.
+Don't relay on the internal implementation of any code written by others that you use.
+Provide a clean interface so that others using your code don't need to reach inside your classes to done stuff.
+
+**Downsides**
+- Hard to understand
+- Complicate dstructure down of performance
+
+- What is a basic point of the Facade?
+Use a erapper to abstract the complexity of a group of inetrconnected classes
+- What motivates a facade pattern?
+Classes should know as little as possible about other classes that they use (principle of least knowledge).
+Relay on abstractions - interfaces - not on concrete implementation
+Loosely coupled code is always preferable to tightly code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
