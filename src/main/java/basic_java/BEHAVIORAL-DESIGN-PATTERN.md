@@ -154,6 +154,201 @@ while(iterator.hasNext()) {
 alphabets.forEach(l -> l.toUpperCase());
 ```
 
+## Obserer pattern
+- Variables announce changes to their states
+- Other object subscribe to listen to those changes
+
+- PUBLISHERS : Object that publish these updates
+- SUBSCRIBERS : Objects that sbscribe to listen to these updares
+- THE CALLBACK : The code that gets executed when an update is published
+
+Publishers announce different types of updates - each of which is referred to as **AN EVENT** Button clicked, hover
+The term callback refers to the fact that this code belongs to the subscriber object.
+But is called by the publisher object when the event occurs.
+
+- Publisher, Subscriber, Listener or Event?
+    - Listener : The command object with the code that gets executed when something happens
+    - Publisher : The object that announces that something has happened
+    - Subscribers, Observers : The object that wait for something to happen
+    - Subscribers, Observers : The object that register to be informed of changes
+    - Event : The something that happens
+
+- How are the observer and the command pattern related?
+    - The publisher maintains a list of command objects and executes their code when an event occrs
+    - The command objects are part of the controller, and the observer are part of the view
+
+- When a publisher frees an updates how do subscribers become aware of it?
+    - The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified.
+
+```java
+public interface Publisher {}
+
+public class NewsAgency extends Observable implements Publisher {
+    private List<Observer> channels = new ArrayList<>();
+
+    public void addNews(String newsItem) {
+        notifyObserver(newsItem);
+    }
+
+    public void notifyObserver(String newsItem) {
+        for (Observer outlet : this.channels) {
+            outlet.update(this, newsItem);
+        }
+    }
+
+    public void register(Observer outlet) {
+        channels.add(outlet);
+    }
+}
+
+public class RadioChannel implements Observer {
+    public void update(Observable agency, Object newsItem) {
+        if (agency instanceof Publisher) {
+            System.out.println((String) newsItem);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        NewsAgency newsAgency = new NewsAgency();
+        RadioChannel radioChannel = new RadioChannel();
+
+        newsAgency.register(radioChannel);
+        newsAgency.addNews("News1");
+        newsAgency.addNews("News2");
+    }
+}
+```
+
+## Command pattern
+
+- Class that has just 1 method. It encapsulates all the state needed for that one method to do its thing.
+- Such classes are the basis of **COMMAND PATTERN**
+- Classes with just 1 methods:
+    - menus
+    - threading
+    - undo managers
+
+- A command object has a single method, and whatever state needed for that method to do its thing
+- A command object separates the execution of an action from an action itself
+
+- Anonymous classes (listeners, threads) are an excellent way to encapsulate little bits of behavior into objects.
+- Very high portion of anonymous classes simply consisted of objects that implement an interface with just one function
+- **Lambda** functions are simply anonymous function
+
+- In a for loop it is impossible or at least very complicated to parallelize the loop across multiple different CPU
+- Lambda functions and functional programming are a natural way to parallelize computing accross CPU
+
+### Stream
+- Output of one lambda dunctions is fed as input into the next.
+- Java has added exactly this functionality, using "Aggregate operations"
+- FILTER, MAP and FORACH are standard aggregate operations in functional programming
+
+- Call the .stream() method on any collection to get an object of type stream, on which aggregate functions can be applied in sequence
+
+- The Java "Stream" object can be imagined as a stream of values, where each value is being subjected to an operation like
+MAP, FOREACH, FILTER
+
+- Maps is an aggregate operation that takes a lambda expression, applies it to every element of the input stream and sends he result out as the out[ut stream
+
+                    Aggregate Operations
+    Input Stream  +-----------------------------+ Output stream
+    ------------->+ Map (FX) Lambda expressions +-------------->
+    (X1, X2, X3)  +-----------------------------+ (F(X1), F(X2), F(X3))
+
+
+- Filter is an aggregate operation that takes in an lambda expression that encapsuulates a condition, applies it to every
+element of an input stream that satisfies the condition is placed on the output stream
+
+                    Aggregate Operations
+    Input Stream  +--------------------------------+ Output stream
+    ------------->+ Filter (FX) Lambda expressions +-------------->
+    (X1, X2, X3)  +--------------------------------+ (X1, X2)
+
+
+- Forach is an aggregate operation that takes a lambda expression and applies to each element of an input stream, but does not produce an output stream
+
+                    Aggregate Operations
+    Input Stream  +--------------+
+    ------------->+ Forach (FX)  +
+    (X1, X2, X3)  +--------------+
+
+Foreach is used for operations like printing to screen or saving to file, where it makes no sense to produce output stream
+
+### Command pattern in action - threading
+- Old school
+    - Runnable interface
+        - Is implemented by a class with the operations to be carried out on the oyher thread
+    - Thread in-build class
+        - Object of the thread class take in the runnable objects and run them on individual threads
+    - Thread.join() on the thread
+        - The main class calls the .join method on each thread which will wait unitl the thread finishes
+
+- New School
+    - Callable interface
+        - Is implemented by a class with the operations to be carried out on the other thread
+    - Executors In-build class
+        - Java provides helper objects that know how to start, manage and stop callable objects
+    - Future.get
+        - Future are objects which would will hold results in the future, once the callable object finishes whatever stuff it had
+          to do on other thread
+
+- The command pattern separates the execution of an action from the action itself
+- In threading we define the action that we would like the new thread to undertake
+- And wrap that action in the body of an object that implement an interface with just one method
+
+*Define command objecy**
+```java
+Runnable runnable = new Runnable() {
+    public void run() {
+        System.out.println("hello");
+    }
+};
+
+Thread thread = new Thread(runnable);
+thread.start();
+
+// .............
+
+Runnable runnable = () -> {
+    System.out.println("hello");
+}
+Thread thread = new Thread(runnable);
+thread.start();
+```
+- Examples of command pattern
+    - Undo
+    - Logging
+        - need command object to know how to write themselves out to a file, an object that know how to do this is said to be serializable
+
+- What is a basic idea of command Pattern?
+    - Execution of an action is separated from action itself
+    - A class with a single method is esentially an action
+    - The command pattern is a construct from functional programming adopted into oo programming
+
+- What does the command pattern has to do with multithreading?
+The code to be executed on differnet thread is encapsulated in a command object
+
+- What does the Command Pattern have to do with Lambda functions?
+    - Lambda functions provide a syntactically light way to create command objects inrecent version of Java
+    - By Lambda functions are functions without names that can define the command in a command object
+    - Command objects separate an action from its execution, lambda functions represent the action
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

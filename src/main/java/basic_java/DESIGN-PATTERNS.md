@@ -104,6 +104,24 @@ Idea high level components calling low-level components, ubiquitous in framework
 - Our code usually calls libraries and is often called by frameworks, but is structured using design patterns.
 
 
+## MVC
+
+- Model : Storing the data underlying the user interface
+- View : Visual representation of data
+- Controller : Interacts with the user and modifies the model and view
+
+- What is the basic of the MVC pattern?
+    - Separating data from its visual representation
+    - Separating data from its manipulation
+    - Allowing different simultaneous representations of the same data
+
+- How does the client interact with the model in the MVC paradigm?
+User sees the model through the view, and manipulates it via the controller
+
+- Model, View, Controller ?
+    - Controller : A lider to adjust volume in a media player app
+    - Model : The MP4 file of a movie to be played in a media player app
+    - View : The area of the media player app that actually displays video
 
 
 

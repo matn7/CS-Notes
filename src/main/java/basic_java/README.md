@@ -778,7 +778,6 @@ Max size of metaspace is your computer Space
     +-------+---------------+   +-----------+
     Heap
 
-// Continue here
 ## Tuning the VM
 
 -Xmx set the maximum heap size
@@ -830,53 +829,52 @@ WeakReferencs<Book> mybook = book1;
 SoftReference<Book> mybook = book2;
 ```
 
-WeakHashMap - reference between key and values are weak.
+- WeakHashMap - reference between key and values are weak.
 
 ```java
 Map<Book, BookImage> imageCache = new WeakHashMap<>();
 ```
 
-Guava Library can make soft hash map
+- Guava Library can make soft hash map
 
 
 
 ## hashCode, equals, toString
 
 
-You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
+- You must override hashcode in every class that overrides equals. Failure to do so affect working with hash based
 collections like HashMap, HashSet
-In Map objects are stored as key and value. put(key,value) method is used to store objects in HashMap at this time
+- In Map objects are stored as key and value. put(key,value) method is used to store objects in HashMap at this time
 hashCode() method is used to calculate the hash code of key object and both key and value object is stored
 as map.entry, if two keys object have some hash code then only one value object is stored in the same bucket location but
 as a linked list value is stored and if hash code is different then another bucket location is created.
-While retrieving get(key) method is used at this time hash code of key object is calculated and then equals() method
+- While retrieving get(key) method is used at this time hashCode of key object is calculated and then equals() method
 is called to compare value object.
 
 
 ### equals
 
-Check whether one object can be equal to another.
-Equals method implemented in Object class, check whether two references to object are identical.
-Override equal method if you want to check equality based on state of object.
-Two object are equals when they have the same value.
+- Check whether one object can be equal to another.
+- Equals method implemented in Object class, check whether two references to object are identical.
+- Override equal method if you want to check equality based on state of object.
+- Two object are equals when they have the same value.
 
-Equals method is used when we compare two objects. Default implementation of equals method is defined in Object class.
-Two object references are equals only if they are pointing to the same object.
-We need to override equals method, if we would want to compare the contents of an object.
+- Equals method is used when we compare two objects. Default implementation of equals method is defined in Object class.
+- Two object references are equals only if they are pointing to the same object.
+- We need to override equals method, if we would want to compare the contents of an object.
 
-We can override equals method in the class to check the content of the objects.
-The implementation of equals method checks if the id's of both objects are equal.
-If so return true.
+- We can override equals method in the class to check the content of the objects.
+- The implementation of equals method checks if the id's of both objects are equal. If so return true.
 
-    +-------------------------------------+
-    | @override                           |
-    | public boolean equals(Object obj) { |
-    |   Client other = (Client) obj;      |
-    |   if (id != other.id)               |
-    |       return false;                 |
-    |   return true;                      |
-    | }                                   |
-    +-------------------------------------+
+```java
+    @override
+     public boolean equals(Object obj) {
+       Client other = (Client) obj;
+       if (id != other.id)
+           return false;
+       return true;
+     }
+```
 
 Important things to consider when implementing equals method.
 - Reflexive: For any reference value x, x.equals(x) return true
@@ -887,94 +885,91 @@ Important things to consider when implementing equals method.
     if no information used in equals is modified
 - For any non-null reference value x, x.equals(null) should return false
 
-    +---------------------------------------+
-    | @Override                             |
-    | public boolean equals(Object obj) {   |
-    |   if (this == obj) {                  |
-    |       return true;                    |
-    |   }                                   |
-    |   if (obj == null) {                  |
-    |       return false;                   |
-    |   }                                   |
-    |   if (getClass() != obj.getClass()) { |
-    |       return false;                   |
-    |   }                                   |
-    |   Client other = (Client) obj;        |
-    |   if (id != other.id) {               |
-    |       return false;                   |
-    |   }                                   |
-    |   return true;                        |
-    | }                                     |
-    +---------------------------------------+
-
+```java
+          @Override
+          public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            Client other = (Client) obj;
+            if (id != other.id) {
+                return false;
+            }
+            return true;
+          }
+```
 
 ## hashCode
 
-Hash is integer number that identify an object.
-If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
+- Hash is integer number that identify an object.
+- If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
 
-    +--------------------------------------------+
-    | @Override                                  |
-    | public int hashCode() {                    |
-    |   int hash = 1;                            |
-    |   for (int i = 0; i < str.length(); i++) { |
-    |         hash = 31 * hash + chartAt(i)      |
-    |   }                                        |
-    |   return hash;                             |
-    | }                                          |
-    +--------------------------------------------+
+```java
+     @Override
+     public int hashCode() {
+       int hash = 1;
+       for (int i = 0; i < str.length(); i++) {
+             hash = 31 * hash + chartAt(i)
+       }
+       return hash;
+     }
+```
 
-HashCode must be compatible.
-if x.equals(y) return true, x.hashCode() == y.hashCode().
-If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
+- HashCode must be compatible.
+- if x.equals(y) return true, x.hashCode() == y.hashCode().
+- If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
 data structures HasSet, HashMap could be lost.
 
-    +---------------------------+
-    | Object.hash(some, some2); |
-    +---------------------------+
+```java
+Object.hash(some, some2);
+```
 
-HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
-A group of object's might share the same hashCode.
-The implementation of hashCode decides effectiveness of Hashing. A good hashing function evenly
+- HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
+- A group of object's might share the same hashCode.
+- The implementation of hashCode decides effectiveness of Hashing. A good hashing function evenly
 distributes object's into different groups or buckets.
-A good hashCode should have the following properties:
-- if obj1.equals(obj2) is true, then obj1.hashCode() should be equal to obj2.hashCode().
-- obj.hashCode() should return the same value when run multiple times, if values of obj used in equals() have not change.
-- if obj1.equals(obj2) is false, it is NOT required thet obj1.hashCode() is not equal to obj2.hashCode().
-    Two unequals objects might have the same hashCode.
+- A good hashCode should have the following properties:
+    - if obj1.equals(obj2) is true, then obj1.hashCode() should be equal to obj2.hashCode().
+    - obj.hashCode() should return the same value when run multiple times, if values of obj used in equals() have not change.
+    - if obj1.equals(obj2) is false, it is NOT required thet obj1.hashCode() is not equal to obj2.hashCode().
+      Two unequals objects might have the same hashCode.
 
-    +----------------------------------+
-    | @Override                        |
-    | public int hashCode() {          |
-    |   final int prime = 31;          |
-    |   int result = 1;                |
-    |   result = prime * result + id;  |
-    |   return result;                 |
-    | }                                |
-    +----------------------------------+
+```java
+@Override
+public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + id;
+    return result;
+}
+```
 
 ## Serialization
 
-
-Abstract class - high level class, by whom inherits
-Data serialization allows to know about all references (extends)
-Serialized object will be read to file. They will acquire some special identification number (SerialVersionUID),
+- Abstract class - high level class, by who inherits
+- Data serialization allows to know about all references (extends)
+- Serialized object will be read to file. They will acquire some special identification number (SerialVersionUID),
 object will use this number to other objects
-To perform serialization class need to implements Serializable interface
-Serializable marker interface (without method), safety guard to make sure you know what you are doing
-transient data that we don't want to be serialized
-Fragile data should be marked as transient, or should not implement Serializable
+- To perform serialization class need to implements **Serializable interface**
+- Serializable marker interface (without method), safety guard to make sure you know what you are doing
+- transient data that we don't want to be serialized
+- Fragile data should be marked as transient, or should not implement Serializable
 
-Serialization is a mechanism to transform in collection of bytes, which can be then deliver to other place
+- Serialization is a mechanism to transform in collection of bytes, which can be then deliver to other place
 save on disk, and reconstruct objects based on this collection of bytes.
-Deliver object from one VM to another. To make object serializable that means can transform to bytes states
+- Deliver object from one VM to another. To make object serializable that means can transform to bytes states
 it has to be an instance of Serializable interface. It is an marker interface without methods.
 All object must be serializable.
-Serializable mechanism supports version mechanism serialVersionUID = 1L;
-is used to enhanced state, what would happen when class would change
-Static variables are no serialized only instance variables are serialized
+- Serializable mechanism supports version mechanism serialVersionUID = 1L; is used to enhanced state, what would happen when class would change
+- Static variables are no serialized only instance variables are serialized
 
-Serialization is a process saving state of an object to a sequence of bytes. These sequence of bytes
+- Serialization is a process saving state of an object to a sequence of bytes. These sequence of bytes
 can be sent over a network or stored in a file.
 
     +-----------------+
@@ -990,15 +985,15 @@ can be sent over a network or stored in a file.
                                               | memory |
                                               +--------+
 
-Serialization helps us to save and retreive state of an object.
--Serialization : convert object state to some internal object representation
--Deserialization : To reverse convert internal representation to object
+- Serialization helps us to save and retrieve state of an object.
+    - Serialization : convert object state to some internal object representation
+    - Deserialization : To reverse convert internal representation to object
 
-Two important methods
--ObjectOutputStream.writeObject(): serialize and write to file
--ObjectInputStream.readObject(): read from file and deserialize
+- Two important methods
+    - ObjectOutputStream.writeObject(): serialize and write to file
+    - ObjectInputStream.readObject(): read from file and deserialize
 
-How to serialize object using Serializable interface
+- How to serialize object using Serializable interface
 To serialize object it should implements Serializable interface. In the example below, Rectangle class implements
 Serializable interface. Note that Serializable interface does not declare any method to be implemented.
 Create new Rectangle object and serializing it to a file Rectangle.ser.
@@ -1024,18 +1019,18 @@ Create new Rectangle object and serializing it to a file Rectangle.ser.
 How to deserialize on Java
 A rectangle object is deserialize from file Rectangle.ser
 
-    +-------------------------------------------------------------------------------+
-    | FileInputStream fileInputStream = new FileInputStream("Rectangle.ser");       |
-    | ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream); |
-    | Rectangle rectangle = (Rectangle) objectInputStream.readObject();             |
-    | objectInputStream.close();                                                    |
-    +-------------------------------------------------------------------------------+
+```java
+FileInputStream fileInputStream = new FileInputStream("Rectangle.ser");
+ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+Rectangle rectangle = (Rectangle) objectInputStream.readObject();
+objectInputStream.close();
+```
 
-We mark all the properties of the Object that should not be serialized as transient.
-Transient attributes in an object are not serialized. As we don't need to serialize 'area' we can calculate it later
+- We mark all the properties of the Object that should not be serialized as transient.
+- Transient attributes in an object are not serialized. As we don't need to serialize 'area' we can calculate it later
 mark this variable as transient.
 
-All classes that need to be serialized have to implement Serializable interface
+- All classes that need to be serialized have to implement Serializable interface
 
 
 ### Are the constructors in an object invoked when it is de-serialized?
@@ -1046,32 +1041,25 @@ The state of an object is retained as it is.
 ### Are the values of static variables stored when object is serialized?
 Static variables are not part of the object they are not serialized.
 
-    +---------------------+
-    | transient int area; |
-    +---------------------+
-
-
 ### Different between Serializable and Externalizable
-Serializable is marker interface with no method defined
-Use default serialization process which can be very slow for some application
-Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the
-serialization process
+- Serializable is marker interface with no method defined. Use default serialization process which can be very slow for some application
+- Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the serialization process
 
 
 ## How HashMap works?
 
-It's a map implementation
-A map is an associative array data structure "key1"->value, "key2"->value
+- It's a map implementation
+- A map is an associative array data structure "key1"->value, "key2"->value
 
-Hashing: transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
-A shorter value helps in indexing and faster searches.
+- Hashing: transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
+- A shorter value helps in indexing and faster searches.
 
-In Java every object has a method public int hashCode() that will return a hash value for given object.
+- In Java every object has a method public int hashCode() that will return a hash value for given object.
 
-If two object are equal they should have the same hashcode as well.
-Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
+- If two object are equal they should have the same hashcode as well.
+- Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
 
-Index of null key is always 0, as hash of null is always 0
+- Index of null key is always 0, as hash of null is always 0
 
     HASHMAP
     +-------------+
@@ -1086,9 +1074,9 @@ Index of null key is always 0, as hash of null is always 0
         +-------+
 
     Detailed
-    +------------------+
-    |Node<K,V>[] table;|
-    +++----------------+
+    +-------------------+
+    | Node<K,V>[] table |
+    +++-----------------+
      ||
      \/
     +--+                        +-----------------+
@@ -1196,7 +1184,7 @@ Each index in this table is known as bucket. Each bucket is a node that can be l
     scores.get("GALLEON") = 80; // FOUND VALUE
 
 
-In Java 8, when we have too many unequal keys which gives some hashcode(index)
+- In Java 8, when we have too many unequal keys which gives some hashcode(index)
 - when the number of items in a hash bucket grows beyond threshold(TREEIFY_TRESHOLD = 8), content of that bucket
 switches from using linked list of Entry objects to a balanced tree. This theoretically improves the worst-case
 performance from O(n) to O(log n).
@@ -1205,60 +1193,54 @@ Balanced search tree, where leaf nodes have lesser weight (HashCode or Comparabl
 
 ## Exception Handling
 
-
-Exception handling helps us to recover from an unexpected situations like file not found, connection is lost.
-Important part is try-catch block.
-If exception is handled it does not propagate further
-In a try block, the lines after the line throwing exception are not executed
+- Exception handling helps us to recover from an unexpected situations like file not found, connection is lost.
+- Important part is try-catch block.
+- If exception is handled it does not propagate further
+- In a try block, the lines after the line throwing exception are not executed
 
 
 ### finally block
 
-When an exception happens the code after the line throwing exception is not executed.
-If code like closing connection is present in these lines of code, it is not executed.
-This leads to connection and other resource leaks.
-Code written in finally block is executed even when there is an exception.
-Dangling unclosed connection. Finally block is used when code needs to be executed irrespective
+- When an exception happens the code after the line throwing exception is not executed.
+- If code like closing connection is present in these lines of code, it is not executed.
+- This leads to connection and other resource leaks.
+- Code written in finally block is executed even when there is an exception.
+- Dangling unclosed connection. Finally block is used when code needs to be executed irrespective
 of whether an exception is thrown.
+```java
+} finally {
+    connection.close();|
+}
+```
+- In what scenarios finally block not executed?
+    - If exception is thrown in finally
+    - If JVM crashes in between (for example System.exit())
 
-    +--------------------------+
-    | } finally {              |
-    |       connection.close();|
-    | }                        |
-    +--------------------------+
+- Finally block execute even when there is a return statement in try block
 
-In what scenarios finally block not executed?
-- If exception is thrown in finally
-- If JVM crashes in between (for example System.exit())
-Finally block execute even when there is a return statement in try block
+- try without catch block is allowed for instance since Java 7
+```java
+try {
+    // ...
+} finally {
+    // ...
+}
+```
+- Java 7 try with resources (automatic resource management)
+```java
+try (FileInputStream input = new FileInputStream("file.txt")) {
+    // ...
+}
+```
 
-try without catch block is allowed for instance since Java 7
-
-    +-------------+
-    | try {       |
-    |   ...       |
-    | } finally { |
-    |   ...       |
-    | }           |
-    +-------------+
-
-Java 7 try with resources (automatic resource management)
-
-    +-----------------------------------------------------------------+
-    | try (FileInputStream input = new FileInputStream("file.txt")) { |
-    |   ...                                                           |
-    | }                                                               |
-    +-----------------------------------------------------------------+
-
-Hierarchy of Exception class in Java
-Throwable is the highest level of Error Handling classes.
-
-    +---------------------------------------------+
-    | // Pre defined Java Classes                 |
-    | class Error extends Throwable {}            |
-    | class Exception extends Throwable {}        |
-    | class RuntimeException extends Exception {} |
-    +---------------------------------------------+
+- Hierarchy of Exception class in Java
+    -Throwable is the highest level of Error Handling classes.
+```java
+// Pre defined Java Classes
+class Error extends Throwable {}
+class Exception extends Throwable {}
+class RuntimeException extends Exception {}
+```
 
 ### Difference between Error and Exception
 Error is used in situation where there is nothing programmer can do about an error.
@@ -1266,41 +1248,35 @@ StackOverflow, OutOfMemory. Programmer can handle Exception.
 
 
 ### Difference between checked and un-checked exceptions
-Runtime Exceptions and classes that extends RuntimeException are called unchecked exception.
-Other Exception classes are called Checked Exceptions. They are Subclasses of Exception which are
-not subclass of RuntimeException. Checked exceptions should be handled or thrown.
-
-    +-----------------------------------+
-    |throw new Exception("Exception 1");|
-    +-----------------------------------+
+- Runtime Exceptions and classes that extends RuntimeException are called unchecked exception.
+- Other Exception classes are called Checked Exceptions. They are Subclasses of Exception which are
+not subclass of RuntimeException.
+- Checked exceptions should be handled or thrown.
 
 
 ### Create custom Exception
-By extending Exception class or RuntimeException class.
-If extends Exception class it will be checked exception.
-If extends RuntimeException it will be un-checked exception.
+- By extending Exception class or RuntimeException class.
+- If extends Exception class it will be checked exception.
+- If extends RuntimeException it will be un-checked exception.
 
-    +-----------------------------------------------+
-    | class CustomException extends Exception {...} |
-    +-----------------------------------------------+
-
+```java
+class CustomException extends Exception {...}
+```
 
 ### Order of Exceptions
-Specific Exception should be before the Generic Exception.
+- Specific Exception should be before the Generic Exception.
+```java
+try {
+    // ...
+} catch (CurrenciesDoNotMatchException e) {
+    // ...
+} catch (Exception e) {
+    // ...
+}
 
-    +---------------------------------------------+
-    | try {                                       |
-    |   ...                                       |
-    | } catch (CurrenciesDoNotMatchException e) { |
-    |   ...                                       |
-    | } catch (Exception e) {                     |
-    |   ...                                       |
-    | }                                           |
-    |                                             |
-    | // Multiple repeated exception              |
-    | catch (IOException | SQLException e)        |
-    +---------------------------------------------+
-
+// Multiple repeated exception
+catch (IOException | SQLException e)
+```
 
 ### Checked and Unchecked Exceptions
 Checked Exceptions ensures that handling of exception is provided and its verified by compiler also
@@ -1309,50 +1285,48 @@ For throwing unchecked exception no special provision is needed.
 
 ## Generics
 
-
 Generics are used to create Generic Classes and Generic Methods which can work with different Types (classes).
 Make class type parameter to a class.
 
-    +---------------------------------+
-    | class MyListGeneric<T> {        |
-    |   private List<T> values;       |
-    |                                 |
-    |   void add(T value) {           |
-    |       values.add(value);        |
-    |   }                             |
-    |                                 |
-    |   void remove(T value) {        |
-    |       values.remove(value);     |
-    |   }                             |
-    |                                 |
-    |   T get(int index) {            |
-    |       return values.get(index); |
-    |   }                             |
-    | }                               |
-    +---------------------------------+
+```java
+class MyListGeneric<T> {
+       private List<T> values;
+
+       void add(T value) {
+           values.add(value);
+       }
+
+       void remove(T value) {
+           values.remove(value);
+       }
+
+       T get(int index) {
+           return values.get(index);
+       }
+     }
+```
 
 To restrict Generics to a subclass of particular class we can use Generic Restrictions.
 "T extends Number"
 We can use the class MyListRestricted with any class extending (subclass) of Number - Float, Integer, Double
 String is not valid substitute for "T extends Number"
+```java
+class MyListRestricted<T extends Number> {
+       private List<T> values;
 
-    +--------------------------------------------+
-    | class MyListRestricted<T extends Number> { |
-    |   private List<T> values;                  |
-    |                                            |
-    |   void add(T value) {                      |
-    |       values.add(value);                   |
-    |   }                                        |
-    |                                            |
-    |   void remove(T value) {                   |
-    |       values.remove(value);                |
-    |   }                                        |
-    |                                            |
-    |   T get(int index) {                       |
-    |       return values.get(index);            |
-    |   }                                        |
-    | }                                          |
-    +--------------------------------------------+
+       void add(T value) {
+           values.add(value);
+       }
+
+       void remove(T value) {
+           values.remove(value);
+       }
+
+       T get(int index) {
+           return values.get(index);
+       }
+     }
+```
 
 To restrict Generic class to a super class of particular class we can use Generic Restrictions.
 "T super Number"
@@ -1384,61 +1358,56 @@ PECS - Produces extends, Consumer super
     | directory       | newDir.mkdir();                    |
     +-----------------+------------------------------------+
 
-File class represents files and directories.
+- File class represents files and directories.
 
-Write to file using FileWriter
+- Write to file using FileWriter
 .write(), .flush(), .close()
 
-Read from file using FileReader
+- Read from file using FileReader
 .read(), .close()
 
-BufferedWriter and BufferedReader provide better buffering in addition to basic file writing and reading
+- BufferedWriter and BufferedReader provide better buffering in addition to basic file writing and reading
 operations. For example instead reading entire file, we can read file line by line.
 
-BufferedWriter class helps writing to a class with better Buffering than FileWriter.
-BufferedWriter constructor only accept another writer as argument
+- BufferedWriter class helps writing to a class with better Buffering than FileWriter.
+- BufferedWriter constructor only accept another writer as argument
 
-    +-----------------------------------------------------------------+
-    | FileWriter fileWriter = new FileWriter("text.txt");             |
-    | BufferedWriter bufferedWriter = new BufferedWriter(fileWriter); |
-    | bufferedWriter.write("Elephant");                               |
-    | bufferedWriter.newLine();                                       |
-    | bufferedWriter.write("Africa");                                 |
-    | bufferedWriter.flush();                                         |
-    | bufferedWriter.close();                                         |
-    | fileWriter.close();                                             |
-    +-----------------------------------------------------------------+
+```java
+     FileWriter fileWriter = new FileWriter("text.txt");
+     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+     bufferedWriter.write("Elephant");
+     bufferedWriter.newLine();
+     bufferedWriter.write("Africa");
+     bufferedWriter.flush();
+     bufferedWriter.close();
+     fileWriter.close();
+```
 
-BufferedReader helps to read the file line by line. BufferedReader constructors only accept another Reader as argument.
+- BufferedReader helps to read the file line by line. BufferedReader constructors only accept another Reader as argument.
 
-    +-----------------------------------------------------------------+
-    | FileReader fileReader = new FileReader("text.txt");             |
-    | BufferedReader bufferedReader = new BufferedReader(fileReader); |
-    | String line;                                                    |
-    | while ((line = bufferedReader.readLine()) != null) {            |
-    |   System.out.println(line);                                     |
-    | }                                                               |
-    | bufferedReader.close();                                         |
-    | fileWriter.close();                                             |
-    +-----------------------------------------------------------------+
-
-PrintWriter
-Provides advanced methods to write formatted test to the file. It supports printf function.
+```java
+     FileReader fileReader = new FileReader("text.txt");
+     BufferedReader bufferedReader = new BufferedReader(fileReader);
+     String line;
+     while ((line = bufferedReader.readLine()) != null) {
+       System.out.println(line);
+     }
+     bufferedReader.close();
+     fileWriter.close();
+```
+- PrintWriter Provides advanced methods to write formatted test to the file. It supports printf function.
 PrintWriter constructor supports varied kind of arguments - Fle, String Path and Writer
-
-    +-----------------------------------------------------------------+
-    | PrintWriter printWriter = new PrintWriter("text.txt");          |
-    | printWriter.format("%15s", "My Name");                          |
-    | printWriter.println();                                          |
-    | printWriter.printf("Formatted number: %5.5f", 4.5);             |
-    | printWriter.flush();                                            |
-    | printWriter.close();                                            |
-    +-----------------------------------------------------------------+
-
+```java
+    PrintWriter printWriter = new PrintWriter("text.txt");
+     printWriter.format("%15s", "My Name");
+     printWriter.println();
+     printWriter.printf("Formatted number: %5.5f", 4.5);
+     printWriter.flush();
+     printWriter.close();
+```
 
 
 ## Collections
-
 
 ### Why need collections
 Arrays are not dynamic. Once an array of particular size is created, the size cannot be modified.
@@ -1482,63 +1451,66 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 
 ## LIST
 
-List interface extends Collection interface. It contains all methods defined in Collection interface.
-In addition List interface allows operation specifying the position of the element in the Collection.
-Any implementation of List interface would maintain the insertion order.
-When new element is inserted without specifying a position it is inserted at the end of the List of elements.
-We can also use void add(int position, E param) method to insert an element at specific position.
-Methods:
-get, set, add, remove, indexOf, lastIndexOf
+- List interface extends Collection interface. It contains all methods defined in Collection interface.
+- In addition List interface allows operation specifying the position of the element in the Collection.
+- Any implementation of List interface would maintain the insertion order.
+- When new element is inserted without specifying a position it is inserted at the end of the List of elements.
+- We can also use void `add(int position, E param)` method to insert an element at specific position.
 
-List is sequential collection in which every element has index in form of integral number
-List interface has methods which allow to access to n'th element of List. To do so Class should implement RandomAccess
+- Methods:
+    -get, set, add, remove, indexOf, lastIndexOf
+
+- List is sequential collection in which every element has index in form of integral number
+- List interface has methods which allow to access to n'th element of List. To do so Class should implement RandomAccess
 interface. It is a marker interface which does not have any methods.
-For instance ArrayList implements List and RandomAccess, but LinkedList only List interface.
-RandomAccess means random search if you know the index, LinkedList only allows sequential search.
-Adding and removing elements from middle of LinkedList is fast compared to ArrayList, because it only
+- For instance ArrayList implements List and RandomAccess, but LinkedList only List interface.
+- RandomAccess means random search if you know the index, LinkedList only allows sequential search.
+- Adding and removing elements from middle of LinkedList is fast compared to ArrayList, because it only
 require to modify links and no other elements are rearranged.
 
 
 ### ArrayList
 
-ArrayList implements the List interface. So ArrayList stores the elements in insertion order.
-Elements can be inserted into and removed from ArrayList based on their positions.
-ArrayList can have duplicate elements.
-Iterate around ArrayList using Iterator
+- ArrayList implements the List interface. So ArrayList stores the elements in insertion order.
+- Elements can be inserted into and removed from ArrayList based on their positions.
+- ArrayList can have duplicate elements.
+- Iterate around ArrayList using Iterator
+```java
+     Iterator<String> arrayListIterator = arrayList.iterator();
+     while (arrayListIterator.hasNext()) {
+       String str = arrayListIterator.next();
+       System.out.println(str);
+     }
+```
+- We can sort ArrayList using Collection.sort method
+- We can also use Comparable interface, with method compareTo
 
-    +------------------------------------------------------------+
-    | Iterator<String> arrayListIterator = arrayList.iterator(); |
-    | while (arrayListIterator.hasNext()) {                      |
-    |   String str = arrayListIterator.next();                   |
-    |   System.out.println(str);                                 |
-    | }                                                          |
-    +------------------------------------------------------------+
+```java
+     class DescendingSorter implements Comparator<Cricket> {
+       @Override
+       public int compareTo(Cricket cricket1, Cricket cricket2) {
+           if (cricket1.points > cricket2.points) {
+               return -1;
+           }
+           else if (cricket1.points < cricket2.points) {
+               return 1;
+           }
+           return 0;
+       }
+     }
+     // Use
+     Collections.sort(cricket, new DescendingSorter());
+```
 
-We can sort ArrayList using Collection.sort method
-We can also use Comparable interface, with method compareTo
-
-    +--------------------------------------------------------------+
-    | class DescendingSorter implements Comparator<Cricket> {      |
-    |   @Override                                                  |
-    |   public int compareTo(Cricket cricket1, Cricket cricket2) { |
-    |       if (cricket1.points > cricket2.points) {               |
-    |           return -1;                                         |
-    |       }                                                      |
-    |       else if (cricket1.points < cricket2.points) {          |
-    |           return 1;                                          |
-    |       }                                                      |
-    |       return 0;                                              |
-    |   }                                                          |
-    | }                                                            |
-    | // Use                                                       |
-    | Collections.sort(cricket, new DescendingSorter());           |
-    +--------------------------------------------------------------+
-
-Convert List to an Array
+- Convert List to an Array
+```java
 Object[] numObj = numberArray.toArray();
+```
 
-Convert Array to List
+- Convert Array to List
+```java
 List<String> valueList = Arrays.asList(valueArray)
+```
 
 
 ## SET
@@ -1548,10 +1520,10 @@ Does not allow duplicates.
 
 
 ### What is a difference between Set and SortedSet?
-SortedSet interface extends the Set interface. Both Set and SortedSet does not allow duplicate elements.
-SortedSet maintains its elements in a sorted order. Set interface does not guaranteed any order
-Methods of Sorted Set:
-subset(), headSet(), tailSet()
+- SortedSet interface extends the Set interface. Both Set and SortedSet does not allow duplicate elements.
+- SortedSet maintains its elements in a sorted order. Set interface does not guaranteed any order
+- Methods of Sorted Set:
+    - subset(), headSet(), tailSet()
 
 
 ### HashSet
@@ -1559,89 +1531,88 @@ subset(), headSet(), tailSet()
 HashSet implements Set interface. HashSet does not allow duplicates. HashSet does not supports ordering.
 The order in which elements are inserted is not maintained.
 
-    +----------------------------------------+
-    | Set<String> hashSet = new HashSet<>(); |
-    +----------------------------------------+
-
+```java
+Set<String> hashSet = new HashSet<>();
+```
 
 ### LinkedHashSet
 
-LinkedHashSet implements Set interface and exposes similar operations to HashSet.
-Maintains insertion order.
+- LinkedHashSet implements Set interface and exposes similar operations to HashSet.
+- Maintains insertion order.
 
 
 ### TreeSet
 
-TreeSet implements Set, SortedSet and NavigableSet interfaces. TreeSet is similar to HashSet except
+- TreeSet implements Set, SortedSet and NavigableSet interfaces. TreeSet is similar to HashSet except
 that it stores elements in sorted order.
-Some methods:
-lower(), floor(), higher(), ceiling()
+- Some methods:
+    - lower(), floor(), higher(), ceiling()
 
-    +----------------------------------------+
-    | Set<String> treeSet = new TreeSet<>(); |
-    +----------------------------------------+
+```java
+Set<String> treeSet = new TreeSet<>();
+```
 
 
 ## MAP
 
-Map interface does not extends Collection.
-A Map interface supports Collections that use a key value pair.
-A key-value pair is a set of linked data items a key, which is a unique identifier for some item data, and the value
+- Map interface does not extends Collection.
+- A Map interface supports Collections that use a key value pair.
+- A key-value pair is a set of linked data items a key, which is a unique identifier for some item data, and the value
 which is either data or pointer to a data. Key-value pairs are used in lookups tables, hash tables and configuration
 files. A key-value pair in Map interface is called Entry.
-Put method allows to add a key-value pair to the Map.
-Get method allows to get a value from the Map based on key
-Other methods:
-size(), isEmpty(), remove(), putAll(), clear(), containsKey(), containsValue()
+- Put method allows to add a key-value pair to the Map.
+- Get method allows to get a value from the Map based on key
 
-In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
-LinkedHashMap maintains insertion order and process elements based on this order
-HashMap implements Map interface there by supporting key values pairs.
-TreeMap is similar to HashMap except that it stores keys in sorted order. It implements NavigableMap interface and
+- Other methods:
+    - size(), isEmpty(), remove(), putAll(), clear(), containsKey(), containsValue()
+
+- In Map you can choose between HashMap or TreeMap. LinkedHashMap maintains insertion order
+- LinkedHashMap maintains insertion order and process elements based on this order
+- HashMap implements Map interface there by supporting key values pairs.
+- TreeMap is similar to HashMap except that it stores keys in sorted order. It implements NavigableMap interface and
 SortedMap interfaces along with tha Map interface
 
 
 ### ConcurrentHashMap
 
-Methods in atomic ways sets or replace elements if it is the same at a point of time.
-There are couple of mass operations to search, modify or look for ConcurrentHashMap.
-search, reduce, forEach.
-ConcurrentHashMap does not allow null values for keys or values
-ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
-thread safety
-ConcurrentSkipListMap
+- Methods in atomic ways sets or replace elements if it is the same at a point of time.
+- There are couple of mass operations to search, modify or look for ConcurrentHashMap.
+    search, reduce, forEach.
+- ConcurrentHashMap does not allow null values for keys or values
+- ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
+thread safety, ConcurrentSkipListMap
 
 
 ### Difference between Map and SortedMap
 
-SortedMap interface extends Map interface. In addition, an implementation of SortedMap interface maintains
+- SortedMap interface extends Map interface. In addition, an implementation of SortedMap interface maintains
 keys in sorted order.
-Methods are available in the interface to get a ranges of values based on their keys:
-subMap(), headMap(), tailMap(), firstKey(), lastKey()
+- Methods are available in the interface to get a ranges of values based on their keys:
+    - subMap(), headMap(), tailMap(), firstKey(), lastKey()
 
 
 ### QUEUES
 
-Queue interface extends Collection interface. Queue interface is typically used for implementation
+- Queue interface extends Collection interface. Queue interface is typically used for implementation
 holding elements in order for some processing.
-Queue interface offers methods peek() and poll(), which get element at the head of a queue.
-The difference is that poll() method removes the head from queue also. peek() would keep head of
+- Queue interface offers methods peek() and poll(), which get element at the head of a queue.
+- The difference is that poll() method removes the head from queue also. peek() would keep head of
 the queue unchanged.
-offer(), remove(), pull(), element(), peek()
+    - offer(), remove(), pull(), element(), peek()
 
 
 ### BlockingQueue
 
-pool, peek methods return null to signal failure. In that reason insert null vales to them is incorrect
-LinkedBlockingQueue
-ArrayBlockingQueue
+- pool, peek methods return null to signal failure. In that reason insert null vales to them is incorrect
+    - LinkedBlockingQueue
+    - ArrayBlockingQueue
 
 
 ### PriorityQueue
 
-Implements Queue interface.
--offer() adding an element to priority queue
--peek() get the element with highest priority
+- Implements Queue interface.
+    - offer() adding an element to priority queue
+    - peek() get the element with highest priority
 
 
 ### Iterator
@@ -1650,13 +1621,12 @@ Iterator interface allows us to iterate (loop around) a collection. All collecti
 that gets an iterator of collection.
 hasNext() check if there is another elements in the collection being iterated, next() gets the next element
 
-    +--------------------------------+
-    | public interface Iterator<E> { |
-    |   boolean hasNext();           |
-    |   E next();                    |
-    | }                              |
-    +--------------------------------+
-
+```java
+public interface Iterator<E> {
+    boolean hasNext();
+    E next();
+}
+```
 
 ### What is the difference between synchronized and Concurrent Collections?
 Synchronized collections are implemented using synchronized methods and synchronized blocks. Only one Thread
@@ -1722,32 +1692,32 @@ The 10 methods can be divided into different blocks which can be synchronized on
 
 ### What is initial capacity of a HashMap?
 An instance of HashMap has two parameters that affect its performance initial capacity and load factor.
-The capacity is the number of buckets in the hash table, and the initial capacity is the capacity at the time the
-hash table is created. The load factor a measure of how full the hash table is allowed to get before its capacity
-automatically increased.
-When the number of entries in the hash table exceeds the product of load factor and the current capacity, the hash
+- The capacity is the number of buckets in the hash table, and the initial capacity is the capacity at the time the
+hash table is created.
+- The load factor a measure of how full the hash table is allowed to get before its capacity automatically increased.
+- When the number of entries in the hash table exceeds the product of load factor and the current capacity, the hash
 table is rehashed (internal structure rebuild). So the hash table has approximately twice the number of buckets.
-As a general rule the default load factor .75 offers a good trade off between time and space cost.
-Higher value decrease space overhead but increase the lookup cost (put and get operations).
+- As a general rule the default load factor .75 offers a good trade off between time and space cost.
+- Higher value decrease space overhead but increase the lookup cost (put and get operations).
 
 
 ### What is a different between fail safe and fail fast?
-Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
+- Fail fast iterators throw ConcurrentModificationException if there is a modification to the underlying collection is modified.
 This was the default behavior of the synchronized collections of pre Java 5
-Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
+- Fail safe iterators do not throw ConcurrentModificationException even when there are changes in the collection.
 This is the default behavior of the concurrent collections, introduced since Java 5
 
 
 ### ConcurrentHashMap vs HashTable vs SynchronizedMap
-All are thread safe.
-HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
-SynchronizedMap not very different from HasTable similar performance in concurrent Java program.
-You can create synchronized Map version by using Collections.synchronizedMap().
-ConcurrentHashMap is specially designed for concurrent use i.e. more than one thread.
-By default it simultaneously allows 16 threads to read and write from Map without any external synchronization.
-It is very scalable because of stripped locking technique used in the internal implementation of ConcurrentHashMap class.
-Unlike HashTable and Synchronized Map, it never locks whole Map, instead, it divides the Map into segments and locking is done on those.
-It perform better if number of reader are greater than the number of writer threads.
+- All are thread safe.
+- HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
+- SynchronizedMap not very different from HashTable similar performance in concurrent Java program.
+- You can create synchronized Map version by using Collections.synchronizedMap().
+- ConcurrentHashMap is specially designed for concurrent use i.e. more than one thread.
+- By default it simultaneously allows 16 threads to read and write from Map without any external synchronization.
+- It is very scalable because of stripped locking technique used in the internal implementation of ConcurrentHashMap class.
+- Unlike HashTable and Synchronized Map, it never locks whole Map, instead, it divides the Map into segments and locking is done on those.
+- It perform better if number of reader are greater than the number of writer threads.
 
 
 ### What are atomic operations in Java?
@@ -1771,14 +1741,14 @@ BlockedQueue allows the consumer to wait (for a specific time of infinitely) for
 
 
 ### HashMap and HashTable differences?
-HashMap is not synchronized. Faster than HashTable. Allows null keys.
-Hashtable is synchronized. Slower than HashMap. Does not allow null keys.
+- HashMap is not synchronized. Faster than HashTable. Allows null keys.
+- Hashtable is synchronized. Slower than HashMap. Does not allow null keys.
 
 
 ### TreeSet and TreeMap differences?
-TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
-TreeMap is an implementation of Map.
-TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
+- TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
+- TreeMap is an implementation of Map.
+- TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
 
 
 ### Vector Class
@@ -1787,11 +1757,11 @@ We can use Vector if we share a List between two threads that we would want them
 
 
 ### What is a LinkedList
-LinkedList extends List and Queue interfaces. Other than operations exposed by Queue interface, LinkedList
+- LinkedList extends List and Queue interfaces. Other than operations exposed by Queue interface, LinkedList
 has the same operations as ArrayList.
-ArrayList uses an Array kind of structure to share elements. So inserting and deleting from an ArrayList are expensive operations.
+- ArrayList uses an Array kind of structure to share elements. So inserting and deleting from an ArrayList are expensive operations.
 However search of an ArrayList is faster than LinkedList.
-LinkedList uses Linked representation. Each object holds a link to the next element. Hence insertion and deletion are faster than
+- LinkedList uses Linked representation. Each object holds a link to the next element. Hence insertion and deletion are faster than
 ArrayList, but searching is slower.
 
 
@@ -1807,14 +1777,13 @@ Two ways to synchronize HashMap
 - Java Collections synchronizedMap()
 - ConcurrentHashMap
 
-    +-----------------------------------------------------------------------------------+
-    | // Hashtable                                                                      |
-    | Map<String, String> normalMap = new Hashtable<>();                                |
-    | // synchronizedMap                                                                |
-    | synchronizedHashMap = Collections.synchronizedMap(new HashMap<String, String>()); |
-    | // ConcurrentHashMap                                                              |
-    | concurrentHashMap = new ConcurrentHashMap<String, String>();                      |
-    +-----------------------------------------------------------------------------------+
+```java
+// Hashtable
+Map<String, String> normalMap = new Hashtable<>();
+// synchronizedMap
+synchronizedHashMap = Collections.synchronizedMap(new HashMap<String, String>());
+ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap<String, String>();
+```
 
 ### ConcurrentHashMap
 - To achieve high concurrency in project
@@ -1835,216 +1804,84 @@ Two ways to synchronize HashMap
 
 
 
-## Java 8
+# Big-O Notation
 
-### Lambda
-Is a block of code that you can pass to use in future once or more times
-Useful
-Pass comparison method Arrays.sort
-Run task in different thread
-Action event example after button clicked
-Lambda Functions are simply anonymous functions
-
-Output of one operation is fed into another
-This functionality using something called AGGREGATE OPERATIONS
-FILTER, MAP and FOREACH are standard aggregate operations in functional programming
-
-
-### Functional Interfaces
-
-In Java there are a lot of interfaces that determines the action like Runnable or Comparator
-Lambda expression is compatible with these interfaces
-You can put lambda expression in all places, when you can put object that implements one abstract method
-Such interfaces are called functional interfaces
-
-
-### Streams
-
-Process data in more abstract way, than in case of collections. In case of stream you determine what should be done
-not the way it will be executed. Processing details live on implementation.
-Example calculate average value of parameters. Your task is to determine the source of data
-and parameters, library that use stream optimizes all calculations and process the result.
-Returns Optional<T> value.
-
-    +------------------------------------------------------------------+
-    | long counter = word.stream().filter(s->s.length() > 12).count(); |
-    +------------------------------------------------------------------+
-
-3 stream steps. Create stream, determine intermediate operations that modify stream to other form.
-End operation that generates result. After that step stream cannot be used anymore.
-
-Streams allow efficient parallel process
-You can create streams from Collection, Generators or Iterators
-Use filter to choose elements and map to process them
-Other operation to process stream : limit, distinct, sorted
-To get result from stream use reduce operator like : count, max, min, findFirst, findLast, some of them returns Optional vale
-
-Optional type is a safe way to work with null values. To use them use methods ifPresent, orElse
-You can collect stream results in Collections, Arrays, Strings or Maps
-GroupingBy and partitioningBy From Collector class allows to separate stream on group and determine result for each of these groups
-Special streams for primitive typed like : int, long, double
-Parallel Streams automated parallel operations on streams
-
-
-### Streams vs Collections
-
-Streams does not store elements. They can be stored in processing by stream collection or generated on demand
-Streams operation does not modify source data. For instance filter does not delete elements from stream but returns new one
-Streams operations are lazy. They process is delay until the results are needed.
-
-
-### Stream workflow
-
-- Create stream
-- Determine intermediate operations which process stream to different form, this process might require couple of steps (filter)
-- Process end operation which generates the result. After this step stream can no longer be used
-
-Map method is analogous to map interface from stream. Optional value is a stream on size zero or one.
-filterMap method from stream interface. Is used to join two methods.
-
-
-### ParallelStreams
-
-    +------------------------------------------------------------------------------------------------------------------+
-    | Stream.of(arrays).parallel()                                                                                     |
-    | Map<Integer, Long> word = words.parallelStream().filter(s->s.length() < 12).collect(groupingBy(String::length)); |
-    +------------------------------------------------------------------------------------------------------------------+
-
-Streams are introduced in Java. In combination with Lambda expression, they attempt to bring some of the
-important functional programming concepts to Java.
-A stream is a sequence of elements supporting sequential and parallel aggregate operations.
-Consider the flow:
-- Creating an array as stream
-- Use lambda expression to create a filter
-- Use map function to invoke a String function
-- Use sorted function to sort array
-- Print the array using forEach
-
-    +--------------------------------------------------+
-    | Arrays.stream(new String[]{"Ram", "Tam", "Tam"}) |
-    |    .filter(s->s.startsWith("Ta"))                |
-    |    .map(String::toLowerCase)                     |
-    |    .sorted()                                     |
-    |    .forEach(System.out::println);                |
-    +--------------------------------------------------+
-
-In general any use of streams involves.
-- source : Creating or use existing stream
-- Intermediate Operations : returns new stream
-- Terminal operation : consume the stream print
-Intermediate Operations are of two parts
-- Stateful : elements need to be compared against each others (sort)
-- Stateless : no need for comparing with other element (map, filter)
-
-
-### Optional
-
-Optional object Optional<T> pack up object type T. Optional Object is safe alternative to reference to T type,
-which can accept object or null value. Use method that returns alternative value if returned value does not exists
-or take value if present.
-
-    +--------------------------------------------------------------------------------------------------------+
-    | String value = optionalString.orElse(""); // String or " " if not                                      |
-    | String result = optionalString.orElseThrow(IllegalStateException::new); // Throw exception if no value |
-    +--------------------------------------------------------------------------------------------------------+
-
-ifPresent method accepts function. If optional value exists, is passed to function. Else do nothing.
-Optional value is a stream of size zero or one. If value exists function is triggered.
-
-
-### Predicate<T>
-
-Function that return logical value.
-Predicate.isEqual(a) is counterpart of a::equals, but works correctly even with null values.
-Methods and, or, negate to join predicates
-Predicate.isEqual(b) === x->b.equal(x)
-
-
-##################
-# Big-O Notation #
-##################
-
-# Complexity and the Big-O notation
+## Complexity and the Big-O notation
 Performance is a measured along resource consumption and code consumes variety of resources
 Improving code performance beyond a certain point involves Trade offs
 Consuming more of one resources can help consume less of another.
 
 
-# Measures of performance
-Time - The amount of processing or number of operations code has to perform to accomplish it's objectives
-Space - This is both the memory needed by code to store information at run-time as well as disk space needed by code
+## Measures of performance
+- Time : The amount of processing or number of operations code has to perform to accomplish it's objectives
+- Space : This is both the memory needed by code to store information at run-time as well as disk space needed by code
 for persistent storage
-Network - The bandwidth code uses to pass information to clients or other machines
+- Network : The bandwidth code uses to pass information to clients or other machines
 
 Performance indicates how much of these resources the code uses. Code is also more efficient when
 it uses the resources we have in plenty rather that those we lack.
 
 
-# Complexity
+## Complexity
 Complexity is a measure of how resource requirements change as the size of the problem gets larger
 Affects performance. The higher the complexity the problem the lower the performance
 
-Time required by code to run depends on the basic operations it performs
-Arithmetic operations read, assignment write. How performance changes based on input size
-Focus on the worst case performance
-Code uses time, space and network resource. The amount of resource used determines code's performance
-Complexity is a measure of performance
+- Time required by code to run depends on the basic operations it performs
+- Arithmetic operations read, assignment write. How performance changes based on input size
+- Focus on the worst case performance
+- Code uses time, space and network resource. The amount of resource used determines code's performance
+- Complexity is a measure of performance
 
 Big O Notation allows us express complexity as a measure of input size. This express the complexity of an algorithm
-A algorithm which complexity does not change with input size is O(1), is said to have constant time complexity
-The Complexity of an algorithm is O(N) is the time taken by the algorithm increases linearly when N increases
-The Complexity of an algorithm is O(N^2) if the time taken by the algorithm increases quadratically when N increases
+- A algorithm which complexity does not change with input size is O(1), is said to have constant time complexity
+- The Complexity of an algorithm is O(N) is the time taken by the algorithm increases linearly when N increases
+- The Complexity of an algorithm is O(N^2) if the time taken by the algorithm increases quadratically when N increases
 
-+---------------------------+
-| for (int i = 1; i < n;) { |
-|    i = i * 2;             |
-| }                         |
-+---------------------------+
-
+```java
+for (int i = 1; i < n;) {
+   i = i * 2;
+}
+```
 The complexity of this operation is O(log(N))
 
-+----------------+-------+-------+--------+----------+
+
 | Lists and Sets |  get  | add   | remove | contains |
-+----------------+-------+-------+--------+----------+
+|---|---|---|---|---|
 | ArrayList      | O(1)  |  O(1) |  O(n)  |  O(n)    |
 | LinkedList     | O(n)  |  O(1) |  O(1)  |  O(n)    |
 | HashSet        | O(1)  |  O(1) |  O(1)  |  O(1)    |
 | LinkedHashSet  | O(1)  |  O(1) |  O(1)  |  O(1)    |
 | TreeSet        |O(logN)|O(logN)| O(logN)| O(logN)  |
-+----------------+-------+-------+--------+----------+
-| Maps                                               |
-+----------------+-------+-------+--------+----------+
+| Maps | | | |
 | HashMap        | O(1)  |  O(1) |  O(1)  |  O(1)    |
 | LinkedHashMap  | O(1)  |  O(1) |  O(1)  |  O(1)    |
 | TreeMap        |O(logN)|O(logN)| O(logN)| O(logN)  |
-+----------------+-------+-------+--------+----------+
 
-+-----------------+--------+------+--------+------+
+
+
 | Queue           | offer  | peek | pull   | size |
-+-----------------+--------+------+--------+------+
+|---|---|---|
 | PriorityQueue   | O(logN)| O(1) | O(logN)| O(1) |
-+-----------------+--------+------+--------+------+
 
-+--------------------+-----------------+------------------+
+
 | Sorting algorithms | Time Complexity | Space Complexity |
-+--------------------+-----------------+------------------+
+|---|---|---|
 | MergeSort          |     O(NlogN)    |       O(n)       |
 | TreeSort           |     O(NlogN)    |       O(n)       |
-+--------------------+-----------------+------------------+
 
 
-# Sorting
-Trade offs in sorting
-What is the complexity of the algorithm used
-How does it scales as the input size increases?
-How much space does it occupy?
-Does it need extra space to hold information during sorting?
-Is the sort stable?
-Do equal elements maintain their original order after sorting?
-How many comparisons and elements swaps are needed?
-Do the algorithm work better with nearly sorted list?
-Is the sort adaptive?
-Does it breaks early when the list is sorted?
+# #Sorting
+- Trade offs in sorting
+    - What is the complexity of the algorithm used
+    - How does it scales as the input size increases?
+    - How much space does it occupy?
+    - Does it need extra space to hold information during sorting?
+    - Is the sort stable?
+    - Do equal elements maintain their original order after sorting?
+    - How many comparisons and elements swaps are needed?
+    - Do the algorithm work better with nearly sorted list?
+    - Is the sort adaptive?
+    - Does it breaks early when the list is sorted?
 
 Sorting algorithms
 - Selection Sort
@@ -2056,84 +1893,86 @@ Sorting algorithms
 - Binary Search
 
 
-##################
-# Data Structure #
-##################
+# Data Structure
 
-# TREE DATA STRUCTURE
+## TREE DATA STRUCTURE
 Tree is a structure which is made up of nodes. Each node can point to a number of nodes
 Unlike stacks, queues, linked lists the order of elements is not important in a tree
 It is non linear data structure
 Tree is used to represent hierarchical information
 
 
-# The Binary Tree
+### The Binary Tree
 A general tree data structure can have number of children but these trees are less useful and not very commonly used
-in data structure
-In binary tree each node can have 0, 1 or 2 children
+in data structure. In binary tree each node can have 0, 1 or 2 children
 
-Root - a node with no parents, every tree has exactly one root
-Edge - a link from a parent to a child node
-Leaf - node with no children
-Siblings node - are in the same level in a tree
+- Root : a node with no parents, every tree has exactly one root
+- Edge : a link from a parent to a child node
+- Leaf : node with no children
+- Siblings node : are in the same level in a tree
 
-     +---+
-     | A | A -> ROOT
-     +---+
-    /     \ Edges
- +---+   +---+
- | B |   | C |   B-C -> SIBLINGS
- +---+   +---+
+         +---+
+         | A | A -> ROOT
+         +---+
         /     \ Edges
      +---+   +---+
-     | D |   | E | D-E -> SIBLINGS, LEAF
+     | B |   | C |   B-C -> SIBLINGS
      +---+   +---+
+            /     \ Edges
+         +---+   +---+
+         | D |   | E | D-E -> SIBLINGS, LEAF
+         +---+   +---+
 
 Binary Tree Traversal
-Visiting nodes of a tree is called TRAVERSING TREE
+Visiting nodes of a tree is called **TRAVERSING TREE**
 
 
-# BREADTH-FIRST TRAVERSAL
-Involves visiting nodes at every leaf before moving on to the next level
-Start at root node it is at level 0 and is the first node to visit
-Next step check whether there are other Nodes at the same level and visit them
-Once a level is exhausted then we can move to the next level
-Continue process till every node is visited
+#### BREADTH-FIRST TRAVERSAL
+- Involves visiting nodes at every leaf before moving on to the next level
+- Start at root node it is at level 0 and is the first node to visit
+- Next step check whether there are other Nodes at the same level and visit them
+- Once a level is exhausted then we can move to the next level
+- Continue process till every node is visited
 
-A root node is ancestor of all nodes.
-A Binary tree is one where every node can have a maximum of two children. The left and right
-Two binary trees are the same if
-1. Every corresponding node has the same value
-2. The structure of the tree at every corresponding node is the same
+- A root node is ancestor of all nodes.
+- A Binary tree is one where every node can have a maximum of two children. The left and right
+- Two binary trees are the same if
+    - 1. Every corresponding node has the same value
+    - 2. The structure of the tree at every corresponding node is the same
 
 
-# DEPTH-FIRST TRAVERSAL
+#### DEPTH-FIRST TRAVERSAL
 Depth first traversal involves going right to the leaf of the binary Tree first before moving up tree.
-Depth first can be:
-PRE-ORDER, IN_ORDER, POST-ORDER
+- Depth first can be:
+    - PRE-ORDER
+    - IN_ORDER
+    - POST-ORDER
 
 All depth first traversal are most efficiently and intuitively implemented using RECURSION
 
-PRE-ORDER
+##### PRE-ORDER
 Each node is processed first (pre) before it's right and left subtrees.
 The left sub-trees are processed before the right sub trees.
-NODE -> LEFT SUBTREE -> RIGHT SUBTREE
 
-IN-ORDER
+    NODE -> LEFT SUBTREE -> RIGHT SUBTREE
+
+##### IN-ORDER
 The Left subtree is processed first, then the NODE, then RIGHT SUBTREE
-LEFT-SUBTREE -> NODE -> RIGHT SUBTREE
 
-POST-ORDER
+    LEFT-SUBTREE -> NODE -> RIGHT SUBTREE
+
+##### POST-ORDER
 Both subtrees are processed BEFORE the node itself. The node is processed AFTER (POST) the subtree
-LEFT-SUBTREE -> RIGHT SUBTREE -> NODE
+
+    LEFT-SUBTREE -> RIGHT SUBTREE -> NODE
 
 
-# The Binary Search Tree
+### The Binary Search Tree
 Also called an Ordered binary tree and it's a tree with some specific Characteristics.
 
-For Every Node in the TREE:
-Each node in the left subtree of that node has a value less than or equal to the value of the node.
-Each node in the right subtree of that node has a value greater than the value of the node.
+- For Every Node in the TREE:
+    - Each node in the **left** subtree of that node has a value **less than or equal** to the value of the **node**.
+    - Each node in the **right** subtree of that node has a value **greater than** the value of the **node**.
 
             8                   Every node in the left subtree is <= 8
            / \
@@ -2143,15 +1982,15 @@ Each node in the right subtree of that node has a value greater than the value o
        / \    \    \
       2   5    13   18
 
-Binary search tree are typically used for FAST INSERTION and FAST LOOKUP.
+Binary search tree are typically used for **FAST INSERTION** and **FAST LOOKUP**
 
-The structure of a tree depends on the order in which the nodes are ADDED:
-INSERTION
+- The structure of a tree depends on the order in which the nodes are ADDED:
+    - INSERTION
 
-We can simply follow the RIGHT or LEFT subtrees based on the value we want to find:
-LOOKUP
+- We can simply follow the RIGHT or LEFT subtrees based on the value we want to find:
+    - LOOKUP
 
-Insertion and Lookup
+- Insertion and Lookup
 Insert the Node 2 in the tree
 
             8       step-1) Compare Node to be inserted with root node
@@ -2164,7 +2003,7 @@ Insert the Node 2 in the tree
      |2|
      +-+
 
-Lookup in a Binary Search Tree
+- Lookup in a Binary Search Tree
 Lookup the value 7 in the tree
 
             8       step-1) Compare 7 with the root value
@@ -2175,77 +2014,75 @@ Lookup the value 7 in the tree
            |7|     \
            +-+      18
 
-Insertion
+- Insertion
 The Complexity for Node insertion is O(logN).
 The actual complexity depends on the shape of the tree. I.E all right or left child can have O(N)
 
-Lookup
+- Lookup
 The Complexity for value lookup is O(logN) in average case.
 For both insertion and lookup we have the TREE we have to traverse at every step. This gives us the log(N) complexity.
 
 
-# HEAPS
+## HEAPS
 
-# THE PRIORITY QUEUE
+### THE PRIORITY QUEUE
 When a certain element in a collection has HIGHEST WEIGHT-AGE OR PRIORITY - A common use case is to process that first.
 The data structure to store elements where the highest priority has to be processed first can be called a
 priority queue.
 At every step we access the element with highest priority.
 
-Common operations on a priority Queue:
-INSERT ELEMENTS
-ACCESS the highest priority element
-REMOVE the highest priority element
+- Common operations on a priority Queue:
+    - INSERT ELEMENTS
+    - ACCESS the highest priority element
+    - REMOVE the highest priority element
 
 An Array or List
-          | UNORDERED                             | ORDERED
-----------+---------------------------------------+----------------------------------------------------------------------
-INSERTION | Can be anything in a list or array    | Requires finding the right position for the element based on priority
-          | complexity O(1)                       | complexity O(N)
-----------+---------------------------------------+----------------------------------------------------------------------
-ACCESS    | Accessing the highest priority        | Accessing the highest priority elements is easy
-          | element requires going through all    | complexity O(1)
-          | elements in the list - complexity O(N)|
-----------+---------------------------------------+----------------------------------------------------------------------
-REMOVE    | Requires going through all elements   | Removing the highest prioritity element - O(1)
-          | O(N)                                  |
-----------+---------------------------------------+----------------------------------------------------------------------
 
-BALANCED BINARY SEARCH TREE
+              | UNORDERED                             | ORDERED
+    ----------+---------------------------------------+----------------------------------------------------------------------
+    INSERTION | Can be anything in a list or array    | Requires finding the right position for the element based on priority
+              | complexity O(1)                       | complexity O(N)
+    ----------+---------------------------------------+----------------------------------------------------------------------
+    ACCESS    | Accessing the highest priority        | Accessing the highest priority elements is easy
+              | element requires going through all    | complexity O(1)
+              | elements in the list - complexity O(N)|
+    ----------+---------------------------------------+----------------------------------------------------------------------
+    REMOVE    | Requires going through all elements   | Removing the highest prioritity element - O(1)
+              | O(N)                                  |
+    ----------+---------------------------------------+----------------------------------------------------------------------
 
-INSERTION | O(logN)
-----------+---------
-ACCESS    | O(logN)
-----------+---------
-REMOVE    | O(logN)
+### BALANCED BINARY SEARCH TREE
+
+    INSERTION | O(logN)
+    ----------+---------
+    ACCESS    | O(logN)
+    ----------+---------
+    REMOVE    | O(logN)
 
 Both insertion and access moderately fast.
 List solutions make one of these super fast while comparing heavily on the other
 
-BINARY HEAP
+### BINARY HEAP
 
-INSERTION | O(logN)
-----------+---------
-ACCESS    | O(1)
-----------+---------
-REMOVE    | O(logN)
-----------+---------
+    INSERTION | O(logN)
+    ----------+---------
+    ACCESS    | O(1)
+    ----------+---------
+    REMOVE    | O(logN)
+    ----------+---------
 
 THE BINARY HEAP
 A Heap is just a tree with a special properties or constraints on the vales of it's Nodes
 This is called a HEAP Property
 
-Types of Heap:
--MINIMUM HEAP
-Every node value should be <= value of it's children
-The node with the smallest value should be the root of the tree
+- Types of Heap:
+    - MINIMUM HEAP
+        - Every node value should be <= value of it's children. The node with the smallest value should be the root of the tree
+    - MAXIMUM HEAP
+        - Every Node value should be >= Value of it's children. The node with the largest value should be the root of the tree
 
--MAXIMUM HEAP
-Every Node value should be >= Value of it's children.
-The node with the largest value should be the root of the tree
-
-The heap should form a complete binary tree -
-all levels except the last one should be filled
+- The heap should form a complete binary tree
+    - all levels except the last one should be filled
 
 Node at index 0, left child at index 1, right child at index 2
 Node at index: i
@@ -2253,167 +2090,165 @@ has a left child at index: 2i + 1
 has a right child at index: 2i + 2
 Node at index: i GetParent at index: (i-1)/2
 
-        5
-      /   \
-     8     6
-    / \    /\
-   9   12 11 7
-  / \
- 15 10
+            5
+          /   \
+         8     6
+        / \    /\
+       9   12 11 7
+      / \
+     15 10
 
- 5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
+     5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
 
 
-# THE BINARY HEAP
+### THE BINARY HEAP
 Place a single element in the wrong place.
 Then try to find the right position for the element.
-This process is called HEAPIFY
+This process is called **HEAPIFY**
 
-        13
-      /    \
-     8      6
-    / \    /  \
-   9  12  11   7
-  / \
- 15  10
+            13
+          /    \
+         8      6
+        / \    /  \
+       9  12  11   7
+      / \
+     15  10
 
-SHIFT DOWN                   | SHIFT UP
------------------------------+-----------------------------
-All elements in the wrong    | An element is in the wrong
-position with respect to     | position with respect to
-other elements below it on   | other above in the
-the heap                     | heap
-                             |
-It has to be moved downwards | It has to be moved upwards in
-in the heap towards the leaf | the Heap towards the ROOT
-node to find it's right      | Node to find it's right position
-position                     |
+    SHIFT DOWN                   | SHIFT UP
+    -----------------------------+-----------------------------
+    All elements in the wrong    | An element is in the wrong
+    position with respect to     | position with respect to
+    other elements below it on   | other above in the
+    the heap                     | heap
+                                 |
+    It has to be moved downwards | It has to be moved upwards in
+    in the heap towards the leaf | the Heap towards the ROOT
+    node to find it's right      | Node to find it's right position
+    position                     |
 
-SWAP 6 and 8
-SWAP 13 and 7
+- SWAP 6 and 8
+- SWAP 13 and 7
 
-        7
-      /    \
-     6      8
-    / \    /  \
-   9  12  11   13
-  / \
- 15  10
+            7
+          /    \
+         6      8
+        / \    /  \
+       9  12  11   13
+      / \
+     15  10
 
-Insertion                       | O(logN)
---------------------------------+--------
-Access highest priority element | O(1)
---------------------------------+--------
-Remove                          | O(logN)
---------------------------------+--------
+| Insertion | O(logN) |
+|---|---|
+| Access highest priority element | O(1) |
+| Remove | O(logN) |
 
 Heap Sort
-Insertion and removal | O(logN)
-----------------------+---------
-Sorting               | O(NlogN)
+|Insertion and removal | O(logN) |
+|---+---|
+|Sorting | O(NlogN) |
 
-Heap sort is not adaptive
-It's not a stable sort
-It does not need additional space - space complexity is O(1)
+- Heap sort is not adaptive
+- It's not a stable sort
+- It does not need additional space - space complexity is O(1)
 
 
-# THE GRAPH
+## THE GRAPH
 A Graph is used to represent relationships between entities.
 
 The entities can be anything - Graphs find applications in variety of ways in real world.
 These relationship can be arbitrarily complicated and of a variety of different types.
 
-VERTEX                     | EDGE
----------------------------+---------------------------------------------------------
-The Entities Are People    | Personal Relationships - People Work Together - Linkedin
-                           +---------------------------------------------------------
-                           | Personal Relationships - People are friends - Facebook
----------------------------+---------------------------------------------------------
-The Entities Are Locations | A Way to Get from location to another ROADS, RAIL, AIR - Google Maps
----------------------------+---------------------------------------------------------
-The Entities are old       | A Network to carry voice from one instrument to another - at&t
-fashioned Phones -         |
-LANDLINES                  |
----------------------------+---------------------------------------------------------
-The Entities Are computer  | A Way to send information or data from one computer to
-across the world           | another - Google, Level(3), cisco
+    VERTEX                     | EDGE
+    ---------------------------+---------------------------------------------------------
+    The Entities Are People    | Personal Relationships - People Work Together - Linkedin
+                               +---------------------------------------------------------
+                               | Personal Relationships - People are friends - Facebook
+    ---------------------------+---------------------------------------------------------
+    The Entities Are Locations | A Way to Get from location to another ROADS, RAIL, AIR - Google Maps
+    ---------------------------+---------------------------------------------------------
+    The Entities are old       | A Network to carry voice from one instrument to another - at&t
+    fashioned Phones -         |
+    LANDLINES                  |
+    ---------------------------+---------------------------------------------------------
+    The Entities Are computer  | A Way to send information or data from one computer to
+    across the world           | another - Google, Level(3), cisco
 
 The Graphs are used to represent information in many real world applications
 There are many algorithms to optimize different problems represented using graphs
 
-A Graph is a SET of VERTICES and EDGES
+- A Graph is a SET of VERTICES and EDGES
 
-+---+                    +---+
-| A +--------------------+ B | (V,E)
-+---+                    +---+
+    +---+                    +---+
+    | A +--------------------+ B | (V,E)
+    +---+                    +---+
 
-Two Vertices and A single Edge is also a valid graph
+- Two Vertices and A single Edge is also a valid graph
 
-+---+   Edge             +---+
-| A +--------------------+ B | (V,E)
-+---+                    +---+
-VERTEX                  VERTEX
+    +---+   Edge             +---+
+    | A +--------------------+ B | (V,E)
+    +---+                    +---+
+    VERTEX                  VERTEX
 
-+---+                    +---+
-| A +------------------->+ B |
-+---+                    +---+
-SOURCE                  DESTINATION
+    +---+                    +---+
+    | A +------------------->+ B |
+    +---+                    +---+
+    SOURCE                  DESTINATION
 
-The Arrow on the Edge. This means that the relationship between two vertices is directed - THE EDGE is a DIRECTED EDGE
+- The Arrow on the Edge. This means that the relationship between two vertices is directed - THE EDGE is a DIRECTED EDGE
 
-+---+                    +---+ | UNDIRECTED edges represent
-| A +--------------------+ B | | two - way relationship such as:
-+---+                    +---+ | 1. Two way road
-                               | 2. I am his friend and he is mine
--------------------------------+----------------------------------
-                               | DIRECTED edges represent
-+---+                    +---+ | 1 - way relationship such as:
-| A +------------------->+ B | | 1. ONE way road
-+---+                    +---+ | 2. I report to my manager
+    +---+                    +---+ | UNDIRECTED edges represent
+    | A +--------------------+ B | | two - way relationship such as:
+    +---+                    +---+ | 1. Two way road
+                                   | 2. I am his friend and he is mine
+    -------------------------------+----------------------------------
+                                   | DIRECTED edges represent
+    +---+                    +---+ | 1 - way relationship such as:
+    | A +------------------->+ B | | 1. ONE way road
+    +---+                    +---+ | 2. I report to my manager
 
 
-UNDIRECTED GRAPH
+### UNDIRECTED GRAPH
 
-+---+         +---+         +---+
-| A +---------+ B +---------+ F |
-+-+-+         +---+         +-+-+
-  |  \       /                |  \
-  |   \     /                 |   \
-  |    +---+                  |    +---+
-  |    | D |                  |    | H |
-  |    +---+                  |    +---+
-  |         \                 |
-  |          \                |
-+-+-+         +---+         +-+-+
-| C +---------+ E +---------+ G |
-+---+         +---+         +---+
+        +---+         +---+         +---+
+        | A +---------+ B +---------+ F |
+        +-+-+         +---+         +-+-+
+          |  \       /                |  \
+          |   \     /                 |   \
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |         \                 |
+          |          \                |
+        +-+-+         +---+         +-+-+
+        | C +---------+ E +---------+ G |
+        +---+         +---+         +---+
 
-A - C are ADJACENT Nodes
-3 edges are INDICENT Vertex F
+- A - C are ADJACENT Nodes
+- 3 edges are INDICENT Vertex F
 
-The way to go from C to B. C -> A -> B
-This series of Edges is called a PATH
+- The way to go from C to B. C -> A -> B
+- This series of Edges is called a **PATH**
 
 Nodes A,D,E,C form a cycle
 
 
-UNDIRECTED ACYCLIC GRAPH
+### UNDIRECTED ACYCLIC GRAPH
 
-+---+         +---+         +---+
-| A +---------+ B +---------+ F |
-+-+-+         +---+         +-+-+
-  |          /                |  \
-  |         /                 |   \
-  |    +---+                  |    +---+
-  |    | D |                  |    | H |
-  |    +---+                  |    +---+
-  |                           |
-  |                           |
-+-+-+         +---+         +-+-+
-| C +---------+ E |         | G |
-+---+         +---+         +---+
+        +---+         +---+         +---+
+        | A +---------+ B +---------+ F |
+        +-+-+         +---+         +-+-+
+          |          /                |  \
+          |         /                 |   \
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |                           |
+          |                           |
+        +-+-+         +---+         +-+-+
+        | C +---------+ E |         | G |
+        +---+         +---+         +---+
 
-Every Node is CONNECTED TO EVERY OTHER NODE via a series of edges
+- Every Node is CONNECTED TO EVERY OTHER NODE via a series of edges
 This Graph has no cycles
 A Connected graph with no cycles. This is a connected graph
 
@@ -2425,87 +2260,88 @@ A Connected graph with no cycles. This is a connected graph
          /
         E
 
-Graph with no cycle is tree
+- Graph with no cycle is tree
 
 
-DIRECTED GRAPH
+### DIRECTED GRAPH
 
-+---+         +---+         +---+
-| A +-------->+ B +-------->+ F |
-+---+         +---+         +-+-+
-  |  A       /                A  \
-  |   \     V                 |   V
-  |    +---+                  |    +---+
-  |    | D |                  |    | H |
-  |    +---+                  |    +---+
-  |         \                 |
-  V          V                |
-+-+-+         +---+         +-+-+
-| C +-------->+ E +-------->+ G |
-+---+         +---+         +---+
+        +---+         +---+         +---+
+        | A +-------->+ B +-------->+ F |
+        +---+         +---+         +-+-+
+          |  A       /                A  \
+          |   \     V                 |   V
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |         \                 |
+          V          V                |
+        +-+-+         +---+         +-+-+
+        | C +-------->+ E +-------->+ G |
+        +---+         +---+         +---+
 
 Nodes A,B,D,A form a cycle
 
 
-DIRECTED ACYCLIC GRAPH (DAG)
+### DIRECTED ACYCLIC GRAPH (DAG)
 
-+---+         +---+         +---+
-| A +-------->+ B +-------->+ F |
-+-+-+         +---+         +-+-+
-  |  A                        A  \
-  |   \                       |   V
-  |    +---+                  |    +---+
-  |    | D |                  |    | H |
-  |    +---+                  |    +---+
-  |         \                 |
-  V          V                |
-+-+-+         +---+         +-+-+
-| C +-------->+ E +-------->+ G |
-+---+         +---+         +---+
+    +---+         +---+         +---+
+    | A +-------->+ B +-------->+ F |
+    +-+-+         +---+         +-+-+
+      |  A                        A  \
+      |   \                       |   V
+      |    +---+                  |    +---+
+      |    | D |                  |    | H |
+      |    +---+                  |    +---+
+      |         \                 |
+      V          V                |
+    +-+-+         +---+         +-+-+
+    | C +-------->+ E +-------->+ G |
+    +---+         +---+         +---+
 
-A Graph Representation
+### A Graph Representation
 To represent a Graph there is a need a way to model a vertex which may held some information.
 A way to model directed or undirected EDGES.
 
-There are 3 standard ways that Graphs can be represented.
-ADJACENCY MATRIX
-ADJACENCY SET
-ADJACENCY LIST
+- There are 3 standard ways that Graphs can be represented.
+    - ADJACENCY MATRIX
+    - ADJACENCY SET
+    - ADJACENCY LIST
 
-ADJACENCY MATRIX
+#### ADJACENCY MATRIX
 Use a metrix with ROWS and COLUMNS a matrix is table
 The Row labels and the column labels represent the Vertices
 Each cell represent relationship between the vertices i.e. the EDGES
 
-+---+     +---+                   A  B  C  D  E
-| A +---->+ B |                 +----------------
-+-+-+     +-+-+               A | 0  1  1  0  0
-  |         A   V             B | 0  0  0  1  0
-  |         |    +---+        C | 0  0  0  0  1
-  |         |    | D |        D | 0  0  0  0  0
-  |         |    +---+        E | 0  1  0  1  0
-  V         |  A
-+-+-+     +-+-+
-| C +---->+ E |
-+---+     +---+
+        +---+     +---+                   A  B  C  D  E
+        | A +---->+ B |                 +----------------
+        +-+-+     +-+-+               A | 0  1  1  0  0
+          |         A   V             B | 0  0  0  1  0
+          |         |    +---+        C | 0  0  0  0  1
+          |         |    | D |        D | 0  0  0  0  0
+          |         |    +---+        E | 0  1  0  1  0
+          V         |  A
+        +-+-+     +-+-+
+        | C +---->+ E |
+        +---+     +---+
 
-A value 1 or true in (row A, column B) indicates Edge from A to B
-DIRECTED GRAPH
+- A value 1 or true in (row A, column B) indicates Edge from A to B
 
-+---+     +---+                   A  B  C  D  E
-| A +-----+ B |                 +----------------
-+-+-+     +-+-+               A | 0  1  1  0  0
-  |         |   \             B | 1  0  0  1  1
-  |         |    +---+        C | 1  0  0  0  1
-  |         |    | D |        D | 0  1  0  0  1
-  |         |    +---+        E | 0  1  1  1  0
-  |         |  /
-+-+-+     +-+-+
-| C +-----+ E |
-+---+     +---+
+        DIRECTED GRAPH
+
+        +---+     +---+                   A  B  C  D  E
+        | A +-----+ B |                 +----------------
+        +-+-+     +-+-+               A | 0  1  1  0  0
+          |         |   \             B | 1  0  0  1  1
+          |         |    +---+        C | 1  0  0  0  1
+          |         |    | D |        D | 0  1  0  0  1
+          |         |    +---+        E | 0  1  1  1  0
+          |         |  /
+        +-+-+     +-+-+
+        | C +-----+ E |
+        +---+     +---+
 
 
-ADJACENCY LIST (adjacent means neighbors cells)
+#### ADJACENCY LIST (adjacent means neighbors cells)
 
 Each vertex is a node.
 Each vertex as a pointer to a LinkedList.
@@ -2514,68 +2350,67 @@ This LinkedList contains all the other nodes this vertex connects to directly.
 If a vertex V has an Edge leading to Another Vertex U
 Then U is present in V's LinkedList
 
-+---+     +---+                   DIRECTED GRAPH
-| A +---->+ B |               A -> B -> C
-+-+-+     +-+-+               B -> D
-  |         A   V             C -> E
-  |         |    +---+        D
-  |         |    | D |        E -> B -> D
-  |         |    +---+
-  V         |  A
-+-+-+     +-+-+
-| C +---->+ E |
-+---+     +---+
+        +---+     +---+                   DIRECTED GRAPH
+        | A +---->+ B |               A -> B -> C
+        +-+-+     +-+-+               B -> D
+          |         A   V             C -> E
+          |         |    +---+        D
+          |         |    | D |        E -> B -> D
+          |         |    +---+
+          V         |  A
+        +-+-+     +-+-+
+        | C +---->+ E |
+        +---+     +---+
 
-+---+     +---+                   UNDIRECTED GRAPH
-| A +-----+ B |
-+---+     +-+-+               A -> B -> C
-  |         |   \             B -> A -> D -> E
-  |         |    +---+        C -> A -> E
-  |         |    | D |        D -> B -> E
-  |         |    +---+        E -> C -> B -> D
-  |         |  /
-+-+-+     +-+-+
-| C +-----+ E |
-+---+     +---+
+        +---+     +---+                   UNDIRECTED GRAPH
+        | A +-----+ B |
+        +---+     +-+-+               A -> B -> C
+          |         |   \             B -> A -> D -> E
+          |         |    +---+        C -> A -> E
+          |         |    | D |        D -> B -> E
+          |         |    +---+        E -> C -> B -> D
+          |         |  /
+        +-+-+     +-+-+
+        | C +-----+ E |
+        +---+     +---+
 
-Adjacency List Downsides
-The ORDER of the Vertices in the AdjacencyList is MATTER
-The same Graph can have MULTIPLE REPRESENTATIONS
-Certain operation become tricky e.g. deleting a Node involves looking through all the adjacency List to
-remove the Node from all Lists
+- Adjacency List Downsides
+    - The ORDER of the Vertices in the AdjacencyList is MATTER
+    - The same Graph can have MULTIPLE REPRESENTATIONS
+    - Certain operation become tricky e.g. deleting a Node involves looking through all the adjacency List to remove the Node from all Lists
 
 
-ADJACENCY SET
+#### ADJACENCY SET
 
 Similar to AdjacencyList
 Instead of a LinkedList to maintain the adjacent vertices USE A SET
 
 The GRAPH Representations
 
-ADJACENCY MATRIX             |   ADJACENCY LIST, SET
------------------------------+-----------------------
-This works well when the     | A SPARSE Graph with Few
-Graph is WELL CONNECTED i.e. | Connections between nodes
-Many Nodes are connected     | might be more efficiently
-with many other Nodes.       | represented using Adjacency
-The overhead of V^2 spece is | List or Set
-worth it when the number of  |
-connections are large        |
+    ADJACENCY MATRIX             |   ADJACENCY LIST, SET
+    -----------------------------+-----------------------
+    This works well when the     | A SPARSE Graph with Few
+    Graph is WELL CONNECTED i.e. | Connections between nodes
+    Many Nodes are connected     | might be more efficiently
+    with many other Nodes.       | represented using Adjacency
+    The overhead of V^2 spece is | List or Set
+    worth it when the number of  |
+    connections are large        |
 
-E = Number of Edges
-V = Number of Vertices
+- E = Number of Edges
+- V = Number of Vertices
 
-                  | Adjacency Matrix | Adjacency List | Adjacency Set
-------------------+------------------+----------------+------------------
-SPACE             |     V^2          |  E + V         |  E + V
-------------------+------------------+----------------+------------------
-IS EDGE PRESENT   |     1            |  DEGREE OF V   |  Log(DEGREE OF V)
-------------------+------------------+----------------+------------------
-Iterate over      |     V            |  DEGREE OF V   |  DEGREE OF V
-edges on a vertex |                  |                |
+                      | Adjacency Matrix | Adjacency List | Adjacency Set
+    ------------------+------------------+----------------+------------------
+    SPACE             |     V^2          |  E + V         |  E + V
+    ------------------+------------------+----------------+------------------
+    IS EDGE PRESENT   |     1            |  DEGREE OF V   |  Log(DEGREE OF V)
+    ------------------+------------------+----------------+------------------
+    Iterate over      |     V            |  DEGREE OF V   |  DEGREE OF V
+    edges on a vertex |                  |                |
 
 
-THE GRAPH Traversal
+### THE GRAPH Traversal
 
 DEPTH-FIRST, BREADTH-FIRST
 In a graph multiple paths can lead from one node to another
@@ -2585,26 +2420,26 @@ A Graph can also have cycles, the same Node can be visited multiple times
 In order to avoid infinite looping In a Graph we need to keep track of the Node previously visited
 
 
-THE GRAPH TOPOLOGICAL SORT
+### THE GRAPH TOPOLOGICAL SORT
 
 It is an ordering of vertices in a DIRECTED ACYCLIC GRAPH in which each node comes before
 all the nodes to which it has outgoing EDGE
 
-+---+       +---+
-| A +------>+ B | A should come before
-+---+       +---+
+    +---+       +---+
+    | A +------>+ B | A should come before
+    +---+       +---+
 
-+---+     +---+
-| A +---->+ B |               A should come before B and C
-+-+-+     +-+-+               C should come before E
-  |         A   V             E should come before B and D
-  |         |    +---+        B should come before D
-  |         |    | D |
-  |         |    +---+
-  V         |  A
-+-+-+     +-+-+
-| C +---->+ E |
-+---+     +---+
+    +---+     +---+
+    | A +---->+ B |               A should come before B and C
+    +-+-+     +-+-+               C should come before E
+      |         A   V             E should come before B and D
+      |         |    +---+        B should come before D
+      |         |    | D |
+      |         |    +---+
+      V         |  A
+    +-+-+     +-+-+
+    | C +---->+ E |
+    +---+     +---+
 
 Topological sort for this graph will be:
 A,C,E,B,D
@@ -2614,12 +2449,12 @@ It's the destination of no edge no arror points to it
 
 A - is the only vertex with No incoming edge this is the first element of the SORT!
 
-IN DEGREE
+- IN DEGREE
 Number of inward directed graph edges for a given graph vertex
 
 In degree of A is 0
 
-If there were NO VERTICES WITH 0 IN DEGREE, than there would have been no topological sort.
+If there were **NO VERTICES WITH 0 IN DEGREE**, than there would have been **no topological sort**.
 
 If we remove A from this graph, we have to reduce the IN DEGREE of all its immediate neighbors.
 The Next vertex in this SORT the One with In degree 0
@@ -2637,7 +2472,7 @@ It is an ordering of vertices in DIRECTED ACYCLIC GRAPH i which each node comes 
 Nodes to which It has outgoing EDGES
 
 
-# STACK DATA STRUCTURE
+## STACK DATA STRUCTURE
 A stack is data structure to hold elements such that the last element you add to the stack is first one you access
 LIFO list in first out
 Major operations that you performed on the stack are always focused on one end of the stack, called the TOP
@@ -2646,16 +2481,16 @@ Adding new elements to the stack is called -> PUSH -> push an element to the top
 Removing an element from the top a stack is called -> POP -> pop an element from the top of stack
 See what element on stack is do not remove it -> PEEK -> peek at the top of a stack
 
-                  +---+
- |     |         || X ||                |     |                 |     |
- |     |  PUSH   |+---+|      POP       |     |      PEEK       |     |
- |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
- || Y ||  | X |  || Y ||     | X |      || Y ||      | Y |      || Y ||
- |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
- |+---+|         |+---+|                |+---+|                 |+---+|
- || Z ||         || Z ||                || Z ||                 || Z ||
- |+---+|         |+---+|                |+---+|                 |+---+|
- +-----+         +-----+                +-----+                 +-----+
+                      +---+
+     |     |         || X ||                |     |                 |     |
+     |     |  PUSH   |+---+|      POP       |     |      PEEK       |     |
+     |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
+     || Y ||  | X |  || Y ||     | X |      || Y ||      | Y |      || Y ||
+     |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
+     |+---+|         |+---+|                |+---+|                 |+---+|
+     || Z ||         || Z ||                || Z ||                 || Z ||
+     |+---+|         |+---+|                |+---+|                 |+---+|
+     +-----+         +-----+                +-----+                 +-----+
 
 
 Peek let's you access the top element in the stack without actually changing the Data Structure
@@ -2672,105 +2507,102 @@ The most common operations on a stack involve pushing and popping elements from 
 The operations are on one end of the stack.
 A LinkedList match perfectly to build a stack
 
-Performance
+- Performance
 PUSH and POP from a stack O(1) constant time complexity.
 isEmpty and isFull also O(1)
 Size O(1)
 
-Useful
-Implementing Undo in application
-Implementing back button in browser
-Holding the memory for recursive calls in a programing language
-
-+-------+------+-----+------+--------+---------+------+
-|       | PUSH | POP | PEEK | isFull | isEmpty | Size |
-+-------+------+-----+------+--------+---------+------+
-| Stack | O(1) |O(1) | O(1) |  O(1)  |   O(1)  | O(1) |
-+-------+------+-----+------+--------+---------+------+
+- Useful
+    - Implementing Undo in application
+    - Implementing back button in browser
+    - Holding the memory for recursive calls in a programing language
 
 
-# QUEUE DATA STRUCTURE
+| | PUSH | POP | PEEK | isFull | isEmpty | Size |
+|---|---|---|---|---|---|---|
+| Stack | O(1) | O(1) | O(1) | O(1) | O(1) | O(1) |
+
+
+## QUEUE DATA STRUCTURE
 Queue is a Data Structure where you add elements to the End of the Queue and remove elements
 from the beginning of the QUEUE.
 
-                +--------------------------------------------------+
-                     +---++---++---++---++---+
-                     | A || B || C || D || E |
-                     +---++---++---++---++---+
-                +--------------------------------------------------+
+                    +--------------------------------------------------+
+                         +---++---++---++---++---+
+                         | A || B || C || D || E |
+                         +---++---++---++---++---+
+                    +--------------------------------------------------+
 
 
-DEQUEUE remove  +--------------------------------------------------+   ENQUEUE add new element
-     +---+           +---++---++---++---++---+                        +---+
-  <- | A |           | B || C || D || E || F |                     <- | F |
-     +---+           +---++---++---++---++---+                        +---+
-                +--------------------------------------------------+
+    DEQUEUE remove  +--------------------------------------------------+   ENQUEUE add new element
+         +---+           +---++---++---++---++---+                        +---+
+      <- | A |           | B || C || D || E || F |                     <- | F |
+         +---+           +---++---++---++---++---+                        +---+
+                    +--------------------------------------------------+
 
-FIFO first in first out
-LILO last in last out
+- FIFO first in first out
+- LILO last in last out
 
-The operations are performed at two ends. Removal its at the beginning and addition is at the end of the queue.
+- The operations are performed at two ends. Removal its at the beginning and addition is at the end of the queue.
 
-Adding a new element to the end of the Queue is called
+- Adding a new element to the end of the Queue is called
 ENQUEUE -> enqueue an element from the queue
 
-Removing an element from the beginning of a queue is called
+- Removing an element from the beginning of a queue is called
 DEQUEUE -> dequeue an element from the queue
 
-Similar to stack you might just want to see what the first element in a queue is without removing it
+- Similar to stack you might just want to see what the first element in a queue is without removing it
 PEEK -> Peek at the first element in a queue
 
-The Queue implementation in Java
+- The Queue implementation in Java
 OFFER -> adds to a queue if space is available
 
-Common operations on the queue
+- Common operations on the queue
 ENQUEUE     DEQUEUE     PEEK
 
-Other operations
+- Other operations
 ISEMPTY ISFULL OFFER
 
 If you try to dequeue from an empty queue or enqueue into full queue. It's an error throw Exception
 
-The most common operations on queue involve enqueueing and dequeueing elements
+- The most common operations on queue involve enqueueing and dequeueing elements
 The operations are on both ends of queue
 A LinkedList which is a pointer to head and tail works well
 
-Performance
+- Performance
 Enqueueing and dequeueing implemented in this way is O(1)
 IsEmpty isFull O(1)
 Space complexity O(N)
 
-Useful
-Calls
-Queueing job to be printed
-Order processing system E-Commerce websites or bank transactions.
-
-+-------+---------+---------+--------+---------+
-|       | Enqueue | Dequeue | isFull | isEmpty |
-+-------+---------+---------+--------+---------+
-| Queue |   O(1)  |   O(1)  |  O(1)  |   O(1)  |
-+-------+---------+---------+--------+---------+
+- Useful
+    - Calls
+    - Queueing job to be printed
+    - Order processing system E-Commerce websites or bank transactions.
 
 
-#########################
-# Garbage Collection GC #
-#########################
+| | Enqueue | Dequeue | isFull | isEmpty |
+|---|---|---|---|---|
+| Queue | O(1) | O(1) | O(1) | O(1) |
 
-Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
-live object = reachable (referenced by someone else)
-dead object = unreachable (unreferenced)
+
+
+# Garbage Collection GC
+
+- Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
+    - live object = reachable (referenced by someone else)
+    - dead object = unreachable (unreferenced)
 - Objects are allocated in the "heap" of java memory
 - Static members, class definition are stored in "method area" PermGen/Metaspace
-Garbage Collection is carried out by a daemon thread called "Garbage Collector"
-Force GC to happened System.gc (no guaranteed)
-When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
+- Garbage Collection is carried out by a daemon thread called "Garbage Collector"
+- Force GC to happened System.gc (no guaranteed)
+- When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
 
-Garbage Collector involves
+- Garbage Collector involves
     - Mark : go through all program structure, mark reachable objects as live
     - Delete/Sweep : Delete unreachable objects
     - Compacting : Compact memory by moving around objects
 
-Typed of Garbage Collector
+- Typed of Garbage Collector
     - Serial Collector : Runs on single thread, useful in basic applications
     - Concurrent Collector : GC execute as application runs, not wait the old generation to full stop the world
       execute only during mark/re-mark phase
@@ -2785,40 +2617,39 @@ java -XX:+UseParallelGC
 java -XX:+UseConcMarkSweepGC
 
 
-# Garbage Collector example
+- Garbage Collector example
 
-+----------------------------------------------------------+
-| void method() {                                          |
-|   Calendar calendar = new GregorianCalendar(2000,12,12); |
-|   System.out.println(calendar);                          |
-| }                                                        |
-+----------------------------------------------------------+
+```java
+void method() {
+  Calendar calendar = new GregorianCalendar(2000,12,12);
+  System.out.println(calendar);
+}
+```
 
 Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
 After method ends execution the reference variable calendar is no longer valid. Hence there are no reference
 to the object created in the method. JVM recognizes this and removes the object from the heap. This is called GC
 
 
-# When Garbage Collection is run
-Based on fancies of JVM. Possible situations
-- When available memory on he heap is low
-- When CPU is free
+- When Garbage Collection is run
+    - Based on fancies of JVM. Possible situations
+        - When available memory on he heap is low
+        - When CPU is free
 
 
-###############
-# Concurrency #
-###############
 
-fail-safe does not throw ConcurrentModificationException
-fail-fast throw ConcurrentModificationException
-volatile - value read always from main memory no cache
-synchronized - acquire intrinsic lock on object. Only one object can execute this part of code
-join() - wait until other thread finish executing
+# Concurrency
 
-wait and notify for inter thread communication. Must be called from synchronized context method, block
+- fail-safe : does not throw ConcurrentModificationException
+- fail-fast : throw ConcurrentModificationException
+- volatile : value read always from main memory no cache
+- synchronized : acquire intrinsic lock on object. Only one object can execute this part of code
+- join() - wait until other thread finish executing
+
+- wait and notify for inter thread communication. Must be called from synchronized context method, block
 
 
-# Process and threads
+## Process and threads
 In concurrent programming two units of execution process and treads.
 Processing time for a single core is shared among processes and threads, time slicing
 
