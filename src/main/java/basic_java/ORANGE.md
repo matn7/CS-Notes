@@ -1211,7 +1211,54 @@ Special purpose synchronization tools
 
 
 
+## Memory Management
+Garbage collector principal tasks are allocating memory, maintaining referenced objects in memory, and
+recovering memory from objects that no longer have reference to them.
 
+- Tune GC
+    - Maximum pause time goal - time GC pauses application to recover memory
+- Throughput goal
+    - Time spent outside of GC
+
+### Serial GC
+Is performed via a single thread on a single CPU. When this GC thread is run, the execution of the application
+will pause until the collection is completed. Small data setup up to 100 MB, no requirement for low pause time.
+
+### Parallel Collector
+Can be performed with multiple threads across several CPUs. Using those multiple threads significantly speeds up GC.
+No pause time constraints and app performance is the most important aspect of your program.
+
+### Parallel Compacting Collector
+Simlar to parallel Collector except for refined algorithms that reduce collection pause times.
+This collector is best used for apps that do have pause time constraints.
+
+### Concurrent Mark Sweep Collector
+CMS low latency collector, implements algorithm to handle large collections that might warrant long pauses.
+Use when response time take precedence over throughput times and GC pauses.
+
+### Garbage-First G1 Collector
+Is used for multiprocessor machines with large memories. This server-style GC meets pause time goal with
+high probability, while achieving high throughput. Whole heal operations (global marking) are performed
+concurrently with the app thread, whch prevents interruptions proportional to the heap or live-data size.
+
+| Memory Management Tools | Description |
+|---|---|
+| jvisualvm | |
+| jconsole | Java Management Extensions (JMX) |
+| jinfo | |
+| jmap | Memory map tool |
+| jstack | Stack trace tool |
+| jstat | JVM statistics monitoring tool |
+| jhat | Heap analysis tool |
+| hprof profiler | CPU usage, heap statistics, and monitor contentions profiler |
+| jdb | Java debugger tool |
+
+#### Resizing the JVM
+The heap is an area in memory that stores all objects created by executing Java program.
+If you are having performance problems or seeing the Permanent Generation (PermGen) error message
+java.lang.OutOfMemory, you may be running out of heap space.
+
+**Metaspace** : Used for representation class metadata. Metaspace is a successor to PermGen model.
 
 
 

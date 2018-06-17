@@ -269,6 +269,20 @@ Override the clone() method to thrown an exception.
 
 ## Builder
 
+- When you know beforehand exactly what object you need
+    - Simply use a constructor, no design pattern needed
+- When you don't know exactly what object is needed but you want to be able to decide at runtime from a family of objects
+    - Use the Factory Pattern
+- When you know beforehand exactly what object you need, but that object has to be buildup slowly as user input comes in
+    - Use the builder design pattern
+
+- Which of the following might suggest the use of the Builder Pattern?
+The construction of the object varies with information that becomes available after constructor of the object is called.
+
+- What is the basic idea of a Builder Pattern?
+    - Allow objects to be created in a step-by-step manner
+    - Abstract the user of a class from impementation details of the objects of the class
+
 ```java
 public class User {
     // final so you can declare it in constructor

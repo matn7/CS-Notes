@@ -335,6 +335,53 @@ The code to be executed on differnet thread is encapsulated in a command object
     - By Lambda functions are functions without names that can define the command in a command object
     - Command objects separate an action from its execution, lambda functions represent the action
 
+## Chain of Responsibility Pattern
+
+Avoid coupling the sender to the receiver by allowing more than one receiving element to hadle
+the request. The sender interacts only with the first receiver in the queue.
+
+- How exceptions are thrown
+- Handling mouse clicks in UI applications. UI Applications are often built on the composite pattern,
+windows contain other windows. The nested windows pass the mause click action down from one to another
+until some windows has a handler from mouse click.
+
+- What is the basic idea of the Chain of Responsibility Pattern?
+    - Some events need to be handled by one of multiple objects, and it is not known which one object
+    specifically will know how to do what's needed.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        int random = (int) (Math.ceil(Math.random)*10);
+        methodThree(random);
+    }
+
+    public static void methodOne(int random) throws IOException, NullPointerException {
+        if (random == 1) {
+            throw ne IOException("IOException");
+        } else if (random == 2) {
+            throw new NullPointerException("NullPointerException");
+        }
+    }
+
+    public static void methodTwo(int random) throws IOException {
+        try {
+            methodOne(random);
+        } catch (NullPointerException e) {
+            System.out.println("Catch NullPointerException instide methodTwo");
+        }
+    }
+
+    public static void methodThree(int random) {
+        try {
+            methodTwo(random);
+        } catch (IOException) {
+            System.out.println("Catch IOException instide methodThree");
+        }
+}
+
+```
+
 
 
 

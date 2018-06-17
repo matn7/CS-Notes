@@ -186,6 +186,16 @@ Relay on abstractions - interfaces - not on concrete implementation
 Loosely coupled code is always preferable to tightly code.
 
 
+## Composite Pattern
+
+- What is a basic idea of composite pattern ?
+    - Create a class hierarchy to reflect dependent objects, all of which share a common interface
+    - Allow the user to interact with every dependent object in a tree like hierarchy of objects
+
+Objcts are created from object like themselves i.e. share the same interface
+This is a definition of Composite Pattern. Composite Pattern is the basic of most UI Containers in Java.
+- Example Swing COntainer.
+
 
 
 
