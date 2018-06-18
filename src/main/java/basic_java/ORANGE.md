@@ -1261,6 +1261,22 @@ java.lang.OutOfMemory, you may be running out of heap space.
 **Metaspace** : Used for representation class metadata. Metaspace is a successor to PermGen model.
 
 
+## TDD
+### Test Parts
+- Scenario
+- Execute actions
+- Validate behavior
+- Validation
+
+- All jUnit test must be public void
+
+- Eliminating repeated code
+    - @Before - execute setup before unit test
+
+### Mock
+- Simulating objects, dependencies
+- Impossible to mock static method
+- Avoid static methods. Programming for testability
 
 
 

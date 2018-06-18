@@ -131,6 +131,23 @@ public class ComponentScanApplication {
 - As soon as bean is created post construct will be called. Initialize content of bean.
 `@PostConstruct`
 - Called just before bean is removed.
+```java
+@RestController
+@RequestMapping("/api")
+public class StudentController {
+    private List<Student> theStudents;
+
+    @PostConstruct
+    public void loadData() {
+        theStudents.add(new Student("Samara", "Brajan"));
+        theStudents.add(new Student("Mikey", "Rebeca"));
+        theStudents.add(new Student("Misiek", "Brajan"));
+    }
+
+    // ...
+}
+```
+
 `@PreDestroy`
 
 

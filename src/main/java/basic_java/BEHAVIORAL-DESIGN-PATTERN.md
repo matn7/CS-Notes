@@ -382,6 +382,71 @@ public class Main {
 
 ```
 
+## Memento Design Pattern
+
+- What is a basic idea of the Memento Pattern?
+Objects sometimes need to know how to save their state and go back to that saved state.
+
+The ability of an object to save its state.
+If an object can save its state, a relatively easy way to implement undo is to have the object "RESET"
+to a previously saved state.
+Java have in build support for the Memento Pattern via the **Serializable** interface.
+Any class that implements serializable, and in which all member variables are serializable
+can be written to file or read from file with minimal effort.
+The serializable interface has 2 methods - read object and write-object.
+
+```java
+public class MyLittleClass implements Serializable {
+
+}
+```
+If a member variable belongs to a class that does not implement serializable, you can just mark
+the member as "TRANSIENT", meaning that Java should not write at its value to file.
+
+```java
+// Serializing an object
+MyClass myClass = new MyClass();
+List<String> list = new ArrayList<>();
+list.add("Samara");
+list.add("Brajan");
+
+myClass.setList(list);
+myClass.setString("Mikey");
+
+FileOutputStream fileOut = new FileOutputStream("MyLittleClass.obj");
+ObjectOutputStream out = new ObjectOutputStream(fileOut);
+out.writeObject(myClass);
+out.close();
+fileOut.close();
+
+// Deserializing an object
+FileInputStream fileIn = new FIleInputStream("MyClass.obj");
+ObjectInputStream in = new ObjectInputStream(fileIn);
+MyClass myClass1 = (MyClass) in.readObject();
+in.close();
+fileIn.close();
+```
+
+Serializing and de-serializing meaant laying out the object, 1 member variable at a time
+
+- In Java how Memento Pattern and Serializable are related ?
+    - Objects marked Serializable know how to save their state to file, and this is an implementation of Memento Pattern.
+    - Plenty of built in objects are already Serializable so there is little need to make these adhere to the
+    Memento Pattern.
+    - The Serializable interface is one easy way to implement the Memento Pattern
+
+
+## Visitor Pattern
+
+- Involves having an object that knows how to traverse the tree of a composite objects
+- The Visitor object sits outside the composite object - which allows us to have any number of visitor classes for a given
+composite object.
+- Each visitor class defines its own traversal of the composite tree, as well as its own unique operation on each node.
+- Using a Visitor object along with a composite objects makes it easy to customize the process of traversal
+
+- What is a basic idea of Visitor Pattern ?
+    - The Visitor pattern is a way to do something with each node of a composite object.
+- Visitor + Composite = Decorator
 
 
 

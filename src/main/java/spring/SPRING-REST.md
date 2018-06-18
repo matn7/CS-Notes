@@ -90,22 +90,81 @@ public class DemoController {
 
 ```
 
+- Spring REST and Jackson POJOs are automatically converted to JSON
+
+### Path Variables
+- Retrieve by id
+    - GET : /api/students/{id}
 
 
 
+    +--------+ /api/students/{id}  | Spring  |   +---------+
+    | REST   |-------------------->|  REST   |-->| REST    |
+    | Client |<--------------------| Jackson |<--| Service |
+    +--------+ {                                 +---------+
+                 "firstName":"Rebeca",
+                 "lastName":"Brajan"
+               }
+
+```java
+
+@GetMapping("/students/{id}")
+public Student getStudent(@PathVariable int studentId) {
+```
+
+## Exception Handling
+- Error response class
+    - Java POJOs
+    - Jackson converts it to JSON
+
+- Exception class
+    - extends RuntimeException
+
+- Update REST to throw exception if necessary
+
+- Add exception handler @ExceptionHandler
+    - Exception handler will return a ResponseEntity
+    - ResponseEntity is a wrapper for the HTTP response object
+    - ResponseEntity provides control to specify:
+        - HTTP status code, HTTP headers and Response body
+
+### @ControllerAdvice
+
+- ControllerAdvice interceptor/filter
+- Pre-process request to controller
+- Post-process responses to handel exceptions
+- For global exception handling
 
 
 
+        Rest client             Controller Advice               REST Service
+            |   -------------------->   |   -------------------->   |
+            |                           |                           |
+            |                           |                           |
+            |   <---------------------  |   <--------------------   |
+            |                           |                           |
+                                Exception Handler
 
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    // ...
+}
+```
 
+## API
+- Define API Requirements
+- Identify resources
+    - Plurar forms of resources /api/customers
+- HTTP methods to assign actions on resources
+    - GET, POST, PUT, DELETE
 
+| Http Method | Endpoint | CRUD Action |
+|---|---|---|
+| POST | /api/students | Create new student |
+| GET | /api/students | Read list of students |
+| GET | /api/students/{id} | Read single student |
+| PUT | /api/students | Update existing student |
+| DELETE | /api/students/{id} | Delete student |
 
-
-
-
-
-
-
-
-
-
+- Dont include actions in endpoint, instead use HTTP to assign actions
