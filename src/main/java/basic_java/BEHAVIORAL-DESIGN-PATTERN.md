@@ -448,8 +448,25 @@ composite object.
     - The Visitor pattern is a way to do something with each node of a composite object.
 - Visitor + Composite = Decorator
 
+## State Pattern
+- Objects for state pattern. This pattern is used to encapsulate varying behavior for the same object based on
+its initail state.
+- This can be a cleaner way for an object to change its behavior at runtime without restoring
+large monolithic conditional statements and thus improve maintainability.
 
+- Class needs to implement methods play(), pause(), getVolume(), ...
+    - Put all of these methods in interface MediaPlayerState
 
+```java
+public class MediaPlayer implements IMediaPlayer {
+    // ...
+}
+```
+
+- What is a basic idea of state pattern?
+    - Objects that maintain an internal State Machine can use this trick to reduce the hassle as new states are added
+    - State machines have discrete States, each state can be represented by a member variable, all these member variables implement
+    a common interface.
 
 
 

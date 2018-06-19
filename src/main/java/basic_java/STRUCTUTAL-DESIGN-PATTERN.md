@@ -185,6 +185,48 @@ Classes should know as little as possible about other classes that they use (pri
 Relay on abstractions - interfaces - not on concrete implementation
 Loosely coupled code is always preferable to tightly code.
 
+```java
+public class WashingMachine {
+    public static void main(String[] args) {
+        new WashingMachine().lightlySoiled();
+    }
+    public void heavilySoiled() {
+        setWaterTemp(90);
+        setDuration(30);
+        addDetergent();
+        heatWater();
+        startWash();
+    }
+    public void heavilySoiled() {
+        setWaterTemp(60);
+        setDuration(20);
+        addDetergent();
+        heatWater();
+        startWash();
+    }
+
+    private void setWaterTemp(int i) {
+        System.out.println("Water temp " + i);
+    }
+
+    private void setDuration(int i) {
+        System.out.println("Duration time " + i);
+    }
+
+    private void addDetergent() {
+        System.out.println("Add detergent");
+    }
+
+    private void heatWater() {
+        System.out.println("Heat water");
+    }
+
+    private void startWash() {
+        System.out.println("Start wash");
+    }
+}
+```
+
 
 ## Composite Pattern
 
@@ -195,6 +237,39 @@ Loosely coupled code is always preferable to tightly code.
 Objcts are created from object like themselves i.e. share the same interface
 This is a definition of Composite Pattern. Composite Pattern is the basic of most UI Containers in Java.
 - Example Swing COntainer.
+
+## Flyweight pattern
+- Is an object that minimalizes memory use by sharing as much data as possible with other similar objects.
+It is a way to use objects in large numbers when a simple repeated representation would use an
+unacceptable aount of memory.
+- Often some parts of object state can be shared, and it is common practice to hold them in external data structure
+(extrinsic state) and pass them to the flyweight objects temporarily when they are used.
+
+- Java makes use of String interning optimization mechanizm to store string.
+- Strings in Java are IMMUTABLE which means that Java only stores one copy of each distinct string value.
+
+- What is the basic idea of the flyweight pattern?
+    - Some objects - String, for instance should be represented by immutable instances
+    - The Flyweight pattern creates new objects only for unique values - all instances with the same value reference the same
+    underlying immutable object
+
+### Multithreading
+- The flyweight pattern involves creating new objects only for distinct values, and having variables "reference" only these distinct values.
+- It is typically used where creating new objects for each distinct value would be wasteful, or lead to an unacceptable
+performance hit.
+- By default equals method tests for object identity it returns true if and only if the 2 objects are
+literally the same (point to the same location in memory).
+- In flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are actually
+different objects.
+
+- Why does the implementation of .equals() matter in the flyweight pattern ?
+    - Default implementation of .equals() return true if and only if the two objects being compared one literally
+    the same object, in the flyweight pattern this method should return true if two objects share the same value,
+    even if they are differnet.
+    - The default implementatio of .equals() relies on object identity, wich may cause problems
+    if we end up with multiple flyweights referring to the same underlying value.
+    - Concurrency issues sometimes give rise to decouple flyweight - there duplicates are fine so long
+    as they return true when called .equals()
 
 
 
