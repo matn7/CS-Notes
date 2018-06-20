@@ -468,9 +468,22 @@ public class MediaPlayer implements IMediaPlayer {
     - State machines have discrete States, each state can be represented by a member variable, all these member variables implement
     a common interface.
 
+## Mediator pattern
+- The frame acts as the mediator so that non of the individual UI elements need to know about each other.
+- UI Elements are refered to as Colleagues
 
+    Button        TextBox
+           \     /
+            Frame
+           /     \
+    Another      Another
+    TextBox      Button
 
+- Colleagues are entirely decoupled from each other.
 
+- What is the basic idea of the Mediator Pattern ?
+    - When class hierarchies got too complicated, they can be simplified using Mediators
+    - A mediator object decouples peer objects in a hierarcy from needing to know all about each peer
 
 
 

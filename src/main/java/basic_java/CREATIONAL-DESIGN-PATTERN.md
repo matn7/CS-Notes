@@ -343,6 +343,22 @@ public class Main {
 
 ```
 
+## Prototype Pattern
+- Object of class can be created as clone of another object of that class.
+- That means that the class has a constructor that takes in another object of the same class. Such
+a constructor is called a copy constructor.
+- In java it is effected via the clone method of the interface *Cloneable*
+- In general Java cloneable interface is not highly regarded
+    - The .clone() method belongs in the object class (i.e. every object has this method) when it ought to have belonged
+    in the cloneable ineterface
+    - The implication of (1) is that all objects have a clone method, but if you try to clone an object that does not
+    implement cloneable, a not cloneable exception is thrown.
+    - Clone() is effictively a copy constructor, except that its not set up as a constructor
+
+- What is the basic idea of the Prototype Pattern ?
+    - Sometimes objects need to know how to create clones of themeselves
+    - Sometimes clients don't really care how an object should be instantiated - they just know they want another
+    object like this one.
 
 
 

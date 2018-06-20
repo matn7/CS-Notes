@@ -168,3 +168,33 @@ public class GlobalExceptionHandler {
 | DELETE | /api/students/{id} | Delete student |
 
 - Dont include actions in endpoint, instead use HTTP to assign actions
+
+## CRUD
+### Read GET
+
+```java
+@RestController
+@RequestMapping("/api")
+public class StudentRestController {
+    @Autowired
+    private StudentService studentService;
+
+    @GetMapping("/students")
+    public List<Students> getStudents() {
+        return studentService.getStudents();
+    }
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+

@@ -272,13 +272,72 @@ different objects.
     as they return true when called .equals()
 
 
+## Bridge Pattern
+- Decouple an abstraction from implementation so that the two can vary independently.
+The bridge uses encapsulation, aggregation and can use inheritance to separate responsibilities into different classes.
+
+        A
+       / \
+      Ab Aa
+     /  \  \
+    Ab1 Ab2 Aa1
+
+    If you find a class hierarchy getting out of control, too many derived classes
 
 
 
+        A               N
+       / \             / \
+    Aa(N) Ab(N)       1   2
+
+    There now 2 class hierarchies instead of 1 and  \objects of the first
+    hierarchy have member variables of objects of the second hierarchy
 
 
 
+                Shape
+               /     \
+       Rectangle     Circle
+      /         \           \
+ Blue           Red         Red
+ Rectangle      Rectangle   Circle
 
+Refactor into 2 class hierarchies, one each for shape and for class
+
+       Shape                    Color
+    /        \                  /   \
+ Rectangle   Circle            Blue Red
+ (color)     (color)
+
+- The bridge pattern is very similar to the strategy pattern
+- Bridge and Strategy both plug in member variables to determine behavior - thus prefer composition (Has-A)
+over inheritance (Is-A)
+- And also similar to template pattern
+    - Since bridge and template both "plug-in" important or complex parts of their behavior
+
+- Bridge and adapter are quite different - Adapter takes in objects of one interface and wraps them into objects of another interface
+
+- What is a basic idea of the Bridge Pattern ?
+    - When class hierarchies got too complicated, they can be simplified using bridges
+    - The Bridge Pattern uses composition (has-a) as a bridge between two independent class hierarchies.
+
+## Proxy Pattern
+- Prototypical example is remote method invocation RMI.
+- RMI was a way in Java to make method calls to code that resided on a different machine
+- When you made an RMI call, you would get a proxy object a stand-in for the actual object that resided on a different computer.
+- The underlying principle of the proxy pattern is that one object controls access to another
+
+- This controlling object is called the proxy or the surrogate
+
+- Proxies might also be useful if expensive calls can be cached.
+- The proxy for a command object could ment a cache where the key = set of parameters
+from each call to the command, and value = Result of the command
+- Tis technique is called MEMOIZATION. And can lead to big performance savings for computationally intensive commands,
+or those involving file or database IO.
+
+- What is the basic idea of the Proxy Pattern ?
+    - Proxies are objects that "stand in" for other objects
+    - Proxy objects control access or abstract functioality of other objects.
 
 
 
