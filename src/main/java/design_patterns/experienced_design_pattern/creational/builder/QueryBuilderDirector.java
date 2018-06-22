@@ -1,4 +1,4 @@
-package design_patterns.experienced_design_pattern.creational;
+package design_patterns.experienced_design_pattern.creational.builder;
 
 public class QueryBuilderDirector {
 

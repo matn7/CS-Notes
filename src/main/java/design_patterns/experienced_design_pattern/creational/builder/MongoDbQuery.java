@@ -1,12 +1,12 @@
-package design_patterns.experienced_design_pattern.creational;
+package design_patterns.experienced_design_pattern.creational.builder;
 
-public class SqlQuery implements Query {
+public class MongoDbQuery implements Query {
     private String from;
     private String where;
 
     @Override
     public void execute() {
-        System.out.println("Executing sql query from " + from + " where " + where);
+        System.out.println("Executing mongoDbQery from " + from + " where " + where);
     }
 
     public void setFrom(String from) {

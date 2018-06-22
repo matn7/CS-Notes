@@ -2650,32 +2650,32 @@ to the object created in the method. JVM recognizes this and removes the object 
 
 
 ## Process and threads
-In concurrent programming two units of execution process and treads.
+- In concurrent programming two units of execution process and treads.
 Processing time for a single core is shared among processes and threads, time slicing
 
-Process : Has a self contained execution environment. Private set of runtime resources
+- Process : Has a self contained execution environment. Private set of runtime resources
 Each process has its own memory space. Process can communicate with each others IPC
 
-Threads : Lightweight process. Creating a new thread requires fewer resources than creating a new process
+- Threads : Lightweight process. Creating a new thread requires fewer resources than creating a new process
 Exists within a process. Every process has at least one thread
 
-join() : method wait until thread to finish
+- join() : method wait until thread to finish
 
-threads priority : importance of a thread to the scheduler. Lower priority thread tend to run less often.
+- threads priority : importance of a thread to the scheduler. Lower priority thread tend to run less often.
 setPriority(), getPriority(). MAX_PRIORITY, NORM_PRIORITY, MIN_PRIORITY
 
-yield() : this static method is essentially used to notify the system that the current thread is willing to
+- yield() : this static method is essentially used to notify the system that the current thread is willing to
 give up CPU for a while, but scheduler can immediately pick them back. Is put back into the ready queue of the processor,
 and waits for it next turn.
 
 
-# Start Thread
-Extends Thread - override run() method
+## Start Thread
+- Extends Thread - override run() method
 
-Implements Runnable - override run() method, pass Runnable object to Thread class constructor. Call start method
+- Implements Runnable - override run() method, pass Runnable object to Thread class constructor. Call start method
 on thread object.
 
-Executor Service - dynamically reuse thread. Check if threads are already working
+- Executor Service - dynamically reuse thread. Check if threads are already working
   - Executors.newCachedThreadPool() return an executor service that can dynamically reuse threads
     Before starting a job, it going to check whether there are any threads that finished the job if so reuse them
     If no create new one, good for processor effective solution
@@ -2687,59 +2687,59 @@ Executor Service - dynamically reuse thread. Check if threads are already workin
   - executorService.submit(Callable or Runnable)
 
 
-### Concurrent Collections
+## Concurrent Collections
 
 ### ConcurrentHashMap
-Full concurrency during retrieval
-Reads can happen fast, while writes require lock
-Whole table is not locked only segment is locked
-Iterations do not throw concurrent modification exception
-Null key not allowed
-Operations are atomic
+- Full concurrency during retrieval
+- Reads can happen fast, while writes require lock
+- Whole table is not locked only segment is locked
+- Iterations do not throw concurrent modification exception
+- Null key not allowed
+- Operations are atomic
 
 
 ### BlockingQueue
-Interface that represents a queue that is thread safe. put(), take()
+- Interface that represents a queue that is thread safe. put(), take()
 
 
 ### DelayQueue
-Like BlockingQueue that implements Delay interface. Cannot put null into it.
+- Like BlockingQueue that implements Delay interface. Cannot put null into it.
 
 
 ### PriorityBlockingQueue
-Implements Comparable interface. Determine what will be the order of a Queue.
+- Implements Comparable interface. Determine what will be the order of a Queue.
 
 
 ### Threads complications
-Thread interference and memory consistency errors
+- Thread interference and memory consistency errors
     - If two thread access the same variable, it is possible for them to get in each others way
       For example two threads incrementing the same variable at the same time
       To fix this make sure that section of code is only accessed by one thread at a time, by using synchronized keyword for example
       But this slows down performance, and can lead to thread contention issues (starvation, livelock, deadlock)
 
-Thread Contention
+- Thread Contention
     - Deadlock : two thread each is blocked by a lock held by the other
     - Livelock : two thread's don't deadlock, but keep blocking on locks held by each other, neither can progress
     - Starvation : Same thread keep acquiring locks, and cause other threads to be unable to get anything done
 
 
 ### Semaphores
-Variables that are used to controlling access to common resources, important in OS
+- Variables that are used to controlling access to common resources, important in OS
 is a record of how many units of particular resource are available
-Semaphores track how many resources are free, it does not keep track of which of the resources are free
-Mutexes are binary semaphores. Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlock it
+- Semaphores track how many resources are free, it does not keep track of which of the resources are free
+- Mutexes are binary semaphores. Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlock it
 Methods acquire() if permit is available take it, release() add a permit
 
 
 ### Callable and Future
-Returns something from a thread implements Callable instead of Runnable
+- Returns something from a thread implements Callable instead of Runnable
 
 
 ### Thread States
-Runnable - create a new thread and call start method
-Blocked - enter synchronized block, lock
-Waiting - after wait()
-Terminated - run method is over
+- Runnable - create a new thread and call start method
+- Blocked - enter synchronized block, lock
+- Waiting - after wait()
+- Terminated - run method is over
 
 
 ### Concurrent Libraries
@@ -2748,7 +2748,7 @@ Terminated - run method is over
 Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations
 being performed by other tasks. Give initial count to count down latch object and task that calls await() on that
 object will block until count reaches zero. The count cannot be reset. Typically use is to divide a problem into "n"
-independently solve able tasks and create a CountDownLatch with value of "n"
+independently solveable tasks and create a CountDownLatch with value of "n"
 When each task is finished it calls countDown on Latch. Task waiting to solve call await() on the Latch to hold
 themselves back until it is completed
 
@@ -2762,81 +2762,81 @@ Can be reused.
 ### From Java 8 Book
 
 ### Concurrent Programming
-Runnable describes task that might be executed asynchronously
-Executor plans execute runnable instance
-Callable tasks that return results or throw exception
-Results without synchronization are unpredictable
-Better use thread safe data structures than use locks
-ConcurrentHashMap is thread safe array allows to updates elements using atomic operations
-To interrupt task set interrupt flag or throw InterruptedException
+- Runnable describes task that might be executed asynchronously
+- Executor plans execute runnable instance
+- Callable tasks that return results or throw exception
+- Results without synchronization are unpredictable
+- Better use thread safe data structures than use locks
+- ConcurrentHashMap is thread safe array allows to updates elements using atomic operations
+- To interrupt task set interrupt flag or throw InterruptedException
 
-Thread is mechanism that allow to execute sequence of instruction, these instructions are provided by OS
-Couple of threads work in parallel using multiple processors of different time slice of the same processor
+- Thread is mechanism that allow to execute sequence of instruction, these instructions are provided by OS
+- Couple of threads work in parallel using multiple processors of different time slice of the same processor
 
-Executor executes a task by choosing threads that might be executed with
+- Executor executes a task by choosing threads that might be executed with
 
-+-------------------------------+
-| Runnable task = () -> {};     |
-| Executor exec = Executors...; |
-| exec.execute(task);           |
-+-------------------------------+
+```java
+ Runnable task = () -> {};
+ Executor exec = Executors...;
+ exec.execute(task);
+```
 
-Factory method Executor class
-Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks
-Executors.newFixedThreadPool(thread_num); - good for grater amount of tasks
-To acquire number of thread based on number of processors
+- Factory method Executor class
+- Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks
+- Executors.newFixedThreadPool(thread_num); - good for grater amount of tasks
 
-+--------------------------------------------------------------+
-| int processors = Runtime.getRuntime().availableProcessors(); |
-+--------------------------------------------------------------+
+- To acquire number of thread based on number of processors
 
-Objects Future and Executor
-Callable - Method call() oposite to method run() from Runnable interface returns value or throw an Exceptions
+```java
+int processors = Runtime.getRuntime().availableProcessors();
+```
+
+- Objects Future and Executor
+- Callable - Method call() oposite to method run() from Runnable interface returns value or throw an Exceptions
 To execute callable there is a need for ExecutorService instance
 
-+---------------------------------------------------------------+
-| ExecutorService exec = ExecutorService.newFixedThreadPool(2); |
-| Callable<V> call = ...;                                       |
-| Future<V> result = exec.submit(call);                         |
-+---------------------------------------------------------------+
+```java
+ExecutorService exec = ExecutorService.newFixedThreadPool(2);
+Callable<V> call = ...;
+Future<V> result = exec.submit(call);
+```
 
-Future is an object that represents a calculations, which results will be accessible in a future
+- Future is an object that represents a calculations, which results will be accessible in a future
 
-Thread safety
+- Thread safety
 RAM memory are slow, couple of time slower then modern processors. Processor try to collect needed data
 in registers or cache memory on main board, and at the end make changes in main memory
 This cache memory is key factor for performance optimization
 
-Thread Visibility
-- final value is visible after initialization
-- initial value of static variable is visible after static initialization
-- changes variable with volatile keyword are visible
-- changes after release a lock are visible for all that acquire this lock
-Volatile keyword - compiler generates needed instructions to make sure that all changes that being applied in
+- Thread Visibility
+    - final value is visible after initialization
+    - initial value of static variable is visible after static initialization
+    - changes variable with volatile keyword are visible
+    - changes after release a lock are visible for all that acquire this lock
+    - Volatile keyword - compiler generates needed instructions to make sure that all changes that being applied in
 one task are visible in another
 
-Chasing
-Are problems always when shared variables are modified. Locks to critical section make atomic
+- Chasing : Are problems always when shared variables are modified. Locks to critical section make atomic
 
-Strategy of safety concurrency
-- Avoid shared data between tasks. One task z1, second task z2, third z3 = z1 + z2
-- Use immutable objects
-- Locks allows only one task access to data at a time. Use data structures and algorithms from java libraries
+- Strategy of safety concurrency
+    - Avoid shared data between tasks. One task z1, second task z2, third z3 = z1 + z2
+    - Use immutable objects
+    - Locks allows only one task access to data at a time. Use data structures and algorithms from java libraries
 
-Immutable classes
-Class is immutable if instance after creation cannot change
-Implement immutable class
-- variable with final keyword
-- non method can modify data
-- do not allow to leak modification
-- do not allow to "this" reference pass outside constructor
+- Immutable classes
+    - Class is immutable if instance after creation cannot change
+    - Implement immutable class
+        - variable with final keyword
+        - non method can modify data
+        - do not allow to leak modification
+        - do not allow to "this" reference pass outside constructor
 
-Concurrent Algorithms
-Parallel Streams
+### Concurrent Algorithms
+- Parallel Streams
 
-    +----------------------------------------------------------------------------+
-    | Long results = coll.parallelStream().filter(s->s.startsWith('a')).count(); |
-    +----------------------------------------------------------------------------+
+```java
+Long results = coll.parallelStream().filter(s->s.startsWith('a')).count();
+```
 
 ParallelStream method returns parallel stream. Stream is parted on segments
 Filtering and counting is executed for each segments and results are joined together without your further interactions
@@ -2845,81 +2845,38 @@ Arrays operations part array on segments, parallelly process them and join resul
 Arrays.pararellSetAll(), parallelSort()
 Process array into a stream,
 
-    +--------------------------------------------------+
-    | long sum = IntStream.of(value).parallel().sum(); |
-    +--------------------------------------------------+
+```java
+long sum = IntStream.of(value).parallel().sum(); |
+```
 
 
-Thread safe data structures
+### Thread safe data structures
 
-ConcurrentHashMap
+- ConcurrentHashMap
 Map on which operations are thread safe. Can support large number of parallel read and some number of parallel writes
 To actualize data compute() method. This method is Atomic, no other thread can modify map content while executing operation
 
-BlockingQueues
+- BlockingQueues
 Is one of the most commonly used tool for synchronized work. One task put element into the queue, while another
 take element from a queue. Allows to safety pass tasks from one task to another
 
-LinkedBlockingQueue, ArrayBlockingQueue
-ConcurrentSkipListMap - compare keys
-ConcurrentSkipListSet
-CopyOnWriteArrayList, CopyOnWriteArraySet - are thread safe thanks the fact that all methods that modify collection
+- LinkedBlockingQueue, ArrayBlockingQueue
+- ConcurrentSkipListMap - compare keys
+- ConcurrentSkipListSet
+- CopyOnWriteArrayList, CopyOnWriteArraySet - are thread safe thanks the fact that all methods that modify collection
 make copy used array. Good in situation when number of threads go through queue is larger than number of thread that modify queue
 
-Atomic Values
+#### Atomic Values
 
-    +-------------------------------------------+
-    | AtomicLong nextNumber = new AtomicLong(); |
-    | long id = nextWord.incrementAndGet();     |
-    +-------------------------------------------+
+```java
+AtomicLong nextNumber = new AtomicLong();
+long id = nextWord.incrementAndGet();
+```
 
 Atomic operation, load data, modify data and save data cannot be interrupted in between.
 
 
-
-# Design Patterns
-
-Design Patterns are canonical solutions to recurring problems
-Creational Patterns "How should object be created"
-    - Factory, AbstractFactory, Singleton, Builder, Prototype, Dependency Injection
-Behavioral Patterns "How should object behave and interact with each other"
-    - Strategy, Template, Iterator, Command, Chain of Responsibility, Memento, Visitor, State, Mediator, Observer
-Structural Patterns "How should classes behave and interact with each other"
-    - Decorator, Adapter, Facade, Composite, Flyweight, Bridge, Proxy
-Concurrency Pattern "How should specific situation be handled in multithreading"
-    - Double checked locking
-Model View Controller "Architectural pattern"
-
-Libraries and Frameworks are both code written by others that we can use
-Design Patterns are proven ideas for solving common problems
-Code usually calls libraries and is often called by frameworks, but is structured using Design Patterns
-
-
-## Creational
-
-How objects are constructed
-Decouple the construction of an action from its use
-Hide implementation of an object only reveal its interface
-Defer instantiation until run time
-Families of related objects that must be used together
-Allow creation of finite number of instances
-
-
-## Behavioral
-
-How do objects behave and interact with each other
-How logical unit (classes) as whole interacts with the outside world
-Iterator pattern - here logical unit includes one class Iterator class. This pattern governs how the
-is used by the client (the outside world)
-
-
-## Structural
-
-How classes within the logical unit interacts with each other
-MVC pattern - logical unit includes 3 classes model, view, controller
-The pattern governs how the Model, View, Controller interact with each other
-If the interaction between the M, V, C were change, the UI would not look or behave any different !
-
+## Other
 
 ### Design Principle #1 : Relay on Interfaces, not implementation
 

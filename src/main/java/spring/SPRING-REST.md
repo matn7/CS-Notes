@@ -187,6 +187,52 @@ public class StudentRestController {
 
 ```
 
+## Create POST
+
+- @RequestBody to access the request body as POJO
+
+```java
+@PostMapping("/students")
+public Student addStudent(@RequestBody Student student) {
+    student.setId(0); // id of 0 DAO code will perform INSERT new Student
+    studentService.saveStudent(student);
+    return student;
+}
+
+```
+
+- Sending JSON data to Spring REST Controller
+- For controller to process JSON data, need to set a HTTP request header
+    - Content-type: application/json
+- Configure REST client to send the correct HTTP request header (using Postman for instance)
+
+## Update PUT
+
+```java
+@PutMapping("/students")
+public Student updateStudent(@RequestBody Student student) {
+    studentService.saveStudent(student);
+    return student;
+}
+```
+
+## Delete DELETE
+
+```java
+@DeleteMapping("/students/{studentId}")
+public String deleteStudent(@PathVariable int studentId) {
+
+    Student stucent = studentService.getStudent(studentId);
+
+    if (student == null) {
+        throw new StudentNotFoundException("Student with id not found : " + studentId);
+    }
+
+    studentService.seleteStudent(studentId);
+    return "Deleted student with id : " + studentId;
+}
+```
+
 
 
 

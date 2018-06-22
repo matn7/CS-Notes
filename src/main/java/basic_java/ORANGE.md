@@ -1278,6 +1278,20 @@ java.lang.OutOfMemory, you may be running out of heap space.
 - Impossible to mock static method
 - Avoid static methods. Programming for testability
 
+## Clean Code
+- SRP (Single responsible principle)
+A functional unit on a given level of abstraction should only be responsible for a single
+aspect of system's requirements. An aspect of requirements, which can change independently
+of other aspects.
+- The language you wrote your code should look like it was made for the problem.
+- DRY (Don't repeat yourself)
+- KISS (Keep it simple stupid)
+- YANGE (You ain't gonna need it)
+- Can be easy extended by other developers
+- Should have minimal dependencies
+- Smaller is better
+- It should have unit and acceptable tests
+- It should be expresive
 
 
 

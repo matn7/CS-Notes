@@ -1,8 +1,9 @@
-package design_patterns.experienced_design_pattern.creational;
+package design_patterns.experienced_design_pattern.creational.builder;
 
-public class SqlQueryBuilder implements QueryBuilder  {
+public class MongoDbQueryBuilder implements QueryBuilder {
 
-    private SqlQuery query = new SqlQuery();
+    private MongoDbQuery query = new MongoDbQuery();
+
     @Override
     public void from(String from) {
         query.setFrom(from);
