@@ -189,8 +189,66 @@ public class LoginController {
 </form:form>
 ```
 
+### Spring Security Logout
+- Add logout support to Spring Security Configuration
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurarAdapter {
+    // ...
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .anyResult().authorized()
+            .and()
+            .fromLogin()
+                .loginPage("/loginPage")
+                .loginProcessingUrl("/authenticatePlease")
+                .permitAll();
+            .and()
+            .logout().permitAll();
+    }
+}
+```
 
+```html
+<form:form action="${pageContext.request.contextPath}/logout" method="POST">
+    <input type="submit" value="Logout" />
+</form:form>
+```
 
+### Spring Security - Cross Site Request Forgery (CSRF)
+- CSRF
+    - A security attack where an evil website tricks you into executing an action on a web application that
+    you are currently logged in.
+- Logged in an e-commerence app and buy unwanted stuff
 
+- Protect
+    - Embed additional authentication ata/token into all HTML forms
+    - On subsequent requests, web app will verify token before processing
+
+- enabled by default in Spring Security
+- Spring Security uses te Synchronized Token Pattern
+    - Each request includes a session cookie and randomly generated token
+- For request processing, Spring Security verifies token before processing
+- All handles by Spring Security Filters
+
+- Use for
+    - Any normal browser web requests
+    - Building a service for non-browser clients
+
+- Use Spring Security CSRF protection
+    - For form submission use POST
+    - Include CSRF token in form submission
+    - `<form:form>` automatically adds CSRF token
+
+```html
+<form action="..." method="POST">
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}" />
+</form>
+
+```
 
