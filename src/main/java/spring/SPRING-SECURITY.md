@@ -249,6 +249,5 @@ public class SecurityConfig extends WebSecurityConfigurarAdapter {
            name="${_csrf.parameterName}"
            value="${_csrf.token}" />
 </form>
-
 ```
 
