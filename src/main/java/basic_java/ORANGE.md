@@ -1092,6 +1092,20 @@ Not Null, Check, Default, Unique, Primary Key, Foreign Key
 56. What is Union?
 Union operator is used to combine the results of two tables, and it eliminates duplicate row from the table.
 
+57. How to generate stack overflow ?
+```java
+public class StackOverflowException {
+
+    public static void main(String[] args) {
+        new StackOverflowException().generateException(89);
+    }
+
+    public int generateException(int i) {
+        return i * generateException(i);
+    }
+
+}
+```
 
 ## Multithreading
 - Access to variable marked volatile is synchronized on the variable itself.

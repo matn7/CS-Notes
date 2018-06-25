@@ -1,4 +1,4 @@
-package numbers;
+package basic_java.numbers;
 
 /**
  * Created by Mati on 23.12.2017.

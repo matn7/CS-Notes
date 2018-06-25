@@ -251,3 +251,17 @@ public class SecurityConfig extends WebSecurityConfigurarAdapter {
 </form>
 ```
 
+## Spring Security - Access based on roles
+
+```java
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers("/").hasRole("footballer")
+        .antMatchers("/zoo/**").hasRole("zookeeper")
+        .and()
+        .formLogin()
+}
+
+```
+

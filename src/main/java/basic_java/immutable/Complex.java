@@ -1,12 +1,13 @@
-package immutable;
+package basic_java.immutable;
 
 /**
  * Created by Mati on 05.02.2018.
  */
-public class Complex2 {
+public final class Complex {
     /**
      * Rules:
      * 1. No setter methods
+     * 2. Declare class as final to prevent inheritance
      * 3. All fields as final
      * 4. All fields as private
      * 5. Return new object in all calls
@@ -15,7 +16,7 @@ public class Complex2 {
     private final float re;
     private final float im;
 
-    private Complex2(float re, float im) {
+    public Complex(float re, float im) {
         this.re = re;
         this.im = im;
     }
@@ -31,7 +32,7 @@ public class Complex2 {
     }
 
     // Return new Complex object
-    public static Complex2 valueOf(float re, float im) {
-        return new Complex2(re, im);
+    public Complex add(Complex c) {
+        return new Complex(re + c.re, im + c.im);
     }
 }
