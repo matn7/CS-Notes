@@ -394,8 +394,7 @@ public class Business1 {
     public String calculate() {
         return daoRepo.retrieveMessage();
     }
-}CommonJoinpoint.trackTimeAnnotation()
-
+}
 ```
 
 ```java

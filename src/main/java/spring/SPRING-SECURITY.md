@@ -225,7 +225,7 @@ public class SecurityConfig extends WebSecurityConfigurarAdapter {
 - Logged in an e-commerence app and buy unwanted stuff
 
 - Protect
-    - Embed additional authentication ata/token into all HTML forms
+    - Embed additional authentication aka/token into all HTML forms
     - On subsequent requests, web app will verify token before processing
 
 - enabled by default in Spring Security
@@ -264,4 +264,45 @@ protected void configure(HttpSecurity http) throws Exception {
 }
 
 ```
+
+## Spring Security - custom access denied page
+
+```java
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+    // ...
+        .exceptionHandling()
+            .accessDeniedPage("/noop");
+}
+
+```
+
+## Spring Security - display content based on roles
+```html
+<security:authorize access="hasRole('zookeeper')">
+    <!-- ... -->
+</security:authorize>
+```
+
+## Spring Security - JDBC
+
+- Spring Security can read user account info from database
+
+```sql
+CREATE TABLE users (
+    username varchar(60) NOT NULL,
+    password varchar(60) NOT NULL,
+    enabled tinyint(1) NOT NULL.
+    PRIMARY KEY (username)
+) ENGINE = InnoDB DEFAULT CHARSET=latin1;
+
+```
+
+```sql
+INSERT INTO users VALUES
+('brajan', '{noop}haslo',1),
+('samara', '{noop}haslo',1);
+```
+- {noop} - encoding algorithm id
+
 

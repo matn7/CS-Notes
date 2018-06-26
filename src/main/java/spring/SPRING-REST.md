@@ -21,12 +21,12 @@ Process of converting JSON data to a Java POJO
 
 - Package : *com.fasterxml.jackson.databind*
 
-                                                 +---------+
-    {                                  set       | Java    |
-        "id": 786454,               ---------->  | POJO    |
-        "firstName": Samara,           get       |         |
-        "active": true              <----------  | Student |
-    }                                            +---------+
+                                                     +---------+
+        {                                  set       | Java    |
+            "id": 786454,               ---------->  | POJO    |
+            "firstName": Samara,           get       |         |
+            "active": true              <----------  | Student |
+        }                                            +---------+
 
 - Converts JSON to Java POJO, call setter on POJO
     - It does not call private method, so define public setters
@@ -51,11 +51,11 @@ mapper.writeValue(new File("output.json"), student);
 
 
 ## Creating Spring REST
-- 1. Add maven dependency
+- Add maven dependency
     - spring-webmvc
     - jackson-databind
     - javax.servlet-api
-- 2. Java Configuration: @Configuration
+- Java Configuration: @Configuration
 
 ```java
 @Configration
@@ -66,7 +66,7 @@ public class AppConfig {
 }
 ```
 
-- 3. Config Servlet Initializer
+- Config Servlet Initializer
     - AbstractAnnotationConfigDispatcherServletInitializer
 
 ```java
@@ -76,7 +76,7 @@ public class SpringMVCDispatcherServlet extends AbstractAnnotationConfigDispatch
 }
 ```
 
-- 4. Create Rest Service @RestController
+- Create Rest Service @RestController
 
 ```java
 @RestController
@@ -97,14 +97,13 @@ public class DemoController {
     - GET : /api/students/{id}
 
 
-
-    +--------+ /api/students/{id}  | Spring  |   +---------+
-    | REST   |-------------------->|  REST   |-->| REST    |
-    | Client |<--------------------| Jackson |<--| Service |
-    +--------+ {                                 +---------+
-                 "firstName":"Rebeca",
-                 "lastName":"Brajan"
-               }
+            +--------+ /api/students/{id}  | Spring  |   +---------+
+            | REST   |-------------------->|  REST   |-->| REST    |
+            | Client |<--------------------| Jackson |<--| Service |
+            +--------+ {                                 +---------+
+                         "firstName":"Rebeca",
+                         "lastName":"Brajan"
+                       }
 
 ```java
 
