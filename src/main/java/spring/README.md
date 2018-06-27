@@ -31,13 +31,9 @@ Self contained functional software assembled into a Java EE app. Servlets and JS
 - Java Server Faces (JSF)
 
 ### MVC (Model View Controller)
-#### Model
-The state of data
-#### View
-Displaying / formatting the data in desired format. JSP pages in web app
-#### Controller
-Manages all requests and has the logic to decide where to forward them.
-Servlet is a controller
+- Model: The state of data
+- View: Displaying / formatting the data in desired format. JSP pages in web app
+- Controller: Manages all requests and has the logic to decide where to forward them. Servlet is a controller
 
 ### Servlet
 A Servlet is a server side technology used to create web apps.
@@ -95,20 +91,25 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 
 
 #### Core container
-    - Beans and Core - provides IoC (Inversion of Control) / DI (Dependency Injection).
+- Beans and Core - provides IoC (Inversion of Control) / DI (Dependency Injection).
       IoC is famous design pattern where the responsibility of object creation is transferred to an object factory
-    - Context - provides the means to access objects in framework style
-    - SpEL - expression language for quering and managing objects.
+- Context - provides the means to access objects in framework style
+- SpEL - expression language for quering and managing objects.
+
 #### AOP
-    - Enables modularization of concerns such as logging, security, across multiple types of objects.
+- Enables modularization of concerns such as logging, security, across multiple types of objects.
+
 #### Aspects
-    - Separate module that provide integration with AspectJ (AOP framework)
+- Separate module that provide integration with AspectJ (AOP framework)
+
 #### Instrumentation
-    - Class loader implementations.
+- Class loader implementations.
+
 #### Messaging
-    - For messaging based app
+- For messaging based app
+
 #### Data Access / Integration Layer
-    - OXM - Allows object/xml mapping implementation and integration with software such as JAXB, Castor.
+- OXM - Allows object/xml mapping implementation and integration with software such as JAXB, Castor.
 
 ## Spring Framework vs JEE
 

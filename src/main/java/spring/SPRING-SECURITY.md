@@ -305,4 +305,133 @@ INSERT INTO users VALUES
 ```
 - {noop} - encoding algorithm id
 
+```sql
+CREATE TABLE authorities (
+    username varchar(60) NOT NULL,
+    authority varchar(60) NOT NULL,
+    UNIQUE KEY authorities_idx_1 (username, authority),
+    CONSTRAINT authorities_ibfk_1
+    FOREIGN KEY (username)
+    REFERENCES users (username)
+) ENGINE = InnoDB DEFAULT CHARSET=latin1;
+```
+
+```java
+INSERT INTO authorities
+VALUES
+(brajan, ROLE_MANAGER),
+(samara, ROLE_ADMIN);
+```
+- maven
+    - mysql-connector-java
+    - c3p0
+
+*mysql.properties*
+```properties
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/database_panda?useSSL=false
+jdbc.user=brajan
+jdbc.password=gdziejestsamara
+
+connection.pool.initialPoolSize=5
+connection.pool.minPoolSize=5
+connection.pool.maxPoolSize=20
+connection.pool.maxIdelTime=3000
+```
+- DataSource configuration
+```java
+@Configuration
+@EnableWebMvc
+@ComponentScan(basePackages="com.panda")
+@PropertySource("classpath:mysql.properties")
+public class AppConfig {
+    @Autowired
+    private Environment env; // hold data read from properties file
+
+    @Bean
+    public DataSource securityDataSource() {
+    	// create connection pool
+    	ComboPooledDataSource dataSource = new ComboPooledDataSource();
+
+    	try {
+    		dataSource.setDriverClass(env.getProperty("jdbc.driver"));
+    	} catch (PropertyVetoException e) {
+    		throw new RuntimeException(e);
+    	}
+    	// set database connection props
+    	dataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+        dataSource.setUser(env.getProperty("jdbc.user"));
+        dataSource.setPassword(env.getProperty("jdbc.password"));
+
+    	// set connection pool props
+		dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+		dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+		dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+		dataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+
+    	return dataSource;
+    }
+
+}
+```
+
+- Update Spring Security to use JDBC
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Override
+    protected void configure(AuthenicationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource);
+    }
+
+}
+
+```
+
+## Spring Security - Password Encryption
+
+- bcrypt algorithm
+    - One way encrypted hashing
+    - Adds random salt to password for protection
+    - Includes support to defeat from brute force attacks
+
+- Password column at leat 68 characters wide
+    - {bcrypt} - 8 chars
+    - encodedPassword - 60 chars
+
+
+```sql
+('brajan', '{bcrypt}$2a$sdasd$50sdmkMAKdsmiamLSLM',1),
+('samara', '{noop}$2a$sdasd$50sdmkMAKdsmiamLSLM',1);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

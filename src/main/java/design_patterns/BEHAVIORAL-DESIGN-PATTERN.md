@@ -1,6 +1,6 @@
 # Behavioral Pattern
-Strategy,
-## Strategy Pattern, Comparator interface
+## Strategy Pattern,
+**Example**: Comparator interface
 Algorithm to sort list of strings. Each algorithm implements the interface `Comparator<String>`
 Any object that implements this interface has a method that takes in 2 strings, and specifies which string comes first.
 
@@ -49,17 +49,17 @@ of the class to be simple and it is a injector which holds all the complicated i
 instantiate and inject into particular class.
 
 - What is the difference between composition and inheritance?
-Composition refers to defining behavior by the member variables a class includes
-Inheritance refers to defining behavior by the interfaces or classes that a class inherits from
-Composition = "has-a", Inheritance = "Is-a"
+    - Composition refers to defining behavior by the member variables a class includes
+    - Inheritance refers to defining behavior by the interfaces or classes that a class inherits from
+    - Composition = "has-a", Inheritance = "Is-a"
 
 - How are Strategy Pattern and Dependency injection related?
-Each defines behavior by setting member variables of a class
+    - Each defines behavior by setting member variables of a class
 
 ## Template pattern
-Frameworks are complicated group of classes that do a bunch of stuff.
-- High level modules should not depend on low-level modules. Both should depend on abstractions.
-- Abstractions should not depend on details. Details should depend on abstractions.
+- Frameworks are complicated group of classes that do a bunch of stuff.
+    - High level modules should not depend on low-level modules. Both should depend on abstractions.
+    - Abstractions should not depend on details. Details should depend on abstractions.
 
 In template a complicated algorithm is implemented usually in the form of an instantiated method of an abstract base class.
 A programmers merely plugs in customization to specific steps by implementing the abstract method of the
@@ -76,9 +76,9 @@ The abstract (unimplemented) methods left for programmer are called hooks
                 | 4. Sum importance                |
                 | 5. Return                        |
                 +----------------------------------+
-Step 3 is key part which programmer customizes.
-Programmer extends abstract based class and implements Step 3
-The template pattern is a precursor to the use of frameworks
+- Step 3 is key part which programmer customizes.
+    - Programmer extends abstract based class and implements Step 3
+      The template pattern is a precursor to the use of frameworks
 
 - What is the basic point of the Template Pattern?
     - Specify a complex set of steps, and have client code plug in specific implemetnations of individual.
