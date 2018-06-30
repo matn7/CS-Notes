@@ -226,6 +226,212 @@ public class Puma implements Section {
 
 ```
 
+### Inject values from properties file
+
+```properties
+foo.email=email@panda.com
+foo.team=Missisipi
+```
+
+*applicationContext.xml*
+```xml
+<context:property-placeholder location="classpath:zoo.properties" />
+
+<bean id="myPanda" class="com.panda.tiergarten.berlin.Puma">
+    <property name="cleaningService" ref="myService" />
+
+    <property name="emailAddress" value="${foo.email}" />
+    <property name="team" value="${foo.team" />
+</bean>
+
+```
+
+## Bean scopes
+
+- Scope refers to the lifecycle of the bean
+- How long does the bean live?
+- How many instances are created?
+- How is the bean shared?
+
+
+### Default scope: Singleton
+
+```xml
+<beans >
+
+    <bean id="myTeam" class="com.springdemo.FootballTeam"
+        scope="singleton">
+
+    </bean>
+
+</beans>
+
+```
+
+- Spring Container creates only one instance of the bean, by default
+- It is cached in memory
+- All requests for the bean
+    - return a SHARED reference of the **SAME** bean
+
+
+### Spring bean scopes
+
+| Scope | Description |
+|---|---|
+| singleton | Create a single shared instance of the bean. Default scope |
+| prototype | Creates a new bean instance for each container request |
+| request | Scoped to an HTTP web request. Only used for web apps |
+| session | Scoped to an HTTP web session. Only used for web apps |
+| global-session | Scoped to a global HTTP web session. Only used for web apps |
+
+
+## Bean lifecycle
+
+
+Container  :arrow_right:   Bean    :arrow_right: Dependencies :arrow_right:  Internal   :arrow_right: Custom init method
+Started                  Instantiated               Injected                Spring Processing
+
+
+Bean is ready for use
+---------------------
+Container is Shutdown
+        :arrow_down:
+Custom Destroy method         :arrow_right:`    STOP
+
+
+### Bean Lifecycle Methods / Hooks
+- Add custom code during bean initialization
+    - Calling custom business logic methods
+    - Setting handles to resources (db, sockets)
+
+- Add custom code during bean destruction
+    - Calling custom business logic methods
+    - Clean up handles to resources
+
+
+### Init method configuration
+
+```xml
+<beans >
+
+    <bean id="myTeam" class="com.springdemo.FootballTeam"
+        init-method="doStartupStuff"
+        destroy-method="doCleanupStuff">
+
+    </bean>
+
+</beans>
+
+```
+
+- Init and destroy ethod signatures
+    - Any access modifier
+    - Any return types. Void most popular
+    - Any metod name
+    - No arguments allowed
+
+- For the prototype scope spring does not call **destroy** method.
+In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean:
+the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client,
+with no further record of that prototype instance.
+
+Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
+in the case of prototypes, configured destruction lifecycle callbacks are not called.
+The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.
+
+
+## Configura Spring with Java Annotations
+
+- What are Java Annotations?
+    - Special labels/markers added to Java classes
+    - Provide meta-data about class
+    - Processed at compile time or run-time for special processing
+
+- Example `@Override`
+    - Override method, we are telling a compiler we override method exactly as present in interface or parent class.
+    - Compiler check that we actually override method, if some issue they will be compile time error
+
+### Scanning for Component Classes
+- Spring will scan Java classes for special annotations
+- Automatically register the beans in the Spring container
+
+- Development process
+    - Enable component scanning in Spring config file
+    - Add @Component Annotation to Java Classes
+    - Retrieve bean from Spring container
+
+**Enable component scanning**
+
+```xml
+<beans>
+    <context:component-scan base-package="com.panda.springdemo" />
+</beans>
+```
+
+**Add @Component annotations**
+
+```java
+@Component("monkeyService")
+public class MonkeyService implements Service {
+
+    @Override
+    public String getCleanupService() {
+        return "Clean monkeys cages";
+    }
+
+}
+
+```
+
+**Retrieve bean from Spring Container**
+
+```java
+Service monkeyService = context.getBean("monkeyService", MonkeyService.class);
+```
+
+## Constructor Injection
+
+- What is Spring Auto Wiring?
+    - For dependency injection, Spring can use autowiring
+    - Spring will look for a class that mathces the property
+        - matches by type: class or interface
+    - Spring will inject it automatically
+
+- Autowiring Injection Types
+    - Constructor injection
+    - Setter injection
+    - Field Injections
+
+
+*MonkeyService.java*
+```java
+@Component
+public class MonkeyService implements Service {
+
+    private BillingService billingService;
+
+    @Autowired
+    public MonkeyService(BillingService billingService) {
+        this.billingService = billingService;
+    }
+
+    // ...
+
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

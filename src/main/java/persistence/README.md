@@ -34,15 +34,17 @@ Structured Query Language SQL is a language used to manage data in Relational Da
 
 ```sql
 CREATE TABLE BOOK(
-    ID BGINT(10) NOT NULL,
+    ID BIGINT(10) NOT NULL,
     ISBN VARCHAR(15) NOT NULL,
     TITLE VARCHAR(240) NOT NULL,
     PRIMARY KEY (ID)
 ```
+
 `primary key` - no duplicate or null values allowed in this column
 `foreign key` - value of this column must match a value in the primary key of another table
 
 ### Rules that Relational Database follows
+
 - `Entity Integrity` Every table has a primary key.
 - `Referential Integrity` A foreign key points at a value that is the primary key of another table. Null value are valid for FK.
 
@@ -51,13 +53,15 @@ CREATE TABLE BOOK(
 - Object Model - Object oriented language (e.g. Java)
 - Relational Model - RDBMS (e.g. MySQL)
 
-- **Object Model** - uses principles of
-    - Abstraction       - Polymorphism
-    - Encapsulation     - Concurrency
-    - Modularity        - Persistence
+- **Object Model**: uses principles of
+    - Abstraction
+    - Polymorphism
+    - Encapsulation
+    - Concurrency
+    - Modularity
+    - Persistence
 
-Object is an instance of a class.
-It has identity, state and behavior.
+Object is an instance of a class. It has identity, state and behavior.
 
 - **Relational Model**
     - Structure of data
@@ -68,7 +72,7 @@ It has identity, state and behavior.
 ## Object Relational Impedance Mismatch
 
 Loading or storing graphs of objects using a relational database causes mismatch problem.
-Object Relational Impedance Mismaych (Paradigm Mismatch).
+Object Relational Impedance Mismatch (Paradigm Mismatch).
 Object Model and Relational Model do not work well together.
 
 **Granurality**
@@ -86,12 +90,14 @@ Granurality is the extent to which a system could be broken down into small part
 ## Object Relational Maping
 
 ### Problems
+
 - Too many SQL statements
 - Too Many Copy Codes
 - Manually handled associations
 - Database Dapendent
 
 ### ORM (Object Relational Mapping)
+
 Object Relational Mapping refers to the technique of mapping the representation of data from Java Objects to Relational Database.
 ORM allows you use Java Objects as representation of a Relational Database.
 
@@ -101,9 +107,11 @@ Advantage of the features present in the Object Model (Java) and the Relational 
 **Hides the complexity of SQL and JDBC**
 
 ## Hibernate
+
 Object relational mapping framework which is used to map Java objects to relational database. It allows us to specify configuration
 to use to connect to the DB and to specify the way ava object should be mapped to the tables in that database.
 Java objects as representation of data.
+
 
 ## Hibernate + JPA Hello World
 
@@ -135,7 +143,9 @@ Configuration   :arrow_backward:    SessionFactory  :arrow_backward:    **Sessio
 
 **Building session factory is resource intensive process. 1 Session Factory for 1 database.**
 
+
 ### Building Session Factory
+
 *HibernateUtils.java*
 ```java
 public class HibernateUtil {
