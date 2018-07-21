@@ -5,3 +5,6 @@ out/
 */target/*
 target
 .target
+src/test/resources/cars.json
+src/test/resources/person.json
+

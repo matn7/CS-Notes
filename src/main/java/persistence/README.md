@@ -383,7 +383,7 @@ If class is broken, students are not broken.
 In aggregation relationship, when the whole is destroyed, its parts are not destroyed with it.
 
 ### Composition
-Composition is a strong form of aggregation. Each part may belong t only one whole (no sharing).
+Composition is a strong form of aggregation. Each part may belong to only one whole (no sharing).
 Room in house.
 In a composition relationship, when the whole is destroyed its parts are also destroyed with it.
 **ValueTypes** is form of coposition.
@@ -444,7 +444,7 @@ Value type objects are identified through owning entity.
 
 The lifecycle of a **value type** object is bound to that of its owning **entity** object.
 
-Classes like String and Integer are most simple **calue type** classes.
+Classes like String and Integer are most simple **value type** classes.
 
 - Does the database identity of an object matters?
     - Enity yes
@@ -487,6 +487,7 @@ public class PersonEntity {
 ```
 
 A component has no individual identity
+
 ```java
 @Embeddable
 public class Address {

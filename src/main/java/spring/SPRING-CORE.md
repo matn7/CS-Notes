@@ -33,6 +33,7 @@ public class HomeDataService {
 ## AUTOWIRING
 
 ### 1. By name
+
 ```java
 @Component
 public class SortServiceImpl {
@@ -42,6 +43,7 @@ public class SortServiceImpl {
 ```
 
 ### 2. By `@Primary` higher priority than by name
+
 ```java
 @Component
 @Primary
@@ -51,6 +53,7 @@ public class BubbleSortAlgorithm implements SortAlgorithm {
 ```
 
 ### 3. `@Qualifier` (highest priority)
+
 ```java
 @Component
 @Qualifier("quick")
@@ -114,11 +117,13 @@ public class JdbcConne {
 ```
 
 ## Singleton vs GOF singleton
-- GOF singleton - one singleton per JVM
-- Sipring singleton - one singleton per Application Context
+
+- GOF singleton : one singleton per JVM
+- Sipring singleton : one singleton per Application Context
 
 
 ## COMPONENT SCAN
+
 ```java
 @SpringBootApplication
 @ComponentScan("com.spring.basics.componentscan")
@@ -128,9 +133,9 @@ public class ComponentScanApplication {
 ```
 
 ## THE LIFECYCLE OF THE BEAN
-- As soon as bean is created post construct will be called. Initialize content of bean.
-`@PostConstruct`
-- Called just before bean is removed.
+
+- As soon as bean is created post construct will be called. Initialize content of bean. `@PostConstruct`
+
 ```java
 @RestController
 @RequestMapping("/api")
@@ -148,14 +153,15 @@ public class StudentController {
 }
 ```
 
-`@PreDestroy`
+- `@PreDestroy`: Called just before bean is removed.
 
 
 ## CDI
-JavaEE Dependency Injection Standard (JRS-330)
-- @Inject `@Autowired`
-- @Named `@Component & @Qualifier`
-- @Singleton
+
+- JavaEE Dependency Injection Standard (JRS-330)
+    - @Inject `@Autowired`
+    - @Named `@Component` & ``@Qualifier`
+    - @Singleton
 
 *SomeCDIBusiness.java*
 ```java
@@ -175,6 +181,7 @@ public class SomeCDIBusiness {
     }
 }
 ```
+
 *SomeCdiDao.java*
 ```java
 //@Component
@@ -184,6 +191,7 @@ public class SomeCdiDao {
 ```
 
 ## Spring Configuration
+
 *pom.xml*
 ```xml
 <dependency>
@@ -241,19 +249,24 @@ try (ClassPathXmlApplicationContext applicationContext =
 
 ## Wrap up IOC, Application Context and BeanFactory
 
-- IOC Container - Manages beans. Create instance of WelcomeService. Creates beans for WelcomeController.
-Autowires WelcomeService bean into the WelcomeController.
-Wireing, creation of beans.
+- IOC Container :
+    - Manages beans
+    - Create instance of WelcomeService
+    - Creates beans for WelcomeController
+    - Autowires WelcomeService bean into the WelcomeController.
+    - Wireing, creation of beans.
 
-- Application Context - implementation of IOC
-- Bean Factory - implementation of IOC
+- Application Context : implementation of IOC
+- Bean Factory : implementation of IOC
 
-- ApplicationContext = Bean Factory enchanced
+- ApplicationContext = Bean Factory ++
     - Spring AOP features
     - I18n capabilities
     - WebApplicationContext for web app
 
+|
 ### Without Spring
+
 ```java
 @RestController
 public class WelcomeController {
@@ -264,6 +277,7 @@ public class WelcomeController {
   }
 }
 ```
+|
 ### With Spring
 ```java
 @Component
@@ -280,9 +294,11 @@ public class WelcomeController
     }
 }
 ```
+|
 
 
 ## Component Annotations
+
 - `@Component` - generic component
 - `@Repository` - encapsulating storage, retrieval, typical for relational databases
 - `@Service` - Business serice facade
@@ -291,6 +307,7 @@ public class WelcomeController
 Classify components to different categories. Apply different logic for each category.
 
 ## Read from properties file
+
 *app.properties*
 ```properties
 external.service.url = http://server.com/service
@@ -309,6 +326,7 @@ public class ExternalService {
     }
 }
 ```
+
 *PropertiesApplication.java*
 ```java
 @Configuration
@@ -337,20 +355,23 @@ public class PropertiesApplication {
 - Auto Configuration
 - Component Scan
 
-Spring boot looks at a) Frameworks available on CLASSPATH, b) Existing configuration for the application based on these,
+- Spring boot looks at
+    - a) Frameworks available on CLASSPATH
+    - b) Existing configuration for the application based on these,
+
 Spring boot provides basic configuration needed to configure the application with these framework. This is called
 `Auto Configuration`.
 
 
 ## Spring Boot, Spring, Spring MVC
 
-`Spring Framework`
+**`Spring Framework`**
 - Most important feature of Spring Framework is Dependency Injection. At the core all Spring Modules is
 Dependency Injection or IOC Inversion of Control.
 - Reduce duplication, plumbing code.
 - Integration with other framework
 
-`Spring MVC`
+**`Spring MVC`**
 - Spring MVC framework provides decoupled way of developing web applications. With simple concepts like
 `Dispatcher Servlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop web applications.
 
@@ -424,9 +445,11 @@ public class BeforeAspect {
 ```
 
 #### Join Point (pointcut)
+
 - "execution(* com.panda.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
 
 #### Advice
+
 ```java
 logger.info("Validation before method call");
 logger.info("Intercepted method call - {}", joinPoint);
@@ -435,9 +458,11 @@ logger.info("Intercepted method call - {}", joinPoint);
 - what should I do when I do interception
 
 #### Aspect
+
 - Combination of **Pointcut** and **Advice**
 
 #### JoinPoint
+
 - Specific interception of method call. Specific execution instatce. If called 100 method calls they will be
 100 joinPoints.
 
@@ -447,6 +472,7 @@ logger.info("Intercepted method call - {}", joinPoint);
 
 
 ### `@After`
+
 `@After` = `@AfterReturning` + `@AfterThrowing`
 
 ```java
@@ -480,15 +506,16 @@ logger.info("Intercepted method call - {}", joinPoint);
 ```
 
 ### Best practices
+
 ```java
 public class CommonJoinpointConfig {
     @Pointcut("execution(* com.panda.spring.aop.business.*.*(..))")
     public void dataLayer() {}
 }
 
-    // Before
-    @Before("com.panda.spring.aop.aspect.CommonJoinpointConfig.dataLayer()")
-        public void before(JoinPoint joinPoint) {
+// Before
+@Before("com.panda.spring.aop.aspect.CommonJoinpointConfig.dataLayer()")
+public void before(JoinPoint joinPoint) {
 ```
 
 ### Create annototion
@@ -550,6 +577,7 @@ Some examples loaded by app context for us:
 
 
 ## JPA
+
 *Person.java*
 ```java
 @Entity
@@ -571,6 +599,7 @@ public class Person {
 ```
 
 *PersonRepository.java*
+
 ```java
 @Repository
 @Transactional
@@ -608,11 +637,14 @@ public class PersonRepository {
 ## Spring Data JPA
 
 *SpringDataRepository.java*
+
 ```java
 public interface SpringDataRepository extends JpaRepository<Person, Integer> {
 }
 ```
+
 *Use*
+
 ```java
 repository.findById(12);
 repository.save(new Person("Panda", "China", new Date());
@@ -620,8 +652,10 @@ repository.findAll();
 repository.deleteBYId(12);
 ```
 
-## Dpring MVC
+## Spring MVC
+
 *web.xml*
+
 ```xml
 <web-app>
 
@@ -646,6 +680,7 @@ repository.deleteBYId(12);
 ```
 
 *todo-servlet.xml*
+
 ```xml
 <beans>
     <context:component-scan base-package="com.panda" />

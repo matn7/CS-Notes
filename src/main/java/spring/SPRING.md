@@ -389,7 +389,7 @@ public class MonkeyService implements Service {
 Service monkeyService = context.getBean("monkeyService", MonkeyService.class);
 ```
 
-## Constructor Injection
+### Constructor Injection
 
 - What is Spring Auto Wiring?
     - For dependency injection, Spring can use autowiring
@@ -420,6 +420,110 @@ public class MonkeyService implements Service {
 }
 ```
 
+### Setter Injection
+
+```java
+private BillingService billingService;
+
+@Autowired
+public void setBillingService(BillingService billingService) {
+	this.billingService = billingService;
+}
+```
+
+### Method injection
+
+```java
+@Autowired
+public void anyMethodName(BillingService billingService) {
+    this.billingService = billingService;
+}
+
+```
+
+### Field Injection
+
+- Inject dependencies by setting field values on class directly
+- Accomplished by using Java Reflection
+- Configura the dependency injection with Autowired Annotation
+    - Applied directly to the field
+    - No need for setter methods
+
+```java
+@Autowired
+private BillingService billingService;
+```
+
+## Autowired and Qualifier
+
+
+```java
+@Autowired
+@Quelifier("tigerService")
+private BillingService billingService;
+```
+
+**For Constructor Injection**
+
+```java
+@Autowired
+public MonkeyService(@Quelifier("tigerService") BillingService billingService) {
+    this.billingService = billingService;
+}
+```
+
+- How to inject properties ?
+    - @Value("${foo.email}")
+
+## @Scope Annotation
+
+- Bean Scopes
+    - Scope refers to the lifecycle of a bean
+    - How long does bean live?
+    - How many instances are created?
+    - How the bean is shared?
+
+- Default scope is singleton
+
+```java
+@Component
+@Scope("singleton")
+public class PandaService implements Service {
+    // ...
+}
+```
+
+## Bean Lifecycle method Annotations
+
+- Methods for init and destroy
+- Annotations:
+    - @PostConstruct
+    - @PreDestroy
+- Method annotated with @PostConstruct or @PreDestroy. Cannot have any arguments
+
+```java
+@Component
+public class PandaService implements Service {
+
+    @PostConstruct
+    public void doStartupStuff() {
+        // ...
+    }
+
+    @PreDestroy
+    public void doCleanupStuff() {
+        // ...
+    }
+}
+```bean(s)
+
+- For Prototype Scope Spring does not call @PreDestroy method
+Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
+in the case of prototypes, configured destruction lifecycle callbacks are not called.
+The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.
+
+To get the Spring container to release resources held by prototype-scoped beans,
+try using a custom bean post-processor, which holds a reference to beans that need to be cleaned up.
 
 
 
