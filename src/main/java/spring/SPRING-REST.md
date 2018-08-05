@@ -166,7 +166,7 @@ public class GlobalExceptionHandler {
 | PUT | /api/students | Update existing student |
 | DELETE | /api/students/{id} | Delete student |
 
-- Dont include actions in endpoint, instead use HTTP to assign actions
+- Don't include actions in endpoint, instead use HTTP to assign actions
 
 ## CRUD
 ### Read GET

@@ -127,7 +127,7 @@ JSTL helps to implement a common functionality in JSP, like iterations, conditio
 ## Spring IoC Container
 
 - A Spring IoC Container is a component of the Spring framework that contains the "beans" and manages their lifecycle.
-- The ApplicationContext interface represents the Spring IoC container and is responsible for instantiatiog, configuring
+- The ApplicationContext interface represents the Spring IoC container and is responsible for instantiation, configuration
 and assembling the beans. The container gets its instructions on what objects to instantiate, configure and assemble by reading configuration metadata.
 - The configuration metadata can be represented in XML or Annotations.
 - Several implementations of the ApplicationContext
@@ -166,7 +166,7 @@ and assembling the beans. The container gets its instructions on what objects to
 **Bean Scope Introduction**
 Recipe is a kind of template. From a single recipe you can create different instances or objects with relevant configurations.
 - One configuration is the scope of an object. This configuration helps to avoid hard coding the scope of an object at the Java class level.
-- In the Spring framework it is possible to define five scopes )of which three are available only if you are using web-aware ApplicationContext).
+- In the Spring framework it is possible to define five scopes, of which three are available only if you are using web-aware ApplicationContext.
 
 ### Singleton
 This is single bean definition that limits the scope to a single object instance per Spring IoC container.
@@ -180,9 +180,9 @@ This means each and every HTTP request will create its own instance of a bean fo
 
 ### Session
 This is a single bean definition which the scope to the lifecycle of a HTTP session.
-"A user session contains information about the user across multiple HTTP requests.
-Wen a user accesses a site for the first time, the user is assigned a unique ID to identify session.
-This session ID is usually stored in a cookie or in a request parameter."
+A user session contains information about the user across multiple HTTP requests.
+When a user accesses a site for the first time, the user is assigned a unique ID to identify session.
+This session ID is usually stored in a cookie or in a request parameter.
 
 ### Global Session
 This is a single bean definition which limits the scope to the lifecycle of a global HTTP Session. Typisally only valid when used in a partlet context.
@@ -243,12 +243,12 @@ public class Organization {
 }
 ```
 - What the bean definition with <bean> tag does above, is expressed using the `@Component` annotation.
-- Precise `@Value` annotations for property value injected (from a separate file) and no elaborate constructor argumants.
+- Precise `@Value` annotations for property value injected (from a separate file) and no elaborate constructor arguments.
 
-By using `@Configuration` annotation we can build java based configuration class where we can centralize most of our annoatatopm configurations.
+By using `@Configuration` annotation we can build java based configuration class where we can centralize most of our annotation configurations.
 This will provide type safety as well as clean separation of concerns that xml gives us.
 
-- Stereotype annotations are markers for any class that fullfills a role within an application
+- Stereotype annotations are markers for any class that full fills a role within an application
 - `@Component` is generic stereotype for any Spring managed component.
 - `@Repository`, `@Service` and `@Controller` are specializations of `@Component` for more specific use cases.
 
@@ -323,20 +323,20 @@ persistence mechanism your application uses, the domain logic speaks to a DAO la
 
                             +--------------------------------------+
     +-------------------+   |  +-----------+    +------+           |
-    | Application       +---+--+ DAO       +<-->+ DAO  |           | JDBC
-    | Persistence Layer +<--+--+ Interface +<-->+ Impl +<----------+-------> DB
+    | Application       +---+->+ DAO       +<-->+ DAO  |           +-------> DB JDBC
+    | Persistence Layer +<--+--+ Interface +<-->+ Impl +<----------+
     +-------------------+   |  +-----------+    +------+ DAO Layer |
                             +--------------------------------------+
 
 ## Spring MVC in depth
 
 ### JNDI Data Source
-JNDI - Java Naming and Directory Interface.In computing a directory service or name service maps the names of network resources
+JNDI - Java Naming and Directory Interface. In computing a directory service or name service maps the names of network resources
 to their respective network addresses.
-Using JNDI applications ca store and retrieve named Java objects of any type.
+Using JNDI applications can store and retrieve named Java objects of any type.
 JNDI is an API to uniformly access naming and directory services.
 
-Examples of directory services
+#### Examples of directory services
 - LDAP - Lightweight Directory Access Protocol
 - CORBA - Common Object Request Broker Architecture
 - RMI - Remote Method Invocation
@@ -434,7 +434,7 @@ These methods support some argument types as `@RequestMapping` methods, but they
 
 - The `@SessionAttribute` annotation is used at the class level.
 - Typically it's used on the `@Controller`.
-- The 'value' and 'name' element of `@SessionAttribute` is of type String[].
+- The **value** and **name** element of `@SessionAttribute` is of type String[].
 
 `@SessionAttributes("product")`
 `@SessionAttributes(names={"product", "price"})`
@@ -539,7 +539,7 @@ It means that, it won't allow just empty spaces.
 @NotBlank(message = "*First Name: cannot be blank")
 
 - Annotation starts with `@` which signals to the compiler that this is annotation.
-- Java annotations can have elements (message here) for whic you can set values Element is like an attribute parameter.
+- Java annotations can have elements (message here) for which you can set values Element is like an attribute parameter.
 - Java annotations are typically used to provide:
     - Compiler instructions
     - Build time instructions
@@ -583,7 +583,7 @@ Groups enable partial validation and ordered validation.
 
 ## @Pattern
 
-- Regular Expressions are set of characters and/or meta characters that match )of specify) patterns and can be used
+- Regular Expressions are set of characters and/or meta characters that match (of specify) patterns and can be used
 to search, edit and manipulate text.
 - "[abc]" regular expression that matches any one of the characters a, b, c.
 - A regex is a String of characters. Those characters that have an interpolation above and beyond their literal meaning are called
@@ -598,15 +598,15 @@ The pattern defined by the regex may match one or several times or not at all fo
 "character class" matches only one out of several characters. To match an **a** or **e**, use `[ae]`. Use regex `gr[ae]y` to match either
 `gray` or `grey`. Regex `gr[ae]y` does not match `greay`, `graey`. The order of the characters inside a character class does not matter.
 
-`[xyz]` matches any one of the characters **x**, **y** or **z**
-`[c-n]` matches any one of the characters in the range c to n. You can use a hyphen inside a character class to specify a range of characters.
-`[B-Pk-y]` matches any one of the characters in range B to P and k to y.
-`[a-z0-9]` matches any single lowercase letter or any digit
+- `[xyz]` matches any one of the characters **x**, **y** or **z**
+- `[c-n]` matches any one of the characters in the range c to n. You can use a hyphen inside a character class to specify a range of characters.
+- `[B-Pk-y]` matches any one of the characters in range B to P and k to y.
+- `[a-z0-9]` matches any single lowercase letter or any digit
 
 - Hence the regex `[a-zA-Z-0-9]` means a trrough z or A through Z or 0 to 9
 
-**{}** acts as a qualifier and indicates the number of occrrences of preceding regex to match.
-So {6} means the mathcing string can repeat 6 times or can have a max length of 6 characters.
+**{}** acts as a qualifier and indicates the number of occurrences of preceding regex to match.
+So {6} means the matching string can repeat 6 times or can have a max length of 6 characters.
 
 
 

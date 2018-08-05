@@ -1,7 +1,6 @@
 # Complexity
-Is a measure of how resource requirements change as the size of problem gets larger
-
-## Big O Notation - allows express complexity as a resource of input size
+Is a measure of how resource requirements change as the size of problem gets larger.
+**Big O Notation** - allows express complexity as a resource of input size
 
 # Sorting
 ## 1. Selection sort O(N^2)
@@ -163,7 +162,7 @@ public static class Node {
         return left;
     }
 
-    public NOde getRight() {
+    public Node getRight() {
         return right;
     }
 }
@@ -203,11 +202,11 @@ public static boolean sameTree(Node head1, Node head2) {
 - **ISFULL O(1)**
 - **SIZE O(1)**
 
-StackOverflowException - pushing into full stack
-StackUnderflowException - popping or peeking empty element
+- StackOverflowException - pushing into full stack
+- StackUnderflowException - popping or peeking empty element
 
-*LinkedList is used to build a stack*
-Stack is used to implementing undo, back button
+- **LinkedList** is used to build a stack
+- Stack is used to implementing undo, back button
 
 ```java
 // SINGLE ELEMENT IN LINKED LIST
@@ -254,12 +253,11 @@ Linked List with pointer to the head and tail works well, or stack (2 stacks)
 ## Binary Tree
 - Tree is a data structure which is made up of nodes.
 The order of element is not important in a Tree. Non-linear data structure (data organized without any sequence).
-- In binary tree
-In binary tree each node can have 0, 1 or 2 children.
-ROOT - parent node
-EDGE - Link from parent to leaf
-LEAF - border Nodes no children
-SIBLINGS - Nodes at the same level
+- In binary tree each node can have 0, 1 or 2 children.
+    - ROOT - parent node
+    - EDGE - Link from parent to leaf
+    - LEAF - border Nodes no children
+    - SIBLINGS - Nodes at the same level
 ```java
 public static class Node<T> {
     private T data;
@@ -284,19 +282,19 @@ Each node in the left subtree of Node has a value less than or equal to the valu
 Each node in the right subtree of Node has a value greater than the value of the Node.
 Binary search tree are typically used for **Fast insertion and fast lookup**
 - INSERTION O(Log(N))
-- LOOKUP O(LOG(N))
+- LOOKUP O(Log(N))
 Complexity is based on shape. For example if only right or left child both insertion and lookup O(N)
 
 # Heaps
 ## Priority Queue
 The highest priority element has to be processed first.
-INSERT
-ACCESS - the highest priority element
-REMOVE - the highest priority element
+- INSERT
+- ACCESS - the highest priority element
+- REMOVE - the highest priority element
 
 | operation| Array or List unordered | Array or List ordered | Balanced binary search tree | The binary heap |
 |---|---|---|---|---|
-| insertion | O(1) | O(N) | O(Log(N)) | O(Log(N)) |
+| INSERTION | O(1) | O(N) | O(Log(N)) | O(Log(N)) |
 | ACCESS | O(N) | O(1) | O(Log(N)) | O(1) |
 | REMOVE | O(N) | O(1) | O(Log(N)) | O(Log(N)) |
 
@@ -305,8 +303,9 @@ A heap is a tree with special properties or constraints on the values of it's no
 Two types of Heaps
 - MINIMUM HEAP - node with smallest value is root.
 - MAXIMUM HEAP - node with largest value is root.
-Operations travels upwards (leaf -> root), trawels downwards (root -> leaf).
-Heaps can be represented using tree or array
+    - Operations travels upwards (leaf -> root),
+    - travels downwards (root -> leaf).
+    - Heaps can be represented using tree or array
 
 **GET PARENT**
 Node at index: i -> has parent at index (i-1)/2
@@ -338,7 +337,7 @@ Node at index: (2*i + 2)
 - Complexity O(N(Log(N)))
 - Space complexity O(1)
 
-# GRAPH
+## GRAPH
 - Graph is used to represent relationship between entities.
     - VERTEX
     - EDGE
@@ -364,7 +363,7 @@ Node at index: (2*i + 2)
 
 - Series of edges is called **PATH**
 
-## UNDIRECTED ACYCLIC GRAPH
+### UNDIRECTED ACYCLIC GRAPH
     A connected graph with no cycles is a TREE
         +---+         +---+         +---+
         | A +---------+ B +---------+ F |
@@ -380,12 +379,12 @@ Node at index: (2*i + 2)
         | C +---------+ E |         | G |
         +---+         +---+         +---+
 
-## DIRECTED ACYCLIC GRAPH (DAG)
+### DIRECTED ACYCLIC GRAPH (DAG)
 
         +---+         +---+         +---+
         | A +-------->+ B +-------->+ F |
         +-+-+         +---+         +-+-+
-          |  A                        A  \
+          |  ^                        ^  \
           |   \                       |   V
           |    +---+                  |    +---+
           |    | D |                  |    | H |
@@ -399,7 +398,7 @@ Node at index: (2*i + 2)
 - 3 ways to represent Graph
     - Adjacency matrix
     - Adjacency list
-    - Adjecencey set
+    - Adjacency set
 
 ### ADJACENCY MATRIX
 Use a metrix with ROWS and COLUMNS a matrix is table
@@ -460,10 +459,10 @@ If no vertices with in degree of 0 no topological sort
 - Charts and tables are views
 - Numeric data are model
 - Controller -> A slider to adjust volume in a media player app
-- Model -> The MP$ file of a movie to be played in a media-player app
+- Model -> The MP3 file of a movie to be played in a media-player app
 - View -> The area of the media player app that actually displays video
 
-# Synchronized
+### Synchronized
 
     public class SameClass {                        public class SomeClass {
         synchronized static void foo() {}   ===         static void foo() {
@@ -482,7 +481,7 @@ If no vertices with in degree of 0 no topological sort
 
 
 
-# Questions
+### Questions
 1. How to interrupt thread.
 ```java
 } catch (InterruptedException e) {
@@ -495,96 +494,84 @@ If no vertices with in degree of 0 no topological sort
 TimeUnit.SECONDS.sleep(1);
 ```
 
-3. What happend if extends String
-Failed String is final so cannot be extended.
+3. What happened if extends String
+- Failed String is final so cannot be extended.
 
 4. Why private constructor in inner class
-???
+- ???
 
 5. When apply synchronization
 - Methods
 - Code blocks
 
 6. Remote exception
-Super class for exception related to remote method execution.
+- Super class for exception related to remote method execution.
 
 7. Ways to parse XML in Java
 - DOM : entire XML structure in tree.
-- SAX : parse line after line  and triggers events while meet elements like open tag, close tag etc.
+- SAX : parse line after line and triggers events while meet elements like open tag, close tag etc.
 
 8. Iterate through enum values
 ```java
-public enum NUmers {
+public enum Numbers {
     ONE("One"),
     TWO("Two"),
     THREE("Three");
 }
 
-for (NUmbers n : Numbers.values()) {
+for (Numbers n : Numbers.values()) {
     System.out.println(n.getName());
 }
 ```
 
 9. Class to work with dates
-java.time.Date, Duration, LocalDateTime, TemporalAdjuster
+- java.time.Date, Duration, LocalDateTime, TemporalAdjuster, LocalTime
 
 
 10. Iterator and how it works
-Mechanism to process elements n order.
-Iterable<T> interface defines Iterator<T> iterator() method which returns an iterator, which can be used to visit all
+- Mechanism to process elements n order.
+- Iterable<T> interface defines Iterator<T> iterator() method which returns an iterator, which can be used to visit all
 elements in collection.
 
 11. How parallel streams works in Java?
-Stream is splitted and then each parts are processed and then join.
-When task last for long time it blocks all threads in pools. As a result it block rest of task that uses parallelStream.
+- Stream is split and then each parts are processed and then join.
+- When task last for long time it blocks all threads in pools. As a result it block rest of task that uses parallelStream.
 
 12. Stream API in Java8
-Java use Fork Join Framework.
-ParallelStream split big task on small subtask process them and then join together.
-Java8 Streams is based on convert collection to streams.
+- Java use Fork Join Framework.
+- ParallelStream split big task on small subtask process them and then join together.
+- Java8 Streams is based on convert collection to streams.
 
 13. Collections vs Streams
-Collections in memory data structures. Each element is calculated before become part of collection.
-Streams are computed o emand.
-Streams can be defined as sequences of elements that supports aggregate operations like:
-filter, map, reduce, find.
-Streams don't have methods like foreach which internally iterate through elements. Code is unaware iteration logic.
+- Collections in memory data structures. Each element is calculated before become part of collection.
+- Streams are computed on demand.
+- Streams can be defined as sequences of elements that supports aggregate operations like:
+    - filter, map, reduce, find.
+- Streams don't have methods like foreach which internally iterate through elements. Code is unaware iteration logic.
 
 14. How map and filter works in Java
 - map : process data to stream
 - filter : argument of filter is Predicate<T>, function that converts T to boolean
 
-List<String> names = students.steram().map(student::getName).filter(name->name.startsWith("A"))
+```java
+List<String> names = students.stream().map(student::getName).filter(name->name.startsWith("A"))
     .collect(Collectors.toList());
+```
 
 15. How Optional works?
-It helps work with null pointers.
-OfNullable - create optional value if exists
-ifPresent - is triggered when Optional is null
+- It helps work with null pointers.
+- OfNullable - create optional value if exists
+- ifPresent - is triggered when Optional is null
 
 16. Default methods in interfaces.
-It is possible to provide default implementation of method in interface.
+- It is possible to provide default implementation of method in interface.
 
 ```java
 public interface IntSeq {
     default boolean hasNext() { return true; }
 }
 ```
-Class that implements this interface can override this method or provide new implemetation.
-
-15. BigO notation
-What is a resource requirements as input of a problem gets larger
-
-- Access to element in table : O(N)
-- Access to element in sorted table : O(1)
-- Access to element in hashTable : O(N)
-- Access to element in tree (binary tree) : O(log(N)) or O(N)
-- Quick Sort : O(N(log(N)))
-- Bubble Sort : O(N^2)
-
-16. Stability of sorting algorithm
-- Elements with the same hashCode stays on the same position after sorting. For example in bubble sort, panda, panda, pies.
-panda would change position with other panda in even though of a fact that they have the same hashCode.
+- Class that implements this interface can override this method or provide new implementation.
 
 17. In what format keep prices
 - BigDecimal
@@ -796,62 +783,60 @@ ADVANTAGES
 
 29. Heap
 
-                    | 2 |                       | 2 |
-                   /     \                      | 4 |
-              | 4 |       | 8 |                 | 8 |
-             /     \    10     \                | 9 |
-        | 9 |       | 7 |       | 9 |           | 7 |
-       /     \   13                             | 10|
- | 15 |       | 10 |                            | 9 |
-                                                | 15|
-                                                | 10|
-                                                | 13|
+                            | 2 |                       | 2 |
+                           /     \                      | 4 |
+                      | 4 |       | 8 |                 | 8 |
+                     /     \    10     \                | 9 |
+                | 9 |       | 7 |       | 9 |           | 7 |
+               /     \   13                             | 10|
+         | 15 |       | 10 |                            | 9 |
+                                                        | 15|
+                                                        | 10|
+                                                        | 13|
 
-            | PARENT | (index - 2) / 2
-                |
-             | index |
-            /         \
-    | LEFT |           | RIGHT |
-    index*2 + 1         index*2 + 2
+                    | PARENT | (index - 2) / 2
+                        |
+                     | index |
+                    /         \
+            | LEFT |           | RIGHT |
+            index*2 + 1         index*2 + 2
 
 30. Tree
 
-        ROOT
-       /    \
-    LEAF   CHILD
-                \
-                LEAF
+                ROOT
+               /    \
+            LEAF   CHILD
+                        \
+                        LEAF
 
 
-The binary TREE
-o to 2 child nodes (left, right)
+The binary TREE to 2 child nodes (left, right)
 
-The binary tree
-- Left node is less than root node
+- The binary tree
+    - Left node is less than root node
+    - Insert like find
 
-Insert like find
+        BALANCED                    UNBALANCED
 
-    BALANCED                    UNBALANCED
-
-         4                           1
-       /   \                          \
-      2     5                          2
-    /   \    \                          \
-  1      3    6                          3
+             4                           1
+           /   \                          \
+          2     5                          2
+        /   \    \                          \
+      1      3    6                          3
 
     insert: O(log(N))                insert: O(N)
     find: O(log(N))                  find: O(N)
 
-TRAVERSING
-INORDER                         PREORDER                    POSTORDER
-left -> root -> right       root -> left -> right       left -> right -> root
+        TRAVERSING
+        INORDER                         PREORDER                    POSTORDER
+        left -> root -> right       root -> left -> right       left -> right -> root
 
 31. Big O Notation
-Equation that describes how the run time change with respect to input
-1. Different steps got added                    O(a + b)
-2. Drop constants                               O(2N) => O(N)
-3. Differnet inputs => different variables      O(a * b)
-4. Drop non dominate terms                      O(N + N^2) => O(N^2)
+- Equation that describes how the run time change with respect to input
+    - 1. Different steps got added                    O(a + b)
+    - 2. Drop constants                               O(2N) => O(N)
+    - 3. Different inputs => different variables      O(a * b)
+    - 4. Drop non dominate terms                      O(N + N^2) => O(N^2)
 
 32. Algorithm efficiencies
 
@@ -881,29 +866,30 @@ Equation that describes how the run time change with respect to input
 | O(Nlog(N)) | Time is linearithmic to the number of elements |
 
 33. Collections
-The Collections are objects that group multiple elements and store, retrieve and manipulate these objects.
-The Collection interface is the root of the Collection hierarchy.
-Subinterfaces of Collection include List, Queue and Set
+- The Collections are objects that group multiple elements and store, retrieve and manipulate these objects.
+- The Collection interface is the root of the Collection hierarchy.
+- Sub interfaces of Collection include List, Queue and Set
 
 | Interface | Ordered | Duplications | Notes |
+|---|---|---|---|
 | List | Yes | Yes | Positional access, element insertion control |
 | Map | Can be | No | Unique keys, one value mapping max per key |
 | Queue | Yes | Yes | Holds elements, usually FIFO |
 | Set | Can be | No | Unique matters |
 
-Collection.stream() returns a sequential stream with the context collection as its source.
-Collection.parallelStream() returns a parallel stream with the context collection as its source
-Collection.addAll(), .max(), .min(), .remove(), .rotate()
+- Collection.stream() returns a sequential stream with the context collection as its source.
+- Collection.parallelStream() returns a parallel stream with the context collection as its source
+- Collection.addAll(), .max(), .min(), .remove(), .rotate()
 
 
 34. Garbage Collector
 
-    Young generation    Old Generation      Permanant Generation
-    +-----------------+-----------------+---------------------------+
-    | Eden            | Tenured         | Perm                      |
-    +-----------------+-----------------+---------------------------+
+        Young generation    Old Generation      Permanant Generation
+        +-----------------+-----------------+---------------------------+
+        | Eden            | Tenured         | Perm                      |
+        +-----------------+-----------------+---------------------------+
 
-Permanant generation is used to store metadata. Store String pool also.
+Permanent generation is used to store metadata. Store String pool also.
 
 - Types of Garbage collectors:
     - Throughput GC - parallel version young generation     -XX:+UseParallelGC
@@ -913,7 +899,7 @@ Permanant generation is used to store metadata. Store String pool also.
 
 - Full GC Concurrent GC
     - Executed on single GC thread, which executes with app thread to execute before tenured generation.
-    - Full GC, appication is stopped and GC is executed as all application thread is stopped
+    - Full GC, application is stopped and GC is executed as all application thread is stopped
 
 35. How XML DOM parser works
 - DOM standard to access and manipulate XML document.
@@ -925,7 +911,7 @@ Permanant generation is used to store metadata. Store String pool also.
 - Faster and uses less memory than tree based processors
 - Push parser: pusher data into callback methods
 - Works on Android
-- Entire document does not need to e put in memory
+- Entire document does not need to be put in memory
 - One way impossible to parse from end to begin of document
 
 | Data Event | Error Handling Events | Other Events |
@@ -1007,9 +993,11 @@ String myThreadLocalValue = (String) myThreadLocal.get();
 - Parent objct set to null
 - Object has only weak reference via WeakHashMap
 
-41. Hap Generations
+41. Heap Generations
 - Heap is separated with three parts
-    - Young Generation, (Tenured or Old Generation), Perm Area
+    - Young Generation,
+    - Tenured or Old Generation
+    - Perm Area
 - Generation are then separated on 3 parts
     - Eden Space
     - Survivor 1
@@ -1029,20 +1017,20 @@ Web service description language.
         prototype
 
 43. What is RMI?
-Remote execute object methods. Object can be placed in differnet JVM on other computers.
+- Remote execute object methods. Object can be placed in different JVM on other computers.
 
 44. XML Schema
 - Grammar, blueprint to xml document
 - XSD extension
-    - deliver contract between 2 users (to not send unnecesary informations).
+    - deliver contract between 2 users (to not send unnecessary informations).
     - if xml follows scheme that means it is valid document
     <xsd:schema>            - root element
-        <xsd:restrction>    - restrykcyjne dane
+        <xsd:restriction>   - restricted dane
         <xsd:sequence>      - elements order assured
 
 45. HTTP errors protocols qualification
 - 1xx : information
-- 2xx : seccess 201 created, 200 OK, 204
+- 2xx : success 201 created, 200 OK, 204
 - 3xx : redirection
 - 4xx : client error, 404, 400, 403 forbidden, 401 unauthorized
 - 5xx : server error
@@ -1050,47 +1038,52 @@ Remote execute object methods. Object can be placed in differnet JVM on other co
 46. SOLID
 - Single Responsible Principle : One class should have one and only one responsibility
 - Open closed principle : Software component should be open for extension, but closed for modification
-- Lisko'v substitution principle : Derived type must be completely substituable for their base type
-- Interface segragation principle : Client should not be forced toimplement unnecesary methods which they will not use
+- Lisko'v substitution principle : Derived type must be completely substitutable for their base type
+- Interface segregation principle : Client should not be forced to implement unnecessary methods which they will not use
 - Dependency Inversion principle : Dependent on abstraction not on concretion
 
 47. ACID
 - Atomic
 - Consistency : data must follows validation rules
 - Isolation : concurrency control
-- Durability : commited transaction stays commited even in case of power loss
+- Durability : committed transaction stays committed even in case of power loss
 
 48. What is a primary key?
-A primary key is a combination of fields which uniquely specify a row. This is a special kind of unique key, and
+- A primary key is a combination of fields which uniquely specify a row. This is a special kind of unique key, and
 it has implicit not null constraint. It means, primary value cannot be null.
 
 49. What is a unique key?
-A unique key constraint uniquely identified each record in the db
+- A unique key constraint uniquely identified each record in the db
 
 50. What is a foreign key?
-A foreign key is one table which can be related to the primary key of another table.
+- A foreign key is one table which can be related to the primary key of another table.
 
 51. What is a view?
-A view is a virtual table which consists of subset of data contained in a table. View are not virtually stored, and it
+- A view is a virtual table which consists of subset of data contained in a table. View are not virtually stored, and it
 takes less space to store.
 
 52. What is an index?
-An index is performance tuning method of allowing faster retrieval of records from the table. An index creates an
+- An index is performance tuning method of allowing faster retrieval of records from the table. An index creates an
 entry for each value and it will be faster to retrieve data.
 
 53. What is cursor?
-Is a control which enables traversal over the rows or records in the table.
+- Is a control which enables traversal over the rows or records in the table.
 
 54. What is a trigger?
-Code or programs that automatically execute with response to some event on a table or view in a database.
+- Code or programs that automatically execute with response to some event on a table or view in a database.
 Mainly trigger helps to maintain the integrity of the database. Student is added to DB, new record should be created in
 related tables like Exams, Score.
 
 55. What is constraint?
-Not Null, Check, Default, Unique, Primary Key, Foreign Key
+- Not Null
+- Check
+- Default
+- Unique
+- Primary Key
+- Foreign Key
 
 56. What is Union?
-Union operator is used to combine the results of two tables, and it eliminates duplicate row from the table.
+- Union operator is used to combine the results of two tables, and it eliminates duplicate row from the table.
 
 57. How to generate stack overflow ?
 ```java
@@ -1107,6 +1100,20 @@ public class StackOverflowException {
 }
 ```
 
+58. BigO notation
+- What is a resource requirements as input of a problem gets larger
+    - Access to element in table : O(N)
+    - Access to element in sorted table : O(1)
+    - Access to element in hashTable : O(1)
+    - Access to element in tree (binary tree) : O(log(N)) or O(N)
+    - Quick Sort : O(N(log(N)))
+    - Bubble Sort : O(N^2)
+
+59. Stability of sorting algorithm
+- Elements with the same hashCode stays on the same position after sorting. For example in bubble sort, panda, panda, pies.
+panda would change position with other panda in even though of a fact that they have the same hashCode.
+
+
 ## Multithreading
 - Access to variable marked volatile is synchronized on the variable itself.
 - Variable marked as volatile are safe to use in different thread.
@@ -1120,29 +1127,35 @@ that implements an interface with just one method.
     - PROGRAM : PROCESS :: 1 : 1
     - PROCESS : THREADS :: 1 : MANY
 
-    CALLABLE        LOCK OBJECTS
-    EXECUTORS       CONCURRENT COLLECTIONS
-    THREAD POOLS    ATOMIC VARIABLES
+        CALLABLE        LOCK OBJECTS
+        EXECUTORS       CONCURRENT COLLECTIONS
+        THREAD POOLS    ATOMIC VARIABLES
 
 - Synchronization problems:
-    - Thread interference : Fifferent thread access the same data
+    - Thread interference : Different thread access the same data
     - Memory consistency error : inconsistent value of variable
-    - Thread contention : Threads get in each other way and slow down or even have to be killed by java, starvation, livelock, deadlock
+    - Thread contention : Threads get in each other way and slow down or even have to be killed by java
+        - starvation
+        - livelock
+        - deadlock
 
-- Completion Service : Returns the queue of feature objects in the order in which they finish
-- Callable : It's a generic class that explicitly returns the thread results. Correctly passes exception from one thread to another.
-Submit the callable to an Executor object and get a Future object as the result.
-Future.cancel() interrupt operation midway
-Future.get() to wait for the callable to finish running
+- Completion Service
+    - Returns the queue of feature objects in the order in which they finish
 
-    OLD-SCHOOL              NEW-SCHOOL
-    Runnable Interface      CALLABLE INTERFACE
-    THREAD CLASS            EXECUTORS IN BUILD CLASS
-    Thread.join()           Future.get()
+- Callable
+    - It's a generic class that explicitly returns the thread results. Correctly passes exception from one thread to another.
+    - Submit the callable to an Executor object and get a Future object as the result.
+    - Future.cancel() interrupt operation midway
+    - Future.get() to wait for the callable to finish running
 
-Future<Integer> oneFuture = executor.submit(oneCallable);
+            OLD-SCHOOL              NEW-SCHOOL
+            Runnable Interface      CALLABLE INTERFACE
+            THREAD CLASS            EXECUTORS IN BUILD CLASS
+            Thread.join()           Future.get()
 
-To interrupt another thread, call the .interrupt() member function on thet thread
+    - Future<Integer> oneFuture = executor.submit(oneCallable);
+
+To interrupt another thread, call the .interrupt() member function on that thread
 
 - Calling Future.cancel() is like calling thread.interrupt()
 - Two ways for a thread to check if it has been interrupted
@@ -1163,10 +1176,11 @@ Java supports it with the Thread class or Runnable interface.
 
 ### Creating threads
 - extends Thread class
-- implements Runnable interface : a single RUnnable instance can be processed to multiple thread objects.
+- implements Runnable interface : a single Runnable instance can be processed to multiple thread objects.
 
 ### Thread states
-Enumerated Thread.state provides siz thread states
+Enumerated Thread.state provides six thread states
+
 | State | Description |
 |---|---|
 | New | A thread that is created but not started |
@@ -1177,8 +1191,10 @@ Enumerated Thread.state provides siz thread states
 | TERMINATED | A thread that is completed |
 
 ### Thread priorities
-MIN_PRIORITY, NORM_PRIORITY, MAX_PRIORITY
-Lower priority threads yield to higher priority thread
+- MIN_PRIORITY
+- NORM_PRIORITY
+- MAX_PRIORITY
+- Lower priority threads yield to higher priority thread
 
 ### Common methods
 - getPriority()
@@ -1194,16 +1210,20 @@ Lower priority threads yield to higher priority thread
 select one of the thread to run
 - wait() : Pauses a thread in a wait state until another thread calls notify or notifyAll
 
-- Common static methods used for threads from Thread class activeCount(), concurrentThread(), interrupted(), sleep()
+- Common static methods used for threads from Thread class
+    - activeCount()
+    - concurrentThread()
+    - interrupted()
+    - sleep()
 - yield() : Pauses the current thread to allow other thread to run
-- Synchronization : Apply locks to blocks and mwthods. A lock is also known as monitor or mutex (mutually exclusive lock)
+- Synchronization : Apply locks to blocks and methods. A lock is also known as monitor or mutex (mutually exclusive lock)
 
 ### Concurrent utilities
-Executors
-ThreadPoolExecutor as well as its subclass ScheduledThreadPoolExecutor implements the Executor
-interface to provide configuable, flexible thread pools.
+- Executors
+    - ThreadPoolExecutor as well as its subclass ScheduledThreadPoolExecutor implements the Executor
+interface to provide configurable, flexible thread pools.
 
-|Concurrent Collectios | |
+|Concurrent Collections | |
 |---|---|
 | HashMap | ConcurrentHashMap |
 | TreeMap | ConcurrentSkipListMap |
@@ -1220,13 +1240,13 @@ Special purpose synchronization tools
 | Semaphore | Maintain a Set of permits |
 |---|---|
 | CountDownLatch | Implements waits against sets of operations being performed |
-| CyclicBarier | Implements waits against common barier parts |
+| CyclicBarrier | Implements waits against common barrier parts |
 | Exchanger | Synchronization point where threads can exchange elements |
 
 
 
 ## Memory Management
-Garbage collector principal tasks are allocating memory, maintaining referenced objects in memory, and
+- Garbage collector principal tasks are allocating memory, maintaining referenced objects in memory, and
 recovering memory from objects that no longer have reference to them.
 
 - Tune GC
@@ -1235,25 +1255,25 @@ recovering memory from objects that no longer have reference to them.
     - Time spent outside of GC
 
 ### Serial GC
-Is performed via a single thread on a single CPU. When this GC thread is run, the execution of the application
+- Is performed via a single thread on a single CPU. When this GC thread is run, the execution of the application
 will pause until the collection is completed. Small data setup up to 100 MB, no requirement for low pause time.
 
 ### Parallel Collector
-Can be performed with multiple threads across several CPUs. Using those multiple threads significantly speeds up GC.
+- Can be performed with multiple threads across several CPUs. Using those multiple threads significantly speeds up GC.
 No pause time constraints and app performance is the most important aspect of your program.
 
 ### Parallel Compacting Collector
-Simlar to parallel Collector except for refined algorithms that reduce collection pause times.
+- Similar to parallel Collector except for refined algorithms that reduce collection pause times.
 This collector is best used for apps that do have pause time constraints.
 
 ### Concurrent Mark Sweep Collector
-CMS low latency collector, implements algorithm to handle large collections that might warrant long pauses.
+- CMS low latency collector, implements algorithm to handle large collections that might warrant long pauses.
 Use when response time take precedence over throughput times and GC pauses.
 
 ### Garbage-First G1 Collector
-Is used for multiprocessor machines with large memories. This server-style GC meets pause time goal with
-high probability, while achieving high throughput. Whole heal operations (global marking) are performed
-concurrently with the app thread, whch prevents interruptions proportional to the heap or live-data size.
+- Is used for multiprocessor machines with large memories. This server-style GC meets pause time goal with
+high probability, while achieving high throughput. Whole heap operations (global marking) are performed
+concurrently with the app thread, which prevents interruptions proportional to the heap or live-data size.
 
 | Memory Management Tools | Description |
 |---|---|
@@ -1267,12 +1287,13 @@ concurrently with the app thread, whch prevents interruptions proportional to th
 | hprof profiler | CPU usage, heap statistics, and monitor contentions profiler |
 | jdb | Java debugger tool |
 
-#### Resizing the JVM
-The heap is an area in memory that stores all objects created by executing Java program.
-If you are having performance problems or seeing the Permanent Generation (PermGen) error message
-java.lang.OutOfMemory, you may be running out of heap space.
+### Resizing the JVM
+- The heap is an area in memory that stores all objects created by executing Java program.
+- If you are having performance problems or seeing the Permanent Generation (PermGen) error message
+    - java.lang.OutOfMemory, you may be running out of heap space.
 
-**Metaspace** : Used for representation class metadata. Metaspace is a successor to PermGen model.
+**Metaspace**
+- Used for representation class metadata. Metaspace is a successor to PermGen model.
 
 
 ## TDD
@@ -1280,7 +1301,7 @@ java.lang.OutOfMemory, you may be running out of heap space.
 - Scenario
 - Execute actions
 - Validate behavior
-- Validation
+- Refactor
 
 - All jUnit test must be public void
 
@@ -1294,7 +1315,7 @@ java.lang.OutOfMemory, you may be running out of heap space.
 
 ## Clean Code
 - SRP (Single responsible principle)
-A functional unit on a given level of abstraction should only be responsible for a single
+    - A functional unit on a given level of abstraction should only be responsible for a single
 aspect of system's requirements. An aspect of requirements, which can change independently
 of other aspects.
 - The language you wrote your code should look like it was made for the problem.
@@ -1305,7 +1326,7 @@ of other aspects.
 - Should have minimal dependencies
 - Smaller is better
 - It should have unit and acceptable tests
-- It should be expresive
+- It should be expressive
 
 
 

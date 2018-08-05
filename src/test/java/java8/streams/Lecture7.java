@@ -48,7 +48,7 @@ public class Lecture7 {
     @Test
     public void average() throws Exception {
         //ImmutableList<Car> cars = MockData.getCars();
-        ImmutableList<Car> cars = ImmutableList.of();
+        ImmutableList<Car> cars = MockData.getCars();
         double average = cars.stream()
                 .mapToDouble(Car::getPrice)
                 .average()

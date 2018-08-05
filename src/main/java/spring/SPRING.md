@@ -1,6 +1,6 @@
 # Spring
 
-## Golas of Spring
+## Goals of Spring
 
 - Lightweight development with Java POJOs
 - Dependency injection, loose coupling
@@ -8,7 +8,6 @@
 - Minimalize boilerplate Java code
 
 ### Components
-
 - Core Container
     - Factory for creating beans
     - Manage beans dependencies
@@ -40,9 +39,12 @@
 - Additional Spring modules build on top of core Framework
     - Spring Cloud
     - Spring Data
-    - Spring Batch, Spring LDAP
-    - Spring Security, Spring Web Services
-    - Spring Android, Spring Web Flow
+    - Spring Batch
+    - Spring LDAP
+    - Spring Security
+    - Spring Web Services
+    - Spring Android
+    - Spring Web Flow
 
 
 ## Inversion of Control (IoC)
@@ -55,7 +57,7 @@
     - Create and manage objects (inversion of control)
     - Inject object's dependencies (Dependency Injection)
 
-- Configura Spring COntainer
+- Configure Spring Container
     - XML Configuration
     - Java Annotations
     - Java Source Code
@@ -75,7 +77,7 @@
 </beans>
 ```
 
-### Create a Spring COntainer
+### Create a Spring Container
 
 - Spring Container is ApplicationContext
 - Specialized implementations
@@ -97,15 +99,14 @@ Panda thePanda = context.getBean("myPanda", Panda.class);
 ```
 
 
-- What is a Spring Bean?
-A "Spring Bean" is simply a Java object.
+### What is a Spring Bean?
+- A "Spring Bean" is simply a Java object.
 
-When Java objects are created by the Spring Container, then Spring refers to them as "Spring Beans".
+- When Java objects are created by the Spring Container, then Spring refers to them as "Spring Beans".
+- Spring Beans are created from normal Java classes .... just like Java objects.
 
-Spring Beans are created from normal Java classes .... just like Java objects.
 
-
-- Why do we specify the interface in getBean()?
+### Why do we specify the interface in getBean()?
 
 Behaves the same as getBean(String), but provides a measure of type safety by throwing a BeanNotOfRequiredTypeException
 if the bean is not of the required type.
@@ -324,10 +325,10 @@ Custom Destroy method         :arrow_right:`    STOP
 
 ```
 
-- Init and destroy ethod signatures
+- Init and destroy method signatures
     - Any access modifier
     - Any return types. Void most popular
-    - Any metod name
+    - Any method name
     - No arguments allowed
 
 - For the prototype scope spring does not call **destroy** method.
@@ -391,9 +392,9 @@ Service monkeyService = context.getBean("monkeyService", MonkeyService.class);
 
 ### Constructor Injection
 
-- What is Spring Auto Wiring?
+- What is Spring AutoWiring?
     - For dependency injection, Spring can use autowiring
-    - Spring will look for a class that mathces the property
+    - Spring will look for a class that matches the property
         - matches by type: class or interface
     - Spring will inject it automatically
 
@@ -515,7 +516,8 @@ public class PandaService implements Service {
         // ...
     }
 }
-```bean(s)
+```
+
 
 - For Prototype Scope Spring does not call @PreDestroy method
 Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,

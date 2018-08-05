@@ -119,7 +119,7 @@ public class JdbcConne {
 ## Singleton vs GOF singleton
 
 - GOF singleton : one singleton per JVM
-- Sipring singleton : one singleton per Application Context
+- Spring singleton : one singleton per Application Context
 
 
 ## COMPONENT SCAN
@@ -160,7 +160,7 @@ public class StudentController {
 
 - JavaEE Dependency Injection Standard (JRS-330)
     - @Inject `@Autowired`
-    - @Named `@Component` & ``@Qualifier`
+    - @Named `@Component` & `@Qualifier`
     - @Singleton
 
 *SomeCDIBusiness.java*
@@ -253,18 +253,19 @@ try (ClassPathXmlApplicationContext applicationContext =
     - Manages beans
     - Create instance of WelcomeService
     - Creates beans for WelcomeController
-    - Autowires WelcomeService bean into the WelcomeController.
-    - Wireing, creation of beans.
+    - Autowire WelcomeService bean into the WelcomeController.
+    - Wiring, creation of beans.
 
-- Application Context : implementation of IOC
-- Bean Factory : implementation of IOC
+- Application Context :
+    - implementation of IOC
+- Bean Factory :
+    - implementation of IOC
 
 - ApplicationContext = Bean Factory ++
     - Spring AOP features
     - I18n capabilities
     - WebApplicationContext for web app
 
-|
 ### Without Spring
 
 ```java
@@ -277,7 +278,6 @@ public class WelcomeController {
   }
 }
 ```
-|
 ### With Spring
 ```java
 @Component
@@ -294,7 +294,6 @@ public class WelcomeController
     }
 }
 ```
-|
 
 
 ## Component Annotations
@@ -356,11 +355,11 @@ public class PropertiesApplication {
 - Component Scan
 
 - Spring boot looks at
-    - a) Frameworks available on CLASSPATH
-    - b) Existing configuration for the application based on these,
+    - a) Frameworks available on **CLASSPATH**
+    - b) Existing configuration for the application based on these
 
 Spring boot provides basic configuration needed to configure the application with these framework. This is called
-`Auto Configuration`.
+`AutoConfiguration`.
 
 
 ## Spring Boot, Spring, Spring MVC
@@ -373,7 +372,7 @@ Dependency Injection or IOC Inversion of Control.
 
 **`Spring MVC`**
 - Spring MVC framework provides decoupled way of developing web applications. With simple concepts like
-`Dispatcher Servlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop web applications.
+`DispatcherServlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop web applications.
 
 ## Spring boot
 

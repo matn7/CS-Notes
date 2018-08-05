@@ -3,27 +3,27 @@
 ## Spring Security Features
 - Provides a portable security mechanism for Java enterprise apps
 
-### AUTHENTICATION & AUTHORIZATION
-- Authentication - ensuring a user wo they claim to be.
+### Authentication & Authorization
+- Authentication - ensuring a user who they claim to be.
     - HTTP basic, Form Based, LDAP, OpenID, X.509
-- Authorization - deterniming if a user is allowed to perfrm an action.
+- Authorization - determining if a user is allowed to perform an action.
 
-### security capabilities
+### Security capabilities
 - Protection web resources
     - Requires specific roles to access URLs
 - Authorizing method invocations
     - Requiring specific roles to access methods
 - Restricting entity access
-    - Costantly Access Lists (CAL) to detrmine domain object access
+    - Constantly Access Lists (CAL) to determine domain object access
 
 ### Extra Features
 - Cross Site Request Forgery `CSRF`
 - Session Fixation
-- Clickjacking
-- Cross Site Scrption `XSS`
+- Click jacking
+- Cross Site Scripting `XSS`
 - Password encoding via hash and salt
 
-### Spring Security Streangths
+### Spring Security Strengths
 - Spring approach
 - Annotation based
 - Spring MVC
@@ -33,7 +33,7 @@
 ### Security Principles
 
 #### Authentication
-- Process of identyfying an individual using credentials
+- Process of identifying an individual using credentials
     - Username & password
     - Tokens
 
@@ -46,8 +46,8 @@
 ## Spring Security Basics
 
 **MAVEN**
-spring-security-web
-spring-security-config
+- spring-security-web
+- spring-security-config
 
 ### Basic XML Configuration
 
@@ -69,13 +69,13 @@ spring-security-config
 </context-param>
 ```
 
-*security-context.xml`
+*security-context.xml*
 ```xml
 <security:http auto-config="true" use-expressions="false">
     <security:intercept-url pattern="/**" access="ROLE_USER"/>
 </security:http>
 <security:authentication-manager>
-    <security:suthentication-provider>
+    <security:authentication-provider>
         <security:user-service>
             <security:user name="user" password="password" authorities="ROLE_USER"/>
         </security:user-service>
@@ -92,7 +92,7 @@ spring-security-config
 ```
 
 ## CSRF Token
-spring-security-taglib
+- spring-security-taglib
 *login.jsp*
 ```jsp
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
@@ -263,7 +263,7 @@ public class CustomAuthenticationToken extends UsernamePasswordAuthenticationTok
     private String maki;
 
     public CustomAuthenticationToken(String principal, String credentials, String make) {
-        siper(principal, credentials);
+        super(principal, credentials);
         this.maki = maki;
     }
 
@@ -287,7 +287,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
         String password = super.obtainPassword(request);
         String maki = request.getParameter("make");
 
-        CustomAuthenticationToken token = new CustomAuthenticationToken(username, password, make);
+        CustomAuthenticationToken token = new CustomAuthenticationToken(username, password, maki);
         super.setDetails(request, token);
         return this.getAuthenticationManager().authenticate(token);
     }
@@ -372,7 +372,8 @@ publc class PasswordEncoder {
 
 ### LDAP Authentication Provider
 
-MAVEN : spring-security-ldap
+**MAVEN**
+- spring-security-ldap
 
 *security-context.xml*
 ```xml
@@ -403,8 +404,8 @@ public class MyUserDetailsContextMapper implements UserDetailsContextMapper {
     public void mapUserToContext(UserDetails user, DirContextAdapter context) {
         UserEntity user = (UserEntity) user;
         context.setAttributeValue("name", user.getName());
-        context.setAttributeValue("emial", user.getEmail());
-        contxt.setAttributeValue("password", user.getPassword());
+        context.setAttributeValue("email", user.getEmail());
+        context.setAttributeValue("password", user.getPassword());
         context.setAttributeValue("id", user.getId());
     }
 }
@@ -431,7 +432,7 @@ public class MyUserDetailsContextMapper implements UserDetailsContextMapper {
 
 ### Authorize tag
 ```jsp
-<%@ taglib uri="org.springfraework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="org.springframework.org/security/tags" prefix="sec" %>
 
 <sec:authorize assess="${isAllowed}">
 </sec:authorize>
@@ -502,29 +503,29 @@ public String save(checkout);
 @ResponseBody
 @RequestMapping("/checkouts")
 @PostFilter("principal.userid=object.user.userid")
-public List<CHeckout> getCheckouts(Authentication authentication) {
+public List<Checkout> getCheckouts(Authentication authentication) {
     return this.checkoutRepository.findAll();
 }
 ```
 
 ## Access Control
 
-`acl_sid` - store info about principals or authorities
-`acl_class` - qualified class name
-`acl_object_identity` - protected object instances
-`acl_entry` - entries
+- `acl_sid` - store info about principals or authorities
+- `acl_class` - qualified class name
+- `acl_object_identity` - protected object instances
+- `acl_entry` - entries
 
-MAVEN
-**spring-security-acl**
-**ehcache**
+**MAVEN**
+- spring-security-acl
+- ehcache
 
 *dispatcher-servlet.xml*
 ```xml
 <bean id="expressionHandler" class="org.springframework....DefaultMethodSecurityExpressionHandler">
     <property name="permissionEvaluator" ref="permissionEval"/>
-    <property name="permissionCacheOptimizer" ref="permissioCacheOpt"/>
+    <property name="permissionCacheOptimizer" ref="permissionCacheOpt"/>
 </bean>
-<bean id="permissioCacheOpt" class="org.springframework.security.acl.AclPermissionCacheOptimizer">
+<bean id="permissionCacheOpt" class="org.springframework.security.acl.AclPermissionCacheOptimizer">
     <constructor-arg ref="aclService"/>
 </bean>
 <bean id="permissionEval" class="org.springframework.acls.AclPermissionEvaluator">
@@ -555,7 +556,7 @@ Create public key using `keytool`
 ```
 
 ### CSRF
-Script rely upon session after click on melicious script.
+Script rely upon session after click on malicious script.
 
 ```html
 <div>
