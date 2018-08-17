@@ -40,8 +40,8 @@ CREATE TABLE BOOK(
     PRIMARY KEY (ID)
 ```
 
-`primary key` - no duplicate or null values allowed in this column
-`foreign key` - value of this column must match a value in the primary key of another table
+- `primary key` - no duplicate or null values allowed in this column
+- `foreign key` - value of this column must match a value in the primary key of another table
 
 ### Rules that Relational Database follows
 
@@ -61,7 +61,7 @@ CREATE TABLE BOOK(
     - Modularity
     - Persistence
 
-Object is an instance of a class. It has identity, state and behavior.
+- Object is an instance of a class. It has identity, state and behavior.
 
 - **Relational Model**
     - Structure of data
@@ -109,7 +109,7 @@ Advantage of the features present in the Object Model (Java) and the Relational 
 ## Hibernate
 
 Object relational mapping framework which is used to map Java objects to relational database. It allows us to specify configuration
-to use to connect to the DB and to specify the way ava object should be mapped to the tables in that database.
+to use to connect to the DB and to specify the way Java object should be mapped to the tables in that database.
 Java objects as representation of data.
 
 
@@ -436,15 +436,11 @@ public class Address {
 }
 ```
 
-An object of **entity** type **has its own database identity (primary key).**
-
-An object of **value type** has **no database identity (primary key)** it belongs to an entity.
-
-Value type objects are identified through owning entity.
-
-The lifecycle of a **value type** object is bound to that of its owning **entity** object.
-
-Classes like String and Integer are most simple **value type** classes.
+- An object of **entity** type **has its own database identity (primary key).**
+- An object of **value type** has **no database identity (primary key)** it belongs to an entity.
+- Value type objects are identified through owning entity.
+- The lifecycle of a **value type** object is bound to that of its owning **entity** object.
+- Classes like String and Integer are most simple **value type** classes.
 
 - Does the database identity of an object matters?
     - Enity yes
@@ -454,8 +450,8 @@ Classes like String and Integer are most simple **value type** classes.
     - No
 
 ## Component Mapping
-A component is a part of whole in such a way thet if the whole is destroyed, all its parts are also destroyed with it.
-E.g. your room in your hause.
+A component is a part of whole in such a way that if the whole is destroyed, all its parts are also destroyed with it.
+E.g. your room in your house.
 
 Each component (part) may belong to only one whole.
 
@@ -724,9 +720,7 @@ public class Student {
 }
 ```
 
-
 ## One to Many Relationship
-
 
 *Student.java*
 ```java
@@ -760,7 +754,7 @@ public class Student {
 }
 ```
 
-If the association is **bidirectial**, one of the side (and only one) has to be the **owner** ot the relationship.
+If the association is **bidirectional**, one of the side (and only one) has to be the **owner** ot the relationship.
 The **owner** of the relationship is responsible for association (columns) update.
 
 **Many** side in a One-To-Many bi-directional relationship is almost always the **owner** side.

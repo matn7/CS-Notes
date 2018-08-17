@@ -3,16 +3,13 @@ package algorithms.other_algorithms.armstrong;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mati on 16.07.2017.
- */
 public class Armstrong {
 
     // Armstrong number is number that is equal to third power of each of its components.
     // 153 = 1 ^ 3 + 5 ^ 3 + 3 ^ 3 = 1 + 125 + 27 = 153
 
     public static void main(String[] args) {
-        // Loop through uptill 1000 to find armstrong numbers
+        // Loop through up till 1000 to find armstrong numbers
         List<Integer> armstrongList = new ArrayList<>();
         for (int i = 100; i < 1000; i++) {
             if (isArmstrong(i)) {

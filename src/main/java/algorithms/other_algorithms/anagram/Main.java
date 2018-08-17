@@ -3,9 +3,6 @@ package algorithms.other_algorithms.anagram;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Main {
 
     // Anagrams of a word have all the same letters of the word itself in a different order
