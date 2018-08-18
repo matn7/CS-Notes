@@ -239,6 +239,354 @@ the left subtree is <= 8    the right subtree is > 8
 - While searching for a node in the tree there is only one place where that node can be found.
 - We can simply follow the right or left subtrees based on the value we want to find
 
+## Insertion and lookup in binary search tree
+
+- Insert the node [2] into the tree
+
+                8
+               / \
+              6   14
+             / \    \
+            4   7    16
+                       \
+                        18
+
+- Steps:
+    - Compare node [2] with root [8]
+    - Root [8] has left child so continue comparing
+    - 6 has left child continue comparing
+    - 2 < 4 insert 2 in this place
+
+
+                8
+               / \
+              6   14
+             / \    \
+            4   7    16
+           /           \
+         [2]            18
+
+```java
+public static Node<Integer> insert(Node<Integer> head, Node<Integer> node) {
+    if (head == null( {
+        return node;        // Base case if the head is null then the node itself is the head
+    }
+
+    if (node.getData() <= head.getData()) {
+        // If the Node values is smaller then the head then it's correct place is somewhere in the left subtree
+        // we insert the node into the left subtree
+        head.setLeftChild(insert(head.getLeftChild(), node));
+    } else {
+        // If the Node is greater than the head then it's correct place is somewhere in the right subtree
+        // we insert the node into the right subtree
+        head.setRightChild(insert(head.getRightChild(), node));
+    }
+
+    return head;
+}
+```
+
+## Lookup in a binary search tree
+
+- Lookup the value [7] in the tree
+
+                8
+               / \
+              6   14
+             / \    \
+            4   7    16
+                       \
+                        18
+
+
+- Steps:
+    - Compare [7] with root
+    - 8 has left child so we continue comparing
+    - Compare 7 with 6 go to right child
+    - Match the node has been found
+
+
+```java
+public static Node<Integer> lookup(Node<Integer> head, int data) {
+    if (head == null) {
+        return null;        // Base case if the head is null then the node has not been found, return null
+    }
+
+    if (head.getData() == data) {
+        return head;        // Check if the value of the head matches the value we're looking for, if yes we have found a match
+    }
+
+    // If the lookup value is smaller than or equal to the head then lookup the left subtree otherwise lookup he right subtree
+    if (data <= head.getData()) {
+        return lookup(head.getLeftChild(), data);
+    } else {
+        return lookup(head.getRightChild(), data);
+    }
+}
+```
+
+### The binary search tree
+
+- Insertion
+    - The Complexity for node insertion is O(log(N)) in average case O(LG(N)) ln(e^x) = x
+    - The actual complexity depends on the shape of the tree fo example if all left or right
+    children only complexity is O(log(N))
+
+- Lookup
+    - The Complexity for value lookup is O(log(N)) in the average case
+    - For both insertion and lookup we have tree traverse at every step. This gives us the log(N) Complexity
+
+## Binary tree problems
+
+### Find the minimum value in a binary search tree
+
+- The minimum value in a binary search tree can be found by traversing the left subtree of every node.
+- For every node it's left child will have a value smaller than the node's value.
+- If a node has no left child that is the node with the smallest value. The left most leaf node in the tree.
+
+```java
+public static int minimumValue(Node<Integer> head) {
+    if (head == null) {
+        return Integer.MIN_VALUE;   // Base case, if the head is null then the tree has no nodes, return the minimum integer value
+    }
+
+    if (head.getLeftChild() == null) {
+        return head.getData();      // Follows the left child for every node, if the left child is null then this is the minimum value node
+    }
+
+    return minimumValue(head.getLeftChild());   // Recurse till a left child is Available
+}
+```
+
+### :star: Find the maximum depth of a binary tree
+
+- The max depth will be furthest distance of the leaf node from the root
+
+```java
+public static int maxDepth(Node root) {
+    if (root == null) {
+        return 0;   // Base case if the root is null then the tree has no nodes, the max depth is 0
+    }
+
+    if (root.getLeftChild() == null && root.getRightChild() == null) {
+        return 0;   // If both left and right child of the node is null then there is a leaf and has a depth of 0
+    }
+
+    // Find the max depth on the left and right subtrees. Add 1 to account for the current depth of the tree
+    int leftMaxDepth = 1 + maxDepth(root.getLeftChild());
+    int rightMaxDepth = 1 + maxDepth(root.getRightChild());
+    return Math.max(leftMaxDepth, rightMaxDepth);   // Find the max depth between the left and right subtrees
+}
+
+```
+
+### Mirror a binary tree
+
+- Every left child is now right child and vice versa
+
+```java
+public static void mirror(Node<Integer> root) {
+    if (root == null) {
+        return;         // Base case if the head is null then the tree has no nodes, there is nothing to mirror
+    }
+
+    mirror(root.getLeftChild());    // Call mirror recursively on every node in the left and right subtrees
+    mirror(root.getRightChild());
+
+    // swap the left and the right child of each node
+    Node<Integer> temp = root.getLeftChild();
+    root.setLeftChild(root.getRightChild());
+    root.setRightChild(temp);      // Swap the left and right children of this node
+}
+```
+
+### Count trees
+
+- Count the number of structurally unique binary trees possible
+- For example for 3 nodes
+
+                O           O               O
+               / \           \               \
+              O   O           O               O        .....
+                               \             /
+                                O           O
+
+```java
+public static int countTrees(int numNodes) {
+    if (numNodes <= 1) {
+        return 1;       // When the number of nodes is 1 there is just one possible tree, this is the base case
+    }
+
+    int sum = 0;
+
+    // Consider that at every node can be the root, the nodes before it will be on the left and the nodes after it on the right
+    // Nodes on the left and right from their own subtrees
+    for (int i = 1; i < numNodes; i++) {
+        int countLeftTrees = countTrees(i - 1);
+        int countRightTrees = countTrees(numNodes - i);
+        sum = sum + (countLeftTrees + countRightTrees); // This is the number of possible trees with this root, the combination of right and left subtrees
+    }
+}
+```
+
+### Print all nodes within a range in a binary search tree
+
+- A range will include a subset to nodes in binary search tree
+- This subset can include 0 nodes as well
+- Check every node to see if it's in within the range, print it to screen if the range constraints are met
+
+```java
+public static void printRange(Node<Integer> root, int low, int high) { // pass in the min and max indicating the range we care about
+    if (root == null) {
+        return;     // Base case
+    }
+
+    // If the range low values is less than the current node, run the operation on the left node
+    if (low <= root.getData()) {
+        printRange(root.getLeftChild(), low, high);
+    }
+
+    // Check the node value to see if it's within the range if yes print
+    if (low <= root.getData() && root.getData() <= high) {
+        System.out.println(root.getData());
+    }
+
+    if (high > root.getData()) {
+        // If range high value is greater than the current node, run the operation on the right subtree
+        printRange(root.getRightChild(), low, high);
+    }
+}
+```
+
+### Check if a binary tree is a binary search tree
+
+- For every node in a binary search tree the nodes with values <= node are in the left subtree and nodes with values >
+node are in a right subtree.
+- Check every node to see if this constraint is violated.
+- It can be solved iteratively and recursively.
+
+```java
+// Pass in the min and max indicating the range for the subtree
+public static boolean isBinarySearchTree(Node<Integer> root, int min, int max) {
+    if (root == null) {
+        return true;    // A null node is a valid binary tree
+    }
+
+    if (root.getData() <= min || root.getData() > max) {
+        return false;   // If a node lies outside the range then the BST constraint has been violated and we return false
+    }
+
+    // Check the left and Right subtrees to see if they're valid search trees
+    return isBinaryTree(root.getLeftChild(), min, root.getData()) &&
+           isBinaryTree(root.getRightChild(), root.getData(), max);
+}
+
+```
+
+- For the left subtree the current nodes value should be the max
+- For the right subtree the current node's value should be the min
+
+### Has path sum
+
+- Check if a path from root leaf node sums up to a certain value
+- At every leaf node check if the path to it sums to the value specified
+- Subtract the current node's value from the sum when recursing left and right towards the leaf node.
+
+```java
+// Pass in the current running sum
+public static boolean hasPathSum(Node<Integer> root, int sum) {
+    if (root.getLeftChild() == null && root.getRightChild() == null) {
+        return sum = root.getData();    // In the case of a leaf node, check if the sum is exactly equal to the value of the node
+    }
+
+    int subSum = sum - root.getData();  // For internal non leaf nodes subtract the current node value from the sum
+
+    // Recurse left and right to see if the sub sum is satisfied in any of the paths
+    if (root.getLeftChild() != null) {
+        boolean hasPathSum = hasPathSum(root.getLeftChild(), subSum);
+        if (hasPathSum) {
+            return true;
+        }
+    }
+
+    if (root.getRightChild() != null) {
+        boolean hasPathSum = hasPathSum(root.getRightChild(), subSum);
+        if (hasPathSum) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+### Print paths
+
+- Keep track of the current path followed to reach the leaf node.
+- At a leaf node print the current path.
+- For internal nodes add the node to the path and recurse to the left and right children.
+
+```java
+// A list keep track of the current path to this node
+public static void printPaths(Node<Integer> root, List<Node<Integer>> pathList) {
+    if (root == null) {
+    return;     // Base case
+    }
+
+    pathList.add(root);
+    // Add the current node to the path and recurse to the left and right child
+    printPaths(root.getLeftChild(), pathList);
+    printPaths(root.getRightChild(), pathList);
+
+    // If this is leaf node, print the current path, which has all nodes leading to this leaf node
+    if (root.getLeftChild() == null && root.getRightChild() == null) {
+        print(pathList);
+    }
+    // Remove the current node from the pathList as all paths from this node has been processed and printed
+    pathList.remove(root);
+
+}
+```
+
+### Find the least common ancestor for 2 nodes
+
+                1
+               / \
+              2   3
+                 / \
+                7  [6]
+               / \    \
+             [8]  5    4
+
+- 3 is the least common ancestor for 8 and 6
+- 1 is also a common ancestor but not the least one
+
+```java
+public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer> a, Node<Integer> b) {
+    if (root == null) {
+        return null;
+    }
+
+    if (root == a || root == b) {
+        return root;    // If the current root is either of two nodes then return the root itself
+    }
+
+    Node<Integer> leftCA = leastCommonAncestor(root.getLeftChild(), a, b);
+    Node<Integer> rightCA = leastCommonAncestor(root.getRightChild(), a, b);
+
+    if (leftCA != null && rightCA != null) {
+        return root;    // If both exists it means either the node or it's ancestor exists in the left and right subtree so the current node is LCA
+    }
+
+    if (leftCA != null)  {
+        return leftCA;  // If only of the common ancestor is non null return that
+    }
+
+    return rightCA;
+}
+```
+
+
+
 
 
 

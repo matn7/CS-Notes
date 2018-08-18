@@ -690,15 +690,15 @@ public int hashCode() { return 42; }
 ```
 Then all objects are signed to the same bucket and hash table will degrade to normal list
 
-24. Palidrome
+24. :star: Palindrome
 ```java
-public class Palidrome {
-    public static boolean isPalidrome(String str) {
+public class Palindrome {
+    public static boolean isPalindrome(String str) {
         if (str.length() == 0 || str.length() == 1) {
             return true;
         }
         if (str.charAt(0) == str.charAt(str.length() - 1) {
-            return isPalidrome(str.substring(1,str.length()-1));
+            return isPalindrome(str.substring(1,str.length()-1));
         }
         return false;
     }

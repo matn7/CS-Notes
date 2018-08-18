@@ -74,7 +74,7 @@ Use abstract factory to create families of related classes.
       while the abstract factory pattern is a way to create groups of related classes that implements different interfaces.
     - Abstract factory objects create entire families of classes, Factory objects create a single family of classes
 
-## Singleton
+## :star: Singleton
 - Exactly one object of a particular type is needed
     - Device Drivers
     - Registry Settings

@@ -116,7 +116,7 @@ public class BinarySearchImpl {
 public class JdbcConne {
 ```
 
-## Singleton vs GOF singleton
+## :star: Singleton vs GOF singleton
 
 - GOF singleton : one singleton per JVM
 - Spring singleton : one singleton per Application Context

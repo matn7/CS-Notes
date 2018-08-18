@@ -1,5 +1,5 @@
 # Back notebook notes
-## Immutable class
+## :star: Immutable class
 ### With final class
 ```java
 public final class Complex {

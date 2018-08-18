@@ -2191,7 +2191,7 @@ List<Object[]> resultList = em.createQuery("SELECT guide.name, guide.salary FROM
     .getResultList();
 ```
 
-## Isolation Rules
+## :star: Isolation Rules
 
 - Rules for Isolation Levels
     - Isolation level defines the extent to which a transaction is visible to other transactions.
