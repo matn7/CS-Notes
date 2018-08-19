@@ -1,4 +1,4 @@
-# Stream
+ Stream
 
 - An abstraction
 - Focused on the all instead of the parts

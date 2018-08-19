@@ -1,4 +1,3 @@
-# Back notebook notes
 ## :star: Immutable class
 ### With final class
 ```java

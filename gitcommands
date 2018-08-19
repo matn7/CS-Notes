@@ -29,3 +29,5 @@ git commit --amend
 # .gitignore #
 ##############
 Each file in separate line.
+
+git add . && git reset src/test/resources/

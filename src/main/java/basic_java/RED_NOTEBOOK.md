@@ -74,13 +74,15 @@ public static class Node<T> {
 - We continue this till every node of the tree has been visited
 
 **PATH**
-                    /                       LEVEL N
-                   /
-                  -------                   LEVEL N + 1
-                       /
-                      /
-                     --------               LEVEL N + 2
-                                            Highest level
+
+                            /                       LEVEL N
+                           /
+                          -------                   LEVEL N + 1
+                               /
+                              /
+                             --------               LEVEL N + 2
+                                                    Highest level
+
 
 ### Implementing Breadth First Traversal
 - Start from the root and add it to the Queue
@@ -143,11 +145,11 @@ public static void breadthFirst(Node root) throws Queue.QueueUnderflowException,
 - Each node is processed first, before it's right and left subtrees
 - The left sub-trees are processed before the right subtrees
 
-NODE
-:arrow_down:
-LEFT SUBTREE
-:arrow_down:
-RIGHT SUBTREE
+NODE<br/>
+:arrow_down:<br/>
+LEFT SUBTREE<br/>
+:arrow_down:<br/>
+RIGHT SUBTREE<br/>
 
 ```java
 public static void preOrder(Node<Character> root) {
@@ -168,11 +170,11 @@ public static void preOrder(Node<Character> root) {
 - The subtree rooted at B is processed before A and the subtree rooted at C
 - Each time a NODE not a left child, we have to move deeper into the left subtree
 
-LEFT SUBTREE
-:arrow_down:
-NODE
-:arrow_down:
-RIGHT SUBTREE
+LEFT SUBTREE<br/>
+:arrow_down:<br/>
+NODE<br/>
+:arrow_down:<br/>
+RIGHT SUBTREE<br/>
 
 ```java
 public static void inOrder(Node root) {
@@ -190,11 +192,11 @@ public static void inOrder(Node root) {
 - Both subtrees are processed before the node itself. The node is processed after POST the subtree.
 - The subtree rooted at B is processed before the subtree rooted at C. A is processed last.
 
-LEFT SUBTREE
-:arrow_down:
-RIGHT SUBTREE
-:arrow_down:
-NODE
+LEFT SUBTREE<br/>
+:arrow_down:<br/>
+RIGHT SUBTREE<br/>
+:arrow_down:<br/>
+NODE<br/>
 
 ```java
 public static void postOrder(Node root) {
@@ -297,6 +299,7 @@ public static Node<Integer> insert(Node<Integer> head, Node<Integer> node) {
             4   7    16
                        \
                         18
+
 
 
 - Steps:
@@ -584,6 +587,258 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
     return rightCA;
 }
 ```
+
+# Heaps
+
+## The Priority Queue
+
+- When a certain element in a collection has the highest weightage or priority a common use case is to process that first.
+- The data structure you use to store elements where the highest priority has to be processed first can be called a **priority queue**
+- At every step we access the element with the highest priority.
+- The data structure needs to understand the priorities of the elements it holds.
+
+- Common operations on a priority queue:
+    - Insert elements
+    - Access the highest priority element
+    - Remove the highest priority element
+
+- Priority queues has a whole number of practical use cases in event simulation, thread scheduling, handling emergency room cases.
+
+## An array or a list
+
+| event | Unordered | Ordered |
+|---|---|---|
+| Insertion | Can be anywhere in the list or array **O(1)** | Requires finding right position **O(N)** |
+| Access | Accessing the highest priorities element requires going through all elements of list **O(N)** | Easy access highest priority element **O(1)** |
+| Remove | Removing the highest priorities element requires going through all elements of list **O(N)** | Easy access highest priority element **O(1)** |
+
+### Balanced binary search tree
+
+| Insertion | O(log(N)) |
+|---|---|
+| Access | O(log(N)) |
+| Remove | O(log(N)) |
+
+- Both insertion and access moderately fast
+- List solutions make one of these super fast while comparing heavily on the other
+
+### The Binary Heap
+
+| Insertion | O(log(N)) |
+|---|---|
+| Access | O(1) |
+| Remove | O(log(N)) |
+
+## The binary heap
+
+- A heap is just a tree with a special properties or constraints on the values of it's nodes
+- This is called heap property
+- Heaps can be of two types
+    - Minimum heap : Every node should be <= value of its children, the node with the smallest value should be the root of the tree
+    - Maximum heap : Every node should be >= value of its children, the node with the largest value should be the root of the tree
+- If **H** is the high of the tree - the leaf nodes should be only at level **H** or **H - 1** (shape property)
+- The heap should form a complete binary tree, all levels except the last should be filled
+
+
+                    47          maximum value in the entire tree
+                   /  \
+                  32   28
+                 /  \    \
+                9   12    7
+
+- All leaf nodes are at high H or H - 1
+- These nodes cannot have children till all the nodes at level **H-1** have both left and right children
+- All nodes at level **H-1** have to be filled before moving on to level **H**
+
+
+## The binary heap implementation
+
+- The logical structure of a binary heap is a tree so theoretically we could represent a heap just as we would represent a tree
+- The operations typically performed on a heap requires us to use:
+    - Traverse downwards from the root towards the leaf nodes
+    - Traverse upwards from the leaf node towards the root
+- Each node would have a pointer to the left and right child
+
+- On a heap we want to be able to
+    - Get left child
+    - Get right child
+    - Get parent
+
+- A node would need 2 child pointers and a parent pointer
+- This is a lot of extra space
+- Heaps can be represented much more efficiently by using an array and having an implicit relationship to determine the parent,
+left and right child of a node
+- Contiguous slots in an array can be used to represent binary tree levels
+
+- Node at index: 0              (i)
+- Left child at index: 1        (2*i + 1)
+- Right child at index: 2       (2*i + 2)
+
+- Node at index i get parent has parent at index: (i-1)/2
+
+                 5                  [ 5 8 6 9 12 11 7 15 10 ]
+               /   \
+              8     6
+             / \   / \
+            9  12 11  7
+           / \
+          15 10
+
+```java
+// A generic heap, can hold data of any type. Note that the generic type has to extends comparable this is how we check for highest priority
+public abstract class Heap<T extends Comparable> {
+    private static int MAX_SIZE = 40;
+    private T[] array;      // Use an array to store the heap elements
+    private int count;
+    public Heap(Class<T> clazz) {
+        this(clazz, MAX_SIZE);
+    }
+    public Heap(Class<T> clazz, size) {
+        array = (T[]) Array.newInstance(clazz, size);   // This is how instantiate a generic array in Java
+    }
+}
+```
+
+### Get the left child index
+
+```java
+public int getLeftChildIndex(int index) {
+    int leftChildIndex = 2 * index + 1;     // Calculate the left child index using the formula
+
+    if (leftChildIndex >= count) {
+        return -1;  // Check to see if a left child of this node is present. If it's less than count (the number of nodes) then it is a valid left child
+    }
+    return leftChildIndex;
+}
+```
+
+### Get the right child index
+
+```java
+public int getRightChildIndex(int index) {
+    int rightChildIndex = 2 * index + 2;     // Calculate the right child index using the formula
+
+    if (rightChildIndex >= count) {
+        return -1;  // Check to see if a right child of this node is present. If it's less than count (the number of nodes) then it is a valid left child
+    }
+    return rightChildIndex;
+}
+```
+
+### Get parent index
+
+```java
+public int getParentIndex(int index) {
+    if (index < 0 || index > count) {       // Check that the index is not out of range
+        return -1;
+    }
+
+    return (index - 1)/2;                   // Formula to get the parent index
+}
+```
+
+### Helper methods
+
+```java
+protected void swap(int index1, int index2) {
+    T tempValue = array[index1];
+    array[index1] = array[index2]; // Swap 2 elements in the heap array
+    array[index2] = tempValue;
+}
+
+public int getCount() {
+    return count;
+}
+
+public boolean isEmpty() {
+    return count == 0;
+}
+
+public boolean isFull() {
+    return count == array.length;
+}
+
+public T getElementAtIndex(int index) {
+    return array[index];
+}
+```
+
+## The binary heap
+
+- While inserting or removing an element into the heap how do we know which is the right position for the element to occupy?
+- We place a single element in the wrong place.
+- Then try to find the right position for the element.
+- This process is called heapify.
+
+### Sift down
+- An element is in the wrong position with respect to other elements below it in the heap.
+- It has to be moved downwards in the heap towards the leaf node to find it's right position.
+
+### Sift up
+- An element is in the wrong position with respect to other elements above it in the heap.
+- It has to be moved upwards in the heap towards the root node to find it's right position.
+
+- heap
+    - Insertion O(log(N))
+    - Access highest priority element O(1)
+    - Remove O(log(N))
+
+## The heap sort
+
+- First converts the unsorted list or array into the heap
+- Use the heap to access the maximum element and put it in the right position in the Array
+
+- Heapify
+    - First converts the unsorted list or array into a head
+    - Take a position of the array make all elements in that position satisfy the heap property
+    - Keep adding additional elements into the heap portion ensuring that these additional elements also satisfy the heap property
+    - The heap will grow to encompass all elements in the array
+
+- Sort
+    - Use the heap to access the maximum element and put it in the right position in the array
+    - A heap offers O(1) access to the largest or the smallest element
+    - Remove the largest element from the heap and position it at the end of sorted array
+    - The sorted array will grow to encompass all elements in the array
+
+### Heap sort heapify
+
+- We'll use a maximum heap so we can always access the largest element in O(1) time
+- A heap can be represented using an array
+- Heapify is the operation to convert the unsorted array to a heap
+- We use the same array with no additional space to do the heapify
+- Insertion is done N times to get all the elements in heap form
+- Removal of the maximum element is done N times, followed by heapify
+
+- Insertion and removal have log(N) time complexity so doing it for N elements means the average case complexity of
+heap sort id **O(NLog(N))**
+
+- Heap sort is not adaptive
+- It is not a stable sort
+- It does not need additional space, space complexity O(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
