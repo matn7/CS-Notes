@@ -816,11 +816,116 @@ heap sort id **O(NLog(N))**
 - It is not a stable sort
 - It does not need additional space, space complexity O(1)
 
+## Heap problems
 
+### Find the maximum element in a minimum heap
 
+- One of the leaf nodes is the maximum element if we only scan the leaf nodes we will find it
+- The first left node comes after the last internal node, it's the parent of the last node in the heap
 
+```java
+public static int getMaximum(MinHeap<Integer> minHeap) {
+    int lastIndex = minHeap.getCount() - 1; // Get the last node in the heap - present at the last index of the array
+    int lastParentIndex = minHeap.getParentIndex(lastIndex);    // Find the parent of the very last index, this is the last internal node
+    int findChildIndex = lastParentIndex + 1;
 
+    int maxElement = minHeap.getElementAtIndex(firstChildIndex);
+    // Iterate through all the leaf nodes starting at the index after the index of the last parent node
+    for (int i = firstChildIndex; i < lastIndex; i++) {
+        if (maxElement < minHeap.getElementAtIndex(i)) {
+            maxElement = minHeap.getElementAtIndex(i);
+        }
+    }
+    return maxElement;  // Return the maximum element this is now a simple scan
+}
+```
 
+# The Graph
+
+- A graph is used to represent relationship between entities.
+- The entities can be anything, graphs find applications in variety of ways in the real world
+- These relationships can be arbitraily complicated and of a variety of different types
+
+**VERTEX**
+- The entities are people (professional graph, social graph)
+- Entities are locations (maps)
+
+**EDGE**
+- Professional relationships - people work together
+- Personal relationships - people are friends
+- A way to get from one location to another road, rail, air
+
+- Graphs are used to represent information in many real world applications
+- There are many algorithms to optimize different problems represented using graph
+
+## What is a graph
+
+- Graph is a set of vertices and edges (V, E)               A --------------- B
+
+- Two vertices and a single edge is also valid graph        A, B                Vertex
+                                                            ---------------     Edge
+
+- Arrow on the edge means the relationship is directed      A --------------> B
+
+- Undirected edges represent 2 way relationship such as
+    - Two ways road
+    - I am his friend and he is mine
+
+- Directed edges represent 1 way relationship such as
+    - One way road
+    - I report to my manager
+
+### UNDIRECTED GRAPH
+
+        +---+         +---+         +---+
+        | A +---------+ B +---------+ F |
+        +-+-+         +---+         +-+-+
+          |  \       /                |  \
+          |   \     /                 |   \
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |         \                 |
+          |          \                |
+        +-+-+         +---+         +-+-+
+        | C +---------+ E +---------+ G |
+        +---+         +---+         +---+
+
+- A - C are ADJACENT Nodes
+- 3 edges are INDICENT Vertex F
+
+- The way to go from C to B. C -> A -> B
+- This series of Edges is called a **PATH**
+
+### UNDIRECTED ACYCLIC GRAPH
+
+        +---+         +---+         +---+
+        | A +---------+ B +---------+ F |
+        +-+-+         +---+         +-+-+
+          |          /                |  \
+          |         /                 |   \
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |                           |
+          |                           |
+        +-+-+         +---+         +-+-+
+        | C +---------+ E |         | G |
+        +---+         +---+         +---+
+
+- Every Node is CONNECTED TO EVERY OTHER NODE via a series of edges
+This Graph has no cycles
+A Connected graph with no cycles. This is a connected graph
+
+               B
+             / | \
+            A  D  F
+           /     / \
+          C     G   H
+         /
+        E
+
+- Graph with no cycle is tree
 
 
 
