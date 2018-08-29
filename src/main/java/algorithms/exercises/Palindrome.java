@@ -3,8 +3,8 @@ package algorithms.exercises;
 /**
  * Created by Mati on 26.12.2017.
  */
-public class Palindrom {
-    public boolean checkPalindrom(String word) {
+public class Palindrome {
+    public boolean checkPalindrome(String word) {
         boolean result = true;
         char[] wordchar = word.toCharArray();
 
@@ -24,7 +24,7 @@ public class Palindrom {
             return true;
         }
         if (word.charAt(0) == word.charAt(word.length()-1)) {
-            return checkPalindrom(word.substring(1,word.length()-1));
+            return checkPalindrome(word.substring(1,word.length()-1));
         }
         return false;
     }

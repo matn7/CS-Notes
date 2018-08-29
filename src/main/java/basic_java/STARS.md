@@ -149,7 +149,18 @@ public class Singleton {
 }
 ```
 
+## :star: Multiply without `*`
 
+```java
+public static double multiply(double x, double y) {
+    if (x == 0 || y == 0) {
+        return 0;
+    } else if (y > 0) {
+        return x + multiply(x, y - 1);
+    }
+    return -multiply(x, -y);
+}
+```
 
 
 

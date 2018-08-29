@@ -927,12 +927,311 @@ A Connected graph with no cycles. This is a connected graph
 
 - Graph with no cycle is tree
 
+### DIRECTED GRAPH
+
+        +---+         +---+         +---+
+        | A +-------->+ B +-------->+ F |
+        +---+         +---+         +-+-+
+          |  A       /                A  \
+          |   \     V                 |   V
+          |    +---+                  |    +---+
+          |    | D |                  |    | H |
+          |    +---+                  |    +---+
+          |         \                 |
+          V          V                |
+        +-+-+         +---+         +-+-+
+        | C +-------->+ E +-------->+ G |
+        +---+         +---+         +---+
+
+Nodes A,B,D,A form a cycle
 
 
+### DIRECTED ACYCLIC GRAPH (DAG)
+
+    +---+         +---+         +---+
+    | A +-------->+ B +-------->+ F |
+    +-+-+         +---+         +-+-+
+      |  A                        A  \
+      |   \                       |   V
+      |    +---+                  |    +---+
+      |    | D |                  |    | H |
+      |    +---+                  |    +---+
+      |         \                 |
+      V          V                |
+    +-+-+         +---+         +-+-+
+    | C +-------->+ E +-------->+ G |
+    +---+         +---+         +---+
+
+### A Graph Representation
+To represent a Graph there is a need a way to model a vertex which may held some information.
+A way to model directed or undirected EDGES.
+
+- There are 3 standard ways that Graphs can be represented.
+    - ADJACENCY MATRIX
+    - ADJACENCY SET
+    - ADJACENCY LIST
+
+```java
+// Set up an interface with methods all graph should implement, the implementations can use the adjacency matrix, adjacency list
+// or adjacency set
+public interface Graph {
+
+    // An Enum to indicate whether the Graph represents an Undirected or Directed Graph
+    enum GraphType {
+        DIRECTED,
+        UNDIRECTED
+    }
+
+    // An edge lies between two vertices, vertices are represented by numbers
+    void addEdge(int v1, int v2);
+
+    // Helper to get the Adjacent vertices from any vertex, a method which is required for all algorithms involving graphs
+    List<Integer> getAdjacentVertices(int v);
+}
+```
+
+### ADJACENCY MATRIX
+
+Use a metrix with ROWS and COLUMNS a matrix is table
+The Row labels and the column labels represent the Vertices
+Each cell represent relationship between the vertices i.e. the EDGES
+
+        +---+     +---+                   A  B  C  D  E
+        | A +---->+ B |                 +----------------
+        +-+-+     +-+-+               A | 0  1  1  0  0
+          |         A   V             B | 0  0  0  1  0
+          |         |    +---+        C | 0  0  0  0  1
+          |         |    | D |        D | 0  0  0  0  0
+          |         |    +---+        E | 0  1  0  1  0
+          V         |  A
+        +-+-+     +-+-+
+        | C +---->+ E |
+        +---+     +---+
+
+- A value 1 or true in (row A, column B) indicates Edge from A to B
+
+        DIRECTED GRAPH
+
+        +---+     +---+                   A  B  C  D  E
+        | A +-----+ B |                 +----------------
+        +-+-+     +-+-+               A | 0  1  1  0  0
+          |         |   \             B | 1  0  0  1  1
+          |         |    +---+        C | 1  0  0  0  1
+          |         |    | D |        D | 0  1  0  0  1
+          |         |    +---+        E | 0  1  1  1  0
+          |         |  /
+        +-+-+     +-+-+
+        | C +-----+ E |
+        +---+     +---+
+
+```java
+class Graph {
+    int[][] adjacencyMatrix;
+    int numVertices;
+}
+```
+
+```java
+// This implements the graph interface to use of the adjacency matrix is an implementation details
+public class AdjacencyMatrixGraph implements Graph {
+    // Set up a V x V matrix to hold the vertices and Edges relationship
+    private int[][] adjacencyMatrix;
+
+    private GraphType graphType = GraphType.DIRECTED;
+
+    private int numVertices = 0;
+
+    public AdjacencyMatrixGraph(int numVertices, GraphType graphType) {
+        this.numVertices = numVertices;
+        this.graphType = graphType;
+        adjacencyMatrix = new int[numVertices][numVertices];
+
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                // initialize the matrix and other information in the constructor
+                adjacencyMatrix[i][j] = 0;
+            }
+        }
+    }
+
+    @Override
+    public void addEdge(int v1, int v2) {
+        if (v1 > numVertices || v1 < 0 || v2 >= numVertices || v2 < 0) {
+            throw new IllegalArgumentException("Vertex number is not valid");
+        }
+        // Set the cell at row v1 and column v2
+        adjacencyMatrix[v1][v2] = 1;
+
+        if (graphType == GraphType.UNDIRECTED) {
+            // If the graph is undirected then the connection goes both ways - set row v2 and column v2 as well
+            adjacencyMatrix[v2][v1] = 1;
+        }
+    }
+
+    @Override
+    public List<Integer> getAdjacencyVertices(int v) {
+        if (v >= numVertices ||  v < 0) {
+            throw new IllegalArgumentException("Vertex number is not valid");
+        }
+
+        List<Integer> adjacencyVerticesList = new ArrayList<>();
+
+        for (int i = 0; i < numVertices; i++) {
+            if (adjacencyMatrix[v][i] == 1) {
+                adjacencyVerticesList.add(i);
+            }
+        }
+
+        Collections.sort(adjacentVerticesList);
+        return adjacentVerticesList;
+    }
+}
+```
+
+### ADJACENCY LIST (adjacent means neighbors cells)
+
+Each vertex is a node.
+Each vertex as a pointer to a LinkedList.
+This LinkedList contains all the other nodes this vertex connects to directly.
+
+If a vertex V has an Edge leading to Another Vertex U
+Then U is present in V's LinkedList
+
+        +---+     +---+                   DIRECTED GRAPH
+        | A +---->+ B |               A -> B -> C
+        +-+-+     +-+-+               B -> D
+          |         A   V             C -> E
+          |         |    +---+        D
+          |         |    | D |        E -> B -> D
+          |         |    +---+
+          V         |  A
+        +-+-+     +-+-+
+        | C +---->+ E |
+        +---+     +---+
+
+        +---+     +---+                   UNDIRECTED GRAPH
+        | A +-----+ B |
+        +---+     +-+-+               A -> B -> C
+          |         |   \             B -> A -> D -> E
+          |         |    +---+        C -> A -> E
+          |         |    | D |        D -> B -> E
+          |         |    +---+        E -> C -> B -> D
+          |         |  /
+        +-+-+     +-+-+
+        | C +-----+ E |
+        +---+     +---+
+
+- Adjacency List Downsides
+    - The ORDER of the Vertices in the AdjacencyList is MATTER
+    - The same Graph can have MULTIPLE REPRESENTATIONS
+    - Certain operation become tricky e.g. deleting a Node involves looking through all the adjacency List to remove the Node from all Lists
+
+### ADJACENCY SET
+
+Similar to AdjacencyList
+Instead of a LinkedList to maintain the adjacent vertices USE A SET
+
+The GRAPH Representations
+
+    ADJACENCY MATRIX             |   ADJACENCY LIST, SET
+    -----------------------------+-----------------------
+    This works well when the     | A SPARSE Graph with Few
+    Graph is WELL CONNECTED i.e. | Connections between nodes
+    Many Nodes are connected     | might be more efficiently
+    with many other Nodes.       | represented using Adjacency
+    The overhead of V^2 spece is | List or Set
+    worth it when the number of  |
+    connections are large        |
+
+- E = Number of Edges
+- V = Number of Vertices
+
+                      | Adjacency Matrix | Adjacency List | Adjacency Set
+    ------------------+------------------+----------------+------------------
+    SPACE             |     V^2          |  E + V         |  E + V
+    ------------------+------------------+----------------+------------------
+    IS EDGE PRESENT   |     1            |  DEGREE OF V   |  Log(DEGREE OF V)
+    ------------------+------------------+----------------+------------------
+    Iterate over      |     V            |  DEGREE OF V   |  DEGREE OF V
+    edges on a vertex |                  |                |
 
 
+### THE GRAPH Traversal
 
+DEPTH-FIRST, BREADTH-FIRST
+In a graph multiple paths can lead from one node to another
 
+A Graph can also have cycles, the same Node can be visited multiple times
+
+In order to avoid infinite looping In a Graph we need to keep track of the Node previously visited
+
+## Topological Sort
+
+- It is an ordering of vertices in a directed acyclic graph in which each node comes before all the nodes to which
+it has outgoing edges
+
+    A ----------> B     A should come before B
+
+    A ----------> B             The topological sort for this graph A,C,E,B,D
+    |             | \
+    |             |   D
+    |             | /
+    C ----------> E
+
+- A graph can have multiple topological sort
+- We first find a vetex which has no incoming edges
+- It is the destination of no edge no arrow points to it
+- **A** is the only vertex with no incoming edge - this is the first element of the sort
+- Indegree number of inward directed graph edges for a given graph vertex
+- Indegree of A is 0
+- If there are no vertices with 0 indegree, then there would have been no topological sort
+<br/>
+- If remove A from graph we have to reduce the indegree of all its immediate neighbors
+- The next vertex in this sort the one with indegree 0 C is the next element
+- Remove C from graph decrease indegree next element is E
+<br/>
+- Running time of topological sort is O(V + E)
+- Every edge and every vertex is visited once
+
+### Indegree in Adjacency List
+
+```java
+public int getIndegree(int v) {
+    if (v < 0 || v >= numVertices) {
+        throw new IllegalArgumentException("Vertex number is not valid");
+    }
+
+    int indegree = 0;
+    for (int i = 0; i < numVertices; i++) {
+        // If the current vertex is present as an adjacent vertex for any other vertex then increment the indegree
+        // count for the current vertex
+        if (getAdjacentVertex(i).contains(v)) {
+            indegree++;
+        }
+    }
+
+    return indegree;
+}
+```
+
+### Indegree in Adjacency Matrix
+
+```java
+public int getIndegree(int v) {
+    if (v < 0 || v >= numVertices) {
+        throw new IllegalArgumentException("Vertex number is not valid");
+    }
+
+    int indegree = 0;
+    for (int i = 0; i < numVertices; i++) {
+        if (adjacencyMatrix[o][v] != 0) {
+            indegree++;
+        }
+    }
+
+    return indegree;
+}
+```
 
 
 
