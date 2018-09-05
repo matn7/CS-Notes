@@ -1,8 +1,5 @@
 package algorithms.iterative_recursive;
 
-/**
- * Created by Mati on 22.12.2017.
- */
 public class HornerIterative {
     // 5 * x^3 + x^2 + 5 * x + 8
     // (5 * x^2 + x + 5) * x + 8

@@ -1,8 +1,5 @@
 package algorithms.iterative_recursive;
 
-/**
- * Created by Mati on 21.12.2017.
- */
 public class FactorialIterative {
     public int calculate(int num) {
 

@@ -1,8 +1,5 @@
 package algorithms.exercises;
 
-/**
- * Created by Mati on 16.03.2018.
- */
 public class FactorialRecursive2 {
     public int calculateFactorial(int num) throws Exception {
         if (num < 0) {

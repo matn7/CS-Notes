@@ -1,8 +1,5 @@
 package algorithms.exercises;
 
-/**
- * Created by Mati on 23.12.2017.
- */
 public class OddNumbers {
     public int[] odd(int num) {
         int[] result = new int[num];

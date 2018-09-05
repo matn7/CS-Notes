@@ -2,9 +2,6 @@ package algorithms.other_algorithms.producer_consumer_blocking_queue;
 
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Created by Mati on 23.07.2017.
- */
 public class Consumer implements Runnable {
 
     private final BlockingQueue sharedQueue;

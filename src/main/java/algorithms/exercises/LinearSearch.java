@@ -1,8 +1,5 @@
 package algorithms.exercises;
 
-/**
- * Created by Mati on 26.12.2017.
- */
 public class LinearSearch {
     public int[] findMinMax(int[] tab) {
         int[] result = new int[2]; // arr of size 2 for min and max value

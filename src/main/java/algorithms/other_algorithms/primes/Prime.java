@@ -1,8 +1,5 @@
 package algorithms.other_algorithms.primes;
 
-/**
- * Created by Mati on 13.07.2017.
- */
 public class Prime {
 
     public static void main(String[] args) {

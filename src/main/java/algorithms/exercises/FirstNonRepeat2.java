@@ -3,9 +3,6 @@ package algorithms.exercises;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Mati on 16.03.2018.
- */
 public class FirstNonRepeat2 {
     public char findCharacter(String testWord) throws Exception {
 

@@ -1,8 +1,5 @@
 package algorithms.iterative_recursive;
 
-/**
- * Created by Mati on 22.12.2017.
- */
 public class FibonacciRecursive {
     public int calculateFibo(int number) {
         if (number == 0) {

@@ -1,8 +1,5 @@
 package algorithms.other_algorithms.is_palidrome;
 
-/**
- * Created by Mati on 28.07.2017.
- */
 public class Main {
 
     public static void main(String[] args) {

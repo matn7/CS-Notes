@@ -2,9 +2,6 @@ package algorithms.other_algorithms.producer_consumer_wait_notify;
 
 import java.util.Vector;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class ProducerConsumerSolution {
 
     public static void main(String[] args) {

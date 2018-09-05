@@ -1,8 +1,5 @@
 package algorithms.exercises;
 
-/**
- * Created by Mati on 23.12.2017.
- */
 public class Cesar {
     public char[] encrypt(String text, int index) {
 

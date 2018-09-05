@@ -162,6 +162,104 @@ public static double multiply(double x, double y) {
 }
 ```
 
+## :star: First non repeat character
+
+```java
+public class FirstNonRepeat {
+    public char findCharacter(String testWord) throws Exception {
+
+        if (testWord == "") {
+            throw new Exception("Empty String");
+        }
+
+        // map<key, value> [ a : 3, b : 3, c : 1, u : 1 ]
+        Map<Character, Integer> charMap = new HashMap<>();
+        char[] testWordCharArr = testWord.toCharArray();
+
+        for (int i = 0; i < testWord.length(); i++) {
+            if (charMap.containsKey(testWordCharArr[i])) {
+                charMap.put(testWordCharArr[i], charMap.get(testWordCharArr[i]) + 1);
+            } else {
+                charMap.put(testWordCharArr[i], 1);
+            }
+        }
+
+        for (int i = 0; i < testWord.length(); i++) {
+            if (charMap.get(testWordCharArr[i]) == 1) {
+                return testWordCharArr[i];
+            }
+        }
+        return 'a';
+    }
+}
+```
+
+## :star: Check Rectangle
+
+```java
+public class Rectangle {
+    public boolean check(int a, int b, int c) {
+        if ((a < b + c) && (b < a + c) && (c < a + b)) {
+            if ((Math.pow(a,2) + Math.pow(b, 2)) == Math.pow(c, 2)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+}
+```
+
+## :star: Singleton vs GOF singleton
+
+- GOF singleton : one singleton per JVM
+- Spring singleton : one singleton per Application Context
+
+## :star: Binary search
+
+```java
+public static int binarySearch(int[] sortedList, int number) {
+    int min = 0;
+    int max = sortedList.length - 1;
+    while (min <= max) { // first iteration min = 0 max = 11, second min = 0 max = 4, third iteration min = 3 max = 4
+        int mid = min + (max - min) / 2; // 5, 2, 3
+        System.out.println();
+        System.out.println("Min: " + min + " Mid: " + mid + " Max: " + max);
+
+        if (sortedList[mid] == number) { // third iteration sortedList[3] = 0 -> true
+            return mid; // Searched value is in index 3 in sorted array
+        }
+        if (sortedList[mid] > number) { // first iteration 34 > 0 -> true
+            max = mid - 1; // lesser half,
+            // max = 5 - 1 = 4
+        } else { // second iteration sortedList[2] = -98
+            min = mid + 1; // greater half second iteration min = 2 + 1 = 3
+        }
+    }
+    return -1;
+}
+```
+
+## :star: Binary search recursive
+
+```java
+public static int binarySearch(int[] sortedArray, int number, int min, int max) {
+    if (min > max) {
+        return -1;
+    }
+
+    int mid = min + (max - min) / 2;
+    if (sortedArray[mid] == number) {
+        return mid;
+    }
+
+    if (sortedArray[mid] > number) {
+        return binarySearch(sortedArray, number, min, mid - 1);
+    } else {
+        return binarySearch(sortedArray, number, mid + 1, max);
+    }
+}
+```
 
 
 

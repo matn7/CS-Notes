@@ -6,9 +6,6 @@ import java.util.Comparator;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-/**
- * Created by Mati on 05.08.2017.
- */
 public class InterfacesAndLambda {
     // Interfejsy pozwalają na określenie co ma zostać wykonane bez konieczności tworzenia implementacji.
 

@@ -3,9 +3,6 @@ package algorithms.other_algorithms.point;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mati on 29.07.2017.
- */
 public class Punkt {
 
     public static class Point {

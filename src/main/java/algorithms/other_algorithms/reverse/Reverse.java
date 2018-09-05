@@ -1,8 +1,5 @@
 package algorithms.other_algorithms.reverse;
 
-/**
- * Created by Mati on 16.07.2017.
- */
 public class Reverse {
     // Program to reverse string. Example China will be anihC
 

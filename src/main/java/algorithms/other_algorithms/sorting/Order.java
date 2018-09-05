@@ -2,9 +2,6 @@ package algorithms.other_algorithms.sorting;
 
 import java.util.Comparator;
 
-/**
- * Created by Mati on 15.07.2017.
- */
 public class Order implements Comparable<Order> {
 
     private int orderId;

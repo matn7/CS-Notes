@@ -2,9 +2,6 @@ package algorithms.other_algorithms.first_non_repeat;
 
 import java.util.HashMap;
 
-/**
- * Created by Mati on 28.07.2017.
- */
 public class FirstNonRepeat {
 
     public static void main(String[] args) {

@@ -5,9 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Mati on 15.07.2017.
- */
 public class ObjectSortingExample {
 
     public static void main(String[] args) {

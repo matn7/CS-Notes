@@ -1,6 +1,6 @@
 # Spring Core
 
-## DEPENDENCIES
+## Dependencies
 
 ```java
 @Component
@@ -30,7 +30,7 @@ public class HomeDataService {
 }
 ```
 
-## AUTOWIRING
+## Autowiring
 
 ### 1. By name
 
@@ -71,7 +71,7 @@ public class SortServiceImpl {
 
 ```
 
-## SCOPE OF BEANS
+## Scope of Beans
 
 Bean Scopes default Singleton.
 - Singleton - One instance per Spring Context
@@ -105,7 +105,7 @@ public class BinarySearchImpl {
 
 ```java
 @Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class BinarySearchImpl {
 ```
 
@@ -122,17 +122,17 @@ public class JdbcConne {
 - Spring singleton : one singleton per Application Context
 
 
-## COMPONENT SCAN
+## Component Scan
 
 ```java
 @SpringBootApplication
-@ComponentScan("com.spring.basics.componentscan")
-public class ComponentScanApplication {
+@ComponentScan("com.spring.basics.web")
+public class Application {
     // ...
 }
 ```
 
-## THE LIFECYCLE OF THE BEAN
+## The lifecycle of a bean
 
 - As soon as bean is created post construct will be called. Initialize content of bean. `@PostConstruct`
 
@@ -148,7 +148,6 @@ public class StudentController {
         theStudents.add(new Student("Mikey", "Rebeca"));
         theStudents.add(new Student("Misiek", "Brajan"));
     }
-
     // ...
 }
 ```
@@ -278,7 +277,9 @@ public class WelcomeController {
   }
 }
 ```
+
 ### With Spring
+
 ```java
 @Component
 public class WelcomeService {}
@@ -295,12 +296,11 @@ public class WelcomeController
 }
 ```
 
-
 ## Component Annotations
 
 - `@Component` - generic component
 - `@Repository` - encapsulating storage, retrieval, typical for relational databases
-- `@Service` - Business serice facade
+- `@Service` - Business service facade
 - `@Controller` - Controller in MVC design pattern
 
 Classify components to different categories. Apply different logic for each category.
@@ -340,8 +340,8 @@ public class PropertiesApplication {
 		try (AnnotationConfigApplicationContext applicationContext =
 					 new AnnotationConfigApplicationContext(PropertiesApplication.class)) {
 
-			SomeExternalSerice serice = applicationContext.getBean(SomeExternalSerice.class);
-			LOGGER.info(" ===> {}", serice.returnServiceURL());
+			SomeExternalService service = applicationContext.getBean(SomeExternalSerivce.class);
+			LOGGER.info(" ===> {}", service.returnServiceURL());
 		}
 	}
 }
@@ -360,7 +360,6 @@ public class PropertiesApplication {
 
 Spring boot provides basic configuration needed to configure the application with these framework. This is called
 `AutoConfiguration`.
-
 
 ## Spring Boot, Spring, Spring MVC
 
@@ -462,13 +461,12 @@ logger.info("Intercepted method call - {}", joinPoint);
 
 #### JoinPoint
 
-- Specific interception of method call. Specific execution instatce. If called 100 method calls they will be
+- Specific interception of method call. Specific execution instance. If called 100 method calls they will be
 100 joinPoints.
 
 - Process where this whole thing gets executed is called
 **Weaving** - process of implementing AOP around your method calls
 **Weaver** - framework which implements Weaving
-
 
 ### `@After`
 
@@ -557,7 +555,7 @@ public class AroundAspect {
 }
 ```
 
-## Spring Boot Autoconfiguration
+## Spring Boot AutoConfiguration
 
 Some examples loaded by app context for us:
 
@@ -608,7 +606,7 @@ public class PersonRepository {
     EntityManager entityManager;
 
     public List<Person> findAll() {
-        TypedQuery<Person> namedQuery = entityManager.createNamedQuery("finad_all", Person.class);
+        TypedQuery<Person> namedQuery = entityManager.createNamedQuery("find_all", Person.class);
         return namedQuery.getResultList();
     }
 

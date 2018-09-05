@@ -1,8 +1,5 @@
 package algorithms.prime_numbers;
 
-/**
- * Created by Mati on 20.12.2017.
- */
 public class EratostenesSieve {
     public static void main(String[] args) {
         boolean[] tab = new boolean[11];

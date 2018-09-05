@@ -4,9 +4,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Consumer implements Runnable {
     private final Vector sharedQueue;
     private final int SIZE;

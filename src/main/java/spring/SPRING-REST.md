@@ -15,10 +15,9 @@ Process of converting JSON data to a Java POJO
     - Serialization / Deserialization
     - Marshalling / Unmarshalling
 
-### JSON Data Binding with Jackson
+## JSON Data Binding with Jackson
 
 - Handles data binding between JSON and Java
-
 - Package : *com.fasterxml.jackson.databind*
 
                                                      +---------+
@@ -32,7 +31,7 @@ Process of converting JSON data to a Java POJO
     - It does not call private method, so define public setters
 
 ```java
-ObjectMapper mapper = new ObjsetMapper();
+ObjectMapper mapper = new ObjectMapper();
 
 // Read from file and map to Java POJO
 Student student = mapper.readValue(new File("myjson.json"), Student.class);
@@ -44,13 +43,14 @@ mapper.enable(SerializationFeature.INDENT_OUTPUT);
 mapper.writeValue(new File("output.json"), student);
 ```
 
-### Spring Jackson Support
+## Spring Jackson Support
+
 - Spring automatically handle Jackson
 - JSON data binding passed to REST controller is converted to POJO
 - Java object returned from REST controller is converted to JSON
 
-
 ## Creating Spring REST
+
 - Add maven dependency
     - spring-webmvc
     - jackson-databind
@@ -58,11 +58,10 @@ mapper.writeValue(new File("output.json"), student);
 - Java Configuration: @Configuration
 
 ```java
-@Configration
+@Configuration
 @EnableWebMvc
 @ComponentScan(basePackage = "com.panda.spring")
 public class AppConfig {
-
 }
 ```
 
@@ -92,7 +91,8 @@ public class DemoController {
 
 - Spring REST and Jackson POJOs are automatically converted to JSON
 
-### Path Variables
+## Path Variables
+
 - Retrieve by id
     - GET : /api/students/{id}
 
@@ -106,12 +106,13 @@ public class DemoController {
                        }
 
 ```java
-
 @GetMapping("/students/{id}")
 public Student getStudent(@PathVariable int studentId) {
+}
 ```
 
 ## Exception Handling
+
 - Error response class
     - Java POJOs
     - Jackson converts it to JSON
@@ -135,7 +136,6 @@ public Student getStudent(@PathVariable int studentId) {
 - For global exception handling
 
 
-
         Rest client             Controller Advice               REST Service
             |   -------------------->   |   -------------------->   |
             |                           |                           |
@@ -152,9 +152,10 @@ public class GlobalExceptionHandler {
 ```
 
 ## API
+
 - Define API Requirements
 - Identify resources
-    - Plurar forms of resources /api/customers
+    - Plural forms of resources /api/customers
 - HTTP methods to assign actions on resources
     - GET, POST, PUT, DELETE
 
@@ -169,6 +170,7 @@ public class GlobalExceptionHandler {
 - Don't include actions in endpoint, instead use HTTP to assign actions
 
 ## CRUD
+
 ### Read GET
 
 ```java
@@ -183,10 +185,9 @@ public class StudentRestController {
         return studentService.getStudents();
     }
 }
-
 ```
 
-## Create POST
+### Create POST
 
 - @RequestBody to access the request body as POJO
 
@@ -221,7 +222,7 @@ public Student updateStudent(@RequestBody Student student) {
 @DeleteMapping("/students/{studentId}")
 public String deleteStudent(@PathVariable int studentId) {
 
-    Student stucent = studentService.getStudent(studentId);
+    Student student = studentService.getStudent(studentId);
 
     if (student == null) {
         throw new StudentNotFoundException("Student with id not found : " + studentId);

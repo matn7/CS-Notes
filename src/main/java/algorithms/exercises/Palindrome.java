@@ -1,8 +1,5 @@
 package algorithms.exercises;
 
-/**
- * Created by Mati on 26.12.2017.
- */
 public class Palindrome {
     public boolean checkPalindrome(String word) {
         boolean result = true;

@@ -1,8 +1,6 @@
 package algorithms.exercises;
 
-/**
- * Created by Mati on 26.12.2017.
- */
+
 public class SearchArr {
     public int findIndex(int[] tab, int val) {
 

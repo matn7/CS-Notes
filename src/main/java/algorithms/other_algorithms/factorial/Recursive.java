@@ -1,8 +1,5 @@
 package algorithms.other_algorithms.factorial;
 
-/**
- * Created by Mati on 12.07.2017.
- */
 public class Recursive {
 
     public static void main(String[] args) {

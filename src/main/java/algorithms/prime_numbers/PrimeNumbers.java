@@ -1,8 +1,5 @@
 package algorithms.prime_numbers;
 
-/**
- * Created by Mati on 19.12.2017.
- */
 public class PrimeNumbers {
     public boolean checkPrime(int testNumber) {
 

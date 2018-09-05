@@ -1,8 +1,5 @@
 package algorithms.prime_numbers;
 
-/**
- * Created by Mati on 21.12.2017.
- */
 public class EuclideAlgorithm {
     public int bcd(int num1, int num2) {
 

@@ -1,8 +1,5 @@
 package algorithms.exercises;
 
-/**
- * Created by Mati on 23.12.2017.
- */
 public class QuadraticEquation {
     public int delta(int a, int b, int c) {
         int dalta = (int) Math.pow(b,2) - 4 * a * c;
