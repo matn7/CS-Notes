@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class NewsAgency extends Observable implements Publisher {
 
     // Add List of Observers in our case Radio and TV

@@ -8,10 +8,11 @@
 - Minimalize boilerplate Java code
 
 ## Components
+
 - Core Container
     - Factory for creating beans
     - Manage beans dependencies
-        - :one:Beans
+        - :one: Beans
         - :two: Core
         - :three: Spel
         - :four: Context
@@ -43,6 +44,7 @@
 
 
 ## Spring Projects
+
 - Additional Spring modules build on top of core Framework
     - Spring Cloud
     - Spring Data
@@ -76,11 +78,11 @@
 
 ### Configure Spring beans
 
-*applicationContext.xml*
+**applicationContext.xml**
 
 ```xml
 <beans >
-    <bean id="myPanda" class="com.panda.tiergarten.berlin.ZooWorker"></bean>
+    <bean id="myPandaBean" class="com.panda.tiergarten.berlin.ZooWorker"></bean>
 </beans>
 ```
 
@@ -102,17 +104,18 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app
 ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 // retrieve bean from spring container
-Panda thePanda = context.getBean("myPanda", Panda.class);
+Panda thePanda = context.getBean("myPandaBean", Panda.class);
 ```
 
-### What is a Spring Bean?
+## What is a Spring Bean?
+
 - A "Spring Bean" is simply a Java object.
 
 - When Java objects are created by the Spring Container, then Spring refers to them as "Spring Beans".
 - Spring Beans are created from normal Java classes like Java objects.
 
 
-### Why do we specify the interface in getBean()?
+## Why do we specify the interface in getBean()?
 
 Behaves the same as getBean(String), but provides a measure of type safety by throwing a BeanNotOfRequiredTypeException
 if the bean is not of the required type.
@@ -141,7 +144,7 @@ This means that ClassCastException can't be thrown on casting the result correct
 
 ### Define the dependency interface and class
 
-*CleaningService.java*
+**CleaningService.java**
 
 ```java
 public interface CleaningService {
@@ -149,19 +152,19 @@ public interface CleaningService {
 }
 ```
 
-*ZooCleaningService.java*
+**ZooCleaningService.java**
 
 ```java
 public class ZooCleaningService implements CleaningService {
     public String getCleanUp() {
-        return "Tiger cages are clean now";
+        return "Clean zoo";
     }
 }
 ```
 
 ###  Create a constructor in your class for injections
 
-*TigerSection.java*
+**TigerSection.java**
 
 ```java
 public class ZooWorker implements Section {
@@ -205,7 +208,8 @@ public class Puma implements Section {
 }
 ```
 
-*applicationContext.xml*
+**applicationContext.xml**
+
 ```xml
 <beans >
     <bean id="myService" class="com.panda.tiergarten.berlin.ZooCleaningService"></bean>
@@ -220,7 +224,7 @@ public class Puma implements Section {
 ### Inject literal values
 
 ```xml
-<beans >
+<beans>
     <bean id="myService" class="com.panda.tiergarten.berlin.ZooCleaningService"></bean>
 
     <bean id="myPanda" class="com.panda.tiergarten.berlin.Puma"></bean>
@@ -239,25 +243,24 @@ foo.email=email@panda.com
 foo.team=Missisipi
 ```
 
-*applicationContext.xml*
+**applicationContext.xml**
 ```xml
 <context:property-placeholder location="classpath:zoo.properties" />
 
-<bean id="myPanda" class="com.panda.tiergarten.berlin.Puma">
+<bean id="myPuma" class="com.panda.tiergarten.berlin.Puma">
     <property name="cleaningService" ref="myService" />
 
     <property name="emailAddress" value="${foo.email}" />
     <property name="team" value="${foo.team}" />
 </bean>
-
 ```
 
 ## Bean scopes
 
 - Scope refers to the lifecycle of the bean
-- How long does the bean live?
-- How many instances are created?
-- How is the bean shared?
+- How long does the bean live ?
+- How many instances are created ?
+- How is the bean shared ?
 
 
 ### Default scope: Singleton
@@ -289,7 +292,8 @@ foo.team=Missisipi
 ## Bean lifecycle
 
 Container  :arrow_right:   Bean    :arrow_right: Dependencies :arrow_right:  Internal   :arrow_right: Custom init method<br/>
-Started                  Instantiated               Injected                Spring Processing
+<br/>
+Started     :arrow_right:  Instantiated   :arrow_right:  Injected  :arrow_right:  Spring Processing
 
 
 ### Bean is ready for use
@@ -297,10 +301,13 @@ Started                  Instantiated               Injected                Spri
 Container is Shutdown <br/>
 :arrow_down: <br/>
 Custom Destroy method <br/>
-:arrow_right: <br/>
+:arrow_right:
 STOP
 
+<br/>
+
 ### Bean Lifecycle Methods / Hooks
+
 - Add custom code during bean initialization
     - Calling custom business logic methods
     - Setting handles to resources (db, sockets)
@@ -318,7 +325,6 @@ STOP
         destroy-method="doCleanupStuff">
     </bean>
 </beans>
-
 ```
 
 - Init and destroy method signatures
@@ -327,8 +333,10 @@ STOP
     - Any method name
     - No arguments allowed
 
-- For the prototype scope spring does not call **destroy** method.
-In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean: <br/>
+<br/>
+
+For the prototype scope spring does not call **destroy** method.
+In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean
 the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client,
 with no further record of that prototype instance.
 
@@ -343,7 +351,7 @@ The client code must clean up prototype-scoped objects and release expensive res
     - Provide meta-data about class
     - Processed at compile time or run-time for special processing
 
-- Example `@Override`
+- :star: Example `@Override`
     - Override method, we are telling a compiler we override method exactly as present in interface or parent class.
     - Compiler check that we actually override method, if some issue they will be compile time error
 
@@ -354,7 +362,7 @@ The client code must clean up prototype-scoped objects and release expensive res
 
 - Development process
     - Enable component scanning in Spring config file
-    - Add @Component Annotation to Java Classes
+    - Add `@Component` Annotation to Java Classes
     - Retrieve bean from Spring container
 
 **Enable component scanning**
@@ -365,7 +373,7 @@ The client code must clean up prototype-scoped objects and release expensive res
 </beans>
 ```
 
-**Add @Component annotations**
+**Add `@Component` annotations**
 
 ```java
 @Component("monkeyService")
@@ -391,7 +399,7 @@ Service monkeyService = context.getBean("monkeyService", MonkeyService.class);
 - What is Spring AutoWiring?
     - For dependency injection, Spring can use autowiring
     - Spring will look for a class that matches the property
-        - matches by type: class or interface
+        - Matches by type, class or interface
     - Spring will inject it automatically
 
 - Autowiring Injection Types
@@ -399,7 +407,8 @@ Service monkeyService = context.getBean("monkeyService", MonkeyService.class);
     - Setter injection
     - Field Injections
 
-*MonkeyService.java*
+**MonkeyService.java**
+
 ```java
 @Component
 public class MonkeyService implements Service {
@@ -438,7 +447,7 @@ public void anyMethodName(BillingService billingService) {
 
 - Inject dependencies by setting field values on class directly
 - Accomplished by using Java Reflection
-- Configure the dependency injection with @Autowired Annotation
+- Configure the dependency injection with `@Autowired` Annotation
     - Applied directly to the field
     - No need for setter methods
 
@@ -464,16 +473,19 @@ public MonkeyService(@Quelifier("tigerService") BillingService billingService) {
 }
 ```
 
-- How to inject properties ?
-    - @Value("${foo.email}")
+### How to inject properties ?
+
+```java
+@Value("${foo.email}")
+```
 
 ## @Scope Annotation
 
 - Bean Scopes
     - Scope refers to the lifecycle of a bean
-    - How long does bean live?
-    - How many instances are created?
-    - How the bean is shared?
+    - How long does bean live ?
+    - How many instances are created ?
+    - How the bean is shared ?
 
 - Default scope is singleton
 
@@ -481,7 +493,6 @@ public MonkeyService(@Quelifier("tigerService") BillingService billingService) {
 @Component
 @Scope("singleton")
 public class PandaService implements Service {
-    // ...
 }
 ```
 
@@ -489,9 +500,9 @@ public class PandaService implements Service {
 
 - Methods for init and destroy
 - Annotations:
-    - @PostConstruct
-    - @PreDestroy
-- Method annotated with @PostConstruct or @PreDestroy. Cannot have any arguments
+    - `@PostConstruct`
+    - `@PreDestroy`
+- Method annotated with `@PostConstruct` or `@PreDestroy`. Cannot have any arguments
 
 ```java
 @Component
@@ -499,18 +510,16 @@ public class PandaService implements Service {
 
     @PostConstruct
     public void doStartupStuff() {
-        // ...
     }
 
     @PreDestroy
     public void doCleanupStuff() {
-        // ...
     }
 }
 ```
 
 
-- For Prototype Scope Spring does not call @PreDestroy method
+For Prototype Scope Spring does not call `@PreDestroy` method
 Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
 in the case of prototypes, configured destruction lifecycle callbacks are not called.
 The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.

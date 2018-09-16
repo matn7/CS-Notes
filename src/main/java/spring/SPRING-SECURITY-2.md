@@ -1,14 +1,21 @@
 # Spring Security
 
 ## Spring Security Features
+
 - Provides a portable security mechanism for Java enterprise apps
 
 ### Authentication & Authorization
-- Authentication - ensuring a user who they claim to be.
-    - HTTP basic, Form Based, LDAP, OpenID, X.509
-- Authorization - determining if a user is allowed to perform an action.
+
+- Authentication - ensuring a user who they claim to be
+    - HTTP basic
+    - Form Based
+    - LDAP
+    - OpenID
+    - X.509
+- Authorization - determining if a user is allowed to perform an action
 
 ### Security capabilities
+
 - Protection web resources
     - Requires specific roles to access URLs
 - Authorizing method invocations
@@ -17,6 +24,7 @@
     - Constantly Access Lists (CAL) to determine domain object access
 
 ### Extra Features
+
 - Cross Site Request Forgery `CSRF`
 - Session Fixation
 - Click jacking
@@ -24,20 +32,23 @@
 - Password encoding via hash and salt
 
 ### Spring Security Strengths
+
 - Spring approach
 - Annotation based
 - Spring MVC
 - Testing
 - Layered security approach
 
-### Security Principles
+## Security Principles
 
-#### Authentication
+### Authentication
+
 - Process of identifying an individual using credentials
     - Username & password
     - Tokens
 
-#### Authorization
+### Authorization
+
 - Process of granting someone access to a resource
     - Files
     - Records
@@ -45,13 +56,14 @@
 
 ## Spring Security Basics
 
-**MAVEN**
-- spring-security-web
-- spring-security-config
+- **MAVEN**
+    - spring-security-web
+    - spring-security-config
 
 ### Basic XML Configuration
 
-*web.xml*
+**web.xml**
+
 ```xml
 <filter>
     <filter-name>SpringSecurityFilterChain</filter-name>
@@ -69,7 +81,8 @@
 </context-param>
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:http auto-config="true" use-expressions="false">
     <security:intercept-url pattern="/**" access="ROLE_USER"/>
@@ -83,7 +96,7 @@
 </security:authentication-manager>
 ```
 
-## HTTP Basic Authentication
+### HTTP Basic Authentication
 
 ```xml
 <security:http auto-config="true" use-expressions="false">
@@ -91,27 +104,31 @@
 </security:http>
 ```
 
-## CSRF Token
+### CSRF Token
+
 - spring-security-taglib
-*login.jsp*
+
+**login.jsp**
+
 ```jsp
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<!-- ... -->
 <sec:csrfInput/>
 ```
 
-## Authentication
+### Authentication
+
 - UserDetailsService
 - SecurityContextHolder
 - UserDetails
 - AuthenticationProvider
 - Authentication
 
-## Security Interceptor
+### Security Interceptor
+
 - Decider whether access is granted to a particular sources
 - FilterSecurityInterceptor enforces access to HTTP resources
 - MethodSecurityInterceptor enforces access to method invocations
-- Config sing instances of ConfigAttribute
+- Config using instances of ConfigAttribute
 
 ```xml
 <filter>
@@ -133,7 +150,8 @@
 </bean>
 <bean id="filterSecurityInterceptor" class="org.springframework.security.web.accept.intercept.FilterSecurityInterceptor"/>
 ```
-## Security Interceptor Types
+
+### Security Interceptor Types
 
 ```java
 @Controller
@@ -147,7 +165,7 @@ public class SampleController {
 }
 ```
 
-## Process
+### Process
 
     USER ---> Security Interceptor ---> Authenticated   --- yes ---> Controller
 
@@ -165,7 +183,8 @@ UserEntity user = this.autoUserRepository.findByUsername(username);
 
 ### UserDetails
 
-*UserEntity.java*
+**UserEntity.java**
+
 ```java
 @Entity
 @Table(name="USER_ENTITY")
@@ -198,7 +217,8 @@ public class UserEntity implements UserDetails {
 }
 ```
 
-*HomeController.java*
+**HomeController.java**
+
 ```java
 @Controller
 @RequestMapping("/")
@@ -222,7 +242,8 @@ public class HomeController {
 
 ### Custom Authentication Privider
 
-*CustomAuthenticationProvider.java*
+**CustomAuthenticationProvider.java**
+
 ```java
 @Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -248,7 +269,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 }
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:authentication-manager>
     <security:authentication-provider ref="CustomAuthenticationProvider">
@@ -257,14 +279,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 ### Custom Authentication Object
 
-*CustomAuthenticationToken.java*
+**CustomAuthenticationToken.java**
+
 ```java
 public class CustomAuthenticationToken extends UsernamePasswordAuthenticationToken {
     private String maki;
 
     public CustomAuthenticationToken(String principal, String credentials, String make) {
         super(principal, credentials);
-        this.maki = maki;
+        this.maki = make;
     }
 
     public CustomAuthenticationToken(UserEntity principal, String credentials, Collection<? extends GrantedAuthority> authorities, String maki) {
@@ -278,7 +301,8 @@ public class CustomAuthenticationToken extends UsernamePasswordAuthenticationTok
 }
 ```
 
-*CustomAuthenticationFilter.java*
+**CustomAuthenticationFilter.java**
+
 ```java
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFIlter {
     @Override
@@ -294,7 +318,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
 }
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:authentication-manager alias="authenticationManager">
     <security:authentication-provider ref="customAuthenticationProvider"/>
@@ -311,14 +336,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
 
 ## JDBC Authentication
 
-*application-context.xml*
+**application-context.xml**
+
 ```xml
 <jdbc:embedded-database id="datasource" type="H2">
     <jdbc:script location="classpath:init.sql"/>
 </jdbc:embedded-database>
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:authentication-manager>
     <security:authentication-provider>
@@ -329,7 +356,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
 
 ### Group Based Access Control
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:authentication-manager>
     <security:authentication-provider>
@@ -340,7 +368,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
 ```
 
 ### Encoding Password
-*security-context.xml*
+
+**security-context.xml**
+
 ```xml
 <security:authentication-manager>
     <security:authentication-provider>
@@ -351,7 +381,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
 ```
 
 ### Salting Hashes
-*security-context.xml*
+
+**security-context.xml**
+
 ```xml
 <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
 <security:password-encoder ref="passwordEncoder"/>
@@ -368,12 +400,12 @@ publc class PasswordEncoder {
 
 ## LDAP Authentication
 
-*spring-security.ldif* ldap configuration
+**spring-security.ldif** ldap configuration
 
 ### LDAP Authentication Provider
 
-**MAVEN**
-- spring-security-ldap
+- **MAVEN**
+    - spring-security-ldap
 
 *security-context.xml*
 ```xml
@@ -384,7 +416,7 @@ publc class PasswordEncoder {
 </security:authentication-manager>
 ```
 
-## UserDetails Context Mapper
+### UserDetails Context Mapper
 
 ```java
 @Component("contextmapper")
@@ -394,7 +426,7 @@ public class MyUserDetailsContextMapper implements UserDetailsContextMapper {
         Collection<? extends GrantedAuthority> auth) {
         UserEntity user = new UserEntity();
         user.setName(context.getStringAttribute("username"));
-        user.setEmail(context.getStringAttribute("emial"));
+        user.setEmail(context.getStringAttribute("email"));
         user.setUsername(name);
         user.setAuthorities(auth);
         return user;
@@ -411,7 +443,8 @@ public class MyUserDetailsContextMapper implements UserDetailsContextMapper {
 }
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <context:component-scan base-package="com.panda.security"/>
 
@@ -421,7 +454,7 @@ public class MyUserDetailsContextMapper implements UserDetailsContextMapper {
 </security:authentication-manager>
 ```
 
-## Authorization
+### Authorization
 
 ```xml
 <security:http auto-config="true" use-expressions="true">
@@ -431,6 +464,7 @@ public class MyUserDetailsContextMapper implements UserDetailsContextMapper {
 ```
 
 ### Authorize tag
+
 ```jsp
 <%@ taglib uri="org.springframework.org/security/tags" prefix="sec" %>
 
@@ -438,9 +472,9 @@ public class MyUserDetailsContextMapper implements UserDetailsContextMapper {
 </sec:authorize>
 ```
 
-*UserController.java*
+**UserController.java**
+
 ```java
-// ...
 @ModelAttribute("isAllowed")
 public boolean isAllowed(Authentication authentication) {
     return authentication != null && authentication.getAuthorities().contains(
@@ -448,10 +482,9 @@ public boolean isAllowed(Authentication authentication) {
 }
 ```
 
-`@PreAuthorize`
+**`@PreAuthorize`**
 
 ```java
-
 @ResponseBody
 @RequestMapping("/authorized")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -460,12 +493,13 @@ public string authorized() {
 }
 ```
 
-*dispatcher-servlet.xml*
+**dispatcher-servlet.xml**
+
 ```xml
 <security:global-method-security pre-post-annotations="enabled"/>
 ```
 
-`@PostAuthorize`
+**`@PostAuthorize`**
 
 ```java
 @RequestMapping("/{id}")
@@ -477,8 +511,9 @@ public String getCheckout(@PathVariable("checkout") long id, Model model) {
 }
 ```
 
-`@RolesAllowed`
-*dispatcher-servlet.xml*
+**`@RolesAllowed`** <br/>
+
+***dispatcher-servlet.xml*
 ```xml
 <security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled"/>
 ```
@@ -492,13 +527,15 @@ public String adminPage() {
 }
 ```
 
-`@PreFilter`
+**`@PreFilter`**
+
 ```java
 @PreFilter("principal.userid=object.user.userid")
 public String save(checkout);
 ```
 
-`@PostFilter`
+**`@PostFilter`**
+
 ```java
 @ResponseBody
 @RequestMapping("/checkouts")
@@ -515,11 +552,12 @@ public List<Checkout> getCheckouts(Authentication authentication) {
 - `acl_object_identity` - protected object instances
 - `acl_entry` - entries
 
-**MAVEN**
-- spring-security-acl
-- ehcache
+- **MAVEN**
+    - spring-security-acl
+    - ehcache
 
-*dispatcher-servlet.xml*
+**dispatcher-servlet.xml**
+
 ```xml
 <bean id="expressionHandler" class="org.springframework....DefaultMethodSecurityExpressionHandler">
     <property name="permissionEvaluator" ref="permissionEval"/>
@@ -542,20 +580,24 @@ public List<Checkout> getCheckouts(Authentication authentication) {
 ## Advanced
 
 ### HTTP channel Security
+
 Create public key using `keytool`
 
-*server.xml*
+**server.xml**
+
 ```xml
 <connector SSLEnabled="true" KeyStoreFile=".../keystore.jks" kaystorePass="pwd" scheme="https" secure="true" clientAuth="false"
     sslProtocol="TLSv1" ... />
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:intercept-url pattern="/checkouts/*" access="ROLE_ADMIN" requires-channel="https"/>
 ```
 
 ### CSRF
+
 Script rely upon session after click on malicious script.
 
 ```html
@@ -564,7 +606,8 @@ Script rely upon session after click on malicious script.
 </div>
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:csrf disabled="true"/>
 ```
@@ -589,14 +632,16 @@ Script rely upon session after click on malicious script.
 </div>
 ```
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:remember-me key="rememberme"/>
 ```
 
 ### Java Configuration
 
-*SecurityConfig.java*
+**SecurityConfig.java**
+
 ```java
 @Configuration
 @EnableWebSecurity
@@ -621,7 +666,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
-*SecurityAppInitializer.java*
+**SecurityAppInitializer.java**
+
 ```java
 public class SecurityAppInitializer extends AbstractSecurityWebApplicationInitializer {
     public SecurityAppInitializer() {

@@ -95,6 +95,37 @@ Native Properties & Events  :arrow_forward: Custom Properties & Events  :arrow_f
 
 - Form is created programmatically and synchronized with the DOM
 
+## Pipes
+
+- Allows to transform output in template
+
+```html
+<p>{{ username | uppercase }}</p>
+```
+
+- Create custom pipe, implements PipeTransform, override transform method
+- Pipe arguments after :, for example shorten:8
+
+## Compilation
+
+### Just in Time
+
+Development :arrow_forward: Production :arrow_forward: App download in browser :arrow_forward: Parses and compiles template to Java Script
+
+### Ahead of Time
+
+Development :arrow_forward: Parses and compiles template to Java Script :arrow_forward: Production :arrow_forward: App download in browser
+
+- Faster Startup, parsing and compilation doesn't happen in browser
+- Templates checked during Development
+- Smaller File Size
+
+## Deployment
+
+- Build App
+- AOT Compilation
+- Set base element
+- Return index.html in case of 404 error
 
 ## Questions
 
@@ -106,8 +137,12 @@ routerLinkActive="active"
 
 
 ## Commands
-ng new project-name
-npm install
-ng g d directive-name
-ng g c page-not-found
-npm install --save rxjs-compat
+ng new project-name <br/>
+npm install <br/>
+ng g d directive-name <br/>
+ng g c page-not-found <br/>
+npm install --save rxjs-compat <br/>
+<br/><br/>
+**Ahead of time compilation** <br/>
+ng build --prod --aot <br/>
+ng build --prod --aot --base-href /application/ <br/>

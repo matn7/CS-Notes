@@ -18,7 +18,7 @@ Process of converting JSON data to a Java POJO
 ## JSON Data Binding with Jackson
 
 - Handles data binding between JSON and Java
-- Package : *com.fasterxml.jackson.databind*
+- Package : **com.fasterxml.jackson.databind**
 
                                                      +---------+
         {                                  set       | Java    |
@@ -55,7 +55,7 @@ mapper.writeValue(new File("output.json"), student);
     - spring-webmvc
     - jackson-databind
     - javax.servlet-api
-- Java Configuration: @Configuration
+- Java Configuration: `@Configuration`
 
 ```java
 @Configuration
@@ -122,7 +122,7 @@ public Student getStudent(@PathVariable int studentId) {
 
 - Update REST to throw exception if necessary
 
-- Add exception handler @ExceptionHandler
+- Add exception handler `@ExceptionHandler`
     - Exception handler will return a ResponseEntity
     - ResponseEntity is a wrapper for the HTTP response object
     - ResponseEntity provides control to specify:
@@ -147,7 +147,6 @@ public Student getStudent(@PathVariable int studentId) {
 ```java
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    // ...
 }
 ```
 
@@ -189,7 +188,7 @@ public class StudentRestController {
 
 ### Create POST
 
-- @RequestBody to access the request body as POJO
+- `@RequestBody` to access the request body as POJO
 
 ```java
 @PostMapping("/students")
@@ -206,7 +205,7 @@ public Student addStudent(@RequestBody Student student) {
     - Content-type: application/json
 - Configure REST client to send the correct HTTP request header (using Postman for instance)
 
-## Update PUT
+### Update PUT
 
 ```java
 @PutMapping("/students")
@@ -216,7 +215,7 @@ public Student updateStudent(@RequestBody Student student) {
 }
 ```
 
-## Delete DELETE
+### Delete DELETE
 
 ```java
 @DeleteMapping("/students/{studentId}")

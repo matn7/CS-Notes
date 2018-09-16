@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class Main {
 
     public static void main(String[] args) {

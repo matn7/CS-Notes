@@ -48,7 +48,6 @@ public class SortServiceImpl {
 @Component
 @Primary
 public class BubbleSortAlgorithm implements SortAlgorithm {
-    // ...
 }
 ```
 
@@ -58,9 +57,10 @@ public class BubbleSortAlgorithm implements SortAlgorithm {
 @Component
 @Qualifier("quick")
 public class QuickSortAlgorithm implements SortAlgorithm {
-    // ...
 }
 ```
+
+**use**
 
 ```java
 public class SortServiceImpl {
@@ -68,7 +68,6 @@ public class SortServiceImpl {
     @Qualifier("quick")
     private SortAlgorithm sortAlgorithm;
 }
-
 ```
 
 ## Scope of Beans
@@ -114,6 +113,7 @@ public class BinarySearchImpl {
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE,
        proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JdbcConne {
+}
 ```
 
 ## :star: Singleton vs GOF singleton
@@ -128,7 +128,6 @@ public class JdbcConne {
 @SpringBootApplication
 @ComponentScan("com.spring.basics.web")
 public class Application {
-    // ...
 }
 ```
 
@@ -148,7 +147,6 @@ public class StudentController {
         theStudents.add(new Student("Mikey", "Rebeca"));
         theStudents.add(new Student("Misiek", "Brajan"));
     }
-    // ...
 }
 ```
 
@@ -162,7 +160,8 @@ public class StudentController {
     - @Named `@Component` & `@Qualifier`
     - @Singleton
 
-*SomeCDIBusiness.java*
+**SomeCDIBusiness.java**
+
 ```java
 // @Component
 @Named
@@ -181,7 +180,8 @@ public class SomeCDIBusiness {
 }
 ```
 
-*SomeCdiDao.java*
+**SomeCdiDao.java**
+
 ```java
 //@Component
 @Named
@@ -191,7 +191,8 @@ public class SomeCdiDao {
 
 ## Spring Configuration
 
-*pom.xml*
+**pom.xml**
+
 ```xml
 <dependency>
     <groupId>org.springframework</groupId>
@@ -248,7 +249,7 @@ try (ClassPathXmlApplicationContext applicationContext =
 
 ## Wrap up IOC, Application Context and BeanFactory
 
-- IOC Container :
+- IOC Container
     - Manages beans
     - Create instance of WelcomeService
     - Creates beans for WelcomeController
@@ -260,7 +261,7 @@ try (ClassPathXmlApplicationContext applicationContext =
 - Bean Factory :
     - implementation of IOC
 
-- ApplicationContext = Bean Factory ++
+- ApplicationContext = **Bean Factory ++**
     - Spring AOP features
     - I18n capabilities
     - WebApplicationContext for web app
@@ -307,12 +308,14 @@ Classify components to different categories. Apply different logic for each cate
 
 ## Read from properties file
 
-*app.properties*
+**app.properties**
+
 ```properties
 external.service.url = http://server.com/service
 ```
 
-*ExternalService.java*
+**ExternalService.java**
+
 ```java
 @Component
 public class ExternalService {
@@ -326,7 +329,8 @@ public class ExternalService {
 }
 ```
 
-*PropertiesApplication.java*
+**PropertiesApplication.java**
+
 ```java
 @Configuration
 @ComponentScan("com.panda.spring.properties")
@@ -349,33 +353,36 @@ public class PropertiesApplication {
 
 ## Spring Boot Auto Configuration
 
-`@SpringBootApplication`
-- Spring Context
-- Auto Configuration
-- Component Scan
+- :star: `@SpringBootApplication`
+    - Spring Context
+    - Auto Configuration
+    - Component Scan
 
 - Spring boot looks at
     - a) Frameworks available on **CLASSPATH**
     - b) Existing configuration for the application based on these
 
-Spring boot provides basic configuration needed to configure the application with these framework. This is called
+- Spring boot provides basic configuration needed to configure the application with these framework. This is called
 `AutoConfiguration`.
 
 ## Spring Boot, Spring, Spring MVC
 
 **`Spring Framework`**
+
 - Most important feature of Spring Framework is Dependency Injection. At the core all Spring Modules is
 Dependency Injection or IOC Inversion of Control.
 - Reduce duplication, plumbing code.
 - Integration with other framework
 
 **`Spring MVC`**
+
 - Spring MVC framework provides decoupled way of developing web applications. With simple concepts like
 `DispatcherServlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop web applications.
 
 ## Spring boot
 
-*pom.xml*
+**pom.xml**
+
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -395,7 +402,7 @@ Dependency Injection or IOC Inversion of Control.
 
 ## AOP
 
-### `@Before`
+**`@Before`**
 
 ```java
 package com.panda.spring.aop.business;
@@ -426,7 +433,6 @@ public class DaoRepo {
 ```
 
 ```java
-
 @Aspect
 @Configuration
 public class BeforeAspect {
@@ -442,11 +448,13 @@ public class BeforeAspect {
 }
 ```
 
-#### Join Point (pointcut)
+**Join Point (pointcut)**
 
 - "execution(* com.panda.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
 
-#### Advice
+<br/>
+
+**Advice**
 
 ```java
 logger.info("Validation before method call");
@@ -455,20 +463,20 @@ logger.info("Intercepted method call - {}", joinPoint);
 
 - what should I do when I do interception
 
-#### Aspect
+** Aspect **
 
 - Combination of **Pointcut** and **Advice**
 
-#### JoinPoint
+** JoinPoint **
 
 - Specific interception of method call. Specific execution instance. If called 100 method calls they will be
 100 joinPoints.
 
 - Process where this whole thing gets executed is called
-**Weaving** - process of implementing AOP around your method calls
-**Weaver** - framework which implements Weaving
+    - **Weaving** - process of implementing AOP around your method calls
+    - **Weaver** - framework which implements Weaving
 
-### `@After`
+**`@After`**
 
 `@After` = `@AfterReturning` + `@AfterThrowing`
 
@@ -490,7 +498,7 @@ logger.info("Intercepted method call - {}", joinPoint);
     }
 ```
 
-### `@Around`
+**`@Around`**
 
 ```java
     @Around("execution(* com.panda.spring.aop.business.*.*(..))")
@@ -515,14 +523,18 @@ public class CommonJoinpointConfig {
 public void before(JoinPoint joinPoint) {
 ```
 
-### Create annototion
+### :star: Create annototion
 
 ```java
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Stoper {
 }
+```
 
+---
+
+```java
 @Repository
 public class DaoRepo {
 
@@ -531,13 +543,21 @@ public class DaoRepo {
         return "DaoRepo";
     }
 }
+```
 
+---
+
+```java
 public class CommonJoinpoint {
     @Pointcut("@annotation(com.panda.spring.aop.aspect.Stopper)")
     public void stopper() {
     }
 }
+```
 
+---
+
+```java
 @Aspect
 @Configuration
 public class AroundAspect {
@@ -575,7 +595,8 @@ Some examples loaded by app context for us:
 
 ## JPA
 
-*Person.java*
+**Person.java**
+
 ```java
 @Entity
 @Table(name="person")
@@ -590,12 +611,10 @@ public class Person {
 
     @Column(name = "location")
     private String location;
-
-    // ...
 }
 ```
 
-*PersonRepository.java*
+**PersonRepository.java**
 
 ```java
 @Repository
@@ -633,14 +652,14 @@ public class PersonRepository {
 
 ## Spring Data JPA
 
-*SpringDataRepository.java*
+**SpringDataRepository.java**
 
 ```java
 public interface SpringDataRepository extends JpaRepository<Person, Integer> {
 }
 ```
 
-*Use*
+**Use**
 
 ```java
 repository.findById(12);
@@ -651,7 +670,7 @@ repository.deleteBYId(12);
 
 ## Spring MVC
 
-*web.xml*
+**web.xml**
 
 ```xml
 <web-app>
@@ -676,7 +695,7 @@ repository.deleteBYId(12);
 </web-app>
 ```
 
-*todo-servlet.xml*
+**servlet.xml**
 
 ```xml
 <beans>

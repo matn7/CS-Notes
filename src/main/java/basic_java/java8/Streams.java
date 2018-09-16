@@ -15,6 +15,7 @@ public class Streams {
     // Tworzenie Strumieni
     public static void main(String[] args) {
         Stream<String> song = Stream.of("Ram", "Pam", "Pam", "Tam");
+        System.out.println(song);
         Stream<String> silencs = Stream.empty();
         Stream<String> repeat = Stream.generate(() -> "Echo");
         Stream<Double> random = Stream.generate(Math::random); //Math.random();
