@@ -2,9 +2,6 @@ package mutithreading.threading_new_school;
 
 import java.util.concurrent.*;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class Main2 {
 
     public static void main(String[] args) {

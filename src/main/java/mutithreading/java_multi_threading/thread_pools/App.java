@@ -4,12 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Mati on 21.07.2017.
- */
 // Ways to manage a lot of threads at the same time
 // ExecutorService and static method newFixedThreadPool()
-
 class Processor implements Runnable {
 
     private int id;

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Mati on 20.07.2017.
- */
 public class Worker {
 
     private Random random = new Random();

@@ -4,9 +4,6 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class Runner {
 
     private Lock lock = new ReentrantLock();

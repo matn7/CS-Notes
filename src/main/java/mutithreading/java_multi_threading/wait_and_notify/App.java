@@ -1,8 +1,5 @@
 package mutithreading.java_multi_threading.wait_and_notify;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class App {
 
     public static void main(String[] args) throws InterruptedException {

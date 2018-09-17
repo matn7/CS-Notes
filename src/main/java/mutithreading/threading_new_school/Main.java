@@ -7,9 +7,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class Main {
 
     public static void main(String[] args) {

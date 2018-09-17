@@ -1,8 +1,5 @@
 package mutithreading.simulations_and_multithreading.callable_and_future;
 
-/**
- * Created by Mati on 11.07.2017.
- */
 public class Main {
     // Terminating Threads
     // Interrupt threads. For example making I/O operations and the user stop the operations via UI.

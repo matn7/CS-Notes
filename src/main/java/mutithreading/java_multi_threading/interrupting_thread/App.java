@@ -3,9 +3,6 @@ package mutithreading.java_multi_threading.interrupting_thread;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class App {
 
     public static void main(String[] args) throws InterruptedException {

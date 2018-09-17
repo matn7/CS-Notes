@@ -1,8 +1,5 @@
 package mutithreading.simulations_and_multithreading.synchronization;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class Main {
 
     private static int count = 0;

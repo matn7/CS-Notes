@@ -1,8 +1,5 @@
 package mutithreading.singleton;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class Singleton {
     // Maintain just one private, static instance
     // this is the singleton object

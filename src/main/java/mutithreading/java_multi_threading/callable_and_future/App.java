@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.*;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class App {
 
     // Return value from multithreading

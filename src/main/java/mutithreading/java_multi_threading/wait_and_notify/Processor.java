@@ -2,9 +2,6 @@ package mutithreading.java_multi_threading.wait_and_notify;
 
 import java.util.Scanner;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Processor {
 
     public void produce() throws InterruptedException {

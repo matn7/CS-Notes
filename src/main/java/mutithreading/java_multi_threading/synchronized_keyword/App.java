@@ -1,8 +1,5 @@
 package mutithreading.java_multi_threading.synchronized_keyword;
 
-/**
- * Created by Mati on 14.07.2017.
- */
 public class App {
 
     private int count = 0;

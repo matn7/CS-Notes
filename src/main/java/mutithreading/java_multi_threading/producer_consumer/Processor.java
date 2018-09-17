@@ -4,9 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Processor {
 
     private LinkedList<Integer> list = new LinkedList<>();

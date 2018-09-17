@@ -4,9 +4,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Created by Mati on 21.07.2017.
- */
 // Problems with synchronization
 class Processor implements Runnable {
 

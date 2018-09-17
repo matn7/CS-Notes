@@ -1,8 +1,5 @@
 package mutithreading.simulations_and_multithreading.semaphores;
 
-/**
- * Created by Mati on 11.07.2017.
- */
 public class App {
 
     public static void main(String[] args) {

@@ -1,11 +1,6 @@
 package mutithreading.simulations_and_multithreading.executorService;
 
-/**
- * Created by Mati on 11.07.2017.
- */
 public class Worker implements Runnable {
-
-
     @Override
     public void run() {
         for (int i = 0; i < 5; i++) {

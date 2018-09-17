@@ -3,9 +3,6 @@ package mutithreading.simulations_and_multithreading.lock;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created by Mati on 11.07.2017.
- */
 public class App {
 
     private static int counter = 0;

@@ -3,9 +3,6 @@ package mutithreading.locks;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class App {
     public static int counter = 0;
     private static Lock lock = new ReentrantLock();

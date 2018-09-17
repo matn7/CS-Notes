@@ -3,9 +3,6 @@ package mutithreading.simulations_and_multithreading.executorService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Created by Mati on 11.07.2017.
- */
 public class App {
 
     public static void main(String[] args) {

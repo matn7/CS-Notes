@@ -2,9 +2,6 @@ package mutithreading.threading_new_school;
 
 import java.util.concurrent.Callable;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class MyCallable implements Callable<Integer> {
 
     // The callable interface is the direct descendant of Runnable interface

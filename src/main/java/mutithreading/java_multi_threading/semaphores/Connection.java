@@ -2,9 +2,6 @@ package mutithreading.java_multi_threading.semaphores;
 
 import java.util.concurrent.Semaphore;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Connection {
 
     private static Connection instance = new Connection();

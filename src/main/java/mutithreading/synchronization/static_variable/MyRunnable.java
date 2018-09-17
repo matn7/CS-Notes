@@ -1,8 +1,5 @@
 package mutithreading.synchronization.static_variable;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class MyRunnable implements Runnable {
 
     private static int m_myCount = 0;

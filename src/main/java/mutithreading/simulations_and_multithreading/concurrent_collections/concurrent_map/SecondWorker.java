@@ -2,9 +2,6 @@ package mutithreading.simulations_and_multithreading.concurrent_collections.conc
 
 import java.util.concurrent.ConcurrentMap;
 
-/**
- * Created by Mati on 12.07.2017.
- */
 public class SecondWorker implements Runnable {
 
     private ConcurrentMap<String, Integer> map;

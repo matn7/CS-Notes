@@ -1,8 +1,5 @@
 package mutithreading.synchronization.member_variable;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class MyRunnable implements Runnable {
 
     private int m_myCount = 0;

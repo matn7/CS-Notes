@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Exchanger;
 
-/**
- * Created by Mati on 12.07.2017.
- */
 public class FillingWorker implements Runnable {
 
     // With the help of Exchanger - two threads can exchange objects

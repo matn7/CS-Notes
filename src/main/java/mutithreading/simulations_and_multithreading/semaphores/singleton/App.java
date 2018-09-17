@@ -4,9 +4,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-/**
- * Created by Mati on 11.07.2017.
- */
 enum Downloader { // enum is thread safe
     INSTANCE;
     // Semaphore(int permits, boolean fair)
@@ -36,7 +33,7 @@ public class App {
     public static void main(String[] args) {
         // Executors.newCachedThreadPool()
         // before starting a job it going to check whether there are any threads that finished the job, reuse them
-        ExecutorService executorService = Executors.newCachedThreadPool(); // dynamicaly reuse threads
+        ExecutorService executorService = Executors.newCachedThreadPool(); // dynamically reuse threads
 
         for (int i = 0; i < 5; i++) {
             executorService.execute(new Runnable() {

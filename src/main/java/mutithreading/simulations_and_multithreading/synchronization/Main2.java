@@ -1,8 +1,5 @@
 package mutithreading.simulations_and_multithreading.synchronization;
 
-/**
- * Created by Mati on 11.07.2017.
- */
 public class Main2 {
     private static int count1 = 0;
     private static int count2 = 0;

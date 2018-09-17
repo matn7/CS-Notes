@@ -4,9 +4,6 @@ import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class App {
 
     // BlockingQueue, ArrayBlockingQueue

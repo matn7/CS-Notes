@@ -1,8 +1,5 @@
 package mutithreading.singleton.doubleCheckLocking;
 
-/**
- * Created by Mati on 10.07.2017.
- */
 public class Singleton {
 
     // Mark member variable as volatile, so each
