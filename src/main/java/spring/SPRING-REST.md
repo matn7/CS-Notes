@@ -232,6 +232,58 @@ public String deleteStudent(@PathVariable int studentId) {
 }
 ```
 
+## Richardson Maturity Model
+
+- A model used to describe the maturity of RESTful services
+- No formal specification for REST
+- RMM is used to describe the quality of the RESTful service
+
+## RMM levels
+
+LEVEL 3: Hypermedia Controls <br/>
+:arrow_down: <br/>
+Level2: HTTP Verbs <br/>
+:arrow_down: <br/>
+Level 1: Resources <br/>
+:arrow_down: <br/>
+Level 0: The Swap of POX <br/>
+
+### Level 0: Swamp of POX
+
+- POX - Plain Old XML
+- Uses implementing protocol as a transport protocol
+- Typically uses one URI and one kind of method
+- Examples - RPC, SOAP, XML-RPC
+
+### Level 1: Resources
+
+- Uses Multiple URIs to identify specific resources
+- Examples:
+    - http://localhost:8080/panda/123
+    - http://localhost:8080/panda/321
+- Uses a single method **GET**
+
+### Level 2: HTTP Verbs
+
+- HTTP Verbs are used with URIs for desired actions
+- Examples
+    - GET /students/123 - return student with id 123
+    - PUT /students/123 (with XML/JSON body) to update data for student 123
+    - DELETE /students/123 to delete student with id 123
+- Most common
+
+### Level 3: Hypermedia
+
+- Representation contains URIs which may be useful to consumers
+- Helps clients explore the resource
+- Not standarized at this time
+- Spring provides an implementation of HATEOS
+
+### Summary
+
+- Level 1 - breaks large service into distinct URIs
+- Level 2 - Introduces Verbs to implement actions
+- Level 3 - provides discoverability, making the API more self documenting
 
 
 
