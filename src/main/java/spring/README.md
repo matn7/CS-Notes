@@ -42,7 +42,6 @@
 
 - Test Layer
 
-
 ## Spring Projects
 
 - Additional Spring modules build on top of core Framework
@@ -55,7 +54,6 @@
     - Spring Android
     - Spring Web Flow
 
-
 ## Inversion of Control (IoC)
 
 - Outsourcing the construction and management of objects. Outsource to object factory.
@@ -65,12 +63,10 @@
 - Primary functions
     - Create and manage objects (inversion of control)
     - Inject object's dependencies (Dependency Injection)
-
 - Configure Spring Container
     - XML Configuration
     - Java Annotations
     - Java Source Code
-
 - Development process
     - Configure Spring Beans
     - Create Spring Container
@@ -110,17 +106,14 @@ Panda thePanda = context.getBean("myPandaBean", Panda.class);
 ## What is a Spring Bean?
 
 - A "Spring Bean" is simply a Java object.
-
 - When Java objects are created by the Spring Container, then Spring refers to them as "Spring Beans".
 - Spring Beans are created from normal Java classes like Java objects.
-
 
 ## Why do we specify the interface in getBean()?
 
 Behaves the same as getBean(String), but provides a measure of type safety by throwing a BeanNotOfRequiredTypeException
 if the bean is not of the required type.
 This means that ClassCastException can't be thrown on casting the result correctly, as can happen with getBean(String).
-
 
 ## Dependency Injection
 
@@ -132,11 +125,9 @@ This means that ClassCastException can't be thrown on casting the result correct
 
 
 - dependency = helper
-
 - Injection Types
     - Constructor injection
     - Setter Injection
-
 - Development Process - Constructor Injection
     - Define the dependency interface and class
     - Create a constructor in your class for injections
@@ -189,7 +180,6 @@ public class ZooWorker implements Section {
     </bean>
 </beans>
 ```
-
 
 ## Setter Injection
 
@@ -244,6 +234,7 @@ foo.team=Missisipi
 ```
 
 **applicationContext.xml**
+
 ```xml
 <context:property-placeholder location="classpath:zoo.properties" />
 
@@ -261,7 +252,6 @@ foo.team=Missisipi
 - How long does the bean live ?
 - How many instances are created ?
 - How is the bean shared ?
-
 
 ### Default scope: Singleton
 
@@ -288,13 +278,11 @@ foo.team=Missisipi
 | session | Scoped to an HTTP web session. Only used for web apps |
 | global-session | Scoped to a global HTTP web session. Only used for web apps |
 
-
 ## Bean lifecycle
 
 Container  :arrow_right:   Bean    :arrow_right: Dependencies :arrow_right:  Internal   :arrow_right: Custom init method<br/>
 <br/>
 Started     :arrow_right:  Instantiated   :arrow_right:  Injected  :arrow_right:  Spring Processing
-
 
 ### Bean is ready for use
 

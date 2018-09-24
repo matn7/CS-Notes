@@ -1,6 +1,9 @@
+# My favorite
+
 ## :star: Immutable class
 
 ### With final class
+
 ```java
 public final class Complex {
     /**
@@ -21,7 +24,6 @@ public final class Complex {
     }
 
     // only getters
-
     public float getRe() {
         return re;
     }
@@ -42,6 +44,7 @@ public final class Complex {
 - Immutable objects are thread safe, don't requires synchronization.
 
 ### Class no final but with static factory method
+
 ```java
 public class Complex2 {
     /**
@@ -61,7 +64,6 @@ public class Complex2 {
     }
 
     // only getters
-
     public float getRe() {
         return re;
     }
@@ -76,13 +78,16 @@ public class Complex2 {
     }
 }
 ```
+
 - Alternative for declare class as final. Declare all constructors as private or protected
 next add public static factory methods.
 
 ### Rules
+
 - Class should be immutable
 - All fields should be final
 
+***
 
 ## :star: Find the maximum depth of a binary tree
 
@@ -103,8 +108,9 @@ public static int maxDepth(Node root) {
     int rightMaxDepth = 1 + maxDepth(root.getRightChild());
     return Math.max(leftMaxDepth, rightMaxDepth);   // Find the max depth between the left and right subtrees
 }
-
 ```
+
+***
 
 ## :star: Palindrome
 
@@ -126,6 +132,8 @@ public class Palindrome {
 // CDC     ==> true
 // D       ==> true
 ```
+
+***
 
 ## :star: Singleton
 
@@ -149,6 +157,8 @@ public class Singleton {
 }
 ```
 
+***
+
 ## :star: Multiply without `*`
 
 ```java
@@ -161,6 +171,8 @@ public static double multiply(double x, double y) {
     return -multiply(x, -y);
 }
 ```
+
+***
 
 ## :star: First non repeat character
 
@@ -210,10 +222,14 @@ public class Rectangle {
 }
 ```
 
+***
+
 ## :star: Singleton vs GOF singleton
 
 - GOF singleton : one singleton per JVM
 - Spring singleton : one singleton per Application Context
+
+***
 
 ## :star: Binary search
 
@@ -239,6 +255,8 @@ public static int binarySearch(int[] sortedList, int number) {
     return -1;
 }
 ```
+
+***
 
 ## :star: Binary search recursive
 

@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Mati on 01.08.2017.
- */
 public class AdjacencyMatrixGraph implements Graph {
 
     // Set up a V X V Matrix to hold the vertices and Edges relationship

@@ -1,12 +1,14 @@
 # Tree
 
 ## The tree
+
 - A tree is a data structure which is made up of nodes. Each node can point to a number of nodes.
 - Unlike Stacks, Queues, Linked Lists the order of the elements is not important in a tree.
 - It is a non linear data structure.
 - A trees is typically used to represent hierarchical information.
 
-## The Binary Tree
+### The Binary Tree
+
 - In general tree Data Structure can have any number of children but these trees are less useful and not very commonly
 used as data structure.
 - In binary tree each node can have, **0, 1 or 2** children
@@ -27,7 +29,8 @@ used as data structure.
     - F is a descendant of C
     - C is an Ancestor of H
 
-## A tree node
+### A tree node
+
 ```java
 public static class Node<T> {
     private T data;
@@ -60,13 +63,14 @@ public static class Node<T> {
 }
 ```
 
-## Breadth first traversal
+### Breadth first traversal
 
 - There are a wide number of ways to visit the nodes of a tree.
 - They vary based on the order in which the Nodes are accessed
 - Visiting nodes of a tree is called **traversing a tree**
 
 ### Breadth-First
+
 - Breadth first traversal involves visiting nodes at every level before moving on the next level
 - Start with the root node it's at level 0 and is the first node to visit
 - Next step is to check whether there are other Nodes at the same level and visit them
@@ -85,6 +89,7 @@ public static class Node<T> {
 
 
 ### Implementing Breadth First Traversal
+
 - Start from the root and add it to the Queue
 - Dequeue and process the Node
 - Add it's left and then right child
@@ -125,7 +130,6 @@ public static void breadthFirst(Node root) throws Queue.QueueUnderflowException,
 - Depth first traversal involves going right to the leaf of the binary tree first before moving up the tree
 - Going deep before moving up
 - Here there are a whole variety of possibilities in how the nodes are processed
-
 - Depth first traversal can be:
     - pre order
     - in order
