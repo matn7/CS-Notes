@@ -9,6 +9,9 @@
 ### 7. FindAny, findFirst
 ### 8. Statistics
 ### 9. Grouping data
+### 10. Reduce and Flatmap
+### 11. Joining
+### 12. More Streams
 
 ***
 
@@ -200,6 +203,8 @@ public void distinct() {
 
 ## 6. Filtering
 
+- Predicate<T> - filter method argumants, function converting T to boolean
+
 ### Filter
 
 ```java
@@ -286,6 +291,8 @@ public void findAny() {
 ***
 
 ## 8. Statistics
+
+- Operation Min, Max returns Optional<T>, wraps value or alternative value if null
 
 ### Count
 
@@ -557,10 +564,6 @@ filter apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow
 mapping apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850} <br/>
 mapping price 2072 <br/>
 filter apartment Apartment{id=3, localization="Wadowicka", city="Krakow", size=78, price=2850} <br/>
-
-
-
-- TODO: filter arguments predicate
 
 
 
