@@ -1,8 +1,5 @@
 package design_patterns.basic.creational.singleton;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class Singleton {
 
     // Just one private, static instance

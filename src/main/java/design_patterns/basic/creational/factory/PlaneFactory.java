@@ -1,8 +1,5 @@
 package design_patterns.basic.creational.factory;
 
-/**
- * Created by Mati on 09.08.2017.
- */
 public class PlaneFactory {
     // Factory says that it returns something that implements plane
     public static Plane getPlane(PlaneType planeType) {

@@ -1,8 +1,5 @@
 package design_patterns.basic.creational.singleton.double_check_lock;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class SingletonImproved implements Cloneable {
 
     // mark member variable as volatile, so each access this variable is fresh read from memory

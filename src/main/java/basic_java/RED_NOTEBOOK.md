@@ -7,7 +7,7 @@
 - It is a non linear data structure.
 - A trees is typically used to represent hierarchical information.
 
-### The Binary Tree
+## The Binary Tree
 
 - In general tree Data Structure can have any number of children but these trees are less useful and not very commonly
 used as data structure.
@@ -124,7 +124,6 @@ public static void breadthFirst(Node root) throws Queue.QueueUnderflowException,
 ```
 - Adding the left child first ensures that the nodes at the same level and processed from left to right
 
-
 ## Depth first traversal
 
 - Depth first traversal involves going right to the leaf of the binary tree first before moving up the tree
@@ -134,18 +133,17 @@ public static void breadthFirst(Node root) throws Queue.QueueUnderflowException,
     - pre order
     - in order
     - post order
-
 - All depth first traversal are most efficiently and intuitively implemented using recursion
 - The base case is when the root is null
 - At every point we work with a subtree rooted at some Node
 - The recursive step is on 2 subtrees the left and right
 - The processing can be performed:
-    1. Before       [PRE-ORDER]
-    2. In between   [IN-ORDER]
-    3. After        [POST-ORDER]
-    The recursive case
+    - 1. Before       [PRE-ORDER]
+    - 2. In between   [IN-ORDER]
+    - 3. After        [POST-ORDER]
 
 ### PRE-ORDER
+
 - Each node is processed first, before it's right and left subtrees
 - The left sub-trees are processed before the right subtrees
 

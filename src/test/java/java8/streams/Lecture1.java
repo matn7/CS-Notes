@@ -39,7 +39,6 @@ public class Lecture1 {
         List<Person> people = MockData.getPeople();
         List<Person> youngPeople = people.stream()
                 .filter(person -> person.getAge() <= 10)
-                .filter
                 .limit(10)
                 .collect(Collectors.toList());
 

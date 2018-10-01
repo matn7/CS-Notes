@@ -1,5 +1,7 @@
 ## :star: Immutable class
+
 ### With final class
+
 ```java
 public final class Complex {
     /**
@@ -36,19 +38,20 @@ public final class Complex {
 }
 ```
 
-    Add operation creates and return new object withou modify current object.
-    Immutables objects are simple. They have exactly one state one that was created.
-    Immutable objects are thread safe, don't requires synchronization.
+- Add operation creates and return new object without modify current object.
+- Immutable objects are simple. They have exactly one state one that was created.
+- Immutable objects are thread safe, don't requires synchronization.
 
 ### Class no final but with static factory method
+
 ```java
 public class Complex2 {
     /**
      * Rules:
      * 1. No setter methods
-     * 3. All fields as final
-     * 4. All fields as private
-     * 5. Return new object in all calls
+     * 2. All fields as final
+     * 3. All fields as private
+     * 4. Return new object in all calls
      */
 
     private final float re;
@@ -75,53 +78,51 @@ public class Complex2 {
     }
 }
 ```
-    Alternative for declare class as final. Declare all constructors as private or protected
-    next add public static factiry methods.
+
+- Alternative for declare class as final. Declare all constructors as private or protected,
+next add public static factory methods.
 
 ### Rules
+
 - Class should be immutable
 - All fields should be final
 
-## Which classes can you use for-each with?
+***
+
+### Which classes can you use for-each with?
+
 Class which implements the Iterable<T> interface can be used n for-each statement.
 
-## When topological sort is impossible
-When there no vertices with 0 indegree, then there would have been no topological sort.
+### When topological sort is impossible
 
-## Negative hsshCode
+When there no vertices with 0 in degree, then there would have been no topological sort.
+
+### Negative hashCode
+
 Sometimes hashCode calculation itself goes beyond their Integer.MAX 2147483647,
 what happen then is that we got a negative integer after the overflow.
 
-## ACID
+### ACID
+
 - Atomicity : Cannot stop in between
-- Consistence : data should meet validation reqirements
+- Consistence : data should meet validation requirements
 - Isolation : multithreading protection
-- Durability : once commited transaction leave commited even after power loss
+- Durability : once committed transaction leave committed even after power loss
 
-## Stream
-```java
-List<String> names = students.steram().map(student::getName).filter(name->name.startsWith("A"))
-    .collect(Collectors.toList());
-```
+### Optional<T> methods
 
-## SOLID principles
-- Single responsible : One class should have one and only one responsibility
-- Open close : Software components should be open for extension but close for modification
-- Linkovs substitution : Derived types must be completely substitutable for their base class
-- Interface segragation : Client should not be forced to iplement unnecessary methods which they will not use
-- Dependency Inversion : Depend on abstraction, not on cocretions
-
-## Optional<T> methods
 - orElse()
 - orElseGet()
 - orElseThrow()
 - ifPresent()
 
 ## Rules that DB follows
+
 - Entity integrity : every table has primary key
 - Referential integrity : A foreign key points to value tat is a primary key of another table
 
-## final
+### final
+
 - Can not change reference but can modify object
 
 ```java
@@ -131,7 +132,8 @@ c = new Customer("Dagmara");
 c.setName("Misiek");
 ```
 
-## Maps
+### Maps
+
 ```java
 for (Map.Entry<String, Integer> wpis : counts.entrySet()) {
     key.add(wpis.getKey());
@@ -139,7 +141,7 @@ for (Map.Entry<String, Integer> wpis : counts.entrySet()) {
 }
 ```
 
-## equals
+### :star: equals
 
 ```java
 public class Item {
@@ -150,7 +152,7 @@ public class Item {
         // check whether objects are equals
         if (this == otherObject) return true;
 
-        // Must return false if parametr is null
+        // Must return false if parameter is null
         if (otherObject == null) return false;
 
         // Check whether object is instance of Item class
@@ -163,7 +165,7 @@ public class Item {
 }
 ```
 
-## Constructor chaining
+### Constructor chaining
 
 ```java
 public class Temporal {
@@ -188,32 +190,21 @@ public class Main {
     }
 ```
 
-## Some
+### Some DB
+
 - An object of **entity type** has its own DB identity primary key
 - An object of **value type** has no DB identity, it belongs to an entity
 - By default equals comparing an object by comparing their address in memory
-- Leave unimplemeted hashCode will always create new object as if they different objects
-
-## Hash Table vs HashMap
-
-| HashTable | HashMap |
-|---|---|
-| synchronized | not synchronized |
-| null key or values not allowed | Allows one NULL kay and any number of NUL values |
-| | Subclass is LinkedHashMap (maintein insertion order) |
-
-
+- Leave unimplemented hashCode will always create new object as if they different objects
 - To declare side as not responsible for relationship the attribute mapped by is used.
 - A Business Key is also called natural key
-- Synthetic identifier is an identifier with no usiness meaning.
+- Synthetic identifier is an identifier with no business meaning.
 - TRANSIENT STATE : object don't associated with any table row
 - PERSISTENT STATE : object with database identity. Primary key is set of database identity
 - DETACHED : no longer manage by Entity Manager
-
-##. No argument constructor
-No argument constructor for hibernate to be able to instantiate objects using Java Reflection
-
+- No argument constructor for hibernate to be able to instantiate objects using Java Reflection
 - Owner is the entity that is persisted to the table that has the foreign key column.
+- LazyInitializationException : When we try to Lazy Load data but entity manager is closed
 
 | Hibernate | JPA |
 |---|---|
@@ -221,22 +212,30 @@ No argument constructor for hibernate to be able to instantiate objects using Ja
 | Session | EntityManager |
 | Transaction | EntityTransaction |
 
-##. LazyInitializationException
-When we try to Lazy Load data but entity manager is closed
+### Hash Table vs HashMap
 
-##. Optimistic Locking
+| HashTable | HashMap |
+|---|---|
+| synchronized | not synchronized |
+| null key or values not allowed | Allows one NULL kay and any number of NUL values |
+| | Subclass is LinkedHashMap (maintain insertion order) |
+
+### Optimistic Locking
+
 Official name of the versioning. Strategy to prevent lost updates. No database locking.
 
-## When to use pesimistic locking
+### When to use pessimistic locking
+
 When you've got multiple database queries being executed on the same data within a single transaction.
 
+### ConcurrentHashMap
 
-## ConcurrentHashMap
 - Provides thread safety and memory consistent atomic operations.
 - getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge
 - ConcurrentMap does not allow null key or value
 
 ## Garbage collectors
+
 - Serial GC
     - One thread on single CPU.
     - Stop application execution.
@@ -251,12 +250,12 @@ When you've got multiple database queries being executed on the same data within
     - Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint
 
 - Concurrent Mark-Sweep Collector CMS
-    - CMS has algorithm which service big collections whic results in long pauses.
+    - CMS has algorithm which service big collections which results in long pauses.
     - Reply time is more important than throughput
 
 - Garbage first G1 Collector
     - Multi processors machines with vast memory.
-    - Server style GC, hight time probaility and high throughput.
+    - Server style GC, high time probability and high throughput.
     - Late heap operations Global Marking sre executed parallelly with application thread.
 
 

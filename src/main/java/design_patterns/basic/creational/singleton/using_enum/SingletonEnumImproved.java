@@ -4,10 +4,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-/**
- * Created by Mati on 09.07.2017.
- */
-
 enum Downloader {   // enum is thread safe
     INSTANCE;
 

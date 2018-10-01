@@ -279,6 +279,101 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 }
 ```
 
+## :star: equals
+
+```java
+public class Item {
+    private String desc;
+    private double price;
+
+    public boolean equals(Object otherObject) {
+        // check whether objects are equals
+        if (this == otherObject) return true;
+
+        // Must return false if parameter is null
+        if (otherObject == null) return false;
+
+        // Check whether object is instance of Item class
+        if (getClass() != otherObject.getClass()) return false;
+
+        // Check value
+        Item other = (Item) otherObject;
+        return Object.equals(desc == other.desc && price == other.price);
+    }
+}
+```
+
+- TODO implementacja hashCode i equals
+- TODO hashCode w implementacji co to jest (miejsce w pamięci)
+
+## :star: How to build own annotation
+
+**TrackTimer.java**
+
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TrackTime {
+}
+```
+
+**JoinPointConfig.java**
+
+```java
+public class JoinPointConfig {
+    @Pointcut("@annotation(com.panda.spring.aop.aspect.TrackTime)")
+    public void trackTime() {
+    }
+}
+
+```
+
+**AroundAspect.java**
+
+```java
+@Aspect
+@Configuration
+public class AroundAspect {
+
+    @Around("com.panda.spring.aop.aspect.JoinPointConfig.trackTime()")
+    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        joinPoint.proceed();
+        long entTime = System.currentTimeMillis() - startTime;
+        logger.info("Time taken by this {} is {}", joinPoint, entTime);
+    }
+
+}
+```
+
+**Use**
+```java
+@Repository
+public class Dao1 {
+
+    @TrackTime
+    public String retrieve() {
+        return "Dao Repo";
+    }
+}
+```
+
+## :star: How to generate stack overflow ?
+
+```java
+public class StackOverflowException {
+
+    public static void main(String[] args) {
+        new StackOverflowException().generateException(89);
+    }
+
+    public int generateException(int i) {
+        return i * generateException(i);
+    }
+
+}
+```
+
 
 
 

@@ -1,8 +1,5 @@
 package design_patterns.basic.creational.abstract_factory;
 
-/**
- * Created by Mati on 09.08.2017.
- */
 public class Main {
     // Abstract Factory is creational pattern. Construct object such that they can be decoupled from implementing system.
     // AbstractFactory defines the interface that all of the concrete factories will need to implement to product products.

@@ -1,8 +1,5 @@
 package design_patterns.basic.structural.facade;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class WashingMachine {
 
     public static void main(String[] args) {

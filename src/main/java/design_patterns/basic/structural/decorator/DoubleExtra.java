@@ -1,10 +1,6 @@
 package design_patterns.basic.structural.decorator;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class DoubleExtra extends Extra {
-
 
     public DoubleExtra(String label, double price, Order order) {
         super(label, price, order);

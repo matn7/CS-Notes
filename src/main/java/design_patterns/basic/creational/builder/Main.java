@@ -1,8 +1,5 @@
 package design_patterns.basic.creational.builder;
 
-/**
- * Created by Mati on 09.07.2017.
- */
 public class Main {
 
     public static void main(String[] args) {

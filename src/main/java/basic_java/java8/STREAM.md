@@ -1,14 +1,14 @@
 # Java Stream API
 
-## 1. What is a Stream
-## 2. How to use
-## 3. Iterating with Streams
-## 4. Min, Max, Comparator
-## 5. Unique
-## 6. Filtering
-## 7. FindAny, findFirst
-## 8. Statistics
-## 9. Grouping data
+### 1. What is a Stream
+### 2. How to use
+### 3. Iterating with Streams
+### 4. Min, Max, Comparator
+### 5. Unique
+### 6. Filtering
+### 7. FindAny, findFirst
+### 8. Statistics
+### 9. Grouping data
 
 ***
 
@@ -24,18 +24,17 @@
 
 ## 2. How to use
 
-- :one: Concrete implementation
-    - Arrays, Maps, Lists, Set
-        - MockData.getStudents()
+List<Student> :arrow_right: STREAM :arrow_right: STREAM :arrow_right: STREAM :arrow_right: Double avgGrade
+<br/>
+
+- :one: Concrete implementation Arrays, Maps, Lists, Set
+    - MockData.getStudents()
 - :two: Call stream() on concrete type
-    - :arrow_right: STREAM :arrow_right: STREAM :arrow_right: STREAM
-    - filter()  ->   map()   -> reduce()
-    - ABSTRACTION -> WHAT WE WANT
-        - MockData.getStudents().filter().limit()
-- :three: ABSTRACTION :arrow_right: Concrete implementation
-    - Arrays, Maps, Lists, Set, Optional, String, Integer
-    - sum(), collect(Collectors.toList()), average(), collect(Collectors.groupingBy())
-         - MockData.getStudents().filter().limit().collect()
+    - MockData.getStudents().stream()
+- :three: Process stream
+    - MockData.getStudents().filter().limit()
+- :four: From Abstract to concrete implementation
+    - MockData.getStudents().filter().limit().collect()
 
 ### Imperative
 
@@ -82,7 +81,7 @@ public void declarative() {
 
 ## 3. Iterating with Streams
 
-### range
+### Range
 
 ```java
 public void range() {
@@ -176,7 +175,7 @@ public void max() {
 
 ## 5. Unique
 
-### distinct()
+### Distinct
 
 ```java
 public void distinct() {
@@ -187,7 +186,7 @@ public void distinct() {
 }
 ```
 
-### toSet()
+### ToSet
 
 ```java
 public void distinct() {
@@ -201,12 +200,12 @@ public void distinct() {
 
 ## 6. Filtering
 
-### filter()
+### Filter
 
 ```java
 public void filterEx() {
     ImmutableList<Student> students = MockData.getStudents();
-    // Predicate expression that evaliates true or false
+    // Predicate expression that evaluates true or false
     // Predicate what we want to keep
     Predicate<Student> studentPredicate = student -> student.getGrades() < 3.5;
 
@@ -218,7 +217,7 @@ public void filterEx() {
 }
 ```
 
-### map()
+### Map
 
 ```java
 public void mapEx() {
@@ -230,7 +229,7 @@ public void mapEx() {
         .collect(Collectors.toList());
 
     // Engineer::map    ->  method reference
-    // Function<Student, Engineer> studentEnginnerFunction = new Engineer(student.getId(), student.getGrade());
+    // Function<Student, Engineer> studentEngineerFunction = new Engineer(student.getId(), student.getGrade());
 }
 
 // public static Engineer map(Student student) {
@@ -238,7 +237,7 @@ public void mapEx() {
 // }
 ```
 
-### avg student grade
+### Avg student grade
 
 ```java
 public void averageStudentGrade() {
@@ -252,9 +251,11 @@ public void averageStudentGrade() {
 }
 ```
 
-## 7. findAny, findFirst
+***
 
-### findAny()
+## 7. FindAny, findFirst
+
+### FindAny
 
 ```java
 public void findAny() {
@@ -268,7 +269,7 @@ public void findAny() {
 }
 ```
 
-### findFirst()
+### FindFirst
 
 ```java
 public void findAny() {
@@ -282,20 +283,22 @@ public void findAny() {
 }
 ```
 
+***
+
 ## 8. Statistics
 
-### count()
+### Count
 
 ```java
 public void count() {
-    long enginners = MockData.getStudents()
+    long engineers = MockData.getStudents()
         .stream()
         .filter(student -> student.getFieldOfStudy().equalIgnoreCase("engineering"))
         .count();
 }
 ```
 
-### min()
+### Min
 
 ```java
 public void count() {
@@ -308,7 +311,7 @@ public void count() {
 }
 ```
 
-### max()
+### Max
 
 ```java
 public void count() {
@@ -321,7 +324,7 @@ public void count() {
 }
 ```
 
-### average()
+### Average
 
 ```java
 public void average() {
@@ -334,7 +337,7 @@ public void average() {
 }
 ```
 
-### sum()
+### Sum
 
 ```java
 public void sum() {
@@ -348,7 +351,7 @@ public void sum() {
 }
 ```
 
-### summaryStatistics()
+### SummaryStatistics
 
 ```java
 public void statistics() {
@@ -359,17 +362,14 @@ public void statistics() {
         .summaryStatistics();
 
     System.out.println(stat.getAverage());
-
-    ImmutableList<Car> cars = MockData.getCars();
-            DoubleSummaryStatistics carsStatistics = cars.stream()
-                    .mapToDouble(Car::getPrice)
-                    .summaryStatistics();
 }
 ```
 
+***
+
 ## 9. Grouping data
 
-### Collectors.groupingBy()
+### Collectors groupingBy
 
 ```java
 public void grouping() {
@@ -390,7 +390,7 @@ public void grouping() {
 }
 ```
 
-### groupingAndCounting
+### GroupingAndCounting
 
 ```java
 public void groupingAndCounting() {
@@ -410,7 +410,157 @@ public void groupingAndCounting() {
 }
 ```
 
-- filter arguments predicate
+***
+
+## 10. Reduce and Flatmap
+
+### Reduce
+
+```java
+public void reduce() {
+    Integer[] integers = {1,2,34,567,890,9000,12659};
+    int sum = Arrays.stream(integer)
+        .reduce(0, (a,b) -> a + b); // (a,b) -> a + b || Integer::sum (method reference)
+    System.out.println(sum);    // 23163
+}
+```
+
+### FlatMap
+
+```java
+private static final List<ArrayList<String>> arrayListOfNames = Lists.newArrayList(
+            Lists.newArrayList("Brajan", "Mariusz", "Ryży"),
+            Lists.newArrayList("Puchaty", "Rufus", "Boni"),
+            Lists.newArrayList("Samara", "Rysia"));
+
+public void withoutFlatMap() {
+    List<String> names - Lists.newArrayList();
+
+    for (List<String> list : arrayListOfNames) {
+        for (String name : list) {
+            names.add(name);
+        }
+    }
+
+    System.out.println(names);
+}
+
+public void flatMap() {
+    // Brajan, Mariusz, Ryży, Puchaty, Rufus, Boni, Samara, Rysia
+    List<String> names = arrayListOfNames.stream()
+        .flatMap(List::stream)
+        .collect(Collectors.toList());
+    System.out.println(names);
+}
+```
+
+***
+
+## 11. Joining
+
+### Joining
+
+```java
+public void joinWithoutStream() {
+    List<String> names = ImmutableList.of("brajan", "samara", "blażej");
+
+    String join = "";
+
+    for (String name : names) {
+        join += name + ",";
+    }
+}
+
+public void joinWithStream() {
+    List<String> names = ImmutableList.of("brajan", "samara", "błażej");
+
+    String joinedNames = names.stream()
+        .map(String::toUpperCase)
+        .collect(Collectors.joining(","));
+
+    System.out.println(joinedNames); // brajan,samara,błażej
+}
+```
+
+***
+
+## 12. More Streams
+
+### Collectors toList
+
+```java
+public void collectors() {
+    List<String> grades = MockData.getStudents()
+        .stream()
+        .map(Student::getGrade)
+        .collect(
+            () -> new ArrayList<String>(),          // empty array list         -> ArrayList::new
+            (list, elem) -> list.add(elem),         // add elements             -> ArrayList::add
+            (list1, list2) -> list1.addAll(list2)); // accumulate all elements  -> ArrayList::addAll
+        // .collect(Collectors.toList());
+}
+```
+
+### Collectors, Multithreading
+
+- Very big array compute in multiple threads and get results
+
+### Intermediate and terminal operators
+
+- **Intermediate** Perform transformation or filtering
+    - filter
+    - map
+
+```java
+.stream()
+.filter(student -> {
+    return student.getGrades() < 3;
+})
+.map(student -> {
+    return student.getGrades();
+}); // java.util.stream.ReferencePipeLine
+```
+
+- **Terminal** From abstraction to concrete type
+    - collect
+
+```java
+.collect(Collectors.toList())
+```
+
+- Map and filter are not invoked until terminal operation (lazy valuation).
+- Streams are lazy. It does not build anything until terminal operators.
+- Streams are very optimizes and safe to use in our apps.
+
+### How streams process data
+
+```java
+MockData.getApartments()
+    .stream()
+    .filter(apartment -> {
+        System.out.println("filter apartment " + student);
+        return apartment.getSize() < 60;
+    })
+    .map(apartment -> {
+        System.out.println("mapping apartment " + student);
+        return apartment.getSize();
+    })
+    .map(price -> {
+        System.out.println("mapping price " + student);
+        return price + (price * .12);
+    })
+    .collect(Collectors.toList());
+```
+
+filter apartment Apartment{id=1, localization="Miodowa", city="Krakow", size=100, price=6700} <br/>
+filter apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850} <br/>
+mapping apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850} <br/>
+mapping price 2072 <br/>
+filter apartment Apartment{id=3, localization="Wadowicka", city="Krakow", size=78, price=2850} <br/>
+
+
+
+- TODO: filter arguments predicate
 
 
 
