@@ -1,5 +1,6 @@
 package algorithms.exercises;
 
+// STAR
 public class CountNumbers {
     public int countNum(int number) {
         int k;

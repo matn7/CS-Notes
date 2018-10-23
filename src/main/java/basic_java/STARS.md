@@ -116,12 +116,27 @@ public static int maxDepth(Node root) {
 
 ```java
 public class Palindrome {
-    public static boolean isPalindrome(String str) {
-        if (str.length() == 0 || str.length() == 1) {
+    public boolean checkPalindrome(String word) {
+        boolean result = true;
+        char[] wordchar = word.toCharArray();
+
+        for (int i = 0; i < word.length()/2; i++) {
+            if (wordchar[i] != wordchar[word.length()-1-i]) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+
+    }
+
+    public boolean checkRecursive(String word) {
+        if (word.length() == 0 || word.length() == 1) {
             return true;
         }
-        if (str.charAt(0) == str.charAt(str.length() - 1) {
-            return isPalindrome(str.substring(1,str.length()-1));
+        if (word.charAt(0) == word.charAt(word.length()-1)) {
+            return checkPalindrome(word.substring(1,word.length()-1));
         }
         return false;
     }
@@ -374,6 +389,24 @@ public class StackOverflowException {
 }
 ```
 
+
+## :star: Count numbers
+
+```java
+public class CountNumbers {
+    public int countNum(int number) {
+        int k;
+        int n = number;
+
+        for (k = 1; (n /= 10) != 0; k++){
+            System.out.println(number /= 10);
+        }
+        System.out.println(number /= 10);
+        return k;
+
+    }
+}
+```
 
 
 

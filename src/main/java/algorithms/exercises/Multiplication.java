@@ -1,5 +1,6 @@
 package algorithms.exercises;
 
+// STAR
 public class Multiplication {
 
     public static void main(String[] args) {

@@ -1,13 +1,13 @@
 ## Complexity
 
 Is a measure of how resource requirements change as the size of problem gets larger. <br/>
-**Big O Notation** - allows express complexity as a resource of input size
+**Big O Notation** - allows express complexity as a resource of input size.
 
 ## Sorting
 
 ### 1. Selection sort O(N^2)
 
-At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
+- At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
 - Complexity O(N^2)
 - O(N^2) - comparisons
 - O(N) - swaps
@@ -25,8 +25,9 @@ public static void selectionSort(int[] list) {
 
 ### 2. Bubble sort O(N^2)
 
-At each iteration, every element is compared with its neighbor and swapped if they are not in order.
-Smaller element bubbling to the beginning of the list. If no swaps that means list is sorted.
+- At each iteration, every element is compared with its neighbor and swapped if they are not in order.
+- Smaller element bubbling to the beginning of the list.
+- If no swaps that means list is sorted.
 - Complexity O(N^2)
 - O(N^2) - comparisons
 - O(N^2) - swaps
@@ -51,7 +52,7 @@ public static void bubbleSort(int[] list) {
 
 ### 3.Insertion Sort O(N^2)
 
-Start with sorted list of size 1. Insert next element into list at right position.
+- Start with sorted list of size 1. Insert next element into list at right position.
 - Complexity O(N^2)
 - O(N^2) - comparisons
 - O(N^2) - swaps

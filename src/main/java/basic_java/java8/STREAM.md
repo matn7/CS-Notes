@@ -421,6 +421,8 @@ public void groupingAndCounting() {
 
 ## 10. Reduce and Flatmap
 
+- Reduce combine all elements in the stream and produce one single result.
+
 ### Reduce
 
 ```java

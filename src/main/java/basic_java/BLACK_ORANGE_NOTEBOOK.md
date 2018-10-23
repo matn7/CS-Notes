@@ -38,7 +38,7 @@ public final class Complex {
 }
 ```
 
-- Add operation creates and return new object without modify current object.
+- Add operation creates and return **new** object without modify current object.
 - Immutable objects are simple. They have exactly one state one that was created.
 - Immutable objects are thread safe, don't requires synchronization.
 
@@ -84,14 +84,14 @@ next add public static factory methods.
 
 ### Rules
 
-- Class should be immutable
-- All fields should be final
+- Class should be immutable.
+- All fields should be final.
 
 ***
 
 ### Which classes can you use for-each with?
 
-Class which implements the Iterable<T> interface can be used n for-each statement.
+Class which implements the **Iterable<T>** interface can be used in for-each statement.
 
 ### When topological sort is impossible
 
@@ -104,10 +104,10 @@ what happen then is that we got a negative integer after the overflow.
 
 ### ACID
 
-- Atomicity : Cannot stop in between
-- Consistence : data should meet validation requirements
-- Isolation : multithreading protection
-- Durability : once committed transaction leave committed even after power loss
+- Atomicity : Cannot stop in between.
+- Consistence : data should meet validation requirements.
+- Isolation : multithreading protection.
+- Durability : once committed transaction leave committed even after power loss.
 
 ### Optional<T> methods
 
@@ -118,8 +118,8 @@ what happen then is that we got a negative integer after the overflow.
 
 ## Rules that DB follows
 
-- Entity integrity : every table has primary key
-- Referential integrity : A foreign key points to value tat is a primary key of another table
+- Entity integrity : Every table has primary key.
+- Referential integrity : A foreign key points to value tat is a primary key of another table.
 
 ### final
 
@@ -192,19 +192,20 @@ public class Main {
 
 ### Some DB
 
-- An object of **entity type** has its own DB identity primary key
-- An object of **value type** has no DB identity, it belongs to an entity
-- By default equals comparing an object by comparing their address in memory
-- Leave unimplemented hashCode will always create new object as if they different objects
-- To declare side as not responsible for relationship the attribute mapped by is used.
-- A Business Key is also called natural key
+- An object of **entity type** has its own DB identity primary key.
+- An object of **value type** has no DB identity, it belongs to an entity.
+- By default equals comparing an object by comparing their address in memory.
+- Leave unimplemented hashCode will always create **new object** as if they different objects.
+- To declare side as not responsible for relationship the attribute **mapped by** is used.
+- A Business Key is also called natural key.
 - Synthetic identifier is an identifier with no business meaning.
-- TRANSIENT STATE : object don't associated with any table row
-- PERSISTENT STATE : object with database identity. Primary key is set of database identity
-- DETACHED : no longer manage by Entity Manager
-- No argument constructor for hibernate to be able to instantiate objects using Java Reflection
+- Object states :
+    - TRANSIENT STATE : object don't associated with any table row.
+    - PERSISTENT STATE : object with database identity. Primary key is set of database identity.
+    - DETACHED : no longer manage by Entity Manager.
+- No argument constructor for hibernate to be able to instantiate objects using Java Reflection.
 - Owner is the entity that is persisted to the table that has the foreign key column.
-- LazyInitializationException : When we try to Lazy Load data but entity manager is closed
+- LazyInitializationException : When we try to Lazy Load data but entity manager is closed.
 
 | Hibernate | JPA |
 |---|---|
@@ -222,7 +223,7 @@ public class Main {
 
 ### Optimistic Locking
 
-Official name of the versioning. Strategy to prevent lost updates. No database locking.
+Official name of the **versioning**. Strategy to prevent lost updates. No database locking.
 
 ### When to use pessimistic locking
 
@@ -231,29 +232,25 @@ When you've got multiple database queries being executed on the same data within
 ### ConcurrentHashMap
 
 - Provides thread safety and memory consistent atomic operations.
-- getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge
-- ConcurrentMap does not allow null key or value
+- getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge.
+- ConcurrentMap does not allow null key or value.
 
 ## Garbage collectors
 
-- Serial GC
+- Serial GC :
     - One thread on single CPU.
     - Stop application execution.
-    - Small apps up to 100MB, that do not have low pause time requirements
-
-- Parallel GC
+    - Small apps up to 100MB, that do not have low pause time requirements.
+- Parallel GC :
     - Multiple threads on multiple CPU.
-    - Faster GC through use multiple CPU
-    - Do not want to stop application, performance of application is key
-
-- Parallel Compaction Collector
-    - Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint
-
-- Concurrent Mark-Sweep Collector CMS
+    - Faster GC through use multiple CPU.
+    - Do not want to stop application, performance of application is key.
+- Parallel Compaction Collector :
+    - Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint.
+- Concurrent Mark-Sweep Collector CMS :
     - CMS has algorithm which service big collections which results in long pauses.
-    - Reply time is more important than throughput
-
-- Garbage first G1 Collector
+    - Reply time is more important than throughput.
+- Garbage first G1 Collector :
     - Multi processors machines with vast memory.
     - Server style GC, high time probability and high throughput.
     - Late heap operations Global Marking sre executed parallelly with application thread.

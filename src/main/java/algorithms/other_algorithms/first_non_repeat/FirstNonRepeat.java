@@ -18,7 +18,7 @@ public class FirstNonRepeat {
             if (characterHashMap.containsKey(c)) {
                 characterHashMap.put(c, characterHashMap.get(c) + 1);
             } else {
-                characterHashMap.put(c, 1); // first occurences of each word comes from this part
+                characterHashMap.put(c, 1); // first occurrences of each word comes from this part
             }
         }
         for (i = 0; i < length; i++) {

@@ -147,7 +147,58 @@ public class TaxDiscountsConfiguration {
     - @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
     - @ComponentScan
 
+## MapStruct
 
+- MapStruct is a code generator for Java bean mapping
+    - Helps reduce coding for type conversions
+    - When dealing with REST services, use case is to expose API data using DTOs (Data Transfer Object)
+- MapStruct is annotation based processor plugged into the Java compiler
+- From Interfaces declared, MapStruct will generate code at build time
+
+
+## Spring Web Reactive
+
+- Reactive systems
+    - Responsive
+    - Resilient
+    - Elastic
+    - Message driven
+
+### Spring Flux
+
+- Non-blocking applications
+- Asynchronous
+- Event-driven
+- Small num of threads to scale
+- Backpressure use reactive streams
+
+```java
+Flux<?>
+Mono<?>
+```
+
+- Returns stream of resources in time interval for example each record every second
+
+## Spring Web MVC
+
+- MVC pattern that divide application into three parts
+    - Model
+    - View
+    - Controller
+- DispatcherServlet
+- HandlerMapping
+- Controller
+- ViewResolver
+- View
+
+## Login Rest Endpoint
+
+- @RestController (@ResponseBody + @Controller)
+- @PathVariable
+- @RequestParam
+- @RequestHeader
+- @RequestBody
+- @RequestMapping
 
 
 

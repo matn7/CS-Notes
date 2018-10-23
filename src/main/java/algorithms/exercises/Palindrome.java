@@ -1,5 +1,6 @@
 package algorithms.exercises;
 
+// STAR
 public class Palindrome {
     public boolean checkPalindrome(String word) {
         boolean result = true;

@@ -8,7 +8,7 @@
 
 - Servlet filters are used to pre-process / post-process web requests
 - Servlet filters can route web requests based on security logic
-- Spring provides secrity functionality with servlet filters
+- Spring provides security functionality with servlet filters
 
 ## Spring Security - Overview
 
@@ -49,7 +49,7 @@
 
 ### HTTP Basic Authentication
 
-- Build in for Brovser
+- Build in for Browser
 - Default login form
 
 ## Authentication and Authorization
@@ -57,7 +57,7 @@
 - In-memory
 - JDBC
 - LDAP
-- Custom / Pluggable
+- Custom / Plugable
 
 ## Spring Security - Config
 
@@ -82,7 +82,7 @@
 public class AppConfig {
     // bean for view resolver
     @Bean
-    public ViweResolver viewResolver() {
+    public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
         viewResolver.setPrefix("/WEB-INF/view/");
@@ -100,7 +100,7 @@ public class AppConfig {
 - Code is automatically detected
 - Code used to initialize the servlet container
 - `AbstractAnnotationConfigDispatcherServletInitializer`
-    - Extend this calss
+    - Extend this class
     - Override methods
     - Specify servlet mapping and location of app config
 
@@ -138,7 +138,6 @@ public class DemoController {
 - maven dependency
     - spring-security-web
     - spring-security-config
-
 - Spring Security Web App Initializer
     - Code is used to initialize the servlet container
     - Special class to register to Spring Security Filters
