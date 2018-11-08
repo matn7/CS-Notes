@@ -417,6 +417,10 @@ ng build --prod --aot --base-href /application/ <br/>
 ng build --watch
 npm install rxjs-compat --save
 
+// React, Redux, Axios
+npm i redux react-redux redux-thunk
+npm i axios
+
 
 ## Change detector
 

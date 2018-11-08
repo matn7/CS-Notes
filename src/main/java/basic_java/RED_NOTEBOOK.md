@@ -15,7 +15,7 @@ used as data structure.
 - **Root** a node with no parents, every tree has exactly one root.
 - **Edge** a link from a parent node to a child node
 
-
+```
             ROOT        --->    A
             EDGE        --->   / \
             Siblings    --->  B   C     [Siblings nodes at the same level in the tree]
@@ -23,6 +23,7 @@ used as data structure.
                                 D   E
                                / \   \
              Leaf       --->  F   H   G [Leaf a node with no children]
+```
 
 - A root node is an ancestor of Every Node
     - C is an Ancestor of F

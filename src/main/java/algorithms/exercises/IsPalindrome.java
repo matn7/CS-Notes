@@ -3,7 +3,6 @@ package algorithms.exercises;
 // STAR
 public class IsPalindrome {
 
-
     public boolean isPalindrome(String testWord) {
 
         testWord = testWord.toLowerCase();

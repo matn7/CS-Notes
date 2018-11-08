@@ -253,7 +253,7 @@ public static int binarySearch(int[] sortedList, int number) {
     int min = 0;
     int max = sortedList.length - 1;
     while (min <= max) { // first iteration min = 0 max = 11, second min = 0 max = 4, third iteration min = 3 max = 4
-        int mid = min + (max - min) / 2; // 5, 2, 3
+        int mid = (max + min) / 2; // 5, 2, 3
         System.out.println();
         System.out.println("Min: " + min + " Mid: " + mid + " Max: " + max);
 
@@ -281,7 +281,7 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
         return -1;
     }
 
-    int mid = min + (max - min) / 2;
+    int mid = (max + min) / 2;
     if (sortedArray[mid] == number) {
         return mid;
     }
@@ -408,24 +408,368 @@ public class CountNumbers {
 }
 ```
 
+## :star: todo sortowanie 00110101001000 -> 00000000011111
 
+## :star: Builder design patterns [Creational Pattern]
 
+```java
+public class Customer {
+    private String name;
+    private String age;
+    private String salary;
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setAge(String age) {
+        this.age = age;
+    }
 
+    public String getAge() {
+        return age;
+    }
 
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
 
+    public String getSalary() {
+        return salary;
+    }
 
+    public String toString() {
+        return age + " - " + name + " - " + salary;
+    }
 
+}
+```
 
+```java
+public class CustomerBuilder {
+    private static Customer customer;
 
+    public static CustomerBuilder defaultCustomer() {
+        this.customer = new Customer();
+        return new CustomerBuilder();
+    }
 
+    public CustomerBuilder withName(String name) {
+        this.customer.setName(name);
+        return this;
+    }
 
+    public CustomerBuilder withAge(String age) {
+        this.customer.setAge(age);
+        return this;
+    }
 
+    public CustomerBuilder withSalary(String amount) {
+        this.customer.setSalary(amount);
+        return this;
+    }
 
+    public Customer build() {
+        return customer;
+    }
 
+}
 
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        CustomerBuilder builder = CustomerBuilder.defaultCustomer();
+
+        Customer customer = builder.withAge("89").withSalary("2500").build();
+
+        System.out.println(customer);
+
+    }
+
+}
+
+```
+
+## :star: Decorator Pattern [Structural]
+
+```java
+public interface Order {
+    // Decorated class must implement this interface
+    double getPrice();
+    String getLabel();
+}
+```
+
+```java
+public class Pizza implements Order {
+    // Class that must be decorated implements interface Order
+    // Decorator means dynamically add responsibilities to object
+
+    private String label;
+    private double price;
+
+    public Pizza(String label, double price) {
+        this.label = label;
+        this.price = price;
+    }
+
+    @Override
+    public double getPrice() {
+        return this.price;
+    }
+
+    @Override
+    public String getLabel() {
+        return this.label;
+    }
+}
+```
+
+```java
+public abstract class Extra implements Order {
+
+    protected Order order;
+    protected String label;
+    protected double price;
+
+    public Extra(String label, double price, Order order) {
+        this.label = label;
+        this.price = price;
+        this.order = order;
+    }
+
+    // price delegate to other implementation
+    public abstract double getPrice();
+
+    public String getLabel() {
+        return order.getLabel() + ", " + this.label;
+    }
+
+}
+```
+
+```java
+public class DoubleExtra extends Extra {
+    public DoubleExtra(String label, double price, Order order) {
+        super(label, price, order);
+    }
+
+    @Override
+    public double getPrice() {
+        return (this.price * 2) + order.getPrice();
+    }
+
+    @Override
+    public String getLabel() {
+        return order.getLabel() + ", double " + this.label;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Order fourSeasonPizza = new Pizza("Four season", 10); // Reason why program to interface
+        fourSeasonPizza = new DoubleExtra("Mozarella", 2, fourSeasonPizza);
+
+        System.out.println(fourSeasonPizza.getPrice() + " : " + fourSeasonPizza.getLabel());
+    }
+
+}
+```
+
+## :star:  Factory Pattern
+
+**Plane.java**
+
+```java
+public interface Plane {
+    // Any Plane that factory returns must implement this interface
+    void model();
+}
+```
+
+**Junkers.java**
+
+```java
+public class Junkers implements Plane {
+    // Concrete Plane implementation
+    @Override
+    public void model() {
+        System.out.println("Junkers Ju 87 Stuka produced");
+    }
+}
+```
+
+**PlaneFactory.java**
+
+```java
+public class PlaneFactory {
+    // Factory says that it returns something that implements plane
+    public static Plane getPlane(PlaneType planeType) {
+        switch (planeType){
+            case HEINKEL:
+                return new Heinkel();
+            case JUNKERS:
+                return new Junkers();
+            case MESSERSCHMITT:
+                return new Messerschmitt();
+        }
+        return null;
+    }
+}
+```
+
+**Main.java**
+
+```java
+public class Main {
+
+    public static void main(String[] args) {
+        Plane plane = PlaneFactory.getPlane(PlaneType.JUNKERS);
+        plane.model();
+    }
+}
+```
+
+***
+
+## :star: Object Class Methods
+
+### hashCode
+
+### toString
+
+### equals
+
+### wait and notify
+- work in tandem – when one thread calls wait() on an object, that thread will block until
+  another thread calls notify() or notifyAll() on that same object.
+
+### getClass
+
+### clone
+- For the method to be used all classes calling the method must implement the Cloneable interface
+
+### Object constructor
+- All constructors in Java must make a call to the Object constructor. This is done with the call super().
+This has to be the first line in a constructor. The reason for this is so that the object can actually be created on the heap before
+any additional initialization is performed.
+
+### finalize
+- This is a protected and non-static method of the Object class. s. This method is used to perform some final operations
+or clean up operations on an object before it gets removed from memory.
+According to the doc, this method gets called by the garbage collector on an object when garbage
+collection determines that there are no more references to the object.
+But there are no guarantees that finalize() method would gets called if the object is still reachable or no Garbage
+Collectors run when the object become eligible. That's why it's better not rely on this method.
+Generally it's considered bad practice to use finalize() method in applications of any kind and should be avoided.
+Finalizers are not meant for freeing resources (e.g., closing files). The garbage collector gets called when (if!) the
+system runs low on heap space. You can't rely on it to be called when the system is running low on file handles or,
+for any other reason.
+The intended use-case for finalizers is for an object that is about to be reclaimed to notify some other object about
+its impending doom. A better mechanism now exists for that purpose---the java.lang.ref.WeakReference<T>
+class. If you think you need write a finalize() method, then you should look into whether you can solve the same
+problem using WeakReference instead. If that won't solve your problem, then you may need to re-think your design
+on a deeper level.
+
+***
+
+## :star: Concurrent Collections
+
+### Thread Safe collections
+```java
+List<String> threadSafeList = Collections.synchronizedList(new ArrayList<String>());
+Set<String> threadSafeSet = Collections.synchronizedSet(new HashSet<String>());
+Map<String, String> threadSafeMap = Collections.synchronizedMap(new HashMap<String, String>());
+```
+- Since Java 5
+```java
+List<String> threadSafeList = new CopyOnWriteArrayList<String>();
+Set<String> threadSafeSet = new ConcurrentHashSet<String>();
+Map<String, String> threadSafeMap = new ConcurrentHashMap<String, String>();
+```
+
+- ConcurrentHashMap insertions
+SomeObject previousValue = concurrentHashMap.putIfAbsent(1, value);
+
+### Concurrent Collections
+Concurrent collections are a generalization of thread-safe collections, that allow for a broader usage in a concurrent
+environment.
+While thread-safe collections have safe element addition or removal from multiple threads, they do not necessarily
+have safe iteration in the same context (one may not be able to safely iterate through the collection in one thread,
+while another one modifies it by adding/removing elements).
+<br/>
+**java.util.concurrent.CopyOnWriteArrayList**
+The "snapshot" style iterator method uses a reference to the state of the array at the point that the
+iterator was created. This array never changes during the lifetime of the iterator, so interference is
+impossible and the iterator is guaranteed not to throw ConcurrentModificationException.
+<br/>
+**ConcurrentLinkedQueue**
+Iterators are weakly consistent, returning elements reflecting the state of the queue at some point at or
+since the creation of the iterator. They do not throw java.util.ConcurrentModificationException, and may
+proceed concurrently with other operations. Elements contained in the queue since the creation of the
+iterator will be returned exactly once.
+<br/>
+```java
+public static final List<Integer> LIST = Collections.synchronizedList(new ArrayList<>());
+```
+Could (and statistically will on most modern, multi CPU/core architectures) lead to exceptions.
+Synchronized collections from the Collections utility methods are thread safe for addition/removal of elements,
+but not iteration (unless the underlying collection being passed to it already is).
+
+***
+
+## :star: WeakHashMap
+
+Weak References : The objects that are referenced only by weak references are garbage collected eagerly; the GC
+won’t wait until it needs memory in that case.
+<br/>
+**Difference between Hashmap and WeakHashMap:**<br/>
+If the Java memory manager no longer has a strong reference to the object specified as a key, then the entry in the
+map will be removed in WeakHashMap.
+
+***
+
+## :star: Design Patterns
+
+### Creational
+
+- Builder
+- Singleton
+- Factory
+- AbstractFactory
+- Prototype Pattern
+
+### Behavioral
+
+- Strategy Pattern
+- Dependency Injection
+- Template pattern
+- Iterator Pattern
+- Observer pattern
+- Command pattern
+- Chain of Responsibility Pattern
+- Memento Design Pattern
+- Visitor Pattern
+- State Pattern
+- Mediator pattern
+
+### Structural
+
+- Decorator Pattern
+- Adapter Pattern
+- Facade Pattern
+- Composite Pattern
+- Flyweight pattern
+- Bridge Pattern
+- Proxy Pattern
 
 
 
