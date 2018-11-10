@@ -117,12 +117,12 @@ This means that ClassCastException can't be thrown on casting the result correct
 
 ## Dependency Injection
 
-
+```
         +-------------+     give me object            +----------------+
-        | Application | ----------------------------> | Object Factory |
+        | ApplicaConfigure Spring with Java Annotationstion | ----------------------------> | Object Factory |
         |             | <---------------------------- |                | ----> Configuration
         +-------------+                               +----------------+
-
+```
 
 - dependency = helper
 - Injection Types

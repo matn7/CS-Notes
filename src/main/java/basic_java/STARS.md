@@ -108,6 +108,38 @@ public static int maxDepth(Node root) {
     int rightMaxDepth = 1 + maxDepth(root.getRightChild());
     return Math.max(leftMaxDepth, rightMaxDepth);   // Find the max depth between the left and right subtrees
 }
+
+ public static class Node<T> {
+
+        private T data;
+        private Node<T> leftChild;
+        private Node<T> rightChild; // Node can have Max 2 child
+
+        public Node(T data) {
+            this.data = data;
+        }
+
+        public Node<T> getRightChild() {
+            return rightChild;
+        }
+
+        public void setRightChild(Node<T> rightChild) {
+            this.rightChild = rightChild;
+        }
+
+        public Node<T> getLeftChild() {
+            return leftChild;
+        }
+
+        public void setLeftChild(Node<T> leftChild) {
+            this.leftChild = leftChild;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+    }
 ```
 
 ***
@@ -295,6 +327,8 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 ```
 
 ## :star: equals
+
+- By default equals comparing a object by comparing their address in memory
 
 ```java
 public class Item {
@@ -644,6 +678,13 @@ public class Main {
 
 ### hashCode
 
+- HashCode if two objects are equals then their hashCode values should be equals as well,
+so if implement just equals method and leave hashCode unimplemented the hashCode will always
+**create 2 students** objects as if they are different objects. Even when their enrId are the same.
+- If two objects are equal, then their hashCode values must also be equal. Whenever you implement equals(Object), you must also implement hashCode().
+- For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return.
+If your entity will be part of a Set collection, override its equals and hashCode methods.
+
 ### toString
 
 ### equals
@@ -771,5 +812,49 @@ map will be removed in WeakHashMap.
 - Bridge Pattern
 - Proxy Pattern
 
+***
 
+## :star: Example `@Override`
 
+- Override method, we are telling a compiler we override method exactly as present in interface or parent class.
+- Compiler check that we actually override method, if some issue they will be compile time error
+
+***
+
+## :star: Spring Bean Lifecycle
+
+Instantiate <br/>
+:arrow_down: <br/>
+Populate properties <br/>
+:arrow_down: <br/>
+Call setBeanName of BeanNameAware <br/>
+:arrow_down: <br/>
+Call setBeanFactory of BeanFactoryAware <br/>
+:arrow_down: <br/>
+Call setApplicationContext of ApplicationContextAware <br/>
+:arrow_down: <br/>
+Preinitialization (BeanPostProcessor) <br/>
+:arrow_down: <br/>
+afterPropertiesSet of initializing Beans <br/>
+:arrow_down: <br/>
+Custom Init method <br/>
+:arrow_down: <br/>
+Post Initialization (BeanPostProcessors) :arrow_right: Bean redy to use
+
+**Destroy bean** <br/>
+
+Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call Custom destroy method :arrow_right: Terminated
+
+***
+
+## :star: Rules that Relational Database follows
+
+- **Entity Integrity** : Every table has a primary key.
+- **Referential Integrity** : A foreign key points at a value that is the primary key of another table. Null value are valid for FK.
+
+***
+
+## :star: object states
+- Transient state - object does not associated with any table row
+- Persistent - object with database identify. Primary key is set as database identifier.
+- Detached - no longer managed by EntityManager. setText will only change state in JVM memory.

@@ -133,13 +133,14 @@ public static int binarySearch(int[] list, int number) {
 
 ## Binary Tree
 
-- A binary tree is one where every node can have maximum od two children
+- A binary tree is one where every node can have maximum of two children
     - Left children and right children
 - Two binary trees are the same if:
     - 1. Every corresponding node has the same value.
     - 2. The structure of the tree at every corresponding node is the same
 - **Complexity O(N)**
 
+```
         +---+
         | N |
         +---+
@@ -147,6 +148,7 @@ public static int binarySearch(int[] list, int number) {
     +---+   +---+
     | L |   | R |
     +---+   +---+
+```
 
 ```java
 public static class Node {
@@ -286,8 +288,8 @@ public static class Node<T> {
 
 - Breadth-First : Visit node at every level before moving the next level.
 - Depth-First : Involves going right to the leaf of the binary tree first before moving up the tree.
-  - PRE-ORDER : NODE -> LEFT SUBTREE -> RIGHT SUBTREE
-  - IN-ORDER : LEFT SUBTREE -> NODE -> RIGHT SUBTREE
+  - PRE-ORDER :  NODE         -> LEFT SUBTREE  -> RIGHT SUBTREE
+  - IN-ORDER :   LEFT SUBTREE -> NODE          -> RIGHT SUBTREE
   - POST-ORDER : LEFT SUBTREE -> RIGHT SUBTREE -> NODE
 
 ### Binary search tree
@@ -324,10 +326,11 @@ public static class Node<T> {
         - travels downwards (root -> leaf).
         - Heaps can be represented using tree or array
 <br/>
-- **GET PARENT** : Node at index: i -> has parent at index (i-1)/2
-- **GET LEFT CHILD** : Node at index: (2*i + 1)
-- **GET RIGHT CHILD** : Node at index: (2*i + 2)
+- **GET PARENT** : Node at index: i -> has parent at index (i-1)/2<br/>
+- **GET LEFT CHILD** : Node at index: (2*i + 1) <br/>
+- **GET RIGHT CHILD** : Node at index: (2*i + 2 <br/>
 
+```
              5
            /   \
           8     6
@@ -337,6 +340,7 @@ public static class Node<T> {
       15  10
 
 {5,8,6,9,12,11,7,15,10}
+```
 
 - Heapify : which is the right position of element
     - SIFT DOWN
@@ -357,6 +361,7 @@ public static class Node<T> {
     - EDGE
 - Graphs is set of vertices and edges
 
+```
                 Edge
        | A | -------------- | B |       UNDIRECTED - 2 way relationship
       Vertex                Vertex
@@ -365,15 +370,16 @@ public static class Node<T> {
                 Edge
        | A | -------------> | B |       DIRECTED - 1 way relationship
       Vertex                Vertex
-
+```
 
 - A and B are **Adjacent** Nodes
 
-
+```
         | B | ----- | F | ----- | H |           - 3 edges are INDICENT of vertex F
                       |                         - F is said to have a degree of 3
                       |
                     | G |
+```
 
 - Series of edges is called **PATH**
 
@@ -381,6 +387,7 @@ public static class Node<T> {
 
 - A connected graph with no cycles is a TREE
 
+```
         +---+         +---+         +---+
         | A +---------+ B +---------+ F |
         +-+-+         +---+         +-+-+
@@ -394,9 +401,11 @@ public static class Node<T> {
         +-+-+         +---+         +-+-+
         | C +---------+ E |         | G |
         +---+         +---+         +---+
+```
 
 ### DIRECTED ACYCLIC GRAPH (DAG)
 
+```
         +---+         +---+         +---+
         | A +-------->+ B +-------->+ F |
         +-+-+         +---+         +-+-+
@@ -410,6 +419,7 @@ public static class Node<T> {
         +-+-+         +---+         +-+-+
         | C +-------->+ E +-------->+ G |
         +---+         +---+         +---+
+```
 
 - 3 ways to represent Graph
     - Adjacency matrix
@@ -422,6 +432,7 @@ public static class Node<T> {
 - The Row labels and the column labels represent the Vertices
 - Each cell represent relationship between the vertices i.e. the EDGES
 
+```
         +---+     +---+                   A  B  C  D  E
         | A +---->+ B |                 +----------------
         +-+-+     +-+-+               A | 0  1  1  0  0
@@ -433,6 +444,7 @@ public static class Node<T> {
         +-+-+     +-+-+
         | C +---->+ E |
         +---+     +---+
+```
 
 ### ADJACENCY LIST
 
@@ -487,6 +499,7 @@ public static class Node<T> {
 
 ### Synchronized
 
+```
     public class SameClass {                        public class SomeClass {
         synchronized static void foo() {}   ===         static void foo() {
     }                                                       synchronized(SomeClass.class) {}
@@ -501,6 +514,7 @@ public static class Node<T> {
     }                                               synchronized(this) {}
                                                 }
                                               }
+```
 
 ***
 
@@ -558,7 +572,11 @@ for (Numbers n : Numbers.values()) {
 
 ### 9. Class to work with dates
 
-- java.time.Date, Duration, LocalDateTime, TemporalAdjuster, LocalTime
+- java.time.Date
+- Duration
+- LocalDateTime
+- TemporalAdjuster
+- LocalTime
 
 ### 10. Iterator and how it works
 
@@ -824,6 +842,7 @@ public class BiggerAndSmaller {
 - Linear data structure
 - Flexible sizes
 
+```
             | Q | U | E | U | E | S |
 
             | S |
@@ -832,9 +851,11 @@ public class BiggerAndSmaller {
             | C |
             | K |
             | S |
+```
 
 ### 29. Heap
 
+```
                             | 2 |                       | 2 |
                            /     \                      | 4 |
                       | 4 |       | 8 |                 | 8 |
@@ -852,21 +873,23 @@ public class BiggerAndSmaller {
                     /         \
             | LEFT |           | RIGHT |
             index*2 + 1         index*2 + 2
+```
 
 ### 30. Tree
 
+```
                 ROOT
                /    \
             LEAF   CHILD
                         \
                         LEAF
-
+```
 
 - The binary TREE to 2 child nodes (left, right)
 - The binary tree
     - Left node is less than root node
     - Insert like find
-
+```
                 BALANCED                    UNBALANCED
 
                      4                           1
@@ -874,6 +897,8 @@ public class BiggerAndSmaller {
                   2     5                          2
                 /   \    \                          \
                1      3    6                         3
+```
+
 - Balanced
     - insert: O(log(N))
     - find: O(log(N))
@@ -881,9 +906,11 @@ public class BiggerAndSmaller {
     - insert: O(N)
     - find: O(N)
 
+```
         TRAVERSING
         INORDER                         PREORDER                    POSTORDER
         left -> root -> right       root -> left -> right       left -> right -> root
+```
 
 ### 31. Big O Notation
 
@@ -939,17 +966,19 @@ public class BiggerAndSmaller {
 
 ### 34. Garbage Collector
 
+```
         Young generation    Old Generation      Permanent Generation
         +-----------------+-----------------+---------------------------+
         | Eden            | Tenured         | Perm                      |
         +-----------------+-----------------+---------------------------+
+```
 
 - Permanent generation is used to store metadata. Store String pool also.
 - Types of Garbage collectors:
-    - Throughput GC - parallel version young generation     -XX:+UseParallelGC
-    - Concurrent low pause collector                        -XX:+UseConcMarkSweepGC
+    - Throughput GC - parallel version young generation     `-XX:+UseParallelGC`
+    - Concurrent low pause collector                        `-XX:+UseConcMarkSweepGC`
     - Most GC is executed multithreaded at the same time app is executed
-    - Incremented low pause collector                       -XX:+UseTrainGC
+    - Incremented low pause collector                       `-XX:+UseTrainGC`
 - Full GC Concurrent GC
     - Executed on single GC thread, which executes with app thread to execute before tenured generation.
     - Full GC, application is stopped and GC is executed as all application thread is stopped

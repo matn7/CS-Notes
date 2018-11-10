@@ -42,7 +42,7 @@ CREATE TABLE BOOK(
 - **primary key** : no duplicate or null values allowed in this column
 - **foreign key** : value of this column must match a value in the primary key of another table
 
-- Rules that Relational Database follows
+- :star: Rules that Relational Database follows
     - **Entity Integrity** : Every table has a primary key.
     - **Referential Integrity** : A foreign key points at a value that is the primary key of another table. Null value are valid for FK.
 
@@ -1049,6 +1049,7 @@ A combination of more than 1 table column that identifies the uniqueness of a re
 |---|---|
 | | |
 
+```
     ------------------------------------------------------------------------------
     address of parent1 in heap memory           Address of parent2 in heap memory
 
@@ -1057,6 +1058,7 @@ A combination of more than 1 table column that identifies the uniqueness of a re
     firstname: Paul                             firstname: Paul
     lastname: Sharp                             lastname: Sharp
     ----------------------------| Java Memory Heap |-------------------------------
+```
 
 No matter how good or natural a composite primary key is, it is **not recommended for uniquely identyfying a record**
 
@@ -1135,7 +1137,7 @@ public class HelloWorld {
 }
 ```
 
-Not only composite key even **business key (e.g. ISBN)** are nt reccomended fr uniqely identify a record.
+Not only composite key even **business key (e.g. ISBN)** are not recommended for uniquely identify a record.
 
 A Business key is also called **Natural key**
 
@@ -1224,6 +1226,7 @@ public class HibernateJPAProviderImpl implements JPA {
 }
 ```
 
+```
         Hibernate
 
         +-------------+
@@ -1231,10 +1234,12 @@ public class HibernateJPAProviderImpl implements JPA {
         | Persistence |
         | API         |
         +-------------+
+```
 
 In addition to it's own **"native"** API, Hibernate is also an implementation of
 Java Persistence API (JPA) specification.
 
+```
                     Application
                         |
                         JPA
@@ -1242,6 +1247,7 @@ Java Persistence API (JPA) specification.
                +--------+--------+
                |        |        |
            Hibernate  OpenJPA  EclipseLink
+```
 
 ## Hibernate as JPA Provider
 
@@ -1302,7 +1308,7 @@ try {
     txn.begin();
     Message msg = new Message("Hello Hibernate");
     entityManager.persist(msg);
-    thx.commit();
+    txn.commit();
 } catch (Exception e) {
     if (txn != null) {
         txn.rollback();
@@ -1400,6 +1406,7 @@ where
     message0_.ID=?
 ```
 
+```
     +----------+     +----------------------------------------+
     | Client   |     |  +---------------------------------+   |
     |          |     |  | +-------+                       |   |  Database Connection
@@ -1410,18 +1417,18 @@ where
                      |  +---------------------------------+   |         (and therefore cache)
                      |      JVM                               |
                      +----------------------------------------+
+```
 
+EntityManager == first level cache <br/>
+EntityManager 2 caches, hibernate does not cache persistence objects across 2 entity managers.
 
-EntityManager == first level cache
-2 EntityManager 2 caches, hibernate does not cache persistence objects across 2 entity managers.
-
-**Second-level-cache** : cache entity manager factory <br/>
+**Second-level-cache** - cache entity manager factory <br/>
 **First level cache** - scope EntityManager </br>
 **Second level cache** - scope EntityManagerFactory <br/>
 
 ## SQL Joins
 
-### SQL Joins, Inner Join or Joinid: Long
+### SQL Joins, Inner Join or Join id: Long
 
 **TableA**
 
@@ -1547,11 +1554,13 @@ try {
 }
 ```
 
+```
     ------------- Java Heap Memory -------------
     |a47e0b87|                      |b89a3a42|   ----->  Addresses in heap memory
       Mikey                           Mikey
     student1                        student2
     --------------------------------------------
+```
 
 - :star: By default equals comparing a object by comparing their address in memory
 
@@ -1571,9 +1580,9 @@ public class Student {
 }
 ```
 
-: star: HashCode if two objects are equals then their hashCode values should be equals as well,
+:star: HashCode if two objects are equals then their hashCode values should be equals as well,
 so if implement just equals method and leave hashCode unimplemented the hashCode will always
-**create 2 students** objects as if they are different objects. Even whentheir enrId are the same.
+**create 2 students** objects as if they are different objects. Even when their enrId are the same.
 
 ```java
 // ...
@@ -1648,7 +1657,7 @@ List<Object[]> returnList = query.getResultList();
 
 ```java
 // ...
-String name="Mikey";    // symulating dyamic parameter
+String name="Mikey";    // simulating dynamic parameter
 Query query = em.createQuery("SELECT guide FROM Guide guide WHERE guide.name = '" + name "'");
 Guide guide = (Guide) query.getSingleResult();
 // ...
@@ -1783,6 +1792,7 @@ List<Guide> guides = query.getResultList();
 
 ## Inheritance Mapping and Polymorphic Queries
 
+```
         +-------------------+
         | Animal            |
         +-------------------+
@@ -1793,9 +1803,11 @@ List<Guide> guides = query.getResultList();
         +---+----------+----+
             |          |
            Cat        Dog
+```
 
 ### JOINED
 
+```
     +----------------+                               +----------------+
     | Cat            |                               | Dog            |
     +----------------+                               +----------------+
@@ -1809,9 +1821,11 @@ List<Guide> guides = query.getResultList();
            +------->+ id [BIGINT PK]               +<-------+
                     | name [VARCHAR(255) Nullable] |
                     +------------------------------+
+```
 
 ### SINGLE_TABLE
 
+```
         +------------------------------+
         | Animal                       |
         +------------------------------+
@@ -1819,16 +1833,18 @@ List<Guide> guides = query.getResultList();
         | id [BIGINT PK]               |
         | name [VARCHAR(255) Nullable] |
         +------------------------------+
+```
 
 ### TABLE_PER_CLASS (Table per concrete class)
 
-
+```
     +---------------------+                      +---------------------+
     | Cat                 |                      | Dog                 |
     +---------------------+                      +---------------------+
     | id [BIGINT PK]      |                      | id [BIGINT PK]      |
     | name [VARCHAR(255)] |                      | name [VARCHAR(255)] |
     +---------------------+                      +---------------------+
+```
 
 - **PERSIST**
     - Return type void
@@ -1934,6 +1950,7 @@ public abstract class Animal {
 The superclass has a table and each subclass has a table that contains only un-inherited properties
 the subclass tables have a primary key that is a foreign key of the superclass.
 
+```
      Cat
     +----+
     | id |
@@ -1948,10 +1965,11 @@ the subclass tables have a primary key that is a foreign key of the superclass.
     +----+             +----+--------+
     | 2  |
     +----+
+```
 
-- Poor performence for polymorphic queries.
+- Poor performance for polymorphic queries.
 - All the properties in subclass may have not-null constraint
-- Not bad performence for derived class queries.
+- Not bad performance for derived class queries.
 
 ### Inheritance (TABLE_PER_CLASS)
 
@@ -1988,7 +2006,7 @@ public abstract class Animal {
 :one:
 
 ```java
-@MantToOne(cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
+@ManyToOne(cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
 @JoinColumn(name="guide_id")
 private Guide guide;
 ```
@@ -2052,13 +2070,15 @@ List<Student> students = query.getResultList();
 
 ## Merging Detached Objects
 
-      Loading objects | Modyfying loaded objects | Storing loaded objects |
+```
+      Loading objects | Modifying loaded objects | Storing loaded objects |
     |---------------->|------------------------->|----------------------->|
 
         Persistence         Detached Objects        Persistence
     ------------------>                          ------------------>
           Context                                     Context
                                     merge --------->
+```
 
 **Student.java**
 
@@ -2131,11 +2151,13 @@ public class Guide {
     private Set<Student> students = new HashSet<>();
 }
 ```
+```
             Persistence Context
     ------------------------------------------------------------>
 
     ------------------------>           ------------------------>
     txn1#begin    txn1#commit           txn2#begin    txn2#commit
+```
 
 **CascadeType.MERGE**
 
@@ -2452,8 +2474,8 @@ public class Guide {
 }
 ```
 
-**ehcache.cml**
-```java
+**ehcache.xml**
+```xml
 <ehcache>
     <cache name="entity.Guide"
         maxElementInMemory="1000"
@@ -2513,7 +2535,7 @@ public class Guide {
 
 - **Second Level Cache**
     - Caching associations in second level cache
-    - By default assoctated ojects aren't cached
+    - By default associated objects aren't cached
 
 ```java
 @Entity
@@ -2643,7 +2665,7 @@ private Guide guide;
 private Set<Student> students = new HashSet<>();
 ```
 
-In large application, almost all associations must be navigable in both directio gueries
+In large application, almost all associations must be navigable in both direction queries
 
 ### Use bind variables
 
@@ -2663,7 +2685,7 @@ In JDBC always replace non-constraint values by `?`
 - Bad candidates
     - Data that is updated often
     - Financial data, where decisions must be based on latest update
-    - Daa that is shared with and / or written by other applications
+    - Data that is shared with and / or written by other applications
 
 
 

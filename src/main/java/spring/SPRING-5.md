@@ -21,7 +21,7 @@
 - Is a technique to allow dependencies to be injected at runtime
 - Dependencies are not predetermined
 
-## Spring Bean Lifecycle
+## :star: Spring Bean Lifecycle
 
 Instantiate <br/>
 :arrow_down: <br/>
@@ -99,7 +99,7 @@ the requesting object
 
 - Spring Stereotypes are used to define Spring Beans in the Spring context
     - @Controller
-    - @ResrController
+    - @RestController
     - @Service
     - @Component
     - @Repository

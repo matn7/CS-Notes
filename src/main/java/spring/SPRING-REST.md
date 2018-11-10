@@ -3,13 +3,14 @@
 ## JSON Data Binding
 
 Process of converting JSON data to a Java POJO
-
+```
     +------+       +------+
     |      +------>+ Java |
     | JSON |       |      |
     |      +<------+ POJO |
     +------+       +------+
           Data Binding
+```
 
 - Also called as :
     - Serialization / Deserialization
@@ -20,12 +21,14 @@ Process of converting JSON data to a Java POJO
 - Handles data binding between JSON and Java
 - Package : **com.fasterxml.jackson.databind**
 
+```
                                                      +---------+
         {                                  set       | Java    |
             "id": 786454,               ---------->  | POJO    |
             "firstName": Samara,           get       |         |
             "active": true              <----------  | Student |
         }                                            +---------+
+```
 
 - Converts JSON to Java POJO, call setter on POJO
     - It does not call private method, so define public setters
