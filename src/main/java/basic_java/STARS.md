@@ -322,6 +322,8 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 }
 ```
 
+***
+
 ## :star: equals
 
 - By default equals comparing a object by comparing their address in memory
@@ -352,8 +354,12 @@ public class Item {
 }
 ```
 
+***
+
 - TODO implementacja hashCode i equals
 - TODO hashCode w implementacji co to jest (miejsce w pamięci)
+
+***
 
 ## :star: How to build own annotation
 
@@ -407,6 +413,8 @@ public class Dao1 {
 }
 ```
 
+***
+
 ## :star: How to generate stack overflow ?
 
 ```java
@@ -423,6 +431,7 @@ public class StackOverflowException {
 }
 ```
 
+***
 
 ## :star: Count numbers
 
@@ -442,7 +451,9 @@ public class CountNumbers {
 }
 ```
 
-## :star: Sortowanie 00110101001000 -> 00000000011111
+***
+
+## :star: Sort 00110101001000 -> 00000000011111
 
 ```java
 public class ZeroOneSort {
@@ -450,7 +461,6 @@ public class ZeroOneSort {
     public static void main(String[] args) {
         int[] unsorted = {0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
         int numOfOnes = 0;
-
 
         for (int i = 0; i < unsorted.length; i++) {
             if (unsorted[i] == 1) {
@@ -471,6 +481,7 @@ public class ZeroOneSort {
 }
 ```
 
+***
 
 ## :star: Builder design patterns [Creational Pattern]
 
@@ -557,6 +568,8 @@ public class Main {
 }
 
 ```
+
+***
 
 ## :star: Decorator Pattern [Structural]
 
@@ -646,6 +659,8 @@ public class Main {
 }
 ```
 
+***
+
 ## :star:  Factory Pattern
 
 ```java
@@ -692,7 +707,9 @@ public class Main {
 }
 ```
 
-## :star: Observer pattern [behavioral]
+***
+
+## :star: Observer pattern [Behavioral]
 
 ```java
 public interface Publisher {
@@ -807,18 +824,18 @@ This has to be the first line in a constructor. The reason for this is so that t
 any additional initialization is performed.
 
 ### finalize
-- This is a protected and non-static method of the Object class. s. This method is used to perform some final operations
-or clean up operations on an object before it gets removed from memory.
-According to the doc, this method gets called by the garbage collector on an object when garbage
+- This is a protected and non-static method of the Object class.
+- This method is used to perform some final operations or clean up operations on an object before it gets removed from memory.
+- According to the doc, this method gets called by the garbage collector on an object when garbage
 collection determines that there are no more references to the object.
-But there are no guarantees that finalize() method would gets called if the object is still reachable or no Garbage
+- But there are no guarantees that finalize() method would gets called if the object is still reachable or no Garbage
 Collectors run when the object become eligible. That's why it's better not rely on this method.
-Generally it's considered bad practice to use finalize() method in applications of any kind and should be avoided.
-Finalizers are not meant for freeing resources (e.g., closing files). The garbage collector gets called when (if!) the
+- Generally it's considered bad practice to use finalize() method in applications of any kind and should be avoided.
+- Finalizers are not meant for freeing resources (e.g., closing files). The garbage collector gets called when (if!) the
 system runs low on heap space. You can't rely on it to be called when the system is running low on file handles or,
 for any other reason.
-The intended use-case for finalizers is for an object that is about to be reclaimed to notify some other object about
-its impending doom. A better mechanism now exists for that purpose---the java.lang.ref.WeakReference<T>
+- The intended use-case for finalizers is for an object that is about to be reclaimed to notify some other object about
+its impending doom. A better mechanism now exists for that purpose, the `java.lang.ref.WeakReference<T>`
 class. If you think you need write a finalize() method, then you should look into whether you can solve the same
 problem using WeakReference instead. If that won't solve your problem, then you may need to re-think your design
 on a deeper level.
@@ -841,29 +858,34 @@ Map<String, String> threadSafeMap = new ConcurrentHashMap<String, String>();
 ```
 
 - ConcurrentHashMap insertions
+
+```java
 SomeObject previousValue = concurrentHashMap.putIfAbsent(1, value);
+```
 
 ### Concurrent Collections
-Concurrent collections are a generalization of thread-safe collections, that allow for a broader usage in a concurrent
+
+- Concurrent collections are a generalization of thread-safe collections, that allow for a broader usage in a concurrent
 environment.
-While thread-safe collections have safe element addition or removal from multiple threads, they do not necessarily
+- While thread-safe collections have safe element addition or removal from multiple threads, they do not necessarily
 have safe iteration in the same context (one may not be able to safely iterate through the collection in one thread,
 while another one modifies it by adding/removing elements).
-<br/>
-**java.util.concurrent.CopyOnWriteArrayList**
-The "snapshot" style iterator method uses a reference to the state of the array at the point that the
+
+- **java.util.concurrent.CopyOnWriteArrayList**
+    - The "snapshot" style iterator method uses a reference to the state of the array at the point that the
 iterator was created. This array never changes during the lifetime of the iterator, so interference is
 impossible and the iterator is guaranteed not to throw ConcurrentModificationException.
-<br/>
-**ConcurrentLinkedQueue**
-Iterators are weakly consistent, returning elements reflecting the state of the queue at some point at or
+
+- **ConcurrentLinkedQueue**
+    - Iterators are weakly consistent, returning elements reflecting the state of the queue at some point at or
 since the creation of the iterator. They do not throw java.util.ConcurrentModificationException, and may
 proceed concurrently with other operations. Elements contained in the queue since the creation of the
 iterator will be returned exactly once.
-<br/>
+
 ```java
 public static final List<Integer> LIST = Collections.synchronizedList(new ArrayList<>());
 ```
+
 Could (and statistically will on most modern, multi CPU/core architectures) lead to exceptions.
 Synchronized collections from the Collections utility methods are thread safe for addition/removal of elements,
 but not iteration (unless the underlying collection being passed to it already is).
@@ -872,11 +894,11 @@ but not iteration (unless the underlying collection being passed to it already i
 
 ## :star: WeakHashMap
 
-Weak References : The objects that are referenced only by weak references are garbage collected eagerly; the GC
+- Weak References : The objects that are referenced only by weak references are garbage collected eagerly; the GC
 won’t wait until it needs memory in that case.
-<br/>
-**Difference between Hashmap and WeakHashMap:**<br/>
-If the Java memory manager no longer has a strong reference to the object specified as a key, then the entry in the
+
+- **Difference between HashMap and WeakHashMap:**<br/>
+    - If the Java memory manager no longer has a strong reference to the object specified as a key, then the entry in the
 map will be removed in WeakHashMap.
 
 ***
@@ -944,9 +966,9 @@ Custom Init method <br/>
 :arrow_down: <br/>
 Post Initialization (BeanPostProcessors) :arrow_right: Bean redy to use
 
-**Destroy bean** <br/>
+- **Destroy bean** <br/>
 
-Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call Custom destroy method :arrow_right: Terminated
+Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Call Custom destroy method :arrow_right: Terminated
 
 ***
 
@@ -965,6 +987,41 @@ Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call 
 ***
 
 ## :star: Factorial
+
+```java
+public class Factorial {
+
+    public int calculateFactorial(int num) {
+
+        int result = 1;
+
+        if (num == 0 || num == 1) {
+            return result;
+        } else {
+            for (int i = 2; i < num; i++) {
+                result *= i;
+            }
+        }
+        return result;
+    }
+
+}
+
+public class FactorialRecursive {
+    public int calculateFactorial(int num) {
+        if (num == 0 || num == 1) {
+            return 1;
+        } else {
+            return num * calculateFactorial(num - 1)''
+        }
+    }
+
+}
+```
+
+***
+
+## :star: Fibonacci
 
 ```java
 public class FibonacciIterative {
@@ -1008,6 +1065,8 @@ public class FactorialRecursive {
 }
 ```
 
+***
+
 ## :star: Synchronized
 
 ```java
@@ -1040,6 +1099,8 @@ public class SomeClass {
 }
 ```
 
+***
+
 ## :star: Declaring a **volatile** Java variable
 
 Means the value of this variable will never be called
@@ -1048,7 +1109,6 @@ acts as through it is enclosed in a synchronized block, synchronized on itself.
 <br/>
 - A class loader is a part of JVM. Technically namespaces are unique per class loader.
 Usually there is just 1 class loader per program.
-<br/>
 - In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object.
     - Thread interference : different thread access the same data
     - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
@@ -1062,6 +1122,8 @@ Usually there is just 1 class loader per program.
     - Locking variables correctly can eliminate thread interference and memory consistency error
         - But it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock)
 
+***
+
 ## :star: What is the best way to subclass Singleton?
 
 - Singleton classes should never be subclassed or extended
@@ -1071,6 +1133,8 @@ Usually there is just 1 class loader per program.
     - It is possible to specify that a thread can only execute a section of code once it has acquired the lock on source object.
     - If some other thread currently holds that lock, the current thread must wait its turn
     **This is achieved using the Synchronized keyword**
+
+***
 
 ## :star: Synchronized
 
@@ -1127,12 +1191,16 @@ public void addName(String name) {
 | Livelock | Two thread don't deadlock, but keep blocking on locks held by each other, neither really can progress |
 | Starvation | Some threads keep acquiring locks greedly. And cause other threads to be unable to get anything done |
 
+***
+
 ## :star: Make sure your singleton objects can't be cloned
 
 - 1. The .clone() method belongs to object class (every object has this method), when it ought to belong to cloneable interface
 - 2. Object have a clone method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
 - 3. So make sure that your singleton class does not implement cloneable - or if for some reason it does
 Override the clone() method to thrown an exception.
+
+***
 
 ## :star: Which of following is true?
 
@@ -1145,4 +1213,170 @@ Override the clone() method to thrown an exception.
 - The .clone() method is in object class, which means all objects have a .clone() method
 - The .clone() method sits in the cloneable interface, so objects that implement this interface posses a .clone()
 - Calling .clone() on an object that does not explicitly implement the method result in an exception
+
+***
+
+## :star: Memory
+
+- In a classical computer architecture, each processor has
+a small set of registers, and a larger amount of memory. Access to registers is much faster than access to main
+memory. In modern architectures, there are memory caches that are slower than registers, but faster than main
+memory.
+- The Java Memory Model is the section of the JLS that specifies the conditions under which one thread is guaranteed
+  to see the effects of memory writes made by another thread.
+- Happens before relationships : "Two actions can be ordered by a happens-before relationship. If one action happens-before another, then
+  the first is visible to and ordered before the second."
+
+- If you adopt the following principals when writing concurrent code in Java, you can largely avoid the need to resort
+  to happens-before reasoning
+    - Use immutable data structures where possible. A properly implemented immutable class will be thread-safe,
+      and will not introduce thread-safety issues when you use it with other classes.
+    - Understand and avoid "unsafe publication".
+    - Use primitive mutexes or Lock objects to synchronize access to state in mutable objects that need to be
+      thread-safe1.
+    - Use Executor / ExecutorService or the fork join framework rather than attempting to create manage
+      threads directly.
+    - Use the `java.util.concurrent classes that provide advanced locks, semaphores, latches and barriers, instead
+      of using wait/notify/notifyAll directly.
+    - Use the java.util.concurrent versions of maps, sets, lists, queues and deques rather than external
+      synchonization of non-concurrent collections.
+
+***
+
+## :star: Java Memory Management
+
+- When a Java virtual machine starts, it needs to know how big to make the Heap, and the default size for thread
+  stacks. These can be specified using command-line options on the java command. For versions of Java prior to Java
+  8, you can also specify the size of the PermGen region of the Heap.
+- Note that PermGen was removed in Java 8, and if you attempt to set the PermGen size the option will be ignored
+  (with a warning message).
+- If you don't specify Heap and Stack sizes explicitly, the JVM will use defaults that are calculated in a version and
+  platform specific way. This may result in your application using too little or too much memory. This is typically OK
+  for thread stacks, but it can be problematic for a program that uses a lot of memory.
+- The following JVM options set the heap size:
+    - -Xms<size> - sets the initial heap size
+    - -Xmx<size> - sets the maximum heap size
+    - -XX:PermSize<size> - sets the initial PermGen size
+    - -XX:MaxPermSize<size> - sets the maximum PermGen size
+    - -Xss<size> - sets the default thread stack size
+```bash
+$ java -Xms512m -Xmx1024m JavaApp
+$ java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSize'
+```
+
+### Garbage collection
+
+- The Java runtime
+  system takes responsibility for finding the objects to be disposed of. This task is performed by a component called a
+  garbage collector, or GC for short.
+    - A reachable object is any object that can be accessed in any potential continuing computation from
+      any live thread.
+    - Unreachable objects are objects that cannot possibly be reached as above
+- When the GC detects an unreachable object, the following events can occur
+    - If there are any Reference objects that refer to the object, those references will be cleared before the object
+      is deleted.
+    - If the object is finalizable, then it will be finalized. This happens before the object is deleted.
+    - The object can be deleted, and the memory it occupies can be reclaimed.
+
+### Finalization
+
+- A Java object may declare a finalize method. This method is called just before Java releases the memory for the
+  object.
+    - Java makes no guarantees about when a finalize() method will called.
+    - Java does not even guarantee that a finalize() method will be called some time during the running
+      application's lifetime.
+    - The only thing that is guaranteed is that the method will be called before the object is deleted ... if the object
+      is deleted.
+
+### Manually trigger GC
+
+```java
+System.gc();
+```
+- However, Java does not guarantee that the Garbage Collector has run when the call returns. This method simply
+  "suggests" to the JVM (Java Virtual Machine) that you want it to run the garbage collector, but does not force it to do
+  so.
+
+### Memory consumption
+
+| Primitive | Boxed | Memory size primitive / boxed |
+|---|---|---|
+| boolean | Boolean | 1 byte / 16 bytes |
+| byte | Byte | 1 byte / 16 bytes |
+| short | Short | 2 bytes / 16 bytes |
+| char | Char | 2 bytes / 16 bytes |
+| int | Integer | 4 bytes / 16 bytes |
+| long | Long | 8 bytes / 16 bytes |
+| float | Float | 4 bytes / 16 bytes |
+| double | Double | 8 bytes / 16 bytes |
+
+- Boxed objects always require 8 bytes for type and memory management, and because the size of objects is always
+  a multiple of 8, boxed types all require 16 bytes total.
+- In addition, each usage of a boxed object entails storing a
+  reference which accounts for another 4 or 8 bytes, depending on the JVM and JVM options.
+- Memory consumption grows even more when using arrays: a float[5] array will require only 32 bytes; whereas a Float[5]
+  storing 5 distinct non-null values will require 112 bytes total (on 64 bit without compressed pointers, this increases
+  to 152 bytes)
+
+***
+
+## :star: String pool and heap storage
+
+- Like many Java objects, all String instances are created on the heap, even literals. When the JVM finds a String
+  literal that has no equivalent reference in the heap, the JVM creates a corresponding String instance on the heap
+  and it also stores a reference to the newly created String instance in the String pool. Any other references to the
+  same String literal are replaced with the previously created String instance in the heap.
+- When we use double quotes to create a String, it first looks for String with same value in the String pool, if found it
+  just returns the reference else it creates a new String in the pool and then returns the reference.
+- However using new operator, we force String class to create a new String object in heap space. We can use intern()
+  method to put it into the pool or refer to other String object from string pool having same value.
+- Before Java 7, String literals were stored in the runtime constant pool in the method area of PermGen, that had a
+  fixed size.
+- In JDK 7, interned strings are no longer allocated in the permanent generation of the Java heap, but are
+  instead allocated in the main part of the Java heap (known as the young and old generations), along with
+  the other objects created by the application. This change will result in more data residing in the main Java
+  heap, and less data in the permanent generation, and thus may require heap sizes to be adjusted. Most
+  applications will see only relatively small differences in heap usage due to this change, but larger
+  applications that load many classes or make heavy use of the String.intern() method will see more
+  significant differences.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
