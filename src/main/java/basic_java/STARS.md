@@ -284,19 +284,15 @@ public class Rectangle {
 public static int binarySearch(int[] sortedList, int number) {
     int min = 0;
     int max = sortedList.length - 1;
-    while (min <= max) { // first iteration min = 0 max = 11, second min = 0 max = 4, third iteration min = 3 max = 4
-        int mid = (max + min) / 2; // 5, 2, 3
-        System.out.println();
-        System.out.println("Min: " + min + " Mid: " + mid + " Max: " + max);
-
-        if (sortedList[mid] == number) { // third iteration sortedList[3] = 0 -> true
-            return mid; // Searched value is in index 3 in sorted array
+    while (min <= max) { //
+        int mid = (max + min) / 2;
+        if (sortedList[mid] == number) {
+            return mid;
         }
-        if (sortedList[mid] > number) { // first iteration 34 > 0 -> true
-            max = mid - 1; // lesser half,
-            // max = 5 - 1 = 4
-        } else { // second iteration sortedList[2] = -98
-            min = mid + 1; // greater half second iteration min = 2 + 1 = 3
+        if (sortedList[mid] > number) {
+            max = mid - 1;
+        } else {
+            min = mid + 1;
         }
     }
     return -1;
@@ -442,7 +438,35 @@ public class CountNumbers {
 }
 ```
 
-## :star: todo sortowanie 00110101001000 -> 00000000011111
+## :star: Sortowanie 00110101001000 -> 00000000011111
+
+```java
+public class ZeroOneSort {
+
+    public static void main(String[] args) {
+        int[] unsorted = {0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
+        int numOfOnes = 0;
+
+
+        for (int i = 0; i < unsorted.length; i++) {
+            if (unsorted[i] == 1) {
+                numOfOnes++;
+                unsorted[i] = 0;
+            }
+        }
+
+        for (int i = unsorted.length - numOfOnes; i < unsorted.length; i++) {
+            unsorted[i] = 1;
+        }
+
+        for (int i = 0; i < unsorted.length; i++) {
+            System.out.println(unsorted[i]);
+        }
+    }
+
+}
+```
+
 
 ## :star: Builder design patterns [Creational Pattern]
 
@@ -858,3 +882,51 @@ Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call 
 - Transient state - object does not associated with any table row
 - Persistent - object with database identify. Primary key is set as database identifier.
 - Detached - no longer managed by EntityManager. setText will only change state in JVM memory.
+
+***
+
+## :star: Factorial
+
+```java
+public class FibonacciIterative {
+    public int calculateFibo(int number) {
+        int result = 0;
+        int a = 1; // for 1
+        int b = 1; // for 2
+        if (number == 0) {
+            return 0;
+        } else if (number == 1 || number == 2) {
+            return 1;
+        } else {
+            for (int i = 3; i <= number; i++) {
+                result = a + b;
+                a = b;
+                b = result;
+            }
+        }
+        return result;
+
+    }
+
+    public int[] calculateFiboArr(int number) {
+        int[] result = new int[number];
+        for (int i = 0; i < number; i++) {
+            result[i] = calculateFibo(i);
+        }
+        return result;
+    }
+}
+
+public class FactorialRecursive {
+
+    public int calculate(int num) {
+        if (num == 0 || num == 1) {
+            return 1;
+        } else {
+            return num * calculate(num - 1);
+        }
+    }
+}
+```
+
+

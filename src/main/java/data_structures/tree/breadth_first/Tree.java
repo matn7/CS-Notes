@@ -2,9 +2,6 @@ package data_structures.tree.breadth_first;
 
 import data_structures.queue.Queue;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Tree {
 
 

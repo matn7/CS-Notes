@@ -1,8 +1,5 @@
 package data_structures.tree.depth_first;
 
-/**
- * Created by Mati on 28.07.2017.
- */
 public class Tree {
 
     public static void postOrder(Node root) {

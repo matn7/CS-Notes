@@ -1,8 +1,5 @@
 package data_structures.tree.binary_tree_same_tree;
 
-/**
- * Created by Mati on 08.07.2017.
- */
 public class Node {
     private int id;
     private Node left;
