@@ -262,28 +262,33 @@ public class Main {
 - Maps is an aggregate operation that takes a lambda expression, applies it to every element of the input stream and sends
 the result out as the output stream
 
+```
                     Aggregate Operations
     Input Stream  +-----------------------------+ Output stream
     ------------->+ Map (FX) Lambda expressions +-------------->
     (X1, X2, X3)  +-----------------------------+ (F(X1), F(X2), F(X3))
+```
 
 
 - Filter is an aggregate operation that takes in an lambda expression that encapsulates a condition, applies it to every
 element of an input stream that satisfies the condition is placed on the output stream
 
+```
                     Aggregate Operations
     Input Stream  +--------------------------------+ Output stream
     ------------->+ Filter (FX) Lambda expressions +-------------->
     (X1, X2, X3)  +--------------------------------+ (X1, X2)
+```
 
-
-- Forach is an aggregate operation that takes a lambda expression and applies to each element of an input stream,
+- Foreach is an aggregate operation that takes a lambda expression and applies to each element of an input stream,
 but does not produce an output stream
 
+```
                     Aggregate Operations
     Input Stream  +--------------+
     ------------->+ Forach (FX)  +
     (X1, X2, X3)  +--------------+
+```
 
 Foreach is used for operations like printing to screen or saving to file, where it makes no sense to produce output stream
 
@@ -375,7 +380,7 @@ public class Main {
 
     public static void methodOne(int random) throws IOException, NullPointerException {
         if (random == 1) {
-            throw ne IOException("IOException");
+            throw new IOException("IOException");
         } else if (random == 2) {
             throw new NullPointerException("NullPointerException");
         }
@@ -393,7 +398,7 @@ public class Main {
         try {
             methodTwo(random);
         } catch (IOException) {
-            System.out.println("Catch IOException instide methodThree");
+            System.out.println("Catch IOException inside methodThree");
         }
 }
 
@@ -494,12 +499,14 @@ a common interface.
 - The frame acts as the mediator so that non of the individual UI elements need to know about each other.
 - UI Elements are reffered to as Colleagues
 
+```
     Button        TextBox
            \     /
             Frame
            /     \
     Another      Another
     TextBox      Button
+```
 
 - Colleagues are entirely decoupled from each other.
 

@@ -325,6 +325,10 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 ## :star: equals
 
 - By default equals comparing a object by comparing their address in memory
+- By default equals method tests for object identity it returns true if and only if the 2 objects are literally the same (point to the same location in memory).
+- In flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are actually different objects.
+- The default implementation of .equals() relies on object identity, which may cause problems if we end up with multiple flyweights referring to the same underlying value.
+- Concurrency issues sometimes give rise to decouple flyweight - there duplicates are fine so long as they return true when called .equals()
 
 ```java
 public class Item {
@@ -644,16 +648,12 @@ public class Main {
 
 ## :star:  Factory Pattern
 
-**Plane.java**
-
 ```java
 public interface Plane {
     // Any Plane that factory returns must implement this interface
     void model();
 }
 ```
-
-**Junkers.java**
 
 ```java
 public class Junkers implements Plane {
@@ -664,8 +664,6 @@ public class Junkers implements Plane {
     }
 }
 ```
-
-**PlaneFactory.java**
 
 ```java
 public class PlaneFactory {
@@ -684,8 +682,6 @@ public class PlaneFactory {
 }
 ```
 
-**Main.java**
-
 ```java
 public class Main {
 
@@ -695,6 +691,89 @@ public class Main {
     }
 }
 ```
+
+## :star: Observer pattern [behavioral]
+
+```java
+public interface Publisher {
+}
+```
+
+```java
+public class NewsAgency extends Observable implements Publisher {
+
+    // Add List of Observers in our case Radio and TV
+    private List<Observer> channels = new ArrayList<>();
+
+    // Add some news. NewsAgency is kind of things that delegates news to different providers (TV, Radio)
+    public void addNews(String newsItem) {
+        notifyObserver(newsItem);
+    }
+
+    // Observer is registered media.
+    public void notifyObserver(String newsItem) {
+        for (Observer outlet : this.channels) {
+            outlet.update(this, newsItem);
+        }
+    }
+
+    // Register observer. We can think of this as some news are proper for TV only some for Radio only.
+    // Simply add Class that implements Observer to ArrayList.
+    // Here register where we want to display our message.
+    public void register(Observer outlet) {
+        channels.add(outlet);
+    }
+
+}
+```
+
+```java
+public class RadioChannel implements Observer {
+    @Override
+    public void update(Observable agency, Object newsItem) {
+        // Only add news when news agency implements Publisher interface. We can think of it as only valid news agency
+        // implements Publisher. If for some reason we acquire news from unreliable source
+        // (does not implements Publisher) just ignore it.
+        if (agency instanceof Publisher) {
+            System.out.println((String) newsItem + " Radio");
+        }
+    }
+}
+```
+
+```java
+public class TVChannel implements Observer {
+    @Override
+    public void update(Observable agency, Object newsItem) {
+        // Another media in this case TV
+        if (agency instanceof Publisher) {
+            System.out.println((String) newsItem + " TV");
+        }
+    }
+}
+```
+
+```java
+public class Main {
+
+    public static void main(String[] args) {
+        // Create observer and listener
+        NewsAgency newsAgency = new NewsAgency();
+        RadioChannel radioChannel = new RadioChannel();
+        TVChannel tvChannel = new TVChannel();
+
+        // registrtion observer
+        newsAgency.register(radioChannel);
+        //newsAgency.register(tvChannel);
+
+        newsAgency.addNews("News 1");
+        newsAgency.addNews("News 2");
+        newsAgency.addNews("News 3");
+    }
+
+}
+```
+
 
 ***
 
@@ -929,4 +1008,141 @@ public class FactorialRecursive {
 }
 ```
 
+## :star: Synchronized
+
+```java
+public class SomeClass {
+    synchronized static void foo() {
+
+    }
+
+    // Equivalent of above is
+    static void foo() {
+        synchronized(SomeClass.class) {
+
+        }
+    }
+}
+```
+
+```java
+public class SomeClass {
+    synchronized void foo() {
+
+    }
+
+    // Equivalent of above is
+    void foo() {
+        synchronized(this) {
+
+        }
+    }
+}
+```
+
+## :star: Declaring a **volatile** Java variable
+
+Means the value of this variable will never be called
+thread-locally all reads and writes will go straight to "main memory". Access to the variable
+acts as through it is enclosed in a synchronized block, synchronized on itself.
+<br/>
+- A class loader is a part of JVM. Technically namespaces are unique per class loader.
+Usually there is just 1 class loader per program.
+<br/>
+- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object.
+    - Thread interference : different thread access the same data
+    - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
+    - Thread Contention : Thread get in each other's way, and slow down-or sometimes even have to be killed in Java
+- Thread interference and memory consistency errors
+    - If two thread access the same variable, it's possible for them to get in each other's way
+      That's because Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction.
+    - For example two threads incrementing the same variable could simply lose one of the two increments.
+    - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
+      is a powerful concept used widely in computer science especially in databases.
+    - Locking variables correctly can eliminate thread interference and memory consistency error
+        - But it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock)
+
+## :star: What is the best way to subclass Singleton?
+
+- Singleton classes should never be subclassed or extended
+- Every object in Java has a lock associated with it.
+    - This lock is called the intrinsic lock or monitor.
+    - This lock is usually always open, any number of threads can access the object simultaneously.
+    - It is possible to specify that a thread can only execute a section of code once it has acquired the lock on source object.
+    - If some other thread currently holds that lock, the current thread must wait its turn
+    **This is achieved using the Synchronized keyword**
+
+## :star: Synchronized
+
+### methods
+
+- Any method in java can be marked as synchronized
+- Only one thread at a time only applies to the same method of the same object
+- Only one thread can be executing this member function on this object at a given point in time
+- So for instance if the same method does something to a static class variable (not an object variable), errors can still result
+- Used right making a method as synchronized can help eliminate thread interference and memory consistency error.
+
+```java
+public class SynchronizedCounter {
+    private int c = 0;
+    public synchronized void increment() {
+        c++;
+    }
+
+    public synchronized void decrement() {
+        c--;
+    }
+
+    public synchronized int value() {
+        return c;
+    }
+}
+```
+
+### blocks of code
+
+- Since every object in Java has an intrinsic lock associated with it, it is possible to lock
+  any section of code by making it as synchronized.
+- Any object can be used as lock using a synchronized statement
+
+```java
+public void addName(String name) {
+    synchronized(this) {
+        lastName = name;
+        nameCount++;
+    }
+    nameList.add(name);
+}
+```
+- Threads never gets blocked on itself which means that one synchronized method of an object can always call
+  another synchronized method of the same object without blocking.
+- Making method as synchronized is a shortcut to making the entire body of the method as synchronized
+  on "THIS"
+
+
+### Thread Contention
+
+| Deadlock | Two thread each is blocked on a lock held by the other |
+|---|---|
+| Livelock | Two thread don't deadlock, but keep blocking on locks held by each other, neither really can progress |
+| Starvation | Some threads keep acquiring locks greedly. And cause other threads to be unable to get anything done |
+
+## :star: Make sure your singleton objects can't be cloned
+
+- 1. The .clone() method belongs to object class (every object has this method), when it ought to belong to cloneable interface
+- 2. Object have a clone method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
+- 3. So make sure that your singleton class does not implement cloneable - or if for some reason it does
+Override the clone() method to thrown an exception.
+
+## :star: Which of following is true?
+
+- The clone method is in the Object class, which means all objects have a .clone() method
+- Singletons should never implement cloneable
+- Calling .clone() on an object that does not explicitly implement the method result in an exception
+- The volatile keyword ensures a variable is never cached, and only read from main memory
+- Access to variable marked volatile is synchronized on the variable itself
+- Variable marked volatile are safe to use in different threads
+- The .clone() method is in object class, which means all objects have a .clone() method
+- The .clone() method sits in the cloneable interface, so objects that implement this interface posses a .clone()
+- Calling .clone() on an object that does not explicitly implement the method result in an exception
 

@@ -179,7 +179,7 @@ the contents of url are obtained.
 
 ### What is a basic point of the Facade?
 
-    - Use a wrapper to abstract the complexity of a group of interconnected classes
+- Use a wrapper to abstract the complexity of a group of interconnected classes
 
 ### What motivates a facade pattern?
 
@@ -199,7 +199,7 @@ public class WashingMachine {
         heatWater();
         startWash();
     }
-    public void heavilySoiled() {
+    public void lightlySoiled() {
         setWaterTemp(60);
         setDuration(20);
         addDetergent();
@@ -281,38 +281,42 @@ as they return true when called `.equals()`
 - Decouple an abstraction from implementation so that the two can vary independently.
 - The bridge uses encapsulation, aggregation and can use inheritance to separate responsibilities into different classes.
 
+```
                 A
                / \
               Ab Aa
              /  \  \
             Ab1 Ab2 Aa1
+```
 
 If you find a class hierarchy getting out of control, too many derived classes
 
-
-
+```
             A               N
            / \             / \
         Aa(N) Ab(N)       1   2
+```
 
-There now 2 class hierarchies instead of 1 and  \objects of the first
+There now 2 class hierarchies instead of 1 and objects of the first
 hierarchy have member variables of objects of the second hierarchy
 
-
-
+```
                         Shape
                        /     \
                Rectangle     Circle
               /         \           \
          Blue           Red         Red
          Rectangle      Rectangle   Circle
+```
 
 Refactor into 2 class hierarchies, one each for shape and for class
 
+```
                Shape                    Color
             /        \                  /   \
          Rectangle   Circle            Blue Red
          (color)     (color)
+```
 
 - The bridge pattern is very similar to the strategy pattern
 - Bridge and Strategy both plug in member variables to determine behavior - thus prefer composition (Has-A)

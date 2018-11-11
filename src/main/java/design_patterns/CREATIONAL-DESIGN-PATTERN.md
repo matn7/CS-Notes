@@ -193,14 +193,13 @@ acts as through it is enclosed in a synchronized block, synchronized on itself.
 - A class loader is a part of JVM. Technically namespaces are unique per class loader.
 Usually there is just 1 class loader per program.
 <br/>
-- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables
-with the same object.
+- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object.
     - Thread interference : different thread access the same data
     - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
     - Thread Contention : Thread get in each other's way, and slow down-or sometimes even have to be killed in Java
 - Thread interference and memory consistency errors
     - If two thread access the same variable, it's possible for them to get in each other's way
-      That's becouse Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction.
+      That's because Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction.
     - For example two threads incrementing the same variable could simply lose one of the two increments.
     - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
       is a powerful concept used widely in computer science especially in databases.
@@ -269,23 +268,23 @@ public void addName(String name) {
 | Livelock | Two thread don't deadlock, but keep blocking on locks held by each other, neither really can progress |
 | Starvation | Some threads keep acquiring locks greedly. And cause other threads to be unable to get anything done |
 
-### :star: Make sure your singleton objects can't be cloned**
+### :star: Make sure your singleton objects can't be cloned
 
-- 1. The .clone method belongs to object class (every object has this method), when it ought to belong to cloneable interface
+- 1. The .clone() method belongs to object class (every object has this method), when it ought to belong to cloneable interface
 - 2. Object have a clone method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
-- 3. So make sure that your singleton class does not implement colneable - or if for some reason it does
+- 3. So make sure that your singleton class does not implement cloneable - or if for some reason it does
 Override the clone() method to thrown an exception.
 
 ### Which of following is true?
 
-- The clone method is in the Object class, which means all objects have a .clone method
+- The clone method is in the Object class, which means all objects have a .clone() method
 - Singletons should never implement cloneable
-- Calling .clone() on an object thet does not explicitly implement the method result in an exception
+- Calling .clone() on an object that does not explicitly implement the method result in an exception
 - The volatile keyword ensures a variable is never cached, and only read from main memory
 - Access to variable marked volatile is synchronized on the variable itself
 - Variable marked volatile are safe to use in different threads
 - The .clone() method is in object class, which means all objects have a .clone() method
-- The .clone() method sits in the cloneable interface, so objects that implement this interfae posses a .clone()
+- The .clone() method sits in the cloneable interface, so objects that implement this interface posses a .clone()
 - Calling .clone() on an object that does not explicitly implement the method result in an exception
 
 ## :star: Builder
@@ -298,15 +297,15 @@ Override the clone() method to thrown an exception.
     - Use the builder design pattern
 
 - Which of the following might suggest the use of the Builder Pattern?
-The construction of the object varies with information that becomes available after constructor of the object is called.
+    - The construction of the object varies with information that becomes available after constructor of the object is called.
 
 - What is the basic idea of a Builder Pattern?
     - Allow objects to be created in a step-by-step manner
-    - Abstract the user of a class from impementation details of the objects of the class
+    - Abstract the user of a class from implementation details of the objects of the class
 
 ```java
 public class User {
-    // final so you can declare it in constructor
+    // final so you have to declare it in constructor
     private final String firstName; // required
     private final String lastName; // required
     private final int age;
