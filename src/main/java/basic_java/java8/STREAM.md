@@ -167,7 +167,7 @@ public void min() {
 
 ```java
 public void max() {
-    final List<Integer> numbers = ImmutableList.of()-90,87,76543,-109,0,234,-8301,99900;
+    final List<Integer> numbers = ImmutableList.of(-90,87,76543,-109,0,234,-8301,99900);
     Integer max = numbers.stream()
         .max(Comparator.naturalOrder())
         .get();

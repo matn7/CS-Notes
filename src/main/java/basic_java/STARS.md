@@ -980,6 +980,7 @@ Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Cal
 ***
 
 ## :star: object states
+
 - Transient state - object does not associated with any table row
 - Persistent - object with database identify. Primary key is set as database identifier.
 - Detached - no longer managed by EntityManager. setText will only change state in JVM memory.
@@ -1012,7 +1013,7 @@ public class FactorialRecursive {
         if (num == 0 || num == 1) {
             return 1;
         } else {
-            return num * calculateFactorial(num - 1)''
+            return num * calculateFactorial(num - 1);
         }
     }
 
