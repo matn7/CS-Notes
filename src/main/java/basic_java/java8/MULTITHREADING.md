@@ -36,7 +36,7 @@
 
 ### Interrupt
 
-- Task that can be stopped should stop execution when interrupted flag is set or InterruptedException arises
+- Task that can be stopped should stop execution when interrupted flag is set or InterruptedException is thrown
 
 ### Process
 
@@ -115,6 +115,8 @@ Future<String> result = exec.submit(task);
 
 ```java
 // Race
+int counter = 0;
+
 Thread t1 = new Thread(new Runnable() {
     @Override
     public void run() {

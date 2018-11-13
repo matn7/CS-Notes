@@ -1,5 +1,3 @@
-# My favorite
-
 ## :star: Immutable class
 
 ### With final class
@@ -253,6 +251,8 @@ public class FirstNonRepeat {
 }
 ```
 
+***
+
 ## :star: Check Rectangle
 
 ```java
@@ -353,11 +353,6 @@ public class Item {
     }
 }
 ```
-
-***
-
-- TODO implementacja hashCode i equals
-- TODO hashCode w implementacji co to jest (miejsce w pamięci)
 
 ***
 
@@ -527,7 +522,7 @@ public class CustomerBuilder {
     private static Customer customer;
 
     public static CustomerBuilder defaultCustomer() {
-        this.customer = new Customer();
+        customer = new Customer();
         return new CustomerBuilder();
     }
 
@@ -804,10 +799,104 @@ so if implement just equals method and leave hashCode unimplemented the hashCode
 - If two objects are equal, then their hashCode values must also be equal. Whenever you implement equals(Object), you must also implement hashCode().
 - For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return.
 If your entity will be part of a Set collection, override its equals and hashCode methods.
+<br/>
+- Hash is integer number that identify an object.
+- If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
+
+```java
+     @Override
+     public int hashCode() {
+       int hash = 1;
+       for (int i = 0; i < str.length(); i++) {
+             hash = 31 * hash + chartAt(i)
+       }
+       return hash;
+     }
+```
+
+- HashCode must be compatible.
+- if x.equals(y) return true, x.hashCode() == y.hashCode().
+- If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
+data structures HasSet, HashMap could be lost.
+
+```java
+Object.hash(some, some2);
+```
+
+- HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
+- A group of object's might share the same hashCode.
+- The implementation of hashCode decides effectiveness of Hashing. A good hashing function evenly
+distributes object's into different groups or buckets.
+- A good hashCode should have the following properties:
+    - if obj1.equals(obj2) is true, then obj1.hashCode() should be equal to obj2.hashCode().
+    - obj.hashCode() should return the same value when run multiple times, if values of obj used in equals() have not change.
+    - if obj1.equals(obj2) is false, it is NOT required thet obj1.hashCode() is not equal to obj2.hashCode().
+      Two unequals objects might have the same hashCode.
+
+```java
+@Override
+public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + id;
+    return result;
+}
+```
+
 
 ### toString
 
 ### equals
+- Check whether one object can be equal to another.
+- Equals method implemented in Object class, check whether two references to object are identical.
+- Override equal method if you want to check equality based on state of object.
+- Two object are equals when they have the same value.
+
+- Equals method is used when we compare two objects. Default implementation of equals method is defined in Object class.
+- Two object references are equals only if they are pointing to the same object.
+- We need to override equals method, if we would want to compare the contents of an object.
+
+- We can override equals method in the class to check the content of the objects.
+- The implementation of equals method checks if the id's of both objects are equal. If so return true.
+
+```java
+    @override
+     public boolean equals(Object obj) {
+       Client other = (Client) obj;
+       if (id != other.id)
+           return false;
+       return true;
+     }
+```
+
+Important things to consider when implementing equals method.
+- Reflexive: For any reference value x, x.equals(x) return true
+- Symmetric: For any reference values x and y, if x.equals(y) should return true if and only if y.equals(x) returns true.
+- Transitive: For any reference values x, y and z, if x.equals(y) returns true and y.equals(z) returns true,
+    then x.equals(z) must return true
+- Consistent: For any reference values x and y, multiple invocations of x.equals(y) consistently return true
+    if no information used in equals is modified
+- For any non-null reference value x, x.equals(null) should return false
+
+```java
+          @Override
+          public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            Client other = (Client) obj;
+            if (id != other.id) {
+                return false;
+            }
+            return true;
+          }
+```
 
 ### wait and notify
 - work in tandem – when one thread calls wait() on an object, that thread will block until
@@ -862,6 +951,14 @@ Map<String, String> threadSafeMap = new ConcurrentHashMap<String, String>();
 ```java
 SomeObject previousValue = concurrentHashMap.putIfAbsent(1, value);
 ```
+
+- Methods in atomic ways sets or replace elements if it is the same at a point of time.
+- There are couple of mass operations to search, modify or look for ConcurrentHashMap.
+    search, reduce, forEach.
+- ConcurrentHashMap does not allow null values for keys or values
+- ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
+thread safety, ConcurrentSkipListMap
+
 
 ### Concurrent Collections
 
@@ -1237,10 +1334,10 @@ memory.
       thread-safe1.
     - Use Executor / ExecutorService or the fork join framework rather than attempting to create manage
       threads directly.
-    - Use the `java.util.concurrent classes that provide advanced locks, semaphores, latches and barriers, instead
+    - Use the java.util.concurrent classes that provide advanced locks, semaphores, latches and barriers, instead
       of using wait/notify/notifyAll directly.
     - Use the java.util.concurrent versions of maps, sets, lists, queues and deques rather than external
-      synchonization of non-concurrent collections.
+      synchronization of non-concurrent collections.
 
 ***
 
@@ -1341,6 +1438,106 @@ System.gc();
   applications that load many classes or make heavy use of the String.intern() method will see more
   significant differences.
 
+***
+
+## Tuning the VM
+
+-Xmx set the maximum heap size
+-Xms set starting heap size
+
+```
+-Xmx512m -Xms150m
+```
+
+PermGen Size
+-XX:MaxPermSize
+
+```
+-XX:MaxPermSize=256m
+```
+
+-verbose:gc // print to the console when garbage collection takes place
+
+```
+-Xmx10m -verbose:gc // print garbage collection
+```
+
+Young generation = 1/3 heap size
+-Xmn set the size of young generation
+-Xms256m
+
+
+### Generating heap dumps
+
+```
+-XX:HeapDumpOnOutOfMemory // creates a heap dump file "hprof"
+```
+
+### Choosing a GC
+
+Types of GC:
+- Serial : -XX:+UseSerialGC
+- Parallel young generation: -XX:+UseParallelGC
+- Mostly Concurrent: -XX:+UseConcMarkSweepGC
+                     -XX:+UseG1GC
+
+use -XX:+PrintCommandLineFlag to find out which is your default
+
+jmeter to generate load
+apache-jmeter
+
+***
+
+## :star: Generics
+
+Generics are used to create Generic Classes and Generic Methods which can work with different Types (classes).
+Make class type parameter to a class.
+
+```java
+class MyListGeneric<T> {
+       private List<T> values;
+
+       void add(T value) {
+           values.add(value);
+       }
+
+       void remove(T value) {
+           values.remove(value);
+       }
+
+       T get(int index) {
+           return values.get(index);
+       }
+     }
+```
+
+To restrict Generics to a subclass of particular class we can use Generic Restrictions.
+"T extends Number"
+We can use the class MyListRestricted with any class extending (subclass) of Number - Float, Integer, Double
+String is not valid substitute for "T extends Number"
+```java
+class MyListRestricted<T extends Number> {
+       private List<T> values;
+
+       void add(T value) {
+           values.add(value);
+       }
+
+       void remove(T value) {
+           values.remove(value);
+       }
+
+       T get(int index) {
+           return values.get(index);
+       }
+     }
+```
+
+To restrict Generic class to a super class of particular class we can use Generic Restrictions.
+"T super Number"
+We can use the class MyListRestricted with any class that is super to class Number.
+
+PECS - Produces extends, Consumer super
 
 
 

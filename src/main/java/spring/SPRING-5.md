@@ -200,7 +200,56 @@ Mono<?>
 - @RequestBody
 - @RequestMapping
 
+***
 
+## Spring Security
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+<dependency>
+	<groupId>com.google.code.gson</groupId>
+	<artifactId>gson</artifactId>
+	<version>2.8.5</version>
+</dependency>
+<dependency>
+	<groupId>io.jsonwebtoken</groupId>
+	<artifactId>jjwt</artifactId>
+	<version>0.9.0</version>
+</dependency>
+```
+
+### Initial spring security config
+
+- WebSecurityConfigurerAdapter
+
+```java
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(
+    securedEnabled = true,
+    jsr250Enabled = true,
+    prePostEnabled = true
+)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+}
+```
+
+- WebSecurityConfigurerAdapter
+    - Default configuration
+    - Customize configuration
+    - HttpSecurity
+        - http.cors().and().csrf().disabled()
+        - exceptionHandling()
+        - sessionManagement()
+        - sessionCreationPolicy()
+        - headers().frameOptions().sameOrigin() - enable h2 db
+        - authorizedRequests()
+        - antMatchers().permitAll()
+        - anyRequest().authenticated()
 
 
 

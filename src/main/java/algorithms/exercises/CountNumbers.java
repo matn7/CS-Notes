@@ -9,7 +9,6 @@ public class CountNumbers {
         for (k = 1; (n /= 10) != 0; k++){
             System.out.println(number /= 10);
         }
-        System.out.println(number /= 10);
         return k;
 
     }

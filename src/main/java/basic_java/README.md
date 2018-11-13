@@ -283,7 +283,7 @@ Following piece of code created 2 objects
 String str1 = "Value"
 String str2 = new String("Value");
 ```
-```
+
 - Some methods:
     - .charAt(), .length(), .equalsIgnoreCase(), .substring()
 
@@ -950,7 +950,7 @@ public int hashCode() {
 }
 ```
 
-## Serialization
+## :star: Serialization
 
 - Abstract class - high level class, by who inherits
 - Data serialization allows to know about all references (extends)
@@ -972,6 +972,7 @@ All object must be serializable.
 - Serialization is a process saving state of an object to a sequence of bytes. These sequence of bytes
 can be sent over a network or stored in a file.
 
+````
     +-----------------+
     |  Serializable   |                       +------+
     | << interface >> |                       | file |
@@ -984,6 +985,7 @@ can be sent over a network or stored in a file.
                                               +--------+
                                               | memory |
                                               +--------+
+```
 
 - Serialization helps us to save and retrieve state of an object.
     - Serialization : convert object state to some internal object representation
@@ -1046,7 +1048,7 @@ Static variables are not part of the object they are not serialized.
 - Externalizable interface has two methods readExternal() and writeExternal() which allows you to control the serialization process
 
 
-## How HashMap works?
+## :star: How HashMap works?
 
 - It's a map implementation
 - A map is an associative array data structure "key1"->value, "key2"->value
@@ -1061,6 +1063,7 @@ Static variables are not part of the object they are not serialized.
 
 - Index of null key is always 0, as hash of null is always 0
 
+```
     HASHMAP
     +-------------+
     |<<interface>>|  +-------------+ +-----------+ +--------------+
@@ -1089,11 +1092,13 @@ Static variables are not part of the object they are not serialized.
     |  |                        +-----------------+
     +--+
 
+```
 
 ### PUT
 
 Each index in this table is known as bucket. Each bucket is a node that can be linked list of nodes
 
+```
                                                     +---+
     scores.put("QUEEN",120);                        | 0 |--> WALL | 70772256 | 70 | null
     scores.put("KNIGHT",100);                       +---+
@@ -1137,9 +1142,11 @@ Each index in this table is known as bucket. Each bucket is a node that can be l
     scores.put("WALL",70);
     hash("WALL") = 70772256
     index = 70772256 & 15 = 0
+```
 
 ### GET
 
+```
     scores.get("KNIGHT");
     scores.get("QUEEN");
     scores.get("GALLEON");
@@ -1182,7 +1189,7 @@ Each index in this table is known as bucket. Each bucket is a node that can be l
                 Compare key using equals method, next node, "GALLEON".equals("GALLEON") = true
 
     scores.get("GALLEON") = 80; // FOUND VALUE
-
+```
 
 - In Java 8, when we have too many unequal keys which gives some hashcode(index)
 - when the number of items in a hash bucket grows beyond threshold(TREEIFY_TRESHOLD = 8), content of that bucket
@@ -1283,7 +1290,7 @@ Checked Exceptions ensures that handling of exception is provided and its verifi
 For throwing unchecked exception no special provision is needed.
 
 
-## Generics
+## :star: Generics
 
 Generics are used to create Generic Classes and Generic Methods which can work with different Types (classes).
 Make class type parameter to a class.
@@ -1338,7 +1345,7 @@ PECS - Produces extends, Consumer super
 
 ## File API
 
-
+```
     +-----------------+------------------------------------+
     | Create file     | File file = new File("nazwa.txt"); |
     +-----------------+------------------------------------+
@@ -1357,6 +1364,7 @@ PECS - Produces extends, Consumer super
     | Create new      | File newDir = new File("newDir");  |
     | directory       | newDir.mkdir();                    |
     +-----------------+------------------------------------+
+```
 
 - File class represents files and directories.
 
@@ -1427,6 +1435,7 @@ all modifications that being processed after their creation. Such iterator does 
 In multithreading Java application synchronized collection classes like HashTable and Vector quickly becomes
 the bottleneck, to address that Java 5 introduced some concurrent collections.
 
+```
     +------+--------------+-----------------------+
     |      | Collection   | Cononcurrent          |
     |      |              | Thread Safe           |
@@ -1447,7 +1456,7 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
     |      |              | BlockingQueue         |
     |      |              | PriorityBlockingQueue |
     +------+--------------+-----------------------+
-
+```
 
 ## LIST
 
@@ -1573,7 +1582,7 @@ files. A key-value pair in Map interface is called Entry.
 SortedMap interfaces along with tha Map interface
 
 
-### ConcurrentHashMap
+### :star: ConcurrentHashMap
 
 - Methods in atomic ways sets or replace elements if it is the same at a point of time.
 - There are couple of mass operations to search, modify or look for ConcurrentHashMap.
@@ -1629,6 +1638,7 @@ public interface Iterator<E> {
 ```
 
 ### What is the difference between synchronized and Concurrent Collections?
+Tutaj zacząć jutro
 Synchronized collections are implemented using synchronized methods and synchronized blocks. Only one Thread
 can executing any of the synchronized code at given point in time. This places severe restrictions on the concurrency
 of thread - there by affecting performance of the application. All the pre Java 5 synchronized collections
@@ -1636,6 +1646,7 @@ HashTable & Vector use this approach
 Post Java 5 collections using new approach to synchronization are available in Java.
 These are concurrent collections
 
+```
     +--------------------------------+--------------------------------+
     | SYNCHRONIZED                   | CONCURRENT                     |
     +--------------------------------+--------------------------------+
@@ -1656,6 +1667,7 @@ These are concurrent collections
     | throw                          | don't throw                    |
     | ConcurrentModificationException| ConcurrentModificationException|
     +--------------------------------+--------------------------------+
+```
 
 Post Java 5 collections using new approach to synchronization are available in Java.
 These are called concurrent collections. Examples of new approaches are
