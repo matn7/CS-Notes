@@ -16,8 +16,10 @@ Is a measure of how resource requirements change as the size of problem gets lar
 public static void selectionSort(int[] list) {
     for (int i = 0; i < list.length; i++) {
         for (int j = i + 1; i < list.length; j++) {
-            swap(list, i, j);
-            print(list);
+            if (list[i] > list[j]) {
+                swap(listToSort, i, j);
+                print(listToSort);
+            }
         }
     }
 }
@@ -292,6 +294,31 @@ public static class Node<T> {
   - IN-ORDER :   LEFT SUBTREE -> NODE          -> RIGHT SUBTREE
   - POST-ORDER : LEFT SUBTREE -> RIGHT SUBTREE -> NODE
 
+```
+         +------+
+         | Node |
+         +------+
+        /        \
++------+          +-------+
+| Left |          | Right |
++------+          +-------+
+```
+
+```java
+public static void preOrder(Node<Character> root) {
+    if (root == null) {
+        return;                 // Base case nothing to traverse
+    }
+
+    // process the node before recurse to the left and right subtrees
+
+    print(root);                        // NODE
+    preOrder(root.getLeftChild());      // LEFT SUBTREE
+    preOrder(root.getRightChild());     // RIGHT SUBTREE
+}
+```
+
+
 ### Binary search tree
 
 - Each node in the left subtree of Node has a value less than or equal to the value of the Node.
@@ -326,9 +353,9 @@ public static class Node<T> {
         - travels downwards (root -> leaf).
         - Heaps can be represented using tree or array
 <br/>
-- **GET PARENT** : Node at index: i -> has parent at index (i-1)/2<br/>
-- **GET LEFT CHILD** : Node at index: (2*i + 1) <br/>
-- **GET RIGHT CHILD** : Node at index: (2*i + 2 <br/>
+- *GET PARENT* : Node at index: i -> has parent at index (i-1)/2<br/>
+- *GET LEFT CHILD* : Node at index: (2*i + 1) <br/>
+- *GET RIGHT CHILD* : Node at index: (2*i + 2) <br/>
 
 ```
              5
@@ -461,7 +488,7 @@ public static class Node<T> {
 - E = Number of Edges
 - V = Number of Vertices
 
-| ... | Adjacency Matrix | Adjacency List | Adjacency Set |
+| | Adjacency Matrix | Adjacency List | Adjacency Set |
 |---|---|---|---|
 | SPACE | V^2 | E + V | E + V |
 | IS EDGE PRESENT | 1 | Degree of V | log(Degree of V) |
@@ -807,7 +834,7 @@ public class FirstNonRepeat {
 
 ```java
 public class BiggerAndSmaller {
-    private int bigger = Integer.MIX_VALUE;
+    private int bigger = Integer.MIN_VALUE;
     private int smaller = Integer.MAX_VALUE;
 
     public void find(int[] numbers) {

@@ -1638,7 +1638,7 @@ public interface Iterator<E> {
 ```
 
 ### What is the difference between synchronized and Concurrent Collections?
-Tutaj zacząć jutro
+
 Synchronized collections are implemented using synchronized methods and synchronized blocks. Only one Thread
 can executing any of the synchronized code at given point in time. This places severe restrictions on the concurrency
 of thread - there by affecting performance of the application. All the pre Java 5 synchronized collections
@@ -1674,6 +1674,7 @@ These are called concurrent collections. Examples of new approaches are
 - Copy on Write
 - Compare and Swap
 - Lock and Unlock
+<br/>
 New approaches to concurrency provide better performance in specific context
 
 
@@ -1871,9 +1872,9 @@ The complexity of this operation is O(log(N))
 
 
 
-| Queue           | offer  | peek | pull   | size |
-|---|---|---|
-| PriorityQueue   | O(logN)| O(1) | O(logN)| O(1) |
+| Queue | offer | peek | pull | size |
+|---|---|---|---|---|
+| PriorityQueue | O(logN)| O(1) | O(logN)| O(1) |
 
 
 | Sorting algorithms | Time Complexity | Space Complexity |
@@ -1882,7 +1883,8 @@ The complexity of this operation is O(log(N))
 | TreeSort           |     O(NlogN)    |       O(n)       |
 
 
-# #Sorting
+##Sorting
+
 - Trade offs in sorting
     - What is the complexity of the algorithm used
     - How does it scales as the input size increases?
@@ -1923,6 +1925,7 @@ in data structure. In binary tree each node can have 0, 1 or 2 children
 - Leaf : node with no children
 - Siblings node : are in the same level in a tree
 
+```
          +---+
          | A | A -> ROOT
          +---+
@@ -1934,6 +1937,7 @@ in data structure. In binary tree each node can have 0, 1 or 2 children
          +---+   +---+
          | D |   | E | D-E -> SIBLINGS, LEAF
          +---+   +---+
+```
 
 Binary Tree Traversal
 Visiting nodes of a tree is called **TRAVERSING TREE**
@@ -1957,7 +1961,7 @@ Visiting nodes of a tree is called **TRAVERSING TREE**
 Depth first traversal involves going right to the leaf of the binary Tree first before moving up tree.
 - Depth first can be:
     - PRE-ORDER
-    - IN_ORDER
+    - IN-ORDER
     - POST-ORDER
 
 All depth first traversal are most efficiently and intuitively implemented using RECURSION
@@ -1966,18 +1970,23 @@ All depth first traversal are most efficiently and intuitively implemented using
 Each node is processed first (pre) before it's right and left subtrees.
 The left sub-trees are processed before the right sub trees.
 
+```
     NODE -> LEFT SUBTREE -> RIGHT SUBTREE
+```
 
 ##### IN-ORDER
 The Left subtree is processed first, then the NODE, then RIGHT SUBTREE
 
+```
     LEFT-SUBTREE -> NODE -> RIGHT SUBTREE
+```
 
 ##### POST-ORDER
 Both subtrees are processed BEFORE the node itself. The node is processed AFTER (POST) the subtree
 
+```
     LEFT-SUBTREE -> RIGHT SUBTREE -> NODE
-
+```
 
 ### The Binary Search Tree
 Also called an Ordered binary tree and it's a tree with some specific Characteristics.
@@ -1986,6 +1995,7 @@ Also called an Ordered binary tree and it's a tree with some specific Characteri
     - Each node in the **left** subtree of that node has a value **less than or equal** to the value of the **node**.
     - Each node in the **right** subtree of that node has a value **greater than** the value of the **node**.
 
+```
             8                   Every node in the left subtree is <= 8
            / \
           7   14                Every node in the right subtree in > 8
@@ -1993,6 +2003,7 @@ Also called an Ordered binary tree and it's a tree with some specific Characteri
         4   12   16
        / \    \    \
       2   5    13   18
+```
 
 Binary search tree are typically used for **FAST INSERTION** and **FAST LOOKUP**
 
@@ -2005,6 +2016,7 @@ Binary search tree are typically used for **FAST INSERTION** and **FAST LOOKUP**
 - Insertion and Lookup
 Insert the Node 2 in the tree
 
+```
             8       step-1) Compare Node to be inserted with root node
            / \      step-2) 8 has left child so continue compare node values
           6   14    step-3) 6 already has a left child continue compare node values
@@ -2014,10 +2026,12 @@ Insert the Node 2 in the tree
      +-+            18
      |2|
      +-+
+```
 
 - Lookup in a Binary Search Tree
 Lookup the value 7 in the tree
 
+```
             8       step-1) Compare 7 with the root value
            / \      step-2) 8 has a left child so continue comparing the node
           6   14    step-3) Compare 7 to 6. Go to right child
@@ -2025,6 +2039,7 @@ Lookup the value 7 in the tree
         4  +-+   16
            |7|     \
            +-+      18
+```
 
 - Insertion
 The Complexity for Node insertion is O(logN).
@@ -2050,6 +2065,7 @@ At every step we access the element with highest priority.
 
 An Array or List
 
+```
               | UNORDERED                             | ORDERED
     ----------+---------------------------------------+----------------------------------------------------------------------
     INSERTION | Can be anything in a list or array    | Requires finding the right position for the element based on priority
@@ -2062,14 +2078,17 @@ An Array or List
     REMOVE    | Requires going through all elements   | Removing the highest prioritity element - O(1)
               | O(N)                                  |
     ----------+---------------------------------------+----------------------------------------------------------------------
+```
 
 ### BALANCED BINARY SEARCH TREE
 
+```
     INSERTION | O(logN)
     ----------+---------
     ACCESS    | O(logN)
     ----------+---------
     REMOVE    | O(logN)
+```
 
 Both insertion and access moderately fast.
 List solutions make one of these super fast while comparing heavily on the other
@@ -2096,12 +2115,13 @@ This is called a HEAP Property
 - The heap should form a complete binary tree
     - all levels except the last one should be filled
 
-Node at index 0, left child at index 1, right child at index 2
-Node at index: i
-has a left child at index: 2i + 1
-has a right child at index: 2i + 2
-Node at index: i GetParent at index: (i-1)/2
+- Node at index 0, left child at index 1, right child at index 2
+- Node at index: i
+    - has a left child at index: 2i + 1
+    - has a right child at index: 2i + 2
+- Node at index: i GetParent at index: (i-1)/2
 
+```
             5
           /   \
          8     6
@@ -2111,13 +2131,14 @@ Node at index: i GetParent at index: (i-1)/2
      15 10
 
      5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
-
+```
 
 ### THE BINARY HEAP
 Place a single element in the wrong place.
 Then try to find the right position for the element.
 This process is called **HEAPIFY**
 
+```
             13
           /    \
          8      6
@@ -2137,10 +2158,12 @@ This process is called **HEAPIFY**
     in the heap towards the leaf | the Heap towards the ROOT
     node to find it's right      | Node to find it's right position
     position                     |
+```
 
 - SWAP 6 and 8
 - SWAP 13 and 7
 
+```
             7
           /    \
          6      8
@@ -2148,6 +2171,7 @@ This process is called **HEAPIFY**
        9  12  11   13
       / \
      15  10
+```
 
 | Insertion | O(logN) |
 |---|---|
@@ -2156,7 +2180,7 @@ This process is called **HEAPIFY**
 
 Heap Sort
 |Insertion and removal | O(logN) |
-|---+---|
+|---|---|
 |Sorting | O(NlogN) |
 
 - Heap sort is not adaptive
@@ -2168,10 +2192,12 @@ A stack is data structure to hold elements such that the last element you add to
 LIFO list in first out
 Major operations that you performed on the stack are always focused on one end of the stack, called the TOP
 
-Adding new elements to the stack is called -> PUSH -> push an element to the top of a stack
-Removing an element from the top a stack is called -> POP -> pop an element from the top of stack
-See what element on stack is do not remove it -> PEEK -> peek at the top of a stack
+- Adding new elements to the stack is called
+    - -> PUSH -> push an element to the top of a stack
+    - Removing an element from the top a stack is called -> POP -> pop an element from the top of stack
+    - See what element on stack is do not remove it -> PEEK -> peek at the top of a stack
 
+```
                       +---+
      |     |         || X ||                |     |                 |     |
      |     |  PUSH   |+---+|      POP       |     |      PEEK       |     |
@@ -2182,15 +2208,19 @@ See what element on stack is do not remove it -> PEEK -> peek at the top of a st
      || Z ||         || Z ||                || Z ||                 || Z ||
      |+---+|         |+---+|                |+---+|                 |+---+|
      +-----+         +-----+                +-----+                 +-----+
-
+```
 
 Peek let's you access the top element in the stack without actually changing the Data Structure
 
 Common operations on stack
+```
 PUSH    POP     PEEK
+```
 
 Other operations which are useful
+```
 ISEMPTY     ISFULL      SIZE
+```
 
 If you try to POP from an empty element or PUSH into full stack -> It's an ERROR throw an Exception!
 
@@ -2199,9 +2229,9 @@ The operations are on one end of the stack.
 A LinkedList match perfectly to build a stack
 
 - Performance
-PUSH and POP from a stack O(1) constant time complexity.
-isEmpty and isFull also O(1)
-Size O(1)
+    - PUSH and POP from a stack O(1) constant time complexity.
+    - isEmpty and isFull also O(1)
+    - Size O(1)
 
 - Useful
     - Implementing Undo in application
@@ -2218,6 +2248,7 @@ Size O(1)
 Queue is a Data Structure where you add elements to the End of the Queue and remove elements
 from the beginning of the QUEUE.
 
+```
                     +--------------------------------------------------+
                          +---++---++---++---++---+
                          | A || B || C || D || E |
@@ -2230,17 +2261,16 @@ from the beginning of the QUEUE.
       <- | A |           | B || C || D || E || F |                     <- | F |
          +---+           +---++---++---++---++---+                        +---+
                     +--------------------------------------------------+
+```
 
 - FIFO first in first out
 - LILO last in last out
 
 - The operations are performed at two ends. Removal its at the beginning and addition is at the end of the queue.
 
-- Adding a new element to the end of the Queue is called
-ENQUEUE -> enqueue an element from the queue
+- Adding a new element to the end of the Queue is called ENQUEUE -> enqueue an element from the queue
 
-- Removing an element from the beginning of a queue is called
-DEQUEUE -> dequeue an element from the queue
+- Removing an element from the beginning of a queue is called DEQUEUE -> dequeue an element from the queue
 
 - Similar to stack you might just want to see what the first element in a queue is without removing it
 PEEK -> Peek at the first element in a queue
@@ -2249,10 +2279,14 @@ PEEK -> Peek at the first element in a queue
 OFFER -> adds to a queue if space is available
 
 - Common operations on the queue
+```
 ENQUEUE     DEQUEUE     PEEK
+```
 
 - Other operations
+```
 ISEMPTY ISFULL OFFER
+```
 
 If you try to dequeue from an empty queue or enqueue into full queue. It's an error throw Exception
 
@@ -2277,7 +2311,7 @@ Space complexity O(N)
 
 
 
-# Garbage Collection GC
+# :star: Garbage Collection GC
 
 - Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
     - live object = reachable (referenced by someone else)
@@ -2303,10 +2337,11 @@ Space complexity O(N)
 Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required
 Use parallel collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
 
+```
 java -XX:+UseSerialGC
 java -XX:+UseParallelGC
 java -XX:+UseConcMarkSweepGC
-
+```
 
 - Garbage Collector example
 
@@ -2578,11 +2613,12 @@ That unit could be a single class, or even be a collection of classes
 The implementation is a guts of that unit
 Never get assumption about content of any unit
 
+```
 +------------------------------------------------------+
 | ArrayList<String> list = new ArrayList<>(); // wrong |
 | List<String> list = new ArrayList<>(); // correct    |
 +------------------------------------------------------+
-
+```
 
 ### Design Principle #2 : The Open / Close Principle
 
@@ -2592,14 +2628,14 @@ Once you have written a class, it's done. Never add anything to it after that
 No new member variables, no new methods, no new interfaces implemented, No modification
 But other code should be able to use your class in new ways. New applications via extension
 
-Inheritance, template pattern
+- Inheritance, template pattern
     - If you structure your code into abstract base class, other classes can find
       new way to use it via Inheritance
 
-Delegation, observer, MVC, Chain of Responsibility
+- Delegation, observer, MVC, Chain of Responsibility
     - If you fire events and expose properties, other code can listen in, and use your code via Delegation
 
-Composition, strategy pattern
+- Composition, strategy pattern
     - If you take in member variable to determine behavior, you allow extension via Composition
 
 
@@ -2611,10 +2647,12 @@ Only make method calls to friends
 friends - object passed in as parameter to methods of your classes. Object created inside your class
 Code should never include multiple '.' operators in the same function call
 
+```
     +----------------------------------------------------------------+
     | int friendNumber = media.getRelatives().getFriend(); // not OK |
     | int friendNumber = media.getFriend(); // OK                    |
     +----------------------------------------------------------------+
+```
 
 But this rule is not always a case
 Summarized, each unit should have only limited knowledge about other units. Each unit should only talk to its friend

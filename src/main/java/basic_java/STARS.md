@@ -1539,7 +1539,56 @@ We can use the class MyListRestricted with any class that is super to class Numb
 
 PECS - Produces extends, Consumer super
 
+## :star: Garbage Collection GC
 
+- Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
+    - live object = reachable (referenced by someone else)
+    - dead object = unreachable (unreferenced)
+- Objects are allocated in the "heap" of java memory
+- Static members, class definition are stored in "method area" PermGen/Metaspace
+- Garbage Collection is carried out by a daemon thread called "Garbage Collector"
+- Force GC to happened System.gc (no guaranteed)
+- When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
+
+- Garbage Collector involves
+    - Mark : go through all program structure, mark reachable objects as live
+    - Delete/Sweep : Delete unreachable objects
+    - Compacting : Compact memory by moving around objects
+
+- Typed of Garbage Collector
+    - Serial Collector : Runs on single thread, useful in basic applications
+    - Concurrent Collector : GC execute as application runs, not wait the old generation to full stop the world
+      execute only during mark/re-mark phase
+    - Parallel Collector : Uses multiple CPUs to perform GC. Multiple threads doing mark/sweep. Does not start until
+      heap is full/near-full. "Stop the world" when runs.
+
+Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required
+Use parallel collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
+
+```
+java -XX:+UseSerialGC
+java -XX:+UseParallelGC
+java -XX:+UseConcMarkSweepGC
+```
+
+- Garbage Collector example
+
+```java
+void method() {
+  Calendar calendar = new GregorianCalendar(2000,12,12);
+  System.out.println(calendar);
+}
+```
+
+Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
+After method ends execution the reference variable calendar is no longer valid. Hence there are no reference
+to the object created in the method. JVM recognizes this and removes the object from the heap. This is called GC
+
+
+- When Garbage Collection is run
+    - Based on fancies of JVM. Possible situations
+        - When available memory on he heap is low
+        - When CPU is free
 
 
 
