@@ -972,7 +972,7 @@ All object must be serializable.
 - Serialization is a process saving state of an object to a sequence of bytes. These sequence of bytes
 can be sent over a network or stored in a file.
 
-````
+```
     +-----------------+
     |  Serializable   |                       +------+
     | << interface >> |                       | file |
