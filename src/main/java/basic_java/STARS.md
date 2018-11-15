@@ -798,8 +798,7 @@ so if implement just equals method and leave hashCode unimplemented the hashCode
 **create 2 students** objects as if they are different objects. Even when their enrId are the same.
 - If two objects are equal, then their hashCode values must also be equal. Whenever you implement equals(Object), you must also implement hashCode().
 - For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return.
-If your entity will be part of a Set collection, override its equals and hashCode methods.
-<br/>
+- If your entity will be part of a Set collection, override its equals and hashCode methods.
 - Hash is integer number that identify an object.
 - If x and y are different objects, x.hashCode and y.hashCode should also be different (but not always are).
 
@@ -1440,17 +1439,17 @@ System.gc();
 
 ***
 
-## Tuning the VM
+## :star: Tuning the VM
 
--Xmx set the maximum heap size
--Xms set starting heap size
+- -Xmx set the maximum heap size
+- -Xms set starting heap size
 
 ```
 -Xmx512m -Xms150m
 ```
 
 PermGen Size
--XX:MaxPermSize
+- -XX:MaxPermSize
 
 ```
 -XX:MaxPermSize=256m
@@ -1462,9 +1461,9 @@ PermGen Size
 -Xmx10m -verbose:gc // print garbage collection
 ```
 
-Young generation = 1/3 heap size
--Xmn set the size of young generation
--Xms256m
+- Young generation = 1/3 heap size
+    - -Xmn set the size of young generation
+    - -Xms256m
 
 
 ### Generating heap dumps
@@ -1478,8 +1477,9 @@ Young generation = 1/3 heap size
 Types of GC:
 - Serial : -XX:+UseSerialGC
 - Parallel young generation: -XX:+UseParallelGC
-- Mostly Concurrent: -XX:+UseConcMarkSweepGC
-                     -XX:+UseG1GC
+- Mostly Concurrent:
+    - -XX:+UseConcMarkSweepGC
+    - -XX:+UseG1GC
 
 use -XX:+PrintCommandLineFlag to find out which is your default
 
@@ -1514,7 +1514,7 @@ class MyListGeneric<T> {
 To restrict Generics to a subclass of particular class we can use Generic Restrictions.
 "T extends Number"
 We can use the class MyListRestricted with any class extending (subclass) of Number - Float, Integer, Double
-String is not valid substitute for "T extends Number"
+String is valid substitute for "T extends Number"
 ```java
 class MyListRestricted<T extends Number> {
        private List<T> values;
@@ -1538,6 +1538,8 @@ To restrict Generic class to a super class of particular class we can use Generi
 We can use the class MyListRestricted with any class that is super to class Number.
 
 PECS - Produces extends, Consumer super
+
+***
 
 ## :star: Garbage Collection GC
 

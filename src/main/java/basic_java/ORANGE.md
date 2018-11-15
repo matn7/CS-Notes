@@ -15,7 +15,7 @@ Is a measure of how resource requirements change as the size of problem gets lar
 ```java
 public static void selectionSort(int[] list) {
     for (int i = 0; i < list.length; i++) {
-        for (int j = i + 1; i < list.length; j++) {
+        for (int j = i + 1; j < list.length; j++) {
             if (list[i] > list[j]) {
                 swap(listToSort, i, j);
                 print(listToSort);
@@ -123,6 +123,25 @@ public static int binarySearch(int[] list, int number) {
         }
     }
     return -1;
+}
+```
+
+```java
+public static int binarySearch(int[] sortedArray, int number, int min, int max) {
+    if (min > max) {
+        return -1;
+    }
+
+    int mid = (max + min) / 2;
+    if (sortedArray[mid] == number) {
+        return mid;
+    }
+
+    if (sortedArray[mid] > number) {
+        return binarySearch(sortedArray, number, min, mid - 1);
+    } else {
+        return binarySearch(sortedArray, number, mid + 1, max);
+    }
 }
 ```
 
@@ -353,9 +372,9 @@ public static void preOrder(Node<Character> root) {
         - travels downwards (root -> leaf).
         - Heaps can be represented using tree or array
 <br/>
-- *GET PARENT* : Node at index: i -> has parent at index (i-1)/2<br/>
-- *GET LEFT CHILD* : Node at index: (2*i + 1) <br/>
-- *GET RIGHT CHILD* : Node at index: (2*i + 2) <br/>
+- GET PARENT : Node at index: i -> has parent at index (i-1)/2<br/>
+- GET LEFT CHILD : Node at index: (2*i + 1) <br/>
+- GET RIGHT CHILD : Node at index: (2*i + 2) <br/>
 
 ```
              5
@@ -682,6 +701,19 @@ public class Factorial {
             return result;
         }
     }
+}
+```
+
+```java
+public class FactorialRecursive {
+    public int calculateFactorial(int num) {
+        if (num == 0 || num == 1) {
+            return 1;
+        } else {
+            return num * calculateFactorial(num - 1);
+        }
+    }
+
 }
 ```
 
@@ -1290,7 +1322,7 @@ panda would change position with other panda in even though of a fact that they 
 - The volatile keyword ensures a variable is never cached, and only read from main memory,
 and wraps the action in the body of an object that implements an interface with just one method.
 
-- Threads are controlled y process
+- Threads are controlled by process
     - PROGRAM : PROCESS :: 1 : 1
     - PROCESS : THREADS :: 1 : MANY
     - CALLABLE
