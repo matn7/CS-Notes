@@ -478,6 +478,19 @@ public class ZeroOneSort {
 
 ***
 
+## :star: Reverse string recursive
+
+```
+public static String reverseRec(String str) {
+    if ((null == str) || (str.length() <= 1)) {
+        return str;
+    }
+    return reverseRec(str.substring(1)) + str.charAt(0);
+}
+```
+
+***
+
 ## :star: Builder design patterns [Creational Pattern]
 
 ```java
