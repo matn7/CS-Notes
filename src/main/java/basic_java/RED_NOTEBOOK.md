@@ -79,6 +79,7 @@ public static class Node<T> {
 - We continue this till every node of the tree has been visited
 
 **PATH**
+```
 
                             /                       LEVEL N
                            /
@@ -87,7 +88,7 @@ public static class Node<T> {
                               /
                              --------               LEVEL N + 2
                                                     Highest level
-
+```
 
 ### Implementing Breadth First Traversal
 
@@ -220,6 +221,7 @@ public static void postOrder(Node root) {
     - Each node in the left subtree of that node has a value less than or equal to the value of the node
     - Each node in the right subtree of that node has a value greater than the value of the node
 
+```
 Every node on               Every node on
 the left subtree is <= 8    the right subtree is > 8
 
@@ -230,6 +232,7 @@ the left subtree is <= 8    the right subtree is > 8
                     4   12   16
                    / \    \    \
                   2   5    13   18
+```
 
 - Recursively every node in the tree should obey the same constraint
 - Binary search tree are typically used for fast insertion and fast lookup
@@ -248,6 +251,7 @@ the left subtree is <= 8    the right subtree is > 8
 
 - Insert the node [2] into the tree
 
+```
                 8
                / \
               6   14
@@ -255,6 +259,7 @@ the left subtree is <= 8    the right subtree is > 8
             4   7    16
                        \
                         18
+```
 
 - Steps:
     - Compare node [2] with root [8]
@@ -262,7 +267,7 @@ the left subtree is <= 8    the right subtree is > 8
     - 6 has left child continue comparing
     - 2 < 4 insert 2 in this place
 
-
+```
                 8
                / \
               6   14
@@ -270,6 +275,7 @@ the left subtree is <= 8    the right subtree is > 8
             4   7    16
            /           \
          [2]            18
+```
 
 ```java
 public static Node<Integer> insert(Node<Integer> head, Node<Integer> node) {
@@ -295,6 +301,7 @@ public static Node<Integer> insert(Node<Integer> head, Node<Integer> node) {
 
 - Lookup the value [7] in the tree
 
+```
                 8
                / \
               6   14
@@ -302,8 +309,7 @@ public static Node<Integer> insert(Node<Integer> head, Node<Integer> node) {
             4   7    16
                        \
                         18
-
-
+```
 
 - Steps:
     - Compare [7] with root
@@ -344,7 +350,7 @@ public static Node<Integer> lookup(Node<Integer> head, int data) {
 
 ## Binary tree problems
 
-### Find the minimum value in a binary search tree
+### :star: Find the minimum value in a binary search tree
 
 - The minimum value in a binary search tree can be found by traversing the left subtree of every node.
 - For every node it's left child will have a value smaller than the node's value.
@@ -386,7 +392,7 @@ public static int maxDepth(Node root) {
 
 ```
 
-### Mirror a binary tree
+### :star: Mirror a binary tree
 
 - Every left child is now right child and vice versa
 
@@ -411,11 +417,13 @@ public static void mirror(Node<Integer> root) {
 - Count the number of structurally unique binary trees possible
 - For example for 3 nodes
 
+```
                 O           O               O
                / \           \               \
               O   O           O               O        .....
                                \             /
                                 O           O
+```
 
 ```java
 public static int countTrees(int numNodes) {
@@ -555,6 +563,7 @@ public static void printPaths(Node<Integer> root, List<Node<Integer>> pathList) 
 
 ### Find the least common ancestor for 2 nodes
 
+```
                 1
                / \
               2   3
@@ -562,6 +571,7 @@ public static void printPaths(Node<Integer> root, List<Node<Integer>> pathList) 
                 7  [6]
                / \    \
              [8]  5    4
+```
 
 - 3 is the least common ancestor for 8 and 6
 - 1 is also a common ancestor but not the least one
@@ -642,12 +652,13 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
 - If **H** is the high of the tree - the leaf nodes should be only at level **H** or **H - 1** (shape property)
 - The heap should form a complete binary tree, all levels except the last should be filled
 
-
+```
                     47          maximum value in the entire tree
                    /  \
                   32   28
                  /  \    \
                 9   12    7
+```
 
 - All leaf nodes are at high H or H - 1
 - These nodes cannot have children till all the nodes at level **H-1** have both left and right children
@@ -679,6 +690,7 @@ left and right child of a node
 
 - Node at index i get parent has parent at index: (i-1)/2
 
+```
                  5                  [ 5 8 6 9 12 11 7 15 10 ]
                /   \
               8     6
@@ -686,6 +698,7 @@ left and right child of a node
             9  12 11  7
            / \
           15 10
+```
 
 ```java
 // A generic heap, can hold data of any type. Note that the generic type has to extends comparable this is how we check for highest priority
@@ -880,6 +893,7 @@ public static int getMaximum(MinHeap<Integer> minHeap) {
 
 ### UNDIRECTED GRAPH
 
+```
         +---+         +---+         +---+
         | A +---------+ B +---------+ F |
         +-+-+         +---+         +-+-+
@@ -893,6 +907,7 @@ public static int getMaximum(MinHeap<Integer> minHeap) {
         +-+-+         +---+         +-+-+
         | C +---------+ E +---------+ G |
         +---+         +---+         +---+
+```
 
 - A - C are ADJACENT Nodes
 - 3 edges are INDICENT Vertex F
@@ -902,6 +917,7 @@ public static int getMaximum(MinHeap<Integer> minHeap) {
 
 ### UNDIRECTED ACYCLIC GRAPH
 
+```
         +---+         +---+         +---+
         | A +---------+ B +---------+ F |
         +-+-+         +---+         +-+-+
@@ -915,11 +931,13 @@ public static int getMaximum(MinHeap<Integer> minHeap) {
         +-+-+         +---+         +-+-+
         | C +---------+ E |         | G |
         +---+         +---+         +---+
+```
 
 - Every Node is CONNECTED TO EVERY OTHER NODE via a series of edges
 This Graph has no cycles
 A Connected graph with no cycles. This is a connected graph
 
+```
                B
              / | \
             A  D  F
@@ -927,11 +945,13 @@ A Connected graph with no cycles. This is a connected graph
           C     G   H
          /
         E
+```
 
-- Graph with no cycle is tree
+- :star: Graph with no cycle is tree
 
 ### DIRECTED GRAPH
 
+```
         +---+         +---+         +---+
         | A +-------->+ B +-------->+ F |
         +---+         +---+         +-+-+
@@ -945,12 +965,14 @@ A Connected graph with no cycles. This is a connected graph
         +-+-+         +---+         +-+-+
         | C +-------->+ E +-------->+ G |
         +---+         +---+         +---+
+```
 
 Nodes A,B,D,A form a cycle
 
 
 ### DIRECTED ACYCLIC GRAPH (DAG)
 
+```
     +---+         +---+         +---+
     | A +-------->+ B +-------->+ F |
     +-+-+         +---+         +-+-+
@@ -964,8 +986,10 @@ Nodes A,B,D,A form a cycle
     +-+-+         +---+         +-+-+
     | C +-------->+ E +-------->+ G |
     +---+         +---+         +---+
+```
 
 ### A Graph Representation
+
 To represent a Graph there is a need a way to model a vertex which may held some information.
 A way to model directed or undirected EDGES.
 
@@ -995,9 +1019,12 @@ public interface Graph {
 
 ### ADJACENCY MATRIX
 
-Use a metrix with ROWS and COLUMNS a matrix is table
+Use a matrix with ROWS and COLUMNS a matrix is table
 The Row labels and the column labels represent the Vertices
 Each cell represent relationship between the vertices i.e. the EDGES
+
+```
+        DIRECTED GRAPH
 
         +---+     +---+                   A  B  C  D  E
         | A +---->+ B |                 +----------------
@@ -1010,10 +1037,12 @@ Each cell represent relationship between the vertices i.e. the EDGES
         +-+-+     +-+-+
         | C +---->+ E |
         +---+     +---+
+```
 
 - A value 1 or true in (row A, column B) indicates Edge from A to B
 
-        DIRECTED GRAPH
+```
+        UN DIRECTED GRAPH
 
         +---+     +---+                   A  B  C  D  E
         | A +-----+ B |                 +----------------
@@ -1026,6 +1055,7 @@ Each cell represent relationship between the vertices i.e. the EDGES
         +-+-+     +-+-+
         | C +-----+ E |
         +---+     +---+
+```
 
 ```java
 class Graph {
@@ -1093,13 +1123,14 @@ public class AdjacencyMatrixGraph implements Graph {
 
 ### ADJACENCY LIST (adjacent means neighbors cells)
 
-Each vertex is a node.
-Each vertex as a pointer to a LinkedList.
-This LinkedList contains all the other nodes this vertex connects to directly.
+- Each vertex is a node.
+- Each vertex as a pointer to a LinkedList.
+- This LinkedList contains all the other nodes this vertex connects to directly.
 
 If a vertex V has an Edge leading to Another Vertex U
 Then U is present in V's LinkedList
 
+```
         +---+     +---+                   DIRECTED GRAPH
         | A +---->+ B |               A -> B -> C
         +-+-+     +-+-+               B -> D
@@ -1123,6 +1154,7 @@ Then U is present in V's LinkedList
         +-+-+     +-+-+
         | C +-----+ E |
         +---+     +---+
+```
 
 - Adjacency List Downsides
     - The ORDER of the Vertices in the AdjacencyList is MATTER
@@ -1136,19 +1168,22 @@ Instead of a LinkedList to maintain the adjacent vertices USE A SET
 
 The GRAPH Representations
 
+```
     ADJACENCY MATRIX             |   ADJACENCY LIST, SET
     -----------------------------+-----------------------
     This works well when the     | A SPARSE Graph with Few
     Graph is WELL CONNECTED i.e. | Connections between nodes
     Many Nodes are connected     | might be more efficiently
     with many other Nodes.       | represented using Adjacency
-    The overhead of V^2 spece is | List or Set
+    The overhead of V^2 space is | List or Set
     worth it when the number of  |
     connections are large        |
+```
 
 - E = Number of Edges
 - V = Number of Vertices
 
+```
                       | Adjacency Matrix | Adjacency List | Adjacency Set
     ------------------+------------------+----------------+------------------
     SPACE             |     V^2          |  E + V         |  E + V
@@ -1157,22 +1192,23 @@ The GRAPH Representations
     ------------------+------------------+----------------+------------------
     Iterate over      |     V            |  DEGREE OF V   |  DEGREE OF V
     edges on a vertex |                  |                |
-
+```
 
 ### THE GRAPH Traversal
 
-DEPTH-FIRST, BREADTH-FIRST
-In a graph multiple paths can lead from one node to another
+- DEPTH-FIRST, BREADTH-FIRST
+    - In a graph multiple paths can lead from one node to another
 
-A Graph can also have cycles, the same Node can be visited multiple times
+- A Graph can also have cycles, the same Node can be visited multiple times
 
-In order to avoid infinite looping In a Graph we need to keep track of the Node previously visited
+- In order to avoid infinite looping In a Graph we need to keep track of the Node previously visited
 
 ## Topological Sort
 
 - It is an ordering of vertices in a directed acyclic graph in which each node comes before all the nodes to which
 it has outgoing edges
 
+```
     A ----------> B     A should come before B
 
     A ----------> B             The topological sort for this graph A,C,E,B,D
@@ -1180,19 +1216,18 @@ it has outgoing edges
     |             |   D
     |             | /
     C ----------> E
+```
 
 - A graph can have multiple topological sort
-- We first find a vetex which has no incoming edges
+- We first find a vertex which has no incoming edges
 - It is the destination of no edge no arrow points to it
 - **A** is the only vertex with no incoming edge - this is the first element of the sort
 - Indegree number of inward directed graph edges for a given graph vertex
 - Indegree of A is 0
 - If there are no vertices with 0 indegree, then there would have been no topological sort
-<br/>
 - If remove A from graph we have to reduce the indegree of all its immediate neighbors
 - The next vertex in this sort the one with indegree 0 C is the next element
 - Remove C from graph decrease indegree next element is E
-<br/>
 - Running time of topological sort is O(V + E)
 - Every edge and every vertex is visited once
 

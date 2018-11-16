@@ -491,6 +491,88 @@ public static String reverseRec(String str) {
 
 ***
 
+## :star: Find the minimum value in a binary search tree
+
+```java
+public static int minimumValue(Node<Integer> head) {
+    if (head == null) {
+        return Integer.MIN_VALUE;   // Base case, if the head is null then the tree has no nodes, return the minimum integer value
+    }
+
+    if (head.getLeftChild() == null) {
+        return head.getData();      // Follows the left child for every node, if the left child is null then this is the minimum value node
+    }
+
+    return minimumValue(head.getLeftChild());   // Recurse till a left child is Available
+}
+```
+
+***
+
+## :star: Mirror a binary tree
+
+- Every left child is now right child and vice versa
+
+```java
+public static void mirror(Node<Integer> root) {
+    if (root == null) {
+        return;         // Base case if the head is null then the tree has no nodes, there is nothing to mirror
+    }
+
+    mirror(root.getLeftChild());    // Call mirror recursively on every node in the left and right subtrees
+    mirror(root.getRightChild());
+
+    // swap the left and the right child of each node
+    Node<Integer> temp = root.getLeftChild();
+    root.setLeftChild(root.getRightChild());
+    root.setRightChild(temp);      // Swap the left and right children of this node
+}
+```
+
+***
+
+## :star: Find the least common ancestor for 2 nodes
+
+```
+                1
+               / \
+              2   3
+                 / \
+                7  [6]
+               / \    \
+             [8]  5    4
+```
+
+- 3 is the least common ancestor for 8 and 6
+- 1 is also a common ancestor but not the least one
+
+```java
+public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer> a, Node<Integer> b) {
+    if (root == null) {
+        return null;
+    }
+
+    if (root == a || root == b) {
+        return root;    // If the current root is either of two nodes then return the root itself
+    }
+
+    Node<Integer> leftCA = leastCommonAncestor(root.getLeftChild(), a, b);
+    Node<Integer> rightCA = leastCommonAncestor(root.getRightChild(), a, b);
+
+    if (leftCA != null && rightCA != null) {
+        return root;    // If both exists it means either the node or it's ancestor exists in the left and right subtree so the current node is LCA
+    }
+
+    if (leftCA != null)  {
+        return leftCA;  // If only of the common ancestor is non null return that
+    }
+
+    return rightCA;
+}
+```
+
+***
+
 ## :star: Builder design patterns [Creational Pattern]
 
 ```java
