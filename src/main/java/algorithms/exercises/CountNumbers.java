@@ -2,7 +2,12 @@ package algorithms.exercises;
 
 // STAR
 public class CountNumbers {
-    public int countNum(int number) {
+
+    public static void main(String[] args) {
+        System.out.println(countNum(809088));
+    }
+
+    public static int countNum(int number) {
         int k;
         int n = number;
 
