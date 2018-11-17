@@ -214,7 +214,7 @@ public void filterEx() {
     // Predicate what we want to keep
     Predicate<Student> studentPredicate = student -> student.getGrades() < 3.5;
 
-    List<Car> listOfBadStudents = cars.stream()
+    List<Student> listOfBadStudents = students.stream()
         .filter(studentPredicate)
         .collect(Collectors.toList());
 
@@ -281,7 +281,7 @@ public void findAny() {
     // Returns optional
 
     Integer[] nums = {1,2,3,4,5,6,7,8,9};
-    int firstNum = Integer anyNum = Arrays.stream(nums)
+    int firstNum = Arrays.stream(nums)
         .filter(n -> n < 10)
         .findFirst()
         .get();

@@ -371,10 +371,9 @@ public static void preOrder(Node<Character> root) {
         - Operations travels upwards (leaf -> root),
         - travels downwards (root -> leaf).
         - Heaps can be represented using tree or array
-<br/>
-- GET PARENT : Node at index: i -> has parent at index (i-1)/2<br/>
-- GET LEFT CHILD : Node at index: (2*i + 1) <br/>
-- GET RIGHT CHILD : Node at index: (2*i + 2) <br/>
+- GET PARENT : Node at index: i -> has parent at index (i-1)/2
+- GET LEFT CHILD : Node at index: (2*i + 1)
+- GET RIGHT CHILD : Node at index: (2*i + 2)
 
 ```
              5

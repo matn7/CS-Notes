@@ -87,6 +87,111 @@ next add public static factory methods.
 
 ***
 
+## :star: Sorting
+
+### 1. Selection sort O(N^2)
+
+- At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
+- Complexity O(N^2)
+- O(N^2) - comparisons
+- O(N) - swaps
+
+```java
+public static void selectionSort(int[] list) {
+    for (int i = 0; i < list.length; i++) {
+        for (int j = i + 1; j < list.length; j++) {
+            if (list[i] > list[j]) {
+                swap(listToSort, i, j);
+                print(listToSort);
+            }
+        }
+    }
+}
+```
+
+### 2. Bubble sort O(N^2)
+
+- At each iteration, every element is compared with its neighbor and swapped if they are not in order.
+- Smaller element bubbling to the beginning of the list.
+- If no swaps that means list is sorted.
+- Complexity O(N^2)
+- O(N^2) - comparisons
+- O(N^2) - swaps
+
+```java
+public static void bubbleSort(int[] list) {
+    for (int i = 0; i < list.length; i++) {
+        boolean swapped = false;
+        for (int j = list.length - 1; j > i; j--) {
+            if (list[j] < list[j-1]) {
+                swap(list, j, j-1);
+                swapped = true;
+            }
+        }
+        print(list);
+        if (!swapped) {
+            break;  // if no swap break
+        }
+    }
+}
+```
+
+### 3.Insertion Sort O(N^2)
+
+- Start with sorted list of size 1. Insert next element into list at right position.
+- Complexity O(N^2)
+- O(N^2) - comparisons
+- O(N^2) - swaps
+
+```java
+public static void insertionSort(int[] list) {
+    for (int i = 0; i < list.length - 1; i++) {
+        for (int j = i + 1; j > 0; j--) {
+            if (list[j] < list[j-1]) {
+                swap(list, j, j-1);
+            } else {
+                break;
+            }
+            print(list);
+        }
+    }
+}
+```
+
+### 4. Shell Sort between O(N) and O(N^2)
+
+Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
+Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
+Sort on almost sorted list. Complexity depends on increment value chosen.
+
+- Complexity O(N) and O(N^2)
+
+### 5. Merge Sort O(N(Log(N)))
+
+Follows divide and conquer approach to create smaller sub problems.
+Then merge together sorted lists to get fully sorted list.
+
+- Complexity O(N(Log(N)))
+- Is not adaptive = takes advantage over input (nearly sorted list)
+
+### 6. Quick Sort
+
+Divide and conquer algorithm which partitions the list at every step. Partition is based on **pivot** element from the list.
+The list is partitioned with all elements smaller than pivot on one side and larger than pivot on the other.
+Pivots is usually first or last element in the list.
+
+- Complexity O(N(Log(N)))
+- O(Log(N)) extra space
+- Is not adaptive
+
+### Stability of sorting algorithm
+
+- Elements with the same hashCode stays on the same position after sorting. For example in bubble sort, panda, panda, pies.
+panda would change position with other panda in even though of a fact that they have the same hashCode.
+
+
+***
+
 ## :star: Find the maximum depth of a binary tree
 
 - The max depth will be furthest distance of the leaf node from the root
@@ -198,6 +303,53 @@ public class Singleton {
             }
         }
         return singleton;
+    }
+}
+```
+
+- With enum
+
+```java
+enum Downloader {   // enum is thread safe
+    INSTANCE;
+
+    private Semaphore semaphore = new Semaphore(3, true);
+
+    public void downloadData() {
+        try {
+            semaphore.acquire();
+            download();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            semaphore.release();
+        }
+    }
+
+    private void download() {
+        System.out.println("Downloading data");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+public class SingletonEnumImproved {
+
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Downloader.INSTANCE.downloadData();
+                }
+            });
+        }
+        executorService.shutdown();
     }
 }
 ```
@@ -480,13 +632,17 @@ public class ZeroOneSort {
 
 ## :star: Reverse string recursive
 
-```
+```java
 public static String reverseRec(String str) {
     if ((null == str) || (str.length() <= 1)) {
         return str;
     }
     return reverseRec(str.substring(1)) + str.charAt(0);
 }
+// Panda.substring(1) = anda + P
+// anda.substring(1) = nda + a + P
+// nda.substring(1) = da + n + a + P
+// da.substring(1) = a + d + n + a + P
 ```
 
 ***
@@ -1392,6 +1548,37 @@ public void addName(String name) {
 - 3. So make sure that your singleton class does not implement cloneable - or if for some reason it does
 Override the clone() method to thrown an exception.
 
+```java
+public class SingletonImproved implements Cloneable {
+
+    // mark member variable as volatile, so each access this variable is fresh read from memory
+    private volatile static SingletonImproved singleton;
+
+    private SingletonImproved() {
+
+    }
+
+    // double-check-locking
+    // reduce overhead of acquiring a lock, by first testing lock creation
+    public static SingletonImproved getInstance() {
+        if (singleton == null) {
+            synchronized (SingletonImproved.class) { // lock in between
+                if (singleton == null) {
+                    singleton = new SingletonImproved();
+                }
+            }
+        }
+        return singleton;
+    }
+
+    // make sure that singleton object can't be cloned
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+}
+```
+
 ***
 
 ## :star: Which of following is true?
@@ -1687,8 +1874,80 @@ to the object created in the method. JVM recognizes this and removes the object 
         - When available memory on he heap is low
         - When CPU is free
 
+***
 
+## :star: Tree
 
+```
+                ROOT
+               /    \
+            LEAF   CHILD
+                        \
+                        LEAF
+```
+
+- The binary TREE to 2 child nodes (left, right)
+- The binary tree
+    - Left node is less than root node
+    - Insert like find
+```
+                BALANCED                    UNBALANCED
+
+                     4                           1
+                   /   \                          \
+                  2     5                          2
+                /   \    \                          \
+               1      3    6                         3
+```
+
+- Balanced
+    - insert: O(log(N))
+    - find: O(log(N))
+- Unbalanced
+    - insert: O(N)
+    - find: O(N)
+
+```
+        TRAVERSING
+        INORDER                         PREORDER                    POSTORDER
+        left -> root -> right       root -> left -> right       left -> right -> root
+```
+
+***
+
+## :star: Garbage Collector
+
+```
+        Young generation    Old Generation      Permanent Generation
+        +-----------------+-----------------+---------------------------+
+        | Eden            | Tenured         | Perm                      |
+        +-----------------+-----------------+---------------------------+
+```
+
+- Permanent generation is used to store metadata. Store String pool also.
+- Types of Garbage collectors:
+    - Throughput GC - parallel version young generation     `-XX:+UseParallelGC`
+    - Concurrent low pause collector                        `-XX:+UseConcMarkSweepGC`
+    - Most GC is executed multithreaded at the same time app is executed
+    - Incremented low pause collector                       `-XX:+UseTrainGC`
+- Full GC Concurrent GC
+    - Executed on single GC thread, which executes with app thread to execute before tenured generation.
+    - Full GC, application is stopped and GC is executed as all application thread is stopped
+
+***
+
+## :star: Heap Generations
+
+- Heap is separated with three parts
+    - Young Generation,
+    - Tenured or Old Generation
+    - Perm Area
+- Generation are then separated on 3 parts
+    - Eden Space
+    - Survivor 1
+    - Survivor 2
+- New object is then created on heap in new generation in Eden space, and after few GC it goes to Survivor1 and then
+to Survivor2.
 
 
 

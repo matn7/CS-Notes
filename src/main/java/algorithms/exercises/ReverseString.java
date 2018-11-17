@@ -4,7 +4,14 @@ public class ReverseString {
 
     public static void main(String[] args) {
         System.out.println(reverse("Panda"));
+
+        System.out.println(reverseRec("P"));
+        System.out.println(reverseRec("Pa"));
+        System.out.println(reverseRec("Pan"));
+        System.out.println(reverseRec("Pand"));
         System.out.println(reverseRec("Panda"));
+
+        System.out.println("Panda".substring(1));
     }
 
     static String reverse(String word) {
