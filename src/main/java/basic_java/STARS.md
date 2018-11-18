@@ -89,6 +89,14 @@ next add public static factory methods.
 
 ## :star: Sorting
 
+```java
+public static void swap(int[] listToSort, int iIndex, int jIndex) {
+    int temp = listToSort[iIndex];
+    listToSort[iIndex] = listToSort[jIndex];
+    listToSort[jIndex] = temp;
+}
+```
+
 ### 1. Selection sort O(N^2)
 
 - At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
@@ -139,6 +147,7 @@ public static void bubbleSort(int[] list) {
 ### 3.Insertion Sort O(N^2)
 
 - Start with sorted list of size 1. Insert next element into list at right position.
+- Find element bubbling to right position
 - Complexity O(N^2)
 - O(N^2) - comparisons
 - O(N^2) - swaps
