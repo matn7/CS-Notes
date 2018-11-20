@@ -17,16 +17,12 @@ reflection to instantiate the correct object.
 
 ### Implementing Factory Pattern
 
-**Plane.java**
-
 ```java
 public interface Plane {
     // Any Plane that factory returns must implement this interface
     void model();
 }
 ```
-
-**Junkers.java**
 
 ```java
 public class Junkers implements Plane {
@@ -37,8 +33,6 @@ public class Junkers implements Plane {
     }
 }
 ```
-
-**PlaneFactory.java**
 
 ```java
 public class PlaneFactory {
@@ -57,8 +51,6 @@ public class PlaneFactory {
 }
 ```
 
-**Main.java**
-
 ```java
 public class Main {
 
@@ -68,6 +60,8 @@ public class Main {
     }
 }
 ```
+
+***
 
 ## Abstract Factory
 
@@ -84,6 +78,8 @@ hidden and decoupled from the user.
 while the abstract factory pattern is a way to create groups of related classes that implements different interfaces.
 - Abstract factory objects create entire families of classes, Factory objects create a single family of classes
 
+***
+
 ## :star: Singleton
 
 - Exactly one object of a particular type is needed
@@ -91,12 +87,9 @@ while the abstract factory pattern is a way to create groups of related classes 
     - Registry Settings
 - Singleton objects also makes sense where the state of an object consumes a lot of memory, and just one version
 of that state is sufficient for the entire application.
-<br/><br/>
 - singleton object must satisfy two attributes
     - Exactly one instance of the object should exist
     - Globally accessible
-
-**Singleton.java**
 
 ```java
 public class Singleton {
@@ -119,7 +112,7 @@ public class Singleton {
 }
 ```
 
-## What are standard parts of implementing the Singleton
+### What are standard parts of implementing the Singleton
 
 - Private constructor
 - Synchronized getter for the singleton
@@ -168,10 +161,10 @@ public class Singleton {
 }
 ```
 
-### DOUBLE CHECKED LOCKING
+### Double checked locking
 
-In software engineering, double checked locking is a software design pattern used to reduce overhead of acquiring a lock.
-By first testing the lock creation without actually acquiring a lock.
+In software engineering, double checked locking is a software design pattern used to reduce overhead of acquiring a lock
+by first testing the lock creation without actually acquiring a lock.
 
 ```java
 // check 1 of the double checked lock
@@ -187,12 +180,10 @@ if (singleton == null) {
 ```
 
 - :star: Declaring a **volatile** Java variable means the value of this variable will never be called
-thread-locally all reads and writes will go straight to "main memory". Access to the variable
+thread-locally all reads and writes will go straight to **main memory**. Access to the variable
 acts as through it is enclosed in a synchronized block, synchronized on itself.
-<br/>
 - A class loader is a part of JVM. Technically namespaces are unique per class loader.
 Usually there is just 1 class loader per program.
-<br/>
 - In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object.
     - Thread interference : different thread access the same data
     - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
@@ -259,7 +250,7 @@ public void addName(String name) {
 - Threads never gets blocked on itself which means that one synchronized method of an object can always call
   another synchronized method of the same object without blocking.
 - Making method as synchronized is a shortcut to making the entire body of the method as synchronized
-  on "THIS"
+  on **THIS**
 
 ### Thread Contention
 
@@ -270,22 +261,24 @@ public void addName(String name) {
 
 ### :star: Make sure your singleton objects can't be cloned
 
-- 1. The .clone() method belongs to object class (every object has this method), when it ought to belong to cloneable interface
+- 1. The `.clone()` method belongs to object class (every object has this method), when it ought to belong to cloneable interface
 - 2. Object have a clone method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
 - 3. So make sure that your singleton class does not implement cloneable - or if for some reason it does
-Override the clone() method to thrown an exception.
+Override the `clone()` method to thrown an exception.
 
 ### Which of following is true?
 
-- The clone method is in the Object class, which means all objects have a .clone() method
+- The clone method is in the Object class, which means all objects have a `.clone()` method
 - Singletons should never implement cloneable
-- Calling .clone() on an object that does not explicitly implement the method result in an exception
-- The volatile keyword ensures a variable is never cached, and only read from main memory
-- Access to variable marked volatile is synchronized on the variable itself
-- Variable marked volatile are safe to use in different threads
-- The .clone() method is in object class, which means all objects have a .clone() method
-- The .clone() method sits in the cloneable interface, so objects that implement this interface posses a .clone()
-- Calling .clone() on an object that does not explicitly implement the method result in an exception
+- Calling `.clone()` on an object that does not explicitly implement the method result in an exception
+- The **volatile** keyword ensures a variable is never cached, and only read from main memory
+- Access to variable marked **volatile** is synchronized on the variable itself
+- Variable marked **volatile** are safe to use in different threads
+- The `.clone()` method is in object class, which means all objects have a `.clone()` method
+- The `.clone()` method sits in the cloneable interface, so objects that implement this interface posses a `.clone()`
+- Calling `.clone()` on an object that does not explicitly implement the method result in an exception
+
+***
 
 ## :star: Builder
 
@@ -295,73 +288,86 @@ Override the clone() method to thrown an exception.
     - Use the Factory Pattern
 - When you know beforehand exactly what object you need, but that object has to be buildup slowly as user input comes in
     - Use the builder design pattern
-
 - Which of the following might suggest the use of the Builder Pattern?
     - The construction of the object varies with information that becomes available after constructor of the object is called.
-
 - What is the basic idea of a Builder Pattern?
     - Allow objects to be created in a step-by-step manner
     - Abstract the user of a class from implementation details of the objects of the class
 
 ```java
-public class User {
-    // final so you have to declare it in constructor
-    private final String firstName; // required
-    private final String lastName; // required
-    private final int age;
-    private final String phone;
-    private final String address;
+public class Customer {
+    private String name;
+    private String age;
+    private String salary;
 
-    private User(UserBuilder builder) {
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.age = builder.age;
-        this.phone = builder.phone;
-        this.address = builder.address;
+    public String getName() {
+        return name;
     }
-    // getters, toString
 
-    public static class UserBuilder {
-        private final String firstName; // Must be declared in constructor
-        private final String lastName;
-        private int age;
-        private String phone;
-        private String address;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public UserBuilder(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
+    public String getAge() {
+        return name;
+    }
 
-        public UserBuilder age(int age) {
-            this.age = age;
-            return this;
-        }
+    public void setAge(String age) {
+        this.age = age;
+    }
 
-        public UserBuilder phone(String phone) {
-            this.phone = phone;
-            return this;
-        }
+    public String getSalary() {
+        return salary;
+    }
 
-        public UserBuilder address(String address) {
-            this.address = address;
-            return this;
-        }
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
 
-        public User build() {
-            return new User(this);
-        }
+    public String toString() {
+        return name + " - " + age + " - " + salary;
+    }
+}
+
+public class CustomerBuilder {
+    Customer customer = new Customer();
+
+    public static CustomerBuilder defaultCustomer() {
+        return new CustomerBuilder();
+    }
+
+    public CustomerBuilder withName(String name) {
+        customer.setName(name);
+        return this;
+    }
+
+    public CustomerBuilder withAge(String age) {
+        customer.setAge(age);
+        return this;
+    }
+
+    public CustomerBuilder withSalary(String salary) {
+         customer.setSalary(salary);
+         return this;
+    }
+
+    public Customer build() {
+        return customer;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        User user = new User.UserBuilder("Polar", "Bear").age(8).address("Tier Garten Berlin").phone("990").build();
-        System.out.println(user.toString());
+        CustomerBuilder builder = CustomerBuilder.defaultCustomer();
+        Customer customer = builder.withName("Majki").withSalary("11000").build();
+
+        System.out.println(customer);
     }
 }
 
 ```
+
+***
 
 ## Prototype Pattern
 
@@ -370,11 +376,11 @@ public class Main {
 a constructor is called a copy constructor.
 - In java it is effected via the clone method of the interface **Cloneable**
 - In general Java cloneable interface is not highly regarded
-    - The .clone() method belongs in the object class (i.e. every object has this method) when it ought to have belonged
+    - The `.clone()` method belongs in the object class (i.e. every object has this method) when it ought to have belonged
     in the cloneable interface
     - The implication of (1) is that all objects have a clone method, but if you try to clone an object that does not
     implement cloneable, a not cloneable exception is thrown.
-    - Clone() is effectively a copy constructor, except that its not set up as a constructor
+    - `Clone()` is effectively a copy constructor, except that its not set up as a constructor
 
 ## What is the basic idea of the Prototype Pattern ?
 

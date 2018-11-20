@@ -1,12 +1,14 @@
 # Structural Pattern
 
-## :star: Decorator Pattern, Inputs, outputs streams
+## :star: Decorator Pattern
+
+### Inputs, outputs streams
 
 - Adding the new functionality to existing classes should be easily done while extending the class inherited from
 it we use it within a composite or any other way. You should not force user to modify this class in order to change functionality.
 
-- All input stream derive from a common abstract class `InputStream`. Which contains standard operations
-shared by all streams, close(), read(), reset()
+- All input stream derive from a common abstract class **InputStream**. Which contains standard operations
+shared by all streams, close(), read(), reset().
 For each type of input stream, there is a separate class deriving from input stream
     - FileInputStream
     - AudioInputStream
@@ -29,10 +31,11 @@ ObjectInputStream ois = new ObjectInputStream(
 - Use decorator when you have lots of objects each with a specific behavior independent of all other.
 - Each class can be constructed from an object of the common interface or base class
 
-- When should switching to Decorator Pattern?
-    - When a class is constantly being modified to implement new interfaces
+### When should switching to Decorator Pattern?
 
-**Implementing Decorator Pattern**
+- When a class is constantly being modified to implement new interfaces
+
+### Implementing Decorator Pattern
 
 ```java
 public interface Order {
@@ -120,27 +123,34 @@ public class Main {
 }
 ```
 
+***
+
 ## Adapter Pattern
 
 - An adapter takes in an object that implements an interface, and gives out object that
-implements a differnent interface
+implements a different interface
 
+```
                  +-----------+
         List Out | List      | Array In
         <--------+ +-------+ +<--------
                  | | Array | |
                  | +-------+ |
                  +-----------+
+```
 
-- What is the basic point of the Adapter pattern?
-    - Convert an object from one interface to another.
+### What is the basic point of the Adapter pattern?
+
+- Convert an object from one interface to another.
+
+***
 
 ## :star: Facade Pattern
 
 - A facade provides a simple interface for a larger body of complicated code.
 - Multiple systems can and work together behind a facade, however the user will see only the simple interface.
 
-## Code in Java to download URL
+### Code in Java to download URL
 
 ```java
 URL url = new URL("panda.com");
@@ -153,7 +163,7 @@ while ((line = reader.readLine()) != null) {
 reader.close();
 ```
 
-**Code in C very complicated**
+### Code in C very complicated
 
 - The Java NET library which manages complexity assures that you neither know nor care how exactly
 the contents of url are obtained.
@@ -229,6 +239,7 @@ public class WashingMachine {
 }
 ```
 
+***
 
 ## Composite Pattern
 
@@ -240,9 +251,11 @@ This is a definition of Composite Pattern.
 - Composite Pattern is the basic of most UI Containers in Java.
 - Example Swing Container.
 
+***
+
 ## Flyweight pattern
 
-- Is an object that minimalises memory use by sharing as much data as possible with other similar objects.
+- Is an object that minimalize memory use by sharing as much data as possible with other similar objects.
 - It is a way to use objects in large numbers when a simple repeated representation would use an
 unacceptable amount of memory.
 - Often some parts of object state can be shared, and it is common practice to hold them in external data structure
@@ -258,7 +271,7 @@ underlying immutable object
 
 ### Multithreading
 
-- The flyweight pattern involves creating new objects only for distinct values, and having variables "reference" only these distinct values.
+- The flyweight pattern involves creating new objects only for distinct values, and having variables **reference** only these distinct values.
 - It is typically used where creating new objects for each distinct value would be wasteful, or lead to an unacceptable
 performance hit.
 - :star: By default equals method tests for object identity it returns true if and only if the 2 objects are
@@ -266,7 +279,7 @@ literally the same (point to the same location in memory).
 - In flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are actually
 different objects.
 
-### :star: Why does the implementation of .equals() matter in the flyweight pattern ?
+### :star: Why does the implementation of `.equals()` matter in the flyweight pattern ?
 
 - Default implementation of `.equals()` return true if and only if the two objects being compared one literally
 the same object, in the flyweight pattern this method should return true if two objects share the same value,
@@ -275,6 +288,8 @@ even if they are different.
 if we end up with multiple flyweights referring to the same underlying value.
 - Concurrency issues sometimes give rise to decouple flyweight - there duplicates are fine so long
 as they return true when called `.equals()`
+
+***
 
 ## Bridge Pattern
 
@@ -289,7 +304,7 @@ as they return true when called `.equals()`
             Ab1 Ab2 Aa1
 ```
 
-If you find a class hierarchy getting out of control, too many derived classes
+- If you find a class hierarchy getting out of control, too many derived classes
 
 ```
             A               N
@@ -297,7 +312,7 @@ If you find a class hierarchy getting out of control, too many derived classes
         Aa(N) Ab(N)       1   2
 ```
 
-There now 2 class hierarchies instead of 1 and objects of the first
+- There now 2 class hierarchies instead of 1 and objects of the first
 hierarchy have member variables of objects of the second hierarchy
 
 ```
@@ -309,7 +324,7 @@ hierarchy have member variables of objects of the second hierarchy
          Rectangle      Rectangle   Circle
 ```
 
-Refactor into 2 class hierarchies, one each for shape and for class
+- Refactor into 2 class hierarchies, one each for shape and for class
 
 ```
                Shape                    Color
@@ -322,13 +337,15 @@ Refactor into 2 class hierarchies, one each for shape and for class
 - Bridge and Strategy both plug in member variables to determine behavior - thus prefer composition (Has-A)
 over inheritance (Is-A)
 - And also similar to template pattern
-    - Since bridge and template both "plug-in" important or complex parts of their behavior
+    - Since bridge and template both **plug-in** important or complex parts of their behavior
 - Bridge and adapter are quite different - Adapter takes in objects of one interface and wraps them into objects of another interface
 
 ### What is a basic idea of the Bridge Pattern ?
 
 - When class hierarchies got too complicated, they can be simplified using bridges
 - The Bridge Pattern uses composition (has-a) as a bridge between two independent class hierarchies.
+
+***
 
 ## Proxy Pattern
 
@@ -345,7 +362,7 @@ or those involving file or database IO.
 
 ### What is the basic idea of the Proxy Pattern ?
 
-- Proxies are objects that "stand in" for other objects
+- Proxies are objects that **stand in** for other objects
 - Proxy objects control access or abstract functionality of other objects.
 
 

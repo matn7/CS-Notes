@@ -10,7 +10,7 @@
 int compare(String s1, String s2)
 ```
 
-Comparing by returning -1,0,1 to say if the first string is "LESS_THAN", "EQUAL_TO", "GREATER_THAN" the second String
+Comparing by returning -1,0,1 to say if the first string is **LESS_THAN**, **EQUAL_TO**, **GREATER_THAN** the second String
 Each Algorithm object can specify it's own logic for determining order.
 
 ```java
@@ -42,8 +42,9 @@ Collections.sort(list, new Comparator<String> {
 }
 ```
 
-- Dependency injection : Setting up member variables of complicated classes on the fly.
 - Characteristics of Strategy pattern : Make easy to vary the behavior os a class at runtime, using composition over inheritance.
+
+***
 
 ## Dependency Injection
 
@@ -56,7 +57,7 @@ instantiate and inject into particular class.
 
 - Composition refers to defining behavior by the member variables a class includes
 - Inheritance refers to defining behavior by the interfaces or classes that a class inherits from
-- Composition = "has-a", Inheritance = "Is-a"
+- Composition = **has-a**, Inheritance = **Is-a**
 
 ### How are Strategy Pattern and Dependency injection related?
 
@@ -92,12 +93,14 @@ The abstract (unimplemented) methods left for programmer are called hooks
 
 ### What is the basic point of the Template Pattern?
 
-- Specify a complex set of steps, and have client code plug in specific implemetnations of individual.
+- Specify a complex set of steps, and have client code plug in specific implementations of individual.
 - Allows subclass to customize parts of an algorithm, but force them to adhere to the overall.
 - Template pattern **frameworks**
     - Using framework gives more power, but less control than coding from scratch
 - Frameworks exposes specific parts that programmer need to take care of **Event**
 - Place where waiting for event is called **Listeners**
+
+***
 
 ## Iterator Pattern
 
@@ -150,7 +153,7 @@ public interface Iterator<E> {
 }
 ```
 
-#### External iterator
+### External iterator
 
 ```java
 Iterator<String> iterator = alphabets.listIterator();
@@ -159,11 +162,13 @@ while(iterator.hasNext()) {
 }
 ```
 
-#### Internal iterator
+### Internal iterator
 
 ```java
-alphabets.forEach(l -> l.toUpperCase());
+alphabets.forEach(operand -> operand.toUpperCase());
 ```
+
+***
 
 ## Observer pattern
 
@@ -173,7 +178,7 @@ alphabets.forEach(l -> l.toUpperCase());
 - Subscribers : Objects that subscribe to listen to these updates
 - The callback : The code that gets executed when an update is published
 
-Publishers announce different types of updates - each of which is referred to as **An event** Button clicked, hover
+Publishers announce different types of updates - each of which is referred to as **An event** Button clicked, hover.
 The term callback refers to the fact that this code belongs to the subscriber object.
 But is called by the publisher object when the event occurs.
 
@@ -235,6 +240,8 @@ public class Main {
 }
 ```
 
+***
+
 ## Command pattern
 
 - Class that has just 1 method. It encapsulates all the state needed for that one method to do its thing.
@@ -250,7 +257,7 @@ public class Main {
 - Very high portion of anonymous classes simply consisted of objects that implement an interface with just one function
 - **Lambda** functions are simply anonymous function
 - In a for loop it is impossible or at least very complicated to parallelise the loop across multiple different CPU
-- Lambda functions and functional programming are a natural way to parallelize computing accross CPU
+- Lambda functions and functional programming are a natural way to parallelise computing across CPU
 
 ### Stream
 
@@ -265,7 +272,7 @@ the result out as the output stream
 ```
                     Aggregate Operations
     Input Stream  +-----------------------------+ Output stream
-    ------------->+ Map (FX) Lambda expressions +-------------->
+    ------------->+ Map (FX) Lambda expressions +--------------------->
     (X1, X2, X3)  +-----------------------------+ (F(X1), F(X2), F(X3))
 ```
 
@@ -290,7 +297,7 @@ but does not produce an output stream
     (X1, X2, X3)  +--------------+
 ```
 
-Foreach is used for operations like printing to screen or saving to file, where it makes no sense to produce output stream
+- Foreach is used for operations like printing to screen or saving to file, where it makes no sense to produce output stream
 
 ### Command pattern in action - threading
 
@@ -299,8 +306,8 @@ Foreach is used for operations like printing to screen or saving to file, where 
         - Is implemented by a class with the operations to be carried out on the other thread
     - Thread in-build class
         - Object of the thread class take in the runnable objects and run them on individual threads
-    - Thread.join() on the thread
-        - The main class calls the .join method on each thread which will wait unitl the thread finishes
+    - `Thread.join()` on the thread
+        - The main class calls the `.join()` method on each thread which will wait until the thread finishes
 
 - New School
     - Callable interface
@@ -357,6 +364,8 @@ thread.start();
 - By Lambda functions are functions without names that can define the command in a command object
 - Command objects separate an action from its execution, lambda functions represent the action
 
+***
+
 ## Chain of Responsibility Pattern
 
 - Avoid coupling the sender to the receiver by allowing more than one receiving element to handle
@@ -404,19 +413,20 @@ public class Main {
 
 ```
 
+***
+
 ## Memento Design Pattern
 
 ### What is a basic idea of the Memento Pattern?
 
 - Objects sometimes need to know how to save their state and go back to that saved state.
-
-The ability of an object to save its state.
-If an object can save its state, a relatively easy way to implement undo is to have the object "Reset"
+- The ability of an object to save its state.
+- If an object can save its state, a relatively easy way to implement undo is to have the object **Reset**
 to a previously saved state.
-Java have in build support for the Memento Pattern via the **Serializable** interface.
-Any class that implements serializable, and in which all member variables are serializable
+- Java have in build support for the Memento Pattern via the **Serializable** interface.
+- Any class that implements serializable, and in which all member variables are serializable
 can be written to file or read from file with minimal effort.
-The serializable interface has 2 methods - read object and write-object.
+- The serializable interface has 2 methods - read object and write object.
 
 ```java
 public class MyLittleClass implements Serializable {
@@ -425,7 +435,7 @@ public class MyLittleClass implements Serializable {
 ```
 
 If a member variable belongs to a class that does not implement serializable, you can just mark
-the member as "transient", meaning that Java should not write at its value to file.
+the member as **transient**, meaning that Java should not write at its value to file.
 
 ```java
 // Serializing an object
@@ -460,6 +470,8 @@ Serializing and de-serializing meant laying out the object, 1 member variable at
 Memento Pattern.
 - The Serializable interface is one easy way to implement the Memento Pattern
 
+***
+
 ## Visitor Pattern
 
 - Involves having an object that knows how to traverse the tree of a composite objects
@@ -471,15 +483,17 @@ composite object.
 ### What is a basic idea of Visitor Pattern ?
 
 - The Visitor pattern is a way to do something with each node of a composite object.
-- Visitor + Composite = Decorator
+- `Visitor + Composite = Decorator`
+
+***
 
 ## State Pattern
 
 - Objects for state pattern. This pattern is used to encapsulate varying behavior for the same object based on
-its initaial state.
+its initial state.
 - This can be a cleaner way for an object to change its behavior at runtime without restoring
 large monolithic conditional statements and thus improve maintainability.
-- Class needs to implement methods play(), pause(), getVolume(), ...
+- Class needs to implement methods `play()`, `pause()`, `getVolume()`, ...
     - Put all of these methods in interface MediaPlayerState
 
 ```java

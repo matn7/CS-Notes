@@ -2,6 +2,19 @@
 
 ### With final class
 
+- to poprawy
+- immutable bardzo dokładnie
+    - do czego są
+    - w api javy przykłady
+- wątki bardzo dokładnie
+    - co robi nie obsłużony wyjątek
+- wielowątowość bardzo dokładnie
+    - synchrnized
+- kolekcje i mapy bardzo dokładnie
+- memory
+- wyjątki bardzo dokładnie
+
+
 ```java
 public final class Complex {
     /**

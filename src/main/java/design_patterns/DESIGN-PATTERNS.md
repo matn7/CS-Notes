@@ -77,7 +77,8 @@
         - If the interaction between the M, V, C were change, the UI would not look or behave any different !
 
 ## Design Principle
-- 1. Program to an interface, not an implementation
+
+### 1. Program to an interface, not an implementation
     - Think of the interface as the surface that a unit offers to the outside world
     - Unit could be a single class or collection of classes
     - The implementation is the inside of that unit
@@ -97,7 +98,7 @@ public List<Integer> getList() {
 }
 ```
 
-- 2. The Open / Close principle, "Classes should be open for extension but closed for modification"
+### 2. The Open / Close principle, "Classes should be open for extension but closed for modification"
     - New application via extension
     - Inheritance
         - If you structure your code into abstract base classes, other can find new way to use it, via Inheritance (Template pattern)
@@ -106,19 +107,19 @@ public List<Integer> getList() {
     - Composition
         - If take in member variables to determine behavior, you allow extension via Composition (Strategy pattern)
 
-- 3. Principle of least knowledge, "Only talk to friends, don't talk to strangers"
+### 3. Principle of least knowledge, "Only talk to friends, don't talk to strangers"
 
-**:(**
+:disappointed_relieved:
 ```java
 int number = document.getCurrentPage().getNumber();
 ```
 
-**:)**
+:blush:
 ```java
 int number = document.getCurrentPageNumber();
 ```
 
-- 4. Dependency Inversion and Hollywood Principle
+### 4. Dependency Inversion and Hollywood Principle
     - Depend on abstraction, never on details
     - Don't call us we will call you
     - Idea high level components calling low-level components, ubiquitous in frameworks
