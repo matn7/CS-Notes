@@ -70,6 +70,8 @@ public class SortServiceImpl {
 }
 ```
 
+***
+
 ## Scope of Beans
 
 Bean Scopes default Singleton.
@@ -205,19 +207,21 @@ public class SomeCdiDao {
 </dependency>
 ```
 
-```java
+```javaSpring Boot, Spring,
 //@SpringBootApplication
 @Configuration
 @ComponentScan("com.panda.spring.basics")
 public class BasicApplication {
     // ...
-    AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BasicApplication.class);
+    AnnotationConfigApplicationContext applicationContext =
+        new AnnotationConfigApplicationContext(BasicApplication.class);
     // ...
     applicationContext.close();
 
     // Or use try with resources to close application context
     /*
-    try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BasicApplication.class)) {
+    try (AnnotationConfigApplicationContext applicationContext =
+        new AnnotationConfigApplicationContext(BasicApplication.class)) {
         // ...
     }
     */
@@ -253,8 +257,8 @@ try (ClassPathXmlApplicationContext applicationContext =
     - Manages beans
     - Create instance of WelcomeService
     - Creates beans for WelcomeController
-    - Autowire WelcomeService bean into the WelcomeController.
-    - Wiring, creation of beans.
+    - Autowire WelcomeService bean into the WelcomeController
+    - Wiring, creation of beans
 
 - Application Context :
     - implementation of IOC
@@ -286,7 +290,7 @@ public class WelcomeController {
 public class WelcomeService {}
 
 @RestController
-public class WelcomeController
+public class WelcomeController {
     @Autowired
     private WelcomeService service;
 
@@ -365,16 +369,18 @@ public class PropertiesApplication {
 - Spring boot provides basic configuration needed to configure the application with these framework. This is called
 `AutoConfiguration`.
 
+***
+
 ## Spring Boot, Spring, Spring MVC
 
-**`Spring Framework`**
+### Spring Framework
 
 - Most important feature of Spring Framework is Dependency Injection. At the core all Spring Modules is
 Dependency Injection or IOC Inversion of Control.
 - Reduce duplication, plumbing code.
 - Integration with other framework
 
-**`Spring MVC`**
+### Spring MVC
 
 - Spring MVC framework provides decoupled way of developing web applications. With simple concepts like
 `DispatcherServlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop web applications.
@@ -402,7 +408,7 @@ Dependency Injection or IOC Inversion of Control.
 
 ## AOP
 
-**`@Before`**
+### @Before
 
 ```java
 package com.panda.spring.aop.business;
@@ -448,13 +454,11 @@ public class BeforeAspect {
 }
 ```
 
-**Join Point (pointcut)**
+### Join Point (pointcut)
 
 - "execution(* com.panda.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
 
-<br/>
-
-**Advice**
+### Advice
 
 ```java
 logger.info("Validation before method call");
@@ -463,11 +467,11 @@ logger.info("Intercepted method call - {}", joinPoint);
 
 - what should I do when I do interception
 
-** Aspect **
+### Aspect
 
 - Combination of **Pointcut** and **Advice**
 
-** JoinPoint **
+### JoinPoint
 
 - Specific interception of method call. Specific execution instance. If called 100 method calls they will be
 100 joinPoints.
@@ -476,7 +480,7 @@ logger.info("Intercepted method call - {}", joinPoint);
     - **Weaving** - process of implementing AOP around your method calls
     - **Weaver** - framework which implements Weaving
 
-**`@After`**
+### @After
 
 `@After` = `@AfterReturning` + `@AfterThrowing`
 
@@ -498,7 +502,7 @@ logger.info("Intercepted method call - {}", joinPoint);
     }
 ```
 
-**`@Around`**
+### `@Around`
 
 ```java
     @Around("execution(* com.panda.spring.aop.business.*.*(..))")
@@ -523,12 +527,12 @@ public class CommonJoinpointConfig {
 public void before(JoinPoint joinPoint) {
 ```
 
-### :star: Create annototion
+### :star: Create annotation
 
 ```java
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Stoper {
+public @interface Stopper {
 }
 ```
 
@@ -538,7 +542,7 @@ public @interface Stoper {
 @Repository
 public class DaoRepo {
 
-    @Stoper
+    @Stopper
     public String retrieve() {
         return "DaoRepo";
     }
@@ -564,7 +568,7 @@ public class AroundAspect {
 
     org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Around("com.panda.spring.aop.aspect.CommonJoinpoint.stoper()")
+    @Around("com.panda.spring.aop.aspect.CommonJoinpoint.stopper()")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         joinPoint.proceed();
@@ -592,6 +596,7 @@ Some examples loaded by app context for us:
       - found ConfigurableWebEnvironment (OnWebApplicationCondition)
       - @ConditionalOnProperty (spring.h2.console.enabled=true) matched (OnPropertyCondition)
 
+***
 
 ## JPA
 
@@ -600,7 +605,7 @@ Some examples loaded by app context for us:
 ```java
 @Entity
 @Table(name="person")
-@NamedQuery(name="finad_all", query = "select p from Person p")
+@NamedQuery(name="find_all", query = "select p from Person p")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

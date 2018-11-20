@@ -12,7 +12,7 @@ public class Book {
 }
 ```
 
-Objects leave bayond the scope of JVM **Object persistence**.
+Objects leave beyond the scope of JVM **Object persistence**.
 The state of an object can be saved to a data store, and re-created at a later point in time.
 
 ## Relational Database
