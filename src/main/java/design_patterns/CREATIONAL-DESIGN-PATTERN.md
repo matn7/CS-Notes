@@ -6,14 +6,14 @@ Creational pattern provides one of the best ways to create an object. In factory
 creation logic to the client and refer to newly created object using a common interface.
 
 - The factory object reads in the name of the class to instantiate from a config file, and uses
-reflection to instantiate the correct object.
-- A config file is simply a text file used to specify inputs that application uses at runtime.
-- If config file is changing, it does not need to be changed and re-released.
+reflection to instantiate the correct object
+- A config file is simply a text file used to specify inputs that application uses at runtime
+- If config file is changing, it does not need to be changed and re-released
 
 ### What is the basic idea of Factory Pattern?
 
 - Decouple instantiation of a class from its use
-- Create a mechanism for many alternative implementations to be instantiated from a single method.
+- Create a mechanism for many alternative implementations to be instantiated from a single method
 
 ### Implementing Factory Pattern
 
@@ -68,14 +68,14 @@ public class Main {
 - Reflection : is a way to invoke methods of objects on the fly (at run-time)
 - Reflection is slow and complicated
     - A method call via reflection may take 10 x longer than usual
-- The implementation details of how an object of database type is instantiated in Abstract Factory, is completly
-hidden and decoupled from the user.
-- Use abstract factory to create families of related classes.
+- The implementation details of how an object of database type is instantiated in Abstract Factory, is completely
+hidden and decoupled from the user
+- Use abstract factory to create families of related classes
 
 ### Who are the Factory and the Abstract Factory pattern related?
 
 - The Factory Pattern is a way to create any one of bunch of classes that implement the same interface,
-while the abstract factory pattern is a way to create groups of related classes that implements different interfaces.
+while the abstract factory pattern is a way to create groups of related classes that implements different interfaces
 - Abstract factory objects create entire families of classes, Factory objects create a single family of classes
 
 ***
@@ -86,7 +86,7 @@ while the abstract factory pattern is a way to create groups of related classes 
     - Device Drivers
     - Registry Settings
 - Singleton objects also makes sense where the state of an object consumes a lot of memory, and just one version
-of that state is sufficient for the entire application.
+of that state is sufficient for the entire application
 - singleton object must satisfy two attributes
     - Exactly one instance of the object should exist
     - Globally accessible
@@ -119,7 +119,7 @@ public class Singleton {
 
 ### Double check locking
 
-- Synchronized can lead to quite a performance hit, to get around this.
+- Synchronized can lead to quite a performance hit, to get around this
     - Eagerly instantiate the singleton
     - Double check locking. Mark the member variable as `volatile`
 
@@ -181,9 +181,9 @@ if (singleton == null) {
 
 - :star: Declaring a **volatile** Java variable means the value of this variable will never be called
 thread-locally all reads and writes will go straight to **main memory**. Access to the variable
-acts as through it is enclosed in a synchronized block, synchronized on itself.
+acts as through it is enclosed in a synchronized block, synchronized on itself
 - A class loader is a part of JVM. Technically namespaces are unique per class loader.
-Usually there is just 1 class loader per program.
+Usually there is just 1 class loader per program
 - In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object.
     - Thread interference : different thread access the same data
     - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
@@ -193,17 +193,17 @@ Usually there is just 1 class loader per program.
       That's because Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction.
     - For example two threads incrementing the same variable could simply lose one of the two increments.
     - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
-      is a powerful concept used widely in computer science especially in databases.
+      is a powerful concept used widely in computer science especially in databases
     - Locking variables correctly can eliminate thread interference and memory consistency error
         - But it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock)
 
 ### What is the best way to subclass Singleton?
 
 - Singleton classes should never be subclassed or extended
-- Every object in Java has a lock associated with it.
-    - This lock is called the intrinsic lock or monitor.
-    - This lock is usually always open, any number of threads can access the object simultaneously.
-    - It is possible to specify that a thread can only execute a section of code once it has acquired the lock on source object.
+- Every object in Java has a lock associated with it
+    - This lock is called the intrinsic lock or monitor
+    - This lock is usually always open, any number of threads can access the object simultaneously
+    - It is possible to specify that a thread can only execute a section of code once it has acquired the lock on source object
     - If some other thread currently holds that lock, the current thread must wait its turn
     **This is achieved using the Synchronized keyword**
 
@@ -213,7 +213,7 @@ Usually there is just 1 class loader per program.
 - Only one thread at a time only applies to the same method of the same object
 - Only one thread can be executing this member function on this object at a given point in time
 - So for instance if the same method does something to a static class variable (not an object variable), errors can still result
-- Used right making a method as synchronized can help eliminate thread interference and memory consistency error.
+- Used right making a method as synchronized can help eliminate thread interference and memory consistency error
 
 ```java
 public class SynchronizedCounter {
@@ -234,8 +234,8 @@ public class SynchronizedCounter {
 
 ### Synchronized blocks of code
 
-- Since every object in Java has an intrinstic lock associated with it, it is possible to lock
-  any section of code by making it as synchronized.
+- Since every object in Java has an intrinsic lock associated with it, it is possible to lock
+  any section of code by making it as synchronized
 - Any object can be used as lock using a synchronized statement
 
 ```java
@@ -248,7 +248,7 @@ public void addName(String name) {
 }
 ```
 - Threads never gets blocked on itself which means that one synchronized method of an object can always call
-  another synchronized method of the same object without blocking.
+  another synchronized method of the same object without blocking
 - Making method as synchronized is a shortcut to making the entire body of the method as synchronized
   on **THIS**
 
@@ -264,7 +264,7 @@ public void addName(String name) {
 - 1. The `.clone()` method belongs to object class (every object has this method), when it ought to belong to cloneable interface
 - 2. Object have a clone method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
 - 3. So make sure that your singleton class does not implement cloneable - or if for some reason it does
-Override the `clone()` method to thrown an exception.
+Override the `clone()` method to thrown an exception
 
 ### Which of following is true?
 
@@ -371,21 +371,21 @@ public class Main {
 
 ## Prototype Pattern
 
-- Object of class can be created as clone of another object of that class.
+- Object of class can be created as clone of another object of that class
 - That means that the class has a constructor that takes in another object of the same class. Such
-a constructor is called a copy constructor.
+a constructor is called a copy constructor
 - In java it is effected via the clone method of the interface **Cloneable**
 - In general Java cloneable interface is not highly regarded
     - The `.clone()` method belongs in the object class (i.e. every object has this method) when it ought to have belonged
     in the cloneable interface
     - The implication of (1) is that all objects have a clone method, but if you try to clone an object that does not
-    implement cloneable, a not cloneable exception is thrown.
+    implement cloneable, a not cloneable exception is thrown
     - `Clone()` is effectively a copy constructor, except that its not set up as a constructor
 
 ## What is the basic idea of the Prototype Pattern ?
 
 - Sometimes objects need to know how to create clones of themeselves
-- Sometimes clients don't really care how an object should be instantiated - they just know they want another object like this one.
+- Sometimes clients don't really care how an object should be instantiated - they just know they want another object like this one
 
 
 

@@ -1,6 +1,6 @@
 # DESIGN PATTERNS
 
-- Frameworks are complicated collections of interconnected classes.
+- Frameworks are complicated collections of interconnected classes
 - Libraries are simpler version of frameworks
 - Design patterns are canonical solutions to recurring problems
 
@@ -146,15 +146,222 @@ User sees the model through the view, and manipulates it via the controller
     - Model : The MP4 file of a movie to be played in a media player app
     - View : The area of the media player app that actually displays video
 
+***
+
+## Single Responsibility Principle
+
+### Cohesion
+
+Is a way to measure how much the code segments withing one module (methods of a class, classes inside a package)
+belong together. The higher the cohesion the better, since high cohesion implies easier maintenance and debugging,
+greater code functionality and reusability. Loose coupling of modules is related to high cohesion.
 
 
+### Robustness
+
+Ability of a computer system or algorithm to handle mistakes and malfunctions
+(which could be caused by various factors such as programmer’s mistake or incorrectly formatted user input).
+A robust system is one that can handle these unwanted situations elegantly.
+There are various ways for a software engineer to achieve robustness, such as testing the code for different kinds of inputs,
+but generally, in order to achieve robustness (and high cohesion), programmers follow a certain set of rules and principles
+for better organization of object-oriented programs.
 
 
+### Single Responsibility Principle
 
+- The single responsibility principle revolves around the claim that a certain code module (most often, a class)
+should only have responsibility over one part of the functionality provided by the software.
+- This approach contributes to the **high cohesion** – since methods related to the same concern (same part of the functionality)
+will be members of the same class, and **robustness** – since this reduces the possibility of error.
 
+### :disappointed_relieved: Bad example
 
+```java
+class Text {
+    String text;
+    String author;
+    int length;
+    String getText() { ... }
+    void setText(String s) { ... }
+    String getAuthor() { ... }
+    void setAuthor(String s) { ... }
+    int getLength() { ... }
+    void setLength(int k) { ... }
+    /*methods that change the text*/
+    void allLettersToUpperCase() { ... }
+    void findSubTextAndDelete(String s) { ... }
+    /*method for formatting output*/
+    void printText() { ... }
+}
+```
 
+### :blush: Better example
 
+```java
+class Text {
+    String text;
+    String author;
+    int length;
+    String getText() { ... }
+    void setText(String s) { ... }
+    String getAuthor() { ... }
+    void setAuthor(String s) { ... }
+    int getLength() { ... }
+    void setLength(int k) { ... }
+    /*methods that change the text*/
+    void allLettersToUpperCase() { ... }
+    void findSubTextAndDelete(String s) { ... }
+}
+class Printer {
+    Text text;
+    Printer(Text t) {
+       this.text = t;
+    }
+    void printText() { ... }
+}
+```
+
+## Open Closed Principle
+
+For good application design and the code writing part, you should avoid change in the existing code when requirements change.
+Instead, you should extend the existing functionality by adding new code to meet the new requirements.
+
+```
+“software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification“
+```
+
+- “Open for extension “: This means that the behavior of a software module, say a class can be extended to make it behave
+in new and different ways.
+- “Closed for modification “: This means that the source code of such a module remains unchanged.
+
+### :blush: Better example
+
+```java
+public abstract class InsuranceSurveyor {
+    public abstract boolean isValidClaim();
+}
+
+public class HealthInsuranceSurveyor extends InsuranceSurveyor{
+    public boolean isValidClaim(){
+        System.out.println("HealthInsuranceSurveyor: Validating health insurance claim...");
+        /*Logic to validate health insurance claims*/
+        return true;
+    }
+}
+
+public class VehicleInsuranceSurveyor extends InsuranceSurveyor{
+    public boolean isValidClaim(){
+       System.out.println("VehicleInsuranceSurveyor: Validating vehicle insurance claim...");
+        /*Logic to validate vehicle insurance claims*/
+        return true;
+    }
+}
+
+public class ClaimApprovalManager {
+    public void processClaim(InsuranceSurveyor surveyor){
+        if(surveyor.isValidClaim()){
+            System.out.println("ClaimApprovalManager: Valid claim. Currently processing claim for approval....");
+        }
+    }
+}
+```
+
+## Liskov Substitution Principle
+
+```
+“in a computer program, if S is a subtype of T, then objects of type T may be replaced with objects of type S
+(i.e., objects of type S may substitute objects of type T) without altering any of the desirable properties of that
+program (correctness, task performed, etc.)”.
+```
+
+- Simply said, any object of some class in an object-oriented program can be replaced by an object of a child class.
+
+### Inheritance
+- It is when an object or a class are based on another object or class.
+-  When a class is “inherited” from another class, it means that the inherited class
+(also called subclass, or child class) contains all the characteristics of the superclass
+(parent class), but can also contain new properties.
+    - Class Watch , you can inherit from that class to get a class PocketWatch . A pocket watch is still a watch, it just has some additional features.
+
+### Polymorphism
+
+-  Objects can behave in one way in a certain situation, and in another way in some other situation.
+In object-oriented programming, this is called context-dependent behavior.
+
+### Liskov Substitution Principle Examples
+
+- Functions that reference base classes must be able to use objects of derived (child) classes without knowing it.
+
+### :disappointed_relieved: Bad example
+
+```java
+class TrasportationDevice
+{
+   String name;
+   String getName() { ... }
+   void setName(String n) { ... }
+   double speed;
+   double getSpeed() { ... }
+   void setSpeed(double d) { ... }
+
+   Engine engine;
+   Engine getEngine() { ... }
+   void setEngine(Engine e) { ... }
+   void startEngine() { ... }
+}
+class Car extends TransportationDevice
+{
+   @Override
+   void startEngine() { ... }
+}
+
+class Bicycle extends TransportationDevice
+{
+   @Override
+   void startEngine() /*problem!*/
+}
+```
+
+### :blush: Better example
+
+```java
+class TrasportationDevice
+{
+   String name;
+   String getName() { ... }
+   void setName(String n) { ... }
+
+   double speed;
+   double getSpeed() { ... }
+   void setSpeed(double d) { ... }
+}
+
+class DevicesWithoutEngines extends TransportationDevice
+{
+   void startMoving() { ... }
+}
+
+class DevicesWithEngines extends TransportationDevice
+{
+   Engine engine;
+   Engine getEngine() { ... }
+   void setEngine(Engine e) { ... }
+
+   void startEngine() { ... }
+}
+
+class Car extends DevicesWithEngines
+{
+   @Override
+   void startEngine() { ... }
+}
+
+class Bicycle extends DevicesWithoutEngines
+{
+   @Override
+   void startMoving() { ... }
+}
+```
 
 
 

@@ -4,7 +4,7 @@
 
 - Comparator interface
     - Algorithm to sort list of strings. Each algorithm implements the interface `Comparator<String>`
-    - Any object that implements this interface has a method that takes in 2 strings, and specifies which string comes first.
+    - Any object that implements this interface has a method that takes in 2 strings, and specifies which string comes first
 
 ```java
 int compare(String s1, String s2)
@@ -67,25 +67,27 @@ instantiate and inject into particular class.
 
 ## Template pattern
 
-- Frameworks are complicated group of classes that do a bunch of stuff.
-- High level modules should not depend on low-level modules. Both should depend on abstractions.
-- Abstractions should not depend on details. Details should depend on abstractions.
+- Frameworks are complicated group of classes that do a bunch of stuff
+- High level modules should not depend on low-level modules. Both should depend on abstractions
+- Abstractions should not depend on details. Details should depend on abstractions
 <br/><br/>
 In template a complicated algorithm is implemented usually in the form of an instantiated method of an abstract base class.
 A programmers merely plugs in customization to specific steps by implementing the abstract method of the
 abstract base class.
 The abstract base class is a template for the complicated operation.
-The abstract (unimplemented) methods left for programmer are called hooks
+The abstract (unimplemented) methods left for programmer are called hooks.
 
+```
                 +----------------------------------+
                 | Text algorithm                   |
                 +----------------------------------+
                 | 1. Split article                 |
-        OUT     | 2. Split sentence                | Article comes in
-        <-------+ 3. Determine importance of words +<------- HOOK
+        OUT     | 2. Split sentence                | Article comes in HOOK
+        <-------+ 3. Determine importance of words +<---------------------
                 | 4. Sum importance                |
                 | 5. Return                        |
                 +----------------------------------+
+```
 
 - Step 3 is key part which programmer customizes.
     - Programmer extends abstract based class and implements Step 3
@@ -93,8 +95,8 @@ The abstract (unimplemented) methods left for programmer are called hooks
 
 ### What is the basic point of the Template Pattern?
 
-- Specify a complex set of steps, and have client code plug in specific implementations of individual.
-- Allows subclass to customize parts of an algorithm, but force them to adhere to the overall.
+- Specify a complex set of steps, and have client code plug in specific implementations of individual
+- Allows subclass to customize parts of an algorithm, but force them to adhere to the overall
 - Template pattern **frameworks**
     - Using framework gives more power, but less control than coding from scratch
 - Frameworks exposes specific parts that programmer need to take care of **Event**
@@ -104,7 +106,7 @@ The abstract (unimplemented) methods left for programmer are called hooks
 
 ## Iterator Pattern
 
-- Collections are containers, which means that they hold collections of data.
+- Collections are containers, which means that they hold collections of data
     - A List is a Collection of values in order
     - A Set is a collection of values in no particular order
     - A Map is a collection of key-value pairs
@@ -128,10 +130,10 @@ The abstract (unimplemented) methods left for programmer are called hooks
 
 ### Which classes can you use for-each with?
 
-- Classes which implement the `Iterable<T>` interface can be used in for-each statement in code.
+- Classes which implement the `Iterable<T>` interface can be used in for-each statement in code
 - The Collection is `Iterable<T>` and provides a way to get an `Iterator<T>`
 - External Iterators have the advantages that because the iterator sits outside the collection,
-it's define different iterators for collection.
+it's define different iterators for collection
 
 ### Iterator<T> vs Iterable<E>
 
@@ -244,7 +246,7 @@ public class Main {
 
 ## Command pattern
 
-- Class that has just 1 method. It encapsulates all the state needed for that one method to do its thing.
+- Class that has just 1 method. It encapsulates all the state needed for that one method to do its thing
 - Such classes are the basis of **Command pattern**
 - Classes with just 1 methods:
     - menus
@@ -253,7 +255,7 @@ public class Main {
 
 - A command object has a single method, and whatever state needed for that method to do its thing
 - A command object separates the execution of an action from an action itself
-- Anonymous classes (listeners, threads) are an excellent way to encapsulate little bits of behavior into objects.
+- Anonymous classes (listeners, threads) are an excellent way to encapsulate little bits of behavior into objects
 - Very high portion of anonymous classes simply consisted of objects that implement an interface with just one function
 - **Lambda** functions are simply anonymous function
 - In a for loop it is impossible or at least very complicated to parallelise the loop across multiple different CPU
@@ -261,7 +263,7 @@ public class Main {
 
 ### Stream
 
-- Output of one lambda functions is fed as input into the next.
+- Output of one lambda functions is fed as input into the next
 - Java has added exactly this functionality, using "Aggregate operations"
 - `Filter`, `Map` and `Foreach` are standard aggregate operations in functional programming
 - Call the .stream() method on any collection to get an object of type stream, on which aggregate functions can be applied in sequence
@@ -378,7 +380,7 @@ until some windows has a handler from mouse click.
 ### What is the basic idea of the Chain of Responsibility Pattern?
 
 - Some events need to be handled by one of multiple objects, and it is not known which one object
-specifically will know how to do what's needed.
+specifically will know how to do what's needed
 
 ```java
 public class Main {
@@ -419,14 +421,14 @@ public class Main {
 
 ### What is a basic idea of the Memento Pattern?
 
-- Objects sometimes need to know how to save their state and go back to that saved state.
-- The ability of an object to save its state.
+- Objects sometimes need to know how to save their state and go back to that saved state
+- The ability of an object to save its state
 - If an object can save its state, a relatively easy way to implement undo is to have the object **Reset**
-to a previously saved state.
-- Java have in build support for the Memento Pattern via the **Serializable** interface.
+to a previously saved state
+- Java have in build support for the Memento Pattern via the **Serializable** interface
 - Any class that implements serializable, and in which all member variables are serializable
-can be written to file or read from file with minimal effort.
-- The serializable interface has 2 methods - read object and write object.
+can be written to file or read from file with minimal effort
+- The serializable interface has 2 methods - read object and write object
 
 ```java
 public class MyLittleClass implements Serializable {
@@ -465,9 +467,9 @@ Serializing and de-serializing meant laying out the object, 1 member variable at
 
 ### In Java how Memento Pattern and Serializable are related?
 
-- Objects marked Serializable know how to save their state to file, and this is an implementation of Memento Pattern.
+- Objects marked Serializable know how to save their state to file, and this is an implementation of Memento Pattern
 - Plenty of built in objects are already Serializable so there is little need to make these adhere to the
-Memento Pattern.
+Memento Pattern
 - The Serializable interface is one easy way to implement the Memento Pattern
 
 ***
@@ -476,13 +478,13 @@ Memento Pattern.
 
 - Involves having an object that knows how to traverse the tree of a composite objects
 - The Visitor object sits outside the composite object - which allows us to have any number of visitor classes for a given
-composite object.
-- Each visitor class defines its own traversal of the composite tree, as well as its own unique operation on each node.
+composite object
+- Each visitor class defines its own traversal of the composite tree, as well as its own unique operation on each node
 - Using a Visitor object along with a composite objects makes it easy to customize the process of traversal
 
 ### What is a basic idea of Visitor Pattern ?
 
-- The Visitor pattern is a way to do something with each node of a composite object.
+- The Visitor pattern is a way to do something with each node of a composite object
 - `Visitor + Composite = Decorator`
 
 ***
@@ -490,9 +492,9 @@ composite object.
 ## State Pattern
 
 - Objects for state pattern. This pattern is used to encapsulate varying behavior for the same object based on
-its initial state.
+its initial state
 - This can be a cleaner way for an object to change its behavior at runtime without restoring
-large monolithic conditional statements and thus improve maintainability.
+large monolithic conditional statements and thus improve maintainability
 - Class needs to implement methods `play()`, `pause()`, `getVolume()`, ...
     - Put all of these methods in interface MediaPlayerState
 
@@ -506,12 +508,12 @@ public class MediaPlayer implements IMediaPlayer {
 
 - Objects that maintain an internal State Machine can use this trick to reduce the hassle as new states are added
 - State machines have discrete States, each state can be represented by a member variable, all these member variables implement
-a common interface.
+a common interface
 
 ## Mediator pattern
 
 - The frame acts as the mediator so that non of the individual UI elements need to know about each other.
-- UI Elements are reffered to as Colleagues
+- UI Elements are referred to as Colleagues
 
 ```
     Button        TextBox
@@ -522,12 +524,12 @@ a common interface.
     TextBox      Button
 ```
 
-- Colleagues are entirely decoupled from each other.
+- Colleagues are entirely decoupled from each other
 
 ### What is the basic idea of the Mediator Pattern?
 
 - When class hierarchies got too complicated, they can be simplified using Mediators
-- A mediator object decouples peer objects in a hierarcy from needing to know all about each peer
+- A mediator object decouples peer objects in a hierarchy from needing to know all about each peer
 
 
 
