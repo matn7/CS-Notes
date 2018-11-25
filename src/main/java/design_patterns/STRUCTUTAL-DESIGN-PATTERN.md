@@ -6,15 +6,14 @@
 
 - Adding the new functionality to existing classes should be easily done while extending the class inherited from
 it we use it within a composite or any other way. You should not force user to modify this class in order to change functionality
-
 - All input stream derive from a common abstract class **InputStream**. Which contains standard operations
 shared by all streams, close(), read(), reset().
-For each type of input stream, there is a separate class deriving from input stream
+For each type of input stream, there is a separate class deriving from input stream:
     - FileInputStream
     - AudioInputStream
     - ByteArrayInputStream
 - Each of there objects can be constructed from an object of type InputStream
-- Saving objects to files is a standard operation called **SERIALIZATION**
+- Saving objects to files is a standard operation called **serialization**
 
 **Chain of Input Stream**
 
@@ -72,7 +71,6 @@ public class Pizza implements Order {
 
 ```java
 public abstract class Extra implements Order {
-
     protected Order order;
     protected String label;
     protected double price;
@@ -174,10 +172,8 @@ the contents of url are obtained
 - Each unit should have only limited knowledge about other units; only unit closely related to current unit
 - Each unit should only talk to its friends
 - Only talk to your immediate friends
-
 - Facade pattern is used in:
     - Reflection, networking, database access, file access
-
 - However complicated your classes and their interactions, offer up a very simple interface to use them
 - Don't relay on the internal implementation of any code written by others that you use
 - Provide a clean interface so that others using your code don't need to reach inside your classes to done stuff
@@ -194,7 +190,7 @@ the contents of url are obtained
 ### What motivates a facade pattern?
 
 - Classes should know as little as possible about other classes that they use (principle of least knowledge)
-- Relay on abstractions - interfaces - not on concrete implementation
+- Relay on abstractions: interfaces - not on concrete implementation
 - Loosely coupled code is always preferable to tightly code
 
 ```java
@@ -243,7 +239,7 @@ public class WashingMachine {
 
 ## Composite Pattern
 
-- What is a basic idea of composite pattern ?
+- What is a basic idea of composite pattern:
     - Create a class hierarchy to reflect dependent objects, all of which share a common interface
     - Allow the user to interact with every dependent object in a tree like hierarchy of objects
 - Objects are created from object like themselves i.e. share the same interface
@@ -261,11 +257,11 @@ unacceptable amount of memory
 - Often some parts of object state can be shared, and it is common practice to hold them in external data structure
 (extrinsic state) and pass them to the flyweight objects temporarily when they are used
 - Java makes use of String interning optimization mechanism to store string
-- Strings in Java are **IMMUTABLE** which means that Java only stores one copy of each distinct string value
+- Strings in Java are **immutable** which means that Java only stores one copy of each distinct string value
 
 ### What is the basic idea of the flyweight pattern?
 
-- Some objects - String, for instance should be represented by immutable instances
+- Some objects: String, for instance should be represented by immutable instances
 - The Flyweight pattern creates new objects only for unique values - all instances with the same value reference the same
 underlying immutable object
 
@@ -336,14 +332,15 @@ hierarchy have member variables of objects of the second hierarchy
 - The bridge pattern is very similar to the strategy pattern
 - Bridge and Strategy both plug in member variables to determine behavior - thus prefer composition (Has-A)
 over inheritance (Is-A)
-- And also similar to template pattern
+- And also similar to template pattern:
     - Since bridge and template both **plug-in** important or complex parts of their behavior
-- Bridge and adapter are quite different - Adapter takes in objects of one interface and wraps them into objects of another interface
+- Bridge and adapter are quite different:
+    - Adapter takes in objects of one interface and wraps them into objects of another interface
 
 ### What is a basic idea of the Bridge Pattern ?
 
 - When class hierarchies got too complicated, they can be simplified using bridges
-- The Bridge Pattern uses composition (has-a) as a bridge between two independent class hierarchies.
+- The Bridge Pattern uses composition (has-a) as a bridge between two independent class hierarchies
 
 ***
 

@@ -53,7 +53,6 @@ public class PlaneFactory {
 
 ```java
 public class Main {
-
     public static void main(String[] args) {
         Plane plane = PlaneFactory.getPlane(PlaneType.JUNKERS);
         plane.model();
@@ -65,8 +64,8 @@ public class Main {
 
 ## Abstract Factory
 
-- Reflection : is a way to invoke methods of objects on the fly (at run-time)
-- Reflection is slow and complicated
+- Reflection: is a way to invoke methods of objects on the fly (at run-time)
+- Reflection is slow and complicated:
     - A method call via reflection may take 10 x longer than usual
 - The implementation details of how an object of database type is instantiated in Abstract Factory, is completely
 hidden and decoupled from the user
@@ -82,12 +81,12 @@ while the abstract factory pattern is a way to create groups of related classes 
 
 ## :star: Singleton
 
-- Exactly one object of a particular type is needed
+- Exactly one object of a particular type is needed:
     - Device Drivers
     - Registry Settings
 - Singleton objects also makes sense where the state of an object consumes a lot of memory, and just one version
 of that state is sufficient for the entire application
-- singleton object must satisfy two attributes
+- Singleton object must satisfy two attributes:
     - Exactly one instance of the object should exist
     - Globally accessible
 
@@ -115,12 +114,12 @@ public class Singleton {
 ### What are standard parts of implementing the Singleton
 
 - Private constructor
-- Synchronized getter for the singleton
+- Synchronized getter for the Singleton
 
 ### Double check locking
 
-- Synchronized can lead to quite a performance hit, to get around this
-    - Eagerly instantiate the singleton
+- Synchronized can lead to quite a performance hit, to get around this:
+    - Eagerly instantiate the Singleton
     - Double check locking. Mark the member variable as `volatile`
 
 #### 1. Eagerly instantiate the Singleton
@@ -184,23 +183,23 @@ thread-locally all reads and writes will go straight to **main memory**. Access 
 acts as through it is enclosed in a synchronized block, synchronized on itself
 - A class loader is a part of JVM. Technically namespaces are unique per class loader.
 Usually there is just 1 class loader per program
-- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object.
-    - Thread interference : different thread access the same data
-    - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
-    - Thread Contention : Thread get in each other's way, and slow down-or sometimes even have to be killed in Java
-- Thread interference and memory consistency errors
+- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object:
+    - Thread interference: different thread access the same data
+    - Memory Consistency Errors: A thread sees a state inconsistent value of a variable
+    - Thread Contention: Thread get in each other's way, and slow down-or sometimes even have to be killed in Java
+- Thread interference and memory consistency errors:
     - If two thread access the same variable, it's possible for them to get in each other's way
-      That's because Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction.
-    - For example two threads incrementing the same variable could simply lose one of the two increments.
+      That's because Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction
+    - For example two threads incrementing the same variable could simply lose one of the two increments
     - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
       is a powerful concept used widely in computer science especially in databases
-    - Locking variables correctly can eliminate thread interference and memory consistency error
+    - Locking variables correctly can eliminate thread interference and memory consistency error:
         - But it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock)
 
 ### What is the best way to subclass Singleton?
 
 - Singleton classes should never be subclassed or extended
-- Every object in Java has a lock associated with it
+- Every object in Java has a lock associated with it:
     - This lock is called the intrinsic lock or monitor
     - This lock is usually always open, any number of threads can access the object simultaneously
     - It is possible to specify that a thread can only execute a section of code once it has acquired the lock on source object
@@ -250,14 +249,14 @@ public void addName(String name) {
 - Threads never gets blocked on itself which means that one synchronized method of an object can always call
   another synchronized method of the same object without blocking
 - Making method as synchronized is a shortcut to making the entire body of the method as synchronized
-  on **THIS**
+  on **this**
 
 ### Thread Contention
 
 | Deadlock | Two thread each is blocked on a lock held by the other |
 |---|---|
 | Livelock | Two thread don't deadlock, but keep blocking on locks held by each other, neither really can progress |
-| Starvation | Some threads keep acquiring locks greedly. And cause other threads to be unable to get anything done |
+| Starvation | Some threads keep acquiring locks greedily. And cause other threads to be unable to get anything done |
 
 ### :star: Make sure your singleton objects can't be cloned
 
@@ -282,15 +281,15 @@ Override the `clone()` method to thrown an exception
 
 ## :star: Builder
 
-- When you know beforehand exactly what object you need
+- When you know beforehand exactly what object you need:
     - Simply use a constructor, no design pattern needed
-- When you don't know exactly what object is needed but you want to be able to decide at runtime from a family of objects
+- When you don't know exactly what object is needed but you want to be able to decide at runtime from a family of objects:
     - Use the Factory Pattern
-- When you know beforehand exactly what object you need, but that object has to be buildup slowly as user input comes in
+- When you know beforehand exactly what object you need, but that object has to be buildup slowly as user input comes in:
     - Use the builder design pattern
-- Which of the following might suggest the use of the Builder Pattern?
-    - The construction of the object varies with information that becomes available after constructor of the object is called.
-- What is the basic idea of a Builder Pattern?
+- Which of the following might suggest the use of the Builder Pattern:
+    - The construction of the object varies with information that becomes available after constructor of the object is called
+- What is the basic idea of a Builder Pattern:
     - Allow objects to be created in a step-by-step manner
     - Abstract the user of a class from implementation details of the objects of the class
 
@@ -328,7 +327,8 @@ public class Customer {
         return name + " - " + age + " - " + salary;
     }
 }
-
+```
+```java
 public class CustomerBuilder {
     Customer customer = new Customer();
 
@@ -355,12 +355,12 @@ public class CustomerBuilder {
         return customer;
     }
 }
-
+```
+```java
 public class Main {
     public static void main(String[] args) {
         CustomerBuilder builder = CustomerBuilder.defaultCustomer();
         Customer customer = builder.withName("Majki").withSalary("11000").build();
-
         System.out.println(customer);
     }
 }
@@ -375,7 +375,7 @@ public class Main {
 - That means that the class has a constructor that takes in another object of the same class. Such
 a constructor is called a copy constructor
 - In java it is effected via the clone method of the interface **Cloneable**
-- In general Java cloneable interface is not highly regarded
+- In general Java cloneable interface is not highly regarded:
     - The `.clone()` method belongs in the object class (i.e. every object has this method) when it ought to have belonged
     in the cloneable interface
     - The implication of (1) is that all objects have a clone method, but if you try to clone an object that does not
@@ -384,7 +384,7 @@ a constructor is called a copy constructor
 
 ## What is the basic idea of the Prototype Pattern ?
 
-- Sometimes objects need to know how to create clones of themeselves
+- Sometimes objects need to know how to create clones of themselves
 - Sometimes clients don't really care how an object should be instantiated - they just know they want another object like this one
 
 

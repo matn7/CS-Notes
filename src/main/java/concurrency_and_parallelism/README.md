@@ -158,8 +158,47 @@ $ cat names.txt | sort
         - If-else separates the parent code from the child code
     - A parent process forks a child, which then executes a separate program
 
+### Tomcat
 
+- Tomcat implements the 'one-thread-per-request' model for handling client requests
+- Tomcat runs as a single process, which is multithreaded
+- Tomcat delegates each request for any WAR file to a thread, the 'one-thread-per-request' model
+- Tomcat creates a thread pool at start-up: indeed, two thread pools one for requests over HTTP, another for HTTPS if enables
+    - Thread creation and destruction is relatively expensive process
+- Other Java web services like Jetty, implement the one-thread-per-request model as well
 
+### Non-blocking-io
+
+- print('Hello World') is blocking
+
+### Review
+
+- Multiprocessing: dispatch each task to a separate process ('program in execution')
+    - prefork: the processes by building a pool of these at start-up. Then grab a process from the pool to act as the 'task handler'
+    - When the task-handling process finishes its work, put it to sleep
+    - Apache2, nginx, IIS are production example
+
+- Multithreading: dispatch each task to a separate thread within process
+    - For efficiency, build a thread-pool at start-up, and grab a thread from the pool to act as the 'task handler'
+    - When the task-handling thread finishes its work, put it to sleep
+    - Tomcat, Jetty examples
+
+- Non-blocking I/O: a single-threaded process that jumps quickly from one task to another, doing partial processing of each task
+    - Read from cache by several Task1 and Task2 doing the same things
+    - Node.js example
+
+### Hybrid
+
+- Multiprocessing + multithreading: IIS (Windows web server) and AspNet runtime
+    - Each worker process is multithreaded (10 thread per worker process), each thread handle single request ('one-thread-per-request' model)
+- Multiprocessing + non-blocking I/O: nginx
+    - nginx has a 'master process' to read conf file and to watch over worker processes
+    - A 'worker-process' handles a client request
+    - Other processes cache loader and manager
+- Non-blocking I/O + multithreading: Node.js
+    - a single threaded process managing an event loop
+    - 'workers' are JavaScript functions reads and handles a clients requests uning non-blocking I/O and callbacks to signal task completion
+    - Long running tasks (DB accessing) are delegated to other threads, with callbacks to signal task completion
 
 
 

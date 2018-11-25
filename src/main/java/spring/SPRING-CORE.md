@@ -207,7 +207,8 @@ public class SomeCdiDao {
 </dependency>
 ```
 
-```javaSpring Boot, Spring,
+```java
+// Spring Boot, Spring,
 //@SpringBootApplication
 @Configuration
 @ComponentScan("com.panda.spring.basics")
@@ -696,7 +697,7 @@ repository.deleteBYId(12);
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/spring-mvc/*</url-pattern>
-    </servlet-mapping>
+    </servlet-m//@SpringBootApplicationapping>
 </web-app>
 ```
 

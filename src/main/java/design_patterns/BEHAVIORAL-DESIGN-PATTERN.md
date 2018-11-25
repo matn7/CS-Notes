@@ -2,7 +2,7 @@
 
 ## Strategy Pattern
 
-- Comparator interface
+- Comparator interface:
     - Algorithm to sort list of strings. Each algorithm implements the interface `Comparator<String>`
     - Any object that implements this interface has a method that takes in 2 strings, and specifies which string comes first
 
@@ -11,13 +11,13 @@ int compare(String s1, String s2)
 ```
 
 Comparing by returning -1,0,1 to say if the first string is **LESS_THAN**, **EQUAL_TO**, **GREATER_THAN** the second String
-Each Algorithm object can specify it's own logic for determining order.
+Each Algorithm object can specify it's own logic for determining order
 
 ```java
 Collections.sort(List<String> list, Comparator<String> comparator)
 ```
 
-- Strategy pattern is used to specify a behavior ("how to sort").
+- Strategy pattern is used to specify a behavior ("how to sort")
 - Strategy pattern uses composition (Member Variables) over inheritance (interfaces or abstract classes)
 in the class being modified
 
@@ -42,7 +42,8 @@ Collections.sort(list, new Comparator<String> {
 }
 ```
 
-- Characteristics of Strategy pattern : Make easy to vary the behavior os a class at runtime, using composition over inheritance.
+- Characteristics of Strategy pattern:
+    - Make easy to vary the behavior os a class at runtime, using composition over inheritance
 
 ***
 
@@ -57,7 +58,8 @@ instantiate and inject into particular class.
 
 - Composition refers to defining behavior by the member variables a class includes
 - Inheritance refers to defining behavior by the interfaces or classes that a class inherits from
-- Composition = **has-a**, Inheritance = **Is-a**
+- Composition = **has-a**
+- Inheritance = **Is-a**
 
 ### How are Strategy Pattern and Dependency injection related?
 
@@ -70,7 +72,6 @@ instantiate and inject into particular class.
 - Frameworks are complicated group of classes that do a bunch of stuff
 - High level modules should not depend on low-level modules. Both should depend on abstractions
 - Abstractions should not depend on details. Details should depend on abstractions
-<br/><br/>
 In template a complicated algorithm is implemented usually in the form of an instantiated method of an abstract base class.
 A programmers merely plugs in customization to specific steps by implementing the abstract method of the
 abstract base class.
@@ -89,7 +90,7 @@ The abstract (unimplemented) methods left for programmer are called hooks.
                 +----------------------------------+
 ```
 
-- Step 3 is key part which programmer customizes.
+- Step 3 is key part which programmer customizes:
     - Programmer extends abstract based class and implements Step 3
     - The template pattern is a precursor to the use of frameworks
 
@@ -97,7 +98,7 @@ The abstract (unimplemented) methods left for programmer are called hooks.
 
 - Specify a complex set of steps, and have client code plug in specific implementations of individual
 - Allows subclass to customize parts of an algorithm, but force them to adhere to the overall
-- Template pattern **frameworks**
+- Template pattern **frameworks**:
     - Using framework gives more power, but less control than coding from scratch
 - Frameworks exposes specific parts that programmer need to take care of **Event**
 - Place where waiting for event is called **Listeners**
@@ -106,7 +107,7 @@ The abstract (unimplemented) methods left for programmer are called hooks.
 
 ## Iterator Pattern
 
-- Collections are containers, which means that they hold collections of data
+- Collections are containers, which means that they hold collections of data:
     - A List is a Collection of values in order
     - A Set is a collection of values in no particular order
     - A Map is a collection of key-value pairs
@@ -176,9 +177,9 @@ alphabets.forEach(operand -> operand.toUpperCase());
 
 - Variables announce changes to their states
 - Other object subscribe to listen to those changes
-- Publishers : Object that publish these updates
-- Subscribers : Objects that subscribe to listen to these updates
-- The callback : The code that gets executed when an update is published
+- Publishers: Object that publish these updates
+- Subscribers: Objects that subscribe to listen to these updates
+- The callback: The code that gets executed when an update is published
 
 Publishers announce different types of updates - each of which is referred to as **An event** Button clicked, hover.
 The term callback refers to the fact that this code belongs to the subscriber object.
@@ -186,11 +187,11 @@ But is called by the publisher object when the event occurs.
 
 ### Publisher, Subscriber, Listener or Event?
 
-- Listener : The command object with the code that gets executed when something happens
-- Publisher : The object that announces that something has happened
-- Subscribers, Observers : The object that wait for something to happen
-- Subscribers, Observers : The object that register to be informed of changes
-- Event : The something that happens
+- Listener: The command object with the code that gets executed when something happens
+- Publisher: The object that announces that something has happened
+- Subscribers, Observers: The object that wait for something to happen
+- Subscribers, Observers: The object that register to be informed of changes
+- Event: The something that happens
 
 ### How are the observer and the command pattern related?
 
@@ -199,11 +200,12 @@ But is called by the publisher object when the event occurs.
 
 ### When a publisher frees an updates how do subscribers become aware of it?
 
-- The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified.
+- The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified
 
 ```java
 public interface Publisher {}
-
+```
+```java
 public class NewsAgency extends Observable implements Publisher {
     private List<Observer> channels = new ArrayList<>();
 
@@ -221,7 +223,8 @@ public class NewsAgency extends Observable implements Publisher {
         channels.add(outlet);
     }
 }
-
+```
+```java
 public class RadioChannel implements Observer {
     public void update(Observable agency, Object newsItem) {
         if (agency instanceof Publisher) {
@@ -229,7 +232,8 @@ public class RadioChannel implements Observer {
         }
     }
 }
-
+```
+```java
 public class Main {
     public static void main(String[] args) {
         NewsAgency newsAgency = new NewsAgency();
@@ -266,7 +270,7 @@ public class Main {
 - Output of one lambda functions is fed as input into the next
 - Java has added exactly this functionality, using "Aggregate operations"
 - `Filter`, `Map` and `Foreach` are standard aggregate operations in functional programming
-- Call the .stream() method on any collection to get an object of type stream, on which aggregate functions can be applied in sequence
+- Call the `.stream()` method on any collection to get an object of type stream, on which aggregate functions can be applied in sequence
 - The Java Stream object can be imagined as a stream of values, where each value is being subjected to an operation
 - Maps is an aggregate operation that takes a lambda expression, applies it to every element of the input stream and sends
 the result out as the output stream
@@ -277,7 +281,6 @@ the result out as the output stream
     ------------->+ Map (FX) Lambda expressions +--------------------->
     (X1, X2, X3)  +-----------------------------+ (F(X1), F(X2), F(X3))
 ```
-
 
 - Filter is an aggregate operation that takes in an lambda expression that encapsulates a condition, applies it to every
 element of an input stream that satisfies the condition is placed on the output stream
@@ -294,29 +297,29 @@ but does not produce an output stream
 
 ```
                     Aggregate Operations
-    Input Stream  +--------------+
-    ------------->+ Forach (FX)  +
-    (X1, X2, X3)  +--------------+
+    Input Stream  +---------------------+
+    ------------->+ Forach (FX)         +
+    (X1, X2, X3)  +---------------------+
 ```
 
 - Foreach is used for operations like printing to screen or saving to file, where it makes no sense to produce output stream
 
 ### Command pattern in action - threading
 
-- Old school
-    - Runnable interface
+- Old school:
+    - Runnable interface:
         - Is implemented by a class with the operations to be carried out on the other thread
-    - Thread in-build class
+    - Thread in-build class:
         - Object of the thread class take in the runnable objects and run them on individual threads
-    - `Thread.join()` on the thread
+    - `Thread.join()` on the thread:
         - The main class calls the `.join()` method on each thread which will wait until the thread finishes
 
-- New School
-    - Callable interface
+- New School:
+    - Callable interface:
         - Is implemented by a class with the operations to be carried out on the other thread
-    - Executors In-build class
+    - Executors In-build class:
         - Java provides helper objects that know how to start, manage and stop callable objects
-    - Future.get()
+    - `Future.get()`:
         - Future are objects which will hold results in the future, once the callable object finishes whatever stuff it had
           to do on other thread
 
@@ -345,9 +348,9 @@ Thread thread = new Thread(runnable);
 thread.start();
 ```
 
-- Examples of command pattern
+- Examples of command pattern:
     - Undo
-    - Logging
+    - Logging:
         - need command object to know how to write themselves out to a file, an object that know how to do this is said to be serializable
 
 ### What is a basic idea of command Pattern?
@@ -371,11 +374,11 @@ thread.start();
 ## Chain of Responsibility Pattern
 
 - Avoid coupling the sender to the receiver by allowing more than one receiving element to handle
-the request. The sender interacts only with the first receiver in the queue.
+the request. The sender interacts only with the first receiver in the queue
 - How exceptions are thrown
 - Handling mouse clicks in UI applications. UI Applications are often built on the composite pattern,
 windows contain other windows. The nested windows pass the mouse click action down from one to another
-until some windows has a handler from mouse click.
+until some windows has a handler from mouse click
 
 ### What is the basic idea of the Chain of Responsibility Pattern?
 
@@ -432,7 +435,6 @@ can be written to file or read from file with minimal effort
 
 ```java
 public class MyLittleClass implements Serializable {
-
 }
 ```
 
@@ -495,12 +497,11 @@ composite object
 its initial state
 - This can be a cleaner way for an object to change its behavior at runtime without restoring
 large monolithic conditional statements and thus improve maintainability
-- Class needs to implement methods `play()`, `pause()`, `getVolume()`, ...
+- Class needs to implement methods `play()`, `pause()`, `getVolume()`:
     - Put all of these methods in interface MediaPlayerState
 
 ```java
 public class MediaPlayer implements IMediaPlayer {
-    // ...
 }
 ```
 
@@ -510,9 +511,11 @@ public class MediaPlayer implements IMediaPlayer {
 - State machines have discrete States, each state can be represented by a member variable, all these member variables implement
 a common interface
 
+***
+
 ## Mediator pattern
 
-- The frame acts as the mediator so that non of the individual UI elements need to know about each other.
+- The frame acts as the mediator so that non of the individual UI elements need to know about each other
 - UI Elements are referred to as Colleagues
 
 ```
