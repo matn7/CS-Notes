@@ -1,5 +1,3 @@
-***
-
 ## :heart: Exceptions and exception handling
 
 - Object of type Throwable and its subtypes can be sent up the stack with the throw keyword and caught with try...catch statement

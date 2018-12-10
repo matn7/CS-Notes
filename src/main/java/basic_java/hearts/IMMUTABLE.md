@@ -62,15 +62,15 @@ public final class ImmutableCircle {
 ### With final class
 
 - do poprawy
-- wielowątowość bardzo dokładnie [chapter 126, 127, 128, 129]
-    - synchrnized
+
 - memory
 - java pitfalls
-- stream API
+- stream API (chapter 57)
 
 - immutable (done)
 - generic (done)
 - wyjątki bardzo dokładnie [chapter 69] (done)
+- wielowątowość bardzo dokładnie [chapter 126, 127, 128, 129] (done)
 
 
 ```java

@@ -47,6 +47,11 @@ $ npm install --save bootstrap@3
 
 ## Components
 
+- Component
+    - Template HTML .component.html
+    - Style CSS .component.css
+    - Code TypeScript .component.ts
+
 - Types of directives in Angular
     - Components directives
     - Structural directives
@@ -62,6 +67,10 @@ $ npm install --save bootstrap@3
 
 ### Component decorator
 
+- selector: tag name for component
+- templateUrl: location of html template
+- styleUrls: styles location
+
 ```ts
 @Component({
     selector: 'app-servers',
@@ -69,6 +78,13 @@ $ npm install --save bootstrap@3
 })
 export class ServersComponent implements OnInit {
 ```
+
+Directly define template
+ template: "<h1>{{title}}</h1>",
+
+{{ interpolation }}
+
+- Every Angular Component (@Component) has to be associated with an Angular Module (@NgModule)
 
 ### To use component
 

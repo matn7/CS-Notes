@@ -1,4 +1,3 @@
-
 # :heart: Concurrent Programming
 
 ## :star: Concurrent Programming (Threads)
@@ -94,23 +93,21 @@ threads completes
 after which all waiting threads are released and any subsequent invocations of await return immediately
 - 3. This is a one-shot phenomenon - the count cannot be reset. If you need a version that resets the count, consider using CyclicBarrier
 
-- Methods:
-    - await():
+#### Methods:
+- await():
 
 ```java
 public void await() throws InterruptedException
 ```
-
 ```
 Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
 ```
 
-    - countDown():
+- countDown():
 
 ```java
 public void countDown()
 ```
-
 ```
 Determines to count of the latch, releasing all waiting threads if the count reaches zero
 ```
@@ -1257,6 +1254,883 @@ pool.execute(new Runnable() {
     }
 });
 ```
+
+- If you configure the ThreadPoolExecutor with an unbounded queue, then the thread count will not exceed
+corePoolSize since new threads are only created if the queue is full
+
+```java
+ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime,
+TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory,
+RejectedExecutionHandler handler)
+```
+
+```
+If there are more than corePoolSize but less than maximumPoolSize threads running, a new thread will be created
+only if the queue is full
+```
+
+- Advantages:
+    - BlockingQueue size can be controlled and out-of-memory scenario can be avoided. Application performance
+    won't be degraded with limited queue size
+    - You can use existing or create new Rejection Handler policies
+        - In the default ThreadPoolExecutor.AbortPolicy, the handler throws a runtime RejectedExecutionException
+        upon rejection
+        - In ThreadPoolExecutor.CallerRunsPolicy, the thread that invokes execute itself runs the task.
+        This provides a simple feedback control mechanism that will slow down the rate that new tasks are
+        submitted.
+        - In ThreadPoolExecutor.DiscardPolicy, a task that cannot be executed is simply dropped.
+        - In ThreadPoolExecutor.DiscardOldestPolicy, if the executor is not shut down, the task at the head
+        of the work queue is dropped, and then execution is retired
+    - Custom ThreadFactory can be configured, which us useful:
+        - To set a more descriptive thread name
+        - To set thread daemon status
+        - To set thread priority
+
+### 2. Callable
+
+- If your computation produces some return value which later is required, a simple Runnable task isn't sufficient.
+For such causes you can use ExecutorService.submit(Callable<T>) which returns a value after execution completes.
+
+- The Service will return a Future which you can use to retrieve the result of the task execution
+
+```java
+// Submit a callable for execution
+ExecutorService pool = anExecutorService;
+Future<Integer> future = pool.submit(new Callable<Integer>() {
+    @Override
+    public Integer call() {
+        return new Random().nextInt();
+    }
+}
+
+// ... perform other task in a different thread
+```
+
+- When you need to get the result of the future, call future.get()
+
+- Wait indefinitely for future to finish with a result
+```java
+try {
+    // Blocks current thread until future is completed
+    Integer result = future.get();
+} catch (InterruptedException || ExecutionException e) {
+    // handle
+}
+```
+
+- Wait for future to finish, but no longer than specified time
+```java
+try {
+    // Blocks current thread for a maximum of 500 milliseconds
+    // If the future finishes before that, result is returned,
+    // otherwise TimeoutException is thrown
+    Integer result = future.get(500, TimeUnit.MILLISECONDS);
+} catch (InterruptedException || ExecutionException || TimeoutException e) {
+    // handle
+}
+```
+
+- If the result of a scheduled or running task is no longer required, you can call Future.cancel(boolean) to cancel it.
+- Calling cancel(false) will just remove the task from the queue of tasks to be run.
+- Calling cancel(true) will also interrupt the task if it is currently running.
+
+### 3. submit() vs execute() exception handling differences
+
+- execute() command is used for fire and forget calls (without need of analyzing the result) and submit() command
+is used for analyzing the result of Future object.
+
+- Exceptions from submit() are swallowed by framework if you did not catch them.
+
+#### Case 1: submit the Runnable with execute() command, which reports the Exception
+
+```java
+public class ExecuteSubmitDemo {
+    public ExecuteSubmitDemo() {
+        System.out.println("creating service");
+        ExecutorService service = Executors.newFixedThreadPool(2);
+
+        for (int i = 0; i < 2; i++) {
+            service.execute(new Runnable() {
+                public void run() {
+                    int a = 4, b = 0;
+                    System.out.println("a and b=" + a + ":" + b);
+                    System.out.println("a/b:" + (a / b));
+                    System.out.println("Thread Name in Runnable after divide by zero:"+Thread.currentThread().getName());
+                }
+            });
+        }
+        service.shutdown();
+    }
+    public static void main(String[] args) {
+        ExecuteServiceDemo demo = new ExecuteServiceDemo();
+    }
+}
+
+class ExtendedExecutor extends ThreadPoolExecutor {
+    public ExtendedExecutor() {
+        super(1, 1, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100));
+    }
+
+    protected void afterExecute(Runnable r, Throwable t) {
+        super.afterExecute(r, t);
+        if (t == null && r instanceof Future<?>) {
+            try {
+                Object result = ((Future<?>) r).get();
+            } catch (CancellationException ce) {
+                t = ce;
+            } catch (ExecutionException ee) {
+                t = ee.getCause();
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt(); // ignore rest
+            }
+        }
+        if (t != null) {
+            System.out.println(t);
+        }
+    }
+}
+```
+
+#### Case 2: Replace execute() with submit()
+
+- service.submit(new Runnable() {}). In this case, Exceptions are swallowed by framework since run() method did
+not catch them explicitly
+
+#### Case 3: Change the newFixedThreadPool to ExtendedExecutor
+
+```java
+// ExecutorService service = Executors.newFixedThreadPool(2);
+ExtendedExecutor service = new ExtendedExecutor();
+```
+
+- Use your custom ThreadPoolExecutor and handle Exception with custom ThreadPoolExecutor
+
+### 4. Handle Rejected Execution
+
+- If you try to submit tasks to a shutdown Executor or the queue is saturated and maximum number of Threads has been reached,
+RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor) will be called
+
+- ThreadPoolExecutor.AbortPolicy (default, will throw REE)
+ ThreadPoolExecutor.CallerRunsPolicy (executes task on caller's thread - blocking it)
+- ThreadPoolExecutor.DiscardPolicy (silently discard task)
+- ThreadPoolExecutor.DiscardOldestPolicy (silently discard oldest task in queue and retry execution of the new task)
+
+- Set using ThreadPool constructors
+
+```java
+public ThreadPoolExecutor(int corePoolSize,
+    int maximumPoolSize,
+    long keepAliveTime,
+    TimeUnit unit,
+    BlockingQueue<Runnable> workQueue,
+    RejectedExecutionHandler handler) // <--
+
+public ThreadPoolExecutor(int corePoolSize,
+    int maximumPoolSize,
+    long keepAliveTime,
+    TimeUnit unit,
+    BlockingQueue<Runnable> workQueue,
+    ThreadFactory threadFactory,
+    RejectedExecutionHandler handler) // <--
+```
+
+### 5. Runnable Tasks
+
+- Executors accept a java.lang.Runnable which contains (potentially computationally or otherwise long-running or heavy)
+code to be run in another Thread
+
+```java
+Executor exec = Executors.newFixedThreadPoolExecutor(5);
+exec.execute(new Runnable() {
+    @Override
+    public void run() {
+        // work to do, no need to get result back
+    }
+});
+```
+
+- Using Java 8
+
+```java
+Executor exec = anExecutor;
+exec.execute(() -> {
+    // result
+});
+```
+
+### 6. :star: Use cases for different types of concurrency constructs
+
+#### 1. ExecutorService
+
+```java
+ExecutorService executor = Executors.newFixedThreadPool(50);
+```
+
+It is simple and easy to use. It handles low level details of ThreadPoolExecutor.
+Prefer when number of Callable/Runnable tasks are small in number and piling of tasks in unbounded queue does
+not increase memory & degrade the performance of the system. If you have CPU/Memory constraints, prefer use
+ThreadPoolExecutor with capacity constraints & RejectedExecutionHandler to handle rejection of tasks.
+
+#### 2. CountDownLatch
+
+CountDownLatch will be initialized with a given count. This count is decremented by calls to the countDown()
+method. Threads waiting for this count to reach zero can call one of the await() methods. Calling await()
+blocks the thread until the count reaches zero. This class enables java thread to wait until other set of threads
+completes their tasks.
+
+- Achieving Maximum Parallelism: Sometimes we want to start a number of threads at the same time to achieve
+maximum parallelism
+- Wait N threads to completes before start execution
+- Deadlock detection
+
+#### 3. ThreadPoolExecutor
+
+It provides more control. If application is constrained by number of pending Runnable/Callable tasks, you can
+use bounded queue by setting the max capacity. Once the queue reaches maximum capacity, you can define RejectionHandler.
+Java provides four types of RejectedExecutionHandler policies
+
+- ThreadPoolExecutor.AbortPolicy, the handler throws a runtime RejectedExecutionException upon rejection
+- ThreadPoolExecutor.CallerRunsPolicy, the thread that invokes execute itself runs the task. This provides a simple
+feedback control mechanism that will slow down the rate that new tasks are submitted
+- In ThreadPoolExecutor.DiscardPolicy, a task that cannot be executed is simply dropped
+- ThreadPoolExecutor.DiscardOldestPolicy, if the executor is not shut down, the task at the head of the work queue
+is dropped, and then execution is retried
+- If you want to simulate CountDownLatch behavior, you can use invokeAll() method
+
+#### 4. ForkJoinPool
+
+The ForkJoinPool was added in Java 7. The ForkJoinPool is similar to the Java ExecutorService but with one difference.
+The ForkJoinPool makes it easy for tasks to split their work up into smaller tasks which are then submitted
+to the ForkJoinPool too. Task stealing happens in ForkJoinPool when free worker threads steal tasks from busy
+worker thread queue.
+
+Java 8 has introduced one more API in ExecutorService to create work stealing pool.
+
+```
+Creates a work-stealing thread pool using all available processors as its target parallelism level.
+```
+
+By default, it  will take number of CPU cores as parameter
+
+### 7. Wait for completion of all tasks in ExecutorService
+
+#### 1. ExecutorService.invokeAll()
+
+```
+Executes the given tasks, returning a list of Features holding their status and results when everything is completed.
+```
+
+```java
+public class InvokeAllDemo {
+    public InvokeAllDemo() {
+        System.out.println("creating service");
+        ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+        List<MyCallable> futureList = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            MyCallable myCallable = new MyCallable((long) i);
+            futureList.add(myCallable);
+        }
+
+        System.out.println("Start");
+        try {
+            List<Future<Long>> futures = service.invokeAll(futureList);
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+        System.out.println("Completed");
+        service.shutdown();
+    }
+
+    public static void main(String[] args) {
+        InvokeAllDemo demo = new InvokeAllDemo();
+    }
+
+    class MyCallable implements Callable<Long> {
+        Long id = 0L;
+        public MyCallable(Long val) {
+            this.id = val;
+        }
+        public Long call() {
+            return id;
+        }
+    }
+}
+```
+
+#### 2. CountDownLatch
+
+```
+A synchronization aid that allows one or more threads to wait until a set of operations being performed in other
+threads completes.
+```
+
+```
+A CountDownLatch is initialized with a given count. That await methods block until the current count reaches zero
+due to invocations of the countDown() method, after which all waiting threads are released and any subsequent
+invocations of await return immediately. This is a one-shot phenomenon -- the count cannot be reset. If you need
+a version that resets the count, consider using a CyclicBarrier
+```
+
+#### 3. ForkJoinPool or newWorkStealingPool() in Executors
+
+#### 4. Iterate through all Future objects created after submitting to ExecutorService
+
+#### 5. Recommended way to shutdown ExecutorService
+
+```java
+void shutDownAndAwaitTermination(ExecutorService pool) {
+    pool.shutdown(); // Disable new tasks from being submitted
+    try {
+        // Wait a while for existing tasks to terminate
+        if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+            pool.shutdownNow(); // Cancel currently executing tasks
+            // Wait a while for tasks to respond to being cancelled
+            if (~pool.awaitTermination(60, TimeUnit.SECONDS)) {
+                System.out.println("Pool did not terminate");
+            }
+        }
+    } catch (InterruptedException ie) {
+        // (Re-)Cancel if current thread also interrupted
+        pool.shutdownNow();
+        // Preserve interrupt status
+        Thread.currentThread().interrupt();
+    }
+}
+```
+
+- shutdown(): Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will
+be accepted
+- shutdownNow(): Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and
+returns a list of the tasks that were awaiting execution
+- In above example, if your tasks are taking more time to complete, you can change if condition to while condition
+
+- Replace
+```java
+if (!pool.awaitTermination(60, TimeUnit.SECONDS))
+```
+
+- with
+```java
+while (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+    Thread.sleep(60000);
+}
+```
+
+### 8. Use cases for different types of ExecutorService
+
+Executors returns different type of ThreadPools catering to specific need
+
+#### 1. newSingleThreadExecutor
+
+```java
+public static ExecutorService newSingleThreadExecutor()
+```
+
+```
+Creates an Executor that uses a single worker thread operating off an unbounded queue
+```
+
+There is a difference between newFixedThreadPool(1) and newSingleThreadExecutor() as the java doc says for the latter:
+
+```
+Unlike the otherwise equivalent newFixedThreadPool(1) the returned executor is guaranteed not to
+be reconfigurable to use additional threads
+```
+
+Which means that a newFixedThreadPool can be reconfigured later in the program by:
+((ThreadPoolExecutor) fixedThreadPool).setMaximumPoolSize(10) This is not possible for newSingleThreadExecutor
+
+- Use cases:
+    - 1. You want to execute the submitted tasks in a sequence
+    - 2. You need only one Thread to handle all your request
+- Cons:
+    - 1. Unbounded queue is harmful
+
+#### 2. newFixedThreadPool
+
+```java
+public static ExecutorService newFixedThreadPool(int nThreads)
+```
+
+```
+Creates a thread pool that reuses a fixed number of threads operating off a shared unbounded
+queue. At any point, at most nThreads threads will be active processing tasks. If additional tasks
+are submitted when all threads are active, they will wait in the queue until a thread is available
+```
+
+- Use cases:
+    - 1. Effective use of available cores. Configure nThreads as
+    Runtime.getRuntime().availableProcessors()
+    - 2. When you decide that number of thread should not exceed a number in the thread pool
+
+- Cons:
+    - 1. Unbounded queue is harmful
+
+#### 3. newCachedThreadPool
+
+```java
+public static ExecutorService newCachedThreadPool()
+```
+
+```
+Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are
+available
+```
+
+- Use cases:
+    - 1. For short-lived asynchronous tasks
+
+- Cons:
+    - 1. Unbounded queue is harmful
+    - 2. Each new task will create a new thread if all existing threads are busy. If the task is taking long duration,
+    more number of threads will be created, which will degrade the performance of the system. Alternative in this case:
+    newFixedThreadPool
+
+#### 4. newScheduledThreadPool
+
+```java
+public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize)
+```
+
+```
+Creates a thread pool that can schedule commands to run after a given delay, or to execute periodically
+```
+
+- Use cases:
+    - 1. Handling recurring events with delays, which will happen in future at certain interval of times
+
+- Cons:
+    - 1. Unbounded queue is harmful
+
+#### 5. newWorkStealingPool
+
+```java
+public static ExecutorService newWorkStealingPool()
+```
+
+```
+Creates a work-stealing thread pool using all available processors as its target parallelism level
+```
+
+- Use cases:
+    - 1. For divide and conquer type problem
+    - 2. Effective use of idel threads. Idle threads steals tasks from busy threads
+- Cons:
+    - 1. Unbounded queue size is harmful
+
+- Common drawbacks in all these Executor service: unbounded queue. This will be addressed with
+ThreadPoolExecutor
+
+- With ThreadPoolExecutor, you can:
+    - 1. Control Thread pool size dynamically
+    - 2. Set the capacity for BlockingQueue
+    - 3. Define RejectionExecutionHandler when queue is full
+    - 4. CustomThreadFactory to add some additional functionality during Thread creation
+
+### 9. Scheduled tasks to run at fixed time, after a delay or repeatedly
+
+- The ScheduledExecutorService class provides a methods for scheduling single or repeated tasks in number of
+ways. The following code sample assume that pool has been declared and initialized as follows:
+
+```java
+ScheduledExecutorService pool = Executors.newScheduledThreadPool(5);
+```
+
+- In addition to the normal ExecutorService methods, the ScheduledExecutorService API adds 4 methods that
+  schedule tasks and return ScheduledFuture objects. The latter can be used to retrieve results (in some cases) and
+  cancel tasks.
+
+#### Starting a task after a fixed delay
+
+- Example schedules a task to start after ten minutes
+
+```java
+ScheduledFuture<Integer> future = pool.schedule(new Callable<>() {
+    @Override
+    public Integer call() {
+        // do something
+        return 18;
+    }
+},
+10, TimeUnit.MINUTES);
+```
+
+#### Starting tasks at a fixed rate
+
+- Example schedules a task to start after ten minutes, and then repeatedly at a rate of once every one minute
+
+```java
+ScheduledFuture<?> future = pool.scheduleAtFixedRate(new Runnable() {
+    @Override
+    public void run() {
+        // do something
+    }
+},
+10, 1, TimeUnit.MINUTES);
+```
+
+- Task execution will continue according to the schedule until the pool is shut down, the future is canceled, or one of
+  the tasks encounters an exception.
+- It is guaranteed that the tasks scheduled by a given scheduledAtFixedRate call will not overlap in time. If a task
+  takes longer than the prescribed period, then the next and subsequent task executions may start late.
+
+#### Starting tasks with a fixed delay
+
+- Example schedules a task to start after ten minutes, and then repeatedly with a delay of one minute
+between one task ending and the next one starting
+
+```java
+ScheduledFuture<?> future = pool.scheduleWithFixedDelay(new Runnable() {
+    @Override
+    public void run() {
+        // something
+    }
+},
+10, 1, TimeUnit.MINUTES);
+```
+
+- Task execution will continue according to the schedule until the pool is shut down, the future is cancelled, or one of
+the tasks encounters an exception.
+
+### 10. Using Thread Pools
+
+- Thread Pools are used mostly calling methods in ExecutorService
+- The following methods can be used to submit work for execution:
+
+| Method | Description |
+|---|---|
+| submit | Executes a the submitted work and return a future which can be used to get the result |
+| execute | Execute the task sometime in the future without getting any value |
+| invokeAll | Execute a list of tasks and return a list of Futures |
+| invokeAny | Executes all the but return only the result of one that has been successful (without exceptions) |
+
+Once you are done with the Thread Pool you can call shutdown() to terminate the Thread Pool. This executes all
+pending tasks. To wait for all tasks to execute you can loop around awaitTermination or isShutDown()
+
+***
+
+## ThreadLocal
+
+### 1. Basic ThreadLocal usage
+
+- Java ThreadLocal is used to create thread local variables. It is known that threads of an Object share it's variables,
+so the variable is not thread safe. We can use synchronization for thread safety but if we want to avoid
+synchronization, ThreadLocal allows us to create variables which are local to the thread, i.e. only that thread can
+read or write to these variables, so the other threads executing the same piece of code will not be able to access
+each others ThreadLocal variables.
+
+- We can use ThreadLocal variables in situation where where you have thread pool like in a web service.
+Creating a SimpleDateFormat object every time for every request is time consuming and
+a Static one cannot be created as SimpleDateFormat is not thread safe, so we can create a ThreadLocal so that we
+can perform thread safe operations without the overhead of creating SimpleDateFormat every time.
+
+- Every thread has it's own ThreadLocal variable and they can use it's get() and set() methods to get the default
+value or change it's value to Thread.
+
+- ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread
+
+```java
+public class ThreadLocalExample implements Runnable {
+    // SimpleDateFormat is not thread safe, so give ne to each thread
+    private static final ThreadLocal<SimpleDateFormat> formatter = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyyMMdd HHmm");
+        }
+    };
+
+    public static void main(String[] args) throws InterruptedException {
+        ThreadLocalExample obj = new ThreadLocalExample();
+        for (int i = 0; i < 10; i++) {
+            Thread t = new Thread(obj, " " + i);
+            Thread.sleep(new Runnable().nextInt(1000));
+            t.start();
+        }
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread Name = " + Thread.currentThread().getName() + " default formatter = " +
+            formatter.get().toPattern());
+
+        try {
+            Thread.sleep(new Random().nextInt(1000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        formatter.set(new SimpleDateFormat());
+
+        System.out.println("Thread Name = " + Thread.currentThread().getName() + " formatter = " +
+            formatter.get().toPattern());
+    }
+}
+```
+
+### 2. ThreadLocal Java 8 functional initialization
+
+```java
+public static class ThreadLocalExample {
+    private static final ThreadLocal<SimpleDateFormat> format = ThreadLocal.withInitial(
+        () -> new SimpleDateFormat("yyyyMMdd_HHmm"));
+
+    public String formatDate(Date date) {
+        return format.get().format(date);
+    }
+}
+```
+
+### 3. Multiple threads with one shared object
+
+- Ordinary usage of fields to save state would not be possible because the other thread would see that too
+
+```java
+public class Test {
+    public static void main(String[] args) {
+        Foo foo = new Foo();
+        new Thread(foo, "Thread 1").start();
+        new Thread(foo, "Thread 2").start();
+    }
+}
+```
+
+- In Foo we count starting from zero. Instead of saving the state to a field we store our current number in the
+ThreadLocal object which is statically accessible. The synchronization in this example is not related to the
+usage of ThreadLocal but rather ensures a better console output
+
+```java
+public class Foo implements Runnable {
+    private static final int ITERATIONS = 10;
+    private static final ThreadLocal<Integer> threadLocal = new ThreadLocal<Integer>() {
+        @Override
+        protected Integer initialValue() {
+            return 0;
+        }
+    };
+
+    @Override
+    public void run() {
+        for (int i = 0; i < ITERATIONS; i++) {
+            synchronized (threadLocal) {
+                // Although accessing a static field, we get our own (previously saved) value
+                int value = threadLocal.get();
+                System.out.println(Thread.currentThread().getName() + ": " + value);
+
+                // Update our own variable
+                threadLocal.set(value + 1);
+
+                try {
+                    threadLocal.notifyAll();
+                    if (i < ITERATIONS - 1) {
+                        threadLocal.wait();
+                    }
+                } catch (InterruptedException ex) {
+
+                }
+            }
+        }
+    }
+}
+```
+
+***
+
+## Using ThreadPoolExecutor in MultiThreaded applications
+
+### 1. Performing Asynchronous Tasks Where No Return Value Is Needed Using a Runnable Class Instance
+
+- "Fire & Forget" tasks which can be periodically triggered and do not need to return any type of value
+returned upon completion of the assigned task.
+
+```java
+public class AsyncMaintenanceTaskCompleter implements Runnable {
+    private int taskNumber;
+
+    public AsyncMaintenanceTaskCompleter(int taskNumber) {
+        this.taskNumber = taskNumber;
+    }
+
+    public void run() {
+        int timeout = ThreadLocalRandom.current().nextInt(1, 20);
+        try {
+            log.info(String.format("Task %d is sleeping for %d seconds", taskNumber, timeout));
+            TimeUnit.SECONDS.sleep(timeout);
+            log.info(String.format("Task %d is done sleeping", taskNumber));
+        } catch (InterruptedException e) {
+            log.warning(e.getMessage());
+        }
+    }
+
+}
+```
+
+- AsyncExample 1
+
+```java
+public class AsyncExample1 {
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < 10; i++) {
+            executorService.execute(new AsyncMaintenanceTaskCompleter(i));
+        }
+        executorService.shutdown();
+    }
+}
+```
+
+- Notes:
+    - The tasks did not execute in a predictable order.
+    - Since each task was sleeping for a pseude random amount of time, they did not necessarily complete in the order
+    in which they were invoked
+
+### 2. Performing Asynchronous Tasks Where a Return Value Is Needed Using a Callable Class Instance
+
+```java
+public class AsyncValueTypeTaskCompiler implements Callable<Integer> {
+    private int taskNumber;
+
+    public AsyncValueTypeTaskCompiler(int taskNumber) {
+        this.taskNumber = taskNumber;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        int timeout = ThreadLocalRandom.current().nextInt(1, 20);
+
+        try {
+            log.info(String.format("Task %d is sleeping", taskNumber));
+            TimeUnit.SECONDS.sleep(timeout);
+            log.info(String.format("Task %d si done sleeping", taskNumber));
+        } catch (InterruptedException e) {
+            log.warning(e.getMessage());
+        }
+
+        return timeout;
+    }
+}
+```
+
+- Use
+
+```java
+public class AsyncExample2 {
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        List<Future<Integer>> futures = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            Future<Integer> submittedFuture = executorService.submit(
+                new AsyncValueTypeTaskCompiler(i));
+            futures.add(submittedFuture);
+        }
+
+        executorService.shutdown();
+        while(!futures.isEmpty()) {
+            for (int j = 0; j < futures.size(); j++) {
+                Future<Integer> f = futures.get(j);
+                if (f.isDone()) {
+                    try {
+                        int timeout = f.get();
+                        log.info(String.format("A task just completed after sleeping for %d seconds", timeout));
+                        futures.remove(f);
+                    } catch (InterruptedException | ExecutionException e) {
+                        log.warning(e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+- Notes
+    - Each call to ExecutorService.submit() returned an instance of Future, which was stored in a list for later use
+    - Future contains a method called isDone() which can be used to check whether our task has been completed
+    before attempting to check it's return value. Calling the Future.get() method on a Future that is not yet done
+    will block the current thread until the task is complete, potentially negating many benefits gained from
+    performing the task Asynchronously
+    - The executorService.shutdown() method was called prior to checking the return values from the Future objects.
+    The executorService.shutdown()
+    method does not prevent the completion of tasks which have already been submitted to the ExecutorService,
+    but rather prevents new tasks from being added to the Queue.
+
+### 3. Defining Asynchronous Tasks Inline using Lambdas
+
+```java
+public class AsyncExample3 {
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        List<Future<Integer>> futures = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++) {
+            final int index = i;
+            executorService.execute(() -> {
+                int timeout = getTimeout();
+                log.info(String.format("Runnable %d has been submitted and will sleep for %d seconds",
+                    index, timeout));
+                try {
+                    TimeUnit.SECONDS.sleep(timeout);
+                } catch (InterruptedException e) {
+                    log.warning(e.getMessage());
+                }
+                log.info(String.format("Runnable %d has finished sleeping", index));
+            });
+
+            Future<Integer> submittedFuture = executorService.submit(() -> {
+                int timeout = getTimeout();
+                log.info(String.format("Callable %d will begin sleeping", index));
+                try {
+                    TimeUnit.SECONDS.sleep(timeout);
+                } catch (InterruptedException e) {
+                    log.warning(e.getMessage());
+                }
+                log.info(String.format("Callable %d is done sleeping", index));
+                return timeout;
+            });
+
+            futures.add(submittedFuture);
+        }
+
+        executorService.shutdown();
+        while(!futures.isEmpty()) {
+            for (int j = 0; j < futures.size(); j++) {
+                Future<Integer> f = futures.get(j);
+                if (f.isDone()) {
+                    try {
+                        int timeout = f.get();
+                        log.info(String.format("A task just completed after sleeping for %d seconds", timeout));
+                        futures.remove(f);
+                    } catch (InterruptedException | ExecutionException e) {
+                        log.warning(e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
+    public static int getTimeout(){
+        return ThreadLocalRandom.current().nextInt(1, 20);
+    }
+}
+```
+
+- Notes:
+    - Lambda expressions have access to variable and methods which are available to the scope in which they are
+    defined, but all variables must be final (or effectively final) for use inside a lambda expression.
+    - We do not have to specify whether our Lambda expression is a Callable or Runnable<T> explicitly, the return
+    type is inferred automatically by the return type.
+
+
+
+
+
+
+
+
+
+
 
 
 
