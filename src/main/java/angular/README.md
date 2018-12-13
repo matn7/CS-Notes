@@ -67,6 +67,8 @@ $ npm install --save bootstrap@3
 
 ### Component decorator
 
+Like annotations in Java
+
 - selector: tag name for component
 - templateUrl: location of html template
 - styleUrls: styles location
