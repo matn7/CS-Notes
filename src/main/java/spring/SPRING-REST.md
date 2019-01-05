@@ -288,6 +288,195 @@ Level 0: The Swap of POX <br/>
 - Level 2 - Introduces Verbs to implement actions
 - Level 3 - provides discoverability, making the API more self documenting
 
+***
+
+## Introduction to web services
+
+### Web Service
+
+Web :arrow_right: Business :arrow_right: Data
+
+- Software system designed to support interoperable machine-to-machine interaction over a network.
+
+- 3 keys
+    - Designed for machine-to-machine (or application-to-application) interaction.
+    - Should be interoperable - Not platform dependent.
+    - Should allow communication over a network.
+
+#### Q1: How does data exchange between applications take place?
+
+```
+ApplicationA :arrow_right: WebService
+
+-> Request (input)
+<- Response (Output)
+```
+
+#### Q2: How can we make web service platform independent?
+
+- Request and Response in platform independent format
+- Request format: json, xml
+
+#### Q3: How does the Application A know the format of Request and Response?
+
+- Service definition
+    - Request/Response Format
+    - Request Structure
+    - Response Structure
+    - Endpoint
+
+### Key terminology
+
+- Request: input to web service
+- Response: Output of web service
+- Message Exchange Format:
+    - Format of request nad response
+        - XML and JSON
+- Service provider or Server: WebService, host the webservice
+- Service consumer or Client: Application!, consuming webservice
+- Service Definition: contract between service provider and service consumer,
+    - defines format request and response
+    - what is structure of request and response
+    - where is service available
+- Transport: how a service is called
+    - HTTP and MQ communication over a queue (WebSphere MQ)
+
+## REST
+
+- Resource has an URI (Uniform Resource Identifier)
+    - /user/majka/todos/1
+    - /user/majka/todos
+    - /user/majka
+- Resource representations
+    - XML
+    - HTML
+    - JSON
+
+- Create a User - POST /users
+- Delete a User - DELETE /users/1
+- Get all Users - GET /users
+- Get one Users - GET /users/1
+
+- Data Exchange Format
+    - No restrictions. JSON popular
+- Transport
+    - Only HTTP
+- Service Definition
+    - No standard. WADL/Swagger/
+
+- dispatcher servlet handling all requests, front controller for Spring MVC, which is right controller
+to execute this request
+    - @RestController, @ResponseBody
+
+- What is dispatcher servlet?
+- Who is configuring dispatcher servlet?
+- What does dispatcher servlet do?
+- How does the HelloWorldBean object get converted to JSON?
+- Who is configuring error mapping?
+
+- AUTO-CONFIGURATION
+    - DispatcherServletAutoConfiguration, found dispatcher servlet on classpath
+    - ErrorMvcAutoConfiguration, configure error page, error controller, few error attributes, default error view resolver
+    - HttpMessageConvertersAutoConfiguration, bean automatically converted to JSON
+        - Jackson2ObjectMapper, does conversion from JSON to object and object to JSON
+
+- Mapping servlet: 'dispatcherServlet' to [/] -> dispatcher servlet is handling all the requests
+    - Front controller pattern for spring mvc framework
+- Mapper {[hello-world], methods=[GET]}
+    - Which method is executed
+    - @RestController
+        - @ResponseBody, response from that will be mapped to message converter to the same format
+
+## Spring security
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+## JWT
+
+### Basic authentication
+- No expiration time
+- No user details
+
+### Custom token system
+- Both teams should understand
+- Custom structure
+- Possible security flows
+
+### JWT
+- Standard
+- Can contain user details and authorizations
+
+### Token processing
+
+**JwtTokenUtil.java**
+
+```json
+{
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYW5kYXRyb25payIsImV4cCI6MTU0NjE3MTgzMiwiaWF0IjoxNTQ1NTY3MDMyfQ.ZsA8i14l9WB_hVoZFk7VU--TnZYZQBetIsalAZdylgUSI2t96bgmUAx3ogWUlskExqu8cTA_o30Jr5BfSIxJ4w"
+}
+```
+
+### GET Token
+
+POST to http://localhost:8080/authenticate
+
+- Request
+
+```json
+{
+    "username": "panda",
+    "password": "dummy"
+}
+```
+
+- Response
+
+```json
+{
+    "token": "TOKEN_VALUE"
+}
+```
+
+### Refresh token
+
+GET to http://localhost:8080/refresh
+<br/>
+Header - Authorization: 'Bearer JWT_TOKEN'
+
+
+### Authorize all other requests
+
+- GET/POST/PUT/DELETE to http://localhost:8080/resource
+    - Header - Authorization: "Bearer JWT_TOKEN"
+- Filter - JwtTokenAuthorizationOncePerRequestFilter
+
+### All together
+
+```java
+JWTWebSecurityConfig extends WebSecurityConfigurerAdapterConfigures
+```
+
+- userDetailService with BCryptPasswordEncoder
+- Statelessness
+- AuthenticationEntryPoint
+- JwtTokenAuthorizationOncePerRequestFilter
+- h2-console
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,6 @@
+// To add values to a collection within a JPA Entity, always use the getter method first and all the
+// objects afterwards
+basicUser.getUserRoles().addAll(userRoles);
+
+spring integration test inject value to tested class
+https://stackoverflow.com/questions/17353327/populating-spring-value-during-unit-test

@@ -44,6 +44,86 @@ $ npm install --save bootstrap@3
 **index.html** - single page that is rendered contains <app-root></app-root> <br/>
 **main.ts** - bootstraping AppModule.ts
 
+## Angular Modules
+
+```ts
+@NgModule({
+    declarations: [
+        // what is a part of this specific Angular module
+    ],
+    imports: [
+        // what is needed to work
+    ],
+    providers: [
+        // for DI
+    ],
+    bootstrap: [
+        AppComponent,
+        // which component should be loaded as well
+    ]
+})
+```
+
+- Angular application is group of Angular modules
+- JavaScript Module is any TypeScript or JavaScript file with code in it!
+
+## Bootstraping of Angular Application
+
+- Root Module & Component
+
+#### main.ts
+
+```ts
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.error(err));
+```
+
+#### index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My todos application</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <app-root></app-root> <!-- AppComponent -->
+    <!-- <div>Index HTML content</div> -->
+  </body>
+</html>
+```
+
+#### app.component.ts
+
+```ts
+@Component({
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+}
+```
+
+#### app.component.html (view source)
+
+```html
+<router-outlet></router-outlet>
+```
+
+```
++---------------------+     +---------------------------+     +-------------------------------+
+| Angular Application | --> | Angular Modules @NgModule | --> | Angular Components @Component |
++---------------------+     +---------------------------+     +-------------------------------+
+```
 
 ## Components
 
@@ -212,9 +292,33 @@ getUserLocation() {
 
 ### Event binding
 
+```html
+User Name : <input type="text" name="username" value="{{username}}" /> <!-- interpolation -->
+Password: <input type="password" nmae="password" value="{{password}}" />
+
+<button (click)="handleLogin()">Login</button> <!-- event binding -->
+```
+
+- Take data from view element, 2 way data binding, banana in box approach
+
+```html
+User Name: <input type="text" name="username" [(ngModel)]="username" />
+Password: <input type="password" name="password" [(ngModel)]="password" />
+
+<button (click)="handleLogin()">Login</button>
+```
+
+- Summing up
+
+```html
+{{username}} : string interpolation, bind up view to value of component property
+(client)="handleLogin()" : event binding, user event to component event
+[(ngModel)]="username" : two way data binding, ngModel -> angular directive adding on top of regular html
+```
+
 ```ts
-buttonSays: string = "Waiting";
-onButtonClicked() {
+buttonSays: string = "Waiting"; // component property
+onButtonClicked() { // component event
     this.buttonSays = "Button was clicked";
 }
 ```
@@ -251,6 +355,35 @@ onUpdateButton(event: Event) {
     console.log(event);
     this.customerName = (<HTMLInputElement>event.target).value;
 }
+```
+
+```html
+  <fieldset class="form-group">
+    <label>Target date</label>
+    <input
+      type="date"
+      [(ngModel)]="todo.targetDate"
+      class="form-control"
+      name="targetDate"
+      required="required"
+    />
+  </fieldset>
+```
+
+- Is equivalent to
+
+```html
+  <fieldset class="form-group">
+    <label>Target date</label>
+    <input
+      type="date"
+      [ngModel]="todo.targetDate"
+      (ngModelChange)="todo.targetDate = $event"
+      class="form-control"
+      name="targetDate"
+      required="required"
+    />
+  </fieldset>
 ```
 
 ### Two way binding
@@ -291,6 +424,18 @@ export class LightsUpDirective {
 </ng-template>
 ```
 
+```html
+<small *ngIf="invalidLogin">{{ errorMessage }}</small>
+
+<div>
+  User Name : <input type="text" name="username" [(ngModel)]="username" />
+
+  Password: <input type="password" name="password" [(ngModel)]="password" />
+
+  <button (click)="handleLogin()">Login</button>
+</div>
+```
+
 ### ngStyle (attribute directive)
 
 ```ts
@@ -314,6 +459,14 @@ getColor() {
 
 ```html
 <app-user *ngFor="let user of users"></app-user>
+
+  <tbody>
+    <!-- for (Todo todo : todos) -->
+    <tr *ngFor="let todo of todos">
+      <td>{{ todo.id }}</td>
+      <td>{{ todo.description }}</td>
+    </tr>
+  </tbody>
 ```
 
 ***
@@ -347,11 +500,28 @@ Native Properties & Events  :arrow_forward: Custom Properties & Events  :arrow_f
 
 ## Services & Dependency Injection
 
+- Service: logic common for multiple components
+
+```bash
+ng g s service/authentication
+```
+
+- Normal class with @Injectable annotation, i can inject in any place i want use
+
 - Get info about your services from @NgModule provider so that it can use the dependencies in components
 - Services are singletons shared across components
 - Service is place where app business logic is
 - Should has only one purpose
 - @Injectable annotation to make service ready to be injected
+
+```ts
+// Router
+// Angular.giveMeRouter
+// Dependency Injection
+// Find a router and inject to this component
+// router (constructor argument) will be available as member variable
+constructor(private router: Router, private authenticate: AuthenticationService) {}
+```
 
 ### Hierarchical Injector
 
@@ -480,10 +650,72 @@ npm i axios
 "outputPath": "dist",
 ```
 
+## Session Storage
 
+- Associate with browser window
+- Allows us access to session storage object
+- When close browser no session is reloaded
 
+- You can only access data from Local/Session Storage that was set from your website
+- Values set into Local Storage persist across browser restarts. Hence, it's less secure!
 
+```ts
+authenticate(username, password) {
+    if (username === "panda" && password === "panda") {
+        sessionStorage.setItem("authenticatedUser", username);
+        return true;
+    } else {
+        return false;
+    }
+}
 
+isUserLoggedIn() {
+    const user = sessionStorage.getItem("authenticatedUser");
+    return !(user === null);
+}
+
+logout() {
+    sessionStorage.removeItem("authenticatedUser");
+}
+```
+
+### Guard routes canActivate
+
+```ts
+export class RouteGuardService implements CanActivate {
+  constructor() {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return true;
+  }
+}
+```
+
+```ts
+const routes: Routes = [
+  { path: "", component: LoginComponent, canActivate: [RouteGuardService] }, // canActivate, RouteGuardService
+  { path: "login", component: LoginComponent }
+];
+```
+
+### HttpCLient
+
+```ts
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+
+@Injectable({
+  providedIn: "root"
+})
+export class WelcomeDataService {
+  constructor(private http: HttpClient) {}
+
+  executeHelloWorldBeanService() {
+    // console.log("execute hello world bean service");
+    return this.http.get("http://localhost:8080/hello-world-bean");
+  }
+}
+```
 
 
 

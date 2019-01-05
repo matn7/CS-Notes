@@ -2,10 +2,10 @@
 
 ## Stream
 
-- With Java 8 Collection interface has two methods to generate a Stream: stream() and parallelStream().
-Stream operations are either intermediate or terminal. Intermediate operations return a Stream so multiple
-intermediate operations can be chained before the Stream is closed. Terminal operations are either
-void or return a non-stream result.
+- With Java 8 Collection interface has two methods to generate a Stream: `stream()` and `parallelStream()`.
+Stream operations are either intermediate or terminal.
+- Intermediate operations return a Stream so multiple intermediate operations can be chained before the Stream is closed.
+- Terminal operations are either void or return a non-stream result.
 
 ### 1. Using Streams
 
@@ -24,12 +24,12 @@ fruitStream.filter(s -> s.contains("a"))
     .forEach(System.out::println);
 ```
 
-- 1. Create a Stream<String> containing a sequenced ordered Stream of fruit String elements using the static factory method
-Stream.of(values)
-- 2. The filter() operation retains only elements that match a given predicate. In this case the elements containing
-an "a"
-- 3. The map() operation transforms each element using a given function, called a mapper. In this case, each fruit String
-is mapped to its uppercase String version
+- 1. Create a `Stream<String>` containing a sequenced ordered Stream of fruit String elements using the static factory method
+`Stream.of(values)`
+- 2. The `filter()` operation retains only elements that match a given predicate. In this case the elements containing
+an "a".
+- 3. The `map()` operation transforms each element using a given function, called a mapper. In this case, each fruit String
+is mapped to its uppercase String version.
 
 ```
 That the map() operation will return a stream with a different generic type if the mapping
@@ -37,8 +37,8 @@ function returns a type different to its input parameter. For example on a Strea
 .map(String::isEmpty) returns a Stream<Boolean>
 ```
 
-- 4. The sorted() operation sorts the elements of the Stream according to their natural ordering
-- 5. forEach(action) operation performs an action which acts on each element of the Stream, passing it to a
+- 4. The `sorted()` operation sorts the elements of the Stream according to their natural ordering.
+- 5. `forEach(action)` operation performs an action which acts on each element of the Stream, passing it to a
 Consumer. In the example, each element is simply being printed to the console. This operation is a terminal
 operation, thus making it impossible to operate on it again.
 
@@ -49,8 +49,10 @@ terminal operation is called, the Stream object becomes unusable.
 ```
 
 ```
-                Predicate     Function  Comparator
-fruit Stream -> | filter | -> | map| -> | sorted | -> forEach
+                Predicate     Function   Comparator
+                +--------+    +-----+    +--------+
+fruit Stream -> | filter | -> | map | -> | sorted | -> forEach
+                +--------+    +-----+    +--------+
 ```
 
 #### Closing Streams
@@ -61,8 +63,8 @@ operate on IO channels. Most Stream types don't operate on resources and therefo
 closing.
 ```
 
-- The Stream interface extends AutoCloseable. Streams can be closed by calling the close method or by using try-
-with-resource statement
+- The Stream interface extends AutoCloseable. Streams can be closed by calling the `close()` method or by using try-
+with-resource statement.
 
 - Example use case where a Stream should be closed is when you create s Stream of lines from a file:
 
@@ -72,9 +74,9 @@ try (Stream<String> lines = Files.lines(Paths.get("somePath"))) {
 }
 ```
 
-- The Stream interface also declares the Stream.onClose() method which allows you to register Runnable handlers
+- The Stream interface also declares the `Stream.onClose()` method which allows you to register Runnable handlers
 which will be called when the stream is closed. An example use case is where code which produces a stream needs
-to know when it is consumed to perform some cleanup
+to know when it is consumed to perform some cleanup.
 
 ```java
 public Stream<String> streamAndDelete(Path path) throws IOException {
@@ -82,13 +84,13 @@ public Stream<String> streamAndDelete(Path path) throws IOException {
 }
 ```
 
-The run handler will only execute if the close() method gets called, either explicitly or implicitly by a try-withresources
+The run handler will only execute if the `close()` method gets called, either explicitly or implicitly by a try-with resources
 statement.
 
 #### Processing Order
 
-A Stream objects processing can be sequential or parallel.
-- In a sequential mode, the elements are processed in the order of the source of the Stream. If the Stream is ordered
+- A Stream objects processing can be sequential or parallel:
+    - In a sequential mode, the elements are processed in the order of the source of the Stream. If the Stream is ordered
 (such as s SortedMap implementation or a List) the processing is guaranteed to match the ordering of the source.
 
 ```java
@@ -101,9 +103,10 @@ long howManyOddNumbers = integerList.stream()
 System.out.println(howManyOddNumbers);
 ```
 
-- Parallel mode allows the use of multiple threads on multiple cores but there is no guarantee of the order in which elements
+    - Parallel mode allows the use of multiple threads on multiple cores but there is no guarantee of the order in which elements
 are processed.
-If multiple methods are called on a sequential Stream, not every method has to be invoked. For example, if a Stream
+
+- If multiple methods are called on a sequential Stream, not every method has to be invoked. For example, if a Stream
 is filtered and the number of elements is reduced to one, a subsequent call to a method such as sort will not occur.
 This can increase the performance of a sequential Stream — an optimization that is not possible with a parallel
 Stream.
@@ -117,18 +120,20 @@ System.out.println(howManyOddNumbers);
 
 #### Difference from Containers (or Collections)
 
-While some actions can be performed on both Containers and Streams, they ultimately serve different purposes
-and support different operations. Containers are more focused on how the elements are stored and how those
-elements can be accessed efficiently. A Stream, on the other hand, does't provide direct access and manipulation
-to its elements; it is more dedicated to the group of objects as a collective entity and performing operations on
-that entity as a whole. Stream and Collections are separate high-level abstractions for these differing purposes.
+- While some actions can be performed on both Containers and Streams, they ultimately serve different purposes
+and support different operations.
+- Containers are more focused on how the elements are stored and how those elements can be accessed efficiently.
+- A Stream, on the other hand, does't provide direct access and manipulation to its elements; it is more dedicated
+to the group of objects as a collective entity and performing operations on
+that entity as a whole.
+- Stream and Collections are separate high-level abstractions for these differing purposes.
 
 ### 2. Consuming Streams
 
-- A Stream will only be traversed when there is a terminal operation, like count(), collect() or forEach().
+- A Stream will only be traversed when there is a terminal operation, like `count()`, `collect()` or `forEach()`.
 Otherwise no operation on the Stream will be performed.
-In the following example, no terminal operation is added to the Stream, so the filter() operation will not be
-invoked and no output will be produces becouse peek() is NOT a terminal operation
+In the following example, no terminal operation is added to the Stream, so the `filter()` operation will not be
+invoked and no output will be produces because `peek()` is **NOT** a terminal operation
 
 ```java
 IntStream.range(1, 10).filter(a -> a % 2 == 0).peek(System.out::println);
@@ -141,10 +146,10 @@ You could use forEach instead of peek:
 IntStream.range(1, 10).filter(a -> a % 2 == 0).forEach(System.out::println);
 ```
 
-- After the termial operation is performed, the Stream is consumed and cannot be reused.
+- After the terminal operation is performed, the Stream is consumed and cannot be reused.
 - Although a given stream object cannot be reused, it's easy to create a reusable Iterable that delegates to a Stream pipeline.
 This can be useful for returning a modified view of a live data set without having to collect results into a
-temporary structure
+temporary structure.
 
 ```java
 List<String> list = Arrays.asList("FOO", "BAR");
@@ -159,15 +164,17 @@ for (String str : iterable) {
 }
 ```
 
-- This works because Iterable declares a single abstract method Iterator<T> iterator(). That makes it effectively
+- This works because Iterable declares a single abstract method `Iterator<T> iterator()`. That makes it effectively
 a functional interface, implemented by a lambda that creates a new stream on each call.
 In general, a Stream operates as shown in the following image:
 ```
                 Predicate
-transactions -> filter -> collect
+                +--------+
+transactions -> | filter | -> collect
+                +--------+
 ```
 
-- Argument checks are always performed, even without a terminal operation
+- Argument checks are always performed, even without a terminal operation.
 
 ```java
 try {
@@ -179,11 +186,11 @@ try {
 
 ### 3. :star: Creating a Frequency Map
 
-- the groupingBy(classifier, downstream) collector allows the collection of Stream elements into a Map by
+- The `groupingBy(classifier, downstream)` collector allows the collection of Stream elements into a Map by
 classifying each element in a group and performing a downstream operation on the elements classified in the same group.
 - Example of this principle is to use Map to count the occurrences of elements in a Stream. In this example
 the classifier is simply the identity function which returns the element as-is. The downstream operation counts the
-number of equal elements, using counting()
+number of equal elements, using `counting()`:
 
 ```java
 Stream.of("apple", "orange", "banana", "apple")
@@ -192,7 +199,7 @@ Stream.of("apple", "orange", "banana", "apple")
       .forEach(System.out::println);
 ```
 
-- The downstream operation is itself a collector (Collectors.counting()) that operates on elements of type String
+- The downstream operation is itself a collector `Collectors.counting()` that operates on elements of type String
 and produces a result of type Long. The result of the collect method call is a Map<String, Long>.
 Output:
 
@@ -220,7 +227,7 @@ naturalNumbers.limit(5).forEach(System.out::println);
 ```
 
 - Another way of generating an infinite stream is using the Stream.generate method. This type takes a lambda of type
-Supplier
+Supplier.
 
 ```java
 // Generate an infinite stream of random numbers
@@ -242,13 +249,13 @@ System.out.println(Arrays.asList("apple", "banana", "orange")
     );
 ```
 
-- Collectors.toSet() collects the elements of a Stream into a Set
+- `Collectors.toSet()` collects the elements of a Stream into a Set
 
 #### Explicit control over the implementation of List or Set
 
 - There are no guarantees on the type, mutability, serializability or thread safety of the List or Set returned.
 
-- For explicit control over the implementation to be returned, Collectors#toCollection(Supplier) can be used instead,
+- For explicit control over the implementation to be returned, `Collectors#toCollection(Supplier)` can be used instead,
 where the given supplier returns a new and empty collection.
 
 ```java
@@ -269,7 +276,7 @@ System.out.println(strings
 
 #### Collecting Elements using toMap
 
-- Collector accumulates elements into a Map, Where key is the Student Id and Value is Student Value
+- Collector accumulates elements into a Map, Where key is the Student Id and Value is Student Value.
 
 ```java
 List<Student> students = new ArrayList<Student>();
@@ -283,9 +290,9 @@ Map<Integer, String> idToName = students.stream()
 System.out.println(idToName);
 ```
 
-- The Collectors.toMap has another implementation Collector<T, ?, Map<K,U>> toMap(Function<? super T, ?
+- The `Collectors.toMap()` has another implementation Collector<T, ?, Map<K,U>> toMap(Function<? super T, ?
   extends K> keyMapper, Function<? super T, ? extends U> valueMapper, BinaryOperator<U>
-  mergeFunction).The mergeFunction is mostly used to select either new value or retain old value if the key is
+  mergeFunction). The mergeFunction is mostly used to select either new value or retain old value if the key is
   repeated when adding a new member in the Map from a list.
 
 - The mergeFunction often looks like: (s1, s2) -> s1 to retain value corresponding to the repeated key, or (s1,
@@ -294,7 +301,7 @@ System.out.println(idToName);
 #### Collecting Elements to Map of Collections
 
 - Requires to make a map of list out of a primary list. Example: From student of list, we need to make a map of list of
-subjects for each student
+subjects for each student.
 
 ```java
 List<Student> list = new ArrayList<>();
@@ -308,8 +315,9 @@ list.add(new Student("Sascha", SUBJECT.LITERATURE, 50.0));
 list.add(new Student("Robert", SUBJECT.LITERATURE, 12.0));
 
 Map<String, List<SUBJECT>> map = new HashMap<>();
-list.stream().forEach(s -> { map.computeIfAbsent(s.getName(), x -> new ArrayList<>()).add(s.getSubject());
- });
+list.stream().forEach(s -> {
+    map.computeIfAbsent(s.getName(), x -> new ArrayList<>()).add(s.getSubject());
+    });
 System.out.println(map);
 ```
 
@@ -351,7 +359,7 @@ System.out.println(finalList);
 // [one, two, three, four, five, six]
 ```
 
-- Map containing List of Items as values can be Flattened to c Combined List
+- Map containing List of Items as values can be Flattened to Combined List
 
 ```java
 Map<String, List<Integer>> map = new LinkedHashMap<>();
