@@ -53,6 +53,8 @@ public class BubbleSortAlgorithm implements SortAlgorithm {
 
 ### 3. `@Qualifier` (highest priority)
 
+- Hint to Spring which bean we want
+
 ```java
 @Component
 @Qualifier("quick")

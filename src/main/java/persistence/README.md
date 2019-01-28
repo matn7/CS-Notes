@@ -875,6 +875,28 @@ To declare side as not responsible for the relationship, the attribute **mappedB
 </hibernate-configuration>
 ```
 
+```java
+@ManyToMany(mappedBy = "authors")
+private Set<Book> books  = new HashSet<>();
+```
+
+```java
+@ManyToMany
+@JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
+    inverseJoinColumns = @JoinColumn(name = "author_id"))
+private Set<Author> authors = new HashSet<>();
+```
+
+```
++----+-------+            +---------+-----------+           +----+------+
+| ID | TITLE |            | BOOK_ID | AUTHOR_ID |           | ID | NAME |
++----+-------+            +---------+-----------+           +----+------+
+| 3  | AABBC |            | 3       | 2         |           | 2  | Mike |
++----+-------+            +---------+-----------+           +----+------+
+| 5  | CDDEE |            | 5       | 4         |           | 4  | John |
++----+-------+            +---------+-----------+           +----+------+
+```
+
 ## Mapping Enums
 
 | :key: id | employee_id | employee_status | name |

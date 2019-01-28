@@ -698,7 +698,7 @@ const routes: Routes = [
 ];
 ```
 
-### HttpCLient
+### HttpClient
 
 ```ts
 import { Injectable } from "@angular/core";

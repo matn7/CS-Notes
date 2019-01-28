@@ -1,3 +1,28 @@
+## SOLID Principles of OOP
+
+- Single Responsible Principle
+    - Every class should have a single responsibility
+    - Class should be small
+    - Avoid very big classes, split it into smaller classes
+- Open close principle
+    - Class should be open for extension but closed for modification
+    - You should be able to extend class behavior without modifying it
+    - Use private variables with getters and setters only when you need them
+    - Use abstract base class
+- Liskov substitution principle
+    - Objects in program would be replaceable with instances of their subtypes WITHOUT altering the correctness of the program
+    - Violations will often fail the "Is a" test
+    - A Square "Is a" Rectangle
+    - Rectangle "Is not" a Square
+- Interface Segregation principle
+    - Make fine grained interfaces that are client specific
+    - Keep component focused and minimize dependencies between them
+    - Avoid super interface
+- Dependency Inversion Principle
+    - Abstraction should not depend upon detail
+    - Details should not depend upon abstraction
+    - How object obtain dependent objects
+
 ## Spring Dependency Injection
 
 ## Basic of Dependency Injection
@@ -11,8 +36,12 @@
 - By setter
 - By constructor
 
-- DI can be done with classes or interfaces
+### Concrete classes vs interfaces
+
+- DI can be done with concrete classes or interfaces
+- Generally DI with Concrete classes should be avoided
 - DI via Interfaces is preferred
+    - Allows runtime to decide implementation to inject
     - Follows interface segregation principle of SOLID
     - Code more testable
 
@@ -20,6 +49,11 @@
 
 - Is a technique to allow dependencies to be injected at runtime
 - Dependencies are not predetermined
+
+- DI refers much to the composition of your classes
+    - you compose your classes with DI in mind
+- IoC is the runtime environment of your code
+    - Spring Framework IoC container
 
 ## :star: Spring Bean Lifecycle
 
@@ -155,6 +189,78 @@ public class TaxDiscountsConfiguration {
 - MapStruct is annotation based processor plugged into the Java compiler
 - From Interfaces declared, MapStruct will generate code at build time
 
+### MapStruct - Example
+
+```java
+public class Car {
+    private String make;
+    private int numberOfSeats;
+    private TypeCar type;
+
+    // constructor, getters, setters
+}
+```
+
+```java
+public class CarDto {
+    private String make;
+    private int seatCount;
+    private String type;
+
+    // constructor, getters, setters
+}
+```
+
+```java
+@Mapper
+public interface CarMapper {
+    CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
+
+    @Mapping(source = "numberOfSeats", target = "seatCount")
+    CarDto carToCarDto(Car car);
+}
+```
+
+- Use
+
+```java
+@Test
+public void shouldMapCarToDto() {
+    // given
+    Car car = new Car("Ford", 5, CarType.SEDAN);
+
+    // when
+    CarDto carDto = CarMapper.INSTANCE.carToCarDto(car);
+
+    // then
+    assertThat(carDto).isNotNull();
+    assertThat(carDto.getMake()).isEqualTo("Ford");
+    assertThat(carDto.getSeatCount()).isEqualTo(5);
+    assertThat(carDto.getType()).isEqualTo("SEDAN");
+}
+```
+
+***
+
+## Spring Social
+
+### oAuth2
+
+- Authorization Framework
+- Delegates User Authentication
+- Accessing Data in 3rd Part API
+- Many flavors of oauth
+
+### Spring Social - What it is
+
+- Spring Social Core
+- Social Integrations (API Bindings)
+    - Facebook
+    - Twitter
+    - LinkedIn
+    - Community Projects
+
+***
 
 ## Spring Web Reactive
 
@@ -253,8 +359,81 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ***
 
+## Equality in hibernate
 
+- To find good identifier, that always is unique best way is to use id fields,
+- hashCode() and equals() with id
 
+```java
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Book book = (Book) o;
+    return Objects.equals(id, book.id);
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(id);
+}
+```
+
+- Now when working with Set<>
+```java
+private Set<Author> authors = new HashSet<>();
+```
+
+- Different author will have different id and different locations in Set collection
+
+***
+
+## Spring Data Repositories
+
+- Provides an Implementation of the Repository Pattern
+- A Repository has methods for retrieving domain objects should delegate to a specialized Repository object
+such that alternative storage implementations may be interchanged
+- This allows you to easily substitute the persistence layer
+    - going from SQL to NoSQL
+
+### Spring Data JPA
+
+- Spring Data JPA is part of a larger family of Spring Data projects
+- Uses Hibernate for persistence to supported RDBS systems
+    - Just about any major relational database
+- You extend a Java Repository Interface
+- Spring Data JPA provides the implementation at run time
+- No SQL required
+
+## Spring MVC
+
+- MVC is a common design pattern for GUI and Web Applications
+- M = Model
+- V = View
+- C = Controller
+
+```
+                             <----> Model
+    Client <----> Controller
+                             <----> View
+```
+
+### Spring MCV
+
+```
+        ----->  Dispatcher          <------> | Handler Mapping |
+Client          Servlet             -------> | Controller | ----- | Service |
+         <----  (Front Controller)  <-------    | Model | (POJO)    (Data)
+
+                           ------>  | Model | (POJO)
+                           <------  | View |
+```
+
+## Spring Controllers
+
+- Annotate Controller Class with @Controller
+    - This will register the class as a Spring Bean and as a Controller in Spring MVC
+- To map methods to http request path use @RequestMapping
 
 
 
