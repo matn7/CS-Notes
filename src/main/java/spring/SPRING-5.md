@@ -23,6 +23,255 @@
     - Details should not depend upon abstraction
     - How object obtain dependent objects
 
+### Single Responsibility Principle
+
+- Cohesion is a way to measure how much the code segments within one module (methods of a class, classes inside a package…)
+belong together. The higher the cohesion – the better, since high cohesion implies easier maintenance and debugging,
+greater code functionality and reusability. The term cohesion is sometimes contrasted with the concept of coupling,
+ and often, loose coupling of modules is related to high cohesion.
+- Robustness, which could be defined as the ability of a computer system or algorithm to handle mistakes and malfunctions
+
+### Liskov Substitution Principle
+
+- Any object of some class in an object-oriented program can be replaced by an object of a child class
+- Inheritance: if you have a class Watch , you can inherit from that class to get a class PocketWatch.
+A pocket watch is still a watch, it just has some additional features. Another example would be a class called Woman
+with a child class called Mother. A mother is still a woman, with the addition of having a child.
+- polymorphism: objects can behave in one way in a certain situation, and in another way in some other situation.
+In object-oriented programming, this is called context-dependent behavior.
+A mother, when taking a walk with her child or attending a school parent’s meeting, will behave as a mother.
+But when she is out with her friends, at work or simply doing errands, she will behave as a woman.
+
+- States that functions that reference base classes must be able to use objects of derived (child) classes without knowing it.
+
+```java
+class TransportationDevice {
+   String name;
+   String getName() { ... }
+   void setName(String n) { ... }
+   double speed;
+   double getSpeed() { ... }
+   void setSpeed(double d) { ... }
+
+   Engine engine;
+   Engine getEngine() { ... }
+   void setEngine(Engine e) { ... }
+   void startEngine() { ... }
+}
+
+class Car extends TransportationDevice {
+   @Override
+   void startEngine() { ... }
+}
+
+// Bad
+class Bicycle extends TransportationDevice {
+   @Override
+   void startEngine() /*problem!*/
+}
+```
+- Bicycle is a transportation device, however, it does not have an engine and hence, the method startEngine cannot be implemented.
+- Solution to fix
+
+```java
+class TransportationDevice {
+   String name;
+   String getName() { ... }
+   void setName(String n) { ... }
+
+   double speed;
+   double getSpeed() { ... }
+   void setSpeed(double d) { ... }
+}
+
+class DevicesWithoutEngines extends TransportationDevice {
+   void startMoving() { ... }
+}
+
+class DevicesWithEngines extends TransportationDevice {
+   Engine engine;
+   Engine getEngine() { ... }
+   void setEngine(Engine e) { ... }
+
+   void startEngine() { ... }
+}
+```
+
+### Interface Segregation Principle
+
+- Interfaces form a core part of the Java programming language and they are extensively used in enterprise applications
+to achieve abstraction and to support multiple inheritance of type- the ability of a class to implement more than one interfaces.
+- “Clients should not be forced to depend on methods that they do not use”. Here, the term “Clients” refers to the
+implementing classes of an interface.
+- What the Interface Segregation Principle says is that your interface should not be bloated with methods that
+implementing classes don’t require.
+- For such interfaces, also called “fat interfaces”, implementing classes are unnecessarily forced to provide
+implementations (dummy/empty) even for those methods that they don’t need.
+-  In addition, the implementing classes are subject to change when the interface changes.
+- Highly cohesive interfaces, known as “role interfaces”. Each “role interface” declares one or more methods for a
+specific behavior. Thus clients, instead of implementing a “fat interface”, can implement only those “role interfaces”
+whose methods are relevant to them.
+
+- Bad examples
+
+```java
+public interface Toy {
+    void setPrice(double price);
+    void setColor(String color);
+    void move();
+    void fly();
+}
+```
+
+- Better example
+    - The Toy interface forces clients (implementation classes) to depend on methods that they do not use.
+
+```java
+public interface Toy {
+     void setPrice(double price);
+     void setColor(String color);
+}
+
+public interface Movable {
+    void move();
+}
+
+public interface Flyable {
+    void fly();
+}
+```
+
+```java
+public class ToyPlane implements Toy, Movable, Flyable {
+    double price;
+    String color;
+    @Override
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    @Override
+    public void setColor(String color) {
+        this.color=color;
+    }
+    @Override
+    public void move(){
+        System.out.println("ToyPlane: Start moving plane.");
+    }
+    @Override
+    public void fly(){
+        System.out.println("ToyPlane: Start flying plane.");
+    }
+    @Override
+    public String toString(){
+        return "ToyPlane: Moveable and flyable toy plane- Price: "+price+" Color: "+color;
+    }
+}
+```
+
+- The implementation classes now implement only those interfaces they are interested in. Our classes do not have
+unnecessary code clutters, are more readable, and lesser prone to modifications due to changes in interface methods.
+- Single Responsibility Principle is concerned with classes, while Interface Segregation Principle is concerned with interfaces
+
+#### Interface Segregation Principle in the Spring Framework
+
+- Even when just for unit testing your classes, the Interface Segregation Principle has a role.
+If you’re testing a class which you’ve written for dependency injection, as I’ve written before,
+it is ideal that you write to an interface. By designing your classes to use dependency injection against an interface,
+any class implementing the specified interface can be injected into your class. In testing your classes, you may wish to
+inject a mock object to fulfill the needs of your unit test.
+
+## Dependency Inversion Principle
+
+- Ignorance of writing “good code” is the main reason of tightly coupled code existing in applications.
+- As an example, creating an object of a class using the new operator results in a class being tightly coupled to another class.
+- When one class knows explicitly about the design and implementation of another class, changes to one class raise
+the risk of breaking the other class.
+- “A. High-level modules should not depend on low-level modules. Both should not depend on abstractions.
+  B. Abstractions should not depend on details. Details should depend on abstractions.”
+
+- Bad Example
+
+```java
+public class LightBulb {
+    public void turnOn() {
+        System.out.println("LightBulb: Bulb turned on...");
+    }
+    public void turnOff() {
+        System.out.println("LightBulb: Bulb turned off...");
+    }
+}
+
+public class ElectricPowerSwitch {
+    public LightBulb lightBulb;
+    public boolean on;
+    public ElectricPowerSwitch(LightBulb lightBulb) {
+        this.lightBulb = lightBulb;
+        this.on = false;
+    }
+    public boolean isOn() {
+        return this.on;
+    }
+    public void press(){
+        boolean checkOn = isOn();
+        if (checkOn) {
+            lightBulb.turnOff();
+            this.on = false;
+        } else {
+            lightBulb.turnOn();
+            this.on = true;
+        }
+    }
+}
+```
+
+- Better example
+
+```java
+public interface Switch {
+    boolean isOn();
+    void press();
+}
+
+public interface Switchable {
+    void turnOn();
+    void turnOff();
+}
+
+public class ElectricPowerSwitch implements Switch {
+    public Switchable client;
+    public boolean on;
+    public ElectricPowerSwitch(Switchable client) {
+        this.client = client;
+        this.on = false;
+    }
+    public boolean isOn() {
+        return this.on;
+    }
+   public void press(){
+       boolean checkOn = isOn();
+       if (checkOn) {
+           client.turnOff();
+           this.on = false;
+       } else {
+             client.turnOn();
+             this.on = true;
+       }
+   }
+}
+
+public class LightBulb implements Switchable {
+    @Override
+    public void turnOn() {
+        System.out.println("LightBulb: Bulb turned on...");
+    }
+    @Override
+    public void turnOff() {
+        System.out.println("LightBulb: Bulb turned off...");
+    }
+}
+```
+
+
 ## Spring Dependency Injection
 
 ## Basic of Dependency Injection
@@ -81,6 +330,7 @@ Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call 
 
 ### Callback Interfaces
 
+- Spring has two interfaces you can implement for call back events
 - InitializingBean.afterPropertiesSet()
     - called after properties are set
 - DisposableBean.destroy()
@@ -88,6 +338,7 @@ Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call 
 
 ### Life Cycle Annotations
 
+- Spring has two annotations you can use to hook into the bean life cycle
 - @PostConstruct annotated methods will be called after the bean has been constructed, but before its returned to
 the requesting object
 - @PreDestroy is called just before the bean is destroyed by the container
@@ -97,14 +348,32 @@ the requesting object
 - Gives you a means to tap into the Spring context life cycle and interact with beans as they are processed
 - Implement interface BeanPostProcessor
     - postProcessBeforeInitialization - Called before bean initialization method
-    - postProcessAfterInitialization - Colled after bean initialization
+    - postProcessAfterInitialization - Called after bean initialization
 
-### Aware Interfaces
+### `Aware` Interfaces
 
 - Spring has over 14 aware interfaces
 - These are used to access the Spring Framework infrastructure
 - These are largely used within the framework
 - Rarely used
+
+```
+ApplicationContextAware, ApplicationEventPublisherAware, BeanFactoryAware ...
+```
+
+### IoC
+
+- Inversion of Control - the runtime environment (or framework) which injects dependencies
+
+### Callback Interfaces, you can implement to tap into the bean lifecycle
+
+- InitializingBean
+- DisposableBean
+
+### Spring bean lifecycle annotations
+
+- @PostConstruct
+- @PreDestroy
 
 ## Spring Configuration
 
@@ -112,9 +381,10 @@ the requesting object
 
 - XML Based Configuration
     - Since Spring 2
+    - Supported in Spring 5
 - Annotation Based Configuration
     - Since Spring 3
-    - Picked up using Component Scan
+    - Picked up via `Component Scan`
     - Class level annotations
         - @Controller
         - @Service
@@ -123,14 +393,19 @@ the requesting object
 - :star: Java Based Configuration
     - Since Spring 3
     - Java Classes to define Spring Beans
-    - Configuration classes are defined with @Configuration annotation
-    - Beans are defines with @Bean annotation
+    - Configuration classes are defined with `@Configuration` annotation
+    - Beans are defines with `@Bean` annotation
 - Groovy Bean Definition DSL Configuration
     - Since Spring 4
     - Declare beans in Groovy (from Grails)
+- Which use
+    - You can combine all of them
+    - They will work seamlessly together to define beans in the Spring Context
+    - Industry trends is to favor Java based configuration
 
 ### Stereotypes annotations
 
+- Stereotype a fixed general image or set of characteristics which represent a particular type of person or thing
 - Spring Stereotypes are used to define Spring Beans in the Spring context
     - @Controller
     - @RestController
@@ -138,12 +413,17 @@ the requesting object
     - @Component
     - @Repository
 
+```
+                    @Component
+    @Controller     @Repository     @Service
+    @RestController [ annotation representing @Controller and @ResponseBody ]
+```
+
 ## Spring ComponentScan
 
 ```java
 @ComponentScan(basePackages = {"com.panda.services"})
 ```
-
 
 ## Java Configuration
 
@@ -176,10 +456,55 @@ public class TaxDiscountsConfiguration {
 
 ## Spring Boot Configuration
 
-- @SpringBootApplication
-    - @Configuration - declares class as Spring configuration
-    - @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
-    - @ComponentScan
+### Maven Support
+
+- Maven projects inherit from a Spring Boot Parent POM
+    - When possible, do not specify versions in your POM. Allow the versions to inherit from the parent
+- The Spring Boot Maven Plugin allows for packaging the executable jar
+
+### Spring Boot Starters
+
+- Starters are top level dependencies for popular Java libraries
+- Will bring in dependencies for the project and related Spring components
+    - Starter `spring-boot-starter-data-jpa` brings in:
+        - Hibernate
+        - Spring Data JPA - and related Spring dependencies
+
+### Spring Boot Annotations
+
+- `@SpringBootApplication` - main annotation to use includes:
+    - `@Configuration` - Declares class as Spring Configuration
+    - `@EnableAutoConfiguration` - Enables auto configuration
+    - `@ComponentScan` - Scans for components in current package and all child packages
+
+### Disabling Specific Auto Config
+
+- Auto-configuration will bring in A LOT of configuration classes in supplied Spring Boot Jars
+- You can specify classes to exclude with:
+    - `@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})`
+
+## Spring Bean Scopes
+
+- Singleton - (default) Only one instance of the bean is created in the IoC container.
+- Prototype - A new instance is created each time the bean is requested.
+- Request - A single instance per http request. Only valid in the context of a web-aware Spring ApplicationContext.
+- Session - A single instance per http session. Only valid in the context of a web-aware Spring ApplicationContext.
+- Global-session - A single instance per global session. Typically Only used in Portlet context. Only valid in the
+context of a web-aware Spring ApplicationContext.
+- Application - beans is scoped to the lifecycle of a ServletContext. Only valid in the context of a web aware.
+- Websocket - Scopes a single bean definition to the lifecycle of a WebSocket. Only valid in the context of a web-aware
+Spring ApplicationContext.
+- Custom Scope - Spring Scopes are extensible, and you can define your own scope by implementing Spring's Scope
+interface.
+    - You cannot override the built in Singleton and Prototype Scopes.
+
+### Declaring Bean Scope
+
+- No declaration needed for singleton scope.
+- In Java configuration use `@Scope` annotation.
+- In XML configuration is an XML attribute of the `bean` tag
+
+***
 
 ## MapStruct
 
@@ -405,7 +730,89 @@ such that alternative storage implementations may be interchanged
 - Spring Data JPA provides the implementation at run time
 - No SQL required
 
+***
+
 ## Spring MVC
+
+### HTTP Protocol
+
+```bash
+$> telnet panda.com 80
+```
+
+- Http/1.0 - From 1991 to 1995 the HTTP/HTML specifications
+- New software "web browser" appeared
+- HTTP standards were developed by:
+    - IETF - Internet Engineering Task Force
+    - W3C - World Wide Web Consortium
+
+- HTTP/1.1 - Originally released in 1997
+    - Solved a lot of ambiguities from earlier versions
+    - Added support for keep alive connections, chunked encoding transfers, byte-range requests, transfer encodings, and
+    request pipelining
+- Http/1.1 - Updated by RFC 2616 in 1999
+- Updated again by RFC 7230 in 2014
+- Still in use today
+- Request - Added encoding, charset, and cookies
+- Response - Added encoding, charset, and cookies
+
+- Http/2.0 Standarized in 2015
+- Supported by most servers and browsers by the end of 2015
+- Has high level of compatibility with HTTP/1.1
+- Transport Performance was a focus of HTTP/2.0
+- Improves page load speed by:
+    - Lower Latency
+    - Higher Throughput
+- Differences from HTTP/1.1 are largely transparent for web developers
+
+### HTTP Request Methods
+
+- Request methods, also known as verbs, are used to indicate the desired action to be performed
+- GET - is a request for a resource
+- Get - is used when you visit a website
+- HEAD - is like GET, but only asks for meta information without the body
+- POST - is used to post data to the server
+- PUT - is a request for enclosed entity be stored at the supplied URI. If the entity exists, it is expected to
+be updated
+- POST is a create request
+- PUT is a create or update request
+- DELETE - Is a request to delete the specified resource
+- TRACE - Will echo the received request. Can be used to see if request was altered by intermediate servers
+- OPTIONS - Returns the HTTP methods supported by the server for the specified URL
+- CONNECT - Converts the request to a transparent TCP/IP tunnel, typically for HTTPS through an unencrypted HTTP proxy
+- PATCH - Applies partial modifications to the specified resource
+
+### Safe Methods
+
+- Safe Methods are considered safe to use because they only fetch information and do not cause changes on the server
+- The Safe Methods are: GET, HEAD, OPTIONS and TRACE
+
+### Idempotent Methods
+
+- Idempotent - A quality of an action such that repetitions of the action have no further effect on the outcome
+- PUT and DELETE are Idempotent
+- Safe Methods (GET, HEAD, TRACE, OPTIONS) are also Idempotent
+
+### Non-Idempotent Methods
+
+- POST is NOT Idempotent
+- Multiple Posts are likely to create multiple resources
+
+### HTTP Status Codes
+
+- 100 series are informational in nature
+- 200 series indicate successful request
+- 300 series are re directions
+- 400 series are client errors
+- 500 series are server side errors
+
+### Common HTTP Status Codes
+
+- 200 Ok, 201 Created, 204 Accepted
+- 301 Moved Permanently
+- 400 Bad Request, 401 Not Authorized, 404 Not Found
+- 500 Internal Server Error, 503 Service Unavailable
+
 
 - MVC is a common design pattern for GUI and Web Applications
 - M = Model
@@ -429,13 +836,48 @@ Client          Servlet             -------> | Controller | ----- | Service |
                            <------  | View |
 ```
 
+***
+
+## Database Initialization with Spring
+
+### Hibernate DDL Auto
+
+- DDL = Data Definition Language
+    - DML = Data Manipulation Language
+- Hibernate property is set by the Spring property `spring.jpa.hibernate.ddl-auto`
+- Options are: none, validate, update, create, create-drop
+- Spring Boot will use create-drop for embedded databases (hsql, h2, derby) or none
+
+### Initialize with Hibernate
+
+- Data can be loaded from import.sql
+    - Hibernate feature (not Spring specific)
+    - Must be on root of class path
+    - Only executed if Hibernate's ddl-auto propert is set to create or create-drop
+
+### Spring JDBC
+
+- Spring's DataSource initializer via Spring Boot will by default load schema.sql and data.sql from root of the classpath
+- Spring Boot will also load from schema-${platform}.sql and data-${platform}.sql
+    - Must set spring.datasource.platform
+- May conflict with Hibernate's DDL Auto property
+    - Should use setting of 'none' or 'validate'
+
+***
+
 ## Spring Controllers
 
 - Annotate Controller Class with @Controller
     - This will register the class as a Spring Bean and as a Controller in Spring MVC
 - To map methods to http request path use @RequestMapping
 
+***
 
+## Questions
+
+### What is special about the `@Repository` stereotype ?
+
+- Spring will detect platform specific persistence exceptions and re-throw them as Spring exceptions
 
 
 

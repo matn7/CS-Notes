@@ -591,25 +591,6 @@ this.id = +params['id'];
 - Make link active<br/>
 routerLinkActive="active"
 
-
-## Commands
-ng new project-name <br/>
-npm install <br/>
-ng g d directive-name <br/>
-ng g c page-not-found <br/>
-npm install --save rxjs-compat <br/>
-<br/><br/>
-**Ahead of time compilation** <br/>
-ng build --prod --aot <br/>
-ng build --prod --aot --base-href /application/ <br/>
-ng build --watch
-npm install rxjs-compat --save
-
-// React, Redux, Axios
-npm i redux react-redux redux-thunk
-npm i axios
-
-
 ## Change detector
 
 - Each component has own change detector
@@ -717,7 +698,25 @@ export class WelcomeDataService {
 }
 ```
 
+## Commands
+ng new project-name <br/>
+npm install <br/>
+ng g d directive-name <br/>
+ng g c page-not-found <br/>
+npm install --save rxjs-compat <br/>
+<br/><br/>
+**Ahead of time compilation** <br/>
+ng build --prod --aot <br/>
+ng build --prod --aot --base-href /application/ <br/>
+ng build --watch
+npm install rxjs-compat --save
 
+// React, Redux, Axios
+npm i redux react-redux redux-thunk
+npm i axios
+
+### angular material
+npm i --save @angular/cdk @angular/material @angular/animations hammerjs
 
 
 

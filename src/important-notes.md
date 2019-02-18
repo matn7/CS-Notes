@@ -13,3 +13,19 @@ public SocialService(UserRepository userRepository) {
 }
 ```
 
+## Interface Naming Conventions
+
+- Interface should be a good object name
+    - Example Java List interface
+        - Implementations - ArrayList, LinkedList, CheckedList
+- Don't start with "|"
+    - No IList
+
+- When just one implementation - generally accepted to use <Interface Name> + Impl
+- When more than one, name should indicate difference of Implementation
+
+## Maven
+
+```bash
+mvn release:prepare
+```

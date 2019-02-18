@@ -13,17 +13,17 @@ programmer must ensure read and write access to objects is properly synchronized
 in that it **cannot return a result from the execution**. The only way to get some return value from the execution of a
 Runnable is to assign the result to a variable accessible in a scope outside of the Runnable.
 
-- **Callable** was introduced in Java 5 as peer to Runnable. Callable is essentially the same except it has a **call()** method
-instead of run(). The call method has the additional capability to **return a result and it also allowed to throw checked
+- **Callable** was introduced in Java 5 as peer to **Runnable**. **Callable** is essentially the same except it has a `call()` method
+instead of `run()`. The call method has the additional capability to **return a result and it also allowed to throw checked
 exceptions**.
 
 #### The result from a Callable task submission is available to be tapped via a Future
 
-- **Future** can be considered a container of sorts that houses the result of the Callable computation.
-- Computation of the callable can carry on in another thread, and any attempt to tap the result of a Future will block and will
+- **Future** can be considered a container of sorts that houses the result of the **Callable** computation.
+- Computation of the **Callable** can carry on in another thread, and any attempt to tap the result of a **Future** will block and will
 only return the result once it is available.
 
-##### **Callable Interface**
+##### Callable Interface
 
 ```java
 public interface Callable<V> {
@@ -31,7 +31,7 @@ public interface Callable<V> {
 }
 ```
 
-##### **Future**
+##### Future
 
 ```java
 interface Future<V> {
@@ -47,8 +47,6 @@ interface Future<V> {
 
 ```java
 public static void main(String[] args) throws Exception {
-
-}
     ExecutorService es = Executors.newSingleThreadExecutor();
 
     System.out.println("Time At Task Submission: " + new Date());
@@ -61,8 +59,6 @@ public static void main(String[] args) throws Exception {
 
 }
 ```
-
-#### Callable that does a lengthy computation
 
 ```java
 public class ComplexCalculator implements Callable<String> {
@@ -77,7 +73,7 @@ public class ComplexCalculator implements Callable<String> {
 
 #### Other operations permitted on Future
 
-- get(long timeout, TimeUnit unit) defines maximum time period during current thread will wait for a result.
+- `get(long timeout, TimeUnit unit)` defines maximum time period during current thread will wait for a result.
 - To cancel the task call `cancel(mayInterruptIfRunning)`. The flag mayInterrupt indicates that task should be
 interrupted if it was started and is running right now.
 - To check if task is completed/finished by calling `isDone()`.
@@ -90,35 +86,29 @@ A synchronization aid that allows one or more threads to wait until a set of ope
 threads completes.
 ```
 
-- 1. A CountDownLatch is initialized with a given count
-- 2. The await methods block until the current count reaches zero due to invocations of the `countDown()` method,
+- A **CountDownLatch** is initialized with a given count
+- The await methods block until the current count reaches zero due to invocations of the `countDown()` method,
 after which all waiting threads are released and any subsequent invocations of await return immediately
-- 3. This is a one-shot phenomenon - the count cannot be reset. If you need a version that resets the count,
+- This is a one-shot phenomenon - the count cannot be reset. If you need a version that resets the count,
 consider using CyclicBarrier
 
-#### Methods:
+### Methods:
 
-##### `await()`:
+- `await()`:
 
 ```java
 public void await() throws InterruptedException
 ```
-
-```
 Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
-```
 
-##### `countDown()`:
+- `countDown()`:
 
 ```java
 public void countDown()
 ```
-
-```
 Determines to count of the latch, releasing all waiting threads if the count reaches zero
-```
 
-##### Use
+- Use
 
 ```java
 class DoSomething implements Runnable {
@@ -165,9 +155,9 @@ public class CountDownLatchDemo {
 }
 ```
 
-- CountDownLatch is initialized with a counter of 5 in Main thread
-- Main thread is waiting by using await() method
-- Five instances of DoSomething have been created. Each instance decremented the counter with countDown() method
+- **CountDownLatch** is initialized with a counter of 5 in Main thread
+- Main thread is waiting by using `await()` method
+- Five instances of DoSomething have been created. Each instance decremented the counter with `countDown()` method
 - Once the counter becomes zero, Main thread will resume
 
 ### 3. Basic Multithreading
@@ -213,7 +203,7 @@ class CountAndPrint implements Runnable {
 
 Locks are thread synchronisation mechanisms that essentially serve the same purpose as synchronized blocks or key words.
 
-#### Intrinsic Locking
+- Intrinsic Locking
 
 ```java
 int count = 0; // shared among multiple threads
@@ -225,7 +215,7 @@ public void doSomething() {
 }
 ```
 
-#### Synchronisation using Locks
+- Synchronisation using Locks
 
 ```java
 int count = 0; // shared among multiple threads
@@ -293,17 +283,17 @@ public class Locky2 {
 
 ### 5. Semaphores
 
-- Semaphore is a high level synchronizer that maintains a set of permits that can be acquired and released by threads.
-- A Semaphore can be imagined as a counter of permits that will be decremented when a thread acquires,
+- **Semaphore** is a high level synchronize that maintains a set of permits that can be acquired and released by threads.
+- A **Semaphore** can be imagined as a counter of permits that will be decremented when a thread acquires,
 and incremented when a thread releases.
 - If the amount of permits is 0 when a thread attempts to acquire, then the thread will block until a permits is made
 available (or until the thread is interrupted).
 
 ```java
-Semaphore semaphore = new Semaphore(2); // The int value being the number of permits
+Semaphore semaphore = new Semaphore(2);     // The int value being the number of permits
 ```
 
-- The Semaphore constructor accepts an additional boolean parameter for fairness.
+- The **Semaphore** constructor accepts an additional boolean parameter for fairness.
 - When set false, this class makes no guarantees about the order in which threads acquire permits.
 - When fairness is set true, the semaphore guarantees that threads invoking any of the acquire methods are selected to
 obtain permits in the order in which their invocation of these methods was processed.
@@ -316,12 +306,6 @@ Semaphore semaphore = new Semaphore(1, true);
 
 ```java
 class Pool {
-    /*
-    * Note that this DOES NOT bound the amount that may be released!
-    * This is only a starting value for the Semaphore and has no other
-    * significant meaning UNLESS you enforce this inside of the
-    * getNextAvailableItem() and markAsUnused() methods
-    */
     private static final int MAX_AVAILABLE = 100;
     private final Semaphore available = new Semaphore(MAX_AVAILABLE, true);
 
@@ -424,7 +408,7 @@ public synchronized void foo() {
 }
 ```
 
-#### Likewise for **static** methods:
+#### Likewise for static methods:
 
 ```java
 class MyClass {
@@ -447,8 +431,8 @@ class MyClass {
 
 ### 7. Runnable Object
 
-Runnable interface defines a single method, run(), meant to obtain the code executed in the thread.
-The Runnable object is passed to the Thread constructor. And Thread's start() method is called:
+Runnable interface defines a single method, `run()`, meant to obtain the code executed in the thread.
+The Runnable object is passed to the Thread constructor. And Thread's `start()` method is called:
 
 ```java
 public class HelloRunnable implements Runnable {
@@ -559,10 +543,10 @@ method3 mLock1 Second
 method2 wait for mLock2 First
 ```
 
-### 9. Creating a java.lang.Thread instance
+### 9. Creating a Thread instance
 
-- In Java, a thread is represented by an object - an instance of java.lang.Thread or its subclass.
-- First approach is to create that subclass and override the run() method.
+- In Java, a thread is represented by an object - an instance of `java.lang.Thread` or its subclass.
+- First approach is to create that subclass and override the `run()` method.
 
 ```java
 class MyThread extends Thread {
@@ -575,7 +559,7 @@ class MyThread extends Thread {
 }
 ```
 
-#### The thread can be created:
+- The thread can be created:
 
 ```java
 MyThread t = new MyThread();
@@ -600,7 +584,7 @@ class MyThread extends Thread {
 MyThread t = new MyThread("Producer");
 ```
 
-- The second approach is to define the code using java.lang.Runnable and its only method run().
+- The second approach is to define the code using `java.lang.Runnable` and its only method `run()`.
 - The Thread class then allows you to execute that method in a separated thread. To achieve this, create the thread using a
 constructor accepting an instance of Runnable interface
 
@@ -620,20 +604,20 @@ Thread t = new Thread(operator::hardWork);
 Thread t = new Thread(operator::hardWork, "Operator");
 ```
 
-- Alternative accepting an instance of java.lang.ThreadGroup as the first parameter
+- Alternative accepting an instance of `java.lang.ThreadGroup` as the first parameter
 
 ```java
 ThreadGroup tg = new ThreadGroup("Operators");
 Thread t = new Thread(tg, operator::hardWork, "Operators");
 ```
 
-- The ThreadGroup represents a set of threads. You can only add a Thread to a ThreadGroup using a Thread's constructor.
-- The ThreadGroup can then be used to manage all its Threads together, as well as the Thread can gain information from
-its ThreadGroup.
+- The **ThreadGroup** represents a set of threads. You can only add a **Thread** to a **ThreadGroup** using a Thread's constructor.
+- The **ThreadGroup** can then be used to manage all its **Threads** together, as well as the **Thread** can gain information from
+its **ThreadGroup**.
 
 - Often the code readability suffers when creating and configuring many Threads with same properties or from the
-same pattern. That's when java.util.concurrent.ThreadFactory can be used. This interface allows you too encapsulate
-the procedure of creating the thread through the factory pattern and its only method newThread(Runnable).
+same pattern. That's when `java.util.concurrent.ThreadFactory` can be used. This interface allows you too encapsulate
+the procedure of creating the thread through the factory pattern and its only method `newThread(Runnable)`.
 
 ```java
 class WorkerFactory implements ThreadFactory {
@@ -679,7 +663,7 @@ the second thread observes the value of t before the first thread had finished i
 - The second issue is how we are observing t. When we are printing the value of t, the value may have already
 been changed by a different thread after this thread's increment operation
 
--  java.util.concurrent.atomic.AtomicInteger has many atomic operations
+-  `java.util.concurrent.atomic.AtomicInteger` has many atomic operations
 
 ```java
 private static AtomicInteger t = new AtomicInteger(0);
@@ -703,7 +687,7 @@ race condition
 ### 11. Exclusive write / Concurrent read access
 
 - Concurrently write and read the same data.
-- The ReadWriteLock interface, and its ReentrantReadWriteLock implementation allows for an access pattern that can be
+- The **ReadWriteLock** interface, and its **ReentrantReadWriteLock** implementation allows for an access pattern that can be
 described as follow:
     - There can be any number of concurrent readers of the data. If there is at least one reader access granted, then
     no writer access is possible.
@@ -739,10 +723,10 @@ public class Sample {
 }
 ```
 
-- 1. This precise use case has a cleaner solution using AtomicInteger, but what is described here is an access
+- This precise use case has a cleaner solution using **AtomicInteger**, but what is described here is an access
 pattern, that works regardless of the fact that data here is an integer that as an Atomic variant
 
-- 2. The lock on the reading part is really needed. Indeed, if you do not lock on the reader side, any number
+- The lock on the reading part is really needed. Indeed, if you do not lock on the reader side, any number
 of things can go wrong:
     - The writes of primitive values are not guaranteed to be atomic on all JVMs, so the reader could see only
     32 bits of a 64 bits write if data were a 64 bits long type
@@ -751,8 +735,8 @@ of things can go wrong:
     writers use their respective locks
 
 - In case higher performance is required, an under certain types of usage, there is a faster lock type available, called
-the StampedLock, that amongst other things implements an optimistic lock mode. This lock works very different
-from the ReadWriteLock, and this sample is not transposable
+the **StampedLock**, that amongst other things implements an optimistic lock mode. This lock works very different
+from the **ReadWriteLock**, and this sample is not transposable
 
 ### 12. :star: Producer-Consumer
 
@@ -851,19 +835,19 @@ class Counter {
 }
 ```
 
-- Thread A calls incrementCount() first then thread B calls getCount(). In this scenario there is no guarantee
+- Thread A calls `incrementCount()` first then thread B calls `getCount()`. In this scenario there is no guarantee
 that B will see updated value of count. It may still see count as 10, even it is also possible that it never
 sees updated value of count ever.
 
 - How Java memory model integrates with hardware architecture. In Java each thread has it's own thread stack.
-- This stack contains: method call stack and local variable created in that thread.
+- :star: This stack contains: **method call stack and local variable created in that thread**.
 - In a multi core system, it is quite possible that two threads are running concurrently in separate cores.
 - In such scenario it is possible that part of thread's stack lies inside register / cache of a core.
 If inside a thread, an object is accessed using synchronized (or volatile) keyword, after synchronized block that thread
 syncs it's local copy of that variable with the main memory. This creates a read / write barrier and makes sure that
 the thread is seeing the latest value of that object.
 
-- In our case since thread B has not used synchronized access to count, it might be referring value of count
+- In our case since thread B has not used `synchronized` access to count, it might be referring value of count
 stored in register and may never see updates from thread A. Need to make getCount() synchronized.
 
 ```java
@@ -886,7 +870,7 @@ Thread A    Acquire lock
                                                                         Release lock
 ```
 
-- Same visibility effect goes for volatile read / writes as well. All variables updated prior to write to volatile will be
+- Same visibility effect goes for **volatile** read / writes as well. All variables updated prior to write to volatile will be
 flushed to main memory and all reads after volatile variable read will be from main memory.
 
 ### 14. Get status of all threads started by your program excluding system threads
@@ -922,7 +906,7 @@ class MyThread implements Runnable {
 }
 ```
 
-- Thread.getAllStackTraces().keySet() returns all Threads including application threads and system threads. If
+- `Thread.getAllStackTraces().keySet()` returns all Threads including application threads and system threads. If
 you are interested only in status of Threads, started by your application, iterate the Thread set by checking ThreadGroup
 of a particular thread against your main program thread.
 - In absence of above ThreadGroup condition, the program returns status of below System Threads:
@@ -935,7 +919,6 @@ of a particular thread against your main program thread.
 
 - ThreadLocal allows you to have a variable that will be unique to a given thread. Thus if the same code runs in different
 threads, these executions will not share the value, but instead each thread has its own variable that is local to the thread.
-
 - For example, this is frequently used to establish the context (such as authorization information) of handling a request
 in a servlet. You might do something like this:
 
@@ -958,7 +941,7 @@ public void doGet(...) {
 }
 ```
 
-- Now instead of passing MyUserContext into every single method, you can instead use MyServlet.getContext() where
+- Now instead of passing MyUserContext into every single method, you can instead use `MyServlet.getContext()` where
 you need it. Now of course, this does introduce a variable that needs to be documented, but it's thread-safe,
 which eliminates a lot of the downsides to using such highly scoped variable.
 
@@ -1052,19 +1035,15 @@ Produced:728:by thread:2
 Consumed: 728:by thread:1
 ```
 
-- SharedQueue, which is a LinkedBlockingQueue is shared among all Producer and Consumer threads.
+- **SharedQueue**, which is a **LinkedBlockingQueue** is shared among all Producer and Consumer threads.
 - Producer threads produces one integer for every 200 milli seconds continously and append it to sharedQueue.
 - Consumer thread consumes integer from sharedQueue continously.
 - This program is implemented with-out explicit synchronized ot Lock constructs. BlockingQueue is the key to achieve it.
 
-```
-BlockingQueue implementations are designed to be used primarly for producer-consumer queues.
-```
 
-```
-BlockingQueue implementations are thread-safe. All queuing methods achieve their effects
+- BlockingQueue implementations are designed to be used primarily for producer-consumer queues.
+- BlockingQueue implementations are thread-safe. All queuing methods achieve their effects
 atomically using internal locks or other form of concurrency control.
-```
 
 ### 17. Add two 'int' arrays using a ThreadPool
 
@@ -1135,11 +1114,13 @@ implementations do not even consider the nanosecond parameter.
 - Each Java Thread has an interrupted flag, which is initially false. Interrupting a thread, is essentially nothing more
 than setting that flag to true.
 - There are methods that behave in a special way when the thread they're running on is interrupted. These methods are
-called blocking methods. These are methods that put the thread in the WAITING or TIMED_WAITING state. When a thread
-is in this state, interrupting it, will cause an InterruptedException to be thrown on the interrupted thread, rather
+called blocking methods. These are methods that put the thread in the:
+    - WAITING
+    - TIMED_WAITING state.
+- When a thread is in this state, interrupting it, will cause an **InterruptedException** to be thrown on the interrupted thread, rather
 than the interrupt flag being set to true, and the thread becomes RUNNABLE again. Lastly a thread that
 has its interrupt flag set, that enters a blocking method (i.e. tries to get into a waiting state), will immediately throw
-an InterruptedException and the interrupt flag will be cleared.
+an **InterruptedException** and the interrupt flag will be cleared.
 
 - Stopping a thread is a collaboration. When a
   thread is interrupted its running code can be several levels deep into the stacktrace. Most code doesn't call a
@@ -1283,15 +1264,15 @@ only if the queue is full.
     - BlockingQueue size can be controlled and out-of-memory scenario can be avoided. Application performance
     won't be degraded with limited queue size.
     - You can use existing or create new Rejection Handler policies:
-        - In the default ThreadPoolExecutor.AbortPolicy, the handler throws a runtime RejectedExecutionException
+        - In the default `ThreadPoolExecutor.AbortPolicy`, the handler throws a runtime RejectedExecutionException
         upon rejection.
-        - In ThreadPoolExecutor.CallerRunsPolicy, the thread that invokes execute itself runs the task.
+        - In `ThreadPoolExecutor.CallerRunsPolicy`, the thread that invokes execute itself runs the task.
         This provides a simple feedback control mechanism that will slow down the rate that new tasks are
         submitted.
-        - In ThreadPoolExecutor.DiscardPolicy, a task that cannot be executed is simply dropped.
-        - In ThreadPoolExecutor.DiscardOldestPolicy, if the executor is not shut down, the task at the head
+        - In `ThreadPoolExecutor.DiscardPolicy`, a task that cannot be executed is simply dropped.
+        - In `ThreadPoolExecutor.DiscardOldestPolicy`, if the executor is not shut down, the task at the head
         of the work queue is dropped, and then execution is retired
-    - Custom ThreadFactory can be configured, which us useful:
+    - Custom `ThreadFactory` can be configured, which us useful:
         - To set a more descriptive thread name.
         - To set thread daemon status.
         - To set thread priority.
@@ -1301,7 +1282,7 @@ only if the queue is full.
 - If your computation produces some return value which later is required, a simple Runnable task isn't sufficient.
 For such causes you can use `ExecutorService.submit(Callable<T>)` which returns a value after execution completes.
 
-- The Service will return a Future which you can use to retrieve the result of the task execution
+- The Service will return a **Future** which you can use to retrieve the result of the task execution
 
 ```java
 // Submit a callable for execution
@@ -1316,7 +1297,7 @@ Future<Integer> future = pool.submit(new Callable<Integer>() {
 // ... perform other task in a different thread
 ```
 
-- When you need to get the result of the future, call future.get()
+- When you need to get the result of the future, call `future.get()`
 - Wait indefinitely for future to finish with a result
 
 ```java
@@ -1342,15 +1323,15 @@ try {
 ```
 
 - If the result of a scheduled or running task is no longer required, you can call `Future.cancel(boolean)` to cancel it.
-- Calling cancel(false) will just remove the task from the queue of tasks to be run.
-- Calling cancel(true) will also interrupt the task if it is currently running.
+- Calling `cancel(false)` will just remove the task from the queue of tasks to be run.
+- Calling `cancel(true)` will also interrupt the task if it is currently running.
 
 ### 3. submit() vs execute() exception handling differences
 
-- execute() command is used for fire and forget calls (without need of analyzing the result) and submit() command
+- `execute()` command is used for fire and forget calls (without need of analyzing the result) and `submit()` command
 is used for analyzing the result of Future object.
 
-- Exceptions from submit() are swallowed by framework if you did not catch them.
+- Exceptions from `submit()` are swallowed by framework if you did not catch them.
 
 #### Case 1: submit the Runnable with execute() command, which reports the Exception
 
@@ -1405,7 +1386,7 @@ class ExtendedExecutor extends ThreadPoolExecutor {
 
 #### Case 2: Replace execute() with submit()
 
-- service.submit(new Runnable() {}). In this case, Exceptions are swallowed by framework since run() method did
+- `service.submit(new Runnable() {})`. In this case, Exceptions are swallowed by framework since run() method did
 not catch them explicitly.
 
 #### Case 3: Change the newFixedThreadPool to ExtendedExecutor
@@ -1448,7 +1429,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
 ### 5. Runnable Tasks
 
-- Executors accept a java.lang.Runnable which contains (potentially computationally or otherwise long-running or heavy)
+- Executors accept a `java.lang.Runnable` which contains (potentially computationally or otherwise long-running or heavy)
 code to be run in another Thread
 
 ```java
@@ -1485,8 +1466,8 @@ ThreadPoolExecutor with capacity constraints & RejectedExecutionHandler to handl
 
 #### 2. CountDownLatch
 
-CountDownLatch will be initialized with a given count. This count is decremented by calls to the countDown()
-method. Threads waiting for this count to reach zero can call one of the await() methods. Calling await()
+CountDownLatch will be initialized with a given count. This count is decremented by calls to the `countDown()`
+method. Threads waiting for this count to reach zero can call one of the `await()` methods. Calling `await()`
 blocks the thread until the count reaches zero. This class enables java thread to wait until other set of threads
 completes their tasks.
 
@@ -1511,9 +1492,9 @@ is dropped, and then execution is retried
 
 #### 4. ForkJoinPool
 
-The ForkJoinPool was added in Java 7. The ForkJoinPool is similar to the Java ExecutorService but with one difference.
-The ForkJoinPool makes it easy for tasks to split their work up into smaller tasks which are then submitted
-to the ForkJoinPool too. Task stealing happens in ForkJoinPool when free worker threads steal tasks from busy
+The **ForkJoinPool** was added in Java 7. The **ForkJoinPool** is similar to the Java **ExecutorService** but with one difference.
+The **ForkJoinPool** makes it easy for tasks to split their work up into smaller tasks which are then submitted
+to the **ForkJoinPool** too. Task stealing happens in **ForkJoinPool** when free worker threads steal tasks from busy
 worker thread queue.
 
 Java 8 has introduced one more API in ExecutorService to create work stealing pool.
@@ -1577,8 +1558,8 @@ public class InvokeAllDemo {
 - A synchronization aid that allows one or more threads to wait until a set of operations being performed in other
 threads completes.
 
-- A CountDownLatch is initialized with a given count. That await methods block until the current count reaches zero
-due to invocations of the countDown() method, after which all waiting threads are released and any subsequent
+- A **CountDownLatch** is initialized with a given count. That await methods block until the current count reaches zero
+due to invocations of the `countDown()` method, after which all waiting threads are released and any subsequent
 invocations of await return immediately. This is a one-shot phenomenon -- the count cannot be reset. If you need
 a version that resets the count, consider using a CyclicBarrier
 
@@ -1609,9 +1590,9 @@ void shutDownAndAwaitTermination(ExecutorService pool) {
 }
 ```
 
-- shutdown(): Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will
+- `shutdown()`: Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will
 be accepted.
-- shutdownNow(): Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and
+- `shutdownNow()`: Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and
 returns a list of the tasks that were awaiting execution.
 - In above example, if your tasks are taking more time to complete, you can change if condition to while condition.
 
@@ -1638,10 +1619,10 @@ public static ExecutorService newSingleThreadExecutor()
 ```
 
 - Creates an Executor that uses a single worker thread operating off an unbounded queue
-- There is a difference between newFixedThreadPool(1) and newSingleThreadExecutor() as the java doc says for the latter:
+- There is a difference between `newFixedThreadPool(1)` and `newSingleThreadExecutor()` as the java doc says for the latter:
     - Unlike the otherwise equivalent newFixedThreadPool(1) the returned executor is guaranteed not to
     be reconfigurable to use additional threads
-- Which means that a newFixedThreadPool can be reconfigured later in the program by:
+- Which means that a `newFixedThreadPool` can be reconfigured later in the program by:
     - ((ThreadPoolExecutor) fixedThreadPool).setMaximumPoolSize(10) This is not possible for newSingleThreadExecutor
 
 - Use cases:
@@ -1798,8 +1779,8 @@ the tasks encounters an exception.
 | invokeAll | Execute a list of tasks and return a list of Futures |
 | invokeAny | Executes all the but return only the result of one that has been successful (without exceptions) |
 
-Once you are done with the Thread Pool you can call shutdown() to terminate the Thread Pool. This executes all
-pending tasks. To wait for all tasks to execute you can loop around awaitTermination or isShutDown()
+Once you are done with the Thread Pool you can call `shutdown()` to terminate the Thread Pool. This executes all
+pending tasks. To wait for all tasks to execute you can loop around awaitTermination or `isShutDown()`
 
 ***
 
@@ -1807,13 +1788,13 @@ pending tasks. To wait for all tasks to execute you can loop around awaitTermina
 
 ### 1. Basic ThreadLocal usage
 
-- Java ThreadLocal is used to create thread local variables. It is known that threads of an Object share it's variables,
+- Java **ThreadLocal** is used to create thread local variables. It is known that threads of an Object share it's variables,
 so the variable is not thread safe. We can use synchronization for thread safety but if we want to avoid
-synchronization, ThreadLocal allows us to create variables which are local to the thread, i.e. only that thread can
+synchronization, **ThreadLocal** allows us to create variables which are local to the thread, i.e. only that thread can
 read or write to these variables, so the other threads executing the same piece of code will not be able to access
-each others ThreadLocal variables.
+each others **ThreadLocal** variables.
 
-- We can use ThreadLocal variables in situation where where you have thread pool like in a web service.
+- We can use **ThreadLocal** variables in situation where where you have thread pool like in a web service.
 Creating a SimpleDateFormat object every time for every request is time consuming and
 a Static one cannot be created as SimpleDateFormat is not thread safe, so we can create a ThreadLocal so that we
 can perform thread safe operations without the overhead of creating SimpleDateFormat every time.
@@ -1825,7 +1806,7 @@ value or change it's value to Thread.
 
 ```java
 public class ThreadLocalExample implements Runnable {
-    // SimpleDateFormat is not thread safe, so give ne to each thread
+    // SimpleDateFormat is not thread safe, so give to each thread
     private static final ThreadLocal<SimpleDateFormat> formatter = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
@@ -1889,7 +1870,7 @@ public class Test {
 ```
 
 - In Foo we count starting from zero. Instead of saving the state to a field we store our current number in the
-ThreadLocal object which is statically accessible. The synchronization in this example is not related to the
+**ThreadLocal** object which is statically accessible. The synchronization in this example is not related to the
 usage of ThreadLocal but rather ensures a better console output.
 
 ```java
@@ -2038,14 +2019,14 @@ public class AsyncExample2 {
 ```
 
 - Notes
-    - Each call to ExecutorService.submit() returned an instance of Future, which was stored in a list for later use.
-    - Future contains a method called isDone() which can be used to check whether our task has been completed
-    before attempting to check it's return value. Calling the `Future.get()` method on a Future that is not yet done
+    - Each call to `ExecutorService.submit()` returned an instance of **Future**, which was stored in a list for later use.
+    - **Future** contains a method called `isDone()` which can be used to check whether our task has been completed
+    before attempting to check it's return value. Calling the `Future.get()` method on a **Future** that is not yet done
     will block the current thread until the task is complete, potentially negating many benefits gained from
     performing the task Asynchronously
     - The `executorService.shutdown()` method was called prior to checking the return values from the Future objects.
-    The executorService.shutdown()
-    method does not prevent the completion of tasks which have already been submitted to the ExecutorService,
+    The `executorService.shutdown()`
+    method does not prevent the completion of tasks which have already been submitted to the **ExecutorService**,
     but rather prevents new tasks from being added to the Queue.
 
 ### 3. Defining Asynchronous Tasks Inline using Lambdas
@@ -2111,7 +2092,7 @@ public class AsyncExample3 {
 - Notes:
     - Lambda expressions have access to variable and methods which are available to the scope in which they are
     defined, but **all variables must be final (or effectively final)** for use inside a lambda expression.
-    - We do not have to specify whether our Lambda expression is a Callable or Runnable<T> explicitly, the return
+    - We do not have to specify whether our Lambda expression is a **Callable** or **Runnable<T>** explicitly, the return
     type is inferred automatically by the return type.
 
 
