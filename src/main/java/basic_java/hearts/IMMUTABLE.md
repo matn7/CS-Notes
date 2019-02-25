@@ -1,14 +1,14 @@
 ## :star: :heart: Immutable class
 
 - Immutable objects are instances whose state doesn't change after it has been initialized
-- Advantage of immutability comes with concurrency. It is difficult to maintain correctness in mutable objects
+- Advantage of immutability comes with **concurrency**. It is difficult to maintain correctness in mutable objects
 as multiple threads could be trying to change the state of the same object, leading to some threads seeing a different
 state of the same object, depending on the timing of the reads and writes to the said object
 - By having an immutable object, one can ensure that all threads that are looking at the object will be seeing the same state, as
 the state of an immutable object will not change
 - Rules define a simple strategy for creating immutable objects:
-    - Don't provide setter methods - methods that modify fields or objects referred to by fields
-    - Make all fields final and private
+    - Don't provide **setter methods** - methods that modify fields or objects referred to by fields
+    - Make all fields **final** and **private**
     - Don't allow subclasses to override methods. The simplest way to do this is to declare the class as **final**.
     A more sophisticated approach is to make the constructor private and construct instances in factory methods
     - If the instance fields include reference to mutable objects, don't allow these objects to be changed
@@ -60,18 +60,6 @@ public final class ImmutableCircle {
 ```
 
 ### With final class
-
-- do poprawy
-
-- memory
-- java pitfalls
-- stream API (chapter 57)
-
-- immutable (done)
-- generic (done)
-- wyjątki bardzo dokładnie [chapter 69] (done)
-- wielowątowość bardzo dokładnie [chapter 126, 127, 128, 129] (done)
-
 
 ```java
 public final class Complex {
@@ -212,13 +200,13 @@ public final class Person {
     - All properties must be set in constructors or factory methods
     - There should be no setter
     - If necessary to include setters, setters should do nothing or throw exceptions
-    - All properties should be declared as private and final
+    - All properties should be declared as **private** and **final**
     - For all properties that are references to mutable types:
         - the property should be initialized with a deep copy of the value passed via the constructor
         - the property's getter should return a deep copy of the property value
     - The class should be declared as final to prevent someone creating a mutable subclass of an immutable class
     - Immutability does not prevent object from being nullable, null can be assigned to a String variable
-    - If an immutable classes properties are declared as final, instances are inherently thread safe
+    - If an immutable classes properties are declared as **final**, instances are inherently thread safe
 
 ## :star: Design flow which prevent class from being immutable
 

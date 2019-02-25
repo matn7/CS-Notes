@@ -30,11 +30,9 @@ in terms of desired behavior of the unit
     - JBehave, Cucumber, Spock
     - example: given, when, then
 
-- Mock
-A fake implementation of a class used for testing. Like a test double
+- Mock - A fake implementation of a class used for testing. Like a test double
 
-- Spy
-A partial mock, allowing you to override selected methods of a real class
+- Spy - A partial mock, allowing you to override selected methods of a real class
 
 ### Testing Goals
 
@@ -46,7 +44,7 @@ A partial mock, allowing you to override selected methods of a real class
 
 ### Test Scope Dependencies
 
-- Using spring-boot-starter-test (default from Spring Initializr) will load the following dependencies
+- Using `spring-boot-starter-test` (default from Spring Initializr) will load the following dependencies
     - JUnit - The de-facto standard for unit testing Java applications
     - Spring Test and Spring Boot Test - Utilities and integration test support for Spring Boot applications
     - AssertJ - A fluent assertion library
@@ -105,6 +103,40 @@ A partial mock, allowing you to override selected methods of a real class
 | @IfProfileValue | Indicates test is enabled for a specific testing environment |
 | @ProfileValueSourceConfiguration | Specify a profile value source |
 
+***
+
+## JUnit5
+
+- JUnit5 leverages new features of Java8
+    - Lambda Expressions
+    - Streams
+    - Java8 or Higher is required
+- Designed for better integration and extensibility
+
+### JUnit Vintage
+
+- Optional JUnit 5 library
+- Provides a test runner for Junit 3 and 4 tests using JUnit 5
+    - Allows easy migration to JUnit 5
+
+### Key differences
+
+| JUnit 4 | JUnit 5 |
+|---|---|
+| @Test(expected = Foo.class) | Assertions.assertThrows(Foo.class) |
+| @Test(timeout = 1) | Assertions.assertTimeout(Duration) |
+| @RunWith(SpringJUnit4ClassRunner.class) | @ExtendWith(SpringExtension.class) |
+
+### New Annotations
+
+| JUnit 4 | JUnit 5 |
+|---|---|
+| @Before | @BeforeEach |
+| @After | @AfterEach |
+| @BeforeClass | @BeforeAll |
+| @AfterClass | @AfterAll |
+| @Ignored | @Disabled |
+| @Category | @Tag |
 
 
 

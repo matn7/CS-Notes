@@ -111,6 +111,83 @@ public class Recipe {
     // ...
 }
 ```
+## Questions
+
+### What are the 4 types of entity relationships
+- @OneToOne
+- @OneToMany
+- @ManyToOne
+- @ManyToMany
+
+### Which JPA Relationship will require to use of a join table ?
+- Many to Many relationships require to use join table
+
+### What is the difference between a unidirectional relationship and a bidirectional relationship ?
+- In unidirectional, the mapping is done one-way, meaning one side of the relationship will not know about the other.
+While bidirectional both sides will know about the relationship.
+
+### What do JPA Cascade Types do?
+- Cascade Types control how changes are cascaded from parent objects to child objects.
+
+### In JPA 2.1, what is the default Cascade Type?
+- None - JPA does not have a default Cascade Type
+
+### What are the 5 available Cascade Types in JPA 2.1?
+- PERSIST
+- MERGE
+- REFRESH
+- REMOVE
+- DETACH
+- ALL
+
+### Can you embed a type in JPA for reuse?
+- Yes, JPA supports embeddable types. A good example is a Address type.
+
+### Does JPA support object inheritance?
+- Yes, in JPA classes can inherit from a super class
+
+### What is Hibernate's default persistence strategy for inheritance?
+- Single Table - One table is created for the superclass and inheriting subclasses
+
+### What is a disadvantage of the Single Table strategy for inheritance?
+- Single Table can lead to a lot of unused database columns
+
+### What is a disadvantage of the Join Table strategy for inheritance?
+- Fetching subclass entities require a join to the table of the superclass
+
+### Can you have JPA automatically update timestamp properties for audit purposes?
+- Yes, using @PrePersist or @PreUpdate within JPA. Or Hibernate specific @CreationTimestamp or @UpdateTimestamp
+
+### SQL
+- Structured Query Language
+
+### DDL
+- Data Definition Language
+
+### DML
+- Data Manipulation Language
+
+### What is the difference between DDL and DML?
+- DDL is used to define database structures such as tables and indexes. WHile DML is used with data operations such
+as inserts and updates
+
+### What does Hibernate's ddl-auto property control?
+- The ddl-auto property controls what if any DDL operations Hibernate will perform on startup
+
+### What are the 5 valid options for Hibernate's ddl-auto property?
+- none, validate, update, create, create-drop
+
+### When using an embedded database, which ddl-auto setting will Spring Boot set by default?
+- create-drop
+
+### When using an NON-embedded database, which ddl-auto setting will Spring Boot set by default?
+- none
+
+### What two files will Spring Boot use to initialize the database?
+- schema.sql and data.sql
+
+
+
 
 
 

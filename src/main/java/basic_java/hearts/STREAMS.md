@@ -4,8 +4,8 @@
 
 - With Java 8 Collection interface has two methods to generate a Stream: `stream()` and `parallelStream()`.
 Stream operations are either intermediate or terminal.
-- Intermediate operations return a Stream so multiple intermediate operations can be chained before the Stream is closed.
-- Terminal operations are either void or return a non-stream result.
+    - Intermediate operations return a Stream so multiple intermediate operations can be chained before the Stream is closed.
+    - Terminal operations are either void or return a non-stream result.
 
 ### 1. Using Streams
 
@@ -24,29 +24,23 @@ fruitStream.filter(s -> s.contains("a"))
     .forEach(System.out::println);
 ```
 
-- 1. Create a `Stream<String>` containing a sequenced ordered Stream of fruit String elements using the static factory method
+- Create a `Stream<String>` containing a sequenced ordered Stream of fruit String elements using the static factory method
 `Stream.of(values)`
-- 2. The `filter()` operation retains only elements that match a given predicate. In this case the elements containing
+- The `filter()` operation retains only elements that match a given predicate. In this case the elements containing
 an "a".
-- 3. The `map()` operation transforms each element using a given function, called a mapper. In this case, each fruit String
+- The `map()` operation transforms each element using a given function, called a mapper. In this case, each fruit String
 is mapped to its uppercase String version.
-
-```
-That the map() operation will return a stream with a different generic type if the mapping
-function returns a type different to its input parameter. For example on a Stream<String> calling
-.map(String::isEmpty) returns a Stream<Boolean>
-```
-
-- 4. The `sorted()` operation sorts the elements of the Stream according to their natural ordering.
-- 5. `forEach(action)` operation performs an action which acts on each element of the Stream, passing it to a
+    - That the map() operation will return a stream with a different generic type if the mapping
+    function returns a type different to its input parameter. For example on a Stream<String> calling
+    .map(String::isEmpty) returns a Stream<Boolean>
+- The `sorted()` operation sorts the elements of the Stream according to their natural ordering.
+- `forEach(action)` operation performs an action which acts on each element of the Stream, passing it to a
 Consumer. In the example, each element is simply being printed to the console. This operation is a terminal
 operation, thus making it impossible to operate on it again.
 
-```
-Operations defined on the Stream are performed because of the terminal operation.
+- Operations defined on the Stream are performed because of the terminal operation.
 Without a terminal operation, the stream is not processed. Streams can not be reused. Once a
 terminal operation is called, the Stream object becomes unusable.
-```
 
 ```
                 Predicate     Function   Comparator
@@ -55,15 +49,13 @@ fruit Stream -> | filter | -> | map | -> | sorted | -> forEach
                 +--------+    +-----+    +--------+
 ```
 
-#### Closing Streams
+### Closing Streams
 
-```
-Stream generally does not have to be closed. It is only required to close streams that
+- Stream generally does not have to be closed. It is only required to close streams that
 operate on IO channels. Most Stream types don't operate on resources and therefore don't require
 closing.
-```
 
-- The Stream interface extends AutoCloseable. Streams can be closed by calling the `close()` method or by using try-
+- The Stream interface extends **AutoCloseable**. Streams can be closed by calling the `close()` method or by using try-
 with-resource statement.
 
 - Example use case where a Stream should be closed is when you create s Stream of lines from a file:
@@ -84,10 +76,10 @@ public Stream<String> streamAndDelete(Path path) throws IOException {
 }
 ```
 
-The run handler will only execute if the `close()` method gets called, either explicitly or implicitly by a try-with resources
+- The run handler will only execute if the `close()` method gets called, either explicitly or implicitly by a try-with resources
 statement.
 
-#### Processing Order
+### Processing Order
 
 - A Stream objects processing can be sequential or parallel:
     - In a sequential mode, the elements are processed in the order of the source of the Stream. If the Stream is ordered
@@ -103,12 +95,11 @@ long howManyOddNumbers = integerList.stream()
 System.out.println(howManyOddNumbers);
 ```
 
-    - Parallel mode allows the use of multiple threads on multiple cores but there is no guarantee of the order in which elements
+- Parallel mode allows the use of multiple threads on multiple cores but there is no guarantee of the order in which elements
 are processed.
-
 - If multiple methods are called on a sequential Stream, not every method has to be invoked. For example, if a Stream
 is filtered and the number of elements is reduced to one, a subsequent call to a method such as sort will not occur.
-This can increase the performance of a sequential Stream — an optimization that is not possible with a parallel
+This can increase the performance of a sequential Stream an optimization that is not possible with a parallel
 Stream.
 
 ```java
@@ -118,7 +109,7 @@ long howManyOddNumbers = integerList.parallelStream()
 System.out.println(howManyOddNumbers);
 ```
 
-#### Difference from Containers (or Collections)
+### Difference from Containers (or Collections)
 
 - While some actions can be performed on both Containers and Streams, they ultimately serve different purposes
 and support different operations.
@@ -154,10 +145,6 @@ temporary structure.
 ```java
 List<String> list = Arrays.asList("FOO", "BAR");
 Iterable<String> iterable = () -> list.stream().map(String::toLowerCase).iterator();
-
-for (String str : iterable) {
-    System.out.println(str);
-}
 
 for (String str : iterable) {
     System.out.println(str);
@@ -212,10 +199,10 @@ apple=2
 ### 4. Infinite Streams
 
 - It is possible to generate a Stream that does not end. Calling a terminal method on an infinite Stream causes the
-Stream to enter an infinite loop. The limit method of a Stream can be used to limit the number of terms of the Stream
+Stream to enter an infinite loop. The **limit** method of a Stream can be used to limit the number of terms of the Stream
 that Java processes.
 - Example generates a Stream of all natural numbers, starting with the number 1. Each successive term of the
-Stream is one higher than the previous. By calling the limit method of this Stream, only the first five terms of the
+Stream is one higher than the previous. By calling the `limit()` method of this Stream, only the first five terms of the
 Stream are considered and printed.
 
 ```java
@@ -226,7 +213,7 @@ IntStream naturalNumbers = IntStream.iterate(1, x -> x + 1);
 naturalNumbers.limit(5).forEach(System.out::println);
 ```
 
-- Another way of generating an infinite stream is using the Stream.generate method. This type takes a lambda of type
+- Another way of generating an infinite stream is using the `Stream.generate()` method. This type takes a lambda of type
 Supplier.
 
 ```java
@@ -239,7 +226,7 @@ infiniteRandomNumbers.limit(10).forEach(System.out::println);
 
 ### 5. Collect Elements of a Stream into a Collection
 
-#### Collect with toList() and toSet()
+### Collect with toList() and toSet()
 
 ```java
 System.out.println(Arrays.asList("apple", "banana", "orange")
@@ -251,10 +238,9 @@ System.out.println(Arrays.asList("apple", "banana", "orange")
 
 - `Collectors.toSet()` collects the elements of a Stream into a Set
 
-#### Explicit control over the implementation of List or Set
+### Explicit control over the implementation of List or Set
 
 - There are no guarantees on the type, mutability, serializability or thread safety of the List or Set returned.
-
 - For explicit control over the implementation to be returned, `Collectors#toCollection(Supplier)` can be used instead,
 where the given supplier returns a new and empty collection.
 
@@ -274,7 +260,7 @@ System.out.println(strings
 
 ```
 
-#### Collecting Elements using toMap
+### Collecting Elements using toMap
 
 - Collector accumulates elements into a Map, Where key is the Student Id and Value is Student Value.
 
@@ -290,15 +276,14 @@ Map<Integer, String> idToName = students.stream()
 System.out.println(idToName);
 ```
 
-- The `Collectors.toMap()` has another implementation Collector<T, ?, Map<K,U>> toMap(Function<? super T, ?
+- The `Collectors.toMap()` has another implementation `Collector<T, ?, Map<K,U>> toMap(Function<? super T, ?
   extends K> keyMapper, Function<? super T, ? extends U> valueMapper, BinaryOperator<U>
-  mergeFunction). The mergeFunction is mostly used to select either new value or retain old value if the key is
+  mergeFunction)`. The mergeFunction is mostly used to select either new value or retain old value if the key is
   repeated when adding a new member in the Map from a list.
+- The mergeFunction often looks like: `(s1, s2) -> s1` to retain value corresponding to the repeated key, or
+  `(s1, s2) -> s2` to put new value for the repeated key.
 
-- The mergeFunction often looks like: (s1, s2) -> s1 to retain value corresponding to the repeated key, or (s1,
-  s2) -> s2 to put new value for the repeated key.
-
-#### Collecting Elements to Map of Collections
+### Collecting Elements to Map of Collections
 
 - Requires to make a map of list out of a primary list. Example: From student of list, we need to make a map of list of
 subjects for each student.
@@ -412,19 +397,19 @@ Stream<String> aParallelStream = data.parallelStream();
 aParallelStream.forEach(System.out::println);
 ```
 
-- The order might change as all the elements are processed in parallel (Which may make it faster). Use
-parallelStream when ordering does not matter.
+- The order might change as all the elements are processed in parallel (Which may make it faster). **Use
+parallelStream when ordering does not matter**.
 
-#### Performance impact
+### Performance impact
 
-- In case networking is involved, parallel Streams may degrade the overall performance of an application because all
-parallel Streams use a common fork-join thread pool for the network.
-- On the other hand, parallel Streams may significantly improve performance in many other cases, depending of the
+- In case networking is involved, **parallelStreams** may degrade the overall performance of an application because all
+**parallelStreams** use a common fork-join thread pool for the network.
+- On the other hand, **parallelStreams** may significantly improve performance in many other cases, depending of the
 number of available cores in the running CPU at the moment.
 
 ### 9. Creating a Stream
 
-- All java Collection<E> have stream() and parallelStream() methods for which a Stream<E> can be constructed:
+- All java **Collection<E>** have `stream()` and `parallelStream()` methods for which a Stream<E> can be constructed:
 
 ```java
 Collection<String> stringList = new ArrayList<>();
@@ -439,7 +424,7 @@ Stream<String> stringStream = Arrays.stream(values);
 Stream<String> stringStreamAlternative = Stream.of(values);
 ```
 
-- The difference between Arrays.stream() and Stream.of() is that Stream.of() has a varargs parameter, so it can be used like:
+- The difference between `Arrays.stream()` and `Stream.of()` is that `Stream.of()` has a varargs parameter, so it can be used like:
 
 ```java
 Stream<Integer> integerStream = Stream.of(1,2,3);
@@ -452,7 +437,7 @@ IntStream intStream = IntStream.of(1,2,3);
 DoubleStream doubleStream = DoubleStream.of(1.0, 2.0, 3.0);
 ```
 
-- These primitive streams can also be constructed using the Arrays.stream() method
+- These primitive streams can also be constructed using the `Arrays.stream()` method
 
 ```java
 IntStream intStream = Arrays.stream(new int[] {1,2,3});
@@ -465,13 +450,13 @@ int[] values = new int[] {1,2,3,4,5};
 IntStream intStream = Arrays.stream(values, 1, 3);
 ```
 
-- Any primitive stream can be converted to boxed type using the bozed method
+- Any primitive stream can be converted to boxed type using the `boxed()` method
 
 ```java
 Stream<Integer> integerStream = intStream.boxed();
 ```
 
-#### Reusing intermediate operations of a stream chain
+### Reusing intermediate operations of a stream chain
 
 - Stream is closed when ever terminal operation is called. Reusing the stream of intermediate operations, when only
 terminal operation is only varying, we could create a stream supplier to construct a new stream with all
@@ -513,7 +498,7 @@ System.out.println(stats);
 
 ### 11. Converting an iterator to a stream
 
-- Use Spliterators.spliterator() or Spliterators.spliteratorUnknownSize()  to convert an iterator to a stream
+- Use `Spliterators.spliterator()` or `Spliterators.spliteratorUnknownSize()` to convert an iterator to a stream
 
 ```java
 Iterator<String> iterator = Arrays.asList("A", "B", "C").iterator();
@@ -524,10 +509,10 @@ Stream<String> stream = StreamSupport.stream(spliterator, false);
 ### 12. Using IntStream to iterate over indexes
 
 - Streams of elements usually do not allow access to the index value of the current item. To iterate over an array or
-ArrayList while having access to indexes, use IntStream.range(start, endExclusive)
+ArrayList while having access to indexes, use `IntStream.range(start, endExclusive)`
 
 ```java
-String[] names = { "Jon", "Darin", "Bauke", "Hans", "Marc" };
+String[] names = { "Ferrari", "Merc", "RedBull", "Hass", "Renault" };
 IntStream.range(0, names.length)
     .mapToObj(i -> String.format("#%d %s", i + 1, names[i]))
     .forEach(System.out::println);
@@ -550,14 +535,14 @@ Collection<String> digits = Arrays.asList("1", "2", "3");
 Collection<String> greekAbc = Arrays.asList("alpha", "beta", "gamma");
 ```
 
-#### Example 1 - Concatenate two streams
+### Example 1 - Concatenate two streams
 
 ```java
 final Stream<String> concat1 = Stream.concat(abc.stream(), digits.stream());
 concat1.forEach(System.out::println);
 ```
 
-#### Example 2 - Concatenate more than two Streams
+### Example 2 - Concatenate more than two Streams
 
 ```java
 final Stream<String> concat2 = Stream.concat(
@@ -568,7 +553,7 @@ System.out.println(concat2.collect(Collectors.joining(", ")));
 // prints: a, b, c, 1, 2, 3, alpha, beta, gamma
 ```
 
-- Alternatively to simplify the nested concat() syntax the Streams can also be concatenated with flatMap()
+- Alternatively to simplify the nested `concat()` syntax the Streams can also be concatenated with `flatMap()`
 
 ```java
 final Stream<String> concat3 = Stream.of(
@@ -581,15 +566,15 @@ System.out.println(concat3.collect(Collectors.joining(", ")));
 ```
 
 - Be careful when constructing Streams from repeated concatenation, because accessing an element of a deeply
-  concatenated Stream can result in deep call chains or even a StackOverflowException.
+  concatenated Stream can result in deep call chains or even a **StackOverflowException**.
 
 ### 14. Reduction with Streams
 
 - Reduction is the process of applying a binary operator to every element of a stream to result in one value.
-- The sum() of an IntStream is an example of a reduction; it applies addition to every term of the Stream,
+- The `sum()` of an IntStream is an example of a reduction; it applies addition to every term of the Stream,
 resulting in one final value:
 - The reduce method of Stream allows one to create a custom reduction. It is possible to use the reduce method to
-implement the sum() method:
+implement the `sum()` method:
 
 ```java
 IntStream istr;
@@ -598,7 +583,7 @@ OptionalInt istr.reduce((a,b)->a+b);
 ```
 
 - The Optional version is returned so the empty Streams can be handled appropriately.
-- Another example of reduction is combining a Stream<LinkedList<T>> into a single LinkedList<T>:
+- Another example of reduction is combining a **Stream<LinkedList<T>>** into a single **LinkedList<T>**:
 
 ```java
 Stream<LinkedList<T>> listStream;
@@ -612,9 +597,9 @@ Optional<LinkedList<T>> bigList = listStream.reduce((LinkedList<T> list1, Linked
 });
 ```
 
-- You can also provide an identity element. For example, the identity element for addition is 0, as x+0==x. For
-  multiplication, the identity element is 1, as x*1==x. In the case above, the identity element is an empty
-  LinkedList<T>, because if you add an empty list to another list, the list that you are "adding" to doesn't change:
+- You can also provide an identity element. For example, the identity element for addition is 0, as `x+0==x`. For
+  multiplication, the identity element is 1, as `x*1==x`. In the case above, the identity element is an empty
+  **LinkedList<T>**, because if you add an empty list to another list, the list that you are "adding" to doesn't change:
 
 ```java
 Stream<LinkedList<T>> listStream;
@@ -629,16 +614,15 @@ list2)->{
 });
 ```
 
-- Note that when an identity element is provided, the return value is not wrapped in an Optional—if called on an
-  empty stream, reduce() will return the identity element
-
-- The binary operator must also be associative, meaning that (a+b)+c==a+(b+c). This is because the elements may be
+- Note that when an identity element is provided, the return value is not wrapped in an Optional - if called on an
+  empty stream, `reduce()` will return the identity element
+- The binary operator must also be associative, meaning that `(a+b)+c==a+(b+c)`. This is because the elements may be
   reduced in any order.
 
 ### 15. Using Streams of Map.Entry to Preserve Initial Values after Mapping
 
 - When you have a Stream you need to map but want to preserve the initial values as well, you can map the Stream to
-a Map.Entry<K,V> using:
+a **Map.Entry<K,V>** using:
 
 ```java
 public static <K, V> Function<K, Map.Entry<K, V>> entryMapper(Function<K, V> mapper){
@@ -661,8 +645,8 @@ Stream<Map.Entry<K, V>> entryStream = mySet.stream()
 
 ### 16. IntStream to String
 
-- Java does not have a Char Stream, so when working with Strings and constructing a Stream of Characters, an
-  option is to get a IntStream of code points using String.codePoints() method.
+- Java does not have a CharStream, so when working with Strings and constructing a Stream of Characters, an
+  option is to get a IntStream of code points using `String.codePoints()` method.
 
 ```java
 public IntStream stringToIntStream(String in) {
@@ -670,7 +654,7 @@ public IntStream stringToIntStream(String in) {
 }
 ```
 
-- It is a bit more involved to do the conversion other way around i.e. IntStreamToString:
+- It is a bit more involved to do the conversion other way around:
 
 ```java
 public String intStreamToString(IntStream intStream) {
@@ -690,9 +674,9 @@ IntStream.iterate(1, i -> i + 1) // Generate an infinite stream 1,2,3,4,...
     .findFirst();
 ```
 
-- This expression will return an OptionalInt with the result.
+- This expression will return an Optional<Integer> with the result.
 - With an infinite Stream, Java will keep checking each element until it finds a result. With a finite Stream, if
-  Java runs out of elements but still can't find a result, it returns an empty OptionalInt.
+  Java runs out of elements but still can't find a result, it returns an empty Optional<Integer>.
 
 ### 18. Using Streams and Method References to Write Self-Documenting Processes
 
@@ -736,15 +720,15 @@ final long maxSize = 30L; // the number of elements the stream should be limited
 final Stream<T> slice = collection.stream().skip(n).limit(maxSize);
 ```
 
-- IllegalArgumentException is thrown if n is negative of maxSize is negative
-- both skip(long) and limit(long) are intermediate operations
-- if a stream contains fewer than n elements then skip(n) returns an empty stream
-- both skip(long) and limit(long) are cheap operations on sequential stream pipelines, but can be quite
+- **IllegalArgumentException** is thrown if n is negative of maxSize is negative
+- both `skip(long)` and `limit(long)` are intermediate operations
+- if a stream contains fewer than n elements then `skip(n)` returns an empty stream
+- both `skip(long)` and `limit(long)` are cheap operations on sequential stream pipelines, but can be quite
 expensive on ordered parallel pipelines
 
 ### 21. Create a Map based on a Stream
 
-#### Simple case without duplicate keys
+### Simple case without duplicate keys
 
 ```java
 Stream<String> characters = Stream.of("A", "B", "C");
@@ -753,16 +737,14 @@ Map<Integer, String> map = characters
 // map = {65=A, 66=B, 67=C}
 ```
 
-- To make things more declarative, we can use static method in Function interface - Function.identity(). We can
-  replace this lambda element -> element with Function.identity().
+- To make things more declarative, we can use static method in Function interface - `Function.identity()`. We can
+  replace this lambda element -> element with `Function.identity()`.
 
-#### Case where there might be duplicate keys
+### Case where there might be duplicate keys
 
-```
-If the mapped keys contains duplicates (according to Object.equals(Object)), an
+- If the mapped keys contains duplicates (according to Object.equals(Object)), an
 IllegalStateException is thrown when the collection operation is performed. If the mapped keys may
 have duplicates, use toMap(Function, Function, BinaryOperator) instead.
-```
 
 ```java
 Stream<String> characters = Stream.of("A", "B", "B", "C");
@@ -774,7 +756,7 @@ Map<Integer, String> map = characters
 // map = {65=A, 66=BB, 67=C}
 ```
 
-- The BinaryOperator passed to Collectors.toMap(...) generates the value to be stored in the case of a collision. It can:
+- The **BinaryOperator** passed to **Collectors.toMap(...)** generates the value to be stored in the case of a collision. It can:
     - return the old value, so that the first value in the stream takes precedence,
     - return the new value, so that the last value in the stream takes precedence, or
     - combine the old and new values

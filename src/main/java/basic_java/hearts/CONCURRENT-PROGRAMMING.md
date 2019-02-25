@@ -17,13 +17,13 @@ Runnable is to assign the result to a variable accessible in a scope outside of 
 instead of `run()`. The call method has the additional capability to **return a result and it also allowed to throw checked
 exceptions**.
 
-#### The result from a Callable task submission is available to be tapped via a Future
+### The result from a Callable task submission is available to be tapped via a Future
 
 - **Future** can be considered a container of sorts that houses the result of the **Callable** computation.
 - Computation of the **Callable** can carry on in another thread, and any attempt to tap the result of a **Future** will block and will
 only return the result once it is available.
 
-##### Callable Interface
+### Callable Interface
 
 ```java
 public interface Callable<V> {
@@ -31,7 +31,7 @@ public interface Callable<V> {
 }
 ```
 
-##### Future
+### Future
 
 ```java
 interface Future<V> {
@@ -43,7 +43,7 @@ interface Future<V> {
 }
 ```
 
-#### Using Callable and Future example
+### Using Callable and Future example
 
 ```java
 public static void main(String[] args) throws Exception {
@@ -71,7 +71,7 @@ public class ComplexCalculator implements Callable<String> {
 }
 ```
 
-#### Other operations permitted on Future
+### Other operations permitted on Future
 
 - `get(long timeout, TimeUnit unit)` defines maximum time period during current thread will wait for a result.
 - To cancel the task call `cancel(mayInterruptIfRunning)`. The flag mayInterrupt indicates that task should be
@@ -87,26 +87,24 @@ threads completes.
 ```
 
 - A **CountDownLatch** is initialized with a given count
-- The await methods block until the current count reaches zero due to invocations of the `countDown()` method,
+- The `await()` methods block until the current count reaches zero due to invocations of the `countDown()` method,
 after which all waiting threads are released and any subsequent invocations of await return immediately
 - This is a one-shot phenomenon - the count cannot be reset. If you need a version that resets the count,
-consider using CyclicBarrier
+consider using **CyclicBarrier**
 
 ### Methods:
 
-- `await()`:
-
+- `await()`
+    - Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
 ```java
 public void await() throws InterruptedException
 ```
-Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
 
-- `countDown()`:
-
+- `countDown()`
+    - Determines to count of the latch, releasing all waiting threads if the count reaches zero
 ```java
 public void countDown()
 ```
-Determines to count of the latch, releasing all waiting threads if the count reaches zero
 
 - Use
 
@@ -201,8 +199,7 @@ class CountAndPrint implements Runnable {
 
 ### 4. Locks as Synchronisation aids
 
-Locks are thread synchronisation mechanisms that essentially serve the same purpose as synchronized blocks or key words.
-
+- Locks are thread synchronisation mechanisms that essentially serve the same purpose as synchronized blocks or key words.
 - Intrinsic Locking
 
 ```java
@@ -235,7 +232,7 @@ public void doSomething() {
 - Locks also have functionality that intrinsic locking does not offer, such as locking but remaining responsive
 to interruption, or trying to lock, and not block when unable to.
 
-#### Locking, responsive to interruption
+### Locking, responsive to interruption
 
 ```java
 class Locky {
@@ -260,7 +257,7 @@ class Locky {
 }
 ```
 
-#### Only do something when able to lock
+### Only do something when able to lock
 
 ```java
 public class Locky2 {
@@ -337,7 +334,7 @@ class Pool {
 }
 ```
 
-### 6. :star: Synchronization
+### :star: 6. Synchronization
 
 The synchronization block, which can use any Java object as an intrinsic lock.
 
@@ -362,7 +359,7 @@ public static void main(String[] args) {
 
 - If it weren't for the synchronized block, there would have been multiple concurrency issues involved.
 - The first one would be with the post increment operator (it isn't atomic in itself), and the second would be that we
-would be observing the value of t after an arbitrary amount of other threads has had the chance to modify it.
+would be observing the value of `t` after an arbitrary amount of other threads has had the chance to modify it.
 - Since we acquired an intrinsic lock, there will be no race conditions here and the output will contain
 numbers from 1 to 100 in their normal order.
 
@@ -389,8 +386,8 @@ public void foo() {
 }
 ```
 
-#### The following blocks of code are practically equivalent:
-- 1. synchronized block on this:
+### The following blocks of code are practically equivalent:
+- synchronized block on `this`
 
 ```java
 public void foo() {
@@ -400,7 +397,7 @@ public void foo() {
 }
 ```
 
-- 2. synchronized method:
+- synchronized method
 
 ```java
 public synchronized void foo() {
@@ -408,7 +405,7 @@ public synchronized void foo() {
 }
 ```
 
-#### Likewise for static methods:
+### Likewise for static methods
 
 ```java
 class MyClass {
@@ -419,7 +416,7 @@ class MyClass {
     }
 }
 ```
-- Has the same effect as this:
+- Has the same effect as this
 
 ```java
 class MyClass {
@@ -431,7 +428,7 @@ class MyClass {
 
 ### 7. Runnable Object
 
-Runnable interface defines a single method, `run()`, meant to obtain the code executed in the thread.
+- Runnable interface defines a single method, `run()`, meant to obtain the code executed in the thread.
 The Runnable object is passed to the Thread constructor. And Thread's `start()` method is called:
 
 ```java
@@ -454,7 +451,7 @@ public static void main(String[] args) {
 }
 ```
 
-#### Runnable vs Thread subclass
+### Runnable vs Thread subclass
 
 - A Runnable object is more general, because the Runnable object can subclass a class other than Thread.
 - Thread subclassing is easier to use in simple applications, but is limited by the fact that your task class must be a
@@ -467,7 +464,6 @@ descendant of Thread.
 - In Java there is one lock associated with each object. To avoid concurrent modification done by multiple threads on single object
 we can use synchronized keyword.
 - Using synchronized keyword wrongly can lead to stuck systems called as deadlocked system.
-
 - The 2 threads working on 1 instance, lets call threads as First and Second, and lets say we have 2
 resources R1 and R2.
 - First acquires R1 and also needs R2 for its completion while Second acquires R2 and needs R1 for completion.
@@ -559,13 +555,13 @@ class MyThread extends Thread {
 }
 ```
 
-- The thread can be created:
+- The thread can be created
 
 ```java
 MyThread t = new MyThread();
 ```
 
-- A Thread class also contains a constructor accepting a string, which will be used as the thread's name.
+- A Thread class also contains a constructor accepting a string, which will be used as the thread's name
 
 ```java
 class MyThread extends Thread {
@@ -633,10 +629,10 @@ class WorkerFactory implements ThreadFactory {
 
 ### 10. Atomic operations
 
-An atomic operation is an operation that is executed all at once, without any chance of other threads observing or
+- An atomic operation is an operation that is executed all at once, without any chance of other threads observing or
 modifying state during the atomic operation's execution
 
-#### Bad example
+### Bad example
 
 ```java
 private static int t = 0;
@@ -681,7 +677,7 @@ public static void main(String[] args) {
 }
 ```
 
-- The incrementAndGet method of AtomicInteger atomically increments and returns the new value, thus eliminating the previous
+- The `incrementAndGet()` method of **AtomicInteger** atomically increments and returns the new value, thus eliminating the previous
 race condition
 
 ### 11. Exclusive write / Concurrent read access
@@ -738,7 +734,7 @@ of things can go wrong:
 the **StampedLock**, that amongst other things implements an optimistic lock mode. This lock works very different
 from the **ReadWriteLock**, and this sample is not transposable
 
-### 12. :star: Producer-Consumer
+### :star: 12. Producer-Consumer
 
 ```java
 public class Producer implements Runnable {
