@@ -76,13 +76,14 @@ its static type is the last common supertype of the type union.
 - However if `e` is rethrown within the catch block, the exception types that are rethrown are the types in the union.
 
 ```java
-public void method() throws IOException, SQLException
+public void method() throws IOException, SQLException {
     try {
         doSomething();
     } catch (IOException | SQLException e) {
         report(e);
         throw e;
     }
+}
 ```
 
 - IOException and SQLException are checked exceptions whose least common supertype is Exception.
@@ -92,9 +93,9 @@ public void method() throws IOException, SQLException
 
 ### The try-witch-resources statement
 
-- What is resource: Java 7 introduced the java.lang.AutoCloseable interface to allow classes to be managed using
+- :star: What is resource: Java 7 introduced the `java.lang.AutoCloseable` interface to allow classes to be managed using
 try-with-resources statement.
-- Instances of classes that implement AutoCloseable are referred to as resources.
+- **Instances of classes that implement AutoCloseable are referred to as resources.**
 - These typically need to be disposed of in a timely fashion rather than relying on the GC to dispose them.
 - The AutoCloseable interface defines a single method.
 

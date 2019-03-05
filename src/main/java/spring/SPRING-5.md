@@ -938,6 +938,141 @@ Person.builder().name("Majki").city("LA").build();
 
 ***
 
+## Exception Handling in Spring MVC
+
+### HTTP Status Codes
+
+- HTTP 5XX Server Error
+    - HTTP 500 - Internal Server Error
+        - Generally, any unhandled exception
+    - Other 500 errors are generally not used with Spring MVC
+- HTTP 4XX Client Errors - Generally Checked Exceptions
+    - 400 Bad Request - Cannot process due to client error
+    - 401 Unauthorized - Authentication required
+    - 404 Not Found - Resource Not Found
+    - 405 Method Not Allowed - HTTP method not allowed
+    - 409 Conflict - Possible with simultaneous updates
+    - 417 Expectation Failed - Sometimes used with RESTful interfaces
+    - 418 I'm a Teapot
+
+### @ResponseStatus
+
+- Allows you to annotate custom exception classes to indicate to the framework the HTTP status you want returned when
+that exception is thrown
+- Global to the application
+
+### @ExceptionHandler
+
+- `@ExceptionHandler` works at the controller level
+- Allows you to define custom exception handling
+    - Can be used with `@ResponseStatus` for just returning a http status
+    - Can be used to return a specific view
+    - Also can take total control and work with the Model and View
+        - `Model` cannot be a parameter of an ExceptionHandler method
+
+### HandlerExceptionResolver
+
+- HandlerExceptionResolver is an interface you can implement for custom exception handling
+- Used internally by Spring MVC
+- Note Model is not passed
+
+### Internal Spring MVC Exception Handlers
+
+- Spring MVC has 3 implementations of HandlerExceptionResolver
+- ExceptionHandlerExceptionResolver - Matches uncaught exceptions to `@ExceptionHandler`
+- ResponseStatusExceptionResolver - Looks for uncaught exceptions matching `@ResponseStatus`
+- DefaultHandlerExceptionResolver - Converts standard Spring Exceptions to HTTP status codes
+
+### Custom HandlerExceptionResolver
+
+- You can provide your own implementations of HandlerExceptionResolver
+- Typically implemented with Spring's Ordered interface to define order to handlers will run in
+- Custom implementations are uncommon due to Spring robust exception handling
+
+### SimpleMappingExceptionResolver
+
+- A Spring Bean you can define to map exceptions to specific views
+- You only define the exception class name (no package) and the view name
+- You can optionally define a default error page
+
+### Which use
+
+- If just the HTTP status - use `@ResponseStatus`
+- If redirection to a view, Use SimpleMappingExceptionResolver
+- If both, consider `@ExceptionHandler` on the controller
+
+***
+
+## Data Validation with Spring
+
+- JSR 303 Supported Since Spring Framework 3
+- JSR 303 Produced Standard Validation Annotations
+
+### JSR 303 - Java Bean Validation
+
+- Standard validations are found in the package `javax.validation.constraints`
+- From the jar `javax.validation:validation-api`
+- API Implementation is: `org.hibernate.hibernate-validator`
+
+### JSR 380 - Bean Validation 2.0
+
+- Primary goal is to leverage features of Java 8
+- Bean Validation 2.0 not supported in Spring yet
+
+### Standard Validators
+
+@AssertFalse, @AssertTrue, @DecimalMax, @DecimalMin, @Digits, @Future, @Max, @Min, @NotNull, @Null, @Past, @Pattern, @Size
+
+### Hibernate Validators
+
+@CreditCardNumber, @Currency, @EAN, @Email, @Length, @LunhCheck, @Mod10Check, @Mod11Check, @NotBlank, @NotEmpty,
+@ParameterScriptAssert, @Range, @SafeHtml, @ScriptAssert, @URL
+
+***
+
+## Internationalization
+
+- i18n in a Spring MVC context generally is looking at support for languages
+- Driven by 'accept-language' request header
+- 'en-US' - 'en' is the language code, 'US' is country code
+- Language identifiers were established by RFC 3066 in 2001
+- Language Codes are governed by ISO 639
+    - ISO - International Organization for Standardization
+- Region codes are governed by ISO 3166
+    - Can refer to countries, regions, territories
+
+### Locale Detection
+
+- Default behavior is to use Accept-Language header
+- Can be configured to use system, a cookie, or a custom parameter
+    - Custom Parameter is useful to allow user to select language
+
+### Locale Resolver
+
+- AcceptHeaderLocaleResolver is the Spring Boot Default
+- Optionally, can use FixedLocaleResolver
+    - Uses the locale of the JVM
+- Available: CookieLocaleResolver, SessionLocaleResolver
+
+### Changing Locale
+
+- Browsers are typically tied to the Locale of the operation system
+- Locale changing plugins are available
+- Spring MVC provides as LocaleChangeInterceptor to allow you to configure a custom parameter
+to use to change the locale
+
+### Resource Bundles
+
+- Resource bundles (aka messages.properties) are selected on highest match order
+- First selected will be on language region
+    - ie en-US would match messages_en_US.properties
+- If no exact match is found, just the language code is used
+    - en-GB would match messages_en_GB.properties
+    - OR if no file found, would match messages_en.properties
+    - Finally would match messages.properties
+
+***
+
 ## Questions
 
 ### What is special about the `@Repository` stereotype ?
