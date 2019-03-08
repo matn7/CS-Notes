@@ -7,4 +7,5 @@ target
 .target
 src/test/resources/cars.json
 src/test/resources/person.json
+ src/test/resources/
 
