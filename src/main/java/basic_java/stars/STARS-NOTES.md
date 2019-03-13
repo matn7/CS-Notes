@@ -20,8 +20,9 @@ memory. In modern architectures, there are memory caches that are slower than re
 memory.
 - The Java Memory Model is the section of the JLS that specifies the conditions under which one thread is guaranteed
   to see the effects of memory writes made by another thread.
-- Happens before relationships : "Two actions can be ordered by a happens-before relationship.
-    - If one action happens-before another, then the first is visible to and ordered before the second."
+- Happens before relationships :
+    - "Two actions can be ordered by a happens-before relationship"
+    - "If one action happens-before another, then the first is visible to and ordered before the second."
 
 - If you adopt the following principals when writing concurrent code in Java, you can largely avoid the need to resort
   to happens-before reasoning
@@ -29,7 +30,7 @@ memory.
       and will not introduce thread-safety issues when you use it with other classes.
     - Understand and avoid "unsafe publication".
     - Use primitive mutexes or Lock objects to synchronize access to state in mutable objects that need to be
-      thread-safe1.
+      thread-safe.
     - Use Executor / ExecutorService or the fork join framework rather than attempting to create manage
       threads directly.
     - Use the **java.util.concurrent** classes that provide advanced locks, semaphores, latches and barriers, instead
@@ -76,10 +77,10 @@ $ java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSi
 
 ### Finalization
 
-- A Java object may declare a finalize method. This method is called just before Java releases the memory for the
+- A Java object may declare a `finalize()` method. This method is called just before Java releases the memory for the
   object.
-    - Java makes no guarantees about when a finalize() method will called.
-    - Java does not even guarantee that a finalize() method will be called some time during the running
+    - Java makes no guarantees about when a `finalize()` method will called.
+    - Java does not even guarantee that a `finalize()` method will be called some time during the running
       application's lifetime.
     - The only thing that is guaranteed is that the method will be called before the object is deleted ... if the object
       is deleted.
@@ -90,7 +91,7 @@ $ java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSi
 System.gc();
 ```
 - However, Java does not guarantee that the Garbage Collector has run when the call returns. This method simply
-  "suggests" to the JVM (Java Virtual Machine) that you want it to run the garbage collector, but does not force it to do
+  **suggests** to the JVM (Java Virtual Machine) that you want it to run the garbage collector, but does not force it to do
   so.
 
 ### Memory consumption
@@ -154,7 +155,7 @@ PermGen Size
 -XX:MaxPermSize=256m
 ```
 
--verbose:gc // print to the console when garbage collection takes place
+- verbose:gc // print to the console when garbage collection takes place
 
 ```
 -Xmx10m -verbose:gc // print garbage collection
@@ -163,7 +164,6 @@ PermGen Size
 - Young generation = 1/3 heap size
     - -Xmn set the size of young generation
     - -Xms256m
-
 
 ### Generating heap dumps
 
@@ -195,8 +195,8 @@ apache-jmeter
 - Objects are allocated in the "heap" of java memory
 - Static members, class definition are stored in "method area" PermGen/Metaspace
 - Garbage Collection is carried out by a daemon thread called "Garbage Collector"
-- Force GC to happened System.gc (no guaranteed)
-- When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
+- Force GC to happened `System.gc()` (no guaranteed)
+- When failed to allocated because of full heap. Error message `java.lang.OutOfMemoryError`
 
 - Garbage Collector involves
     - Mark : go through all program structure, mark reachable objects as live
@@ -208,10 +208,10 @@ apache-jmeter
     - Concurrent Collector : GC execute as application runs, not wait the old generation to full stop the world
       execute only during mark/re-mark phase
     - Parallel Collector : Uses multiple CPUs to perform GC. Multiple threads doing mark/sweep. Does not start until
-      heap is full/near-full. "Stop the world" when runs.
+      heap is full/near-full. **Stop the world** when runs.
 
-Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required
-Use parallel collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
+- Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required
+- Use parallel collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
 
 ```
 java -XX:+UseSerialGC
@@ -228,7 +228,7 @@ void method() {
 }
 ```
 
-Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
+- Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
 After method ends execution the reference variable calendar is no longer valid. Hence there are no reference
 to the object created in the method. JVM recognizes this and removes the object from the heap. This is called GC
 
@@ -271,6 +271,11 @@ to the object created in the method. JVM recognizes this and removes the object 
     - insert: O(N)
     - find: O(N)
 
+- Traversing:
+    - inorder
+    - pre order
+    - post order
+
 ```
         TRAVERSING
         INORDER                         PREORDER                    POSTORDER
@@ -312,8 +317,6 @@ to the object created in the method. JVM recognizes this and removes the object 
     - Survivor 2
 - New object is then created on heap in new generation in Eden space, and after few GC it goes to Survivor1 and then
 to Survivor2.
-
-***
 
 
 
