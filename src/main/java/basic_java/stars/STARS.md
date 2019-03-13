@@ -11,9 +11,9 @@ public static void swap(int[] listToSort, int iIndex, int jIndex) {
 ### 1. Selection sort O(N^2)
 
 - At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
-- Complexity O(N^2)
-- O(N^2) - comparisons
-- O(N) - swaps
+- Complexity `O(N^2)`
+- `O(N^2)` - comparisons
+- `O(N)` - swaps
 
 ```java
 public static void selectionSort(int[] list) {
@@ -33,9 +33,9 @@ public static void selectionSort(int[] list) {
 - At each iteration, every element is compared with its neighbor and swapped if they are not in order.
 - Smaller element bubbling to the beginning of the list.
 - If no swaps that means list is sorted.
-- Complexity O(N^2)
-- O(N^2) - comparisons
-- O(N^2) - swaps
+- Complexity `O(N^2)`
+- `O(N^2)` - comparisons
+- `O(N^2)` - swaps
 
 ```java
 public static void bubbleSort(int[] list) {
@@ -59,9 +59,9 @@ public static void bubbleSort(int[] list) {
 
 - Start with sorted list of size 1. Insert next element into list at right position.
 - Find element bubbling to right position
-- Complexity O(N^2)
-- O(N^2) - comparisons
-- O(N^2) - swaps
+- Complexity `O(N^2)`
+- `O(N^2)` - comparisons
+- `O(N^2)` - swaps
 
 ```java
 public static void insertionSort(int[] list) {
@@ -80,35 +80,34 @@ public static void insertionSort(int[] list) {
 
 ### 4. Shell Sort between O(N) and O(N^2)
 
-Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
-Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
-Sort on almost sorted list. Complexity depends on increment value chosen.
-
-- Complexity O(N) and O(N^2)
+- Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
+- Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
+- Sort on almost sorted list. Complexity depends on increment value chosen.
+- Complexity `O(N) and O(N^2)`
 
 ### 5. Merge Sort O(N(Log(N)))
 
-Follows divide and conquer approach to create smaller sub problems.
-Then merge together sorted lists to get fully sorted list.
-
-- Complexity O(N(Log(N)))
+- Follows divide and conquer approach to create smaller sub problems.
+- Then merge together sorted lists to get fully sorted list.
+- Complexity `O(N(Log(N)))`
 - Is not adaptive = takes advantage over input (nearly sorted list)
 
 ### 6. Quick Sort
 
-Divide and conquer algorithm which partitions the list at every step. Partition is based on **pivot** element from the list.
-The list is partitioned with all elements smaller than pivot on one side and larger than pivot on the other.
-Pivots is usually first or last element in the list.
+- Divide and conquer algorithm which partitions the list at every step.
+- Partition is based on **pivot** element from the list.
+- The list is partitioned with all elements smaller than pivot on one side and larger than pivot on the other.
+- Pivots is usually first or last element in the list.
 
-- Complexity O(N(Log(N)))
-- O(Log(N)) extra space
+- `Complexity O(N(Log(N)))`
+- `O(Log(N))` extra space
 - Is not adaptive
 
 ### Stability of sorting algorithm
 
-- Elements with the same hashCode stays on the same position after sorting. For example in bubble sort, panda, panda, pies.
-panda would change position with other panda in even though of a fact that they have the same hashCode.
-
+- Elements with the same hashCode stays on the same position after sorting.
+- For example in bubble sort, panda, panda, pies.
+- panda would change position with other panda in even though of a fact that they have the same hashCode.
 
 ***
 
@@ -292,6 +291,8 @@ public static double multiply(double x, double y) {
 ***
 
 ## :star: First non repeat character
+
+// Look at STREAMS.md frequency map
 
 ```java
 public class FirstNonRepeat {
