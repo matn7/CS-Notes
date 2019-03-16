@@ -82,8 +82,8 @@ interrupted if it was started and is running right now.
 ### 2. CountDownLatch
 
 ```
-A synchronization aid that allows one or more threads to wait until a set of operations being performed in other
-threads completes.
+A synchronization aid that allows one or more threads to wait until a set of operations being performed
+in other threads completes.
 ```
 
 - A **CountDownLatch** is initialized with a given count
@@ -94,19 +94,15 @@ consider using **CyclicBarrier**
 
 ### Methods:
 
-- `await()`
-    - Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
+- `await()` - Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
 ```java
 public void await() throws InterruptedException
 ```
 
-- `countDown()`
-    - Determines to count of the latch, releasing all waiting threads if the count reaches zero
+- `countDown()` - Determines to count of the latch, releasing all waiting threads if the count reaches zero
 ```java
 public void countDown()
 ```
-
-- Use
 
 ```java
 class DoSomething implements Runnable {
@@ -118,7 +114,7 @@ class DoSomething implements Runnable {
 
     public void run() {
         try {
-            System.out.println("Do some thing");
+            System.out.println("Do something");
             latch.countDown();
         } catch (Exception err) {
             err.printStackTrace();
@@ -692,7 +688,8 @@ described as follow:
 
 ```java
 public class Sample {
-    // Our lock. The constructor allows a fairness setting, which guarantees the chronology of lock attributes
+    // Our lock. The constructor allows a fairness setting, which guarantees the chronology of
+    // lock attributes
     protected static final ReadWriteLock RW_LOCK = new ReentrantReadWriteLock();
 
     // This is a typical data that needs to be protected for concurrent access
@@ -1138,7 +1135,8 @@ class TaskHandler implements Runnable {
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) { // check for interrupt flag, exit loop when interrupted
+        // check for interrupt flag, exit loop when interrupted
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 Task task = queue.take(); // blocking call, responsive to interrupt
                 handle(task);
@@ -1514,7 +1512,8 @@ when everything is completed.
 public class InvokeAllDemo {
     public InvokeAllDemo() {
         System.out.println("creating service");
-        ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime()
+            .availableProcessors());
 
         List<MyCallable> futureList = new ArrayList<>();
 
@@ -1821,8 +1820,8 @@ public class ThreadLocalExample implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Thread Name = " + Thread.currentThread().getName() + " default formatter = " +
-            formatter.get().toPattern());
+        System.out.println("Thread Name = " + Thread.currentThread().getName() +
+            " default formatter = " + formatter.get().toPattern());
 
         try {
             Thread.sleep(new Random().nextInt(1000));
@@ -2002,7 +2001,8 @@ public class AsyncExample2 {
                 if (f.isDone()) {
                     try {
                         int timeout = f.get();
-                        log.info(String.format("A task just completed after sleeping for %d seconds", timeout));
+                        log.info(String.format("A task just completed after sleeping for %d seconds",
+                            timeout));
                         futures.remove(f);
                     } catch (InterruptedException | ExecutionException e) {
                         log.warning(e.getMessage());
@@ -2069,7 +2069,8 @@ public class AsyncExample3 {
                 if (f.isDone()) {
                     try {
                         int timeout = f.get();
-                        log.info(String.format("A task just completed after sleeping for %d seconds", timeout));
+                        log.info(String.format("A task just completed after sleeping for %d seconds",
+                            timeout));
                         futures.remove(f);
                     } catch (InterruptedException | ExecutionException e) {
                         log.warning(e.getMessage());
@@ -2085,11 +2086,11 @@ public class AsyncExample3 {
 }
 ```
 
-- Notes:
-    - Lambda expressions have access to variable and methods which are available to the scope in which they are
-    defined, but **all variables must be final (or effectively final)** for use inside a lambda expression.
-    - We do not have to specify whether our Lambda expression is a **Callable** or **Runnable<T>** explicitly, the return
-    type is inferred automatically by the return type.
+### Notes:
+- :star: Lambda expressions have access to variable and methods which are available to the scope in which they are
+defined, but **all variables must be final (or effectively final)** for use inside a lambda expression.
+- We do not have to specify whether our Lambda expression is a **Callable** or **Runnable<T>** explicitly, the return
+type is inferred automatically by the return type.
 
 
 
