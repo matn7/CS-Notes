@@ -864,3 +864,87 @@ public void checkEven(Double number) throws IOExcepion // ERROR
 
 - The reason for this rule is that if an overriden method can throw a checked exception that the overriden method
 could not throw, that would break the type substitutability.
+
+***
+
+## :star: Excaptions
+
+```
+NOTE: If one of the threads of your program throws an exception that isn't caught
+by any method along the method invocation stack, that thread will expire. (We will
+come back to this when we look at threads)
+```
+
+### :star: Question: If exception in catch block will be catch again ?
+- Answer NO
+
+```java
+public class Catch {
+    public static void main(String[] args) {
+        try {
+            throw new java.io.IOException();
+        } catch (java.io.IOException exc) {
+            System.err.println("In catch IOException: "+exc.getClass());
+            throw new RuntimeException();
+        } catch (Exception exc) {
+            System.err.println("In catch Exception: "+exc.getClass());
+        } finally {
+            System.err.println("In finally");
+        }
+    }
+}
+```
+
+- Output
+
+```
+In catch IOException: class java.io.IOException
+In finally
+Exception in thread "main" java.lang.RuntimeException
+        at Catch.main(Catch.java:8)
+```
+
+### Checked vs unchecked exceptions
+
+- There are two kinds of exceptions in Java, checked and unchecked, and only checked exceptions need
+appear in throws clauses.
+- The general rule is: Any checked exceptions that may be thrown in a method must either be caught
+or declared in the method's throws clause.
+- Checked exceptions are so called because both the Java compler and the Java virtual machine
+check to make sure this rule is obeyed.
+
+```
+                    * Throwable
+                    /        \
+            + Exception     * any class besides Exception ---> * any subclass
+           /        \
+* RuntimeException   + any class besides RuntimeException
+        |                       |
+* any subclass             + any subclass
+
+* An unchecked throwable
++ An checked exception
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

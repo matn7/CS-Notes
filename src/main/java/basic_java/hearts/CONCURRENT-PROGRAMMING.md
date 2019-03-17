@@ -2092,9 +2092,40 @@ defined, but **all variables must be final (or effectively final)** for use insi
 - We do not have to specify whether our Lambda expression is a **Callable** or **Runnable<T>** explicitly, the return
 type is inferred automatically by the return type.
 
+***
 
+## :star: Processes and Threads
 
+- Processes and Threads are two fundamental units of execution in a concurrent program
 
+### Processes and Threads
+
+- In Java, concurrent programming is mostly thread-based
+- Processing time for each core in a system is shared among processes and
+  threads through an OS feature called time slicing.
+
+```
++----------------------------------------------------------------------------+
+|           Process vs Threads                                               |
++----------------------------------------------------------------------------+
+|   Process (JVM)       +----------+        +----------+        +----------+ |
+|                       | Thread 1 |        | Thread 2 |        | Thread 3 | |
+|                       +----------+        +----------+        +----------+ |
+|                       Stack |             Stack |             Stack |      |
+|                       +----------+        +----------+        +----------+ |
+|   Each thread has its +----------+        +----------+        +----------+ |
+|   own stack memory    | method1()|        | method1()|        | method1()| |
+|                       +----------+        +----------+        +----------+ |
+|                             |                   |                   |      |
+|                             |                   |                   |      |
+|   Single heap per     +--------------------------------------------------+ |
+|   process shared by   | Heap                                             | |
+|   all the threads     |       Object1                 Object2            | |
+|                       +--------------------------------------------------+ |
++----------------------------------------------------------------------------+
+```
+
+### Processes
 
 
 
