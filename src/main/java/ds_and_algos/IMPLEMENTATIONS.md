@@ -235,12 +235,140 @@ class Solution {
 }
 ```
 
+***
 
+# HashMap and HashSet Data structure: Contains Duplicate 219
+## Brutforce Algorithm O(nk) solution: Contains Duplicate 219
 
+```java
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        int n = nums.length;
+        for (int i=0; i<n; ++i) {
+            int j = i-1;
+            while (j>=0) {
+                if (i-j > k) {
+                    break;
+                }
+                if (nums[i] == nums[j]) {
+                    return true;
+                }
+                --j;
+            }
+        }
+        return false;
+    }
+}
+```
 
+## Optimizing with HashMap O(n)
 
+```java
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        int n = nums.length;
 
+        Map<Integer, Integer> h = new HashMap<>();
 
+        for (int i = 0; i < n; ++i) {
+            if (h.containsKey(nums[i]) && i-h.get(nums[i]) <= k) {
+                return true;
+            }
+            h.put(nums[i], i);
+        }
+
+        return false;
+
+    }
+}
+```
+
+***
+
+# Anagram
+## Hash map and Hash Set Data structure O(n^2) Solution: Valid Anagram: 242
+
+```java
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+        if (s == "" && t == "") {
+            return true;
+        }
+        boolean[] matched = new boolean[s.length()];
+
+        for (int i = 0; i < s.length(); ++i) {
+            for (int j = 0; j < t.length(); ++j) {
+                if (s.charAt(i) == t.charAt(j) && !matched[j]) {
+                    matched[j]=true;
+                    break;
+                }
+            }
+        }
+
+        // check if all elements matched[j] = true, if so true, else false
+        for (int i = 0; i < matched.length; ++i) {
+            if (!matched[i]) return false;
+        }
+        return true;
+
+    }
+}
+```
+
+## O(nlogn) Solution
+
+```java
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+        if (s == "" && t == "") {
+            return true;
+        }
+        char[] s_arr = s.toCharArray();
+        char[] t_arr = t.toCharArray();
+
+        Arrays.sort(s_arr);
+        Arrays.sort(t_arr);
+
+        return Arrays.equals(s_arr, t_arr);
+    }
+}
+```
+
+## O(n) Solution with Hashtable
+
+```java
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        // 1 <= integer <= 100
+        // char 'a' -> 65
+        //      'b' -> 66
+        // >= 0 <=128
+        int[] H = new int[128];
+        // 'a' H['a'] ==> H[65]
+
+        for (int i=0; i<s.length(); ++i) {
+            H[s.charAt(i)]++;
+        }
+
+        for (int j=0; j<t.length(); ++j) {
+            H[t.charAt(j)]--;
+        }
+
+        for (int i=0; i<128; ++i) {
+            if (H[i]!=0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
 
 
 

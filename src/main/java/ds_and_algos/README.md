@@ -445,13 +445,211 @@ nums    [2,4,1,7,3,2,5,6]       k = 2
 
 ```
 
-## Brutforce Algorithm O(nk) solution
+## Brutforce Algorithm O(nk) solution: Contains Duplicate 219
 
 ```
 
+a [, , , , , , ,]
+      i   j
+
+aj == aj and [i-j| <= k
+
+i -> O(n)
+    j -> O(k)
+
+O(kn) = O(n^2) (on worst case)
+1 <= k <=n
+
+------------------------------
+
+|i - j| <= k
+
+nums
+
+for (i <- 0 to n-1) :
+    j <- i - 1
+    while (j >= 0):
+        if (|j-i}<=k):
+            break
+        if (nums[i] == nums[j]):
+            return true
+return false
+
+O(nk)
 ```
 
+## Optimizing with HashMap O(n)
 
+```
+
+[1, 2, 1, 3, , , , , ]
+ 0  1  2  3
+HashMap: h(v)
+
++------+--------+
+| Keys | Values |
++------+--------+
++------+--------+
+| 2    | 1      |
++------+--------+
+| 1    | 0      |
++------+--------+
++------+--------+
+
+h(1) = index of element 0
+h(2) = index of element 1
+h(1) = index of element 2 (collision with index of element 0) check {2-0| <= k ?
+h(3) = index of element 3
+
+
+[ 1, 2, 3, 1, 4, 1]     k = 2
+  0  1  2  3  4  5
+
+h(1) = 2
+h(2) = 2
+h(x) = x
+
+    key | value
+    ----+------
+0       |
+1     1 | 3         collision |3-0| > 2 override with index 3, collision |5-3| <= 2 okej found indecies return true
+2     2 | 1
+3     3 | 2
+4     4 | 4
+
+O(n) time
+hashmap support
+insert: O(1)
+update: O(1)
+
+--------------------------------------
+
+a [1, 2, 3, 4, 1, 3, 1]
+size n
+
+
+empty hash map -> h
+
+for (i<- 0 to n-1) :
+    if (ai is hash(aj)(inside h) :
+           if (|h[ai] - i| <= k):
+                return true
+           else  h[ai] = i
+    else :
+        h[ai] = i
+return false
+
+```
+***
+
+# Anagram
+## Hash map and Hash Set Data structure: Valid Anagram: 242
+
+```
+anagram
+nagaram
+
+O(n!)
+O(n^2)
+O(nlogn)
+O(n) HashMap
+```
+
+## O(n!) brute force solution
+
+```
+"gram"      "argm"
+
+Definition
+4!= 4 * 3 * 2 * 1 = 24
+
+---------------------------------------
+s,t
+
+while there is a valid Perm of s:
+    Perm(s)
+    if (s == t) return true
+return false
+```
+
+## O(n^2) Solution
+
+```
+s = "anagram"   t = "nagaram"
+
+matched<boolean> = [f,f,f,f,f,f,f]
+
+----------------------------------------
+
+if (len(s) != len(t)) :
+    return false
+let matched<bool> be initiated with false
+for (i <- 1 to n) :
+    // match letter s[i] to some letter in s[t]
+    for (j <- 1 to n) :
+        if (t[j] == s[i] and not matched [j]) :
+            matched[j] = true
+            break
+if (matched == true all i) :
+    return true
+else:
+    return false
+
+O(n^2)
+```
+
+## O(nlogn) Solution
+
+```
+s = "anagram"   t = "nagaram"
+
+O(nlogn) some sort of sorting
+
+After sorting:
+
+s = "aaagmnr"
+t = "aaagmnr"
+
+----------------------------------------
+
+if (len(s) != len(t)) :
+    return false
+sort(s)
+sort(t)
+
+return s == t
+```
+
+## O(n) Solution with Hashtable
+
+```
+
+s = "anagram"   t = "nagaram"
+
+letter | count
+-------+--------
+   a   |   3
+   b   |   0
+   c   |   0
+  ...  |  ...
+   z   |   0
+
+-----------------------------------
+
+let H be an empty hashtable initialized with 0
+
+for i <- 0 to len(s) :
+    H[s[i]]++
+
+for (i <- 0 to len(t)) :
+    H[t[i]]--
+
+for (i <- 0 to size(H)) :
+    if (H[i] != 0) :
+        return false
+return true
+
+```
 
 
 
