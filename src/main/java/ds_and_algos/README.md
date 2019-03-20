@@ -651,7 +651,136 @@ return true
 
 ```
 
+***
 
+# Heap Data Structure: Kth Largest Element in an Array 215
+## O(nlogn) Solution
+
+```
+k-th largest element
+
+nums "3,2,1,5,6,4"
+
+Sort O(nlogn)
+
+"1,2,3,4,5,6" n - k
+
+2 nd largest : nums[n - k] = nums[6 - 2] = nums[4] = 5
+
+---------------------------------------------
+
+nums
+
+sort(nums)              O(nlogn)
+return nums[n-k]        O(1)
+```
+
+## O(nlogk) Solution, using Heap
+
+```
+Previous algorithms:
+1) O(nlogn)
+2) O(1)
+
+[, , , , n - k, , , ]
+
+1) largest k integers   O(nlogk)
+2) Smalest one of them  O(logk)
+
+
+Heap data structure min heap
+k size
+insertion, deletion: O(logk)
+
+[1,2,3,4,5,6,7,8,9]
+
+k = 3
+step 1: 1 is largest - removed in step 4
+step 2: 2 is largest - removed in step 5
+step 3: 3 is largest - removed in step 6
+step 4: 4 is largest - remove step 1 element - removed in step 7
+step 5: 5 is largest - remove step 2 element - removed in step 8
+step 6: 6 is largest - remove step 3 element - removed in step 9
+step 7: 7 is largest - remove step 4 element
+step 8: 8 is largest - remove step 5 element
+step 9: 9 is largest - remove step 6 element
+
+return 7,8,9
+
+1) Make a Min Heap H of size k              O(k)
+2) Loop over all elements i< 1 to n         O(n)
+    if (size(H) < k) :
+        H.insert(nums[i])                   O(logk)
+    else :                                  O(1)
+        if (min_elem in H < nums[i]) :
+            remove min_elem in H            O(logk)
+            insert nums[i]                  O(logk)
+
+
+O(n) * 3O(logk) = O(nlogk)
+
+[3,2,1,5,6,4] k = 2
+
+min heap H = 2
+
+```
+
+## Heap Data Structure: Find K Pairs with Smallest Sums
+## O(n^2logn) Solution and O(n^2logk) 373
+
+```
+
+*** O(n^2logn) ***
+
+nums1               nums2
+[a1,,,,,,,,,an]     [b1,,,,,,,,,,,,bm]
+
+O(mn)
+[(a1,b1),(a2,b2),.....,(an,bm)]
+[a1 + b1, a2 + b2,....., an + bm]
+
+log(mn) = log(m) + log(n)
+
+O(mnlog(mn)) = O(mn(logm + logn)) = O(n^2(2logn))
+
+1) make long 1D array of size (m * n) when m = n -> O(n^2)
+2) fill up all possible pairs                       O(n^2)
+3) sort array based on sums of Pairs                O(n^2logn)
+4) return first elements                            O(k)
+
+*** O(n^2logk) ***
+
+1) make ID m x n array of all pairs O(n^2)
+2) Makes values O(n^2)
+3) Max heap k
+
+------------------------------------------
+
+1 7 11          2 4 6
+
+(1 2) (1 4) (1 6) (7 2) (7 4) (7 6) (11 2) (11 4) (11 6)
+k = 3
+
+Max
+ (1,2) -> 3
+ (1,4) -> 5
+ (1,6) -> 7
+
+k-th lergest element Min heap
+k-th smallest element Max heap
+
+----------------------------------------
+
+1) Make max heap H of size k
+2) For all possible pairs i <- 1 to n^2 :
+    if (size(H) < k) :
+        insert(pairs[i])
+    else :
+        if (max_sum_of_pair > Pairs[i] sum):
+            replace
+    return all elements in the heap
+
+```
 
 
 

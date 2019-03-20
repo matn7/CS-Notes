@@ -2127,13 +2127,37 @@ type is inferred automatically by the return type.
 
 ### Processes
 
+- Self contained execution environment
+- Independent set of basic run-time resources, such as memory space
+- A single application may be imlemented by set of cooperating processes
+- Most OS support Inter Process Communication (IPC) resources
+- IPC can also be used for communication between processes on different systems
+- Most implementations of the JVM run on a single process
 
+### Threads
 
+- Lightweight processes
+- Creating a new thread requires fewer resources than creating new process
+- Threads exist within a process - every process has at least one
+- Threads share the process's resources, including memory and open files
+- Multithreaded execution is Java:
+    - every application has at least one thread
+    - system thread do memory management, event/signal handling
+- In programming we start with one thread main thread
+- Any thread can create a new thread
 
+- Threads can share data/objects and so their concurrent behaviors are inter-dependent
 
+### Threads and Synchronization Issues
 
-
-
+- Thread can share state (objects)
+- This is very powerful, and makes for very effiecient inter-thread communication
+- This makes two kinds of errors possible:
+    - thread interference
+    - memory inconsistency
+- **Interference:** happens when two operations, running in different threads, but acting on the same data interleave.
+Two operations consist of multiple steps, and the sequences of steps overlap. Because they are unpredictable,
+thread interference bugs can be difficult to detect and fix.
 
 
 

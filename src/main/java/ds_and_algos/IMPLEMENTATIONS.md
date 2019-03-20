@@ -370,7 +370,146 @@ class Solution {
 }
 ```
 
+***
 
+# Heap Data Structure: Kth Largest Element in an Array 215
+## O(nlogn) Solution
+
+```java
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        // Sort the array
+        int n = nums.length;
+        Arrays.sort(nums);
+
+        // return nums[n-k]
+        return nums[n-k];
+    }
+}
+```
+
+## O(nlogk) Solution, using Heap: 215
+
+```java
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        int n = nums.length;
+
+        for (int i=0; i<n; ++i) {
+            if (pq.size() < k) {
+                pq.add(nums[i]);
+            } else {
+                int min_elem = pq.peek();
+                if (min_elem < nums[i]) {
+                    pq.poll();
+                    pq.add(nums[i]);
+                }
+            }
+        }
+        return pq.peek();
+    }
+}
+```
+
+***
+
+## Heap Data Structure: Find K Pairs with Smallest Sums
+## O(n^2logn) Solution 373
+
+```java
+// O(n^2logn)
+class Solution {
+    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        int m = nums1.length;
+        int n = nums2.length;
+
+        if (m==0 || n==0) {
+            return new ArrayList<int[]>();
+        }
+
+        int[][] pairs = new int[m*n][2];
+        int index = 0;
+
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; ++j) {
+                pairs[index][0] = nums1[i];
+                pairs[index][1] = nums2[j];
+                ++index;
+            }
+        }
+        // pairs[k] ==> int[2] (nums1[i], nums2[j])
+        Arrays.sort(pairs, new java.util.Comparator<int[]>(){
+            public int compare(int[] a, int[] b) {
+                if (a[0]+a[1] == b[0]+b[1]) {
+                    return 0;
+                } else if (a[0]+a[1] < b[0]+b[1]) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+        });
+        int[][] first_k = Arrays.copyOfRange(pairs, 0, k);
+        List<int[]> ret = new LinkedList<>(Arrays.asList(first_k));
+        ret.removeAll(Collections.singleton(null));
+        return ret;
+
+    }
+}
+```
+
+## O(n^2logk) Solution 373
+
+```java
+class Solution {
+    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        int m = nums1.length;
+        int n = nums2.length;
+
+        if (m==0 || n==0) {
+            return new ArrayList<int[]>();
+        }
+
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new java.util.Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                if (a[0]+a[1] < b[0]+b[1]) {
+                    return 1;
+                } else if (a[0]+a[1]>b[0]+b[1]) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                int[] temp = new int[2];
+                temp[0] = nums1[i];
+                temp[1] = nums2[j];
+
+                if (pq.size()<k) {
+                    pq.add(temp);
+                } else {
+                    int[] top_elem = pq.peek();
+                    if (nums1[i]+nums2[j]<top_elem[0]+top_elem[1]) {
+                        pq.poll();
+                        pq.add(temp);
+                    }
+                }
+            }
+        }
+
+        List<int[]> ret = new LinkedList<int[]>();
+
+        while(pq.size()!=0) {
+            ret.add(0,pq.poll());
+        }
+        return ret;
+
+    }
+}
+```
 
 
 
