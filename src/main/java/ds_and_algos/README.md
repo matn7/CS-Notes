@@ -782,6 +782,107 @@ k-th smallest element Max heap
 
 ```
 
+***
+
+# Tree Data Structure: Invert Binary Tree   226
+
+```
+             4
+           /   \
+          2     7
+         / \   / \
+        1   3 6   9
+
+             4
+           /   \
+          7     2
+         / \   / \
+        9   6 3   1
+
+```
+
+## O(n) Recursive solution
+
+```
+             4              root
+           /   \
+          2     7
+         / \   / \
+        1   3 6   9
+
+invert(Node* r)
+invert(root)        r -> null return base case
+
+---------------------------------------
+
+invert(Node* r):
+    if (r == NULL/0) :
+        return
+    // r != NULL
+    Node* temp = r.left;
+    r.left = r.right
+    r.fight = temp
+    invert(r.left)
+    invert(r.right)
+
+```
+
+## Tree Data Structure: Same Tree
+### Recursive Solution O(n) : 100
+
+```
+            1           1
+           / \         / \
+          2   3       2   3
+
+sameTree: ST
+
+ST(root1, root2):
+    if (both are null):
+        return true
+    if (one of them is null):
+        return false
+    // non of them is null
+    return root1 == root2 && ST(root1.left, root2.left) && ST(root2.right, root2.right)
+
+O(n)
+```
+
+## Tree Data Structure: Maximum Depth of Binary Tree
+### O(n) Recursive Solution 104
+
+```
+            *
+           / \
+          *   *
+         / \    \
+        *   *    *
+       / \      / \
+      *   *    *   *
+     /
+    *
+
+find_depth(Node* r)
+
+max depth of left and right and take max of them
+
+1 + max(find_depth(r.left), find_depth(r.right))
+
+FD(r) = 1 + max(fd(r.left), fd(r.right))
+
+---------------------------------
+
+fd(Node* r):
+    if (r == NULL):
+        return 0
+    l <- fd(r.left)
+    r <- fd(r.right)
+    return max(l,r) + 1
+
+```
+
+
+
 
 
 
