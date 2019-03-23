@@ -1,5 +1,6 @@
-# Two Sum
-## Two Sum Problem O(n^2)
+## Two Sum
+
+### Two Sum Problem O(n^2)
 
 ```java
 class Solution {
@@ -21,7 +22,7 @@ class Solution {
 }
 ```
 
-## Two Sum Problem O(nlogn)
+### Two Sum Problem O(nlogn)
 
 ```java
 class Solution {

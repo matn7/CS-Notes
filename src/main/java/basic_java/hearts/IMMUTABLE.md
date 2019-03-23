@@ -59,86 +59,6 @@ public final class ImmutableCircle {
 }
 ```
 
-### With final class
-
-```java
-public final class Complex {
-    /**
-     * Rules:
-     * 1. No setter methods
-     * 2. Declare class as final to prevent inheritance
-     * 3. All fields as final
-     * 4. All fields as private
-     * 5. Return new object in all calls
-     */
-
-    private final float re;
-    private final float im;
-
-    public Complex(float re, float im) {
-        this.re = re;
-        this.im = im;
-    }
-
-    // only getters
-    public float getRe() {
-        return re;
-    }
-
-    public float getIm() {
-        return im;
-    }
-
-    // Return new Complex object
-    public Complex add(Complex c) {
-        return new Complex(re + c.re, im + c.im);
-    }
-}
-```
-
-- Add operation creates and return new object without modify current object
-- Immutable objects are simple. They have exactly one state one that was created
-- Immutable objects are thread safe, don't requires synchronization
-
-### Class no final but with static factory method
-
-```java
-public class Complex2 {
-    /**
-     * Rules:
-     * 1. No setter methods
-     * 2. All fields as final
-     * 3. All fields as private
-     * 4. Return new object in all calls
-     */
-
-    private final float re;
-    private final float im;
-
-    private Complex2(float re, float im) {
-        this.re = re;
-        this.im = im;
-    }
-
-    // only getters
-    public float getRe() {
-        return re;
-    }
-
-    public float getIm() {
-        return im;
-    }
-
-    // Return new Complex object
-    public static Complex2 valueOf(float re, float im) {
-        return new Complex2(re, im);
-    }
-}
-```
-
-- Alternative for declare class as final. Declare all constructors as private or protected
-next add public static factory methods
-
 ### Rules
 
 - Class should be immutable
@@ -214,13 +134,14 @@ public final class Person {
 
 ```java
 // example of a bad immutability
-public final class Person {
+public final class PersonBadExample {
     private final String name;
-    private final String surname;
+    private String surname;
 
-    public Person(String name) {
+    public PersonBadExample(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }

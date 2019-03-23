@@ -34,7 +34,7 @@ public class SingleThreaded {
 ```
 
 - As far as the "main" thread can tell, the statements in the main() method and the doIt() method will be executed in
-the order that tey are written in the source code. This is a clear requirement of the Java Language Specification (JLS).
+the order that they are written in the source code. This is a clear requirement of the Java Language Specification (JLS).
 - Now consider the same class used in a multi-threaded application.
 
 ```java
@@ -89,7 +89,7 @@ force main memory reads and writes. Once again, the performance benefits of doin
 
 ### Proper synchronization
 
-- So far, we have seen that the JLS allows the JI compiler to generate code that makes single-threaded code faster by
+- So far, we have seen that the JLS allows the JIT compiler to generate code that makes single-threaded code faster by
 reordering or avoiding memory operations. But what happens when other threads can observe the state of the (shared)
 variables in main memory?
 - The answer is, that the other threads are liable to observe variable states which would appear to be impossible ...
@@ -118,8 +118,10 @@ be predictable and consistent for all execution platforms.
 - Happens-before relationships are the part of the Memory Model that allow us to understand and reason about memory
 visibility. As the JLS says
 
-`"Two actions can be ordered by a happens-before relationship. If one action happens-before another, then
-the first is visible to and ordered before second."`
+```
+Two actions can be ordered by a happens-before relationship. If one action happens-before another, then
+the first is visible to and ordered before second
+```
 
 ### Actions
 
@@ -166,13 +168,13 @@ may see the results of them rather than the earlier one
     - Happens-Before Rule #3 - If an action x synchronized-with a subsequent action y, then x happens-before y
     - Happens-Before Rule #4 - If x happens-before y and y happens-before z then x happens-before z
 - Various classes in the Java standard libraries are specified as defining happens-before relationships. You can
-interpret this as meaning that it happens smehow, without needing to know exactly how to guarantee is going to be met.
+interpret this as meaning that it happens somehow, without needing to know exactly how to guarantee is going to be met.
 
 ## How to avoid needing to understand the Memory Model
 
 - Memory Model is useful if you need to reason about the correctness of multi-threaded code, but you do not want to have
 to do this reasoning for every multi-threaded application that you write.
-- Following principles when writing concurrent code in Java, you can largely avoid the need to resort to happens-before
+- :star: Following principles when writing concurrent code in Java, you can largely avoid the need to resort to happens-before
 reasoning:
     - Use immutable data structures where possible. A properly implemented immutable class will be thread safe, and will
     not introduce thread-safety issues when you use it with other classes
@@ -208,7 +210,7 @@ public class SingleThreadExample {
 - By Happens-Before Rule #1:
     - The write(a) action happens-before the write(b) action
     - The write(b) action happens-before the read(a) action
-    - The read(a) action happens-before the read(a) action
+    - The read(a) action happens-before the read(b) action
 - By Happens-Before Rule #4:
     - write(a) happens-before write(b) AND write(b) happens-before read(a) IMPLIES write(a) happens-before read(a)
     - write(b) happens-before read(a) AND read(a) happens-before read(b) IMPLIES write(b) happens-before read(b)

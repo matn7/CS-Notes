@@ -23,7 +23,7 @@ class MyListGeneric<T> {
 
 - To restrict Generics to a subclass of particular class we can use Generic Restrictions. `T extends Number`
 - We can use the class MyListRestricted with any class extending (subclass) of Number - Float, Integer, Double
-String is valid substitute for "T extends Number"
+String is valid substitute for `T extends Number`
 
 ```java
 class MyListRestricted<T extends Number> {
@@ -209,37 +209,41 @@ public class FruitHelper {
 - Use
 
 ```java
-public class GenericsTest {
+public class GenericTest {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         FruitHelper fruitHelper = new FruitHelper();
         List<Fruit> fruits = new ArrayList<Fruit>();
-        fruits.add(new Apple()); // Allowed, as Apple is a Fruit
-        fruits.add(new Banana()); // Allowed, as Banana is a Fruit
-        fruitHelper.addApple(fruits); // Allowed, as "Fruit super Apple"
+
+        fruits.add(new Apple()); // Allowed apple is fruit
+        fruits.add(new Banana()); // allowed banana is fruit
+        fruitHelper.addApple(fruits); // allowed, Fruit super Apple ---> Apple implements Fruit
+        fruitHelper.addApple(Arrays.asList(new Apple()));
         fruitHelper.eatAll(fruits); // Allowed
 
         Collection<Banana> bananas = new ArrayList<>();
-        bananas.add(new Banana()); // Allowed
-        //fruitHelper.addApple(bananas); // Compile error: may only contain Bananas!
-        fruitHelper.eatAll(bananas); // Allowed, as all Bananas are Fruits
+        bananas.add(new Banana());  // Allowed
+//        fruitHelper.addApple(bananas); // not allowed
+        fruitHelper.eatAll(bananas); // Allowed
+
         Collection<Apple> apples = new ArrayList<>();
         fruitHelper.addApple(apples); // Allowed
-        apples.add(new GrannySmith()); // Allowed, as this is an Apple
-        fruitHelper.eatAll(apples); // Allowed, as all Apples are Fruits.
+        apples.add(new GrannySmith()); // Allowed, GrannySmith extends Apple
+        fruitHelper.eatAll(apples); // Allowed
 
-        Collection<GrannySmith> grannySmithApples = new ArrayList<>();
-        fruitHelper.addApple(grannySmithApples); //Compile error: Not allowed.
-        // GrannySmith is not a supertype of Apple
-        apples.add(new GrannySmith()); //Still allowed, GrannySmith is an Apple
-        fruitHelper.eatAll(grannySmithApples);//Still allowed, GrannySmith is a Fruit
+        Collection<GrannySmith> grannySmithsApples = new ArrayList<>();
+//        fruitHelper.addApple(grannySmithsApples); // Not Allowed, GrannySmith is not supertype of Apple
+        apples.add(new GrannySmith()); // Allowed
+        fruitHelper.eatAll(grannySmithsApples); // Allowed
 
         Collection<Object> objects = new ArrayList<>();
-        fruitHelper.addApple(objects); // Allowed, as Object super Apple
-        objects.add(new Shoe()); // Not a fruit
-        objects.add(new IPhone()); // Not a fruit
-        //fruitHelper.eatAll(objects); // Compile error: may contain a Shoe, too!
+        fruitHelper.addApple(objects); // Allowed as Object super Apple
+        objects.add(new Shoe());
+        objects.add(new IPhone());
+//        fruitHelper.eatAll(objects);
+
     }
+
 }
 ```
 
@@ -281,8 +285,8 @@ public <T extends Number & Comparable<T>> void sortNumbers( List<T> list ) {
 
 - In example T must extends Number and implement Comparable<T> which should fit all "normal" built in number
 implementations like Integer and BigDecimal but doesn't fit the more exotic ones like Striped64.
-- Since multiple inheritance is not allowed, you can use at most one class as bound and it must be the first listed.
-For example <T extends Comparable<T> & Number> is not allowed because Comparable is an interface, and not a class.
+- :star: Since multiple inheritance is not allowed, you can use at most one class as bound and it must be the first listed.
+For example `<T extends Comparable<T> & Number>` is not allowed because Comparable is an interface, and not a class.
 
 ### Benefits of Generic class and interface
 
@@ -296,7 +300,8 @@ List list = new ArrayList();
 list.add("majka");
 String s = (String) list.get(0);
 ```
-    - Using generics, the code does not require casting:
+- Using generics, the code does not require casting:
+
 ```java
 List<String> list = new ArrayList<>();
 list.add("majka");
@@ -316,7 +321,8 @@ public <T> void genericMethod() {
 
 - At runtime the JVM does not know what T originally was, it does not know which constructor to call. The type T is erased.
 
-- 1. Passing T's class when calling genericMethod:
+- Passing T's class when calling genericMethod:
+
 ```java
 public <T> void genericMethod(Class<T> cls) {
     try {
@@ -327,9 +333,10 @@ public <T> void genericMethod(Class<T> cls) {
 }
 genericMethod(String.class);
 ```
-Which throws exception, since there is no way to know if the passed class has ab accessible default constructor.
 
-- 2. Passing a reference to T's constructor:
+- Which throws exception, since there is no way to know if the passed class has ab accessible default constructor.
+- Passing a reference to T's constructor:
+
 ```java
 public <T> void genericMethod(Supplier<T> cons) {
     T t = cons.get();
@@ -387,7 +394,7 @@ public class AnimalContainer<T> {
 }
 ```
 
-- With generic bounded in class definition, this is now possible:
+- :star: With generic bounded in class definition, this is now possible:
 
 ```java
 public class BoundedAnimalContainer<T extends Animal> { // Note bound here
@@ -427,7 +434,7 @@ BoundedAnimalContainer<String> b = new BoundedAnimalContainer<String>();
 
 ### Binding generic parameter to more than 1 type
 
-- Generic parameters can also be bound to more than one type using the `T extends Type1 & Type2 & ...
+- Generic parameters can also be bound to more than one type using the `T extends Type1 & Type2 & ...`
 - Class whose Generic type should implement both Flushable and Closeable.
 
 ```java
@@ -435,10 +442,9 @@ class ExampleClass<T extends Flushable & Closeable> {
 }
 ```
 
-- Use
-
 ```java
-ExampleClass<BufferedWriter> arg1; // Works because BufferedWriter implements both Flushable and Closeable
+ExampleClass<BufferedWriter> arg1; // Works because BufferedWriter implements
+// both Flushable and Closeable
 ExampleClass<Console> arg4; // Does NOT work because Console only implements Flushable
 ExampleClass<ZipFile> arg5; // Does NOT work because ZipFile only implements Closeable
 ExampleClass<Flushable> arg2; // Does NOT work because Closeable bound is not satisfied.
@@ -624,7 +630,7 @@ public class MyGenericSubclass implements MyGenericInterface {
 }
 ```
 
-- This way s not recommended, since it is not 100% safe at runtime because it mixes up raw type (of the subclass)
+- This way is not recommended, since it is not 100% safe at runtime because it mixes up raw type (of the subclass)
 with generics (of the interface) and it is also confusing. Modern java compilers will rise a warning with this kind
 of implementation.
 - All the ways listed above are also allowed when using a generic class as a supertype instead of a generic interface

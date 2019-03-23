@@ -286,7 +286,7 @@ void anotherMethod(String value){
 ```
 
 - If a client can reasonably be expected or recover from an exception, make it checked exception.
-If client cannot do anything to recover from the exception, make it unchecked exception.
+If client cannot do anything to recover from the exception, make it unchecked exception (Runtime).
 
 #### Why does runtime exception not require an explicit exception handling
 
@@ -296,7 +296,7 @@ so you needn't add throws declaration on the method or use try catch block to ha
 However, Exception is considered to be application exception, it is recoverable.
 ```
 
-### Handling InterruptedException
+### :star: Handling InterruptedException
 
 - If an InterruptedException is caught it means someone, somewhere, called `Thread.interrupt()` on the thread your code is
 currently running in.
@@ -555,7 +555,7 @@ public void methodWithPropagatedCheckedException() {
 }
 ```
 
-- How to deal with a checked exception in a static field initializer
+### :star: How to deal with a checked exception in a static field initializer
 
 ```java
 // INCORRECT

@@ -19,7 +19,7 @@ exceptions**.
 
 ### The result from a Callable task submission is available to be tapped via a Future
 
-- **Future** can be considered a container of sorts that houses the result of the **Callable** computation.
+- **Future** can be considered as container of sorts that houses the result of the **Callable** computation.
 - Computation of the **Callable** can carry on in another thread, and any attempt to tap the result of a **Future** will block and will
 only return the result once it is available.
 
@@ -73,10 +73,10 @@ public class ComplexCalculator implements Callable<String> {
 
 ### Other operations permitted on Future
 
-- `get(long timeout, TimeUnit unit)` defines maximum time period during current thread will wait for a result.
+- `get(long timeout, TimeUnit unit)` defines maximum time period during current thread will wait for a result
 - To cancel the task call `cancel(mayInterruptIfRunning)`. The flag mayInterrupt indicates that task should be
-interrupted if it was started and is running right now.
-- To check if task is completed/finished by calling `isDone()`.
+interrupted if it was started and is running right now
+- To check if task is completed/finished by calling `isDone()`
 - To check if the lengthy task were cancelled `isCancelled()`
 
 ### 2. CountDownLatch
@@ -94,12 +94,12 @@ consider using **CyclicBarrier**
 
 ### Methods:
 
-- `await()` - Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
+`await()` - Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
 ```java
 public void await() throws InterruptedException
 ```
 
-- `countDown()` - Determines to count of the latch, releasing all waiting threads if the count reaches zero
+`countDown()` - Determines to count of the latch, releasing all waiting threads if the count reaches zero
 ```java
 public void countDown()
 ```
@@ -1031,7 +1031,7 @@ Consumed: 728:by thread:1
 - **SharedQueue**, which is a **LinkedBlockingQueue** is shared among all Producer and Consumer threads.
 - Producer threads produces one integer for every 200 milli seconds continously and append it to sharedQueue.
 - Consumer thread consumes integer from sharedQueue continously.
-- This program is implemented with-out explicit synchronized ot Lock constructs. BlockingQueue is the key to achieve it.
+- This program is implemented with-out explicit synchronized of Lock constructs. BlockingQueue is the key to achieve it.
 
 
 - BlockingQueue implementations are designed to be used primarily for producer-consumer queues.

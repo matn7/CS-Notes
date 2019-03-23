@@ -31,8 +31,8 @@ an "a".
 - The `map()` operation transforms each element using a given function, called a mapper. In this case, each fruit String
 is mapped to its uppercase String version.
     - That the map() operation will return a stream with a different generic type if the mapping
-    function returns a type different to its input parameter. For example on a Stream<String> calling
-    .map(String::isEmpty) returns a Stream<Boolean>
+    function returns a type different to its input parameter. For example on a Stream<String> calling.map(String::isEmpty)
+    returns a Stream<Boolean>
 - The `sorted()` operation sorts the elements of the Stream according to their natural ordering.
 - `forEach(action)` operation performs an action which acts on each element of the Stream, passing it to a
 Consumer. In the example, each element is simply being printed to the console. This operation is a terminal
@@ -114,7 +114,7 @@ System.out.println(howManyOddNumbers);
 - While some actions can be performed on both Containers and Streams, they ultimately serve different purposes
 and support different operations.
 - Containers are more focused on how the elements are stored and how those elements can be accessed efficiently.
-- A Stream, on the other hand, does't provide direct access and manipulation to its elements; it is more dedicated
+- A Stream, on the other hand, doesn't provide direct access and manipulation to its elements; it is more dedicated
 to the group of objects as a collective entity and performing operations on
 that entity as a whole.
 - Stream and Collections are separate high-level abstractions for these differing purposes.
@@ -337,7 +337,8 @@ Array of List of items can be converted into a single List
 List<String> list1 = Arrays.asList("one", "two")
 List<String> list2 = Arrays.asList("three", "four", "five");
 List<String> list3 = Arrays.asList("six");
-List<String> finalList = Stream.of(list1, list2, list3).flatMap(Collection::stream).collect(Collectors.toList());
+List<String> finalList = Stream.of(list1, list2, list3)
+    .flatMap(Collection::stream).collect(Collectors.toList());
 
 System.out.println(finalList);
 
@@ -842,7 +843,8 @@ s2.compareTo(s1)).collect(Collectors.toList());
 - You can use Comparator.reverseOrder() to have a comparator that imposes the reverse of the natural ordering
 
 ```java
-List<String> reverseSortedData = data.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+List<String> reverseSortedData = data.stream().sorted(Comparator.reverseOrder())
+    .collect(Collectors.toList());
 ```
 
 ### 24. Streams of Primitives
@@ -950,7 +952,8 @@ public String generateRandomString(long length){
     //and convert it to a Stream<Character> using mapToObj.
     //We need to specify the boundaries for the int values to ensure they can safely be cast to char
     Stream<Character> randomCharStream = rng.ints(Character.MIN_CODE_POINT,
-        Character.MAX_CODE_POINT).mapToObj(i -> (char)i).filter(c -> this::useThisCharacter).limit(length);
+        Character.MAX_CODE_POINT).mapToObj(i -> (char)i)
+        .filter(c -> this::useThisCharacter).limit(length);
 
     //now we can use this Stream to build a String utilizing the collect method.
     String randomString = randomCharStream.collect(StringBuilder::new, StringBuilder::append,
