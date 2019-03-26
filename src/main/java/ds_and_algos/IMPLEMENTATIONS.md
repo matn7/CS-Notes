@@ -32,7 +32,8 @@ class Solution {
         // a[i][0] = nums[i]
         // a[i][1] = i      // oryginal index
         // a[0][0] = 1
-        // a[0][1] = 0      // 1 is on index 0 needed in return solution
+        // a[0][1] = 0      // 1 is on index 0 needed in return solution,
+        // as we return result from original not sorted list
         int n = nums.length;
         int[][] a = new int[n][2];
 
@@ -69,8 +70,9 @@ class Solution {
 
 ***
 
-# Max Consecutive Ones
-## Max Consecutive Ones Problem O(n^2)
+## Max Consecutive Ones
+
+### Max Consecutive Ones Problem O(n^2)
 
 ```java
 class Solution {
@@ -95,7 +97,7 @@ class Solution {
 }
 ```
 
-## Max Consecutive Ones Problem O(n)
+### Max Consecutive Ones Problem O(n)
 
 ```java
 class Solution {
@@ -123,8 +125,9 @@ class Solution {
 
 ***
 
-# Maximum Product of Three Numbers
-## Maximum Product of Three Numbers O(nlog(n))
+## Maximum Product of Three Numbers
+
+### Maximum Product of Three Numbers O(nlog(n))
 
 
 ```java
@@ -134,8 +137,13 @@ class Solution {
         Arrays.sort(nums);
         // Step 2 Calculate p1 and p2
         int n = nums.length;
+
+        // [-9 1 2 3] max would be 1 * 2 * 3
         int p1 = nums[n-1] * nums[n-2] * nums[n-3];
+
+        // [-10,-9,1,2,3] max would be -10 * -9 * 3
         int p2 = nums[0] * nums[1] * nums[n-1];
+
         // Step 3 return Math.max(p1,p2)
         return Math.max(p1,p2);
 
@@ -143,11 +151,13 @@ class Solution {
 }
 ```
 
-## Maximum Product of Three Numbers O(n)
+### Maximum Product of Three Numbers O(n)
 
 ```java
 class Solution {
     public int maximumProduct(int[] nums) {
+
+        // valies fro problem description
         int max1=-1000, max2=-1000, max3=-1000, min1=1000, min2=1000;
         int n = nums.length;
 
@@ -189,10 +199,11 @@ class Solution {
 
 ***
 
-# Stack Data Structure: Valid Parentheses
-## Recursive Algorithm O(n^2)
+## Stack Data Structure: Valid Parentheses
 
-## Using Stack O(n)
+### Recursive Algorithm O(n^2)
+
+### Using Stack O(n)
 - Only for one types of braces `(`
 
 ```java
@@ -238,8 +249,9 @@ class Solution {
 
 ***
 
-# HashMap and HashSet Data structure: Contains Duplicate 219
-## Brutforce Algorithm O(nk) solution: Contains Duplicate 219
+## HashMap and HashSet Data structure
+
+### Brutforce Algorithm O(nk) solution: Contains Duplicate 219
 
 ```java
 class Solution {
@@ -262,7 +274,7 @@ class Solution {
 }
 ```
 
-## Optimizing with HashMap O(n)
+### Optimizing with HashMap O(n)
 
 ```java
 class Solution {
@@ -286,8 +298,9 @@ class Solution {
 
 ***
 
-# Anagram
-## Hash map and Hash Set Data structure O(n^2) Solution: Valid Anagram: 242
+## Anagram
+
+## HashMap and HashSet Data structure O(n^2) Solution: Valid Anagram: 242
 
 ```java
 class Solution {
@@ -319,7 +332,7 @@ class Solution {
 }
 ```
 
-## O(nlogn) Solution
+### O(nlogn) Solution
 
 ```java
 class Solution {
@@ -341,7 +354,7 @@ class Solution {
 }
 ```
 
-## O(n) Solution with Hashtable
+### O(n) Solution with Hashtable
 
 ```java
 class Solution {
@@ -373,8 +386,9 @@ class Solution {
 
 ***
 
-# Heap Data Structure: Kth Largest Element in an Array 215
-## O(nlogn) Solution
+## Heap Data Structure
+
+### Kth Largest Element in an Array 215. O(nlogn) Solution
 
 ```java
 class Solution {
@@ -389,7 +403,7 @@ class Solution {
 }
 ```
 
-## O(nlogk) Solution, using Heap: 215
+### O(nlogk) Solution, using Heap (PriorityQueue): 215
 
 ```java
 class Solution {
@@ -416,7 +430,8 @@ class Solution {
 ***
 
 ## Heap Data Structure: Find K Pairs with Smallest Sums
-## O(n^2logn) Solution 373
+
+### O(n^2logn) Solution 373
 
 ```java
 // O(n^2logn)
@@ -460,7 +475,7 @@ class Solution {
 }
 ```
 
-## O(n^2logk) Solution 373
+### O(n^2logk) Solution 373
 
 ```java
 class Solution {
@@ -514,9 +529,9 @@ class Solution {
 
 ***
 
-# Tree Data Structure: Invert Binary Tree   226
+## Tree Data Structure
 
-## O(n) Recursive solution
+### O(n) Recursive solution. Invert Binary Tree  226
 
 ```java
 /**
@@ -545,6 +560,7 @@ class Solution {
 ```
 
 ## Tree Data Structure: Same Tree
+
 ### Recursive Solution O(n) : 100
 
 ```java
@@ -572,6 +588,7 @@ class Solution {
 ```
 
 ## Tree Data Structure: Maximum Depth of Binary Tree
+
 ### O(n) Recursive Solution 104
 
 ```java

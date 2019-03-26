@@ -5,24 +5,31 @@
 ```java
 public static int maxDepth(Node root) {
     if (root == null) {
-        return 0;   // Base case if the root is null then the tree has no nodes, the max depth is 0
+        // Base case if the root is null then the tree has no nodes, the max depth is 0
+        return 0;
     }
 
     if (root.getLeftChild() == null && root.getRightChild() == null) {
-        return 0;   // If both left and right child of the node is null then there is a leaf and has a depth of 0
+        // If both left and right child of the node is null then there is a leaf and has a depth of 0
+        return 0;
     }
 
-    // Find the max depth on the left and right subtrees. Add 1 to account for the current depth of the tree
+    // Find the max depth on the left and right subtrees.
+    // Add 1 to account for the current depth of the tree
     int leftMaxDepth = 1 + maxDepth(root.getLeftChild());
     int rightMaxDepth = 1 + maxDepth(root.getRightChild());
-    return Math.max(leftMaxDepth, rightMaxDepth);   // Find the max depth between the left and right subtrees
+
+    // Find the max depth between the left and right subtrees
+    return Math.max(leftMaxDepth, rightMaxDepth);
 }
 
  public static class Node<T> {
 
         private T data;
+
+        // Node can have Max 2 child
         private Node<T> leftChild;
-        private Node<T> rightChild; // Node can have Max 2 child
+        private Node<T> rightChild;
 
         public Node(T data) {
             this.data = data;
@@ -116,7 +123,8 @@ public class Singleton {
 - With enum
 
 ```java
-enum Downloader {   // enum is thread safe
+// enum is thread safe
+enum Downloader {
     INSTANCE;
 
     private Semaphore semaphore = new Semaphore(3, true);
@@ -217,13 +225,17 @@ public class FirstNonRepeat {
 
 ```java
 public static int binarySearch(int[] sortedList, int number) {
+    // 1 2 3 4 5 6 7 8 9 10
     int min = 0;
+    // max = 9
     int max = sortedList.length - 1;
     while (min <= max) {
         int mid = (max + min) / 2;
         if (sortedList[mid] == number) {
             return mid;
         }
+        //         V     *
+        // 1 2 3 4 5 6 7 8 9 10, look for 8 but value is 5
         if (sortedList[mid] > number) {
             max = mid - 1;
         } else {
@@ -250,8 +262,10 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
     }
 
     if (sortedArray[mid] > number) {
+        // first part (smaller numbers)
         return binarySearch(sortedArray, number, min, mid - 1);
     } else {
+        // second part (bigger numbers)
         return binarySearch(sortedArray, number, mid + 1, max);
     }
 }
@@ -315,11 +329,13 @@ public static int minimumValue(Node<Integer> head) {
     }
 
     if (head.getLeftChild() == null) {
-        // Follows the left child for every node, if the left child is null then this is the minimum value node
+        // Follows the left child for every node,
+        // if the left child is null then this is the minimum value node
         return head.getData();
     }
 
-    return minimumValue(head.getLeftChild());   // Recurse till a left child is Available
+    // Recurse till a left child is Available
+    return minimumValue(head.getLeftChild());
 }
 ```
 

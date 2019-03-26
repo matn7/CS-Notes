@@ -118,10 +118,12 @@ This means that ClassCastException can't be thrown on casting the result correct
 ## Dependency Injection
 
 ```
-        +-------------+     give me object            +----------------+
-        | ApplicaConfigure Spring with Java Annotationstion | ----------------------------> | Object Factory |
-        |             | <---------------------------- |                | ----> Configuration
-        +-------------+                               +----------------+
++------------------+     give me object            +----------------+
+| ApplicaConfigure |                               |                |
+| Spring with Java |                               |                |
+| Annotations      | ----------------------------> | Object Factory |
+|                  | <---------------------------- |                | ----> Configuration
++------------------+                               +----------------+
 ```
 
 - dependency = helper
@@ -512,7 +514,7 @@ Thus, although initialization lifecycle callback methods are called on all objec
 in the case of prototypes, configured destruction lifecycle callbacks are not called.
 The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.
 
-To get the Spring container to release resources held by prototype-scoped beans,
+:star: To get the Spring container to release resources held by prototype-scoped beans,
 try using a custom bean post-processor, which holds a reference to beans that need to be cleaned up.
 
 

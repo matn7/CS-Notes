@@ -187,6 +187,7 @@ inject a mock object to fulfill the needs of your unit test.
 - When one class knows explicitly about the design and implementation of another class, changes to one class raise
 the risk of breaking the other class.
 - “A. High-level modules should not depend on low-level modules. Both should not depend on abstractions.
+
   B. Abstractions should not depend on details. Details should depend on abstractions.”
 
 - Bad Example
@@ -331,17 +332,17 @@ Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call 
 ### Callback Interfaces
 
 - Spring has two interfaces you can implement for call back events
-- InitializingBean.afterPropertiesSet()
+- `InitializingBean.afterPropertiesSet()`
     - called after properties are set
-- DisposableBean.destroy()
+- `DisposableBean.destroy()`
     - Called during bean destruction in shutdown
 
 ### Life Cycle Annotations
 
 - Spring has two annotations you can use to hook into the bean life cycle
-- @PostConstruct annotated methods will be called after the bean has been constructed, but before its returned to
+- `@PostConstruct` annotated methods will be called after the bean has been constructed, but before its returned to
 the requesting object
-- @PreDestroy is called just before the bean is destroyed by the container
+- `@PreDestroy` is called just before the bean is destroyed by the container
 
 ### Bean Post Processors
 

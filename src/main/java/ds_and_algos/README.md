@@ -3,7 +3,7 @@
 ### Two Sum Problem O(n^2)
 
 ```
-ai + aj = target i != j
+ai + aj = target    and  i != j
 
 for ( i <- 1 to n ) :       O(n)
     ( for j <- 1 to n ) :   O(n)
@@ -39,7 +39,7 @@ O(n^2)
 
 ```
 
-### Two Sum Problem O(nlogn)
+### Two Sum Problem O(nlogn) - using sorting algorithms
 
 ```
 [a1,a2,a3,a4,a5,a6]
@@ -62,8 +62,8 @@ Step 2) i, j n steps until   i > j  O(n)
 [2,7,11,15] target 18
 i = 0   j = 3
 
-2 + 15 = 17     17 < 18 -> i = 1
-7 + 15 = 22     22 > 18 -> j = 2
+2 + 15 = 17     17 < 18 -> i = 1    [first element, last element]   go to second element index 1
+7 + 15 = 22     22 > 18 -> j = 2    [second element, last element] go to second to last element index 2
 7 + 11 = 18     18 == 18 ? YES -> [1,2]
 ```
 
@@ -101,13 +101,13 @@ O(n^2)
 
 max_l <- 0
 i <- 1
-while (i <= n) :
-    if a1 != 1 :
+while ( i <= n ) :
+    if ( a1 != 1 ) :
         ++i
     else :
         r <- i + 1
         current_len <- 1
-        while (r <= n && ar == 1) :
+        while ( r <= n && ar == 1 ) :
             ++r
             ++current_len
         i <- r, max_l = max(max_l, current_len)
@@ -116,8 +116,9 @@ while (i <= n) :
 
 ***
 
-# Arrays Data Structures: Maximum Product of Three Numbers
-## Maximum Product of Three Numbers O(n^3)
+## Arrays Data Structures: Maximum Product of Three Numbers
+
+### Maximum Product of Three Numbers O(n^3)
 
 ```
 [a1,a2,a3,...,an]
@@ -180,20 +181,20 @@ max1 = a[i]
 -----------------------------------
 max1, max2, max3
 
-for i <- 0 to n - 1 :
-    if (a[i] >= max3) :
+for ( i <- 0 to n - 1 ) :
+    if ( a[i] >= max3 ) :
         max1 = max2
         max2 = max3
         max3 = a[i]
-    else if (a[i] > max2) :
+    else if ( a[i] > max2 ) :
         max1 = max2
         max2 = a[i]
-    else if (a[i] > max1) :
+    else if ( a[i] > max1 ) :
         max1 = a[i]
-    if (a[i] <= min1) :
+    if ( a[i] <= min1 ) :
         min2 = min1
         min1 = a[i]
-    else if (a[i] < min2) :
+    else if ( a[i] < min2 ) :
         min2 = a[i]
 
 calc p1
@@ -203,8 +204,9 @@ max(p1,p2)
 
 ***
 
-# Stack Data Structure: Valid Parentheses
-## Incorrect Approach to problem
+## Stack Data Structure: Valid Parentheses
+
+### Valid Parentheses, Incorrect Approach to problem
 
 ```
 example: ((()))
@@ -237,10 +239,10 @@ current = "" -> return true
 
 ----------------------------------------------------
 
-check(String s) :
-    if (len(s) = 0) :
+check( String s ) :
+    if ( len(s) = 0 ) :
         return true
-    if (s contains "()") :
+    if ( s contains "()" ) :
         // remove () and let resulting string = t
         retrun check(t)
     else :
@@ -298,27 +300,29 @@ stack               example = "( ( ) )"
 Stack now is empty return true
 Stack is not empty return false
 
+-----------------------------------
 
 empty stack
-if (s.size() == 0) :
+
+if ( s.size() == 0 ) :
     return true
-if (len(s) == 1) :
+if ( len(s) == 1 ) :
     return false
-if (len(s) == 2) :
+if ( len(s) == 2 ) :
     if (s[0] == "(") :
         push it to stack
     else :
         return false
 
-for i <- 1 to n - 1:
+for ( i <- 1 to n - 1 ):
     if (s[i] == "(") :
-        push "(" to st
+        push "(" to stack
     else :
-        if (st empty) :
+        if ( stack empty ) :
             return false
         else :
-            st pop
-if st.empty :
+            stack pop
+if ( stack.empty ) :
     return true
 else :
     return false
@@ -327,8 +331,9 @@ else :
 
 ***
 
-# Stack Data Structure: Baseball Game 628
-## O(n^2) Solution
+## Stack Data Structure: Baseball Game 628
+
+### O(n^2) Solution
 
 ```
 [5,2,C,D,+]
@@ -360,17 +365,17 @@ C: look at previous element which is not cancelled, cancel it and cancel C
 D: look at previous element which is not cancelled and double it, and assign it to D
 +: find two elements and add theit values, and assign it to +
 
-for i <- o to n - 1:
-    if (A[i] == num) :
+for ( i <- o to n - 1 ):
+    if ( A[i] == num ) :
         move forward
-    else if (A[i] == C) :
-    else if (A[i] == D) :
+    else if ( A[i] == C ) :
+    else if ( A[i] == D ) :
     else :
 
 sum <- 0
 
-for i <- 0 to n
-    if (cancelled == false) :
+for ( i <- 0 to n )
+    if ( cancelled == false ) :
         sum += A[i]
 return sum
 ```
@@ -415,14 +420,14 @@ step 6 pop 15, 10, 5 and sum it up
 
 Stack of integers S
 
-for i <- 0 to n - 1 :
-    if operation[i] == number :
+for ( i <- 0 to n - 1 ) :
+    if ( operation[i] == number ) :
         S.push(A[i])
-    if operation[i] == C :
+    if ( operation[i] == C ) :
         S.pop
-    else if operation[i] == D :
+    else if ( operation[i] == D ) :
         S.push(2 * S.top)
-    else if operation[i] == + :
+    else if ( operation[i] == + ) :
         x <- S.top
         S.pop
         y <- S.top
@@ -434,7 +439,7 @@ return sum of all elements in Stack
 
 ***
 
-# HashMap and HashSet Data structure: Contains Duplicate 219
+## HashMap and HashSet Data structure: Contains Duplicate 219
 
 ```
 nums    [2,4,1,7,3,2,5,6]       k = 2
@@ -446,7 +451,7 @@ nums    [2,4,1,7,3,2,5,6]       k = 2
 
 ```
 
-## Brutforce Algorithm O(nk) solution: Contains Duplicate 219
+### Brutforce Algorithm O(nk) solution: Contains Duplicate 219
 
 ```
 
@@ -467,12 +472,12 @@ O(kn) = O(n^2) (on worst case)
 
 nums
 
-for (i <- 0 to n-1) :
+for ( i <- 0 to n-1 ) :
     j <- i - 1
-    while (j >= 0):
-        if (|j-i}<=k):
+    while ( j >= 0 ):
+        if ( |j-i| <= k ):
             break
-        if (nums[i] == nums[j]):
+        if ( nums[i] == nums[j] ):
             return true
 return false
 
@@ -499,7 +504,7 @@ HashMap: h(v)
 
 h(1) = index of element 0
 h(2) = index of element 1
-h(1) = index of element 2 (collision with index of element 0) check {2-0| <= k ?
+h(1) = index of element 2 (collision with index of element 0) check |2-0| <= k ?
 h(3) = index of element 3
 
 
@@ -531,8 +536,8 @@ size n
 
 empty hash map -> h
 
-for (i<- 0 to n-1) :
-    if (ai is hash(aj)(inside h) :
+for ( i <- 0 to n-1 ) :
+    if ( ai is hash(aj)(inside h) ) :
            if (|h[ai] - i| <= k):
                 return true
            else  h[ai] = i
@@ -541,10 +546,12 @@ for (i<- 0 to n-1) :
 return false
 
 ```
+
 ***
 
-# Anagram
-## Hash map and Hash Set Data structure: Valid Anagram: 242
+## Anagram
+
+### Hash map and Hash Set Data structure: Valid Anagram: 242
 
 ```
 anagram
@@ -556,7 +563,7 @@ O(nlogn)
 O(n) HashMap
 ```
 
-## O(n!) brute force solution
+### O(n!) brute force solution
 
 ```
 "gram"      "argm"
@@ -582,16 +589,16 @@ matched<boolean> = [f,f,f,f,f,f,f]
 
 ----------------------------------------
 
-if (len(s) != len(t)) :
+if ( len(s) != len(t) ) :
     return false
 let matched<bool> be initiated with false
-for (i <- 1 to n) :
+for ( i <- 1 to n ) :
     // match letter s[i] to some letter in s[t]
-    for (j <- 1 to n) :
-        if (t[j] == s[i] and not matched [j]) :
+    for ( j <- 1 to n ) :
+        if ( t[j] == s[i] and not matched [j] ) :
             matched[j] = true
             break
-if (matched == true all i) :
+if ( matched == true all i ) :
     return true
 else:
     return false
@@ -599,7 +606,7 @@ else:
 O(n^2)
 ```
 
-## O(nlogn) Solution
+### O(nlogn) Solution
 
 ```
 s = "anagram"   t = "nagaram"
@@ -613,7 +620,7 @@ t = "aaagmnr"
 
 ----------------------------------------
 
-if (len(s) != len(t)) :
+if ( len(s) != len(t) ) :
     return false
 sort(s)
 sort(t)
@@ -621,7 +628,7 @@ sort(t)
 return s == t
 ```
 
-## O(n) Solution with Hashtable
+### O(n) Solution with Hashtable
 
 ```
 
@@ -639,14 +646,14 @@ letter | count
 
 let H be an empty hashtable initialized with 0
 
-for i <- 0 to len(s) :
+for ( i <- 0 to len(s) ) :
     H[s[i]]++
 
-for (i <- 0 to len(t)) :
+for ( i <- 0 to len(t) ) :
     H[t[i]]--
 
-for (i <- 0 to size(H)) :
-    if (H[i] != 0) :
+for ( i <- 0 to size(H) ) :
+    if ( H[i] != 0 ) :
         return false
 return true
 
@@ -654,8 +661,9 @@ return true
 
 ***
 
-# Heap Data Structure: Kth Largest Element in an Array 215
-## O(nlogn) Solution
+## Heap Data Structure: Kth Largest Element in an Array 215
+
+### O(nlogn) Solution
 
 ```
 k-th largest element
@@ -710,10 +718,10 @@ return 7,8,9
 
 1) Make a Min Heap H of size k              O(k)
 2) Loop over all elements i< 1 to n         O(n)
-    if (size(H) < k) :
+    if ( size(H) < k ) :
         H.insert(nums[i])                   O(logk)
     else :                                  O(1)
-        if (min_elem in H < nums[i]) :
+        if ( min_elem in H < nums[i] ) :
             remove min_elem in H            O(logk)
             insert nums[i]                  O(logk)
 
@@ -727,7 +735,8 @@ min heap H = 2
 ```
 
 ## Heap Data Structure: Find K Pairs with Smallest Sums
-## O(n^2logn) Solution and O(n^2logk) 373
+
+### O(n^2logn) Solution and O(n^2logk) 373
 
 ```
 
@@ -774,10 +783,10 @@ k-th smallest element Max heap
 
 1) Make max heap H of size k
 2) For all possible pairs i <- 1 to n^2 :
-    if (size(H) < k) :
+    if ( size(H) < k ) :
         insert(pairs[i])
     else :
-        if (max_sum_of_pair > Pairs[i] sum):
+        if ( max_sum_of_pair > Pairs[i] sum ):
             replace
     return all elements in the heap
 
@@ -785,7 +794,7 @@ k-th smallest element Max heap
 
 ***
 
-# Tree Data Structure: Invert Binary Tree   226
+## Tree Data Structure: Invert Binary Tree   226
 
 ```
              4
@@ -802,7 +811,7 @@ k-th smallest element Max heap
 
 ```
 
-## O(n) Recursive solution
+### O(n) Recursive solution
 
 ```
              4              root
@@ -817,7 +826,7 @@ invert(root)        r -> null return base case
 ---------------------------------------
 
 invert(Node* r):
-    if (r == NULL/0) :
+    if (r == NULL) :
         return
     // r != NULL
     Node* temp = r.left;
@@ -829,6 +838,7 @@ invert(Node* r):
 ```
 
 ## Tree Data Structure: Same Tree
+
 ### Recursive Solution O(n) : 100
 
 ```
@@ -873,17 +883,71 @@ FD(r) = 1 + max(fd(r.left), fd(r.right))
 
 ---------------------------------
 
-fd(Node* r):
-    if (r == NULL):
+fd( Node* r ):
+    if ( r == NULL ):
         return 0
-    l <- fd(r.left)
-    r <- fd(r.right)
+    l <- fd( r.left )
+    r <- fd( r.right )
     return max(l,r) + 1
 
 ```
 
+***
 
+## Advanced Algorithms
 
+### Euclid Algorithm
+
+- FInd the Greatest Common Divisor between numbers A and B
+
+```
+10 and 2
+
+10 / 2 = 5 rest of 0 -> end of Acquisition
+
+common divisior is 2
+
+----------------------------------------
+22 and 6
+
+22 / 6 = 3 rest 4
+6 / 4 = 1 rest 2
+4 / 2 = 2 rest 0 -> end of Acquisition
+
+```
+
+```java
+public class Euclid {
+
+    // With recursion
+    // 22 / 6 = 3 rest of 4
+    // 6 / 4 = 1 rest of 2
+    // 4 / 2 = 2 rest of 0
+    public int gcd(int number, int divisior) {
+
+        int remaining = (number % divisior);
+
+        if (remaining != 0) {
+            return gcd(divisior, remaining);
+        } else {
+            return divisior;
+        }
+    }
+
+    // Without recursion
+    // number/temp = result of divisior
+    public int gcd2(int number, int divisor) {
+        while(divisor != 0) {
+            int temp = divisor;
+            divisor= (number % divisor);
+
+            number = temp;
+        }
+        return number;
+    }
+
+}
+```
 
 
 

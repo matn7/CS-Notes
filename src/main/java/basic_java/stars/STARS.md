@@ -2,8 +2,12 @@
 
 ```java
 public static void swap(int[] listToSort, int iIndex, int jIndex) {
+
+    // i j
     int temp = listToSort[iIndex];
+    // j j
     listToSort[iIndex] = listToSort[jIndex];
+    // j i
     listToSort[jIndex] = temp;
 }
 ```
@@ -98,7 +102,6 @@ public static void insertionSort(int[] list) {
 - Partition is based on **pivot** element from the list.
 - The list is partitioned with all elements smaller than pivot on one side and larger than pivot on the other.
 - Pivots is usually first or last element in the list.
-
 - `Complexity O(N(Log(N)))`
 - `O(Log(N))` extra space
 - Is not adaptive
@@ -276,14 +279,16 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
     }
 
     if (root == a || root == b) {
-        return root;    // If the current root is either of two nodes then return the root itself
+        // If the current root is either of two nodes then return the root itself
+        return root;
     }
 
     Node<Integer> leftCA = leastCommonAncestor(root.getLeftChild(), a, b);
     Node<Integer> rightCA = leastCommonAncestor(root.getRightChild(), a, b);
 
     if (leftCA != null && rightCA != null) {
-        // If both exists it means either the node or it's ancestor exists in the left and right subtree so the current node is LCA
+        // If both exists it means either the node or it's ancestor exists in the left and right
+        // subtree so the current node is LCA
         return root;
     }
 
@@ -537,7 +542,8 @@ public class NewsAgency extends Observable implements Publisher {
     // Add List of Observers in our case Radio and TV
     private List<Observer> channels = new ArrayList<>();
 
-    // Add some news. NewsAgency is kind of things that delegates news to different providers (TV, Radio)
+    // Add some news. NewsAgency is kind of things that delegates news to different providers
+    // (TV, Radio)
     public void addNews(String newsItem) {
         notifyObserver(newsItem);
     }
@@ -549,7 +555,8 @@ public class NewsAgency extends Observable implements Publisher {
         }
     }
 
-    // Register observer. We can think of this as some news are proper for TV only some for Radio only.
+    // Register observer. We can think of this as some news are proper
+    // for TV only some for Radio only.
     // Simply add Class that implements Observer to ArrayList.
     // Here register where we want to display our message.
     public void register(Observer outlet) {
@@ -795,13 +802,13 @@ public int hashCode() {
 - The implementation of equals method checks if the id's of both objects are equal, if so return true
 
 ```java
-    @Override
-     public boolean equals(Object obj) {
-       Client other = (Client) obj;
-       if (id != other.id)
-           return false;
-       return true;
-     }
+@Override
+public boolean equals(Object obj) {
+    Client other = (Client) obj;
+    if (id != other.id)
+        return false;
+    return true;
+}
 ```
 
 Important things to consider when implementing equals method.
@@ -814,23 +821,26 @@ Important things to consider when implementing equals method.
 - For any non-null reference value x, `x.equals(null)` should return false
 
 ```java
-          @Override
-          public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            Client other = (Client) obj;
-            if (id != other.id) {
-                return false;
-            }
-            return true;
-          }
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) {
+        return true;
+    }
+
+    if (obj == null) {
+        return false;
+    }
+
+    if (getClass() != obj.getClass()) {
+        return false;
+    }
+
+    Client other = (Client) obj;
+    if (id != other.id) {
+        return false;
+    }
+    return true;
+}
 ```
 
 ### wait and notify
@@ -1111,9 +1121,9 @@ public void addName(String name) {
 
 ## :star: Make sure your singleton objects can't be cloned
 
-- 1. The `.clone()` method belongs to object class (every object has this method), when it ought to belong to cloneable interface
-- 2. Object have a `.clone()` method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
-- 3. So make sure that your singleton class does not implement cloneable - or if for some reason it does
+- The `.clone()` method belongs to object class (every object has this method), when it ought to belong to cloneable interface
+- Object have a `.clone()` method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
+- So make sure that your singleton class does not implement cloneable - or if for some reason it does
 Override the `.clone()` method to thrown an exception.
 
 ```java
