@@ -1221,7 +1221,22 @@ Servlet Container                   Tomcat, Jetty, Netty, Undertow
 - Spring will detect platform specific persistence exceptions and re-throw them as Spring exceptions
 
 
+### Spring Boot Profile Properties
 
+```
+application-default.properties
+```
+
+```java
+@Component
+@Profile("defualt")
+public class DefaultProfile {
+    @Autowired
+    public DefaultProfile(@Value("${com.pandatronik.profile.message}") String msg) {
+        System.out.println(msg);
+    }
+}
+```
 
 
 

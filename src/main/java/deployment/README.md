@@ -221,6 +221,57 @@ $ docker run -d -p 8080:8080 spring-boot-docker
 ```
 
 
+### :red_circle: MySQL Service account
+
+```sql
+SHOW VARIABLES LIKE 'validate_password%';
+
+SET GLOBAL validate_password_length = 0;
+SET GLOBAL validate_password_number_count = 0;
+SET GLOBAL validate_password_policy=LOW;
+```
+
+- Create cutome user without root privileges
+
+```sql
+
+-- ptr-dev is databasename
+-- panda - password
+
+CREATE USER 'ptr-dev'@'localhost' IDENTIFIED BY 'panda';
+
+GRANT SELECT ON ptr-dev.* to 'ptr'@'localhost';
+GRANT INSERT ON ptr-dev.* to 'ptr'@'localhost';
+GRANT DELETE ON ptr-dev.* to 'ptr'@'localhost';
+GRANT UPDATE ON ptr-dev.* to 'ptr'@'localhost';
+```
+
+### :red-circle: Encrypting properties
+
+SpringDevOps Lecture 30
+
+```xml
+<dependency>
+    <groupId>com.github.ulisesbocchio</groupId>
+	<artifactId>jasypt-spring-boot-starter</artifactId>
+	<version>1.6</version>
+</dependency>
+```
+
+- Use jasypt shell scrit to encode
+
+```bash
+jasypt-1.9.2/bin$ ./encrypt.sh input=panda password=password__this__one
+```
+
+- Use in properties files
+
+```properties
+jasypt.encryptor.password=password__this__one
+
+spring.datasource.username=ENC(AB2jknGes56KGq1ABPAqr8eUjfdrEeUu)
+spring.datasource.password=ENC(WR7WN1GGfcqdhi0VU9hMhQ==)
+```
 
 
 

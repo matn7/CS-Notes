@@ -949,6 +949,70 @@ public class Euclid {
 }
 ```
 
+### Brute Force
+
+- Find pattern into an array and return index of the array
+
+```
+[B, R, U, T, E,___,F, O, R, C, E]       Pattern [R, C]
+
+Is array [0 + patternIndex] == pattern[0]?
+If not increase array index + 1
+If yes increate array pattern + 1
+```
+
+```java
+public class BrutForce {
+
+    /**
+     * This method searches for the pattern into an array and return the index of the first char that matches<BR>
+     * If no mathc found, return -1
+     * array = abcadef
+     * pattern = def -> 4
+     * @param array
+     * @param pattern
+     * @return
+     */
+    public int firstMatch(char[] array, char[] pattern) {
+        for (int a = 0; a <= array.length - pattern.length; a++) {
+            for (int p = 0; p < pattern.length; p++) {
+                if (array[a+p] != pattern[p]) {
+                    break;
+                }
+                if (p == pattern.length - 1) {
+                    return a;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Searches for a pattern into array and return array of indexes of elements found
+     * @param array
+     * @param pattern
+     * @return
+     */
+    public int[] everyMatch(char[] array, char[] pattern) {
+        int[] found = new int[array.length];
+        Arrays.fill(found, -1);
+        int index = 0;
+        for (int a = 0; a <= array.length - pattern.length; a++) {
+            for (int p = 0; p < pattern.length; p++) {
+                if (array[a+p] != pattern[p]) {
+                    break;
+                }
+                if (p == pattern.length - 1) {
+                    found[index++] = a;
+                }
+            }
+        }
+        return found;
+    }
+
+}
+```
+
 
 
 
