@@ -551,7 +551,7 @@ return false
 
 ## Anagram
 
-### Hash map and Hash Set Data structure: Valid Anagram: 242
+### Hash map and Hash Set Data structure: Valid Anagram: [242]
 
 ```
 anagram
@@ -1013,6 +1013,96 @@ public class BrutForce {
 }
 ```
 
+***
+
+### Knut-Morris-Pratt
+
+- Knuth Morris Pratt LSP table (Longest Suffix Preffix table)
+
+- Find pattern into an array and return index of the array
+
+```
+pattern  [a b a b a c]
+
+oryginal [a b a z a c a b a b a b a c]
+
+step 1) a b a matches pattern z does not
+
+step 2) compare z with first element of pattern a != z
+pattern  [a b a b a c]
+oryginal [z a c a b a b a b a c]
+
+step 3) a matches pattern c != b
+pattern  [a b a b a c]
+oryginal [a c a b a b a b a c]
+
+step 4) c != a
+pattern  [a b a b a c]
+oryginal [c a b a b a b a c]
+
+step 5) a b a b a matches pattern c != a, find longest suffix which is a b a
+pattern  [a b a b a c]
+oryginal [a b a b a c]
+
+Found !
+
+O(n+m)
+```
+
+#### KMP longest Suffix Prefix table
+
+```
+    [a b a b a c]
+    [0 0 1 2 3 0] ---> how many characters matching pattern
+
+                                Array pointers
+    pattern [a b a b a c]       J = 0
+      index [0 1 2 3 4 5]       I = 1
+
+      pattern[j]==pattern[i] NO move i + 1
+
+      pattern[j]==pattern[i] YES
+            1. add j + 1 to table, 2 - increase i, 3 - increase j
+```
+
+```java
+public int search(char[] array, char[] pattern) {
+    int[] lsp = computeLSPTable(pattern);
+    int j = 0;
+
+    for (int i = 0; i < array.length; i++) {
+        while(j > 0 && array[i] != pattern[j]) {
+            j = lsp[j - 1];
+        }
+        if (array[i] == pattern[j]) {
+            j++;
+            if (j == pattern.length) {
+                return (i - (j-1));
+            }
+        }
+    }
+
+    return -1;
+}
+
+public int[] computeLSPTable(char[] pattern) {
+    int lsp[] = new int[pattern.length];
+    int j = 0;
+
+    for (int i = 1; i < pattern.length; i++) {
+        while (j > 0 && pattern[i] != pattern[j]) {
+            j = lsp[j-1];
+        }
+        if (pattern[i] == pattern[j]) {
+            lsp[i] = j + 1;
+            j++;
+        } else {
+            lsp[i] = 0;
+        }
+    }
+    return lsp;
+}
+```
 
 
 

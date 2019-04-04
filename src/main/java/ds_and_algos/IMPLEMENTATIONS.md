@@ -22,7 +22,7 @@ class Solution {
 }
 ```
 
-### Two Sum Problem O(nlogn)
+### Two Sum Problem O(nlogn) [1]
 
 ```java
 class Solution {
@@ -72,7 +72,7 @@ class Solution {
 
 ## Max Consecutive Ones
 
-### Max Consecutive Ones Problem O(n^2)
+### Max Consecutive Ones Problem O(n^2) [485]
 
 ```java
 class Solution {
@@ -97,7 +97,7 @@ class Solution {
 }
 ```
 
-### Max Consecutive Ones Problem O(n)
+### Max Consecutive Ones Problem O(n) [485]
 
 ```java
 class Solution {
@@ -125,7 +125,7 @@ class Solution {
 
 ***
 
-## Maximum Product of Three Numbers
+## Maximum Product of Three Numbers [628]
 
 ### Maximum Product of Three Numbers O(nlog(n))
 
@@ -151,13 +151,14 @@ class Solution {
 }
 ```
 
-### Maximum Product of Three Numbers O(n)
+### Maximum Product of Three Numbers O(n) [628]
 
 ```java
 class Solution {
     public int maximumProduct(int[] nums) {
 
-        // valies fro problem description
+        // max1 <= max2 <= max3            min1 <= min2
+        // values from problem description
         int max1=-1000, max2=-1000, max3=-1000, min1=1000, min2=1000;
         int n = nums.length;
 
@@ -199,7 +200,7 @@ class Solution {
 
 ***
 
-## Stack Data Structure: Valid Parentheses
+## Stack Data Structure: Valid Parentheses [20]
 
 ### Recursive Algorithm O(n^2)
 

@@ -2159,6 +2159,9 @@ type is inferred automatically by the return type.
 Two operations consist of multiple steps, and the sequences of steps overlap. Because they are unpredictable,
 thread interference bugs can be difficult to detect and fix.
 
+- :star: Constructors cannot be synchronized
+- Sychronization is effective for keeping systems safe, but can present problems
+with liveness
 
 
 

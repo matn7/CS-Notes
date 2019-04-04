@@ -522,7 +522,7 @@ public void methodThrowingCheckedException(boolean flag) {
 public void methodThrowingCheckedException(boolean flag) throws MyException {
     int i = 1 / 0; // Compiles OK
     if (flag) {
-        throw new MyException(); // Compilation error
+        throw new MyException(); // Compilation ok
     } else {
         throw new MyException2(); // Compiles OK
     }
@@ -871,8 +871,7 @@ could not throw, that would break the type substitutability.
 
 ```
 NOTE: If one of the threads of your program throws an exception that isn't caught
-by any method along the method invocation stack, that thread will expire. (We will
-come back to this when we look at threads)
+by any method along the method invocation stack, that thread will expire.
 ```
 
 ### :star: Question: If exception in catch block will be catch again ?

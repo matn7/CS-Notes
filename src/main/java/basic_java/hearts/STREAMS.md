@@ -31,8 +31,8 @@ an "a".
 - The `map()` operation transforms each element using a given function, called a mapper. In this case, each fruit String
 is mapped to its uppercase String version.
     - That the map() operation will return a stream with a different generic type if the mapping
-    function returns a type different to its input parameter. For example on a Stream<String> calling.map(String::isEmpty)
-    returns a Stream<Boolean>
+    function returns a type different to its input parameter.
+     - For example on a `Stream<String> calling.map(String::isEmpty)` returns a `Stream<Boolean>`.
 - The `sorted()` operation sorts the elements of the Stream according to their natural ordering.
 - `forEach(action)` operation performs an action which acts on each element of the Stream, passing it to a
 Consumer. In the example, each element is simply being printed to the console. This operation is a terminal
@@ -283,7 +283,7 @@ System.out.println(idToName);
 - The mergeFunction often looks like: `(s1, s2) -> s1` to retain value corresponding to the repeated key, or
   `(s1, s2) -> s2` to put new value for the repeated key.
 
-### Collecting Elements to Map of Collections
+### :star: Collecting Elements to Map of Collections
 
 - Requires to make a map of list out of a primary list. Example: From student of list, we need to make a map of list of
 subjects for each student.
@@ -320,7 +320,7 @@ Davis=[MATH, SCIENCE, GEOGRAPHY] }
 
 ```java
 double pi = Math.sqrt(12) *
-            OntStream.rangeClosed(0, 100)
+            IntStream.rangeClosed(0, 100)
                      .mapToDouble(k -> Math.pow(-3, -1 * k) / (2 * k + 1))
                      .sum();
 ```
@@ -457,7 +457,7 @@ IntStream intStream = Arrays.stream(values, 1, 3);
 Stream<Integer> integerStream = intStream.boxed();
 ```
 
-### Reusing intermediate operations of a stream chain
+### :star: Reusing intermediate operations of a stream chain
 
 - Stream is closed when ever terminal operation is called. Reusing the stream of intermediate operations, when only
 terminal operation is only varying, we could create a stream supplier to construct a new stream with all
@@ -547,7 +547,7 @@ concat1.forEach(System.out::println);
 
 ```java
 final Stream<String> concat2 = Stream.concat(
-    Stream.concat(abc.stream(), digits.stream()), geekAbc.stream());
+    Stream.concat(abc.stream(), digits.stream()), greekAbc.stream());
 
 System.out.println(concat2.collect(Collectors.joining(", ")));
 
@@ -558,7 +558,7 @@ System.out.println(concat2.collect(Collectors.joining(", ")));
 
 ```java
 final Stream<String> concat3 = Stream.of(
-    abc.stream(), digits.stream(), geekAbc.stream())
+    abc.stream(), digits.stream(), greekAbc.stream())
     .flatMap(s -> s);
     // or `.flatMap(Function.identity());` (java.util.function.Function)
 
@@ -762,7 +762,7 @@ Map<Integer, String> map = characters
     - return the new value, so that the last value in the stream takes precedence, or
     - combine the old and new values
 
-#### Grouping by value
+#### :star: Grouping by value
 
 - You can use Collectors.groupingBy when you need to perform the equivalent of a database cascaded "group by"
   operation. To illustrate, the following creates a map in which people's names are mapped to surnames:

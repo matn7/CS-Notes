@@ -273,6 +273,115 @@ spring.datasource.username=ENC(AB2jknGes56KGq1ABPAqr8eUjfdrEeUu)
 spring.datasource.password=ENC(WR7WN1GGfcqdhi0VU9hMhQ==)
 ```
 
+***
+
+## Amazon Web Service
+- Provisioning server
+- EC2
+
+### Installing Jenkins
+
+```bash
+# ssh -i "/home/matikomp/Downloads/dev_ops_course.pem" ec2-user@abcdef123.amazonaws.com
+
+$ which wget
+$ sudo su
+
+// install java
+# yum install wget
+# pwd
+# mkdir install
+# cd install
+# wget ---[rest of commands] java
+# tar xzf jdk-8u201-linux-x64.tar.gz
+# cp -r ./jdk1.8.0_201/ /opt/
+# cd /opt
+# ll
+# alternatives --install /usr/bin/java java /opt/jdk1.8.0_201/bin/java 2
+# alternatives --config java
+# alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_201/bin/jar 2
+# alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_201/bin/javac 2
+# alternatives --set jar /opt/jdk1.8.0_201/bin/jar
+# alternatives --set javac /opt/jdk1.8.0_201/bin/javac
+# java -version
+
+// install jenkins
+# cd /home/ec2-user/install/
+# sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+# sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+# sudo yum install jenkins
+# service jenkins start
+# ps -ef | grep jenkins
+```
+
+### How DNS (Domain Names Server) works
+
+- Protocol for obtaining an IP address associated with text
+- Check domain from command line
+
+```bash
+nslookup pandatronik.com
+```
+
+```
++--------------------+   +----------+   +----------------+
+| Your local DNS via |   | Root DNS |   | DNS Server per |
+|   your ISP         |-->|  (.com)  |-->|   your ISP     |
+|   (8.8.8.8)        |   |          |   |   (Route 53)   |
++--------------------+   +----------+   +----------------+
+         A                                      |
+         |                                      V
+         |                              +----------------+
+         +------------------------------| DNS Recors Sets|
+                                        +----------------+
+```
+
+### Route 53
+
+### Setting up Apache with Jenkins
+
+```bash
+# yum install httpd
+# service httpd start
+# cd /etc/httpd/conf
+# vi httpd.conf
+
+<VirtualHost *:80>
+servername http://xxx.yyy.zzz.www:8080/
+ProxyRequests Off
+ProxyPreserveHost On
+AllowEncodedSlashes NoDecode
+ProxyPass / http://localhost:8080/ nocanon
+ProxyPassReverse / http://localhost:8080
+ProxyPassReverse / http://xxx.yyy.zzz.www:8080
+<Proxy http://localhost:8080/* >
+Order deny,allow
+Allow from all
+</Proxy>
+</VirtualHost>
+
+# service httpd restart
+# setsebool -P httpd_can_network_connect true
+
+// block jenkins on port 8080
+# cd /etc
+# cd sysconfig/
+# vi jenkins
+
+## Type:        string
+## Default:     ""
+## ServiceRestart: jenkins
+#
+# IP address Jenkins listens on for HTTP requests.
+# Default is all interfaces (0.0.0.0).
+#
+JENKINS_LISTEN_ADDRESS="127.0.0.1"
+
+# service jenkins restart
+```
+
+-
+
 
 
 
