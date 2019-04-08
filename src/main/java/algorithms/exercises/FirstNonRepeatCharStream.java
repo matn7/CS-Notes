@@ -8,21 +8,39 @@ import java.util.stream.Collectors;
 public class FirstNonRepeatCharStream {
 
     public static void main(String[] args) {
-        new FirstNonRepeatCharStream().findCharacter("majka");
+        Character majka = new FirstNonRepeatCharStream().findCharacter("mmajka");
+        System.out.println(majka);
+
+        Character majka2 = new FirstNonRepeatCharStream().findCharacter(null);
+        System.out.println(majka2);
+
+        Character majka3 = new FirstNonRepeatCharStream().findCharacter("");
+        System.out.println(majka3);
+
+        Character majka4 = new FirstNonRepeatCharStream().findCharacter("a");
+        System.out.println(majka4);
     }
 
-    public char findCharacter(String testWord) {
-        String[] strArr = new String[testWord.length()];
+    public Character findCharacter(String testWord) {
+        if (testWord == null || testWord == "") {
+            return null;
+        }
+        Character[] charArr = new Character[testWord.length()];
 
         for (int i = 0; i < testWord.length(); i++) {
-            strArr[i] = String.valueOf(testWord.charAt(i));
+            charArr[i] = testWord.charAt(i);
         }
 
-        Map<String, Long> collect = Arrays.stream(strArr)
+        Map<Character, Long> collect = Arrays.stream(charArr)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-        collect.entrySet().forEach(System.out::println);
-        return 'a';
+        for (int i = 0; i < testWord.length(); i++) {
+            if (collect.get(charArr[i]) == 1) {
+                return charArr[i];
+            }
+        }
+
+        return null;
     }
 
 }
