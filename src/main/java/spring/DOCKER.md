@@ -13,7 +13,7 @@
 - Have their own disk space
     - can share with host
 
-## Docker Terms
+## Docker Terminology
 
 - Docker Image - The representation of a Docker Container. Like JAR or WAR file in Java
 - Docker Container - The standard runtime of Docker. Effectively a deployed and running Docker Image.
@@ -30,11 +30,20 @@ Client docker CLI :arrow_forward: REST API :arrow_forward: server docker daemon
 
 ### Docker Enterprise Edition
 
+- Announced Match 2nd, 2017
+- CaaS (Container as a Service) platform subscription
+- Enterprise class support
+- Quarterly Released
+- Backported patches for 1 year
+- Certfied infrastructure
+
 - Important for regulatory compliance (PCI, SOX, SAS-70)
 
 ### Docker Community Edition
 
 - Free Docker edition for developers and operations
+- Monthly edge release with latest features for developers
+- Quarterly releases for operations
 
 ### Which use
 

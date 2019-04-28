@@ -380,7 +380,37 @@ JENKINS_LISTEN_ADDRESS="127.0.0.1"
 # service jenkins restart
 ```
 
--
+## Creating ssh keys
+
+```bash
+# whoami
+
+# su -s /bin/bash jenkins
+
+$ whoami
+$ cd /var/lib/jenkins
+$ mkdir .ssh
+$ cd .ssh
+$ ssh-keygen -t rsa -C 'jenkins@example.com'
+```
+
+## Installijg GIT on Jenkins server
+
+```bash
+# sudo yum install git
+```
+
+## Installing docker
+
+```bash
+# uname -r
+# sudo yum update
+
+# from page
+
+# sudo systemctl start docker
+
+```
 
 
 

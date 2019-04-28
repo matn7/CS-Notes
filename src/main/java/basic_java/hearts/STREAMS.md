@@ -58,7 +58,7 @@ closing.
 - The Stream interface extends **AutoCloseable**. Streams can be closed by calling the `close()` method or by using try-
 with-resource statement.
 
-- Example use case where a Stream should be closed is when you create s Stream of lines from a file:
+- Example use case where a Stream should be closed is when you create a Stream of lines from a file:
 
 ```java
 try (Stream<String> lines = Files.lines(Paths.get("somePath"))) {

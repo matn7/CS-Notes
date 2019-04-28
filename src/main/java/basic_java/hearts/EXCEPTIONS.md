@@ -22,7 +22,7 @@ the try...catch.
     - If it is, then the catch block will catch the exception:
         - The variable `e` is bound to exception object
         - The code within the catch block is executed
-        - If that code throws an exception, then the newly thrown exception is propagated in place ot the original one
+        - If that code throws an exception, then the newly thrown exception is propagated in place to the original one
         - Otherwise, control process to the next statement after the try...catch
     - If it is not, the original exception continues to propagate
 
@@ -867,7 +867,7 @@ could not throw, that would break the type substitutability.
 
 ***
 
-## :star: Excaptions
+## :star: Exceptions
 
 ```
 NOTE: If one of the threads of your program throws an exception that isn't caught

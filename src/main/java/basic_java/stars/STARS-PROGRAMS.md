@@ -366,3 +366,76 @@ public static void mirror(Node<Integer> root) {
 ```
 
 ***
+
+## :star: Match parenthesis
+
+- Match {[(
+- Ok example: {[]}()
+- Not ok: ))(({}
+
+```java
+public class MatchParenthesis {
+    private static final Map<Character, Character> matchParenthesis = new HashMap<>();
+    private static final Set<Character> openingParenthesis = new HashSet<>();
+
+    static {
+        matchParenthesis.put(')', '(');
+        matchParenthesis.put(']', '[');
+        matchParenthesis.put('}', '{');
+        openingParenthesis.addAll(matchParenthesis.values()); // ( [ {
+    }
+
+    public static boolean hasMatchingParenthesis(String input) {
+        try {
+            Stack<Character> parenthesisStack = new Stack<>();
+            for (int i = 0; i < input.size(); i++) {
+                char ch = input.charAt(i);
+
+                if (openingParenthesis.contains(ch)) { // ( [ {
+                    parenthesisStack.push(ch); // ( [ {
+                }
+
+                if (matchParenthesis.containsKey(ch)) { // ) ] }
+                    Character lastParenthesis = parenthesisStack.pop();
+
+                    if (lastParenthesis != matchParenthesis.get(ch)) {
+                        return false;
+                    }
+                }
+            }
+            return parenthesisStack.isEmpty();
+        } catch (Stack.StackOverflowException soe) {
+            e.printStackTrace();
+        } catch (Stack.StackUnderflowEception sue) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

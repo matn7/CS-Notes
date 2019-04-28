@@ -258,6 +258,10 @@ Level 0: The Swap of POX <br/>
 - Typically uses one URI and one kind of method
 - Examples - RPC, SOAP, XML-RPC
 
+- http://localhost/getPost
+- http://localhost/deletePost
+- http://localhost/doThis
+
 ### Level 1: Resources
 
 - Uses Multiple URIs to identify specific resources
@@ -274,6 +278,7 @@ Level 0: The Swap of POX <br/>
     - PUT /students/123 (with XML/JSON body) to update data for student 123
     - DELETE /students/123 to delete student with id 123
 - Most common
+- Level1 + methods
 
 ### Level 3: Hypermedia
 
@@ -282,11 +287,29 @@ Level 0: The Swap of POX <br/>
 - Not standarized at this time
 - Spring provides an implementation of HATEOS
 
+- Level2 + HATEOAS
+    - Data + Next Possible Actions
+
 ### Summary
 
 - Level 1 - breaks large service into distinct URIs
 - Level 2 - Introduces Verbs to implement actions
 - Level 3 - provides discoverability, making the API more self documenting
+
+- Best Practice
+    - Consumer first, good dcumentation
+    - Make best use of HTTP
+    - Proper response status
+        - 200 - success
+        - 404 - resource not found
+        - 400 - bad request
+        - 201 - created
+        - 401 - unauthorized
+        - 500 - server error
+    - No secure info in uri
+    - Use plurals
+        - Prefer /users/1 to /user/1
+    - Use nouns for resources
 
 ***
 
@@ -369,10 +392,15 @@ to execute this request
     - @RestController, @ResponseBody
 
 - What is dispatcher servlet?
+    - Front controller pattern for spring mvc framework
 - Who is configuring dispatcher servlet?
+    - SpringBootAutoConfiguration
 - What does dispatcher servlet do?
+    - Dispatcher servlet is handling all the requests, tells Jackson do the conversion to JSON
 - How does the HelloWorldBean object get converted to JSON?
+    - SpringBootAutoConfiguration, message converter Jackson beans are getting initialized
 - Who is configuring error mapping?
+    - SpringBootAutoConfiguration
 
 - AUTO-CONFIGURATION
     - DispatcherServletAutoConfiguration, found dispatcher servlet on classpath
@@ -386,6 +414,29 @@ to execute this request
     - Which method is executed
     - @RestController
         - @ResponseBody, response from that will be mapped to message converter to the same format
+
+## Internationalization
+
+### Configuration
+- LocaleResolver
+    - Default locale - Locale.US
+- ResourceBundleMessageSource
+
+### Usage
+- Autowire MessageSource
+- @RequestHeader(value = "Accept-Language", required=false)
+Locale locale messageSource.getMessage("helloWorld.message", null, locale)
+
+## Versioning
+
+- MediaType versioning ("content negotiation" or "accept header") - GitHub
+- Custom headers versioning - Micsosoft
+- URI versioning - Twitter
+- Request Parameter versioning - Amazon
+
+
+
+***
 
 ## Spring security
 
