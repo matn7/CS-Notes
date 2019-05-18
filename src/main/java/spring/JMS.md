@@ -44,4 +44,14 @@ Mobile    TV   Laptop           [Different Queues]
 // rabbitMQ management: guest, guest
 ```
 
+## Direct Exchange
+
+- Message Key = "mobile"
+```
+                              ---> Mobile (key = mobile) ---> Consumer
+Producer ---> Direct Exchange      TV     (key = TV)     ---> Consumer
+                                   AC     (key = ac)     ---> Consumer
+
+```
+
 

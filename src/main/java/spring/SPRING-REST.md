@@ -19,7 +19,7 @@ Process of converting JSON data to a Java POJO
 ## JSON Data Binding with Jackson
 
 - Handles data binding between JSON and Java
-- Package : **com.fasterxml.jackson.databind**
+- Package - **com.fasterxml.jackson.databind**
 
 ```
                                                      +---------+
@@ -110,7 +110,7 @@ public class DemoController {
 
 ```java
 @GetMapping("/students/{id}")
-public Student getStudent(@PathVariable int studentId) {
+public Student getStudent(@PathVariable int id) {
 }
 ```
 
@@ -205,7 +205,7 @@ public Student addStudent(@RequestBody Student student) {
 
 - Sending JSON data to Spring REST Controller
 - For controller to process JSON data, need to set a HTTP request header
-    - Content-type: application/json
+    - `Content-type: application/json`
 - Configure REST client to send the correct HTTP request header (using Postman for instance)
 
 ### Update PUT
@@ -230,7 +230,7 @@ public String deleteStudent(@PathVariable int studentId) {
         throw new StudentNotFoundException("Student with id not found : " + studentId);
     }
 
-    studentService.seleteStudent(studentId);
+    studentService.deleteStudent(studentId);
     return "Deleted student with id : " + studentId;
 }
 ```
@@ -328,9 +328,9 @@ Web :arrow_right: Business :arrow_right: Data
 
 #### Q1: How does data exchange between applications take place?
 
-```
 ApplicationA :arrow_right: WebService
 
+```
 -> Request (input)
 <- Response (Output)
 ```
@@ -356,7 +356,7 @@ ApplicationA :arrow_right: WebService
     - Format of request nad response
         - XML and JSON
 - Service provider or Server: WebService, host the webservice
-- Service consumer or Client: Application!, consuming webservice
+- Service consumer or Client: Application, consuming webservice
 - Service Definition: contract between service provider and service consumer,
     - defines format request and response
     - what is structure of request and response
@@ -389,7 +389,8 @@ ApplicationA :arrow_right: WebService
 
 - dispatcher servlet handling all requests, front controller for Spring MVC, which is right controller
 to execute this request
-    - @RestController, @ResponseBody
+    - `@RestController`
+    - `@ResponseBody`
 
 - What is dispatcher servlet?
     - Front controller pattern for spring mvc framework
@@ -412,8 +413,8 @@ to execute this request
     - Front controller pattern for spring mvc framework
 - Mapper {[hello-world], methods=[GET]}
     - Which method is executed
-    - @RestController
-        - @ResponseBody, response from that will be mapped to message converter to the same format
+    - `@RestController`
+        - `@ResponseBody`, response from that will be mapped to message converter to the same format
 
 ## Internationalization
 
@@ -424,8 +425,13 @@ to execute this request
 
 ### Usage
 - Autowire MessageSource
-- @RequestHeader(value = "Accept-Language", required=false)
-Locale locale messageSource.getMessage("helloWorld.message", null, locale)
+
+```java
+@RequestHeader(value = "Accept-Language", required=false)
+Locale locale messageSource.getMessage("helloWorld.message", null, locale) {
+    // ...
+}
+```
 
 ## Versioning
 

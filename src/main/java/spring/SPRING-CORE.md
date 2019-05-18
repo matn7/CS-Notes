@@ -87,7 +87,8 @@ Bean Scopes default Singleton.
 ```java
 public static void main(String[] args) {
     // ...
-	ApplicationContext applicationContext = SpringApplication.run(SpringIn5StepsBasicApplication.class, args);
+	ApplicationContext applicationContext =
+	    SpringApplication.run(SpringIn5StepsBasicApplication.class, args);
 
 	BinarySearchImpl binarySearch = applicationContext.getBean(BinarySearchImpl.class);
 	BinarySearchImpl binarySearch1 = applicationContext.getBean(BinarySearchImpl.class);
@@ -102,6 +103,8 @@ public static void main(String[] args) {
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class BinarySearchImpl {
+    // ...
+}
 ```
 
 ### Prototype
@@ -122,8 +125,8 @@ public class JdbcConne {
 
 ## :star: Singleton vs GOF singleton
 
-- GOF singleton : one singleton per JVM
-- Spring singleton : one singleton per Application Context
+- GOF singleton - one singleton per JVM
+- Spring singleton - one singleton per ApplicationContext
 
 
 ## Component Scan
@@ -234,13 +237,13 @@ public class BasicApplication {
 ## Application Context using xml
 
 ```xml
-<context:component-scan base-package="com.panda.spring.basics"></context:component-scan>
+<context:component-scan base-package="com.mybank.spring.basics"></context:component-scan>
 
 <bean id="xmlJdbcConnection"
-    class="com.panda.spring.basics.xml.XmlJdbcConnection">
+    class="com.mybank.spring.basics.xml.XmlJdbcConnection">
 </bean>
 
-<bean id="xmlPersonDAO" class="com.panda.spring.basics.xml.XmlPersonDAO">
+<bean id="xmlPersonDAO" class="com.mybank.spring.basics.xml.XmlPersonDAO">
     <property name="xmlJdbcConnection" ref="xmlJdbcConnection"></property>
 </bean>
 ```
@@ -248,7 +251,7 @@ public class BasicApplication {
 ```java
 // ...
 try (ClassPathXmlApplicationContext applicationContext =
-					 new ClassPathXmlApplicationContext("applicationContext.xml")) {
+    new ClassPathXmlApplicationContext("applicationContext.xml")) {
     // ...
 }
 // ...
@@ -263,15 +266,15 @@ try (ClassPathXmlApplicationContext applicationContext =
     - Autowire WelcomeService bean into the WelcomeController
     - Wiring, creation of beans
 
-- Application Context :
-    - implementation of IOC
-- Bean Factory :
-    - implementation of IOC
+- Application Context
+    - Implementation of IOC
+- Bean Factory
+    - Implementation of IOC
 
 - ApplicationContext = **Bean Factory ++**
     - Spring AOP features
-    - I18n capabilities
-    - WebApplicationContext for web app
+    - `I18n` capabilities
+    - `WebApplicationContext` for web app
 
 ### Without Spring
 
@@ -349,21 +352,69 @@ public class PropertiesApplication {
 	public static void main(String[] args) {
 
 		try (AnnotationConfigApplicationContext applicationContext =
-					 new AnnotationConfigApplicationContext(PropertiesApplication.class)) {
+		    new AnnotationConfigApplicationContext(PropertiesApplication.class)) {
 
-			SomeExternalService service = applicationContext.getBean(SomeExternalSerivce.class);
+			SomeExternalService service = applicationContext
+			    .getBean(SomeExternalSerivce.class);
 			LOGGER.info(" ===> {}", service.returnServiceURL());
 		}
 	}
 }
 ```
 
+```java
+@Component
+@ConfigurationProperties("limits-service")
+public class Configuration {
+
+    private int minimum;
+    private int maximum;
+
+    public int getMinimum() {
+        return minimum;
+    }
+
+    public void setMinimum(int minimum) {
+        this.minimum = minimum;
+    }
+
+    public int getMaximum() {
+        return maximum;
+    }
+
+    public void setMaximum(int maximum) {
+        this.maximum = maximum;
+    }
+}
+```
+
+```properties
+spring.application.name=limits-service
+```
+
+- Use
+
+```java
+@RestController
+public class LimitsConfigurationController {
+
+    @Autowired
+    private Configuration configuration;
+
+    @GetMapping("/limits")
+    public LimitConfiguration retrieveLimitsFromConfigurations() {
+        return new LimitConfiguration(configuration.getMaximum(),configuration.getMinimum());
+    }
+}
+```
+
+
 ## Spring Boot Auto Configuration
 
 - :star: `@SpringBootApplication`
-    - Spring Context
-    - Auto Configuration
-    - Component Scan
+    - SpringContext
+    - AutoConfiguration
+    - ComponentScan
 
 - Spring boot looks at
     - a) Frameworks available on **CLASSPATH**
@@ -459,7 +510,7 @@ public class BeforeAspect {
 
 ### Join Point (pointcut)
 
-- "execution(* com.panda.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
+- "execution(* com.mybank.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
 
 ### Advice
 
@@ -490,7 +541,7 @@ logger.info("Intercepted method call - {}", joinPoint);
 ```java
     // When succeed. Intercept return value
     @AfterReturning(
-            value = "execution(* com.panda.spring.aop.business.*.*(..))",
+            value = "execution(* com.mybank.spring.aop.business.*.*(..))",
             returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
         logger.info("{} returned with value {}", joinPoint, result);
@@ -498,7 +549,7 @@ logger.info("Intercepted method call - {}", joinPoint);
 
     // When failed. Intercept any thrown exception
     @AfterThrowing(
-            value = "execution(* com.panda.spring.aop.business.*.*(..))",
+            value = "execution(* com.mybank.spring.aop.business.*.*(..))",
             throwing = "exception")
     public void afterThrowing(JoinPoint joinPoint, Object exception) {
         logger.info("{} throw exception {}", joinPoint, exception);
@@ -508,7 +559,7 @@ logger.info("Intercepted method call - {}", joinPoint);
 ### `@Around`
 
 ```java
-    @Around("execution(* com.panda.spring.aop.business.*.*(..))")
+    @Around("execution(* com.mybank.spring.aop.business.*.*(..))")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         joinPoint.proceed();
@@ -521,12 +572,12 @@ logger.info("Intercepted method call - {}", joinPoint);
 
 ```java
 public class CommonJoinpointConfig {
-    @Pointcut("execution(* com.panda.spring.aop.business.*.*(..))")
+    @Pointcut("execution(* com.mybank.spring.aop.business.*.*(..))")
     public void dataLayer() {}
 }
 
 // Before
-@Before("com.panda.spring.aop.aspect.CommonJoinpointConfig.dataLayer()")
+@Before("com.mybank.spring.aop.aspect.CommonJoinpointConfig.dataLayer()")
 public void before(JoinPoint joinPoint) {
 ```
 
@@ -539,8 +590,6 @@ public @interface Stopper {
 }
 ```
 
----
-
 ```java
 @Repository
 public class DaoRepo {
@@ -552,17 +601,13 @@ public class DaoRepo {
 }
 ```
 
----
-
 ```java
 public class CommonJoinpoint {
-    @Pointcut("@annotation(com.panda.spring.aop.aspect.Stopper)")
+    @Pointcut("@annotation(com.mybank.spring.aop.aspect.Stopper)")
     public void stopper() {
     }
 }
 ```
-
----
 
 ```java
 @Aspect
@@ -571,7 +616,7 @@ public class AroundAspect {
 
     org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Around("com.panda.spring.aop.aspect.CommonJoinpoint.stopper()")
+    @Around("com.mybank.spring.aop.aspect.CommonJoinpoint.stopper()")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         joinPoint.proceed();
@@ -586,6 +631,7 @@ public class AroundAspect {
 
 Some examples loaded by app context for us:
 
+```
    DataSourceAutoConfiguration.EmbeddedDatabaseConfiguration:
       Did not match:
          - EmbeddedDataSource found supported pooled data source (DataSourceAutoConfiguration.EmbeddedDatabaseCondition)
@@ -598,6 +644,7 @@ Some examples loaded by app context for us:
       - @ConditionalOnClass found required class 'org.h2.server.web.WebServlet'; @ConditionalOnMissingClass did not find unwanted class (OnClassCondition)
       - found ConfigurableWebEnvironment (OnWebApplicationCondition)
       - @ConditionalOnProperty (spring.h2.console.enabled=true) matched (OnPropertyCondition)
+```
 
 ***
 
@@ -699,7 +746,7 @@ repository.deleteBYId(12);
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/spring-mvc/*</url-pattern>
-    </servlet-m//@SpringBootApplicationapping>
+    </servlet-mapping>
 </web-app>
 ```
 

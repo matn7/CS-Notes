@@ -78,7 +78,7 @@
 
 ```xml
 <beans >
-    <bean id="myPandaBean" class="com.panda.tiergarten.berlin.ZooWorker"></bean>
+    <bean id="myAccountBean" class="com.mybank.Account"></bean>
 </beans>
 ```
 
@@ -100,14 +100,14 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app
 ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 // retrieve bean from spring container
-Panda thePanda = context.getBean("myPandaBean", Panda.class);
+Account theAccount = context.getBean("myAccountBean", Account.class);
 ```
 
 ## What is a Spring Bean?
 
-- A "Spring Bean" is simply a Java object.
-- When Java objects are created by the Spring Container, then Spring refers to them as "Spring Beans".
-- Spring Beans are created from normal Java classes like Java objects.
+- A **Spring Bean** is simply a Java object
+- When Java objects are created by the Spring Container, then Spring refers to them as **Spring Beans**
+- Spring Beans are created from normal Java classes like Java objects
 
 ## Why do we specify the interface in getBean()?
 
@@ -126,7 +126,7 @@ This means that ClassCastException can't be thrown on casting the result correct
 +------------------+                               +----------------+
 ```
 
-- dependency = helper
+- Dependency = helper
 - Injection Types
     - Constructor injection
     - Setter Injection
@@ -137,20 +137,20 @@ This means that ClassCastException can't be thrown on casting the result correct
 
 ### Define the dependency interface and class
 
-**CleaningService.java**
+**CheckoutService.java**
 
 ```java
-public interface CleaningService {
-    public String getCleanUp();
+public interface CheckoutService {
+    public String getNotification();
 }
 ```
 
-**ZooCleaningService.java**
+**TradeCheckoutService.java**
 
 ```java
-public class ZooCleaningService implements CleaningService {
-    public String getCleanUp() {
-        return "Clean zoo";
+public class TradeCheckoutService implements CheckoutService {
+    public String getNotification() {
+        return "Money disposal";
     }
 }
 ```
@@ -160,11 +160,11 @@ public class ZooCleaningService implements CleaningService {
 **TigerSection.java**
 
 ```java
-public class ZooWorker implements Section {
-    private CleaningService cleaningService;
+public class Broker implements BankDepartment {
+    private CheckoutService checkoutService;
 
-    public ZooWorker(CleaningService cleaningService) {
-        this.cleaningService = cleaningService;
+    public Broker(CheckoutService checkoutService) {
+        this.checkoutService = checkoutService;
     }
 }
 ```
@@ -173,11 +173,11 @@ public class ZooWorker implements Section {
 
 ```xml
 <beans >
-    <!-- ZooCleaningService service = new ZooCleaningService(); // java -->
-    <bean id="myService" class="com.panda.tiergarten.berlin.ZooCleaningService"></bean>
+    <!-- CheckoutService service = new CheckoutService(); // java -->
+    <bean id="myService" class="com.mybank.CheckoutService"></bean>
 
-    <!-- ZooWorker zoo = new ZooWorker(service); // java -->
-    <bean id="myPanda" class="com.panda.tiergarten.berlin.ZooWorker">
+    <!-- Broker broker = new Broker(service); // java -->
+    <bean id="myBroker" class="com.mybank.Broker">
         <constructor-arg ref=myService" />
     </bean>
 </beans>
@@ -189,13 +189,13 @@ public class ZooWorker implements Section {
 - Configure the dependency injection in Spring config file
 
 ```java
-public class Puma implements Section {
-    private CleaningService cleaningService;
+public class Programmer implements RNDService {
+    private SecurityService securityService;
 
-    public Puma() {}
+    public Programmer() {}
 
-    public void setCleaningService(CleaningService cleaningService) {
-        this.cleaningService = cleaningService;
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 }
 ```
@@ -204,10 +204,10 @@ public class Puma implements Section {
 
 ```xml
 <beans >
-    <bean id="myService" class="com.panda.tiergarten.berlin.ZooCleaningService"></bean>
+    <bean id="myService" class="com.mybank.SecurityService"></bean>
 
-    <bean id="myPanda" class="com.panda.tiergarten.berlin.Puma">
-        <property name="cleaningService" ref="myService" />
+    <bean id="myPanda" class="com.mybank.Programmer">
+        <property name="securityService" ref="myService" />
     </bean>
 </beans>
 
@@ -217,13 +217,13 @@ public class Puma implements Section {
 
 ```xml
 <beans>
-    <bean id="myService" class="com.panda.tiergarten.berlin.ZooCleaningService"></bean>
+    <bean id="myService" class="com.mybank.SecurityService"></bean>
 
-    <bean id="myPanda" class="com.panda.tiergarten.berlin.Puma"></bean>
-    <property name="cleaningService" ref="myService" />
+    <bean id="myProgrammer" class="com.mybank.Programmer"></bean>
+    <property name="securityService" ref="myService" />
 
-    <property name="emailAddress" value="email@panda.com" />
-    <property name="team" value="pandateam" />
+    <property name="emailAddress" value="email@example.com" />
+    <property name="team" value="interceptors" />
 </beans>
 
 ```
@@ -231,17 +231,17 @@ public class Puma implements Section {
 ### Inject values from properties file
 
 ```properties
-foo.email=email@panda.com
-foo.team=Missisipi
+foo.email=email@example.com
+foo.team=interceptors
 ```
 
 **applicationContext.xml**
 
 ```xml
-<context:property-placeholder location="classpath:zoo.properties" />
+<context:property-placeholder location="classpath:bank.properties" />
 
-<bean id="myPuma" class="com.panda.tiergarten.berlin.Puma">
-    <property name="cleaningService" ref="myService" />
+<bean id="myProgrammer" class="com.mybank.Programmer">
+    <property name="securityService" ref="myService" />
 
     <property name="emailAddress" value="${foo.email}" />
     <property name="team" value="${foo.team}" />
@@ -359,19 +359,19 @@ The client code must clean up prototype-scoped objects and release expensive res
 
 ```xml
 <beans>
-    <context:component-scan base-package="com.panda.springdemo" />
+    <context:component-scan base-package="com.mybank.springdemo" />
 </beans>
 ```
 
 **Add `@Component` annotations**
 
 ```java
-@Component("monkeyService")
-public class MonkeyService implements Service {
+@Component("stockService")
+public class StockService implements Service {
 
     @Override
-    public String getCleanupService() {
-        return "Clean monkeys cages";
+    public String getMarketService() {
+        return "Get NASDAQ";
     }
 
 }
@@ -381,15 +381,17 @@ public class MonkeyService implements Service {
 **Retrieve bean from Spring Container**
 
 ```java
-Service monkeyService = context.getBean("monkeyService", MonkeyService.class);
+Service stockService = context.getBean("stockService", StockService.class);
 ```
 
 ### Constructor Injection
 
-- What is Spring AutoWiring?
-    - For dependency injection, Spring can use autowiring
+- What is Spring `Autowiring`
+    - For dependency injection, Spring can use `autowiring`
     - Spring will look for a class that matches the property
-        - Matches by type, class or interface
+        - By type
+        - By class
+        - By interface
     - Spring will inject it automatically
 
 - Autowiring Injection Types
@@ -397,15 +399,15 @@ Service monkeyService = context.getBean("monkeyService", MonkeyService.class);
     - Setter injection
     - Field Injections
 
-**MonkeyService.java**
+**StockService.java**
 
 ```java
 @Component
-public class MonkeyService implements Service {
+public class StockService implements Service {
     private BillingService billingService;
 
     @Autowired
-    public MonkeyService(BillingService billingService) {
+    public StockService(BillingService billingService) {
         this.billingService = billingService;
     }
 
@@ -450,7 +452,7 @@ private BillingService billingService;
 
 ```java
 @Autowired
-@Quelifier("tigerService")
+@Quelifier("vipBillingService")
 private BillingService billingService;
 ```
 
@@ -458,7 +460,7 @@ private BillingService billingService;
 
 ```java
 @Autowired
-public MonkeyService(@Quelifier("tigerService") BillingService billingService) {
+public StockService(@Quelifier("vipBillingService") BillingService billingService) {
     this.billingService = billingService;
 }
 ```
@@ -482,7 +484,7 @@ public MonkeyService(@Quelifier("tigerService") BillingService billingService) {
 ```java
 @Component
 @Scope("singleton")
-public class PandaService implements Service {
+public class BillingService implements Service {
 }
 ```
 
@@ -496,7 +498,7 @@ public class PandaService implements Service {
 
 ```java
 @Component
-public class PandaService implements Service {
+public class BillingService implements Service {
 
     @PostConstruct
     public void doStartupStuff() {
@@ -509,12 +511,12 @@ public class PandaService implements Service {
 ```
 
 
-For Prototype Scope Spring does not call `@PreDestroy` method
-Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
+- For Prototype Scope Spring does not call `@PreDestroy` method
+- Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
 in the case of prototypes, configured destruction lifecycle callbacks are not called.
-The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.
+- The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding.
 
-:star: To get the Spring container to release resources held by prototype-scoped beans,
+- :star: To get the Spring container to release resources held by prototype-scoped beans,
 try using a custom bean post-processor, which holds a reference to beans that need to be cleaned up.
 
 

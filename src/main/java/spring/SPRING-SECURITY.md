@@ -78,7 +78,7 @@
 ```java
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="com.panda.springsecurity")
+@ComponentScan(basePackages="com.mybank.springsecurity")
 public class AppConfig {
     // bean for view resolver
     @Bean
@@ -105,7 +105,8 @@ public class AppConfig {
     - Specify servlet mapping and location of app config
 
 ```java
-public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class SpringMvcDispatcherServletInitializer
+    extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     protected Class<?> getRootConfigClasses() {
         return null;
@@ -144,7 +145,8 @@ public class DemoController {
         - `AbstractSecurityWebApplicationInitializer`
 
 ```java
-public class SpringSecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
+public class SpringSecurityWebApplicationInitializer
+    extends AbstractSecurityWebApplicationInitializer {
 }
 ```
 
@@ -152,6 +154,7 @@ public class SpringSecurityWebApplicationInitializer extends AbstractSecurityWeb
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    // ...
 }
 ```
 
@@ -334,7 +337,7 @@ VALUES
 
 ```properties
 jdbc.driver=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:3306/database_panda?useSSL=false
+jdbc.url=jdbc:mysql://localhost:3306/database?useSSL=false
 jdbc.user=brajan
 jdbc.password=gdziejestsamara
 
@@ -349,7 +352,7 @@ connection.pool.maxIdelTime=3000
 ```java
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="com.panda")
+@ComponentScan(basePackages="com.mybank")
 @PropertySource("classpath:mysql.properties")
 public class AppConfig {
     @Autowired
@@ -371,10 +374,10 @@ public class AppConfig {
         dataSource.setPassword(env.getProperty("jdbc.password"));
 
     	// set connection pool props
-		dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
-		dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
-		dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
-		dataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+    	dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+	    dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+	    dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+	    dataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
 
     	return dataSource;
     }

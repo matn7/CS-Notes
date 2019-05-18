@@ -87,7 +87,8 @@ public interface CurrencyExchangeServiceProxy {
 ```java
 @GetMapping("/currency-converter-feign/from/{from}/to/{to}/quantity/{quantity}")
 public CurrencyConversionBean convertCurrencyFeign(@PathVariable String from,
-                                                  @PathVariable String to, @PathVariable BigDecimal quantity) {
+                                                  @PathVariable String to,
+                                                  @PathVariable BigDecimal quantity) {
 
     CurrencyConversionBean response = proxy.retrieveExchangeValue(from, to);
 
@@ -105,16 +106,19 @@ public CurrencyConversionBean convertCurrencyFeign(@PathVariable String from,
 public interface CurrencyExchangeServiceProxy {
 
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
-    public CurrencyConversionBean retrieveExchangeValue(@PathVariable("from") String from, @PathVariable("to") String to);
+    public CurrencyConversionBean retrieveExchangeValue(@PathVariable("from") String from,
+        @PathVariable("to") String to);
 }
 ```
 
-application.properties
+**application.properties**
+
 ```properties
 currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://localhost:8001
 ```
 
-pom.xml
+**pom.xml**
+
 ```xml
 <dependency>
     <groupId>org.springframework.cloud</groupId>

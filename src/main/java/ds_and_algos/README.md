@@ -1104,6 +1104,59 @@ public int[] computeLSPTable(char[] pattern) {
 }
 ```
 
+***
+
+### Rabin-Karp
+
+```
+Find pattern into an array and return index of the array
+
+array
+l e a r n i n g
+----- hash Y - hash(I)
+  ----- hash Y - hash(I) + hash(r) = T
+    ----- hash T - hash(e) + hash(n) = T2
+
+pattern
+n i n       --> calculate hash
+----- hash X
+
+Is hash(X) == hash (T)
+```
+
+- How hash is calculated rolling hash
+- Rabin-Karp Rolling Hash
+
+```
+array   a c b a c c
+
+        1 3 3
+pattern a c c
+
+        1 + (3*3^1)+(3*3^2) = 37
+
+prime = 3
+pattern length = 3
+pattern hash = 37
+
+Rolling Hash Function
+X[0] + (X1[1} x prime) + (X[2] x prime) ....
+
+a c b = 28
+  c b a = 18
+
+```
+
+***
+
+### Boyer Moore
+
+- Find pattern into an array and return index of the array
+- **Bad Character Rule**
+
+```
+
+```
 
 
 

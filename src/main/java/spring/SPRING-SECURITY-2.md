@@ -148,7 +148,8 @@
         <security-filter-chain pattern="/**" filters="filterSecurityInterceptor"/>
     </constructor-arg>
 </bean>
-<bean id="filterSecurityInterceptor" class="org.springframework.security.web.accept.intercept.FilterSecurityInterceptor"/>
+<bean id="filterSecurityInterceptor"
+    class="org.springframework.security.web.accept.intercept.FilterSecurityInterceptor"/>
 ```
 
 ### Security Interceptor Types
@@ -231,7 +232,8 @@ public class HomeController {
         user.setRole("ROLE_USER");
         userRepository.save(user);
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, userRepository.getPassword(), user.getAuthorities());
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+            user, userRepository.getPassword(), user.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
@@ -252,7 +254,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
+        UsernamePasswordAuthenticationToken token =
+            (UsernamePasswordAuthenticationToken) authentication;
         UserEntity user = repo.findByUsername(token.getName());
 
         if (!user.getPassword().equalsIgnoreCase(token.getCredentials().toString())) {
@@ -285,12 +288,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 public class CustomAuthenticationToken extends UsernamePasswordAuthenticationToken {
     private String maki;
 
-    public CustomAuthenticationToken(String principal, String credentials, String make) {
+    public CustomAuthenticationToken(String principal, String credentials, String maki) {
         super(principal, credentials);
-        this.maki = make;
+        this.maki = maki;
     }
 
-    public CustomAuthenticationToken(UserEntity principal, String credentials, Collection<? extends GrantedAuthority> authorities, String maki) {
+    public CustomAuthenticationToken(UserEntity principal, String credentials,
+        Collection<? extends GrantedAuthority> authorities, String maki) {
         super(principal, credentials, authorities);
         this.maki = maki;
     }
@@ -306,7 +310,8 @@ public class CustomAuthenticationToken extends UsernamePasswordAuthenticationTok
 ```java
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFIlter {
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+        throws AuthenticationException {
         String username = super.obtainUsername(request);
         String password = super.obtainPassword(request);
         String maki = request.getParameter("make");
@@ -329,7 +334,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
     <security:custom-filter ref="customLoginFilter" position="LOGIN_FILTER"/>
 </security:http>
 
-<bean id="loginEntry" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+<bean id="loginEntry"
+    class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
     <constructor-arg value="/login"/>
 </bean>
 ```
@@ -385,7 +391,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
 **security-context.xml**
 
 ```xml
-<bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
+<bean id="passwordEncoder"
+    class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
 <security:password-encoder ref="passwordEncoder"/>
 ```
 
@@ -409,7 +416,9 @@ publc class PasswordEncoder {
 
 *security-context.xml*
 ```xml
-<security:ldap-server id="server" uri="ldap://localhost:10389/dc=panda,dc=panda" manager-dn="uid=admin,ou=admin" manager-password="pass"/>
+<security:ldap-server id="server"
+    uri="ldap://localhost:10389/dc=panda,dc=panda" manager-dn="uid=admin,ou=admin"
+    manager-password="pass"/>
 
 <security:authentication-manager>
     <security:ldap-authentication-provider user-search-filter="(uid={0})" />
@@ -513,7 +522,8 @@ public String getCheckout(@PathVariable("checkout") long id, Model model) {
 
 **`@RolesAllowed`** <br/>
 
-***dispatcher-servlet.xml*
+**dispatcher-servlet.xml**
+
 ```xml
 <security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled"/>
 ```
@@ -586,7 +596,8 @@ Create public key using `keytool`
 **server.xml**
 
 ```xml
-<connector SSLEnabled="true" KeyStoreFile=".../keystore.jks" kaystorePass="pwd" scheme="https" secure="true" clientAuth="false"
+<connector SSLEnabled="true" KeyStoreFile=".../keystore.jks" kaystorePass="pwd"
+    scheme="https" secure="true" clientAuth="false"
     sslProtocol="TLSv1" ... />
 ```
 

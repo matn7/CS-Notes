@@ -11,9 +11,9 @@
     - Use abstract base class
 - Liskov substitution principle
     - Objects in program would be replaceable with instances of their subtypes WITHOUT altering the correctness of the program
-    - Violations will often fail the "Is a" test
-    - A Square "Is a" Rectangle
-    - Rectangle "Is not" a Square
+    - Violations will often fail the **Is a** test
+    - A Square **Is a** Rectangle
+    - Rectangle **Is not** a Square
 - Interface Segregation principle
     - Make fine grained interfaces that are client specific
     - Keep component focused and minimize dependencies between them
@@ -70,7 +70,8 @@ class Bicycle extends TransportationDevice {
    void startEngine() /*problem!*/
 }
 ```
-- Bicycle is a transportation device, however, it does not have an engine and hence, the method startEngine cannot be implemented.
+- Bicycle is a transportation device, however, it does not have an engine and hence, the method
+`startEngine` cannot be implemented.
 - Solution to fix
 
 ```java
@@ -186,9 +187,8 @@ inject a mock object to fulfill the needs of your unit test.
 - As an example, creating an object of a class using the new operator results in a class being tightly coupled to another class.
 - When one class knows explicitly about the design and implementation of another class, changes to one class raise
 the risk of breaking the other class.
-- “A. High-level modules should not depend on low-level modules. Both should not depend on abstractions.
-
-  B. Abstractions should not depend on details. Details should depend on abstractions.”
+- A. High-level modules should not depend on low-level modules. Both should not depend on abstractions.
+- B. Abstractions should not depend on details. Details should depend on abstractions.
 
 - Bad Example
 
@@ -275,7 +275,7 @@ public class LightBulb implements Switchable {
 
 ## Spring Dependency Injection
 
-## Basic of Dependency Injection
+### Basic of Dependency Injection
 
 - DI is where needed dependency is injected by another object
 - The class being injected has no responsibility in instantiating the object being injected
@@ -301,11 +301,11 @@ public class LightBulb implements Switchable {
 - Dependencies are not predetermined
 
 - DI refers much to the composition of your classes
-    - you compose your classes with DI in mind
+    - Compose your classes with DI in mind
 - IoC is the runtime environment of your code
     - Spring Framework IoC container
 
-## :star: Spring Bean Lifecycle
+### :star: Spring Bean Lifecycle
 
 Instantiate <br/>
 :arrow_down: <br/>
@@ -327,9 +327,9 @@ Post Initialization (BeanPostProcessors) :arrow_right: Bean redy to use
 
 **Destroy bean** <br/>
 
-Container Shutdown :arrow_right: Disposable Bean's destroy() :arrow_right: Call Custom destroy method :arrow_right: Terminated
+Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Call Custom destroy method :arrow_right: Terminated
 
-### Callback Interfaces
+### :star: Callback Interfaces
 
 - Spring has two interfaces you can implement for call back events
 - `InitializingBean.afterPropertiesSet()`
@@ -423,7 +423,7 @@ ApplicationContextAware, ApplicationEventPublisherAware, BeanFactoryAware ...
 ## Spring ComponentScan
 
 ```java
-@ComponentScan(basePackages = {"com.panda.services"})
+@ComponentScan(basePackages = {"com.mybank.services"})
 ```
 
 ## Java Configuration
@@ -655,7 +655,7 @@ Mono<?>
 
 ### Initial spring security config
 
-- WebSecurityConfigurerAdapter
+**WebSecurityConfigurerAdapter**
 
 ```java
 @Configuration
@@ -685,10 +685,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ***
 
-## Equality in hibernate
+## :star: Equality in hibernate
 
-- To find good identifier, that always is unique best way is to use id fields,
-- hashCode() and equals() with id
+- To find good identifier, that always is unique best way is to use **id** fields
+- `hashCode()` and `equals()` with id
 
 ```java
 @Override
@@ -738,7 +738,7 @@ such that alternative storage implementations may be interchanged
 ### HTTP Protocol
 
 ```bash
-$> telnet panda.com 80
+$> telnet mybank.com 80
 ```
 
 - Http/1.0 - From 1991 to 1995 the HTTP/HTML specifications
@@ -770,12 +770,12 @@ $> telnet panda.com 80
 
 - Request methods, also known as verbs, are used to indicate the desired action to be performed
 - GET - is a request for a resource
-- Get - is used when you visit a website
+    - GET - is used when you visit a website
 - HEAD - is like GET, but only asks for meta information without the body
 - POST - is used to post data to the server
+- POST is a create request
 - PUT - is a request for enclosed entity be stored at the supplied URI. If the entity exists, it is expected to
 be updated
-- POST is a create request
 - PUT is a create or update request
 - DELETE - Is a request to delete the specified resource
 - TRACE - Will echo the received request. Can be used to see if request was altered by intermediate servers
@@ -816,9 +816,7 @@ be updated
 
 
 - MVC is a common design pattern for GUI and Web Applications
-- M = Model
-- V = View
-- C = Controller
+    - M = Model, V = View, C = Controller
 
 ```
                              <----> Model
@@ -843,24 +841,29 @@ Client          Servlet             -------> | Controller | ----- | Service |
 
 ### Hibernate DDL Auto
 
-- DDL = Data Definition Language
-    - DML = Data Manipulation Language
+- DDL - `Data Definition Language`
+    - DML - `Data Manipulation Language`
 - Hibernate property is set by the Spring property `spring.jpa.hibernate.ddl-auto`
-- Options are: none, validate, update, create, create-drop
-- Spring Boot will use create-drop for embedded databases (hsql, h2, derby) or none
+- :star: Options are:
+    - none
+    - validate
+    - update
+    - create
+    - create-drop
+- Spring Boot will use `create-drop` for embedded databases (hsql, h2, derby) or none
 
 ### Initialize with Hibernate
 
-- Data can be loaded from import.sql
+- Data can be loaded from **import.sql**
     - Hibernate feature (not Spring specific)
     - Must be on root of class path
     - Only executed if Hibernate's ddl-auto propert is set to create or create-drop
 
 ### Spring JDBC
 
-- Spring's DataSource initializer via Spring Boot will by default load schema.sql and data.sql from root of the classpath
-- Spring Boot will also load from schema-${platform}.sql and data-${platform}.sql
-    - Must set spring.datasource.platform
+- Spring's DataSource initializer via Spring Boot will by default load **schema.sql** and **data.sql** from root of the classpath
+- Spring Boot will also load from **schema-${platform}.sql** and **data-${platform}.sql**
+    - Must set `spring.datasource.platform`
 - May conflict with Hibernate's DDL Auto property
     - Should use setting of 'none' or 'validate'
 
@@ -868,9 +871,9 @@ Client          Servlet             -------> | Controller | ----- | Service |
 
 ## Spring Controllers
 
-- Annotate Controller Class with @Controller
+- Annotate Controller Class with `@Controller`
     - This will register the class as a Spring Bean and as a Controller in Spring MVC
-- To map methods to http request path use @RequestMapping
+- To map methods to http request path use `@RequestMapping`
 
 ***
 
@@ -887,43 +890,44 @@ Client          Servlet             -------> | Controller | ----- | Service |
 
 ### Project Lombok Features
 
-- @Getter
+- `@Getter`
     - Creates getter methods for all properties
-- @Setter
+- `@Setter`
     - Creates setter for all non-final properties
-- @ToString
-- @EqualsAndHashCode
+- `@ToString`
+- `@EqualsAndHashCode`
     - Generates implementations of `equals(Object other)` and `hashCode()`
     - By default will use all non-static, non-transient properties
     - Can optionally exclude specific properties
-- @NoArgsConstructor
+- `@NoArgsConstructor`
     - Generates no args constructor
     - Will cause compiler error if there are final fields
     - Can optionally force, which will initialize fianl fields with 0 / false / null
-- @RequiredArgsConstructor
-    - Generates a constructor for all fields that are final or marked @NonNull
-    - Constructor will throw a NullPointerException if any @NonNull fields are null
-- @Data
+- `@RequiredArgsConstructor`
+    - Generates a constructor for all fields that are final or marked `@NonNull`
+    - Constructor will throw a NullPointerException if any `@NonNull` fields are null
+- `@Data`
     - Generates typical boilerplate code for POJOs
     - Combines - @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor
     - No constructor is generated if constructors have been explicitly declared
-- @Value
-    - The immutable variant of @Data
+- `@Value`
+    - The immutable variant of `@Data`
     - All fields are made private and final by default
-- @NonNull
+- `@NonNull`
     - Set on parameter of method or constructor and a NullPointerException will be thrown if parameter is null
-- @Builder
+- `@Builder`
     - Implements the `builder` pattern for object creation
+
 ```java
 Person.builder().name("Majki").city("LA").build();
 ```
-- @SneakyThrows
+- `@SneakyThrows`
     - Throw checked exceptions without declaring in calling method's throws clause
-- @Synchronized
+- `@Synchronized`
     - A safer implementation of Java's synchronized
-- @Log
+- `@Log`
     - Creates a Java util logger
-- @Slf4j
+- `@Slf4j`
     - Creates a SLF4J logger
     - Recommended - SLF4J is a generic logging facade
     - Spring Boot's default logger is LogBack
@@ -980,9 +984,9 @@ that exception is thrown
 ### Internal Spring MVC Exception Handlers
 
 - Spring MVC has 3 implementations of HandlerExceptionResolver
-- ExceptionHandlerExceptionResolver - Matches uncaught exceptions to `@ExceptionHandler`
-- ResponseStatusExceptionResolver - Looks for uncaught exceptions matching `@ResponseStatus`
-- DefaultHandlerExceptionResolver - Converts standard Spring Exceptions to HTTP status codes
+    - ExceptionHandlerExceptionResolver - Matches uncaught exceptions to `@ExceptionHandler`
+    - ResponseStatusExceptionResolver - Looks for uncaught exceptions matching `@ResponseStatus`
+    - DefaultHandlerExceptionResolver - Converts standard Spring Exceptions to HTTP status codes
 
 ### Custom HandlerExceptionResolver
 
@@ -1033,9 +1037,9 @@ that exception is thrown
 
 ## Internationalization
 
-- i18n in a Spring MVC context generally is looking at support for languages
-- Driven by 'accept-language' request header
-- 'en-US' - 'en' is the language code, 'US' is country code
+- `i18n` in a Spring MVC context generally is looking at support for languages
+- Driven by `accept-language` request header
+- `en-US` - **en** is the language code, **US** is country code
 - Language identifiers were established by RFC 3066 in 2001
 - Language Codes are governed by ISO 639
     - ISO - International Organization for Standardization
@@ -1044,7 +1048,7 @@ that exception is thrown
 
 ### Locale Detection
 
-- Default behavior is to use Accept-Language header
+- Default behavior is to use `Accept-Language` header
 - Can be configured to use system, a cookie, or a custom parameter
     - Custom Parameter is useful to allow user to select language
 
@@ -1053,7 +1057,9 @@ that exception is thrown
 - AcceptHeaderLocaleResolver is the Spring Boot Default
 - Optionally, can use FixedLocaleResolver
     - Uses the locale of the JVM
-- Available: CookieLocaleResolver, SessionLocaleResolver
+- Available:
+    - CookieLocaleResolver
+    - SessionLocaleResolver
 
 ### Changing Locale
 
@@ -1066,11 +1072,11 @@ to use to change the locale
 
 - Resource bundles (aka messages.properties) are selected on highest match order
 - First selected will be on language region
-    - ie en-US would match messages_en_US.properties
+    - ie **en-US** would match `messages_en_US.properties`
 - If no exact match is found, just the language code is used
-    - en-GB would match messages_en_GB.properties
-    - OR if no file found, would match messages_en.properties
-    - Finally would match messages.properties
+    - **en-GB** would match `messages_en_GB.properties`
+    - OR if no file found, would match `messages_en.properties`
+    - Finally would match `messages.properties`
 
 ***
 
@@ -1090,7 +1096,7 @@ Elastic -> Responsive -> Resilient -> Message Driven
 ```
 
 - **Responsive**
-    - The system responds ina timely manner
+    - The system responds in a timely manner
     - Responsiveness is the cornerstone of usability and utility
     - Responsiveness also means problems may be detected quickly and dealt with effectively
     - Responsive systems provide rapid and consistent response times
@@ -1135,7 +1141,7 @@ Zuul Proxy      Ribbon
 ### Common Use Cases
 
 - External Service Calls
-- Highly Concurrent Message COnsumers
+- Highly Concurrent Message Consumers
 - Spreadsheets
 - Abstraction Over Asynchronous Programming
     - Abstract whether or not your program is synchronous or asynchronous
@@ -1155,7 +1161,7 @@ Zuul Proxy      Ribbon
 - A Stream is a sequence of events ordered in time
 - Events you want to listen to
 
-### Asymchronous
+### Asynchronous
 
 - Events are captured asynchronously
 - A function is defined to execute when an event is emitted
@@ -1172,7 +1178,8 @@ Zuul Proxy      Ribbon
 ```
 Node.js Server
 
-Request ---> [Event Loop, Single Thread] < -- Delegate --> [POSIX Async Threads] -- Non-blocking IO ---->
+Request ---> [Event Loop, Single Thread] < -- Delegate -->
+[POSIX Async Threads] -- Non-blocking IO ---->
 ```
 
 ### Back Pressure
@@ -1207,8 +1214,8 @@ Servlet Container                   Tomcat, Jetty, Netty, Undertow
 ```
 ### Spring Reactive Types
 
-- 'Mono' is a publisher with zero or one elements in data stream
-- 'Flux' is a publisher with zero or many elements in the data stream
+- `Mono` is a publisher with zero or one elements in data stream
+- `Flux` is a publisher with zero or many elements in the data stream
 -  Both types implement the Reactive Streams Publisher interface
 
 
