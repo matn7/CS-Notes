@@ -528,9 +528,38 @@ non-blocking client-2 ===channel2=====|       |---> |       |
 
 > java -jar -Dspring.profiles.active=prod build/libs/learn-reactivespring.jar
 
+***
 
+## Streaming End Point (SSE)
 
+- It is an endpoint once the connection is made its going to keep pushing the data to the
+client as the new data is available.
 
+```
+Server-Sent Events (SSE)
+
+                |                        |
+client -------> |--- invoke EndPoint --->|  App ----> MongoDB
+                |                        |
+                |<--- onNext(Item) ------|
+                |<--- onNext(Item) ------|
+                |<--- onNext(Item) ------|
+                |           ...          |
+```
+
+### Use Cases
+
+- Stock Tickers
+- Weather Updates
+- Flight Arrival/Departure/Delay updates in airports
+
+### MongoDB
+
+- Tailable Cursor
+    - Connections remains open after all the results are retrieved
+- Capped Collections
+    - Collection of fixed-size in MongoDB
+    - Preserves the insertion Order
 
 
 

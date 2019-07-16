@@ -200,6 +200,11 @@ $ cat names.txt | sort
     - 'workers' are JavaScript functions reads and handles a clients requests uning non-blocking I/O and callbacks to signal task completion
     - Long running tasks (DB accessing) are delegated to other threads, with callbacks to signal task completion
 
+***
+
+## Multiprocessing
+
+- The processes communicate through a 'named pipe' (aka 'FIFO')
 
 
 

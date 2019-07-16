@@ -70,6 +70,8 @@ microservice1 ---> microservice2 ---> microsevice3
 - Dynamic scaling
 - Faster release cycles
 
+***
+
 ## Feign
 
 - Service invocation
