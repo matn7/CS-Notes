@@ -93,19 +93,6 @@ App3    -------->   |      KAFKA CLUSTER    |   --------> App3
                     +-----------------------+
 ```
 
-```bash
-./zookeeper-server-start.sh ../config/zookeeper.properties
-./kafka-server-start.sh ../config/server.properties
-
-./kafka-topics.sh --create --topic my-first-topic --zookeeper localhost:2181 --replication-factor 1 --partitions 1
-./kafka-topics.sh --describe --zookeeper localhost:2181
-
-./kafka-console-producer.sh --broker-list localhost:9092 --topic my-first-topic
-./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my-first-topic --from-beginning
-
-ps -aux | grep kafka | awk '{print $2}' | xargs kill -9
-```
-
 ### Kafka Topics and Partitions
 
 - The Kafka cluster stores streams of records in categories called **topics**
@@ -229,6 +216,50 @@ in order to maintain the state of the cluster this is called as **QUORUM**
 
 - Ideal Scenario **ISR == REPLICATION FACTOR**
 
+### Partitioning Mechanism in Kafka Producer
+
+- Approach 1:
+    - Providing the Partition Number as part of the Producer Record. This is sometimes called Direct partitioning
+    ```java
+    myProducer.send(new  ProducerRecord<String, String>("demo-topic", 0, "message 1",
+                            "Message Value : " + Integer.toString(i)));
+    ```
+- Approach 2: (Round-Robin)
+    - No key and partition is provided as part of the producer record
+    - This will follow a round robin approach in order to allocate the messages to the partitions
+    ```java
+    myProducer.send(new  ProducerRecord<String, String>("demo-topic",
+                            "Message Value : " + Integer.toString(i)));
+    ```
+- Approach 3: (Key-Hashing)
+    - If you provide a key and ther is no custom partition implementation then the partition is
+    decided by the formula. key.hashcode % no of Partitions
+    - There is a drawback with this approach, If the key is the same for every record then some
+    of the partitions will never receive any message
+    ```java
+    myProducer.send(new  ProducerRecord<String, String>("demo-topic", "message",
+                        "Message Value : " + Integer.toString(i)));
+    ```
+- Approach 4: (Custom Partition Implementation)
+    - We need to provide a custom partition implementation as part of this approach
+    - This can be done by providing the implementation class against the
+
+***
+
+```bash
+./zookeeper-server-start.sh ../config/zookeeper.properties
+./kafka-server-start.sh ../config/server.properties
+
+./kafka-topics.sh --create --topic my-first-topic --zookeeper localhost:2181 --replication-factor 1 --partitions 1
+./kafka-topics.sh --describe --zookeeper localhost:2181
+
+./kafka-console-producer.sh --broker-list localhost:9092 --topic my-first-topic
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my-first-topic --from-beginning
+
+./kafka-topics.sh --zookeeper localhost:2181 --alter --topic demo-topic --partitions 4
+
+ps -aux | grep kafka | awk '{print $2}' | xargs kill -9
+```
 
 
 
