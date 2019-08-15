@@ -52,7 +52,51 @@ Client docker CLI :arrow_forward: REST API :arrow_forward: server docker daemon
 - For Java developers fine to use Docker Community Edition
 - Docker Enterprise Edition is not available on some commercial OS such as RHEL, SUSE
 
+***
 
+## Why Docker
+
+- Before containers and docker the apps are deploted and run on Application server created on top
+of physical server
+
+### What is container
+
+- Container consists of:
+    - Runtime Environment
+    - An Application
+    - Dependencies and Libraries
+    - Configuration files
+
+**Advantages**
+
+- Lightweight and faster
+- Consumes very less system resources
+
+### Docker
+
+- Open source platform and it consists:
+    - Docker Engine - a runtime and software packaging tool
+    - Docker Hub - Service for sharing the application in the cloud similar to github
+- The output of a Docker build is a Docker Image
+- To run Docker, we need to have docker running in our machine
+- When the Docker image is run it creates a container
+
+**Advantages**
+
+- Rapid application deployment
+- Easy sharing of artifacts
+- Faster and Light Weight
+
+**Dockerfile**
+
+- FROM - It pulls the image from the docker hub. Here it pulls the java image alpine-oraclejdk8:slim
+- ADD - Add command takes two arguments, one is source and the destination
+- COPY - ./docker-entrypoint.sh /docker-endpoint.sh - This step copies the docker-entrypoint.sh
+in to the docker image that gets built
+- RUN chmod +x / docker-entrypoint.sh
+- ENTRYPOINT - argument sets the concrete default app that is used every time a container is created using the
+image. Often times ENTRYPOINT with CMS, you can remove "application" from CMS and just leave "arguments"
+which will be passed to the ENTRYPOINT
 
 
 

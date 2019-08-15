@@ -172,10 +172,10 @@ Core N <---> Task N
 Idle   <---> Thread/Task N + 1
 ```
 
-- # threads = # cores is optimal only if all threads are runnable and can run without interruption
+- num threads = # cores is optimal only if all threads are runnable and can run without interruption
 (no IO/blocking calls/sleep etc)
 - The assumption is nothing else is running that consumes a lot of CPU
-- Hyperthreading - Virtual Cores vs Physical COres
+- Hyperthreading - Virtual Cores vs Physical Cores
 
 **Inherent Cost of Parallelization and Aggregation**
 

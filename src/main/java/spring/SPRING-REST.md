@@ -405,7 +405,8 @@ to execute this request
 
 - AUTO-CONFIGURATION
     - DispatcherServletAutoConfiguration, found dispatcher servlet on classpath
-    - ErrorMvcAutoConfiguration, configure error page, error controller, few error attributes, default error view resolver
+    - ErrorMvcAutoConfiguration, configure error page, error controller, few error attributes,
+     default error view resolver
     - HttpMessageConvertersAutoConfiguration, bean automatically converted to JSON
         - Jackson2ObjectMapper, does conversion from JSON to object and object to JSON
 
@@ -480,7 +481,9 @@ Locale locale messageSource.getMessage("helloWorld.message", null, locale) {
 
 ### GET Token
 
+```
 POST to http://localhost:8080/authenticate
+```
 
 - Request
 
@@ -501,10 +504,11 @@ POST to http://localhost:8080/authenticate
 
 ### Refresh token
 
+```
 GET to http://localhost:8080/refresh
-<br/>
-Header - Authorization: 'Bearer JWT_TOKEN'
 
+Header - Authorization: 'Bearer JWT_TOKEN'
+```
 
 ### Authorize all other requests
 

@@ -244,7 +244,50 @@ in order to maintain the state of the cluster this is called as **QUORUM**
     - We need to provide a custom partition implementation as part of this approach
     - This can be done by providing the implementation class against the
 
+## Kafka Consumers
+
+```java
+Properties properties=new Properties();
+properties.put("bootstrap.servers", "localhost:9092,localhost:9093");
+properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+properties.put("group.id","test1");
+```
+
+- bootstrap.servers - You need to provide the Broker address against this property
+- key.deserializer - How to deserialize the key that was published from the producer
+- value.deserializer - Similar to key deserializer
+- group.id - Unique string that identifies the consumer group this consumer belongs to
+
+### Consumer Pool API
+
+```java
+ConsumerRecords<String, String> records = consumer.poll(10);
+```
+
+- Consumers sends heartbeat to cluster which makes sure this broker is an active consumer
+- If not heart bet is received within the session.timeout.ms then this will indicate the consumer and
+rebalance will happen at the consumer end
+
 ***
+
+## Kafka - Camel
+
+**Camel**
+
+- Emterprise apps needs to talk to different apps or departments. Integration in order to
+interact with each system
+- Integrations always involves some challenges
+- Enterprice Integration Pattern
+
+- Lighyweight integration framework
+- Supports multiple DSL's programming languages
+- Easily configurable
+- Can handle any payload
+
+***
+
+### Run kafka
 
 ```bash
 ./zookeeper-server-start.sh ../config/zookeeper.properties
@@ -260,6 +303,72 @@ in order to maintain the state of the cluster this is called as **QUORUM**
 
 ps -aux | grep kafka | awk '{print $2}' | xargs kill -9
 ```
+
+**delete topic**
+
+```properties
+delete.topic.enabled=true
+```
+
+```bash
+./kafka-topics.sh --delete --zookeeper localhost:2181 --topic your_topic_name
+```
+
+### Kafka security
+
+```properties
+listeners=SSL://localhost:9092
+advertised.listeners=SSL://localhost:9092
+security.inter.broker.protocol = SSL or SASL or ACL
+ssl.client.auth=required or requested
+ssl.keystore.location=<path>/server.keystore.jsk
+ssl.keystore.password=kafka123
+ssl.keystore.type=JSK
+ssl.truststore.location=<path>/server.truststore.jks
+ssl.truststore.password=kafka123
+ssl.tructstore.type=JKS
+ssl.key.password=kafka123
+```
+
+- **TrustStore** and **KeyStore** are very much similar in terms of construct and structure
+as both are management by the keytool command
+
+- **KayStore**
+    - The keystore file stores the certificate and private key of that certificate
+    - This is server side set up and this file is required at the server level
+- **TrustStore**
+    - The truststore of a client stores all the certificates that the client should trust
+    - This is required at client side
+- **How SSL works?**
+    - Anytime a client will connect to the server, server will present its certificate
+    stored in KeyStore and client will verify that certificate by comparing with
+    certificates stored on its truststore
+    - Once the validation is successful then the connection will be succeeded
+
+```bash
+$ keytool -keystore server.keystore.jks -alias localhost -validity 365 -genkey
+$ openssl req -new -x509 -keyout ca-key -out ca-cert -days 365
+$ keytool -keystore server.truststore.jks -alias CARoot -import -file ca-cert
+$ keytool -keystore server.keystore.jks -alias localhost -certreq -file cert-file
+$ openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days 365 -CAcreateserial -passin pass:kafka123
+
+$ keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert
+$ keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
