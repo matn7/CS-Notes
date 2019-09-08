@@ -1,5 +1,144 @@
 ## Spring Cloud
 
+- Spring Cloud Config Server and Bus
+- Load Balancing (Ribbon, Feign)
+- Naming Server (Eureka)
+- Api Gateway (Zuul)
+- Distributed Tracing (Zipkin)
+- Fault Tolerance (Hystrix)
+
+### Web Service
+
+- Service delivered over the web
+- Web Layer, Business Layer, Data Layer
+- Interoperability (supports .Net, Java, Python)
+- Format that other application can understand
+
+```
+Software system designed to support interoperable machine-to-machine interaction
+over a network.
+```
+
+- Designed for machine-to-machine (or app-to-app) interaction
+- Should be interoperable - Not platform dependent
+- Should allow communication over a network
+
+> How does data exchange between applications take place?
+- Request, Response
+
+> How make platform independent
+- Request, Response format platform independent (xml, json)
+
+> How app know the format of Request and Response?
+- ServiceDefinition
+    - Request/Response Format
+    - Request Structure
+    - Response Structure
+    - Endpoint
+
+> Request and Response
+- Request input, Response output
+
+> Message Exchange Format
+- Format of request and response
+
+> Service Provider and Service Consumer
+- Web Service (service provider) hosts webservice
+- Consumer consuming webservice
+
+> Service Definition
+- Contract between service provider and consumer
+- ServiceDefinition
+    - Request/Response Format
+    - Request Structure
+    - Response Structure
+    - Endpoint
+
+> Transport
+- How the service is called
+- HTTP and MQ
+
+#### SOAP
+
+```xml
+<getCourseDetailsRequest>
+    <id>Course1</id>
+</getCourseDetailsRequest>
+```
+
+```
+SOAP-ENV: Envelope
+    SOAP-ENV: Header
+    (metadata)
+
+    SOAP-ENV: Body
+    (content)
+```
+
+- Format
+    - SOAP XML Request
+    - SOAP XML Response
+- Transport
+    - SOAP over MQ
+    - SOAP over HTTP
+- Service Definition
+    - WSDL (Web Service Definition Language)
+        - Endpoint
+        - All Operations
+        - Request Structure
+        - Response Structure
+
+#### REST
+
+- Make best use of HTTP
+
+```
++--------------------------------------------------------------+
+| REST (REpresentional State Transfer)                         |
++--------------------------------------------------------------+
+|                           HTTP                               |
++-----------------------------+--------------------------------+
+| HTTP Methods (GET,PUT,POST) | HTTP Status Codes (200, 204..) |
++-----------------------------+--------------------------------+
+```
+
+- POST header + body
+
+**Key abstraction - Resource**
+
+- A resource has an URI (Uniform Resource Identifier)
+    - /user/Majki/notes/1
+    - /user/Majki/notes
+    - /user/Majki
+- A resource can have different representations
+    - XML
+    - HTML
+    - JSON
+
+- Create a User - POST /users
+- Delete a User - DELETE /users/1
+- Get all Users - GET /users
+- Get one User - GET /users/1
+
+**REST**
+
+- Data Exchange Format
+    - No Restriction. JSON is popular
+- Transport
+    - Only HTTP
+- Service Definition
+    - No Standard. WADL/Swagger/
+
+#### REST vs SOAP
+
+- Resrictions vs Architectural Approach
+- Data Exchange Format (only XML in SOAP), (any in REST)
+- Service Definition
+- Transport (SOAP any MQ, HTTP), (REST only HTTP)
+- Ease of implementation
+
+***
+
 ### Micro services
 
 - REST

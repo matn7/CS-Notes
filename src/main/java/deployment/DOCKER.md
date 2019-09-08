@@ -98,6 +98,224 @@ in to the docker image that gets built
 image. Often times ENTRYPOINT with CMS, you can remove "application" from CMS and just leave "arguments"
 which will be passed to the ENTRYPOINT
 
+```
+sudo docker run hello-world
+
+docker rmi $(docker images -q)
+```
+
+### Running MongoDB Docker Container
+
+```
+docker ps
+docker ps -a
+docker images
+docker run mongo
+docker run -d mongo
+
+docker ps
+
+------------------------------------------------------------------------------------------------------------------
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
+3d6beb4ac7a2        mongo               "docker-entrypoint.s…"   About a minute ago   Up About a minute   27017/tcp           compassionate_yalow
+
+
+docker stop 3d6beb4ac7a2
+
+docker ps
+
+docker run -p 27017:27017 -d mongo
+
+docker ps
+
+-------------------------------------------------------------------------------------------------------------------
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+b3ca782bc1cd        mongo               "docker-entrypoint.s…"   21 seconds ago      Up 20 seconds       0.0.0.0:27017->27017/tcp   cool_lumiere
+
+
+docker logs -f b3ca782bc1cd
+
+
+docker run -p 27017:27017 -v /home/matikomp/udemy_courses/DOCKER/dockerdata/mongo:/data/db -d mongo
+
+docker ps
+```
+
+### Docker Images
+
+- Images like class file in Java
+- Instance of class is docker container
+
+- An Image defines a Docker Container
+    - Similar in concept to a snapshot of a VM
+    - Or a class vs an instance of the class
+- Images are immutable
+    - Once built, the files making up an image do not change
+
+#### Layers
+
+- Images are built layers
+- Each layer is an immutable file, but is a collection of files and directories
+- Layers receive an ID, calculated via a SHA 256 hash of the layer contents
+    - Thus, if the layer contents change, the SHA 256 hash changes also
+```
+docker image inspect mongo
+```
+
+#### Image Ids
+
+- Image Ids are a SHA 256 hash derived from the layers
+    - Thus if the layers of the image changes, the SHA 256 hash changes
+- The Image ID listed by docker commands (ie 'docker images') is the first 12 characters of the hash
+
+```
+docker images -q --no-trunc
+docker images
+```
+
+#### Image Tag Names
+
+- The hash value of images are referred to by 'tag' names
+- The format of the full tag name is: [REGISTRYHOST/][USERNAME/]NAME[:TAG]
+- For Registry Host 'registry.hub.docker.com' is inferred
+- For ':TAG' - 'latest' is default, and inferred
+- Full tag example: registry.hub.docker.com/mongo:latest
+
+
+```
++-------+       +--------+
+| mongo |       | Debian |
+|-------|       |--------|
+| ##### |       |        |
+| ##### |       |        |
+|-------|-------|--------|----------------------
+| ##### |       | #####  | -> SHARED with mongo
+| ##### |       | #####  | ->
+|-------|-------|--------|----------------------
++-------+       +--------+
+
+##### layers
+```
+
+### Running Rabbit MQ Docker Container
+
+```
+docker run -d --hostname panda-rabbit --name some-rabbit -p 8080:15672 -p 5671:5671 -p 5672:5672 rabbitmq:3-management
+
+docker ps
+```
+
+### Running MySQL Docker Container
+
+```
+docker logs c4174507511b
+
+docker run --name panda-mysql-4 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /home/matikomp/udemy_courses/DOCKER/mysqldata:/var/lib/mysql  -p 3306:3306 -d mysql
+```
+
+## Docker House Keeping
+
+- There are 3 key areas of house keeping:
+    - Containers
+    - Images
+    - Volumes
+
+- Shell to running docker image
+
+```
+docker exec -it <container_name> bash
+```
+
+### Containers
+
+- Kill all Running Docker COntainers
+
+```
+docker kill $(docker ps -q)
+```
+
+- Delete all Stopped Docker Containers
+
+```
+docker rm $(docker ps -a -q)
+```
+
+### Images
+
+- Remove a Docker Image
+
+```
+docker rmi <image name>
+```
+
+- Delete Untagged (dangling) Images
+
+```
+docker rmi $(docker images -q -f dangling=true)
+```
+
+- Delete All Images
+
+```
+docker rmi $(docker images -q)
+```
+
+### Volumes
+
+- Once a volume is no longer associated with a container, it is considered 'dangling'
+- Remove all dangling volumes
+```
+docker volume rm $(docker volume ls -f dangling=true -q)
+```
+- NOTE: Does not remove files from host system in shared volumes
+
+***
+
+## Spring Boot in CentOS
+
+```
+docker run -d centos tail -f /dev/null
+
+// shell into docker centos
+docker exec -it epic_snyder bash
+
+// inside centos docker
+java -version
+yum install java
+java -version
+```
+
+**Dockerfile**
+
+```
+FROM centos
+
+RUN yum install -y java
+
+VOLUME /tmp
+ADD /spring-boot-web-0.0.1-SNAPSHOT.jar myapp.jar
+RUN sh -c 'touch /myapp.jar'
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/myapp.jar"]
+```
+
+**Run Dockerfile**
+
+```
+docker build -t spring-boot-docker .
+
+docker run -d -p 8080:8080 spring-boot-docker
+
+docker logs bcf1b6fbb61a
+
+// localhost:8080
+
+docker logs -f bcf1b6fbb61a
+```
+
+## Automatic Building of Docker Images
+
+
+
 
 
 
