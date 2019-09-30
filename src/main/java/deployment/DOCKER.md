@@ -314,6 +314,124 @@ docker logs -f bcf1b6fbb61a
 
 ## Automatic Building of Docker Images
 
+### Creating Docker Image in Fabric 8
+
+- Add fabric8 dependency to pom.xml
+
+**Dockerfile**
+```
+FROM openjdk
+
+VOLUME /tmp
+ADD maven/spring-boot-docker-0.0.1-SNAPSHOT.jar myapp.jar
+RUN sh -c 'touch /myapp.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/myapp.jar"]
+```
+
+```
+mvn clean package
+mvn clean package docker:build
+```
+
+### Publishing to dockerhub
+
+```
+mvn clean package docker:build docker:push
+```
+
+### Docker template
+
+```
+// maven stop image
+mvn docker:stop
+
+mvn clean package docker:build
+
+docker rm <container name>
+
+mvn docker:start
+```
+
+### Running Docker from maven
+
+```
+mvn docker:run
+```
+
+**pom.xml**
+```xml
+<images>
+    <image>
+        <name>${docker.image.prefix}/${docker.image.name}</name>
+        <build>
+            <dockerFileDir>${project.basedir}/target/dockerfile/</dockerFileDir>
+
+            <!--copies artficact to docker build dir in target-->
+            <assembly>
+                <descriptorRef>artifact</descriptorRef>
+            </assembly>
+            <tags>
+                <tag>latest</tag>
+                <tag>${project.version}</tag>
+            </tags>
+        </build>
+        <run>
+            <ports>
+                <port>8080:8080</port>
+            </ports>
+        </run>
+    </image>
+</images>
+```
+
+```
+systemctl stop mysql
+## Use to run mysql db docker image
+docker run --name mysqldb -p 3306:3306 -e MYSQL_DATABASE=pageviewservice -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql
+
+systemctl stop rabbitmq-server.service
+## Use to run RabbitMQ
+docker run --name rabbitmq -p 5671:5671 -p 5672:5672 rabbitmq
+
+## does not work
+docker run --name pageviewservice -p 8081:8081  springframeworkguru/pageviewservice
+
+## does not work
+docker run --name pageviewservice -p 8081:8081 -e SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/pageviewservice -e SPRING_PROFILES_ACTIVE=mysql springframeworkguru/pageviewservice
+
+docker run --name pageviewservice2 -p 8081:8081 \
+--link rabbitmq:rabbitmq \
+--link mysqldb:mysqldb \
+-e SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/pageviewservice \
+-e SPRING_PROFILES_ACTIVE=mysql  \
+-e SPRING_RABBITMQ_HOST=rabbitmq \
+springframeworkguru/pageviewservice
+~
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
