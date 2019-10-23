@@ -441,4 +441,150 @@ services:
 docker-compose up
 ```
 
+- Run test
+
+```
+npm run test
+
+docker build -f Dockerfile.dev .
+docker run -it d3d34d267455 npm run test
+
+docker-compose up
+docker exec -it 9eb9e2d28f6f npm run test
+```
+
+```Dockerfile.dev
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
+```
+
+```
+docker-compose up --build
+docker attach 93e1fcc6fa7f
+
+# Shell into container
+docker exec -it 93e1fcc6fa7f sh
+```
+
+### nginx
+
+- Web server. Taking incomming traffic, route it and response to it
+
+### Multi-Step Docker Builds
+
+```
+1. Use node:alpine
+2. Copy the package.json file
+3. Install dependencies     // deps only needed to execute 'npm run build'
+4. Run 'npm run build'
+5. Start nginx              // Where nginx compong from ?
+```
+
+```Dockerfile
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package.json .
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx
+COPY --from=builder /app/build /usr/share/nginx/html
+```
+
+```
+docker build .
+// 80 in nginx port inside docker container
+docker run -p 8080:80 c2edc713ec9c
+```
+
+***
+
+## CI deployment with AWS
+
+### Github Setup
+
+```
+1. Create github repo
+2. Create local git repo
+3. Connect local git to github remote
+4. Push work to github
+```
+
+### Travic CI
+
+```
+1. Tell Travis we need a copy of docker running
+2. Build our image using Dockerfile.dev
+3. Tell Travis how to run our test suite
+4. Tell travis how to deploy our code to AWS
+```
+
+```yml
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t matn7/docker-react -f Dockerfile.dev .
+
+
+script:
+  - docker run -e CI=true matn7/docker-react npm run test
+```
+
+### AWS Elastic Beanstalk
+
+**.travis.yml"
+
+```yml
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-2
+  app: "docker"
+  env: "Docker-env"
+  bucket-name: "elastickeanstalk-us-west-2-<some_nums>"
+  bucket-path: "docker"
+  on:
+    branch: "master"
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+```
+
+**Exposing port in Dockerfile**
+
+```Dockerfile
+EXPOSE 80
+```
+
+***
+
+## Multi Container Deployment
+
+- Single Container Deployment Issues
+    - The app was simple - no outside dependencies
+    - Our image was built multiple times
+    - How do we connect to a database from a container?
+
+```console
+create-react-app client
+```
+
+
+
+
+
+
+
+
+
+
 
