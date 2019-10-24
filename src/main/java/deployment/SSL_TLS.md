@@ -294,10 +294,22 @@ Deprecated
     - Check validity period
     - Verify whether certificate was revoked or not (optional)
 
+### Cipher Suite
+
+```
+TLS_ECDHE-RSA-WITH_AES_128_GCM_SHA256
+```
+
+**Delivering key for Encryption in TLS (without Diffie Hellman)**
+
+- RSA key pair is "static" and is not changed until certificate is renewed
+
+![Alt text](src/main/resources/deliver_key.png?raw=true "No Diffie Hellman")
 
 
+**Delivering key for Encryption in TLS (with Diffie Hellmen)**
 
-
+![Alt text](src/main/resources/deliver_key_diffie_hellman.png?raw=true "With Diffie Hellman")
 
 
 
