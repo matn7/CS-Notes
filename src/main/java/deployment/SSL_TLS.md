@@ -304,14 +304,17 @@ TLS_ECDHE-RSA-WITH_AES_128_GCM_SHA256
 
 - RSA key pair is "static" and is not changed until certificate is renewed
 
-![Alt text](src/main/resources/deliver_key.png?raw=true "No Diffie Hellman")
+![Alt text](images/deliver_key.png "No Diffie Hellman")
 
 
 **Delivering key for Encryption in TLS (with Diffie Hellmen)**
 
-![Alt text](src/main/resources/deliver_key_diffie_hellman.png?raw=true "With Diffie Hellman")
+![Alt text](images/deliver_key_diffie_hellman.png "With Diffie Hellman")
 
+### Diffie Hellman key generation
 
+- Diffie Hellman algorithm uses one-way functions
+- Elliptic Curve Cryptography
 
 
 
