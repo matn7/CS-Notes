@@ -116,53 +116,9 @@ openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 openssl genrsa 4096
 ```
 
-### Chain of thust
+### Chain of trust
 
-```
-+------------------------------------------------+
-|    Root CA                                     |
-|                                                |
-|    Owner Info *     Public Key      Private Key |
-|    Issuer Info +                       |    |   |
-|                                       |    |   |
-|    Signature<-------------------------+    |   |
-|                                            |   |
-|                                            |   |
-|    Self-Signed certificate                 |   |
-+--------------------------------------------+---+
-                                             |
-  +------------------------------------------+
-  |
-+-+----------------------------------------------+
-| |  Intermediate CA                             |
-| |                                              |
-| |  Owner Info %    Public Key      Private Key |
-| |  Issuer Info *                           |   |
-| |                                          |   |
-| +->Signature                               |   |
-|                                            |   |
-|                                            |   |
-|    Signed by Root CA                       |   |
-+--------------------------------------------+---+
-                                             |
-  +------------------------------------------+
-  |
-+-+----------------------------------------------+
-| |  End user                                    |
-| |                                              |
-| |  Owner Info &    Public Key      Private Key |
-| |  Issuer Info %                               |
-| |                                              |
-| +->Signature                                   |
-|                                                |
-|                                                |
-|    Signed by Intermediate CA                   |
-+------------------------------------------------+
-
-Issuer Info & (In End user) must match Owner Info & (In Intermediate CA)
-
-Signature - SHA hash with RSA Encryption
-```
+![Alt text](images/Chain-of-trust.png "Chain of trust")
 
 - How end user certificate was securely signed by private key of the Intermediate CA ?
     -  Signing occurs on the Intermediate CA server. With it's private key it securely signes CSR
@@ -244,49 +200,21 @@ Deprecated
 
 **Encryption using asymmetric keys**
 
-```
-+---------------+          +-----------------------------+
-| +-------+     |          | +----------+ OWNER has      |
-| | Data  |     |          | | Data     | Public/Private |
-| +---+---+     |          | +----------+   Key          |
-|     |         |          |          A                  |
-| Encryption    |          |      Decryption             |
-|     |  Public |          | Private  |                  |
-|     V  Key    |          | Ket      |                  |
-| +---+-------+ |          |  +-------+---+              |
-| | Encrypted | |          |  | Encrypted |              |
-| | Data      +-+----------+->+ Data      |              |
-| +-----------+ |          |  +-----------+              |
-+---------------+          +-----------------------------+
-```
+![Alt text](images/Encryption-using-asymmetric-keys.png "Encryption using asymmetric keys")
 
 ### How TLS session is established
 
 **Establishing TLS session**
 
+![Alt text](images/Establishing-TLS-session.png "Establishing TLS session")
+
 ```
-+-------------------+           +------------------------+
-|   Web Browser     |           |   Web Server           |
-|       +-----------------------------------+            | Cipher Suite:
-|       |       Negotiate Cipher Suite      |            | - Set of protocol used in TLS communication
-|       +-----------------------------------+            | - Specify how symmetric key will be generated
-|                   |           |                        | - Which algorithm will be used for data encryption and
-|       SSL/TLS  <--+-----------+--- SSL/TLS             |   decryption
-|     Certificate   |           |   Certificate          | - Info about hashing protocol
-|                   |           |                        |
-|       Verify      |           |                        |
-|       Server      |           |                        |
-|       Certificate |           |                        |
-|                   |           |                        |
-|     +--------------------------------------------+     |
-|     | Generate symmetric key for data encryption |     |
-|     +--------------------------------------------+     |
-|                   |           |                        |
-|     +--------------------------------------------+     |
-| Key |     Send/Receive encrypted data            | KEY |
-|     +--------------------------------------------+     |
-|                   |           |                        |
-+-------------------+           +------------------------+
+Cipher Suite:
+- Set of protocol used in TLS communication
+- Specify how symmetric key will be generated
+- Which algorithm will be used for data encryption and
+decryption
+- Info about hashing protocol
 ```
 
 - Certificate verification
@@ -311,13 +239,27 @@ TLS_ECDHE-RSA-WITH_AES_128_GCM_SHA256
 
 ![Alt text](images/deliver_key_diffie_hellman.png "With Diffie Hellman")
 
-### Diffie Hellman key generation
 
-- Diffie Hellman algorithm uses one-way functions
-- Elliptic Curve Cryptography
+**Elliptic Curve Diffie Hellman Exchange**
 
+![Alt text](images/eliptic_curve_diffie_hellman_exchange.png "Key exchange")
 
+```
+Cipher Suite: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
 
+TLS
+ECDHE - elliptic curve Diffie Hellman exchange
+ECDSA_WITH_CHACHA20 - elliptic curve digital sign algorithm
+
+POLY1305 - encryption algorithm
+SHA256 - hashing algorithm
+```
+
+## TLS secured website
+
+- Domain
+- Hosting
+- TLS Certificate
 
 
 

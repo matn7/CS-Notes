@@ -574,15 +574,126 @@ EXPOSE 80
     - Our image was built multiple times
     - How do we connect to a database from a container?
 
+**Multi container**
+
+![Alt text](docker_img/deployment.png "Deployment")
+
+
 ```console
 create-react-app client
 ```
 
+```Dockerfile
+FROM node:alpine
+WORKDIR '/app'
+COPY ./package.json ./
+RUN npm install
+COPY . .
+CMD ["npm", "run", "start"]
+```
 
+```console
+docker build -f Dockerfile.dev .
+```
 
+```Dockerfile
+FROM node:alpine
+WORKDIR "/app"
+COPY ./package.json ./
+RUN npm install
+COPY . .
+CMD ["npm", "run", "dev"]
+```
 
+```yml
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+  redis:
+    image: 'redis:latest'
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+```
 
+### Nginx Path Routing
 
+- Nginx will look for all of these requests (index.html, main.js, values/all, values/current) and decide
+which server route request to.
+-----------+
+```
+
+![Alt text](docker_img/nginx.png "Nginx")
+
+**default.conf**
+
+```conf
+upstream client {
+    server client:3000;
+}
+
+upstream api {
+    server api:5000;
+}
+
+server {
+    listen: 80;
+
+    location / {
+        proxy_pass http://client;
+    }
+
+    location /api {
+        rewrite /api/(.*) /$1 break;
+        proxy_pass http://api;
+    }
+}
+```
+
+### Nginx Image
+
+```console
+docker-compose up --build
+```
+
+**test app**
+```
+http://localhost:3050/
+```
 
 
 
