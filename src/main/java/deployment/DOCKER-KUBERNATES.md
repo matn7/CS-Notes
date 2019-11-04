@@ -654,8 +654,6 @@ services:
 
 - Nginx will look for all of these requests (index.html, main.js, values/all, values/current) and decide
 which server route request to.
------------+
-```
 
 ![Alt text](docker_img/nginx.png "Nginx")
 
@@ -695,7 +693,173 @@ docker-compose up --build
 http://localhost:3050/
 ```
 
+## CI flow for Multiple Images
 
+### Multi-Container Deployments
 
+![Alt text](docker_img/prod-multiple-nginx.png "Multiple nginx")
 
+1. Push code to github
+2. Travis automatically pulls repo
+3. Travis builds a test image, tests code
+4. Travis builds prod images
+5. Travis pushes build prod image to Docker Hub
+6. Travis pushes project to AWS EB
+7. EB pulls image from Docker Hub, deploys
 
+```Dockerfile
+FROM node:alpine
+WORKDIR "/app"
+COPY ./package.json ./
+RUN npm install
+COPY . .
+CMD ["npm", "run", "start"]
+```
+
+***
+
+## Multi Container Deployments to AWS
+
+### Multi-Container Definition Files
+
+![Alt text](docker_img/multi-container-def.png "Multiple container problem")
+
+```
+Amazon ECS tasks definitions
+```
+
+**nginx-links**
+
+![Alt text](docker_img/nginx-links.png "Multiple container problem")
+
+```
+aws.amazon.com
+```
+
+### Managed Data Service Provider
+
+![Alt text](docker_img/prod-arch.png "Production Architecture")
+
+**AWS Elastic Cache**
+
+- Automatically creates and maintains Redis instances for you
+- Easy to scale
+- Build in logging + maintenance
+- Good security
+- Easier to migrate off of EB with
+
+**AWS Relational Database Service**
+
+- Automatically creates and maintains Postgres instances for you
+- Easy to scale
+- Built in logging + maintenance
+- Good security
+- Automated backups and rollbacks
+- Easier to migrate off of EB with
+
+### AWS VPC's and Security Groups
+
+- EB Instance
+- EC (Redis)
+- RDS (Postgres)
+
+- Setup links between EB and EC and RDS
+
+![Alt text](docker_img/vpc.png "Virtual public cloud")
+
+**Security Group (Firewall Rules)**
+
+- Allow any incoming traffic on Port 80 from any IP
+- Allow traffic on Port 3010 from IP 172.0.40.2
+
+- Allow any traffic from any other AWS service that has this security group (new group)
+    - If any instance EB, RDS, EC belong to this group let the traffic go between them
+
+### RDS Database Creation
+
+### ElastiCache Redis
+
+***
+
+## Kubernates
+
+**Scaling Strategy for Elastic Beanstalk**
+
+![Alt text](docker_img/elasticbeanstalkscalingstrategy.png "Scaling Strategy")
+
+**Prefer Solution**
+
+![Alt text](docker_img/scaling_preffered.png "Scaling prefered solution")
+
+**Kubernates Cluster**
+
+![Alt text](docker_img/kubernates-cluster.png "Kubernates Cluster")
+
+- What is Kubernates?
+    - System for running many different containers over multiple different machines
+- Why use Kubernates?
+    - When you need to run many different containers with different images
+
+### Kubernates DEV and PROD
+
+- Development
+    - minikube
+- Production
+    - Amazon Elastic Container Service for Kubernates (EKS)
+    - Google Cloud Kubernates Engine (GKE)
+
+![Alt text](docker_img/kubernates-local.png "Kubernates local")
+
+### Object Types and API Versions
+- Config File:
+    - Pod - Run a container
+    - Service - setup networking inside Kubernates cluster
+    - StatefulSet
+    - ReplicaController
+
+```
+Config File - Used to create Objects
+- Objects server different purposes, running a container, monitoring a container, setting up networking
+```
+
+![Alt text](docker_img/objectTypes.png "Object types")
+
+### Pod
+
+![Alt text](docker_img/pod.png "pod")
+
+- Containers related to each others
+
+- Pod for postgres
+    - postgres container
+    - logger container  - support container
+    - backup manager    - support container
+
+**Object Types**
+- Pods - Runs one or more closely related containers
+- Services - Sets up networking in a Kubernates Cluster
+    - ClusterIP
+    - NodePort - Exposes a container to the outside world (for DEV only)
+    - LoadBalancer
+    - Ingress
+
+![Alt text](docker_img/ServiceConfig.png "Object types")
+
+**Feed a config file t Kubectl**
+
+```console
+kubectl apply -f <filename>
+kubectl apply -f client-node-port.yaml
+kubectl apply -f client-pod.yaml
+
+# print status of all running pods
+kubectl get pods
+
+# print the status of all running services
+kubectl get services
+
+# print ip address of minikube vm
+minikube ip
+
+#192.168.99.100:31515
+```
