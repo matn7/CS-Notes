@@ -28,6 +28,12 @@ git commit --amend
 ##############
 # .gitignore #
 ##############
-Each file in separate line.
+Each file iHn separate line.
 
 git add . && git reset src/test/resources/
+
+# When HARD reset
+git fsck --lost-found
+// dangling commit 778812aabs
+
+git rebase 778812aabs

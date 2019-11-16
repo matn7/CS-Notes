@@ -863,3 +863,369 @@ minikube ip
 
 #192.168.99.100:31515
 ```
+
+### Deployment Process
+
+```console
+kubectl get pods
+docker ps
+
+docker kill <pod_container_id>
+docker ps   // container still there
+```
+
+![Alt text](docker_img/deployment-flow.png "Deployment Flow")
+
+### Imperative vs Declarative Deployments
+
+- Kubernates - is a system to deploy containerized apps
+- Nodes - are individual machines (or vm's) that run containers
+- Master - are machines (or vm's) with a set of programs to manage nodes
+- Kubernates didn't build our images - it got them from somewhere else (DockerHub)
+- Kubernates (the master) decided where to run each container - each node can run a dissimilar set of containers
+- To deploy something, we update the desired state of the master with a config file
+- The master works constantly to meet your desired state
+
+- Imperative Deployments
+    - Do exactly these steps to arrive at this container setup
+- Declarative Deployments
+    - Our container setup should look like this, make it happen
+
+## Maintaining Containers
+
+- Imperative:
+    - Run a command to list out current running pods
+    - Run a command to update the current pod to use a new image
+- Declarative:
+    - Update our config file that originally created the pod
+    - Throw the updated config file into kubectl
+
+**update existing object**
+
+```console
+kubectl apply -f client-pod.yaml
+# pod/client-pod configured
+
+// Get detailed info about object
+kubectl describe pod client-pod
+```
+
+```console
+kubectl apply -f client-pod.yaml
+```
+
+- Pod Config
+    - containers - can't be updated
+    - name       - can't be updated
+    - port       - can't be updated
+    - image      - can be updated
+
+**Object Types**
+
+- Pods
+    - Runs one or more closely related containers
+- Services
+    - Sets up networking in a Kubernates cluster
+- Deployment
+    - Maintains a set of identical pods, ensuring that they have the correct config and
+    that the right number exists
+
+| Pods | Deployment |
+|---|---|
+| Runs a single set of containers | Runs a set of identical pods (one or more) |
+| Good for one-off dev purposes | Monitors the state of each pod, updating as necessary |
+| Rarely used directly in production | Good for dev |
+| | Good for production |
+
+### Applying a Deployment
+
+```console
+kubectl get pods
+kubectl delete -f client-pod.yaml
+kubectl get pods
+
+kubectl apply -f client-deployment.yaml
+kubectl get pods
+kubectl get deployments
+
+minikube ip
+// 192.168.99.100:31515
+
+kubectl get pods -o wide
+
+kubectl get deployments
+kubectl describe pods
+```
+
+**Update Image Version**
+
+- Change deployment to use multi-client again
+- Update the multi-client image, push to Docker-Hub
+- Get the deployment to recreate our pods with the latest version of multi-client
+
+```
+minikube ip
+// 192.168.0.1:31515
+```
+
+### Triggering Deployment updates
+
+```console
+kubectl apply -f client-deployment.yaml
+```
+
+- Manually delete pods to get the deployment to recreate them with the latest version
+- Tag built images with a real version number and specify version in the config file
+    - Adds an extra step in the production deployment process
+- Use an imperative command to update the image version the deployment should use
+    - Uses an imperative command
+
+```console
+docker build -t majki/multi-client:v5 .
+docker push majki/multi-client:v5
+
+// Imperative command to update image
+kubectl set image <Object_type> / <object_name> <container_name> = <new image to use>
+
+kubectl set image deployment/client-deployment client=majki/multi-client:v5
+kubectl get pods
+minikube ip
+// 31515 port
+```
+
+### Reconfiguring docker CLI
+
+- Configure the VM to use your docker server
+
+```console
+eval $(minikube docker-env)
+```
+
+- this only configures current terminal window
+
+```console
+minikube docker-env
+```
+
+## Production
+
+![Alt text](docker_img/kubernates-prod.png "Kubernates PROD")
+
+- Create config files for each service and deployment
+- Test locally on minikube
+- Create a Github/Travis flow to build images and deploy
+- Deploy app to a cloud provider
+
+- Services: Sets up networking in a Kubernates Cluster
+    - ClusterIP:    Exposes a set of pods to other objects in the cluster
+    - NodePort:     Exposes a set of pods to the outside world (only good for dev purposes!!!)
+    - LoadBalancer
+    - Ingress
+
+- NodePort Service:
+    - port: OTHER Pod that needs multi-client Pod
+    - targetPort: multi-client Pod
+    - nodePort (random 30000-32767)
+
+```console
+kubectl get deployments
+kubectl delete deployment client-deployment
+kubectl get deployments
+kubectl get services
+kubectl delete service client-node-port
+```
+
+```console
+kubectl apply -f k8s
+kubectl get pods
+kubectl get services
+```
+
+![Alt text](docker_img/cluster-ip.png "ClusterIP")
+
+```console
+kubectl apply -f k8s
+kubectl get pods
+kubectl get deployments
+kubectl get services
+
+kubectl get pods
+kubectl logs <deployment-name>
+```
+
+### Postgres PVC (Persistent Volume Claim)
+
+![Alt text](docker_img/postgres-deployment.png "Postgres deployment")
+
+- Volume on host machine exists outside of host machine
+
+**Kubernates Volumes**
+
+- Volume in generic container terminology
+
+```
+Some type of mechanism that allows a container to access a filesystem outside itself
+```
+
+- Volume in Kubernates
+
+```
+An object that allows a container to store data at the pod level
+```
+
+```
+Persistent Volume Claim
+
+Persistent Volume
+
+Volume
+```
+
+**Kubernates Volume**
+
+![Alt text](docker_img/kubernates-volume.png "Kubernates Volume")
+
+**Persistent Volume**
+
+![Alt text](docker_img/persistent-volume.png "Persistent Volume")
+
+**Persistence Volume Claim**
+
+- Access Modes
+    - ReadWriteOnce - Can be used by a single node
+    - ReadOnlyMany - Multiple nodes can read from this
+    - ReadWriteMany - Can be read and written by many nodes
+
+- Allocate Persistent Volume
+
+```console
+kubectl get storageclass
+kubectl describe storageclass
+```
+
+- On a Cloud Provider
+    - Google Cloud Persistent Disk
+    - Azure File
+    - Azure Disk
+    - AWS Block Store
+
+```console
+kubectl apply -f k8s
+kubectl get pods
+kubectl get pv          // get persistent volume
+```
+
+### Setup Environment Variables
+
+- REDIS_HOST
+- REDIS_PORT
+- PGUSER
+- PGHOST
+- PGDATABASE
+- PGPORT
+- PGPASSWORD
+
+
+```
+[Deployment:multi-worker pod] -- http://redis-cluster-ip-service --> ClusterIP Service [Deployment:Redis pod]
+```
+
+### Secret
+
+- Object Type
+    - Secrets - Securely stores a piece of information in the cluster, such as a database password
+
+**Create Secret**
+
+```
+kubectl create secret generic <secret-name> --from-literal key=value
+
+- create - Imperative command to create a new object
+- secret - Type of object we are going to create
+- generic - Type of secret
+    - tls
+    - docker-registry
+- <secret-name> - Name of secret, for later reference in a pod config
+- --from-literal - We are going to add the secret info into this command, as opposed to from . file
+- key=value - Key-value pair of the secret information
+```
+
+- Run locally
+
+```console
+kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345asdf
+
+kubectl get secrets
+
+kubectl apply -f k8s
+```
+
+### Load Balancer Services
+
+- Services
+    - LoadBalancer - Legacy way of getting network traffic into a cluster
+    - Ingress - Exposes a set of services to the outside world
+
+**Ingress**
+
+- Nginx ingress
+
+- ingress-nginx - a community project
+
+```
+https://github.com/kubernetes/ingress-nginx
+```
+
+- kubernates-ingress - a project led by the company nginx
+
+- Setup of ingress-nginx changes depending on environment (local, GC, AWS, Azure)
+
+- Ingress routing rules to get traffic to services
+
+![Alt text](docker_img/Ingress.png "Ingress")
+
+- Ingress Controller - Watches for changes to the ingress and updates the 'thing' that handles traffic
+- Ingress Config - Object that has a set of configuration rules describing how traffic should be routed
+
+![Alt text](docker_img/nginx-ingress.png "Node using Nginx Ingress")
+
+**Ingress on Google Cloud**
+
+![Alt text](docker_img/gclb-nginx.png "GC Load Balancer Ingress")
+
+### Setting up Ingress locally
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+minikube addons enable ingress
+```
+
+![Alt text](docker_img/lb-config.png "Ingress Load Balancing Config")
+
+```console
+minikube ip
+kubectl apply -f k8s
+```
+
+### Minikube Dashboard
+
+```
+http://192.168.99.100
+```
+
+```console
+minikube dashboard
+
+# http://192.168.99.100:30000
+```
+
+
+
+
+
+
+
+
+
+
+
