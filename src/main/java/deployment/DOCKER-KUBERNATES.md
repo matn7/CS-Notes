@@ -1219,6 +1219,25 @@ minikube dashboard
 # http://192.168.99.100:30000
 ```
 
+***
+
+## Prod Deployment
+
+```
+- Create Github Repo
+- Tie repo to Travis CI
+- Create Google Cloud project
+- Enable billing for the project
+- Add deployment scripts to the repo
+```
+
+### Google Cloud vs AWS for Kubernates
+
+- Why Google Cloud ?
+    - Google created Kubernates!
+    - AWS got Kubernates support
+    - Easier to use Kubernates on Google Cloud
+    - Good documentation
 
 
 
