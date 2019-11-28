@@ -543,6 +543,406 @@ openssl dgst -sha1 message1.bin message2.bin
 openssl dgst -sha256 message1.bin message2.bin
 ```
 
+## SSL Communication
+
+- Authentication (Handshake) (PublicKey Algo)
+- Key Exchange (Handshake) (PublicKey Algo / Key Exchanging Protocol)
+- Encrypted data transfer (Record) (PrivateKey Algo)
+
+![SSL communication](images/ssl-communication.png "SLL Communication")
+
+### Step 1. Authentication
+
+- Through SSL Certificates
+    - RSA Certs
+    - 2048 bits to be safe
+- Cipher Suite
+
+**Cipher is**
+```
+TLS_ECDHE_RSA_WITH_AES256_CBC_SHA
+
+1. TLS      Transport layer protocol used (others: SSL)
+2. ECDHE    Session key exchange algorithm (others: RSA, DH, DHE)
+3. RSA      PKI type of the Certificate (others: DSS)
+4. AES256   Symmetric algorithm used to encrypt the actual data (others: RC4, 3DES, CAMELLIA, ARIA, DES40)
+5. CBC      Mode in which the symmetric algorithm operates (others: CCM, GCM)
+5. SHA      Hashing algorithm for data integrity (others: MD5, SHA2)
+```
+- Random Data - Entropy is measure of randomness, added to message
+
+### Step 2. Key Exchange
+
+**RSA Method**
+- Most used (XX%)
+- Uses servers public key for confidentiality while exchanging secret
+- No Perfect Forward Secrecy and hence passive cryptoanalysis is possible
+- Server's private key, critical point of compromise
+
+**Diffie Hellman Method**
+- Most efficient and recommended
+- Ephemeral mode for PFS. Blast radius of passive cryptoanalysis limited to a session
+
+#### Diffie Hellman
+
+- Whitfield Diffie and Martin Hellman in 1976
+- No long term private key involved
+- DHE provides Perfect Forward Secrecy
+- No secret key is exchanged
+
+**Discrete Logarithm Problem (in Zp*)**
+```
+Even though a (alpha), p, A and B are known to the
+adversary, calculating
+a = loga A mod p
+
+is practically impossible with 'p' being a large prime number.
+```
+
+![Key Exchange - Diffie Hellman](images/diffie-hellman.png "Key Exchange - Diffie Hellman")
+
+### Step 3. Encrypted data transfer (Record)
+
+- Actual data transfer
+- Confidentiality (Symmetric Encryption)
+- Message Integrity (MAC)
+- MAC the Encrypt
+
+**Record Header**
+
+```
+Byte 0 = SSL record type
+    SSL3_RT_CHANGE_CIPHER_SPEC 20 (x'14')
+    SSL3_RT_ALTER 21 (x'15')
+    SSL3_RT_HANDSHAKE 22 (x'16')
+    SSL3_RT_APPLICATION_DATA 23 (x'17')
+Byte 1-2 = SSL version (major/minor)
+    SSL3_VERSION x'0300'
+    TLS1_VERSION x'0301'
+Bytes 3-4 = Length of data in the record (excluding the header itself). Max is 16384 (16K).
+Byte 5 = Handshake type
+Byte 6-8 = Length of data to follow in this record
+Byte 9-n = Command-specific data
+```
+
+```console
+openssl s_client -connect qualys.com:443 < /dev/null 2> /dev/null
+```
+
+## Certificate provisioning
+
+1. Certificate request and CA signing
+2. Certificate installation
+3. Certificate Verification
+4. Certificate revoking
+
+### Certificate Request & Signing
+
+- Administrator of the webserver/domain generate the private key and certificate signing request for your site.
+
+```console
+openssl genrsa -out mysite.key 4096
+openssl req -new -key mysite.key -out mysite.csr
+```
+
+- Send mysite.csr to the CA of your choice.
+- Get it signed by CA, say mysite.crt
+    - CA calculates the SHASUM of the certificate's data section
+    - Encrypts the checksum value using CA's private key
+    - Append the signature to the certificate and send back to the requester
+
+*Self Signed*
+
+- Generate yje private key and self signed certificate for 365 days.
+
+```console
+openssl req -x509 -newkey rsa:4096 -keyout mysite.key -out mysite.crt -days 365
+
+openssl x509 -in mysite.crt -text -noout
+```
+
+![Certificate Request & Signing](images/certificate-request-signing.png "Cetificate Request & signing")
+
+
+### Certificate Request & Signing
+
+- Security
+    - Choose your key length
+        - RSA 2048 bit
+        - ECC 192 bit
+    - Keep your private key secure
+    - Check your signing hashing algorithm
+        - SHA2 or more
+    - Choose a reliable CA
+
+### Certificate Installation
+
+- Loadbalancer
+- Web server
+
+**Apache**
+```xml
+<VirtualHost 192.168.0.1:443>
+    DocumentRoot /var/www/html2
+    ServerName www.yourdomain.com
+    SSLEngine on
+    SSLCertificateFile /path/to/your_domain_name.crt
+    SSLCertificateKeyFile /apth/to/your_private.key
+    SSLCertificateChainFile /path/to/DigiCertCA.crt
+</VirtualHost>
+```
+
+**Nginx**
+```properties
+server {
+    Listen 443;
+    ssl on;
+    ssl_certificate /etc/ssl/your_domain_name.pem;  // cat your_domain_name.crt DigiCertCA.crt >> bundle.crt
+    ssl_certificate_key /etc/ssl/your_domain_name.key
+    server_name your.domain.com;
+    access_log /var/log/nginx/nginx.vhost.access.log;
+    error_log /var/log/nginx/nginx.vhost.error.log
+    location /
+        {
+            root /home/www/public_html/your.domain.com/public/;
+            index index.html;
+        }
+}
+```
+
+https://www.digicert.com/ssl-certificate-installation.htm
+
+### Certificate Installation contd.
+
+- Security
+    - Choose your ciphers
+        - No RC4 ()
+        - No AES-CBC with CCL3v3 & TLSv1.0 (BEAST and Lucky13)
+        - AES-GCM
+        - Disable the export and null cipher suites, as well as cipher
+        suites using RC4/3DES. Good to use AES256-SHA for 1.1,
+        and AES256-GCM-SHA256 for TLS 1.2.
+    - Choose your protocol versions
+        - TLSv1.1 / TLSv1.2
+
+### Certificate Revoking
+
+- When do we revoke a cert?
+    - Subscriber's private compromised
+    - CA's private key compromised
+    - Affiliation Changed
+    - Cessation of Operation etc.
+- CRL - Certificate Revocation List
+- OCSP - Open Certificate Status Protocol
+
+```
+X509v3 extensions:
+    Authority Information Access:
+        CA Issuers - URI:http://pki.google.com/GIAG2.crt
+        OCSP - URI:http://clients1.google.com/ocsp
+    ...
+    X509v3 CRL Distribution Points:
+        URI:http://pki.google.com/GIAG2.crt
+```
+
+### Common certificate errors
+
+```
+SSL_ERROR_NO_CERTIFICATE
+SSL_ERROR_WRONG_CERTIFICATE
+SSL_ERROR_UNSUPPORTED_VERSION
+SSL_ERROR_BAD_CERT_DOMAIN
+SSL_ERROR_UNKNOWN_CIPHER_SUITE
+SSL_ERROR_UNKNOWN_CA_ALERT
+SSL_ERROR_REVOKED_CERT_ALERT
+```
+
+https://badssl.com
+
+## Open SSL - Certificate operations
+
+```
+s_client
+    openssl s_client -connect qualys.com:443 < /dev/null
+    openssl s_client -showcerts -connect www.google.com:443 < /dev/null     # show all inter. certs too
+    openssl s_client -connect -tls1_2 qualys.com:443 < /dev/null            # connect using TLSv1.2 only
+
+x509
+    openssl x509 -in www.google.com.crt -noout -text                        # decode the cert file
+    openssl s_client -connect google.com:443 < /dev/null 2> /dev/null | openssl x509 -in /dev/stdin -noout -text
+                                                                            # take input from stdin spit by s_client
+    openssl s_client -connect google.com:443 < /dev/null 2> /dev?null | openssl x509 -noout -dates
+                                                                            # check expiry date
+
+genrsa/rsa
+    openssl genrsa -out mysite.key 4096                                     # generate 4096 bit rsa key
+    openssl rsa -noout -text -check -in mysite.key                          # display the private key components
+    openssl rsa -in mysite.key -pubout > mysite.key.pub                     # extract public key
+    openssl rsa -in mysite.key.pub -pubin -text -noout                      # display the public key components
+
+req
+    openssl req -new -key mysite.key -out mysite.csr                        # new CSR, send this to CA for signing
+    openssl req -x509 -newkey rsa:4096 =keyout mysite.key -out mysite.crt -days 365
+                                                                            # self signed cert
+
+s_server
+    openssl s_server -cert mycert.crt -key mysite.key -www -accept 4443     # start ssl server on port 4443
+
+ciphers
+    openssl ciphers -v ['DHE-RSA-AES256-SHA']                               # displays all without a cipher argument
+
+crl
+    curl -s htp://pki.google.com/GIAG2.crl | openssl crl -inform DER -text -noout -in /dev/stdin
+
+Miscellaneous
+    openssl x509 -noout -modulus mysite.crt | openssl sha256                # all md5sums should be
+    openssl req -noout -modulus mysite.csr | openssl sha256                 # the same if they belong
+    openssl rsa -noout -modulus mysite.key | openssl sha256                 # to the same website
+```
+
+### OpenSSL - Encryption and Decryption functions
+
+```
+dgst
+    openssl dgst -sha256 -sign privkey.pem -out input_message.tar.gz.sig input_message.tar.gz           # sign
+    openssl dgst -sha256 -verify pubkey.pem -signature input_message.tar.gz.sig input_message.tar.gz    # verify
+
+enc
+    openssl enc -ase-256-cbc -salt -in file.txt -out file.txt.enc [-k PASS]     # encrypt
+    openssl enc -ase-256-cbc -d -in file.txt.enc -out file.txt [-k PASS]        @ decrypt
+
+base64
+    openssl base64 -in file.txt -out file.txt.base64        # base64 encoding
+    openssl base64 -d -in file.txt.base64 -out file.txt     # base64 decoding
+
+ecparam
+    openssl ecparam -list_curves                            # list all ECC curves
+    openssl ecparam -name secp256k1 -genkey -noout -out secp256k1 -key.pem  # create key for curve secp256k1
+
+passwd
+    openssl passwd -1 -salt alphanumeric MyPassword         # create shadow-style password
+
+rand
+    openssl rand -out random-data.bin 64                    # create 64bytes random data
+    head -c 64 /dev/urandom | openssl enc -base64           # get 64 random bytes for urandom and base64 encode
+```
+
+## Chain of Trust
+
+### Intermediate CAs
+
+- To establish Chain of Trust
+- A way to reduce the risk of compromising the Root CA's private key
+- Leaf, intermediate and root certificates
+- Leaf and intermediate to be installed at the web server / LB
+- Chain of Trust is broken if any of the Intermediate Certificate is invalid or missing
+
+```
+Equifax (root CA) ---> Geotrust (ICA) ---> GIA (ICA) ---> Google.com (EE/Leaf)
+```
+
+```console
+openssl s_client -connect google.com:443 -showcerts < /dev/null 2> /dev/null
+```
+
+![Chain of trust](images/chain-of-trust.png "Verifying Chain of Trust")
+
+## Trust Store
+
+- Repository of trusted CA certificates
+- Shipped as part of the application
+- Truststore can be modified
+- Different from keystore
+- Application trust store
+    - Browser
+        - Public keys of all major CAs come with release
+    - Java (tomcat, coldfusion etc.)
+        - Mostly there but less frequently updated
+        - You need to take care if customized
+
+### Managing Trust Store
+
+**Tomcat**
+```
+/urs/local/java/jre/bin/keytool -import -v -alias SHA2_Standard_Inter_Symantec_Class_3_Standard_SSL_CA_G4 -file
+/$path/SHA2_Standard_Inter_Symantec_Class_3_Standard_SSL_CA_G4.cer -keystore /myapplication/conf/jssecacerts
+-storepass changeit -noprompt
+
+/usr/local/java/jre/bin/keytool -list -v -keystore /myapplication/conf/jssecacerts -storepass changeit -noprompt
+```
+
+## SSL/TLS
+
+### TLS 1.3
+
+- Safer
+    - Removal of unused and unsafe ciphers and techniques
+    - Security optimization, modern encryption and analysis
+- Faster
+    - 1-RTT for fresh connections
+    - 0-RTT for resumption
+
+### TLS 1.3 removals
+
+- Static RSA for key exchange because of no PFS
+- Weak hashing algorithms
+    - MD5, SHA1, SLOTH 2016 (added POLY1305 along with SHA256/SHA384..)
+- Arbitrary E Curves & (EC) DHE groups - CVE-2016-0701 (added Curve25519 and Curve448)
+- Arbitrary Compression - CRIME
+- Renegotiation - DoS2011, Triple Handshake 2014
+- Non-AEAD ciphers (MAC-then-Encrypt)
+    - AES-CBS mode - DEAST, Lucky13, POODLE, Vaudenay 2002
+    - RC4 - Statistical biases the keystream eg: cookie decryption (replaced by ChaCha20)
+    - RSA-PKCS1-1.5 - DROWN 2016, Jager 2015
+    - Export ciphers - Responsible for protocol downgrade - FREAK, LogJam
+    - DES/3DES - Breakable
+- Simplified resumption - replay attacks since there is no PFS
+
+### TLS 1.3
+
+Safer (optimization, analysis and encryption)
+
+- Only (EC)DHE (based on curves 25519 and 448) and/or PSK for key exchange, no more RSA
+- Limited number of EC groups (defined in either FIPS 186-4. Includes curves 25519 and 448)
+- Only suites with AEAD ciphers (AES-GCM, AES-CCM, ChaCha20)
+    - TLS13-CHACHA20-POLY1305-SHA256, TLS13-AES-256-GCM-SHA384, TLS13-AES-128-GCM-SHA256,
+    TLS13-AES-128-CCM-SHA256, TLS13-AES-128-CCM-8-SHA256
+- Content Type, SNI (Server Name Indication), Certificates and Extensions are encrypted
+- Split and simplified negotiation or cipher suites
+- Full handshake signature
+- Server capability assumptions
+- Applications can do arbitrary amount of padding as opposed to 'no-padding' for streaming/AEAD modes in
+previous versions of TLS
+- Digital Signature algorithms - EdDSA (Ed25519 and Ed448), ECDSA, RSA
+
+### TLS 1.3 Faster 1-RTT
+
+![Faster RTT](images/fasterRTT.png "Faster RTT")
+
+![Faster RTT + Cert](images/fasterRTTCert.png "Faster RTT + Cert")
+
+Faster (0-RTT for resumption)
+
+![Faster RTT Resumption](images/fasterRTTResumption.png "Faster RTT Resumption")
+
+The Session Ticket = E(Kstek, ResumptionKey) is generated and sent by the server for the previous
+handshake. It is encrypted using the Session-Key-Encryption-Key (STEK). PSK is usually a key shared
+between the client and the server out-of-the-bound.
+
+### TLS 1.3 Deployment
+
+- Nginx `ssl_protocols TLSv1.2 TLSv1.3; # nginx.conf`
+- Apache `SSLProtocol -all +TLSv1.2 +TLSv1.3; # ssl.conf`
+
+- Caveats
+    - Resumption with base PSK is forward secure only if coupled with an ephemeral key (ECDHE) during derivation.
+    - The early data (0-RTT) is not forward secure. So prone to reply attacks.
+    - 0-RTT activation is a call that the Application developer has to make. (recommended only for idempotent calls)
+
+
+
+
+
 
 
 

@@ -541,7 +541,7 @@ script:
 
 ### AWS Elastic Beanstalk
 
-**.travis.yml"
+**.travis.yml**
 
 ```yml
 deploy:
@@ -1009,7 +1009,7 @@ minikube docker-env
 
 ## Production
 
-![Alt text](docker_img/kubernates-prod.png "Kubernates PROD")
+![Kubernates Production](docker_img/kuernates-prod.png "Kubernates PROD")
 
 - Create config files for each service and deployment
 - Test locally on minikube
