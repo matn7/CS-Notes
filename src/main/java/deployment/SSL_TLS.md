@@ -939,10 +939,43 @@ between the client and the server out-of-the-bound.
     - The early data (0-RTT) is not forward secure. So prone to reply attacks.
     - 0-RTT activation is a call that the Application developer has to make. (recommended only for idempotent calls)
 
+### HTTP Public Key Pinning
 
+- HPKP
+- Detect fraudulent certificates
+- HTTP Header
 
+HPKP header in response
+```
+Public-Key-Pins:
+    pin-sha256="";
+    pin-sha256="";
+    max-age=259200
+```
+```
+Public-Key-Pins-Report-Only:
+    max-age=259200;
+    pin-sha256="sddmakf'rfdsjid;";
+    pin-sha256="dsjaisd;/2r94ri[";
+report-uri="https://example.net/pkp-report"
+```
 
+HPKP header in server in server configuration (eg:-Apache):
+```
+Header add Public-Key-Pins "max-age=500; includeSubDomains; pin-sha256=\"asdjasdkladsjkasdad\"";
+```
 
+### Let's encrypt - Free & Open certificate
+
+- Automatic Certificate Management Environment (ACME) + Let's Encrypt CA = Fully automated cert management system
+
+### Certificate Transparency
+
+- Make it impossible (or at least very difficult) for CA to issue a SSL certificate for a domain without certificate
+being visible to the owner of that domain.
+- Provide an open auditing and monitoring system that lets any domain owner or CA determine whether certificates have
+been mistakenly or maliciously issued.
+- Protect users from being dupled by certificates that were mistakenly or maliciously issued.
 
 
 

@@ -1,9 +1,1316 @@
 # Linux
 
+## Linux Distributions
+
+- Linux OS = Linux Distribution
+    - Curated software
+- Distro/Flavor = Distribution
+
+### Linux Kernel
+
+- The kernel is the core
+- Linux Kernel + Apps = Distro
+
+- RedHat
+    - Banks
+    - Airlines
+    - Telecoms
+    - Healthcare
+- Ubuntu
+    - Startups
+    - SaaS
+    - Social Networks
+    - Cloud Based
+- Linux Mint
+- Debian
+- Mageia
+- Fedora
+- openSUSE
+- Arch Linux
+- Slackware
+
+- Linux concepts are universal.
+- Each distro is slightly different.
+- You can accomplish the same goals on most Linux distros.
+
+## Linux Fundamentals
+
+### Common Directory
+
+- /     - "Root" the top of the file system hierarchy.
+- /bin  - Binaries and other executable programs.
+- /etc  - System configuration files.
+- /home - Home directories.
+- /opt  - Optional or third party software.
+- /tmp  - Temporary space, typically cleared on reboot.
+- /usr  - User relate programs.
+- /var  - Variable data, most notably log data.
+- /boot - Files needed to boot the operating system.
+- /cdrom - Mount point for CD-ROMs
+- /cgroup - Control Groups hierarchy.
+- /srv  - Contains data which is served by the system.
+- /srv/www - Web server files.
+- /srv/ftp - FTP files.
+- /sys  - Used to display and sometimes configure the devices known to the Linux kernel.
+
+### App Directory Structure
+
+- /usr/local/crashplan/bin
+- /usr/local/crashplan/etc
+- /usr/local/crashplan/lib
+- /usr/local/crashplan/log
+
+- /etc/opt/myapp
+- /opt/myapp/bin
+- /opt/myapp/lib
+- /var/opt/myapp
+
+### The Shell
+
+- The default interface to Linux.
+- A program that accepts your commands and executes those commands.
+- Also called a command line interpreter.
+- Server distributions do not include GUIs.
+
+#### The Prompt
+
+```
+[majka@linuxsvr ~]$
+[root@linuxsvr:~]#
+```
+
+#### Root, the Superuser
+
+- Root is all powerful.
+- Normal accounts can only do a subset of the things root can do.
+- Root access is typically restricted to system administrator.
+- Root access may be required to install, start, stop an application.
+- Day to day activities will be performed using normal account.
+
+#### Tilde Expansion
+
+- ~majka = /home/majka
+- ~seb   = /home/seb
+- ~root  = /root
+- ~ftp   = /srv/ftp
+
+### Basic Linux Commands
+
+- ls    - Lists directory contents.
+- cd    - Changes the current directory.
+- pwd   - Displays the present working directory.
+- cat   - Concatenates and displays files.
+- echo  - Displays arguments to the screen.
+- man   - Displays the online manual.
+- exit  - Exits the shell or your current session.
+- clear - Clears the screen.
+
+### Environment Variables
+
+- Storage location that has a name and a value
+- Typically uppercase
+- Access the contents by executing:
+
+```console
+echo $VAR_NAME
+```
+
+#### PATH
+
+- An environment variable
+- Controls the command search path
+- Contains a list of directories
+
+```console
+echo $PATH
+```
+
+- which - Locate a command
+
+```console
+$ which tac
+```
+
+### Listing Files
+
+- Use `ls -F` to reveal file types.
+
+```
+/   Directory
+@   Link
+*   Executable
+```
+
+#### Symbolic Links
+
+- A link is a points to the actual file or directory.
+- Use the link as if it were the file.
+- A link can be used to create a shortcut.
+    - Use for long file or directory names.
+    - Use to indicate the current version of software.
+
+```console
+$ ls -F
+
+$ ls -latr
+
+$ ls -d
+$ ls --color
+```
+
+#### The tree Command
+
+- Similar to `ls -R`, but creates virtual output.
+
+```
+tree -d     List directories only.
+tree -C     Colorized output.
+```
+
+### Permissions
+
+```console
+$ ls -l
+
+-rw-rw-r--
+```
+
+| Symbol | Type |
+|---|---|
+| - | Regular file |
+| d | Directory |
+| l | Symbolic link |
+
+| Symbol | Permission |
+|---|---|
+| r | Read |
+| w | Write |
+| x | Execute |
+
+| Permission | File | Directory |
+|---|---|---|
+| Read (r) | Allows a file to be read. | Allows file names in the directory to be read. |
+| Write (w) | Allows a file to modified. | Allows entries to be modified within the directory. |
+| Execute (x) | Allows the execution of a file. | Allows access to contents and metadata for entries. |
+
+#### Permission Categories
+
+| Symbol | Category |
+|---|---|
+| u | User |
+| g | Group |
+| o | Other |
+| a | All |
+
+#### Groups
+
+- Every user is in at least one group.
+- Users can belong to many groups.
+- Groups are used to organize users.
+- The `groups` command displays a user's groups.
+- You can also use `id -Gn`.
+
+```console
+$ id -Gn
+$ groups pat
+```
+
+#### Changing Permissions
+
+| Item | Meaning |
+|---|---|
+| chmod | Change mode command |
+| ugoa | User category user, group, other, all |
+| +-= | Add, subtract, or set permissions |
+| rwx | Read, Write, Execute |
+
+```console
+$ chmod g+r sales.data
+
+$ chmod g-w sales.data
+
+$ chmod g+wx sales.data
+
+$ chmod u+rwx,g-x sales.data
+```
+
+#### Order Has Meaning
+
+| | U | G | O |
+| Symbolic | rwx | r-x | r-- |
+| Binary | 111 | 101 | 100 |
+| Decimal | 7 | 5 | 5 |
+
+```
+-rwx------  700
+-rwxr-xr-x  755
+-rw-rw-r--  664
+-rw-rw----  660
+-rw-r--r--  644
+```
+
+### Working with Groups
+
+- New files belong to your primary group.
+- The `chgrp` command changes the group.
+
+```console
+$ groups
+$ chgrp sales sales.data
+$ chmod g+w sales.data
+```
+
+#### Directory Permissions
+
+- Permissions on a directory can effect the files in the directory.
+- If the file permissions look correct, start checking directory permissions.
+- Work your way up th the root.
+
+```console
+chmod 400 my-cat
+chmod 500 my-cat
+my-cat/cat
+```
+
+#### File Creation Mask
+
+- File creation mask determines default permissions.
+- If no mask were used permissions would be:
+    - 777 for directories
+    - 666 for files
+
+**The Umask Command**
+
+```
+umask [-S] [mode]
+```
+
+- Sets the file creation mask to mode, if given.
+- Use -S to for symbolic notation.
+
+**Special Modes**
+
+- umask 0022 is the same as umask 022
+- chmod 0644 is the same as chmod 644
+- The special modes are:
+    - setuid
+    - setgid
+    - sticky
+
+```console
+$ mkdir testumask
+$ cd testumask
+$ umask
+0022
+$ umask -S
+u=rwx,g=rx,o=rx
+
+$ mkdir a-dir
+$ touch a-file
+$ ls -l
+drwxr-xr-x a-dir
+-rw-r--r-- a-file
+
+$ umask 007
+$ umask -S
+u=rwx,g=rwx,o=
+
+$ mkdir a-dir
+$ touch a-file
+$ ls -l
+drwxrwx--- a-dir
+-rw-rw---- a-file
+```
+
+### Finding Files and Directories
+
+```console
+find
+find .
+find /sbean -iname make
+find /bin -name *v
+find . -mtime +10 -mtime -13
+find . -name s* -ls
+find . -size +1M
+find . -type d -newer file.txt
+
+find . -exec file {} \;
+file .bash_profile
+```
+
+**A Fast Find - locate**
+
+```
+locate pattern
+```
+
+- Lists files that match pattern.
+- Faster than the find command.
+- Queries an index.
+- Results are not in real time.
+- May not be enabled on all systems.
+
+```console
+locate sales
+locate tpsre
+```
+
+### Viewing files
+
+- `cat file`    Display the contents of file.
+- `more file`   Browse through a text file.
+- `less file`   More features than more.
+- `head file`   Output the beginning (or top) portion of file.
+- `tail file`   Output the ending (or bottom) portion of file.
+
+**Head and Tail**
+
+- Displays only 10 lines by default
+- Change this behavior with -n
+    - n = number of lines
+    - `tail -15 file.txt`
+
+**Viewing Files in Real Time**
+
+```
+tail -f file        Follow the file.
+```
+
+- Displays data as it is being written to the file.
+
+**sort Options**
+
+- `-k F`    Sort by key. F is the field number.
+- `-r`      Sort in reverse order.
+- `-u`      Sort unique.
+
+**Creating a Collection of Files**
+
+```
+tar [-] c|x|t f tarfile [pattern]
+```
+
+- Create, extract or list contents of a tar archive using pattern, if supplied.
+
+**Compressing Foles To Save Space**
+
+- gzip      Compress files.
+- gunzip    Uncompress files.
+- gzcat     Concatenates compressed files.
+- zcat      Concatenates compressed files.
+
+**Disk Usage**
+
+- du        Estimates file usage.
+- du -k     Display sizes in Kilobytes.
+- du -h     Display sizes in human readable format.
+
+## Wildcards
+
+- A character or string used for pattern matching.
+- Globbing expands the wildcard pattern into a list of files and/or directories. (paths)
+- Wildcards can be used with most commands:
+    - ls
+    - rm
+    - cp
+- `*` - matches zero or more characters.
+    - *.txt
+    - a*
+    - a*.txt
+- `?` - matches exactly one character
+    - ?.txt
+    - a?
+    - a?.txt
+- `[]` - A character class.
+    - Matches any of the characters included between the brackets. Matches exactly one character.
+    - [eaiou]
+    - ca[nt](
+        - can
+        - cat
+        - candy
+        - catch
+- `[!]` - Matches any of the characters NOT included between the brackets. Matches exactly one character.
+    - [!aeiou]*
+        - baseball (first character in not a, e, i, o or u)
+        - cricket
+- Use two characters separated by a hyphen to create a range in a character class
+- `[a-g]*`
+    - Matches all files that start with a, b, c, d, e, f or g.
+- `[3-6]*`
+    - Matches all files that start with 3,4,5 or 6.
+
+**Named Character Classes**
+
+- [[:alpha:]]
+- [[:alnum:]]
+- [[:digit:]]
+- [[:lower:]]
+- [[:space:]]
+- [[:upper:]]
+
+**Matching Wildcard patterns**
+
+- `\` - escape character. Use if you want to match a wildcard character.
+    - Match all files that end with a question mark:
+        - `*\?`
+            - done?
+
+## Input, Output and Redirection
+
+| I/O Name | Abbreviation | File Descriptor |
+|---|---|---|
+| Standard Input | stdin | 0 |
+| Standard Output | stdout | 1 |
+| Standard Error | stderr | 2 |
+
+**Redirection**
+
+- `>`       Redirects standard output to a file. Overwrites (truncating) existing contents.
+- `>>`      Redirects standard output to a file. Appends to any existing content.
+- `<`       Redirects input from a file to a command.
+- `&`       Used with redirection to signal that file descriptor is being used.
+- `2>&1`    Combine stderr and standard output
+- `2>file`  Redirect standard error to a file.
+- `>/dev/null`  Redirect output to nowhere.
+
+```console
+$ ls here not-here 2> /dev/null
+here
+$ ls here not-here > /dev/null 2>&1
+$
+```
+
+```
+sort files.txt === sort < files.txt
+```
+
+**Comparing the Contents of Files**
+
+- `diff file1 file2`    Compare two files.
+- `sdiff file1 file2`   Side-by-side comparision.
+- `vimdiff file1 file2` Highlight differences in vim.
+
+**diff Output**
+
+```
+$ diff file1 file2
+3c3
+...
+
+LineNumFile1-Action-LineNumFile2
+
+Action = (A)dd (C)hange (D)elete
+```
+
+## Searching in files
+
+- `grep`    Display lines matching a pattern.
+
+```
+grep pattern file
+
+-i  Perform a search, ignoring case.
+-c  Count the number of occurrences in a file.
+-n  Precede output with line numbers.
+-v  Invert Match. Print lines that don't match.
+```
+
+**The file Command**
+
+```
+file file_name Display the file type.
+```
+
+```console
+$ file sales.data
+sales.data: ASCII text
+$ file *
+bin directory
+json.tar: POSIX tar archive
+```
+
+**Searching for Text in Binary Files**
+
+- `strings`     Display printable strings.
+
+**Pipes**
+
+- `|`   Pipe symbol
+
+```
+command-output | command-input
+```
+
+```
+grep pattern file
+
+cat file | grep pattern
+```
+
+**The cut Command**
+
+- `cut [file]`      Cut out selected portions of file. If file is omitted, use standard input.
+- `-d delimeter`    Use delimiter as the field separator.
+- `-f N`            Display the Nth field.
+
+```console
+grep -i john jezz.mp3
+
+file jezz.mp3
+cat jezz.mp3
+strings jezz.mp3
+strings jezz.mp3 | grep -i john | head -1 | cut -d ' ' -f2
+```
+
+```console
+grep bob /etc/passwd
+grep bob /etc/passwd | cut -d: -f1,5
+grep bob /etc/passwd | cut -d: -f1,5 | sort
+grep bob /etc/passwd | cut -d: -f1,5 | sort | tr ":" " "
+grep bob /etc/passwd | cut -d: -f1,5 | sort | tr ":" " " | column -t
+
+bobb    Bob     Barker
+bob     Bob     Smith
+```
+
+**Piping Output to a Pager**
+
+- more
+- less
+
+```console
+cat /etc/passwd | less
+less /etc/passwd
+grep bin /etc/passwd | less
+```
+
+## Transferring files over the network
+
+- `SCP` - Secure copy
+- `SFTP` - SSH file transfer protocol
+
+```
+scp source destination  Copy source to destination.
+
+sftp host               Start a secure file transfer session with host.
+
+ftp host                Start file transfer session with host.
+```
+
+## Customizing the Shell Prompt
+
+```console
+$ echo 'export PS1="[\u@\h \w]\$ "' >> ~/.bash_profile
+```
+
+## Aliases
+
+- Shortcuts
+- Use for long commands
+- Use for commands you type often
+
+**Creating Aliases**
+
+```
+alias [name=[=value]]
+```
+
+- List or create aliases
+- Use name=value to create a new alias.
+
+- Fix Typos
+
+```
+$ alias grpe='grep'
+```
+
+- Make Linux behave like another OS
+
+```
+$ alias cls='clear'
+```
+
+**Removing Aliases**
+
+```
+unalias name    Remove the "name" alias.
+
+unalias -a      Remove all aliases.
+```
+
+**Persisting Aliases**
+
+- Add aliases to your personal initialization files.
+    - `.bash_profile`
+
+## Environment Variables
+
+- Name/Value pairs
+- Can change how an application behaves
+- An Example Environment Variable:
+    - `EDITOR=nano`
+
+**Viewing Environment Variables**
+
+```console
+$ printenv
+
+$ echo $HOME
+```
+
+**Creating Environment Variables**
+
+- Syntax:
+
+```console
+export VAR="value"
+
+export EDITOR="vi"
+```
+
+**Removing Environment Variables**
+
+- Syntax:
+```
+unset VAR
+unset TZ
+
+export TZ="US/Pacific"
+date
+unset TZ
+echo $TZ
+```
+
+## Processes and Job Control
+
+```
+ps      Display process status
+```
+
+**ps Options**
+
+- `-e`          Everything, all processes.
+- `-f`          Full format listing.
+- `-u username` Display username's processes.
+- `-p pid`      Display information for PID.
+
+**Common ps Commands**
+
+- `ps -e`           Display all processes.
+- `ps -ef`          Display all processes, full.
+- `ps -eH`          Display a process tree.
+- `ps -e --forest`  Display a process tree.
+- `ps -u username`  Display user's processes.
+- `pstree`          Display processes in a tree format.
+- `top`             Interactive process viewer.
+- `htop`            Interactive process viewer.
+
+
+```console
+ps
+
+ps -p 1530
+
+ps -f
+
+pa -ef
+
+ps -fu majka
+ps -fu root
+
+ps --forest
+
+pstree
+top
+htop
+```
+
+**Background and Foreground Processes**
+
+```
+command &       Start command in background.
+Ctrl-c          Kill the foreground process.
+Ctrl-z          Suspend the foreground process.
+
+bg [%num]       Background a suspended process.
+fg [%num]       Foreground a background process.
+kill            Kill a process by job number or PID.
+jobs [%num]     List jobs.
+```
+
+**Killing Processes**
+
+- `Ctrl-c`          Kills the foreground proc.
+- `kill [-sig] pid` Send a signal to a process.
+- `kill -l`         Display a list of signals.
+
+```
+kill 123
+kill -15 123
+
+kill -TERM 123      kill -9 123
+```
+
+```console
+ps -p 2373
+
+jobs
+
+jobs %1
+
+fg
+
+jobs %%
+jobs %+
+jobs %-
+
+kill %1
+jobs
+
+kill 2394
+kill -9 2396
+```
+
+## Scheduling Repeated Jobs with Cron
+
+- Cron service
+- Crontab format
+- Crontab command
+
+**Cron**
+
+- cron - A time based job scheduling service.
+- crontab - A program to create, read, update and delete your job schedules.
+- Use cron to schedule and automate tasks.
+
+**Crontab Format**
+
+```
+    *   *   *   *   *   command
+    |   |   |   |   |
+    |   |   |   |   +-- Day of the Ween     (0-6)
+    |   |   |   +------ Month of the Year   (1-12)
+    |   |   +---------- Day of the Month    (1-31)
+    |   +-------------- Hour                (0-23)
+    +------------------ Minute              (0-59)
+```
+
+```
+# Run every Monday at 07:00.
+0 7 * * 1 /opt/sales/bin/weekly-report
+```
+
+**Redirecting Output**
+
+```
+# Run at 02:00 every day and
+# send output to a log file.
+0 2 * * * /root/backupdb > /tmp/db.log 2>&1
+```
+
+**Examples**
+
+```
+# Run every 30 minutes.
+0,30 * * * * /opt/acme/bin/half-hour-check
+
+# Another way to do the same thing.
+*/2 * * * * /opt/acme/bin/half-hour-check
+
+# Run for the first 5 minutes of the hour
+0-4 * * * * /opt/acme/bin/first-five-minus
+```
+
+**Crontab Shortcuts**
+
+```
+@yearly     0 0 1 1 *
+@annually   0 0 1 1 *
+@monthly    0 0 1 * *
+@weekly     0 0 * * 0
+@daily      0 0 * * *
+@midnight   0 0 * * *
+@hourly     0 * * * *
+```
+
+**Using the Crontab Command**
+
+- `crontab file`    Install a new crontab from file.
+- `crontab -l`      List your crontab jobs.
+- `crontab -e`      Edit your cron jobs.
+- `crontab -r`      Remove all of your cron jobs.
+
+## Switching Users and Running Commands
+
+**The su Command**
+
+- `su [username]`   Change user ID or become superuser
+
+**su Options**
+
+- `-`           A hyphen is used to provide an environment similar to what the user would expect had the user logged
+                in directly.
+- `-c command`  Specify a command to be executed.
+- `whoami`      Displays the effective username.
+
+**Sudo - Super User Do**
+
+- `sudo`            Execute a command as another user, typically the superuser.
+- `sudo -l`         List available commands.
+- `sudo command`    Run command as root.
+- `sudo -u root command`
+- `sudo -u user command`
+- `sudo su`         Switch to the superuser account.
+- `sudo su -`       Switch to the superuser account with root's environment.
+- `sudo su - username`  Switch to the username account.
+- `sudo -s`         Start a shell
+- `sudo -u root -s`
+- `sudo -u user -s`
+
+**Sudoers Format**
+
+```
+user host=(users)[NOPASSWD:]commands
+
+adminuser ALL=(ALL)NOPASSWD:ALL
+majka linuxsvr=(root) /etc/init.d/oracle
+```
+
+### History command
+
+- `history`     Displays the shell history.
+- `HISTSIZE`    Controls the number of commands to retain in history.
+```console
+export HISTSIZE=1000
+```
+
+### Installing Software
+
+**Package**
+
+- A collection of files
+- Data / Metadata
+    - Package description
+    - Version
+    - Dependencies
+
+**Package Manager**
+
+- Installs, upgrades, and removes packages
+- Manages dependencies
+- Keeps track of what is installed
+
+**RPM**
+
+- RedHat
+- CentOS
+- Fedora
+- Oracle Linux
+- Scientific Linux
+
+- `rpm -qa`                 List all installed packages
+- `rpm -qf /path/to/file`   List the file's package
+- `rpm -ql package`         List package's files
+- `rpm -ivh package.rpm`    Install package
+- `rpm -e package`          Erase (uninstall) package
+
+**yum**
+
+- `yum search string`       Search for string
+- `yum info [package]`      Display info
+- `yum install [-y] package`    Install package
+- `yum remove package`      Remove package
+
+**APT - Advanced Packaging Tool**
+
+- `apt-cache search string`         Search for string.
+- `apt-get install [-y] package`    Install package.
+- `apt-get remove package`          Remove package, leaving configuration
+- `apt-get purge package`           Remove package, deleting configuration
+- `apt-cache show package`          Display information about package
+
+**dpkg**
+
+- `dpkg -l`                 List installed packages
+- `dpkg -S /apth/to/file`   List file's package
+- `dpkg -L package`         List all files in package
+- `dpkg -i package.deb`     Install package
+
+
+## Linux Boot Process
+
+**BIOS**
+
+- Basic Input/Output System
+- Special firmware
+- It's operating system independent
+    - This is not unique to the Linux OS
+- Primary purpose is to find and execute boot loader
+- Performs the POST
+    - Power-On Self Test
+- Knows about bootable devices
+    - Hard drives
+    - USB drives
+    - DVD drives
+- The boot device search order can be changed.
+
+**Boot Loaders**
+
+- LILO
+    - Linux Loader
+- GRUB
+    - Grand Unified Bootloader
+    - Replaced LILO
+- Boot loaders start the operating system
+- Boot loaders can start the operating system with different options
+
+**Initial RAM Disk**
+
+- initrd
+    - initial RAM disk
+- Temporary filesystem that is loaded from disk and stored in memory
+- Contains helpers and modules required to load the permanent OS file system
+
+**The /boot Directory**
+
+- `/boot`
+    - Contains the files required to boot Linux
+    - initrd
+    - kernel
+    - boot loader configuration
+
+```console
+$ ls -F /boot
+```
+
+**Kernel Ring Buffer**
+
+- Contains messages from the Linux kernel
+- `dmesg`
+- `/var/log/dmesg`
+
+**Runlevels / Description**
+
+| Runlevel | Description |
+|---|---|
+| 0 | Shuts down the system |
+| 1,S,s | Single user mode. Used for maintenance |
+| 2 | Multi-user mode with graphical interface |
+| 3 | Multi-user text mode (RedHat/CentOS)
+| 4 | Undefined |
+| 5 | Multi-user mode with graphical interface. (RedHat/CentOS) |
+| 6 | Reboot |
+
+**Init**
+
+```
+/etc/inittab:
+
+id:3:initdefault:
+```
+
+- Being phased out by systemd.
+
+**Systemd**
+
+- Uses targets instead of runlevels
+
+```console
+# cd /lib/systemd/system
+# ls -l runlevel5.target
+
+# systemctl set-default graphical.target
+```
+
+**Changing runlevels or targets**
+
+- telinit RUNLEVEL
+    - `telinit 5`
+- systemctl isolate TARGET
+    - `systemctl isolate graphical.target`
+
+**Rebooting**
+
+```console
+# telinit 6
+# systemctl isolate reboot.target
+# reboot
+```
+
+```
+shutdown    [options]   time    [message]
+```
+
+```console
+# shutdown -r 15:30 "rebooting!"
+# shutdown -r +5 "rebooting soon!"
+# shutdown -r now
+```
+
+**Poweroff**
+
+```console
+# telinit 0
+# systemctl isolate poweroff.target
+# poweroff
+```
+
+## System Logging
+
+**The Syslog Standard**
+
+- Aids in the processing of messages.
+- Allows logging to be centrally controlled.
+- Uses facilities and severities to categorize messages.
+
+**Syslog Servers**
+
+- Process syslog messages based on rules
+- syslogd
+- rsyslog
+- syslog-ng
+
+**rsyslog**
+
+```
+/etc/rsyslog.conf:
+
+$IncludeConfig /etc/rsyslog.d/*.conf
+```
+
+**Logging Rules**
+
+- Selector field
+    - FACILITY.SEVERITY
+    - main.*
+    - main
+    - FACILITY.none
+    - FACILITY_1.SEVERITY;FACILITY_2.SEVERITY
+- Action field
+    - Determines how a message is processed
+
+**Caching vs Non-caching**
+
+- Caching is used if the path starts with a hyphen
+    - `mail.info    -/var/log/mail.info`
+- You may lose some messages during a system crash if you are using caching mode.
+- Using caching mode can improve I/O performance.
+
+**logger**
+
+```
+logger [options] message
+```
+
+- Options:
+    - `-p FACILITY.SEVERITY`
+    - `-t TAG`
+
+**logrotate**
+
+```
+/etc/logrotate.conf:
+
+include /etc/logrotate.d
+```
+
+**Example logrotate.conf**
+
+```configuration
+weekly
+rotate 4
+create
+compressed
+include /etc/logrotate.d
+```
+
+**Test the logrotate configuration**
+
+```console
+# logrotate -fv /etc/logrotate.conf
+```
+
+## Disk Management
+
+- Partitions
+- MBR
+- GPT
+- Mount points
+- fdisk
+
+**Partitions**
+
+- Disks can be divided into parts, called partitions.
+- Partitions allow you to separate data.
+- Partitioning schemes:
+    - 1) OS, 2) Application, 3) User, 4) Swap
+    - 1) OS, 2) User home directories
+    - As a system admin, you decide
+- Can protect the overall system.
+- Keep users from creating oytages by using a home directory partition.
+
+```console
+df -h
+```
+
+**MBR**
+
+- Master Boot Record
+- Can only address 2 TB of disk space
+- Being phased out by GPT
+    - GPT = GUID Partition Table
+- 4 Primary Partitions
+- Extended partitions allow you to create logical partitions
+
+**GPT**
+
+- GPT = GUID Partition Table
+- GUID = Global Unique Identifier
+- Replacing the MBR partitioning scheme
+- Part of UEFI
+- UEFI = Unified Extensible Firmware Interface
+- UEFI is replacing BIOS
+- Supports up to 128 partitions
+- Supports up to 9.4 ZB disk sizes
+- Not supported by older operating systems
+- May require newer or special tools
+
+**Mount Points**
+
+- A directory used to access the data on a partition
+- `/` is always a mount point
+- `/home`
+    - `/home/majka` is on the partition mounted on /home
+- `/export/home`
+    - `/export/home/majka`
+
+**Mounting over existing data**
+
+```console
+mkdir /home/sarah
+mount /dev/sdb2 /home
+```
+- You will not be able to see /home/sarah now
+
+```console
+unmount /home
+```
+- You can now see /home/sarach again.
+
+**Mount Points on Mount Points**
+
+```
+/home
+/home/majka
+```
+
+**fdisk**
+
+- Alternatives: gdisk, parted
+- Earlier versions of fdisk did not support GPT
+
+```console
+fdisk /path/to/device
+```
+
+```console
+fdisk -l
+
+fdisk /dev/sdb
+
+fdisk /dev/sdc
+
+fdisk -l
+```
+
+**File System**
+
+- ext = Extended file system
+    - ext2, ext3 and ext4 are later releases
+    - Often the default file system type
+- Other file systems:
+    - ReiserFS
+    - JFS
+    - XFS
+    - ZFS
+    - Btrfs
+
+**mkfs**
+
+```
+mkfs -t TYPE DEVICE
+
+mkfs -t ext3 /dev/sdb2
+
+mkfs -t ext4 /dev/sdb3
+mkfs.ext4 /dev/sdb3
+
+ls -1 /sbin/mkfs*
+```
+
+**Mounting with mount**
+
+- mount DEVICE MOUNT_POINT
+
+```
+mount /dev/sdb3 /opt
+```
+
+**The df command**
+
+```console
+df -h
+```
+
+- In order to make mounts persist between reboots, add an entry in the /etc/fstab file.
+
+**Unmount**
+
+- unmount DEVICE_OR_MOUNT_POINT
+
+```
+umount /opt
+umount /dev/sdb3
+```
+
+**Preparing swap space**
+
+```console
+mkdwp /dev/sdb1
+
+swapon /dev/sdb1
+swapon -s
+```
+
+**/etc/fstab - The File System Table**
+
+- Controls what devices get mounted and where on boot.
+- Each entry is made up of 6 fields
+    - device
+    - mount point
+    - file system type
+    - mount options
+    - dump
+    - fsck order
+
+**Viewing Labels and UUIDs**
+
+```console
+lsblk 0f
+
+blkid
+```
+
+**Labeling a file system**
+
+```console
+e2label /dev/sdb3 opt
+```
+
 ## Networking TCP/IP
 
 - TCP/IP
-- Classfull networks
+- Classful networks
 - Subnet masks
 - Broadcast addresses
 - CIDR
