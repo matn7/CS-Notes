@@ -1307,6 +1307,362 @@ blkid
 e2label /dev/sdb3 opt
 ```
 
+## LVM - The Logical Volume Manager
+
+**Flexible Capacity**
+
+- You can create file systems that extend across multiple storage devices.
+- You can aggregate multiple storage devices into a single logical volume.
+- Expand or shrink file systems in real-time while the data remains online and fully accessible.
+- Easily migrate data from one storage device to another while online.
+- You can use human-readable device names of your choosing.
+
+```
+/dev/vg_database/lv_db_logsvs/dev/sdb3
+```
+- Increase throughput by allowing your system to read data in parallel.
+- Increase fault tolerance and reliability by having more than one copy of your data.
+- Create point-in-time snapshots of your filesystems.
+
+**Layer of abstraction**
+
+```
+File System         /var  /opt/app
+------------------------------
+Logical Volume (LV)
+------------------------------
+Volume Group (VG)
+------------------------------
+Physical Volumes (PV)
+------------------------------
+Storage Devices
+```
+
+**Logical Volume Creation Process**
+
+- Create one or more physical volume.
+- Create a volume group from those one or more physical volumes.
+- Create one or more logical volumes from volume group.
+
+
+**Extending Volume**
+
+```console
+lvmdiskscan
+pvcreated /dev/sdc
+vgextend vg_app /dev/sdc
+pvs
+lvextend -L +5G -r /dev/vg_app/lv_data
+lvs
+df -h /data
+```
+
+**Mirroring Logical Volume**
+
+```console
+pvcreate /dev/sdd /dev/sde
+vgcreate vg_safe /dev/sdd /dev/sde
+
+lvcreate -m 1
+```
+
+- Logical Volume Manager introduces layers abstraction including
+    - Physical Volumes (PVs)
+    - Volume Groups (VGs)
+    - Logical Volumes (LVs)
+
+** Creating LVs**
+
+```console
+pvcreate /dev/sdb
+
+vgcreate vg_name /dev/sdb
+
+lvcreate -L 100G -n lv_name vg_name
+
+mkfs -t ext4 /dev/vg_name/lv_name
+```
+
+**Extending LVs**
+
+```console
+lvextend -L +10G -r /dev/vg_name/lv_name
+
+pvcreate /dev/sdc
+
+vgextend cg_name /dev/sdc
+```
+
+**Mirrored LVs**
+
+```console
+lvcreate -m 1 -L 100G -n lv_name vg_name
+```
+
+**Removing LVs**
+
+```console
+lvremove /dev/vg_name/lv_name
+
+vgreduce vg_name /dev/sdb
+
+vgremove vg_name
+
+pvremove /dev/sdb
+```
+
+## User Management
+
+**Accounts have**
+
+- Username (or login ID)
+- UID (user ID). This is unique number
+- Default group
+- Comments
+- Shell
+- Home directory location
+
+**/etc/passwd**
+
+```
+root:x:0:0:root:/root:/bin/bash
+```
+
+- The format of the /etc/passwd:
+
+```
+username:password:UID:GUI:comments:home_dir:shell
+
+joe:x:1000:1000:Joe Jones:/home/joe:bin/bash
+```
+
+**Custom for username <8 characters**
+
+```console
+ps -fu joe
+```
+
+**Usernames**
+
+- Less than 8 characters in length by convention
+- Case sensitive
+- In all lowercase by convention
+- Numbers are allowed in usernames
+- Special characters are not allowed
+
+**Passwords are stored in /etc/shadow**
+
+- Encrypted password used to be stored in /etc/passwd
+- /etc/passwd is readable by everyone
+- Now, encrypted passwords are stored in /etc/shadow
+- /etc/shadow is only readable by root
+- Prevents users trying to crack passwords
+
+**UIDs**
+
+- The root account is always UID 0
+- UIDs are unique numbers
+- System accounts have UIDs < 1000
+    - Configured in /etc/login.defs
+
+**GID**
+
+- The GID listed in the /etc/passwd for is the default group for an account
+- New files belong to a user's default group
+- Users can switch groups by using the **newgrp** command
+
+**Comment Field**
+
+- Typically contains the user's full name
+- In the case of a system or application account, it often contains what the account is used for.
+- May contain additional information like a phone number
+- Also called the GECOS field
+
+**Home Directory**
+
+- Upon login the user is placed in their home directory
+- If that directory does not exists, they are placed in "/"
+
+**Shell**
+
+- The shell will be executed when a user logs in.
+- A list of available shells are in /etc/shells
+- The shell doesn't have to be a shell
+- To prevent interactive use of an account, use **/usr/sbin/nologin** or **/bin/false** as the shell
+- Shells can be command line applications
+
+**useradd**
+
+```
+useradd [options] username
+
+-c "COMMENT"        Comments for the account
+-m                  Create the home directory
+-s /shell/path      The path to the user's shell
+
+-g GROUP            Specify the default group
+-G GROUP1,GROUPN    Additional groups
+
+-r                  Create a system account
+-d /home/dir        Specify the home directory
+```
+
+```console
+useradd -c "Majka Majka" -m -s /bin/bash majk
+useradd -c "Eddie Harris" -m -s /bin/bash -g sales -G projectx
+```
+
+**Create a password using passwd**
+
+```console
+# passwd majk
+```
+
+**Account information for "majk"**
+
+```console
+# tail -1 /etc/passwd
+# tail -1 /etc/shadow
+```
+
+**System or Application Accounts**
+
+```console
+# useradd -c "Apache Web Server User" -d /opt/apache -r -s /usr/sbin/nologin apache
+# tail -1 /etc/passwd
+```
+
+**/etc/skel**
+
+- When using `-m` the home directory for the account is created
+- The contents of `/etc/skel` are copied into the home directory
+- `/etc/skel` typically contains shell configuration files (.profile, .bashrc)
+
+**Use -u to specify the UID**
+
+```console
+# useradd -c "MySQL Server" -d /opt/mysql -u 97 -s /usr/sbin/nologin mysql
+# tail -1 /etc/passwd
+```
+
+**userdel [-r] username**
+
+```console
+# userdel eharris
+# userdel -r grant
+```
+
+**usermod**
+
+```
+usermod [ options ] username
+
+-c "COMMENT"        Comments account
+-g GROUP            Specify the default group
+-D GROUP1,GROUPN    Additional groups
+-s /shell/path      Path to the user's shell
+```
+
+**/etc/group**
+
+```
+root:x:0:
+sales:x:1001:john,mary
+```
+
+- The format of `/etc/group` file
+
+```
+group_name:password:GID:account1,accountN
+```
+
+**groups [username]**
+
+```console
+# groups root
+root
+```
+
+**groupadd [options] group_name**
+
+```console
+# groupadd web
+# tail -1 /etc/group
+web:x:1003:
+
+# groupadd -g 2500 db
+# tail -1 /etc/group
+db:x:2500:
+```
+
+**groupdel group_name**
+
+```console
+# groupdel db
+```
+
+**groupmod**
+
+```
+groupmod [options] group_name
+
+-g GID      Change the group ID to GID
+-n GROUP    Rename the group to GROUP
+``
+
+- Create groups:
+    - writers
+    - tv
+    - movie
+- Create user accounts
+    - All users will have the default group of writers
+    - Some will also be in the tv group
+    - Others will be in the movie group
+
+```console
+# groupadd writers
+# groupadd tv
+# groupadd movie
+# tail -3 /etc/group
+writers:x:1002:
+tv:x:1003
+movie:x:1004
+# useradd -c "Carlot Cuse" -g writers -G tv -m -s /bin/bash ccuse
+# passwd ccuse
+# groups ccuse
+ccuse : writers tv
+
+# useradd -c "Levis Fury" -g writers -G tv -m -s /bin/bash lfury
+# passwd lfury
+
+# useradd -c "Mike Tyson" -g writers -G movie -m -s /bin/bash mtyson
+# passwd mtyson
+
+# useradd -c "Ben Franklin" -g writers -G movie,tv -s /bin/bash bfra
+# passwd bfra
+
+# tail -3 /etc/group
+```
+
+- Account information is stored in
+    - `/etc/passwd` and `/etc/shadow`
+- Accounts have the following attributes
+    - username
+    - UID
+    - GID (default group)
+    - Comment
+    - home directory
+    - shell
+- Create accounts `useradd`
+- Delete accounts `userdel`
+- Modify accounts `usermod`
+
+- Group information is stored in `/etc/group`
+- Create groups `groupadd`
+- Delete group `groupdel`
+- Modify groups `groupmod`
+- To view group memberships use **groups**
+
 ## Networking TCP/IP
 
 - TCP/IP
@@ -1690,7 +2046,243 @@ telnet HOST_OR_IP PORT_NUMBER
 telnet google.com 80
 ```
 
+## Advanced Linux Permissions
+
+**Setuid**
+
+- When a process is started, it runs using starting user's UID and GID
+- setuid = Set User ID upon execution
+
+```
+-rwsr-xr-x 1 root root /usr/bin/passwd
+```
+
+- ping
+- chsh
+- setuid files are an attack surface
+- Not honored on shell scripts
+
+| setuid | setgid | sticky | |
+|---|---|---|---|
+| 0 | 0 | 0 | Value for off |
+| 1 | 1 | 1 | Binary value for on |
+| 4 | 2 | 1 | Base 10 value for on |
+
+**Adding the setuid Attribute**
+
+```console
+chmod u+s /path/to/file
+
+chmod 4755 /path/to/file
+```
+
+**Removing the setuid Attribute**
+
+```console
+chmod u-s /path/to/file
+
+chmod 0755 /path/to/file
+```
+
+**Finding setuid Files**
+
+```console
+find / -perm /4000
+find / -perm /4000 -ls
+```
+
+**Only the Owner Should Edit setuid Files**
+
+| | Symbolic | Octal |
+|---|---|---|
+| Good: | -rwsr-xr-x | 4755 |
+| Bad: | -rwsrwxr-x | 4775 |
+| Really bad: | -rwsrwxrwx | 4777 |
+
+**setgid**
+
+- setgid = Set Group ID upon execution
+- `-rwxr-sr-x 1 root tty /usr/bin/wall`
+- `crw--w---- 1 bob  tty /dev/pts/0`
+
+**Finding setgid Files**
+
+```console
+find / -perm /2000 -ls
+```
+
+**Adding the setgid Attribute**
+
+```console
+chmod g+s /path/to/file
+
+chmod 2755 /path/to/file
+```
+
+**Adding the setuid & setgid Attribute**
+
+```console
+chmod ug+s /path/to/file
+
+chmod 6755 /path/to/file
+```
+
+**Removing the setgid Attribute**
+
+```console
+chmod g-s /path/to/file
+
+chmod 0755 /path/to/file
+```
+
+**setgid on Directories**
+
+- setgid on a directory causes new files to inherit the group of the directory
+- setgid causes directories to inherit the setgid git
+- Is not retroactive (changes only new directories cannot modify existing one)
+- Great for working with groups
+
+**The sticky bit**
+
+- Use on a directory to only allow the owner of the fle/directory to delete it
+- Used on `/tmp` (rw t --> t)
+- `drwxrwxrwt 10 root root 4096 Apr 1 08:48 /tmp`
+
+**Adding the Sticky Bit**
+
+```console
+chmod o+t /path/to/directory
+
+chmod 1777 /path/to/directory
+```
+
+**Removing the Sticky Bit**
+
+```console
+chmod o-t /path/to/directory
+
+chmod 0777 /path/to/directory
+```
+
+**Reading ls Output**
+
+- A capitalized special permission means the underlying normal permission is not set.
+- A lowercase special permission means the underlying normal permission set.
+
+## Shell Scripting
+
+- Contain a series of commands
+- An interpreter executes commands in the script
+- Anything you can type at the command line, you can put in a script
+
+```bash
+#!/bin/bash
+echo "Hello world"
+```
+
+```console
+chmod 755 script.sh
+./script.sh
+```
+
+**More than shell scripts**
+
+```python
+#!/usr/bin/python
+```
+
+**Variables**
+
+- Storage locations that have a name
+- Name-value pairs
+- Syntax: `VARIABLE_NAME="Value"`
+- Variables are case sensitive
+- By convention variables are uppercase
+
+**Variable Usage**
+
+```bash
+#!/bin/bash
+MY_SHELL="bash"
+echo $MY_SHELL
+
+echo ${MY_SHELL}
+```
+
+**Assign command output to a variable**
+
+```bash
+#!/bin/bash
+SERVER_NAME=$(hostname)
+SERVER_NAME_2=`hostname`    # older syntax
+echo ${SERVER_NAME}
+```
+
+**Tests**
+
+- Syntax: `[ condition-to-test-for ]`
+- Example: `[ -e /etc/passwd ]`
+
+**The if/elif/else statement**
+
+```
+if [ condition-is-true ]
+then
+    command 1
+    command N
+elif [ condition-is-true ]
+then
+    command N
+else
+    command N
+fi
+```
+
+**For loop**
+
+```
+for VARIABLE_NAME in ITEM_1 INTEM_N
+do
+    command 1
+    command N
+done
+```
+**Positional Parameters**
+
+```
+$script.sh parameter1 parameter2 parameter3
+```
+
+**Accepting User Input (STDIN)**
+
+- The read command accepts STDIN
+
+```
+read -p "PROMPT" VARIABLE
+```
+
+```
+#!/path/to/interpreter
+VARIABLE_NAME="Value"
+$VARIABLE_NAME
+${VARIABLE_NAME}
+VARIABLE_NAME=$(command)
+```
+
+- Positional Parameters:
+
+```
+$0, $1, $2 ... $9
+$@
+```
+
+- Comments start with **#**
+- Use **read** to accept input
+
+
 ***
+
+# Linux
 
 - Commands are text you type in terminal
 - Commands are interpreted by the shell
