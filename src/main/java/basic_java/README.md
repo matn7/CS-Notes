@@ -1841,61 +1841,43 @@ priority queue.
     - REMOVE the highest priority element
 - An Array or List
 
-```
-              | UNORDERED                             | ORDERED
-    ----------+---------------------------------------+----------------------------------------------------------------------
-    INSERTION | Can be anything in a list or array    | Requires finding the right position for the element based on priority
-              | complexity O(1)                       | complexity O(N)
-    ----------+---------------------------------------+----------------------------------------------------------------------
-    ACCESS    | Accessing the highest priority        | Accessing the highest priority elements is easy
-              | element requires going through all    | complexity O(1)
-              | elements in the list - complexity O(N)|
-    ----------+---------------------------------------+----------------------------------------------------------------------
-    REMOVE    | Requires going through all elements   | Removing the highest prioritity element - O(1)
-              | O(N)                                  |
-    ----------+---------------------------------------+----------------------------------------------------------------------
-```
+![Heap](images/heap-table.png "Heap")
 
-### BALANCED BINARY SEARCH TREE
+**BALANCED BINARY SEARCH TREE**
 
-```
-    INSERTION | O(logN)
-    ----------+---------
-    ACCESS    | O(logN)
-    ----------+---------
-    REMOVE    | O(logN)
-```
+| Action | Complexity |
+|---|---|
+| Insertion | O(logN) |
+| Access | O(logN) |
+| Remove | O(logN) |
 
-Both insertion and access moderately fast.
-List solutions make one of these super fast while comparing heavily on the other
+- Both insertion and access moderately fast.
+- List solutions make one of these super fast while comparing heavily on the other.
 
-### BINARY HEAP
+**BINARY HEAP**
 
-    INSERTION | O(logN)
-    ----------+---------
-    ACCESS    | O(1)
-    ----------+---------
-    REMOVE    | O(logN)
-    ----------+---------
+| Action | Complexity |
+|---|---|
+| Insertion | O(logN) |
+| Access | O(1) |
+| Remove | O(logN) |
 
-THE BINARY HEAP
-A Heap is just a tree with a special properties or constraints on the vales of it's Nodes
-This is called a HEAP Property
-
+- A Heap is just a tree with a special properties or constraints on the vales of it's Nodes.
+- This is called a HEAP Property.
 - Types of Heap:
-    - MINIMUM HEAP
-        - Every node value should be <= value of it's children. The node with the smallest value should be the root of the tree
+    - MINIMUM HEAP:
+        - Every node value should be <= value of it's children.
+        - The node with the smallest value should be the root of the tree.
     - MAXIMUM HEAP
-        - Every Node value should be >= Value of it's children. The node with the largest value should be the root of the tree
-
-- The heap should form a complete binary tree
-    - all levels except the last one should be filled
-
-- Node at index 0, left child at index 1, right child at index 2
-- Node at index: i
-    - has a left child at index: 2i + 1
-    - has a right child at index: 2i + 2
-- Node at index: i GetParent at index: (i-1)/2
+        - Every Node value should be >= Value of it's children.
+        - The node with the largest value should be the root of the tree
+- The heap should form a complete binary tree:
+    - All levels except the last one should be filled
+- Node at index 0, left child at index 1, right child at index 2.
+- Node at index `i`:
+    - has a left child at index: `2i + 1`
+    - has a right child at index: `2i + 2`
+- Node at index: i GetParent at index: `(i-1)/2`
 
 ```
             5
@@ -1909,10 +1891,11 @@ This is called a HEAP Property
      5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
 ```
 
-### THE BINARY HEAP
-Place a single element in the wrong place.
-Then try to find the right position for the element.
-This process is called **HEAPIFY**
+**THE BINARY HEAP**
+
+- Place a single element in the wrong place.
+- Then try to find the right position for the element.
+- This process is called **HEAPIFY**
 
 ```
             13
@@ -1922,19 +1905,9 @@ This process is called **HEAPIFY**
        9  12  11   7
       / \
      15  10
-
-    SHIFT DOWN                   | SHIFT UP
-    -----------------------------+-----------------------------
-    All elements in the wrong    | An element is in the wrong
-    position with respect to     | position with respect to
-    other elements below it on   | other above in the
-    the heap                     | heap
-                                 |
-    It has to be moved downwards | It has to be moved upwards in
-    in the heap towards the leaf | the Heap towards the ROOT
-    node to find it's right      | Node to find it's right position
-    position                     |
 ```
+
+![Shift down - Shift up](images/shiftup-shiftdown.png "Shift down, Shift up")
 
 - SWAP 6 and 8
 - SWAP 13 and 7
@@ -1949,169 +1922,115 @@ This process is called **HEAPIFY**
      15  10
 ```
 
-| Insertion | O(logN) |
+| Action | Complexity |
 |---|---|
+| Insertion | O(logN) |
 | Access highest priority element | O(1) |
 | Remove | O(logN) |
 
-Heap Sort
-|Insertion and removal | O(logN) |
+**Heap Sort**
+
+| Action | Complexity |
 |---|---|
+|Insertion and removal | O(logN) |
 |Sorting | O(NlogN) |
 
-- Heap sort is not adaptive
-- It's not a stable sort
-- It does not need additional space - space complexity is O(1)
+- Heap sort is not adaptive.
+- It's not a stable sort.
+- It does not need additional space - space complexity is `O(1)`.
 
-## STACK DATA STRUCTURE
-A stack is data structure to hold elements such that the last element you add to the stack is first one you access
-LIFO list in first out
-Major operations that you performed on the stack are always focused on one end of the stack, called the TOP
+### STACK DATA STRUCTURE
 
-- Adding new elements to the stack is called
-    - -> PUSH -> push an element to the top of a stack
-    - Removing an element from the top a stack is called -> POP -> pop an element from the top of stack
-    - See what element on stack is do not remove it -> PEEK -> peek at the top of a stack
-
-```
-                      +---+
-     |     |         || X ||                |     |                 |     |
-     |     |  PUSH   |+---+|      POP       |     |      PEEK       |     |
-     |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
-     || Y ||  | X |  || Y ||     | X |      || Y ||      | Y |      || Y ||
-     |+---+|  +---+  |+---+|     +---+      |+---+|      +---+      |+---+|
-     |+---+|         |+---+|                |+---+|                 |+---+|
-     || Z ||         || Z ||                || Z ||                 || Z ||
-     |+---+|         |+---+|                |+---+|                 |+---+|
-     +-----+         +-----+                +-----+                 +-----+
-```
-
-Peek let's you access the top element in the stack without actually changing the Data Structure
-
-Common operations on stack
-```
-PUSH    POP     PEEK
-```
-
-Other operations which are useful
-```
-ISEMPTY     ISFULL      SIZE
-```
-
-If you try to POP from an empty element or PUSH into full stack -> It's an ERROR throw an Exception!
-
-The most common operations on a stack involve pushing and popping elements from the TOP.
-The operations are on one end of the stack.
-A LinkedList match perfectly to build a stack
-
+- A stack is data structure to hold elements such that the last element you add to the stack is first one you access.
+- LIFO list in first out.
+- Major operations that you performed on the stack are always focused on one end of the stack, called the TOP.
+- Adding new elements to the stack is called:
+    - **PUSH** - push an element to the top of a stack
+    - Removing an element from the top a stack is called **POP** - pop an element from the top of stack
+    - See what element on stack is do not remove it **PEEK** - peek at the top of a stack
+- Peek let's you access the top element in the stack without actually changing the Data Structure.
+- If you try to POP from an empty element or PUSH into full stack:
+    - It's an ERROR throw an Exception!
+- The most common operations on a stack involve pushing and popping elements from the TOP.
+- The operations are on one end of the stack.
+- A LinkedList match perfectly to build a stack.
 - Performance
-    - PUSH and POP from a stack O(1) constant time complexity.
-    - isEmpty and isFull also O(1)
-    - Size O(1)
-
+    - PUSH and POP from a stack `O(1)` constant time complexity.
+    - isEmpty and isFull also `O(1)`
+    - Size `O(1)`
 - Useful
-    - Implementing Undo in application
-    - Implementing back button in browser
-    - Holding the memory for recursive calls in a programing language
+    - Implementing Undo in application.
+    - Implementing back button in browser.
+    - Holding the memory for recursive calls in a programing language.
 
 
 | | PUSH | POP | PEEK | isFull | isEmpty | Size |
 |---|---|---|---|---|---|---|
 | Stack | O(1) | O(1) | O(1) | O(1) | O(1) | O(1) |
 
+### QUEUE DATA STRUCTURE
 
-## QUEUE DATA STRUCTURE
-Queue is a Data Structure where you add elements to the End of the Queue and remove elements
+- Queue is a Data Structure where you add elements to the End of the Queue and remove elements
 from the beginning of the QUEUE.
-
-```
-                    +--------------------------------------------------+
-                         +---++---++---++---++---+
-                         | A || B || C || D || E |
-                         +---++---++---++---++---+
-                    +--------------------------------------------------+
-
-
-    DEQUEUE remove  +--------------------------------------------------+   ENQUEUE add new element
-         +---+           +---++---++---++---++---+                        +---+
-      <- | A |           | B || C || D || E || F |                     <- | F |
-         +---+           +---++---++---++---++---+                        +---+
-                    +--------------------------------------------------+
-```
-
-- FIFO first in first out
-- LILO last in last out
-
+- FIFO - first in first out.
+- LILO - last in last out.
 - The operations are performed at two ends. Removal its at the beginning and addition is at the end of the queue.
-
-- Adding a new element to the end of the Queue is called ENQUEUE -> enqueue an element from the queue
-
-- Removing an element from the beginning of a queue is called DEQUEUE -> dequeue an element from the queue
-
+- Adding a new element to the end of the Queue is called **ENQUEUE** - enqueue an element from the queue.
+- Removing an element from the beginning of a queue is called **DEQUEUE** - dequeue an element from the queue.
 - Similar to stack you might just want to see what the first element in a queue is without removing it
-PEEK -> Peek at the first element in a queue
-
+**PEEK** - Peek at the first element in a queue.
 - The Queue implementation in Java
-OFFER -> adds to a queue if space is available
+    - OFFER - adds to a queue if space is available
+- If you try to dequeue from an empty queue or enqueue into full queue:
+    - It's an error throw Exception
+- The most common operations on queue involve enqueueing and dequeuing elements.
+- The operations are on both ends of queue.
+- A LinkedList which is a pointer to head and tail works well.
 
-- Common operations on the queue
-```
-ENQUEUE     DEQUEUE     PEEK
-```
-
-- Other operations
-```
-ISEMPTY ISFULL OFFER
-```
-
-If you try to dequeue from an empty queue or enqueue into full queue. It's an error throw Exception
-
-- The most common operations on queue involve enqueueing and dequeueing elements
-The operations are on both ends of queue
-A LinkedList which is a pointer to head and tail works well
-
-- Performance
-Enqueueing and dequeueing implemented in this way is O(1)
-IsEmpty isFull O(1)
-Space complexity O(N)
-
-- Useful
+- Performance:
+    - Enqueueing and dequeueing implemented in this way is `O(1)`
+    - IsEmpty isFull `O(1)`
+    - Space complexity `O(N)`
+- Useful:
     - Calls
     - Queueing job to be printed
-    - Order processing system E-Commerce websites or bank transactions.
-
+    - Order processing system E-Commerce websites or bank transactions
 
 | | Enqueue | Dequeue | isFull | isEmpty |
 |---|---|---|---|---|
 | Queue | O(1) | O(1) | O(1) | O(1) |
 
+### :star: Garbage Collection GC
 
-
-# :star: Garbage Collection GC
-
-- Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use"
-    - live object = reachable (referenced by someone else)
-    - dead object = unreachable (unreferenced)
-- Objects are allocated in the "heap" of java memory
-- Static members, class definition are stored in "method area" PermGen/Metaspace
-- Garbage Collection is carried out by a daemon thread called "Garbage Collector"
-- Force GC to happened System.gc (no guaranteed)
-- When failed to allocated because of full heap. Error message java.lang.OutOfMemoryError
-
-- Garbage Collector involves
-    - Mark : go through all program structure, mark reachable objects as live
-    - Delete/Sweep : Delete unreachable objects
-    - Compacting : Compact memory by moving around objects
-
-- Typed of Garbage Collector
-    - Serial Collector : Runs on single thread, useful in basic applications
-    - Concurrent Collector : GC execute as application runs, not wait the old generation to full stop the world
+- Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use":
+    - Live object - reachable (referenced by someone else)
+    - Dead object - unreachable (unreferenced)
+- Objects are allocated in the "heap" of java memory.
+- Static members, class definition are stored in **method area** PermGen/Metaspace.
+- Garbage Collection is carried out by a daemon thread called **Garbage Collector"**.
+- Force GC to happened `System.gc` (no guaranteed).
+- When failed to allocated because of full heap. Error message `java.lang.OutOfMemoryError`.
+- Garbage Collector involves:
+    - Mark - go through all program structure, mark reachable objects as live
+    - Delete/Sweep - Delete unreachable objects
+    - Compacting :-Compact memory by moving around objects
+- Typed of Garbage Collector:
+    - Serial Collector - Runs on single thread, useful in basic applications
+    - Concurrent Collector - GC execute as application runs, not wait the old generation to full stop the world
       execute only during mark/re-mark phase
-    - Parallel Collector : Uses multiple CPUs to perform GC. Multiple threads doing mark/sweep. Does not start until
-      heap is full/near-full. "Stop the world" when runs.
-
-Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required
-Use parallel collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK
+    - Parallel Collector:
+        - Uses multiple CPUs to perform GC. Multiple threads doing mark/sweep.
+        - Does not start until heap is full/near-full.
+        - "Stop the world" when runs.
+- Use Concurrent collector when:
+    - There is more memory
+    - High number of CPUs
+    - Short pauses required
+- Use parallel collector when:
+    - There is less memory
+    - Lesser number of CPUs
+    - High throughput required
+    - Pauses are OK
 
 ```
 java -XX:+UseSerialGC
@@ -2119,7 +2038,7 @@ java -XX:+UseParallelGC
 java -XX:+UseConcMarkSweepGC
 ```
 
-- Garbage Collector example
+- Garbage Collector example.
 
 ```java
 void method() {
@@ -2128,174 +2047,179 @@ void method() {
 }
 ```
 
-Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
-After method ends execution the reference variable calendar is no longer valid. Hence there are no reference
-to the object created in the method. JVM recognizes this and removes the object from the heap. This is called GC
+- Object of class GregorianCalendar is created on the heap by the first line in method with one reference variable calendar.
+- After method ends execution the reference variable calendar is no longer valid.
+- Hence there are no reference to the object created in the method.
+- JVM recognizes this and removes the object from the heap. This is called GC
 
+**When Garbage Collection is run**
+- Based on fancies of JVM. Possible situations:
+    - When available memory on he heap is low
+    - When CPU is free
 
-- When Garbage Collection is run
-    - Based on fancies of JVM. Possible situations
-        - When available memory on he heap is low
-        - When CPU is free
+## Concurrency
 
+- fail-safe - does not throw ConcurrentModificationException.
+- fail-fast - throw ConcurrentModificationException.
+- volatile - value read always from main memory no cache.
+- synchronized - acquire intrinsic lock on object. Only one object can execute this part of code.
+- join - wait until other thread finish executing.
+- **wait and notify for inter thread communication**:
+    - Must be called from synchronized context method, block.
 
+### Process and threads
 
-# Concurrency
-
-- fail-safe : does not throw ConcurrentModificationException
-- fail-fast : throw ConcurrentModificationException
-- volatile : value read always from main memory no cache
-- synchronized : acquire intrinsic lock on object. Only one object can execute this part of code
-- join() - wait until other thread finish executing
-
-- wait and notify for inter thread communication. Must be called from synchronized context method, block
-
-
-## Process and threads
 - In concurrent programming two units of execution process and treads.
-Processing time for a single core is shared among processes and threads, time slicing
-
-- Process : Has a self contained execution environment. Private set of runtime resources
-Each process has its own memory space. Process can communicate with each others IPC
-
-- Threads : Lightweight process. Creating a new thread requires fewer resources than creating a new process
-Exists within a process. Every process has at least one thread
-
-- join() : method wait until thread to finish
-
-- threads priority : importance of a thread to the scheduler. Lower priority thread tend to run less often.
-setPriority(), getPriority(). MAX_PRIORITY, NORM_PRIORITY, MIN_PRIORITY
-
-- yield() : this static method is essentially used to notify the system that the current thread is willing to
+- Processing time for a single core is shared among processes and threads, **time slicing**.
+- Process:
+    - Has a self contained execution environment.
+    - Private set of runtime resources.
+    - Each process has its own memory space.
+    - Process can communicate with each others IPC
+- Threads:
+    - Lightweight process.
+    - Creating a new thread requires fewer resources than creating a new process.
+    - Exists within a process.
+    - Every process has at least one thread.
+- `join()` - method wait until thread to finish
+- Threads priority - importance of a thread to the scheduler. Lower priority thread tend to run less often.
+    - setPriority()
+    - getPriority()
+    - MAX_PRIORITY, NORM_PRIORITY, MIN_PRIORITY
+- `yield()` - this static method is essentially used to notify the system that the current thread is willing to
 give up CPU for a while, but scheduler can immediately pick them back. Is put back into the ready queue of the processor,
 and waits for it next turn.
 
+**Start Thread**
 
-## Start Thread
-- Extends Thread - override run() method
+- Extends Thread:
+    - Override run() method
+- Implements Runnable:
+    - Override run() method, pass Runnable object to Thread class constructor.
+    - Call start method on thread object.
+- Executor Service - dynamically reuse thread. Check if threads are already working.
+- **Executors.newCachedThreadPool()**:
+    - Return an executor service that can dynamically reuse threads before starting a job, it going to check whether
+    there are any threads that finished the job if so reuse them.
+    - If no create new one, good for processor effective solution.
+- **Executors.newSingleThreadPool()**:
+    - Uses single thread for the job.
+- **Executors.newFixedThreadPool()**:
+    - Maximize the number of threads.
+    - If all the thread are busy we have to wait for one to terminate.
+- executorService.execute(Runnable)
+- executorService.submit(Callable or Runnable)
 
-- Implements Runnable - override run() method, pass Runnable object to Thread class constructor. Call start method
-on thread object.
+### Concurrent Collections
 
-- Executor Service - dynamically reuse thread. Check if threads are already working
-  - Executors.newCachedThreadPool() return an executor service that can dynamically reuse threads
-    Before starting a job, it going to check whether there are any threads that finished the job if so reuse them
-    If no create new one, good for processor effective solution
-  - Executors.newSingleThreadPool() uses single thread for the job
-  - Executors.newFixedThreadPool() maximize the number of threads. If all the thread are busy we have to wait
-    for one to terminate
+**ConcurrentHashMap**
 
-  - executorService.execute(Runnable)
-  - executorService.submit(Callable or Runnable)
+- Full concurrency during retrieval.
+- Reads can happen fast, while writes require lock.
+- Whole table is not locked only segment is locked.
+- Iterations do not throw concurrent modification exception.
+- Null key not allowed.
+- Operations are atomic.
 
+**BlockingQueue**
 
-## Concurrent Collections
+- Interface that represents a queue that is thread safe. put(), take().
 
-### ConcurrentHashMap
-- Full concurrency during retrieval
-- Reads can happen fast, while writes require lock
-- Whole table is not locked only segment is locked
-- Iterations do not throw concurrent modification exception
-- Null key not allowed
-- Operations are atomic
+**DelayQueue**
 
-
-### BlockingQueue
-- Interface that represents a queue that is thread safe. put(), take()
-
-
-### DelayQueue
 - Like BlockingQueue that implements Delay interface. Cannot put null into it.
 
+**PriorityBlockingQueue**
 
-### PriorityBlockingQueue
 - Implements Comparable interface. Determine what will be the order of a Queue.
 
-
 ### Threads complications
-- Thread interference and memory consistency errors
-    - If two thread access the same variable, it is possible for them to get in each others way
-      For example two threads incrementing the same variable at the same time
-      To fix this make sure that section of code is only accessed by one thread at a time, by using synchronized keyword for example
-      But this slows down performance, and can lead to thread contention issues (starvation, livelock, deadlock)
 
-- Thread Contention
-    - Deadlock : two thread each is blocked by a lock held by the other
-    - Livelock : two thread's don't deadlock, but keep blocking on locks held by each other, neither can progress
-    - Starvation : Same thread keep acquiring locks, and cause other threads to be unable to get anything done
+- Thread interference and memory consistency errors:
+    - If two thread access the same variable, it is possible for them to get in each others way.
+    - For example two threads incrementing the same variable at the same time.
+    - To fix this make sure that section of code is only accessed by one thread at a time,
+    by using synchronized keyword for example.
+    - But this slows down performance, and can lead to thread contention issues (starvation, livelock, deadlock)
+- Thread Contention:
+    - Deadlock - two thread each is blocked by a lock held by the other.
+    - Livelock - two thread's don't deadlock, but keep blocking on locks held by each other, neither can progress.
+    - Starvation - Same thread keep acquiring locks, and cause other threads to be unable to get anything done.
 
+**Semaphores**
 
-### Semaphores
-- Variables that are used to controlling access to common resources, important in OS
-is a record of how many units of particular resource are available
-- Semaphores track how many resources are free, it does not keep track of which of the resources are free
-- Mutexes are binary semaphores. Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlock it
-Methods acquire() if permit is available take it, release() add a permit
+- Variables that are used to controlling access to common resources, important in OS.
+- Is a record of how many units of particular resource are available.
+- Semaphores track how many resources are free, it does not keep track of which of the resources are free.
+- Mutexes are binary semaphores.
+- Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlock it.
+- Methods acquire() if permit is available take it, release() add a permit.
 
+**Callable and Future**
 
-### Callable and Future
-- Returns something from a thread implements Callable instead of Runnable
+- Returns something from a thread implements Callable instead of Runnable.
 
+**Thread States**
 
-### Thread States
-- Runnable - create a new thread and call start method
-- Blocked - enter synchronized block, lock
-- Waiting - after wait()
-- Terminated - run method is over
-
+- Runnable - create a new thread and call start method.
+- Blocked - enter synchronized block, lock.
+- Waiting - after wait().
+- Terminated - run method is over.
 
 ### Concurrent Libraries
 
-### CountDownLatch
-Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations
-being performed by other tasks. Give initial count to count down latch object and task that calls await() on that
-object will block until count reaches zero. The count cannot be reset. Typically use is to divide a problem into "n"
-independently solveable tasks and create a CountDownLatch with value of "n"
-When each task is finished it calls countDown on Latch. Task waiting to solve call await() on the Latch to hold
-themselves back until it is completed
+**CountDownLatch**
 
+- Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations
+being performed by other tasks.
+- Give initial count to count down latch object and task that calls await() on that
+object will block until count reaches zero.
+- The count cannot be reset.
+- Typically use is to divide a problem into "n" independently solveable tasks and create a CountDownLatch with
+value of "n".
+- When each task is finished it calls countDown on Latch.
+- Task waiting to solve call await() on the Latch to hold themselves back until it is completed.
 
-### CyclicBarrier
-Used in situation where you want to create a group of tasks to perform work in parallel plus wait
+**CyclicBarrier**
+
+- Used in situation where you want to create a group of tasks to perform work in parallel plus wait
 until they are still finished before moving on to the next step, like join or countDownLatch.
-Can be reused.
+- Can be reused.
 
 
 ### From Java 8 Book
 
-### Concurrent Programming
-- Runnable describes task that might be executed asynchronously
-- Executor plans execute runnable instance
-- Callable tasks that return results or throw exception
-- Results without synchronization are unpredictable
-- Better use thread safe data structures than use locks
-- ConcurrentHashMap is thread safe array allows to updates elements using atomic operations
-- To interrupt task set interrupt flag or throw InterruptedException
+**Concurrent Programming**
 
-- Thread is mechanism that allow to execute sequence of instruction, these instructions are provided by OS
-- Couple of threads work in parallel using multiple processors of different time slice of the same processor
-
-- Executor executes a task by choosing threads that might be executed with
+- Runnable - describes task that might be executed asynchronously.
+- Executor - plans execute runnable instance.
+- Callable - tasks that return results or throw exception.
+- Results without synchronization are unpredictable.
+- Better use thread safe data structures than use locks.
+- ConcurrentHashMap - is thread safe array allows to updates elements using atomic operations.
+- To interrupt task set interrupt flag or throw InterruptedException.
+- Thread is mechanism that allow to execute sequence of instruction, these instructions are provided by OS.
+- Couple of threads work in parallel using multiple processors of different time slice of the same processor.
+- Executor executes a task by choosing threads that might be executed with.
 
 ```java
- Runnable task = () -> {};
- Executor exec = Executors...;
- exec.execute(task);
+Runnable task = () -> {};
+Executor exec = Executors...;
+exec.execute(task);
 ```
 
-- Factory method Executor class
-- Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks
-- Executors.newFixedThreadPool(thread_num); - good for grater amount of tasks
-
-- To acquire number of thread based on number of processors
+- Factory method Executor class.
+- Executors.newCachedThreadPool() - each task execute in safe thread, couple of small tasks.
+- Executors.newFixedThreadPool(threadNum) - good for grater amount of tasks.
+- To acquire number of thread based on number of processors.
 
 ```java
 int processors = Runtime.getRuntime().availableProcessors();
 ```
 
-- Objects Future and Executor
-- Callable - Method call() oposite to method run() from Runnable interface returns value or throw an Exceptions
-To execute callable there is a need for ExecutorService instance
+- Objects Future and Executor.
+- Callable - Method call() opposite to method run() from Runnable interface returns value or throw an Exceptions.
+- **To execute callable there is a need for ExecutorService instance**.
 
 ```java
 ExecutorService exec = ExecutorService.newFixedThreadPool(2);
@@ -2303,171 +2227,175 @@ Callable<V> call = ...;
 Future<V> result = exec.submit(call);
 ```
 
-- Future is an object that represents a calculations, which results will be accessible in a future
-
-- Thread safety
-RAM memory are slow, couple of time slower then modern processors. Processor try to collect needed data
-in registers or cache memory on main board, and at the end make changes in main memory
-This cache memory is key factor for performance optimization
-
-- Thread Visibility
-    - final value is visible after initialization
+- Future is an object that represents a calculations, which results will be accessible in a future.
+- Thread safety:
+    - RAM memory are slow, couple of time slower then modern processors.
+    - Processor try to collect needed data in registers or cache memory on main board, and at the end make changes
+    in main memory.
+    - This cache memory is key factor for performance optimization.
+- :star: Thread Visibility:
+    - **final** value is visible after initialization
     - initial value of static variable is visible after static initialization
     - changes variable with volatile keyword are visible
     - changes after release a lock are visible for all that acquire this lock
     - Volatile keyword - compiler generates needed instructions to make sure that all changes that being applied in
-one task are visible in another
-
-- Chasing : Are problems always when shared variables are modified. Locks to critical section make atomic
-
-- Strategy of safety concurrency
-    - Avoid shared data between tasks. One task z1, second task z2, third z3 = z1 + z2
-    - Use immutable objects
-    - Locks allows only one task access to data at a time. Use data structures and algorithms from java libraries
-
-- Immutable classes
+    one task are visible in another.
+- Chasing - Are problems always when shared variables are modified. Locks to critical section make atomic.
+- :star: Strategy of safety concurrency:
+    - Avoid shared data between tasks. One task z1, second task z2, third z3 = z1 + z2.
+    - Use immutable objects.
+    - Locks allows only one task access to data at a time. Use data structures and algorithms from java concurrent
+    libraries.
+- Immutable classes:
     - Class is immutable if instance after creation cannot change
-    - Implement immutable class
+    - Implement immutable class:
         - variable with final keyword
         - non method can modify data
         - do not allow to leak modification
         - do not allow to "this" reference pass outside constructor
 
-### Concurrent Algorithms
-- Parallel Streams
+**Concurrent Algorithms**
+
+- Parallel Streams.
 
 ```java
 Long results = coll.parallelStream().filter(s->s.startsWith('a')).count();
 ```
 
-ParallelStream method returns parallel stream. Stream is parted on segments
-Filtering and counting is executed for each segments and results are joined together without your further interactions
-Parallel operations on arrays
-Arrays operations part array on segments, parallelly process them and join results
-Arrays.pararellSetAll(), parallelSort()
-Process array into a stream,
+- ParallelStream method returns parallel stream. Stream is parted on segments.
+- Filtering and counting is executed for each segments and results are joined together without your further interactions.
+- Parallel operations on arrays:
+    - Arrays operations part array on segments, parallelly process them and join results.
+    - Arrays.pararellSetAll(), parallelSort()
+    - Process array into a stream,
 
 ```java
 long sum = IntStream.of(value).parallel().sum(); |
 ```
 
+**Thread safe data structures**
 
-### Thread safe data structures
-
-- ConcurrentHashMap
-Map on which operations are thread safe. Can support large number of parallel read and some number of parallel writes
-To actualize data compute() method. This method is Atomic, no other thread can modify map content while executing operation
-
-- BlockingQueues
-Is one of the most commonly used tool for synchronized work. One task put element into the queue, while another
-take element from a queue. Allows to safety pass tasks from one task to another
-
+- ConcurrentHashMap:
+    - Map on which operations are thread safe.
+    - Can support large number of parallel read and some number of parallel writes.
+    - To actualize data compute() method.
+    - compute() method is Atomic, no other thread can modify map content while executing operation.
+- BlockingQueues:
+    - Is one of the most commonly used tool for synchronized work.
+    - One task put element into the queue, while another take element from a queue.
+    - Allows to safety pass tasks from one task to another.
 - LinkedBlockingQueue, ArrayBlockingQueue
 - ConcurrentSkipListMap - compare keys
 - ConcurrentSkipListSet
-- CopyOnWriteArrayList, CopyOnWriteArraySet - are thread safe thanks the fact that all methods that modify collection
-make copy used array. Good in situation when number of threads go through queue is larger than number of thread that modify queue
+- CopyOnWriteArrayList, CopyOnWriteArraySet:
+    - Are thread safe thanks the fact that all methods that modify collection make copy used array.
+    - Good in situation when number of threads go through queue is larger than number of thread that modify queue.
 
-#### Atomic Values
+**Atomic Values**
 
 ```java
 AtomicLong nextNumber = new AtomicLong();
 long id = nextWord.incrementAndGet();
 ```
 
-Atomic operation, load data, modify data and save data cannot be interrupted in between.
+- Atomic operation, load data, modify data and save data cannot be interrupted in between.
 
 
-## Other
+### Other
 
-### Design Principle #1 : Relay on Interfaces, not implementation
-
-"Program to an interface not implementation" decorator, iterator, adapter
-
-Interface is a surface that a unit offers to outside world
-That unit could be a single class, or even be a collection of classes
-The implementation is a guts of that unit
-Never get assumption about content of any unit
+**Design Principle #1 : Relay on Interfaces, not implementation**
 
 ```
-+------------------------------------------------------+
-| ArrayList<String> list = new ArrayList<>(); // wrong |
-| List<String> list = new ArrayList<>(); // correct    |
-+------------------------------------------------------+
+Program to an interface not implementation: decorator, iterator, adapter
 ```
 
-### Design Principle #2 : The Open / Close Principle
+- Interface is a surface that a unit offers to outside world.
+- That unit could be a single class, or even be a collection of classes.
+- The implementation is a guts of that unit.
+- Never get assumption about content of any unit.
 
-"Classes should be open for extension but closed for modification"
+```java
+ArrayList<String> list = new ArrayList<>(); // wrong
+List<String> list = new ArrayList<>(); // correct
+```
 
-Once you have written a class, it's done. Never add anything to it after that
-No new member variables, no new methods, no new interfaces implemented, No modification
-But other code should be able to use your class in new ways. New applications via extension
+**Design Principle #2 : The Open / Close Principle**
 
-- Inheritance, template pattern
+```
+Classes should be open for extension but closed for modification
+```
+
+- Once you have written a class, it's done. Never add anything to it after that.
+- No new member variables, no new methods, no new interfaces implemented, No modification.
+- But other code should be able to use your class in new ways. New applications via extension.
+- Inheritance, **template pattern**:
     - If you structure your code into abstract base class, other classes can find
-      new way to use it via Inheritance
+      new way to use it via Inheritance.
+- Delegation, **observer, MVC, Chain of Responsibility**:
+    - If you fire events and expose properties, other code can listen in, and use your code via Delegation.
+- Composition, **strategy pattern**"
+    - If you take in member variable to determine behavior, you allow extension via Composition.
 
-- Delegation, observer, MVC, Chain of Responsibility
-    - If you fire events and expose properties, other code can listen in, and use your code via Delegation
-
-- Composition, strategy pattern
-    - If you take in member variable to determine behavior, you allow extension via Composition
-
-
-### Design Principle #3 : Principle of Least Knowledge
-
-"Only talk to friends, don't talk to strangers"
-
-Only make method calls to friends
-friends - object passed in as parameter to methods of your classes. Object created inside your class
-Code should never include multiple '.' operators in the same function call
+**Design Principle #3 : Principle of Least Knowledge**
 
 ```
-    +----------------------------------------------------------------+
-    | int friendNumber = media.getRelatives().getFriend(); // not OK |
-    | int friendNumber = media.getFriend(); // OK                    |
-    +----------------------------------------------------------------+
+Only talk to friends, don't talk to strangers
 ```
 
-But this rule is not always a case
-Summarized, each unit should have only limited knowledge about other units. Each unit should only talk to its friend
+- Only make method calls to friends.
+- friends - object passed in as parameter to methods of your classes. Object created inside your class.
+- Code should never include multiple '.' operators in the same function call.
+
+```java
+int friendNumber = media.getRelatives().getFriend(); // not OK
+int friendNumber = media.getFriend(); // OK
+```
+
+- But this rule is not always a case.
+- Summarized, each unit should have only limited knowledge about other units. Each unit should only talk to its friend.
 
 
-### Design Principle #4 : Dependency Injection
+**Design Principle #4 : Dependency Injection**
 
-"Depend on abstraction never on details"
-Used technique to set member variables of objects on the fly.
+```
+Depend on abstraction never on details
+```
 
+- Used technique to set member variables of objects on the fly.
 
-### Design Principle #5 : Hollywood Principle
+**Design Principle #5 : Hollywood Principle**
 
-"Don't call us we will call you"
-Class notifies other class of changes when they occurs via events or messages.
-Idea high-level component calling low-level is used components in frameworks.
+```
+Don't call us we will call you
+```
 
+- Class notifies other class of changes when they occurs via events or messages.
+- Idea high-level component calling low-level is used components in frameworks.
 
-### MVC Paradigm
+**MVC Paradigm**
 
-Model View Controller is an architectural pattern. In Java API Swing
-Basic idea of MVC is to separate data from its representation, separating data from its manipulation,
-allowing different simultaneous representations of the same data
-MediaPlayer Example. Controller a slider to adjust volume in a media player app. Model the mp4 file of a movie
-to be played in a media player app. View the area of the media-player app that actually displays video
-User sees the model through a view, and manipulates it via the controller
+- Model View Controller is an architectural pattern. In Java API Swing.
+- Basic idea of MVC is to separate data from its representation, separating data from its manipulation,
+allowing different simultaneous representations of the same data.
+- MediaPlayer Example:
+    - Controller - a slider to adjust volume in a media player app.
+    - Model the mp4 file of a movie to be played in a media player app.
+    - View the area of the media-player app that actually displays video.
+- User sees the model through a view, and manipulates it via the controller.
 
+**What is a basic point of observer pattern?**
 
-### What is a basic point of observer pattern?
-An object announces updates to its value, and other objects can read to these updates
+- An object announces updates to its value, and other objects can read to these updates.
 
+**When a publisher fires an update, how do subscriber become aware of it?**
 
-### When a publisher fires an update, how do subscriber become aware of it?
-The publisher has a list of listeners, and Java cycles through them and Executes the callback function they had specified
+- The publisher has a list of listeners, and Java cycles through them and Executes the callback function they
+had specified.
 
+**How are properties and bindings different from each other?**
 
-### How are properties and bindings different from each other?
-Properties are ONE:ONE, bindings are ONE:MANY
+- Properties are ONE:ONE, bindings are ONE:MANY
 
+**How Observer and MVC related?**
 
-### How Observer and MVC related?
-The View act as publisher, controller as subscriber
+- The View act as publisher, controller as subscriber.
