@@ -8,9 +8,9 @@ Is a measure of how resource requirements change as the size of problem gets lar
 ### 1. Selection sort O(N^2)
 
 - At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
-- Complexity O(N^2)
-- O(N^2) - comparisons
-- O(N) - swaps
+- Complexity `O(N^2)`
+- `O(N^2)` - comparisons
+- `O(N)` - swaps
 
 ```java
 public static void selectionSort(int[] list) {
@@ -30,9 +30,9 @@ public static void selectionSort(int[] list) {
 - At each iteration, every element is compared with its neighbor and swapped if they are not in order.
 - Smaller element bubbling to the beginning of the list.
 - If no swaps that means list is sorted.
-- Complexity O(N^2)
-- O(N^2) - comparisons
-- O(N^2) - swaps
+- Complexity `O(N^2)`
+- `O(N^2)` - comparisons
+- `O(N^2)` - swaps
 
 ```java
 public static void bubbleSort(int[] list) {
@@ -55,9 +55,9 @@ public static void bubbleSort(int[] list) {
 ### 3.Insertion Sort O(N^2)
 
 - Start with sorted list of size 1. Insert next element into list at right position.
-- Complexity O(N^2)
-- O(N^2) - comparisons
-- O(N^2) - swaps
+- Complexity `O(N^2)`
+- `O(N^2)` - comparisons
+- `O(N^2)` - swaps
 
 ```java
 public static void insertionSort(int[] list) {
@@ -76,36 +76,34 @@ public static void insertionSort(int[] list) {
 
 ### 4. Shell Sort between O(N) and O(N^2)
 
-Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
-Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
-Sort on almost sorted list. Complexity depends on increment value chosen.
-
-- Complexity O(N) and O(N^2)
+- Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
+- Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
+- Sort on almost sorted list. Complexity depends on increment value chosen.
+- Complexity `O(N) and O(N^2)`
 
 ### 5. Merge Sort O(N(Log(N)))
 
-Follows divide and conquer approach to create smaller sub problems.
-Then merge together sorted lists to get fully sorted list.
-
-- Complexity O(N(Log(N)))
+- Follows divide and conquer approach to create smaller sub problems.
+- Then merge together sorted lists to get fully sorted list.
+- Complexity `O(N(Log(N)))`
 - Is not adaptive = takes advantage over input (nearly sorted list)
 
 ### 6. Quick Sort
 
-Divide and conquer algorithm which partitions the list at every step. Partition is based on **pivot** element from the list.
-The list is partitioned with all elements smaller than pivot on one side and larger than pivot on the other.
-Pivots is usually first or last element in the list.
-
-- Complexity O(N(Log(N)))
-- O(Log(N)) extra space
+- Divide and conquer algorithm which partitions the list at every step.
+- Partition is based on **pivot** element from the list.
+- The list is partitioned with all elements smaller than pivot on one side and larger than pivot on the other.
+- Pivots is usually first or last element in the list.
+- Complexity `O(N(Log(N)))`
+- `O(Log(N))` extra space
 - Is not adaptive
 
 ### :star: 7. Binary search
 
-How to search **sorted list**.
-Choose element at mid point of sorted list. Check whether it is smaller or greater then element you are looking for.
-
-- Complexity O(Log(N))
+- How to search **sorted list**.
+- Choose element at mid point of sorted list.
+- Check whether it is smaller or greater then element you are looking for.
+- `Complexity O(Log(N))`
 
 ```java
 public static int binarySearch(int[] list, int number) {
@@ -149,7 +147,6 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 
 - Iterative solutions involves loops.
 - The recursive solutions involves functions that call themselves.
-- By halving the search area every step, binary search works much faster than binary search. **O(Log(N))**
 - Better space complexity comparing iterative binary search
 
 ## Binary Tree
@@ -157,19 +154,9 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 - A binary tree is one where every node can have maximum of two children
     - Left children and right children
 - Two binary trees are the same if:
-    - 1. Every corresponding node has the same value.
-    - 2. The structure of the tree at every corresponding node is the same
+    - Every corresponding node has the same value.
+    - The structure of the tree at every corresponding node is the same
 - **Complexity O(N)**
-
-```
-        +---+
-        | N |
-        +---+
-       /     \
-    +---+   +---+
-    | L |   | R |
-    +---+   +---+
-```
 
 ```java
 public static class Node {
@@ -235,13 +222,12 @@ public static boolean sameTree(Node head1, Node head2) {
 - **ISEMPTY O(1)**
 - **ISFULL O(1)**
 - **SIZE O(1)**
-- StackOverflowException - pushing into full stack
-- StackUnderflowException - popping or peeking empty element
+- `StackOverflowException` - pushing into full stack
+- `StackUnderflowException` - popping or peeking empty element
 - **LinkedList** is used to build a stack
 - Stack is used to implementing undo, back button
 
 ```java
-// SINGLE ELEMENT IN LINKED LIST
 public static class Element<T> {
     private T data;
     private Element next;
@@ -307,21 +293,11 @@ public static class Node<T> {
 
 ### Binary Tree traversal
 
-- Breadth-First : Visit node at every level before moving the next level.
-- Depth-First : Involves going right to the leaf of the binary tree first before moving up the tree.
-  - PRE-ORDER :  NODE         -> LEFT SUBTREE  -> RIGHT SUBTREE
-  - IN-ORDER :   LEFT SUBTREE -> NODE          -> RIGHT SUBTREE
-  - POST-ORDER : LEFT SUBTREE -> RIGHT SUBTREE -> NODE
-
-```
-         +------+
-         | Node |
-         +------+
-        /        \
-+------+          +-------+
-| Left |          | Right |
-+------+          +-------+
-```
+- Breadth-First - Visit node at every level before moving the next level.
+- Depth-First - Involves going right to the leaf of the binary tree first before moving up the tree.
+  - PRE-ORDER -  NODE         -> LEFT SUBTREE  -> RIGHT SUBTREE
+  - IN-ORDER -  LEFT SUBTREE -> NODE          -> RIGHT SUBTREE
+  - POST-ORDER - LEFT SUBTREE -> RIGHT SUBTREE -> NODE
 
 ```java
 public static void preOrder(Node<Character> root) {
@@ -343,9 +319,9 @@ public static void preOrder(Node<Character> root) {
 - Each node in the left subtree of Node has a value less than or equal to the value of the Node.
 - Each node in the right subtree of Node has a value greater than the value of the Node.
 - Binary search tree are typically used for **Fast insertion and fast lookup**
-- INSERTION O(Log(N))
-- LOOKUP O(Log(N))
-- Complexity is based on shape. For example if only right or left child both insertion and lookup O(N)
+- `INSERTION O(Log(N))`
+- `LOOKUP O(Log(N))`
+- Complexity is based on shape. For example if only right or left child both insertion and lookup `O(N)`
 
 ## Heaps
 
@@ -371,9 +347,9 @@ public static void preOrder(Node<Character> root) {
         - Operations travels upwards (leaf -> root),
         - travels downwards (root -> leaf).
         - Heaps can be represented using tree or array
-- GET PARENT : Node at index: i -> has parent at index (i-1)/2
-- GET LEFT CHILD : Node at index: (2*i + 1)
-- GET RIGHT CHILD : Node at index: (2*i + 2)
+- GET PARENT - Node at index: `i` -> has parent at index `(i-1)/2`
+- GET LEFT CHILD - Node at index: `(2*i + 1)`
+- GET RIGHT CHILD : Node at index: `(2*i + 2)`
 
 ```
              5
@@ -395,9 +371,9 @@ public static void preOrder(Node<Character> root) {
 
 - Use Heap to help sort elements in ascending or descending order.
 - Use the heap to access the maximum element and put it in right position in array.
-- O(1) access to smallest and highest element
-- Complexity O(N(Log(N)))
-- Space complexity O(1)
+- `O(1)` access to smallest and highest element
+- Complexity `O(N(Log(N)))`
+- Space complexity `O(1)`
 
 ## GRAPH
 
@@ -406,65 +382,25 @@ public static void preOrder(Node<Character> root) {
     - EDGE
 - Graphs is set of vertices and edges
 
-```
-                Edge
-       | A | -------------- | B |       UNDIRECTED - 2 way relationship
-      Vertex                Vertex
-
-
-                Edge
-       | A | -------------> | B |       DIRECTED - 1 way relationship
-      Vertex                Vertex
-```
+![Graph](images/graph.png "Graph")
 
 - A and B are **Adjacent** Nodes
 
-```
-        | B | ----- | F | ----- | H |           - 3 edges are INDICENT of vertex F
-                      |                         - F is said to have a degree of 3
-                      |
-                    | G |
-```
+![Graph Degree](images/graph-degree.png "Graph Degree")
 
+- 3 edges are Indicent of vertex F
+- F is said to have a degree of 3
 - Series of edges is called **PATH**
 
 ### UNDIRECTED ACYCLIC GRAPH
 
 - A connected graph with no cycles is a TREE
 
-```
-        +---+         +---+         +---+
-        | A +---------+ B +---------+ F |
-        +-+-+         +---+         +-+-+
-          |          /                |  \
-          |         /                 |   \
-          |    +---+                  |    +---+
-          |    | D |                  |    | H |
-          |    +---+                  |    +---+
-          |                           |
-          |                           |
-        +-+-+         +---+         +-+-+
-        | C +---------+ E |         | G |
-        +---+         +---+         +---+
-```
+![Undirected Acyclic Graph](images/undirected-acyclic-graph.png "Undirected Acyclic Graph")
 
 ### DIRECTED ACYCLIC GRAPH (DAG)
 
-```
-        +---+         +---+         +---+
-        | A +-------->+ B +-------->+ F |
-        +-+-+         +---+         +-+-+
-          |  ^                        ^  \
-          |   \                       |   V
-          |    +---+                  |    +---+
-          |    | D |                  |    | H |
-          |    +---+                  |    +---+
-          |         \                 |
-          V          V                |
-        +-+-+         +---+         +-+-+
-        | C +-------->+ E +-------->+ G |
-        +---+         +---+         +---+
-```
+![Directed Acyclic Graph](images/dag.png "Directed Acyclic Graph")
 
 - 3 ways to represent Graph
     - Adjacency matrix
@@ -495,7 +431,7 @@ public static void preOrder(Node<Character> root) {
 
 - Each vertex is a node.
 - Each vertex has a pointer to LinkedList
-- Problem : deleting node need to go through all data structure
+- Problem - deleting node need to go through all data structure
 
 ### ADJACENCY SET
 
@@ -503,8 +439,8 @@ public static void preOrder(Node<Character> root) {
 
 ### Graph representation
 
-- E = Number of Edges
-- V = Number of Vertices
+- `E` - Number of Edges
+- `V` - Number of Vertices
 
 | | Adjacency Matrix | Adjacency List | Adjacency Set |
 |---|---|---|---|
@@ -521,10 +457,8 @@ public static void preOrder(Node<Character> root) {
 
 ### Graph Algorithms
 
-- Topological Sort : Directed Acyclic Graph. If no vertices with in degree of 0 no topological sort
-- Running time O(V + E)
-
-***
+- Topological Sort - Directed Acyclic Graph. If no vertices with in degree of 0 no topological sort
+- Running time `O(V + E)`
 
 ## MVC
 
@@ -536,30 +470,9 @@ public static void preOrder(Node<Character> root) {
 ### Charts
 - Charts and tables are views
 - Numeric data are model
-- Controller -> A slider to adjust volume in a media player app
-- Model -> The MP3 file of a movie to be played in a media-player app
-- View -> The area of the media player app that actually displays video
-
-***
-
-### Synchronized
-
-```
-    public class SameClass {                        public class SomeClass {
-        synchronized static void foo() {}   ===         static void foo() {
-    }                                                       synchronized(SomeClass.class) {}
-                                                        }
-                                                     }
-
-
-    -------------------------------------------------------------------------------------------
-
-    public class SameClass {                  public class SomeClass {
-        synchronized void foo() {}   ===        void foo() {
-    }                                               synchronized(this) {}
-                                                }
-                                              }
-```
+- `Controller` - A slider to adjust volume in a media player app
+- `Model` - The MP3 file of a movie to be played in a media-player app
+- `View` - The area of the media player app that actually displays video
 
 ***
 
@@ -598,8 +511,8 @@ TimeUnit.SECONDS.sleep(1);
 
 ### 7. Ways to parse XML in Java
 
-- DOM : entire XML structure in tree.
-- SAX : parse line after line and triggers events while meet elements like open tag, close tag etc.
+- `DOM` - entire XML structure in tree.
+- `SAX` - parse line after line and triggers events while meet elements like open tag, close tag etc.
 
 ### 8. Iterate through enum values
 
@@ -626,7 +539,7 @@ for (Numbers n : Numbers.values()) {
 ### 10. Iterator and how it works
 
 - Mechanism to process elements in order.
-- Iterable<T> interface defines Iterator<T> iterator() method which returns an iterator, which can be used to visit all
+- `Iterable<T>` interface defines `Iterator<T> iterator()` method which returns an iterator, which can be used to visit all
 elements in collection.
 
 ### 11. How parallel streams works in Java?
@@ -650,8 +563,8 @@ elements in collection.
 
 ### 14. How map and filter works in Java
 
-- map : process data to stream
-- filter : argument of filter is Predicate<T>, function that converts T to boolean
+- map - process data to stream
+- filter - argument of filter is Predicate<T>, function that converts T to boolean
 
 ```java
 List<String> names = students.stream().map(student::getName).filter(name->name.startsWith("A"))
@@ -661,7 +574,7 @@ List<String> names = students.stream().map(student::getName).filter(name->name.s
 ### 15. How Optional works?
 
 - It helps work with null pointers.
-- OfNullable - create optional value if exists
+- ofNullable - create optional value if exists
 - ifPresent - is triggered when Optional is null
 
 ### 16. Default methods in interfaces.
@@ -900,83 +813,31 @@ public class BiggerAndSmaller {
 - Linear data structure
 - Flexible sizes
 
-```
-            | Q | U | E | U | E | S |
-
-            | S |
-            | T |
-            | A |
-            | C |
-            | K |
-            | S |
-```
-
 ### 29. Heap
 
-```
-                            | 2 |                       | 2 |
-                           /     \                      | 4 |
-                      | 4 |       | 8 |                 | 8 |
-                     /     \    10     \                | 9 |
-                | 9 |       | 7 |       | 9 |           | 7 |
-               /     \   13                             | 10|
-         | 15 |       | 10 |                            | 9 |
-                                                        | 15|
-                                                        | 10|
-                                                        | 13|
-
-                    | PARENT | (index - 2) / 2
-                        |
-                     | index |
-                    /         \
-            | LEFT |           | RIGHT |
-            index*2 + 1         index*2 + 2
-```
+![Heap](images/heap.png "Heap")
 
 ### 30. Tree
-
-```
-                ROOT
-               /    \
-            LEAF   CHILD
-                        \
-                        LEAF
-```
 
 - The binary TREE to 2 child nodes (left, right)
 - The binary tree
     - Left node is less than root node
     - Insert like find
-```
-                BALANCED                    UNBALANCED
-
-                     4                           1
-                   /   \                          \
-                  2     5                          2
-                /   \    \                          \
-               1      3    6                         3
-```
-
 - Balanced
-    - insert: O(log(N))
-    - find: O(log(N))
-- Unbalanced
-    - insert: O(N)
-    - find: O(N)
+    - insert: `O(log(N))`
+    - find: `O(log(N))`
+- Unbalanced (H height of tree)
+    - insert: `O(H)`
+    - find: `O(H)`
 
-```
-        TRAVERSING
-        INORDER                         PREORDER                    POSTORDER
-        left -> root -> right       root -> left -> right       left -> right -> root
-```
 
 ### 31. Big O Notation
 
 - Equation that describes how the run time change with respect to input
-    - 1. Different steps got added                    O(a + b)
-    - 2. Drop constants                               O(2N) => O(N)
-    - 3. Different inputs => different variables      O(a * b)
-    - 4. Drop non dominate terms                      O(N + N^2) => O(N^2)
+    - Different steps got added                    `O(a + b)`
+    - Drop constants                               `O(2N) => O(N)`
+    - Different inputs => different variables      `O(a * b)`
+    - Drop non dominate terms                      `O(N + N^2) => O(N^2)`
 
 ### 32. Algorithm efficiencies
 
@@ -996,7 +857,7 @@ public class BiggerAndSmaller {
 | remove, get, put, contains key | TreeMap | O(log(N)) |
 | add, remove, contains | TreeSet | O(log(N)) |
 
-- **Big O notation** is used to indicate time efficiencies, where n is the number of elements
+- **Big O notation** is used to indicate time efficiencies, where `n` is the number of elements
 
 | Notation | Description |
 |---|---|
@@ -1024,12 +885,7 @@ public class BiggerAndSmaller {
 
 ### 34. Garbage Collector
 
-```
-        Young generation    Old Generation      Permanent Generation
-        +-----------------+-----------------+---------------------------+
-        | Eden            | Tenured         | Perm                      |
-        +-----------------+-----------------+---------------------------+
-```
+![Garnage Collector](images/gc.png "Garbage Collector")
 
 - Permanent generation is used to store metadata. Store String pool also.
 - Types of Garbage collectors:
@@ -1051,7 +907,7 @@ public class BiggerAndSmaller {
 - Read only, no for creating XML
 - Event based parser
 - Faster and uses less memory than tree based processors
-- Push parser: pusher data into callback methods
+- Push parser - pusher data into callback methods
 - Works on Android
 - Entire document does not need to be put in memory
 - :star: One way impossible to parse from end to begin of document
@@ -1118,7 +974,7 @@ public class Dao1 {
 
 ### 38. Thread Local
 
-- Allow to build variables that can be saved and read through the same thread. Thus ever through two threads
+- Allow to build variables that can be saved and read through the same thread. Thus ever though two threads
 are executed the same code, and it has a reference to thread local, as a result both threads cannot see
 their ThreadLocal variables.
 
@@ -1133,7 +989,7 @@ String myThreadLocalValue = (String) myThreadLocal.get();
 
 - Objects are created on Heap
 - Class variables are on method area
-- Before destroy object from memory GC thread start finalize() method as a result needed cleanup operation can be executed.
+- Before destroy object from memory GC thread start `finalize()` method as a result needed cleanup operation can be executed.
 - Ergonomics to allow good performance JVM with minimal code lines to tuning.
 
 ### 40. When object is candidate to GC?
@@ -1160,8 +1016,8 @@ to Survivor2.
 
 - Web service description language.
     - Determines what is required in service
-    - How to consume and how to deliver then
-- definitions
+    - How to consume and how to deliver them
+- Definitions
     - types
     - binding
     - messages
@@ -1187,20 +1043,20 @@ to Survivor2.
 
 ### 45. HTTP errors protocols qualification
 
-- 1xx : information
-- 2xx : success 201 created, 200 OK, 204
-- 3xx : redirection
-- 4xx : client error, 404, 400, 403 forbidden, 401 unauthorized
-- 5xx : server error
+- `1xx` - information
+- `2xx` - success 201 created, 200 OK, 204
+- `3xx` - redirection
+- `4xx` - client error, 404, 400, 403 forbidden, 401 unauthorized
+- `5xx` - server error
 
 ### 46. SOLID
-- Single Responsible Principle : One class should have one and only one responsibility
-- Open closed principle : Software component should be open for extension, but closed for modification
-- Liskov substitution principle : Derived type must be completely substitutable for their base type
-- Interface segregation principle : Client should not be forced to implement unnecessary methods which they will not use
-- Dependency Inversion principle : Dependent on abstraction not on concretion
+- Single Responsible Principle - One class should have one and only one responsibility
+- Open closed principle - Software component should be open for extension, but closed for modification
+- Liskov substitution principle - Derived type must be completely substitutable for their base type
+- Interface segregation principle - Client should not be forced to implement unnecessary methods which they will not use
+- Dependency Inversion principle - Dependent on abstraction not on concretion
 
-### SOLID
+**SOLID**
 
 - Single Responsible Principle
     - Every class should have a single responsibility
@@ -1228,9 +1084,9 @@ to Survivor2.
 ### 47. ACID
 
 - Atomic
-- Consistency : data must follows validation rules
-- Isolation : concurrency control
-- Durability : committed transaction stays committed even in case of power loss
+- Consistency - data must follows validation rules
+- Isolation - concurrency control
+- Durability - committed transaction stays committed even in case of power loss
 
 ### 48. What is a primary key?
 
@@ -1297,12 +1153,12 @@ public class StackOverflowException {
 ### 58. BigO notation
 
 - What is a resource requirements as input of a problem gets larger
-    - Access to element in table : O(N)
-    - Access to element in sorted table : O(1)
-    - Access to element in hashTable : O(1)
-    - Access to element in tree (binary tree) : O(log(N)) or O(N)
-    - Quick Sort : O(N(log(N)))
-    - Bubble Sort : O(N^2)
+    - Access to element in table - `O(N)`
+    - Access to element in sorted table - `O(1)`
+    - Access to element in hashTable - `O(1)`
+    - Access to element in tree (binary tree) - `O(log(N))` or `O(N)`
+    - Quick Sort - `O(N(log(N)))`
+    - Bubble Sort - `O(N^2)`
 
 ###  59. Stability of sorting algorithm
 
@@ -1316,14 +1172,14 @@ panda would change position with other panda in even though of a fact that they 
 - Access to variable marked **volatile** is synchronized on the variable itself.
 - Variable marked as volatile are safe to use in different thread.
 - The default single thread is called the main thread
-- Command Pattern : Separates execution of an action from an action itself.
+- Command Pattern - Separates execution of an action from an action itself.
     - In Threading we define the action that we would like to new thread to undertake
 - The volatile keyword ensures a variable is never cached, and only read from main memory,
 and wraps the action in the body of an object that implements an interface with just one method.
 
 - Threads are controlled by process
-    - PROGRAM : PROCESS :: 1 : 1
-    - PROCESS : THREADS :: 1 : MANY
+    - PROGRAM : PROCESS - `1 : 1`
+    - PROCESS : THREADS - `1 : MANY`
     - CALLABLE
     - LOCK OBJECTS
     - EXECUTORS
@@ -1333,9 +1189,9 @@ and wraps the action in the body of an object that implements an interface with 
 
 ### Synchronization problems
 
-- Thread interference : Different thread access the same data
-- Memory consistency error : inconsistent value of variable
-- Thread contention : Threads get in each other way and slow down or even have to be killed by java
+- Thread interference - Different thread access the same data
+- Memory consistency error - inconsistent value of variable
+- Thread contention - Threads get in each other way and slow down or even have to be killed by java
     - starvation
     - livelock
     - deadlock
@@ -1348,8 +1204,8 @@ and wraps the action in the body of an object that implements an interface with 
 
 - It's a generic class that explicitly returns the thread results. Correctly passes exception from one thread to another.
 - Submit the callable to an Executor object and get a Future object as the result.
-- Future.cancel() interrupt operation midway
-- Future.get() to wait for the callable to finish running
+- `Future.cancel()` interrupt operation midway
+- `Future.get()` to wait for the callable to finish running
 
 | Old school | New school |
 |---|---|
@@ -1357,9 +1213,9 @@ and wraps the action in the body of an object that implements an interface with 
 | Thread class | Executors in build class |
 | Thread.join() | Future.get() |
 
-- Future<Integer> oneFuture = executor.submit(oneCallable);
+- `Future<Integer> oneFuture = executor.submit(oneCallable);`
 - To interrupt another thread, call the .interrupt() member function on that thread
-- Calling Future.cancel() is like calling thread.interrupt()
+- Calling `Future.cancel()` is like calling `thread.interrupt()`
 - Two ways for a thread to check if it has been interrupted
     - Catch an InterruptedException
     - Thread.interrupt() static method
@@ -1380,7 +1236,7 @@ and wraps the action in the body of an object that implements an interface with 
 ### Creating threads
 
 - extends Thread class
-- implements Runnable interface : a single Runnable instance can be processed to multiple thread objects.
+- implements Runnable interface - a single Runnable instance can be processed to multiple thread objects.
 
 ### Thread states
 
@@ -1409,21 +1265,21 @@ Enumerated Thread.state provides six thread states
 - interrupt()
 - isAlive()
 - isInterrupted()
-- join() : causes the thread that invokes this method to wait for the thread that this object represents to finish
+- join() - causes the thread that invokes this method to wait for the thread that this object represents to finish
 
 ### Common methods used for threads from the Object class
 
-- notify() : tells the thread to wake up and run
-- notifyAll() : Tells threads that are waiting on a thread or resource to wake up, and then the scheduler will
+- notify() - tells the thread to wake up and run
+- notifyAll() - Tells threads that are waiting on a thread or resource to wake up, and then the scheduler will
 select one of the thread to run
-- wait() : Pauses a thread in a wait state until another thread calls notify or notifyAll
+- wait() - Pauses a thread in a wait state until another thread calls notify or notifyAll
 - Common static methods used for threads from Thread class
     - activeCount()
     - concurrentThread()
     - interrupted()
     - sleep()
-- yield() : Pauses the current thread to allow other thread to run
-- Synchronization : Apply locks to blocks and methods. A lock is also known as monitor or mutex (mutually exclusive lock)
+- yield() - Pauses the current thread to allow other thread to run
+- Synchronization - Apply locks to blocks and methods. A lock is also known as monitor or mutex (mutually exclusive lock)
 
 ### Concurrent utilities
 
@@ -1466,28 +1322,31 @@ recovering memory from objects that no longer have reference to them.
 
 ### Serial GC
 
-- Is performed via a single thread on a single CPU. When this GC thread is run, the execution of the application
-will pause until the collection is completed. Small data setup up to 100 MB, no requirement for low pause time.
+- Is performed via a single thread on a single CPU.
+- When this GC thread is run, the execution of the application will pause until the collection is completed.
+- Small data setup up to 100 MB, no requirement for low pause time.
 
 ### Parallel Collector
 
-- Can be performed with multiple threads across several CPUs. Using those multiple threads significantly speeds up GC.
-No pause time constraints and app performance is the most important aspect of your program.
+- Can be performed with multiple threads across several CPUs.
+- Using those multiple threads significantly speeds up GC.
+- No pause time constraints and app performance is the most important aspect of your program.
 
 ### Parallel Compacting Collector
 
 - Similar to parallel Collector except for refined algorithms that reduce collection pause times.
-This collector is best used for apps that do have pause time constraints.
+- This collector is best used for apps that do have pause time constraints.
 
 ### Concurrent Mark Sweep Collector
 
 - CMS low latency collector, implements algorithm to handle large collections that might warrant long pauses.
-Use when response time take precedence over throughput times and GC pauses.
+- Use when response time take precedence over throughput times and GC pauses.
 
 ### Garbage-First G1 Collector
 
-- Is used for multiprocessor machines with large memories. This server-style GC meets pause time goal with
-high probability, while achieving high throughput. Whole heap operations (global marking) are performed
+- Is used for multiprocessor machines with large memories.
+- This server-style GC meets pause time goal with high probability, while achieving high throughput.
+- Whole heap operations (global marking) are performed
 concurrently with the app thread, which prevents interruptions proportional to the heap or live-data size.
 
 | Memory Management Tools | Description |
@@ -1507,7 +1366,7 @@ concurrently with the app thread, which prevents interruptions proportional to t
 - The heap is an area in memory that stores all objects created by executing Java program.
 - If you are having performance problems or seeing the Permanent Generation (PermGen) error message
     - java.lang.OutOfMemory, you may be running out of heap space.
-- **Metaspace** : Used for representation class metadata. Metaspace is a successor to PermGen model.
+- **Metaspace** - Used for representation class metadata. Metaspace is a successor to PermGen model.
 
 ***
 
@@ -1521,7 +1380,7 @@ concurrently with the app thread, which prevents interruptions proportional to t
 - Refactor
 - All jUnit test must be public void
 - Eliminating repeated code
-    - @Before - execute setup before unit test
+    - `@Before` - execute setup before unit test
 
 ### Mock
 

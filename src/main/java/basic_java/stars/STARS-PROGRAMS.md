@@ -187,8 +187,6 @@ public static double multiply(double x, double y) {
 
 ## :star: First non repeat character
 
-// Look at STREAMS.md frequency map
-
 ```java
 public class FirstNonRepeat {
     public char findCharacter(String testWord) throws Exception {
@@ -369,9 +367,9 @@ public static void mirror(Node<Integer> root) {
 
 ## :star: Match parenthesis
 
-- Match {[(
-- Ok example: {[]}()
-- Not ok: ))(({}
+- Match `{[(`
+- Ok example: `{[]}()`
+- Not ok: `))(({}`
 
 ```java
 public class MatchParenthesis {

@@ -1221,7 +1221,7 @@ minikube dashboard
 
 ***
 
-## Prod Deployment
+## Kubernetes Prod Deployment
 
 ```
 - Create Github Repo
@@ -1231,12 +1231,12 @@ minikube dashboard
 - Add deployment scripts to the repo
 ```
 
-### Google Cloud vs AWS for Kubernates
+### Google Cloud vs AWS for Kubernetes
 
 - Why Google Cloud ?
-    - Google created Kubernates!
-    - AWS got Kubernates support
-    - Easier to use Kubernates on Google Cloud
+    - Google created Kubernetes!
+    - AWS got Kubernetes support
+    - Easier to use Kubernetes on Google Cloud
     - Good documentation
 
 

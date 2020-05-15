@@ -1070,7 +1070,7 @@ System.out.println(Arrays.toString(result));
 ```
 
 - This example is purely illustrative. In practice, there won't be any speedup by using threads for a task this
-small. A slowdown is likely, since the overheads of task creation and scheduling will swamp the time taken to
+small. A slowdown is likely, since the overheads of task creation and scheduling will swap the time taken to
 run a task.
 - If you were using Java 7 and earlier, you would use anonymous classes instead of lambdas to implement the
 tasks.
@@ -2104,26 +2104,7 @@ type is inferred automatically by the return type.
 - Processing time for each core in a system is shared among processes and
   threads through an OS feature called time slicing.
 
-```
-+----------------------------------------------------------------------------+
-|           Process vs Threads                                               |
-+----------------------------------------------------------------------------+
-|   Process (JVM)       +----------+        +----------+        +----------+ |
-|                       | Thread 1 |        | Thread 2 |        | Thread 3 | |
-|                       +----------+        +----------+        +----------+ |
-|                       Stack |             Stack |             Stack |      |
-|                       +----------+        +----------+        +----------+ |
-|   Each thread has its +----------+        +----------+        +----------+ |
-|   own stack memory    | method1()|        | method1()|        | method1()| |
-|                       +----------+        +----------+        +----------+ |
-|                             |                   |                   |      |
-|                             |                   |                   |      |
-|   Single heap per     +--------------------------------------------------+ |
-|   process shared by   | Heap                                             | |
-|   all the threads     |       Object1                 Object2            | |
-|                       +--------------------------------------------------+ |
-+----------------------------------------------------------------------------+
-```
+![Process vs Thread](images/process-vs-threads.png "Process vs Thread")
 
 ### Processes
 

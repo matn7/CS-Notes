@@ -104,22 +104,22 @@ what happen then is that we got a negative integer after the overflow.
 
 ### ACID
 
-- Atomicity : Cannot stop in between.
-- Consistence : data should meet validation requirements.
-- Isolation : multithreading protection.
-- Durability : once committed transaction leave committed even after power loss.
+- `Atomicity` - Cannot stop in between.
+- `Consistence` - data should meet validation requirements.
+- `Isolation` - multithreading protection.
+- `Durability` - once committed transaction leave committed even after power loss.
 
 ### Optional<T> methods
 
-- orElse()
-- orElseGet()
-- orElseThrow()
-- ifPresent()
+- `orElse()`
+- `orElseGet()`
+- `orElseThrow()`
+- `ifPresent()`
 
 ## Rules that DB follows
 
-- Entity integrity : Every table has primary key.
-- Referential integrity : A foreign key points to value tat is a primary key of another table.
+- `Entity integrity` - Every table has primary key.
+- `Referential integrity` - A foreign key points to value tat is a primary key of another table.
 
 ### final
 
@@ -199,13 +199,13 @@ public class Main {
 - To declare side as not responsible for relationship the attribute **mapped by** is used.
 - A Business Key is also called natural key.
 - Synthetic identifier is an identifier with no business meaning.
-- Object states :
-    - TRANSIENT STATE : object don't associated with any table row.
-    - PERSISTENT STATE : object with database identity. Primary key is set of database identity.
-    - DETACHED : no longer manage by Entity Manager.
+- Object states:
+    - `TRANSIENT STATE` - object don't associated with any table row.
+    - `PERSISTENT STATE` - object with database identity. Primary key is set of database identity.
+    - `DETACHED` - no longer manage by Entity Manager.
 - No argument constructor for hibernate to be able to instantiate objects using Java Reflection.
 - Owner is the entity that is persisted to the table that has the foreign key column.
-- LazyInitializationException : When we try to Lazy Load data but entity manager is closed.
+- `LazyInitializationException` - When we try to Lazy Load data but entity manager is closed.
 
 | Hibernate | JPA |
 |---|---|
@@ -218,7 +218,7 @@ public class Main {
 | HashTable | HashMap |
 |---|---|
 | synchronized | not synchronized |
-| null key or values not allowed | Allows one NULL kay and any number of NUL values |
+| null key or values not allowed | Allows one null kay and any number of null values |
 | | Subclass is LinkedHashMap (maintain insertion order) |
 
 ### Optimistic Locking
@@ -232,25 +232,25 @@ When you've got multiple database queries being executed on the same data within
 ### ConcurrentHashMap
 
 - Provides thread safety and memory consistent atomic operations.
-- getOrDefault, forEach, replaceAll, computeIfPresent, computeIfAbsent, compute, merge.
+- `getOrDefault`, `forEach`, `replaceAll`, `computeIfPresent`, `computeIfAbsent`, `compute`, `merge`.
 - ConcurrentMap does not allow null key or value.
 
 ## Garbage collectors
 
-- Serial GC :
+- Serial GC:
     - One thread on single CPU.
     - Stop application execution.
     - Small apps up to 100MB, that do not have low pause time requirements.
-- Parallel GC :
+- Parallel GC:
     - Multiple threads on multiple CPU.
     - Faster GC through use multiple CPU.
     - Do not want to stop application, performance of application is key.
-- Parallel Compaction Collector :
+- Parallel Compaction Collector:
     - Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint.
-- Concurrent Mark-Sweep Collector CMS :
+- Concurrent Mark-Sweep Collector CMS:
     - CMS has algorithm which service big collections which results in long pauses.
     - Reply time is more important than throughput.
-- Garbage first G1 Collector :
+- Garbage first G1 Collector:
     - Multi processors machines with vast memory.
     - Server style GC, high time probability and high throughput.
     - Late heap operations Global Marking sre executed parallelly with application thread.
