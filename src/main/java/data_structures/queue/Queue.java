@@ -53,7 +53,8 @@ public class Queue<T> {
 
     // IS FULL
     public boolean isFull() {
-        int nextIndex = (tailIndex + 1) % elements.length; // when the queue is fill head index and tailIndex are right next to each others
+        // when the queue is fill head index and tailIndex are right next to each others
+        int nextIndex = (tailIndex + 1) % elements.length;
         return nextIndex == headIndex;
     }
 
