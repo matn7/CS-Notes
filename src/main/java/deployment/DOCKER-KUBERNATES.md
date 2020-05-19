@@ -18,6 +18,9 @@ docker run -it redis
 
 - Image - Single file with all the dependencies and config required to run a program.
 - Container - Instance of an image. Runs a program (running program).
+
+**Docker for Windows/Mac**
+
 - Docker Client CLI - Tool that we are going to issue commands to.
 - Docker Server (Docker Daemon) - Tool that is responsible for creating images, running containers etc.
 

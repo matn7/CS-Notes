@@ -231,6 +231,153 @@
     - Cloud HSM - Hardware Security Module Service.
     - Cloud Data Loss Prevention API - Classify, Redact Sensitive Data.
 
+## GCP Account
+
+**Free Trial Restrictions**
+
+- No more than 8 vCPU (total simultaneous).
+- No GPUs (video card chips).
+- No TPUs (custom chips for TensorFlow).
+- No Quota increases.
+- No crypto mining allowed.
+- No SLAs (Service Layer Agreement).
+- No premium OS licenses (e.g. Windows).
+- No Cloud Launcher products with extra usage fees.
+
+**Always Free**
+
+- Always Free usage does not count against your free trial credits.
+- Last beyond end of free trial.
+- 24/day of f1-micro runtime, in most US regions, only.
+- 28h/day of App Engine runtime, in North America.
+- 2M/month of Cloud Functions invocations (with runtime/size limits).
+
+**Always Free - Storage Highlights**
+
+- Storage averaged over month.
+- 5 GB of Regional Cloud Storage, including some operations.
+- 1 GB of Cloud Datastore storage, including some operations.
+- 10 GB of BigQuery storage, with 1 TB/month of query processing.
+- 30 GB HDD storage on GCE and AE.
+- 5 GB snapshot storage on GCE and AE.
+- 5 GB of StackDriver logs with 7 day retention.
+
+**Always Free - Networking Highlights**
+
+- Egress to China and Australia not free!
+- 1 GB/month of App Engine data egress.
+- 1 GB/month of Compute Engine data egress.
+- 5 GB/month of egress by Cloud Function invocations.
+- 5 GB/month of egress from Cloud Storage based in North America.
+- 10 GB/month of Cloud PubSub messages.
+
+**Always Free - Other**
+
+- 120 build-minutes/day of Google Cloud Container Builder.
+- 60 minutes/month of Google Cloud Speech API recognition from audio/video.
+- 1000 units/month of Cloud Vision API calls.
+- 5000 units/month Google Cloud Natural Language API.
+- Google Cloud Shell with 5 GB of persistent disk storage quota.
+- 1 GB of Google Cloud Source Repositories private hosting.
+
+**Least Privilege**
+
+```
+Every program and every privileged user of the system should operate using the least amount of privilege
+necessary to complete the job.
+```
+
+- Very Bad Habit to run with admin for normal activities.
+- Admin account with billing access very rarely needed.
+
+**Incognito Mode**
+
+- Called "Incognito Window" in Chrome.
+- Called "Private Browsing" in Firefox.
+
+**Billing Export**
+
+```
+Tools for monitoring, analyzing and optimizing cost have become an important part of managing development. Billing
+export to BigQuery enables you to export your daily usage and cost estimates automatically throughout the day
+to a BigQuery dataset you specify. You can then access your billing data from BigQuery.
+```
+
+**Recap**
+
+- Export must be set up per billing account.
+- Resources should be placed into appropriate projects.
+- Resources should be tagged with labels.
+- Billing exports is not real-time:
+    - Delay is hours.
+
+### Billing Alerts
+
+```
+To help you with project planning and controlling costs, you can set a budget. Setting a budget lets you track
+how your spend is growing toward that amount.
+
+You can apply a budget to either a billing account or a project, and you can set the budget at a specific amount
+or match it to the previous month's spend. You can also create alerts to notify billing administrators when
+spending exceeds a percentage of your budget.
+```
+
+**Billing IAM**
+
+- Role - Billing Account User.
+- Purpose - Link projects to billing accounts.
+- Level - Organization or billing account.
+- Use Case - This role has very restricted permissions, so you can grant it broadly, typically in combination with
+Project Creator. These two roles allow a user to create new projects linked to the billing account on which the
+role is granted.
+
+## Cloud Shell and Data Flow
+
+### Cloud Shell and Editor
+
+```
+Google Cloud Shell provides you with command-line access to your cloud resources directly from your browser.
+You can easily manage your projects and resources without having to install the Google Cloud SDK or other
+tools on your system. With Cloud Shell, the Cloud SDK gcloud command-line tool and other utilities you need
+are always available, up to data and fully authenticated when you need.
+```
+
+**Highlights**
+
+- Web browser access:
+    - No need for local terminal:
+        - Chromebook
+        - No PuTTY!
+    - Automatic SSH key management.
+- 5 GB of persistent storage.
+- Easy-access to pre-installed tools.
+    - gcloud, bq, kubectl, docker, npm/node, pip/python, ruby, vim, emacs, bash, etc.
+- Pre-authorized and always up-to-date.
+- Web preview of web app running on local port.
+
+**Cloud shell**
+
+> gcloud config set project - change to different project.
+
+```console
+pwd
+> /home/matn7
+
+cd ~
+
+cat README-cloudshell.txt
+# download file
+dl README-cloudshell.txt
+
+# Run on cloud localhost
+node hello.js
+# > Web Preview > Preview on port 8080
+nodemon hello.js
+
+```
+
+---
+
 ## Security
 
 ```

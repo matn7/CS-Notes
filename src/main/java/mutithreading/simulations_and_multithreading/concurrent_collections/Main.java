@@ -1,4 +1,4 @@
-package mutithreading.simulations_and_multithreading.concurrent_collections.concurrent_map;
+package mutithreading.simulations_and_multithreading.concurrent_collections;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
