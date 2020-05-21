@@ -373,8 +373,185 @@ dl README-cloudshell.txt
 node hello.js
 # > Web Preview > Preview on port 8080
 nodemon hello.js
-
 ```
+
+### Data Flow
+
+- Data Flows are Everything.
+- Learn to identify and control data flow.
+
+**Three core concepts**
+
+- Moving - Network
+- Processing - Compute
+- Remembering - Storage
+
+**Mental Models**
+
+- A simplified representation of reality.
+- Used to anticipate events or draw conclusions.
+- Systems combine:
+    - Build larger systems out of smaller ones (abstractions).
+    - Zooming in and out.
+
+**Key Takeaways**
+
+- Data flows are the foundation of every system.
+- Moving, Processing, Remembering:
+    - Not just Network, Compute, Storage.
+- Build mental models:
+    - Helps you make predictions.
+- Identify and think through data flows:
+    - Highlight potential issues.
+- Requirements and options not always clear.
+
+### Google Cloud Storage
+
+```console
+gsutil mv -p gs://storage-lab-console-panda/README-cloudshell.txt gs://storage-lab-console-panda/README-cloudshell.txt
+```
+
+**Google Cloud storage via command line**
+
+```console
+gcloud config list
+```
+
+- gsutil - command line tool to connect to google cloud storage.
+
+```console
+gsutil ls
+gsutil ls gs://storage-lab
+
+# create bucket
+gsutil mb --help
+gsutil mb -l northamerics-northeast1 gs://storage-lab-cli
+
+# labels
+gsutil label get gs://storage-lab-console/ > bucketlabels.json
+# change label
+gsutil label ch -l "extralabel:extravalue" gs://storage-lab-cli
+
+gsutil versioning get gs://storage-lab-cli/
+gsutil versioning set on gs://storage-lab-cli/
+gsutil ls gs://storage-lab-cli/
+
+# copy to other bucket
+gsutil cp README.txt gs://storage-lab-cli/
+
+# info about object versioning
+gsutil ls -a gs://storage-lab-cli/
+
+# remove
+gsutil rm gs://storage-lab-cli/README.md
+
+# copy from bucket to bucket
+gsutil cp gs://storage-lab-console/** gs://storage-lab-cli/
+gsutil ls gs://storage-lab-cli/
+
+# share object
+gsutil acl ch -u AllUsers:R gs://storage-lab-cli/Selfie.jpg
+```
+
+**Google Compute Engine Setup**
+
+```console
+# check project
+gcloud config get-value project
+
+# check running vms (Compute Engine API)
+gcloud compute instances list
+gcloud services list
+gcloud services list -h
+gcloud services list --enabled
+gcloud services list --available | grep compute
+gcloud services list
+
+# create vm
+gcloud compute instances create myvm
+
+# delete vm
+gcloud compute instances delete myvm
+
+gcloud compute instances list
+```
+
+**Rundown on gcloud**
+
+- Command-line tool to interact with GCP.
+- Best friends with "gsutil" and "bq":
+    - All share same configuration set via "gcloud config".
+    - "gsutil" could have been "gcloud storage".
+    - "bq" could have been "gcloud bigquery".
+- In general - more powerful than console but less powerful than REST API.
+- Alpha and Beta versions available via "gcloud alpha" and "gcloud beta":
+    - `gcloud beta billing accounts list`
+    - `gcloud beta billing projects link my-project --billing-account 0X0X0X-0X0X0X-0X0X0X`
+
+**Basic Syntax**
+
+> gcloud <global flags> <service/product> <group/area> <command> <flags> <parameters>
+
+- Always drill down (from left to right).
+- Examples:
+    - `gcloud --project myproject compute instances list`
+    - `gcloud --project=myproject compute instances list`
+    - `gcloud compute instances create myvm`
+    - `gcloud services list --available`
+    - `gsutil ls`
+    - `gsutil mb -l northamerica-northeast1 gs://storage-lab-cli`
+    - `gsutil label set bucketlabels.json gs://storage-lab-cli/`
+
+**Global Flags**
+
+- `--help`
+- `-h`
+- `--project <ProjectID>`
+- `--account <Account>`
+- `--filter`:
+    - Not always available, but often better than using grep.
+- `--format`:
+    - Can choose JSON, YAML, CSV, etc.
+    - Can pipe ("|") JSON to "jq" command for further processing.
+- `--quiet (or -q)` - no prompt to confirm actions.
+
+**Config Properties**
+
+- Values entered once and used by any command that needs them.
+- Can be overridden on a specific command with corresponding flag.
+- Used very often for account, project, region and zone:
+    - Set "core/account" or "account" to replace "--account".
+    - Set "core/project" or "project" to replace "--project".
+    - Set "compute/region" to replace "--region".
+    - Set "compute/zone" to replace "--zone".
+- Set with - `gcloud config set <property> <value>`
+- Check with - `gcloud config get-value <property>`
+- Clear with - `gcloud config unset <property>`
+
+**Configurations**
+
+- Can maintain groups of settings and switch between them.
+- Most useful when using multiple projects.
+- Interactive workflow to set common properties in a config with - `gcloud init`.
+- List all properties in a configuration with - `gcloud config list`.
+- List all configurations with - `gcloud config configurations list`:
+    - IS_ACTIVE columns shows which one is currently being used.
+    - Other columns list account, project, region, zone and the name of the config.
+- Make new config with - `gcloud config configurations create ITS_NAME`.
+- Start using config with - `gcloud config configurations activate ITS_NAME`:
+    - Or use for just one command with `--configuration=ITS_NAME`.
+
+**Configurations Analogy**
+
+| Action | Directory | Configuration |
+|---|---|---|
+| Make New | mkdir newdir | gcloud config configurations create newconfig |
+| Switch To | cd newdir | gcloud config configurations activate newconfig |
+| List Contents | ls | gcloud config list |
+| List Non-Active | ls ~/newdir | gcloud --configuration=newconfig config list |
+| | | gcloud config configurations describe newconfig |
+
+
 
 ---
 
@@ -822,7 +999,7 @@ reclaimPolicy: Retain
 
 **RBAC and Admission Control**
 
-![Kubernates Security](images/kubernates-sec.png "Kubernetes Security")
+![Kubernetes Security](images/kubernates-sec.png "Kubernetes Security")
 
 - Some cluster open an insecure local port!
 - Bypasses authN and authZ!

@@ -12,12 +12,12 @@ public class Book {
 }
 ```
 
-Objects leave beyond the scope of JVM **Object persistence**.
-The state of an object can be saved to a data store, and re-created at a later point in time.
+- Objects leave beyond the scope of JVM **Object persistence**.
+- The state of an object can be saved to a data store, and re-created at a later point in time.
 
 ## Relational Database
 
-A database that represents data in a table like format.
+- A database that represents data in a table like format.
 
 ```java
 public class Book {
@@ -28,8 +28,8 @@ public class Book {
 }
 ```
 
-Database management system designed to manage data in a relational DB.
-Structured Query Language SQL is a language used to manage data in Relational Database Management System (RDBMS)
+- Database management system designed to manage data in a relational DB.
+- Structured Query Language SQL is a language used to manage data in Relational Database Management System (RDBMS).
 
 ```sql
 CREATE TABLE BOOK(
@@ -39,18 +39,18 @@ CREATE TABLE BOOK(
     PRIMARY KEY (ID)
 ```
 
-- **primary key** : no duplicate or null values allowed in this column
-- **foreign key** : value of this column must match a value in the primary key of another table
-
-- :star: Rules that Relational Database follows
+- **primary key** : no duplicate or null values allowed in this column.
+- **foreign key** : value of this column must match a value in the primary key of another table.
+- :star: Rules that Relational Database follows:
     - **Entity Integrity** : Every table has a primary key.
-    - **Referential Integrity** : A foreign key points at a value that is the primary key of another table. Null value are valid for FK.
+    - **Referential Integrity** : A foreign key points at a value that is the primary key of another table.
+    Null value are valid for FK.
 
 ## Object Model and Relational Model
 
-- Object Model - Object oriented language (e.g. Java)
-- Relational Model - RDBMS (e.g. MySQL)
-- **Object Model**: uses principles of
+- Object Model - Object oriented language (e.g. Java).
+- Relational Model - RDBMS (e.g. MySQL).
+- **Object Model** - uses principles of:
     - Abstraction
     - Polymorphism
     - Encapsulation
@@ -58,65 +58,67 @@ CREATE TABLE BOOK(
     - Modularity
     - Persistence
 - Object is an instance of a class. It has identity, state and behavior.
-- **Relational Model**
-    - Structure of data
-    - Data Manipulation
-    - Data Integrity
-    - Data are organized in form of tables
+- **Relational Model**:
+    - Structure of data.
+    - Data Manipulation.
+    - Data Integrity.
+    - Data are organized in form of tables.
 
 ## Object Relational Impedance Mismatch
 
-Loading or storing graphs of objects using a relational database causes mismatch problem.
-Object Relational Impedance Mismatch (Paradigm Mismatch).
-Object Model and Relational Model do not work well together.
+- Loading or storing graphs of objects using a relational database causes mismatch problem.
+- Object Relational Impedance Mismatch (Paradigm Mismatch).
+- Object Model and Relational Model do not work well together.
 
-**Granurality** <br/>
-Granurality is the extent to which a system could be broken down into small parts.
+**Granularity**
+
+- Granularity is the extent to which a system could be broken down into small parts.
 
 
 |   | Object Model  | Relational Model  |
 |---|---|---|
-| Granurality | Various level of granurality | 2 levels of granurality |
+| Granularity | Various level of granularity | 2 levels of granularity |
 | Inheritance | YES | NO |
 | Identity | object identity (foo == bar), object equality (foo.equals(bar)) | Primary key |
 | Associations | Object reference | Foreign key, fk associations are not directional |
 | Data Navigation | foo.getBar().getY() | SQL Join Query |
 
-## Object Relational Maping
+## Object Relational Mapping
 
 ### Problems
 
-- Too many SQL statements
-- Too Many Copy Codes
-- Manually handled associations
-- Database Dapendent
+- Too many SQL statements.
+- Too Many Copy Codes.
+- Manually handled associations.
+- Database Dependent.
 
 ### ORM (Object Relational Mapping)
 
-Object Relational Mapping refers to the technique of mapping the representation of data from Java Objects to Relational Database.
-ORM allows you use Java Objects as representation of a Relational Database.
-
-Mapping between the Plain Old Java Objects (POJOs) and Relational Database. **XML** or **Annotations**
-
-Advantage of the features present in the Object Model (Java) and the Relational Model (RDBMS).
-**Hides the complexity of SQL and JDBC**
+- Object Relational Mapping refers to the technique of mapping the representation of data from Java Objects to
+Relational Database.
+- ORM allows you use Java Objects as representation of a Relational Database.
+- Mapping between the Plain Old Java Objects (POJOs) and Relational Database. **XML** or **Annotations**.
+- Advantage of the features present in the Object Model (Java) and the Relational Model (RDBMS).
+- **Hides the complexity of SQL and JDBC**
 
 ## Hibernate
 
-Object relational mapping framework which is used to map Java objects to relational database. It allows us to specify configuration
-to use to connect to the DB and to specify the way Java object should be mapped to the tables in that database.
-Java objects as representation of data.
+- Object relational mapping framework which is used to map Java objects to relational database.
+- It allows us to specify configuration to use to connect to the DB and to specify the way Java object
+should be mapped to the tables in that database.
+- Java objects as representation of data.
 
 ## Hibernate + JPA Hello World
 
-**Session** <br/>
-Hibernate provides session object that represents a **conversation between an application and database**.
-Use session object to persist a state of object into table.
-<br/>
-Configuration   :arrow_backward:    SessionFactory  :arrow_backward:    **Session**
-<br/>
-**Configuration** <br/>
-Configuration to build SessionFactory
+**Session**
+
+- Hibernate provides session object that represents a **conversation between an application and database**.
+- Use session object to persist a state of object into table.
+- Configuration   :arrow_backward:    SessionFactory  :arrow_backward:    **Session**
+
+**Configuration**
+
+- Configuration to build `SessionFactory`.
 
 **hibernate.cfg.xml**
 
@@ -132,13 +134,12 @@ Configuration to build SessionFactory
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <!-- SQL to stdout --->
         <property name="show_sql">true</property>
-
         <mapping resource="domain/Message.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
 ```
 
-:star: **Building session factory is resource intensive process. 1 Session Factory for 1 database.**
+- :star: **Building session factory is resource intensive process. 1 Session Factory for 1 database.**
 
 ### Building Session Factory
 
@@ -167,7 +168,7 @@ public class HibernateUtil {
 }
 ```
 
-- Object relational mapping metadata : information in mapping file Message.hbm.xml.
+- Object relational mapping metadata - Information in mapping file Message.hbm.xml.
 
 **HelloWorld.java**
 
@@ -237,42 +238,43 @@ log4j.logger.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 ```java
 // ...
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    Transaction transaction = session.getTransaction();
-    try {
-        transaction.begin();
-        // Save, finding, updating, deleting objects
-        transaction.commit();
-    } catch (Exception e) {
-        if (transaction != null) {
-            transaction.rollback(); // Catch exception rollback transaction
-        }
-    } finally {
-        if (session != null) {
-            session.close(); // if active session close it
-        }
+Session session = HibernateUtil.getSessionFactory().openSession();
+Transaction transaction = session.getTransaction();
+try {
+    transaction.begin();
+    // Save, finding, updating, deleting objects
+    transaction.commit();
+} catch (Exception e) {
+    if (transaction != null) {
+        transaction.rollback(); // Catch exception rollback transaction
     }
-
+} finally {
+    if (session != null) {
+        session.close(); // if active session close it
+    }
+}
 ```
 
-**Transactions** <br/>
-A transaction is a group of operations that are run as a single unit of work.
+**Transactions**
 
-    start transaction;
+- A transaction is a group of operations that are run as a single unit of work.
 
-    delete from user where id=47899;
-    insert into shopping_cart(id, value) values (65, 'black jacket');
+```
+start transaction;
 
-    commit; // commit any changs made in this transaction
+delete from user where id=47899;
+insert into shopping_cart(id, value) values (65, 'black jacket');
+
+commit; // commit any changes made in this transaction
 
 
-    start transaction;
+start transaction;
 
-    delete from user where id=47899;
-    insert into shopping_cart(id, value) values (65, 'black jacket');
+delete from user where id=47899;
+insert into shopping_cart(id, value) values (65, 'black jacket');
 
-    rollback; // rollback any changs made in this transaction
-
+rollback; // rollback any changes made in this transaction
+```
 
 ### Finding Objects
 
@@ -356,8 +358,8 @@ public class HelloWorld {
 
 ### Entity Class
 
-:star: Why use **default constructor** <br>
-No argument constructor, for hibernate to be able to instantiate objects using Java reflection
+- :star: Why use **default constructor**
+    - No argument constructor, for hibernate to be able to instantiate objects using Java reflection.
 
 **HelloEntity.java**
 
@@ -383,23 +385,24 @@ public class HelloEntity {
 
 ### Aggregation
 
-Aggregation indicates a relationship between a whole and its parts.
-A class is made up of students.
-If class is broken, students are not broken.
-In aggregation relationship, when the whole is destroyed, its parts are not destroyed with it.
+- Aggregation indicates a relationship between a whole and its parts.
+- A class is made up of students.
+- If class is broken, students are not broken.
+- In aggregation relationship, when the whole is destroyed, its parts are not destroyed with it.
 
 ### Composition
 
-Composition is a strong form of aggregation. Each part may belong to only one whole (no sharing).
-Room in house.
-In a composition relationship, when the whole is destroyed its parts are also destroyed with it.
-**ValueTypes** is form of composition.
+- Composition is a strong form of aggregation.
+- Each part may belong to only one whole (no sharing).
+- Room in house.
+- In a composition relationship, when the whole is destroyed its parts are also destroyed with it.
+- **ValueTypes** is form of composition.
 
 ## Entities and Value Types
 
-Do all persistence class have their own database identity (primary key value?)
+- Do all persistence class have their own database identity (primary key value?)
 
-USERS
+**USERS**
 
 | ID | Name  | Street | City | ZipCode | Billing_street | Billing_city | Billing_zipcode |
 |---|---|---|---|---|---|---|---|
@@ -445,24 +448,23 @@ public class Address {
 }
 ```
 
-- An object of **entity** type **has its own database identity (primary key).**
+- An object of **entity** type **has its own database identity (primary key)**.
 - An object of **value type** has **no database identity (primary key)** it belongs to an entity.
 - Value type objects are identified through owning entity.
 - The lifecycle of a **value type** object is bound to that of its owning **entity** object.
 - Classes like String and Integer are most simple **value type** classes.
 - Does the database identity of an object matters?
-    - Enity yes
-    - Value Types no
-- Do all persistent classes have their own database identity (primary key)
-    - No
+    - Entity yes.
+    - Value Types no.
+- Do all persistent classes have their own database identity (primary key) - No.
 
 ## Component Mapping
 
-A component is a part of whole in such a way that if the whole is destroyed, all its parts are also destroyed with it.
-E.g. your room in your house.
-Each component (part) may belong to only one whole.
-The term "component" refers to the object-oriented notion of composition.
-A component is a contained object that is persisted as **value type**.
+- A component is a part of whole in such a way that if the whole is destroyed, all its parts are also destroyed with it.
+- E.g. your room in your house.
+- Each component (part) may belong to only one whole.
+- The term "component" refers to the object-oriented notion of **composition**.
+- A component is a contained object that is persisted as **value type**.
 
 ```java
 @Entity
@@ -486,7 +488,7 @@ public class PersonEntity {
 }
 ```
 
-A component has no individual identity
+- A component has no individual identity.
 
 ```java
 @Embeddable
@@ -542,11 +544,9 @@ public class HelloWorld {
 }
 ```
 
-:one: <br/>
-Hibernate uses reasonable default values not only for XML-based mapping metadata, but also for annotation based metadata.
-
-:two: <br/>
-**hibernate.cfg.xml**
+- :one: - Hibernate uses reasonable default values not only for XML-based mapping metadata, but also for
+annotation based metadata.
+- :two: - **hibernate.cfg.xml**.
 
 ```xml
 <!-- Create, update database tables automatically using mapping metadata -->
@@ -554,43 +554,18 @@ Hibernate uses reasonable default values not only for XML-based mapping metadata
 ```
 
 ```java
-@AttributeOverride({@AttributeOverride(name="street", column=@Column(name="billing_street")}), })
+@AttributeOverride({@AttributeOverride(name="street", column=@Column(name="billing_street")}), ... })
 ```
 
 ## Mapping Associations
 
 ### `@ManyToOne`
 
-**Many side**
-
-| Student |
-|---|
-| id: Long |
-| enrId: String |
-| name: String |
-
-**One Side**
-
-| Guide |
-|---|
-| id: Long |
-| staffId: String |
-| name: String |
-| salary: Integer |
+![Many to One](images/many-to-one.png "Many to One")
 
 Each **Student** has a **Guide**
 
-**Student**
-
-| id :key: | enr_id | name | quide_id |
-|---|---|---|---|
-
-**Guide**
-
-| id :key: | staff_id | name | salary |
-|---|---|---|---|
-
-**Guide.java**
+![Many to One](images/many-to-one-table.png "Many to One")
 
 ```java
 @Entity
@@ -651,10 +626,9 @@ public class Student {
 session.persist(student);
 ```
 
-Cascading the **PERSIST** operation
-
-**CascadeType.PERSIST** <br/>
-session.persist(student) - persist the whole object graph of Student
+- Cascading the **PERSIST** operation.
+- **CascadeType.PERSIST**
+- `session.persist(student)` - persist the whole object graph of Student.
 
 **Student.java**
 
@@ -706,8 +680,8 @@ public class HelloWorld {
 }
 ```
 
-**CascadeType.REMOVE** <br/>
-session.delete(student) - deletes the whole object graph of Student
+- **CascadeType.REMOVE**
+- `session.delete(student)` - deletes the whole object graph of Student.
 
 **Student.java**
 
@@ -768,12 +742,10 @@ public class Student {
 }
 ```
 
-If the association is **bidirectional**, one of the side (and only one) has to be the **owner** ot the relationship.
-The **owner** of the relationship is responsible for association (columns) update.
-
-**Many** side in a One-To-Many bi-directional relationship is almost always the **owner** side.
-
-- **Owner** cares about relationship
+- If the association is **bidirectional**, one of the side (and only one) has to be the **owner** ot the relationship.
+- The **owner** of the relationship is responsible for association (columns) update.
+- **Many** side in a One-To-Many bi-directional relationship is almost always the **owner** side..
+- **Owner** cares about relationship.
 - **Owner** is the entity that is persisted to the table that has the **foreign key** column.
 
 
@@ -810,8 +782,8 @@ public class Passport {
 }
 ```
 
-:star: To declare a side as not responsible for the relationship, the attribute **mappedBy** is used.
-The owner of the relationship is responsible for the association columns updates.
+- :star: To declare a side as not responsible for the relationship, the attribute **mappedBy** is used.
+- The owner of the relationship is responsible for the association columns updates.
 
 ## Many to Many Relationship
 
@@ -862,7 +834,7 @@ public class Author {
 }
 ```
 
-To declare side as not responsible for the relationship, the attribute **mappedBy** is used.
+- To declare side as not responsible for the relationship, the attribute **mappedBy** is used.
 
 **hibernate.cfg.xml**
 
@@ -882,20 +854,13 @@ private Set<Book> books  = new HashSet<>();
 
 ```java
 @ManyToMany
-@JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
+@JoinTable(name = "author_book",
+    joinColumns = @JoinColumn(name = "book_id"),
     inverseJoinColumns = @JoinColumn(name = "author_id"))
 private Set<Author> authors = new HashSet<>();
 ```
 
-```
-+----+-------+            +---------+-----------+           +----+------+
-| ID | TITLE |            | BOOK_ID | AUTHOR_ID |           | ID | NAME |
-+----+-------+            +---------+-----------+           +----+------+
-| 3  | AABBC |            | 3       | 2         |           | 2  | Mike |
-+----+-------+            +---------+-----------+           +----+------+
-| 5  | CDDEE |            | 5       | 4         |           | 4  | John |
-+----+-------+            +---------+-----------+           +----+------+
-```
+![Many to Many Relationship](images/many-to-many-rel.png "Many to Many Relationship")
 
 ## Mapping Enums
 
@@ -984,26 +949,9 @@ System.out.println(employee);
 | email: String |
 | nickNames: Collection<String> |
 
-name : "Majki"
-email: "majki@maki.com" <br/>
-nicknames               :arrow_right:       {0, :arrow_right: Majko
-                                             1, :arrow_right: Maki
-                                             2} :arrow_right: Mak
+![Mapping Collection](images/mapping-collection.png "Mapping Collection")
 
-**Friend_nickname** Collection table
-
-| :key: nickname | friend_id |
-|---|---|
-| Majko | 1 |
-| Maki | 1 |
-| Mak | 1|
-
-**Friend**
-
-| :key: id | name | email |
-|---|---|---|
-| 1 | Majki | majki@maki.com |
-
+![Mapping Collection Table](images/mapping-collection-table.png "Mapping Collection Table")
 
 ```java
 @Entity
@@ -1065,24 +1013,15 @@ ALTER TABLE friend_nickname ADD PRIMARY_KEY(friend_id, nickname);
 
 ### Composite Primary Key
 
-A combination of more than 1 table column that identifies the uniqueness of a record (database table row)
+- A combination of more than 1 table column that identifies the uniqueness of a record (database table row).
 
 | :key: firstname | :key: lastname |
 |---|---|
 | | |
 
-```
-    ------------------------------------------------------------------------------
-    address of parent1 in heap memory           Address of parent2 in heap memory
+![Composite Key](images/composite-key.png "Composite Key")
 
-    a47ex0x71                                   b89q3a87
-    ---------                                   --------
-    firstname: Paul                             firstname: Paul
-    lastname: Sharp                             lastname: Sharp
-    ----------------------------| Java Memory Heap |-------------------------------
-```
-
-No matter how good or natural a composite primary key is, it is **not recommended for uniquely identyfying a record**
+- No matter how good or natural a composite primary key is, it is **not recommended for uniquely identifying a record**.
 
 ```java
 @Entity
@@ -1139,7 +1078,7 @@ public class HelloWorld {
         Transaction transaction = session.getTransaction();
         try {
             transaction.begin();
-            // persistiog
+            // persisting
             ParentPrimaryKey parentPrimaryKey = new ParentPrimaryKey("Gavin", "Gibson");
             Parent parent = new Parent(parentPrimaryKey);
 
@@ -1159,11 +1098,9 @@ public class HelloWorld {
 }
 ```
 
-Not only composite key even **business key (e.g. ISBN)** are not recommended for uniquely identify a record.
-
-A Business key is also called **Natural key**
-
-A business key is not just a unique identifier but it also has a business meaning associated with it.
+- :star: Not only composite key even **business key (e.g. ISBN)** are not recommended for uniquely identify a record.
+- A Business key is also called **Natural key**.
+- A business key is not just a unique identifier but it also has a business meaning associated with it.
 
 ```java
 @Entity
@@ -1189,11 +1126,11 @@ public class Person {
 }
 ```
 
-**A synthetic** identifier is an identifier with no **business meaning**
+- **A synthetic** identifier is an identifier with no **business meaning**.
 
 ### Composite Foreign Key
 
-Composite foreign key are defined on associations using @JoinColumns.
+- Composite foreign key are defined on associations using `@JoinColumns`.
 
 ```java
 @Entity
@@ -1218,8 +1155,8 @@ public class Child {
 
 ## JPA (Java Persistence Api)
 
-JPA is a Java specification for accessing, persisting and managing data between Java objects and a relational database.
-JPA provides guidlines that a framework can implement to be considered JPA capable.
+- JPA is a Java specification for accessing, persisting and managing data between Java objects and a relational database.
+- JPA provides guidelines that a framework can implement to be considered JPA capable.
 
 **JPA Api**
 
@@ -1248,28 +1185,12 @@ public class HibernateJPAProviderImpl implements JPA {
 }
 ```
 
-```
-        Hibernate
-
-        +-------------+
-        | Java        |
-        | Persistence |
-        | API         |
-        +-------------+
-```
+![Hibernate](images/hibernate.png "Hibernate")
 
 In addition to it's own **"native"** API, Hibernate is also an implementation of
 Java Persistence API (JPA) specification.
 
-```
-                    Application
-                        |
-                        JPA
-                        |
-               +--------+--------+
-               |        |        |
-           Hibernate  OpenJPA  EclipseLink
-```
+![JPA Providers](images/jpa-providers.png "JPA Providers")
 
 ## Hibernate as JPA Provider
 
@@ -1365,25 +1286,19 @@ EntityManager em = emf.createEntityManager();
 em.getTransaction().begin();
 
 Message message = new Message("Hello"); // Transient state
-
 em.persist(message);    // persistent state - bound to session
-
 em.getTransaction().commit();
 
 em.close(); // once em is closed the message object becomes detached
-
 message.setText("Hello"); // detached
-
 ```
 
-- :star: object states
-    - Transient state - object does not associated with any table row
+- :star: object states:
+    - Transient state - object does not associated with any table row.
     - Persistent - object with database identify. Primary key is set as database identifier.
-    - Detached - no longer managed by EntityManager. setText will only change state in JVM memory.
-
-
-An EntityManager has a persisting context = **first level cache**
-A **cache** is a copy of data meaning pulled from but living outside the database
+    - Detached - no longer managed by EntityManager. `setText` will only change state in JVM memory.
+- An EntityManager has a persisting context = **first level cache**.
+- A **cache** is a copy of data meaning pulled from but living outside the database.
 
 ```java
 EntityManager em2 = emf.createEntityManager();
@@ -1395,12 +1310,12 @@ em2.getTransaction().commit();
 em2.close();
 ```
 
-**The merge** copies all values to a persistence instace in the session. The merge will work fine when the same object
-exists in the session.
+- **The merge** copies all values to a persistence instance in the session.
+- The merge will work fine when the same object exists in the session.
 
 ## Caching Objects
 
-A code is a copy of data, copy meaning pulled from but living outside database.
+- A code is a copy of data, copy meaning pulled from but living outside database.
 
 ```java
 public class HelloWorldClient {
@@ -1428,58 +1343,27 @@ where
     message0_.ID=?
 ```
 
-```
-    +----------+     +----------------------------------------+
-    | Client   |     |  +---------------------------------+   |
-    |          |     |  | +-------+                       |   |  Database Connection
-    | message1 +<----+--+-+ 8L    |                       +<--+-----------------------| DB |
-    | message2 +<----+--+-+ Hello |                       |   |
-    |          |     |  | +-------+                       |   |
-    +----------+     |  | Message Object    EntityManager +---+----> Persistence Context
-                     |  +---------------------------------+   |         (and therefore cache)
-                     |      JVM                               |
-                     +----------------------------------------+
-```
+![First Level Cache](images/first-level-cache.png "First Level Cache")
 
-EntityManager == first level cache <br/>
-EntityManager 2 caches, hibernate does not cache persistence objects across 2 entity managers.
-
-**Second-level-cache** - cache entity manager factory <br/>
-**First level cache** - scope EntityManager </br>
-**Second level cache** - scope EntityManagerFactory <br/>
+- EntityManager - first level cache.
+- EntityManager - 2 caches, hibernate does not cache persistence objects across 2 entity managers.
+- **Second-level-cache** - cache entity manager factory.
+- **First level cache** - scope EntityManager.
+- **Second level cache** - scope EntityManagerFactory.
 
 ## SQL Joins
 
 ### SQL Joins, Inner Join or Join id: Long
 
-**TableA**
-
-| id | name |
-|---|---|
-| 1 | Panda |
-| 2 | Tiger |
-| 3 | Dog |
-| 4 | Hamster |
-
-**TableB**
-
-| id | name |
-|---|---|
-| 1 | Bull |
-| 2 | Panda |
-| 3 | Lion |
-| 4 | Dog |
+![Join Tables](images/tableA-tableB.png "Join Tables")
 
 ```sql
 SELECT * FROM Table INNER JOIN TableB ON TableA.name = TableB.name
 ```
 
-| id | name | id | name |
-|---|---|---|---|
-| 1 | Panda | 2 | Panda |
-| 3 | Dog | 4 | Dog |
+![Tables Joined](images/table-joined.png "Tables Joined")
 
-**INNER JOIN keyword returns only the rows that match in both TableA and TableB**
+- **INNER JOIN keyword returns only the rows that match in both TableA and TableB**
 
 ### Left Outer Join or Left Join
 
@@ -1494,16 +1378,16 @@ SELECT * FROM TableA LEFT OUTER JOIN TableB ON TableA.name = TableB.name
 | 3 | Dog | 4 | Dog |
 | 4 | Hamster | null | null |
 
-**The LEFT OUTER JOIN keyword returns all the rows from the left table (TableA),
+- The LEFT OUTER JOIN keyword returns all the rows from the left table (TableA),
 with the matching rows (where available) in the right table (Table).
-If there is no match, the right side will contain null.**
+- If there is no match, the right side will contain null.
 
 ## Lazy Fetching
 
 - A collection is fetched when the application invokes an operation upon the collection.
-- By default, collection associations `@OneToMany` and `@ManyToMany` are **lazily** fetched
-- :star: LazyInitializationException - when try to lazy load a data but entity manager is closed.
-- FetchType.EAGER data will be loaded along with Guide object
+- By default, collection associations `@OneToMany` and `@ManyToMany` are **lazily** fetched.
+- :star: `LazyInitializationException` - when try to lazy load a data but entity manager is closed.
+- `FetchType.EAGER` data will be loaded along with Guide object.
 
 **Student.java**
 
@@ -1549,7 +1433,7 @@ public class Guide {
 }
 ```
 
-By default single point associations (`@OneToOne` and `@ManyToOne`) are **eagerly** fetched.
+- By default single point associations (`@OneToOne` and `@ManyToOne`) are **eagerly** fetched.
 
 ## Equals and Hashcode
 
@@ -1576,13 +1460,7 @@ try {
 }
 ```
 
-```
-    ------------- Java Heap Memory -------------
-    |a47e0b87|                      |b89a3a42|   ----->  Addresses in heap memory
-      Mikey                           Mikey
-    student1                        student2
-    --------------------------------------------
-```
+![Java Heap Memory](images/java-heap.png "Java Heap Memory")
 
 - :star: By default equals comparing a object by comparing their address in memory
 
@@ -1602,7 +1480,7 @@ public class Student {
 }
 ```
 
-:star: HashCode if two objects are equals then their hashCode values should be equals as well,
+- :star: HashCode if two objects are equals then their hashCode values should be equals as well,
 so if implement just equals method and leave hashCode unimplemented the hashCode will always
 **create 2 students** objects as if they are different objects. Even when their enrId are the same.
 
@@ -1616,9 +1494,8 @@ System.out.println(students.contains(student2)); // false - before override hash
 // ...
 ```
 - Set function check first whether hashCode are the same.
-
-**If two objects are equal, then their hashCode values must also be equal.**
-Whenever you implement **equals(Object)**, you must also implement hashCode().
+- **If two objects are equal, then their hashCode values must also be equal.**
+- Whenever you implement `equals(Object)`, you must also implement `hashCode()`.
 
 ```java
 @Entity
@@ -1632,16 +1509,15 @@ public class Student() {
 }
 ```
 
-For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return.
-If your entity will be part of a Set collection, override its equals and hashCode methods.
-
-**Busness keys - enrId**
+- For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return.
+- If your entity will be part of a Set collection, override its equals and hashCode methods.
+- **Business keys - enrId**.
 
 ## Query language
 
-### HQL : Hibernate Query Language
+### HQL - Hibernate Query Language
 
-A JPQL query is always a valid HQL query, the reverse is not true.
+- A JPQL query is always a valid HQL query, the reverse is not true.
 
 ```java
 // ...
@@ -1665,7 +1541,11 @@ try {
 }
 ```
 
-**Filtering Results** "SELECT guide FROM Guide guide WHERE guide.salary = 1000"
+**Filtering Results**
+
+```sql
+SELECT guide FROM Guide guide WHERE guide.salary = 1000
+```
 
 ### Reporting Queries
 
@@ -1673,7 +1553,7 @@ try {
 Query query = em.createQuery("SELECT guide.name, guide.salary FROM Guide guide");
 List<Object[]> returnList = query.getResultList();
 ```
-- The result list will contain elements of **Object[]**
+- :star: The result list will contain elements of **Object[]**.
 
 ### Dynamic query
 
@@ -1704,8 +1584,8 @@ List<Guide> guides = query.getResultList();
 // ...
 ```
 
-`Like` : checks if a specified string matches a specified pattern. <br/>
-`%` : wildcard a substitute for zero or more characters
+- `Like` : checks if a specified string matches a specified pattern.
+- `%` : wildcard a substitute for zero or more characters.
 
 ### Native SQL Query
 
@@ -1722,7 +1602,8 @@ List<Guide> guides = query.getResultList();
 List<Guide> guides = (Guide) em.createNamedQuery("findByGuide").setParameter("name", "Mikey").getResultList();
 ```
 
-*orm.xml*
+**orm.xml**
+
 ```xml
 <entity-mappings ...>
     <entity class="entity.Guide">
@@ -1736,7 +1617,8 @@ List<Guide> guides = (Guide) em.createNamedQuery("findByGuide").setParameter("na
     </entity>
 </entity-mappings>
 ```
-`<!CData[[ ]]>` - clear data block, avoid conflict with special xml characters
+
+- `<!CData[[ ]]>` - clear data block, avoid conflict with special xml characters.
 
 ### Aggregate Functions
 
@@ -1745,7 +1627,7 @@ List<Guide> guides = (Guide) em.createNamedQuery("findByGuide").setParameter("na
 int numOfGuides = em.createQuery("select guide from Guide guide").getResultList().size();
 ```
 
-This approach comes with the overload of work needed in converting the result set into Guide objects.
+- This approach comes with the overload of work needed in converting the result set into Guide objects.
 
 ```java
 // ...
@@ -1814,65 +1696,25 @@ List<Guide> guides = query.getResultList();
 
 ## Inheritance Mapping and Polymorphic Queries
 
-```
-        +-------------------+
-        | Animal            |
-        +-------------------+
-        | - id: Long        |
-        | - name: String    |
-        +-------------------+
-        | + noise(): String |
-        +---+----------+----+
-            |          |
-           Cat        Dog
-```
+![Inheritance mapping](images/inheritance-mapping.png "Inheritance Mapping")
 
 ### JOINED
 
-```
-    +----------------+                               +----------------+
-    | Cat            |                               | Dog            |
-    +----------------+                               +----------------+
-    | id [BIGINT PK] |                               | id [BIGINT PK] |
-    +------+---------+                               +------+---------+
-           |                                                |
-           |                                                |
-           |        +------------------------------+        |
-           |        |   Animal                     |        |
-           |        +------------------------------+        |
-           +------->+ id [BIGINT PK]               +<-------+
-                    | name [VARCHAR(255) Nullable] |
-                    +------------------------------+
-```
+![Inheritance Joined](images/inheritance-joined.png "Inheritance Joined")
 
 ### SINGLE_TABLE
 
-```
-        +------------------------------+
-        | Animal                       |
-        +------------------------------+
-        | DTYPE [VARCHAR(31)]          |
-        | id [BIGINT PK]               |
-        | name [VARCHAR(255) Nullable] |
-        +------------------------------+
-```
+![Inheritance Single Table](images/inheritance-single-table.png "Inheritance Single Table")
 
 ### TABLE_PER_CLASS (Table per concrete class)
 
-```
-    +---------------------+                      +---------------------+
-    | Cat                 |                      | Dog                 |
-    +---------------------+                      +---------------------+
-    | id [BIGINT PK]      |                      | id [BIGINT PK]      |
-    | name [VARCHAR(255)] |                      | name [VARCHAR(255)] |
-    +---------------------+                      +---------------------+
-```
+![Inheritance Table Per Class](images/inheritance-table-per-class.png "Inheritance Table Per Class")
 
-- **PERSIST**
-    - Return type void
-    - Can be used only within transaction
-    - Persist for detached object will throw Exception
-    - Takes less time to execute comparing to **save**
+- **PERSIST**:
+    - Return type void.
+    - Can be used only within transaction.
+    - Persist for detached object will throw Exception.
+    - Takes less time to execute comparing to **save**.
 
 
 ### Inheritance (SINGLE_TABLE)
@@ -1923,8 +1765,8 @@ public class Cat extends Animal {
 }
 ```
 
-- The class hierarchy is represented in one table
-- A discriminator column identifies the type of subclass
+- The class hierarchy is represented in one table.
+- A **discriminator** column identifies the type of subclass.
 
 ```java
 // ...
@@ -1956,9 +1798,8 @@ List<Animal> animals = query.getResultList();
 // ...
 ```
 
-- **Good performance** for derived class queries, no joins required
-- All the properties in subclass must not have **not-null** constraint
-
+- **Good performance** for derived class (klasy pochodnej) queries, no joins required.
+- All the properties in subclass must not have **not-null** constraint.
 
 ### Inheritance (JOINED)
 
@@ -1969,28 +1810,13 @@ public abstract class Animal {
 }
 ```
 
-The superclass has a table and each subclass has a table that contains only un-inherited properties
+- The superclass has a table and each subclass has a table that contains only un-inherited properties
 the subclass tables have a primary key that is a foreign key of the superclass.
 
-```
-     Cat
-    +----+
-    | id |
-    +----+
-    | 1  |                  Animal
-    +----+             +----+--------+
-                       | id | name   |
-                       +----+--------+
-     Dog               | 1  | Rebeca |
-    +----+             +----+--------+
-    | id |             | 2  | Majki  |
-    +----+             +----+--------+
-    | 2  |
-    +----+
-```
+![Inheritance Joined Table](images/inheritance-joined-table.png "Inheritance Joined Table")
 
 - Poor performance for polymorphic queries.
-- All the properties in subclass may have not-null constraint
+- All the properties in subclass may have not-null constraint.
 - Not bad performance for derived class queries.
 
 ### Inheritance (TABLE_PER_CLASS)
@@ -2007,23 +1833,25 @@ public abstract class Animal {
 }
 ```
 
-- Each table contains all the properties of the concrete class and also the properties that are inherited from its superclass.
-- The database identifier and its mapping have to be present in the superclass, to be shared in all subclasses and their tables.
-- Not good for polymorphic query. Good performance for derived queries.
-
-- **SQL UNION**
+- Each table contains all the properties of the concrete class and also the properties that are inherited from its
+superclass.
+- The database identifier and its mapping have to be present in the superclass, to be shared in all subclasses and
+their tables.
+- Not good for polymorphic query.
+- Good performance for derived queries.
+- **SQL UNION**:
     - The union operator is used to combine the result-set of two or more SELECT statement.
     - Each SELECT statement within UNION should have same number of columns.
     - The column in each SELECT statement should be in same order and have same data types.
     - The UNION operator selects only distinct values by default.
 
-## N + 1 Selects Problem
+### N + 1 Selects Problem
 
 - By default, single point associations `@OneToOne` and `@ManyToOne` are **eagerly** fetched.
 - By default, collection associations `@OneToMany` and `@ManyToMany` are **lazily** fetched.
-- N + 1 Selects
-    - **1 Select for all the parant objects**
-    - **1 select for each child object**
+- N + 1 Selects:
+    - **1 Select for all the parent objects.**
+    - **1 select for each child object.**
 
 :one:
 
@@ -2033,18 +1861,18 @@ public abstract class Animal {
 private Guide guide;
 ```
 
-Switch the fetching strategy of single point associations (`@OneToOne` and `@ManyToOne`) from EAGER to LAZY.
+- Switch the fetching strategy of single point associations (`@OneToOne` and `@ManyToOne`) from EAGER to LAZY.
 
 ```java
 @Entity
 public class Student {
-    @MantToOne(cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
+    @ManyToOne(cascade={CascadeType.PERSIST}, fetch=FetchType.LAZY)
     @JoinColumn(name="guide_id")
     private Guide guide;
 }
 ```
 
-Change the fetching strategy of your single point associations from EAGER to LAZY.
+- Change the fetching strategy of your single point associations from EAGER to LAZY.
 
 :two:
 
@@ -2056,10 +1884,9 @@ public class HelloWorld {
 }
 ```
 
-Write the query based on the requirements (e.g. using left fetch join) to load the child object eagerly.
+- Write the query based on the requirements (e.g. using left fetch join) to load the child object eagerly.
 
-
-## Batch Fetching
+### Batch Fetching
 
 ```java
 @Entity
@@ -2092,15 +1919,7 @@ List<Student> students = query.getResultList();
 
 ## Merging Detached Objects
 
-```
-      Loading objects | Modifying loaded objects | Storing loaded objects |
-    |---------------->|------------------------->|----------------------->|
-
-        Persistence         Detached Objects        Persistence
-    ------------------>                          ------------------>
-          Context                                     Context
-                                    merge --------->
-```
+![Merging Detached Objects](images/merging-detached-objects.png "Merging Detached Objects")
 
 **Student.java**
 
@@ -2200,8 +2019,9 @@ em2.close();
 
 ## Optimistic Locking and Versioning
 
-**Versioning** <br/>
-SQL for adding a new column "version" to the table
+**Versioning**
+
+- SQL for adding a new column "version" to the table.
 
 ```sql
 ALTER TABLE 'guide' ADD 'version' INT(11) NOT NULL DEFAULT '0';
@@ -2221,9 +2041,9 @@ public class Guide {
 |---|---|---|
 | 654 | Samara | 0 |
 
-- Hibernate is going to check for the version number at each update.
+- Hibernate is going to check for the version number at each update:
     - An Exception will be thrown, to prevent a lost update, if Hibernate doesn't find the In-memory version of an entity
-      to be same as the database version (current version)
+      to be same as the database version (current version).
 - Exception in thread "main" javax.persistence.OptimisticLockException:
     - Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect):[entity.Guide#2]
 - Implementing a business process that spans through multiple transactions should be done using the versioning
@@ -2247,11 +2067,11 @@ try {
 }
 ```
 
-**Optimistic locking** - official name of versioning strategy to prevent lost updates. **No database locking**
+- **Optimistic locking** - official name of versioning strategy to prevent lost updates. **No database locking**.
 
 ### Pessimistic Locking (Database locking)
 
-Could be user only within single transaction
+- Could be use only within single transaction.
 
 ```java
 EntityManager em1 = emf.createEntityManager();
@@ -2270,11 +2090,11 @@ em2.getTransaction().commit();
 em2.close();
 ```
 
-- **Use Versionng Strategy (Optimistic Locking)** to prevent lost updates when implementing a conversation
-(multiple transactions/[request, response cycles])
-- Pessimistic Locking (Database Locking) is usable only within a **single transaction**
+- **Use Versioning Strategy (Optimistic Locking)** to prevent lost updates when implementing a conversation
+(multiple transactions/[request, response cycles]).
+- Pessimistic Locking (Database Locking) is usable only within a **single transaction**.
 - **When to use Pessimistic Locking?**
-    - When you've got multiple database queries being executed on the same data, within a single transaction
+    - When you've got multiple database queries being executed on the same data, within a single transaction.
 
 ```java
 List<Object[]> resultList = em.createQuery("SELECT guide.name, guide.salary FROM Guide AS guide")
@@ -2284,138 +2104,42 @@ List<Object[]> resultList = em.createQuery("SELECT guide.name, guide.salary FROM
 
 ## :star: Isolation Rules
 
-- Rules for Isolation Levels
+- Rules for Isolation Levels:
     - Isolation level defines the extent to which a transaction is visible to other transactions.
     - How and when the changes made by one transaction are made visible to other transactions.
 
-
-    SERIALIZABLE :arrow_right: REPEATABLE_READ :arrow_right: READ_COMMITED :arrow_right: READ_UNCOMMITED
-
-    :arrow_right: Lesser Isolation :arrow_right:
-
-
-    :arrow_right: Better Performance :arrow_right:
+![Isolation Rules](images/isolation-rules.png "Isolation Rules")
 
 
 ### Isolation Level - SERIALIZABLE
 
-TRUE ISOLATION - Slow Performance
+- TRUE ISOLATION - Slow Performance.
 
-    ------------ User 1 ----------------------------- User 2 -------------------------------------------------------
-    start transaction                   |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  4900                        |
-                                        | start transaction
-                                        | update guide set salary = 9999 where id=3;
-                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
-                                        | commit;
-                                        |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  4900                        |
-                                        |
-    commit;                             |
-
+![Isolation Level Serializable](images/isolation-level-serializable.png "Isolation Level Serializable")
 
 ### Isolation Level - REPEATABLE_READ
 
-Phantom reads are possible
-Softer isolation
+- Phantom reads are possible.
+- Softer isolation.
 
-    ------------ User 1 ----------------------------- User 2 ----------------
-    start transaction                   |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  4900                        |
-                                        | start transaction
-                                        | update guide set salary = 9999 where id=3;
-                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
-                                        | commit;
-                                        |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  4900                        |
-    Brajan  7899                        |
+![Isolation Level Repeatable Read](images/isolation-level-repeatable-read.png "Isolation Level Repeatable Read")
 
+### Isolation Level - READ_COMMITTED
 
-### Isolation Level - READ_COMMITED
+- Un repeatable reads are possible.
+- Softer isolation level.
 
-Un repeatable reads are possible.
-Softer isolation level.
+![Isolation Level Read Commtited](images/isolation-level-read-commited.png "Isolation Level Read Committed")
 
-    ------------ User 1 ----------------------------- User 2 ----------------
-    start transaction                   |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  4900                        |
-                                        | start transaction
-                                        | update guide set salary = 9999 where id=3;
-                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
-                                        | commit;
-                                        |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  9999                        |
-    Brajan  7899                        |
+### Isolation Level - READ_UNCOMMITTED
 
+- Dirty reads are possible.
+- Softer isolation level.
 
-### Isolation Level - READ_UNCOMMITED
+![Isolation Level Read Uncommitted](images/isolation-level-read-uncommitted.png "Isolation Level Read Uncommitted")
 
-Dirty reads are possible
-Softer isolation level
-
-    ------------ User 1 ----------------------------- User 2 ----------------
-    start transaction                   |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  4900                        |
-                                        | start transaction
-                                        | update guide set salary = 9999 where id=3;
-                                        | insert into guide (name, salary, staff_id) values ('Brajan', 7899, '23WX');
-                                        |
-    select name, salary from guide;     |
-                                        |
-    name    salary                      |
-    ---------------                     |
-    Mikey   1000                        |
-    Rebeca  3000                        |
-    Samara  9999                        |
-    Brajan  7899                        |
-                                        |  rollback;
-
-
-- MySQL supports all 4 isolation levels
-    - REPEATABLE_READ (default)
-- Oracle supports
+- MySQL supports all 4 isolation levels - REPEATABLE_READ (default).
+- Oracle supports:
     - SERIABLIZABLE
     - READ_COMMITED (default)
 
@@ -2434,17 +2158,15 @@ set global transaction isolation level SERIALIZABLE;
 
 ## Caching and object identity
 
-**A Cache is ID based** <br/>
-Hibernate to be able to look for an object in a cache, it needs to know the ID of that object.
+**A Cache is ID based**
 
+- Hibernate to be able to look for an object in a cache, it needs to know the ID of that object.
 
-## Second Level Caching
+### Second Level Caching
 
-- By default, Hibernate does not cache the persistent objects across different Entity Managers
-
-First Level :arrow_right: EntityManager
-
-Second Level Cache :arrow_right: EntityManagerFactory
+- By default, Hibernate does not cache the persistent objects across different Entity Managers.
+- First Level :arrow_right: EntityManager
+- Second Level Cache :arrow_right: EntityManagerFactory
 
 ```java
 EntityManager em1 = emf.createEntityManager();
@@ -2464,25 +2186,24 @@ em2.getTransaction().commit();
 em2.close();
 ```
 
-Hibernate stores data in second level ache as Dehydrated (key-value pairs) format.
+- Hibernate stores data in second level cache as Dehydrated (key-value pairs) format.
 
-- JVM
-    - L2 Cache
-        - Entity Data Cache
-        - Collection Cache
-        - Query Result Cache
+![L2 Cache](images/l2-cache.png "L2 Cache")
 
 **L2 Cache Implementation**
 
-- EHCache - Single JVM
-= TreeCache from JBoss
+- EHCache - Single JVM.
+- TreeCache from JBoss.
+
+**persistence.xml**
 
 ```xml
 <persistence>
     <persistence-unit>
         <properties>
             <property name="javax.persistence.sharedCache.mode" value="ENABLED_SELECTIVE"/>
-            <property name="hiberate.cache.region.factory_class" value="org.hibernate.cache.ehcacheEhCacheRegionFactory"/>
+            <property name="hiberate.cache.region.factory_class"
+                value="org.hibernate.cache.ehcacheEhCacheRegionFactory"/>
         </properties>
     </persistence-unit>
 </persistence>
@@ -2497,6 +2218,7 @@ public class Guide {
 ```
 
 **ehcache.xml**
+
 ```xml
 <ehcache>
     <cache name="entity.Guide"
@@ -2533,18 +2255,22 @@ em2.close();
 ```
 
 - When entities cache in the second-level cache are updates Hibernate invalidates them.
-- Manually invalidating the cached data of a persistence class emf.evictEntity(Guide.class);
+- Manually invalidating the cached data of a persistence class `emf.evictEntity(Guide.class);`
 
-**Statistics API** <br/>
-To examine performance of second level cache
+**Statistics API**
 
-**Cache Concurrency Strategy** <br/>
-A cache concurrency strategy defines a transaction isolation level for an entity in cache region.
+- To examine performance of second level cache.
 
-    TRANSCTIONAL            - read mostly data, similar to REPEATABLE_READ
-    READ_WRITE              - read mostly data, similar to READ_COMMITED
-    NONSTRICT_READ_WRITE    - data hardly ever changes
-    READ_ONLY               - data never modified example country code
+**Cache Concurrency Strategy**
+
+- A cache concurrency strategy defines a transaction isolation level for an entity in cache region.
+
+| Cache Concurrency Strategy | Description |
+|---|---|
+| TRANSACTIONAL | read mostly data, similar to REPEATABLE_READ |
+| READ_WRITE | read mostly data, similar to READ_COMMITTED |
+| NONSTRICT_READ_WRITE | data hardly ever changes |
+| READ_ONLY | data never modified example country code |
 
 ```java
 @Entity
@@ -2555,9 +2281,9 @@ public class Guide {
 }
 ```
 
-- **Second Level Cache**
-    - Caching associations in second level cache
-    - By default associated objects aren't cached
+- **Second Level Cache**:
+    - Caching associations in second level cache.
+    - By default associated objects aren't cached.
 
 ```java
 @Entity
@@ -2579,7 +2305,7 @@ public class Guide {
 }
 ```
 
-## Best Practies
+## Best Practices
 
 ### Declare identifier properties on persistence class
 
@@ -2687,7 +2413,7 @@ private Guide guide;
 private Set<Student> students = new HashSet<>();
 ```
 
-In large application, almost all associations must be navigable in both direction queries
+- In large application, almost all associations must be navigable in both direction queries.
 
 ### Use bind variables
 
@@ -2695,19 +2421,18 @@ In large application, almost all associations must be navigable in both directio
 SELECT * FROM Guide guide WHERE guide.name = ?
 ```
 
-In JDBC always replace non-constraint values by `?`
+- In JDBC always replace non-constraint values by `?`.
 
 ### Using Second Level Cache
 
-- Good candidates
-    - Data that change rarely
-    - Noncritical data
-    - Data that's local to the application and not modified by other applications
-
-- Bad candidates
-    - Data that is updated often
-    - Financial data, where decisions must be based on latest update
-    - Data that is shared with and / or written by other applications
+- Good candidates:
+    - Data that change rarely.
+    - Noncritical data.
+    - Data that's local to the application and not modified by other applications.
+- Bad candidates:
+    - Data that is updated often.
+    - Financial data, where decisions must be based on latest update.
+    - Data that is shared with and / or written by other applications.
 
 
 

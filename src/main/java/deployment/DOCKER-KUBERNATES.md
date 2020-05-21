@@ -21,6 +21,8 @@ docker run -it redis
 
 **Docker for Windows/Mac**
 
+![Docker Hello World](docker_img/docker-hello-world.png "Docker hello world")
+
 - Docker Client CLI - Tool that we are going to issue commands to.
 - Docker Server (Docker Daemon) - Tool that is responsible for creating images, running containers etc.
 
@@ -28,11 +30,48 @@ docker run -it redis
 docker run hello-world
 ```
 
-- Namespacing - Isolating resources per process (or group of processes).
-    - Processes, Hard drive, Network, Users, Hostnames, IPC.
-- Control Groups (cgroups) - Limit amount of resources used per process.
-    - Memory, CPU Usage, HD I/O, Network Bandwidth.
+![Docker Hello World](docker_img/docker-hello-world-steps.png "Docker hello world")
+
+![Kernel OS](docker_img/kernel.png "Kernel OS")
+
+![Docker Problem](docker_img/docker-problem.png "Docker Problem")
+
+**Namespacing**
+
+![Namespacing](docker_img/docker-problem-namespacing.png "Namespacing")
+
+**Container**
+
+![Container](docker_img/container.png "Container")
+
+- Namespacing - Isolating resources per process (or group of processes)
+(say - this area of hard drive is for this process):
+    - Processes
+    - Hard drive
+    - Network
+    - Users
+    - Hostnames
+    - IPC
+- Control Groups (cgroups) - Limit amount of resources used per process
+(say - amount of bandwidth process can use):
+    - Memory
+    - CPU Usage
+    - HD I/O
+    - Network Bandwidth
 - Container - group of processes assignee to it.
+
+![Container](docker_img/container-details.png "Container")
+
+**Containers vs Images**
+
+![Container Images](docker_img/containers-images.png "Container Images")
+
+**How Docker Running on Your Computer?**
+
+- Namespacing and Control groups are Linux OS features.
+- On MacOS/Windows docker is run through Linux Virtual Machine.
+
+***
 
 ## Docker Client CLI
 
@@ -44,47 +83,69 @@ docker run hello-world
 
 ```console
 docker run busybox echo hi there
+
+# list content of container
 docker run busybox ls
 ```
 
-- Listing running containers.
+**Listing running containers**
 
 ```console
 docker ps
+docker run busybox ping google.com
+
+# on second terminal - see running busybox container
+docker ps
+
+# lists all containers ever created
 docker ps -a
 docker ps | wc -l
 ```
 
-- Container lifecycle.
+**Container lifecycle**
 
-> docker run = docker create + docker start
-> docker create <image_name>
-> docker start <container id>
+```
+docker run = docker create + docker start
+docker create <image_name>
+docker start <container id>
+```
 
 ```console
 docker create hello-world
-docker start -a bc219e7a88bb1fabb72c19fd502dfb16c5cb12f24a43c5699f796c6fe10d61eb
 
-// -a watch for output from container
+# -a watch for output from container and prints out in terminal
+docker start -a bc219e7a88bb1fabb72c19fd502dfb16c5cb12f24a43c5699f796c6fe10d61eb
 ```
 
-- Removing stopped container.
+**Restarting stopped container**
 
 ```console
+docker ps -all
+docker start 2d178f0b4f4cd
+```
+
+**Removing stopped container**
+
+```console
+docker ps --all
+
 docker system prune
 ```
 
-- Retrieving log output.
+**Retrieving log output**
 
 ```console
 docker create busybox echo hi there
 docker start e207a006e63dee92d178f0b4f4cd619987c3b6782ad3e332ed6d49bcb9c015a7
+
+# retrieve logs from stopped container (no rerun container)
 docker logs e207a006e63dee92d178f0b4f4cd619987c3b6782ad3e332ed6d49bcb9c015a7
 ```
 
-- Stopping Containers.
+**Stopping Containers**
 
 > docker stop <container_id>
+
 > docker kill <container_id>
 
 - SIGTERM - stop container with cleanup time.
@@ -93,11 +154,14 @@ docker logs e207a006e63dee92d178f0b4f4cd619987c3b6782ad3e332ed6d49bcb9c015a7
 ```console
 docker create busybox ping google.com
 docker start bb656a399364f374a4a701fdd34783381894f550979365dca464d407c061205f
+docker logs bb656a399364f374a4a701fdd34783381894f550979365dca464d407c061205f
 
-docker stop bb656a399364 // after 10 s kill signal
+# after 10 s kill signal
+docker stop bb656a399364
 
 docker start bb656a399364
-docker kill bb656a399364 // kill immediately
+# kill immediately
+docker kill bb656a399364
 ```
 
 - Multi-command container.
