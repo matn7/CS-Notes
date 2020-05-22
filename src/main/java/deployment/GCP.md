@@ -552,6 +552,53 @@ gcloud compute instances list
 | | | gcloud config configurations describe newconfig |
 
 
+**In out**
+
+```console
+# ip address sees us connecting from
+curl api.ipify.org
+
+gcloud compute instances list
+
+# --- create vm ---
+gcloud compute instances create myhappyvm
+
+gcloud compute machine-types list
+gcloud topic filter
+gcloud compute machine-types list --filter="NAME:f1-micro AND ZONE~us-west"
+
+# set default zone and region
+gcloud config set compute/zone us-west2-b
+gcloud config set compute/region us-west2
+
+gcloud compute instances create --machine-type=f1-micro myhappyvm
+
+# --- connect to machine ---
+ping -c 3 myhappyvm
+ping -c 3 <EXTERNAL_IP>
+
+ssh <EXTERNAL_IP>
+gcloud compute ssh myhappyvm
+
+curl metadata.google.internal/computeMetadata/v1/
+curl -H "Metadata-Flavor:Google"  metadata.google.internal/computeMetadata/v1/
+curl -H "Metadata-Flavor:Google"  metadata.google.internal/computeMetadata/v1/project/project-id
+
+# ssh public key
+curl -H "Metadata-Flavor:Google"  metadata.google.internal/computeMetadata/v1/project/attributes/ssh-keys
+
+gsutil ls
+
+# delete vm
+# log off from myhappyvm
+exit
+gcloud compute instances delete myhappyvm
+gcloud compute instances list
+```
+
+**GCE via console**
+
+
 
 ---
 

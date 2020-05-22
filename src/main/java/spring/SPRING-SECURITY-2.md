@@ -2,61 +2,58 @@
 
 ## Spring Security Features
 
-- Provides a portable security mechanism for Java enterprise apps
+- Provides a portable security mechanism for Java enterprise apps.
 
 ### Authentication & Authorization
 
-- Authentication - ensuring a user who they claim to be
+- Authentication - ensuring a user who they claim to be:
     - HTTP basic
     - Form Based
     - LDAP
     - OpenID
     - X.509
-- Authorization - determining if a user is allowed to perform an action
+- Authorization - determining if a user is allowed to perform an action.
 
 ### Security capabilities
 
-- Protection web resources
-    - Requires specific roles to access URLs
-- Authorizing method invocations
-    - Requiring specific roles to access methods
-- Restricting entity access
-    - Constantly Access Lists (CAL) to determine domain object access
+- Protection web resources - Requires specific roles to access URLs.
+- Authorizing method invocations - Requiring specific roles to access methods.
+- Restricting entity access - Constantly Access Lists (CAL) to determine domain object access.
 
 ### Extra Features
 
-- Cross Site Request Forgery `CSRF`
-- Session Fixation
-- Click jacking
-- Cross Site Scripting `XSS`
-- Password encoding via hash and salt
+- Cross Site Request Forgery `CSRF`.
+- Session Fixation.
+- Click jacking.
+- Cross Site Scripting `XSS`.
+- Password encoding via hash and salt.
 
 ### Spring Security Strengths
 
-- Spring approach
-- Annotation based
-- Spring MVC
-- Testing
-- Layered security approach
+- Spring approach.
+- Annotation based.
+- Spring MVC.
+- Testing.
+- Layered security approach.
 
 ## Security Principles
 
 ### Authentication
 
-- Process of identifying an individual using credentials
+- Process of identifying an individual using credentials:
     - Username & password
     - Tokens
 
 ### Authorization
 
-- Process of granting someone access to a resource
+- Process of granting someone access to a resource:
     - Files
     - Records
     - Databases
 
 ## Spring Security Basics
 
-- **MAVEN**
+- **MAVEN**:
     - spring-security-web
     - spring-security-config
 
@@ -125,10 +122,10 @@
 
 ### Security Interceptor
 
-- Decider whether access is granted to a particular sources
-- FilterSecurityInterceptor enforces access to HTTP resources
-- MethodSecurityInterceptor enforces access to method invocations
-- Config using instances of ConfigAttribute
+- Decider whether access is granted to a particular sources.
+- FilterSecurityInterceptor enforces access to HTTP resources.
+- MethodSecurityInterceptor enforces access to method invocations.
+- Config using instances of ConfigAttribute.
 
 ```xml
 <filter>
@@ -168,14 +165,9 @@ public class SampleController {
 
 ### Process
 
-    USER ---> Security Interceptor ---> Authenticated   --- yes ---> Controller
+![Security Process](images/security-interceptor-process.png "Security Process")
 
-
-
-    Authentication      Authentication      Authentication      UserDetails     SecurityContextHolder
-                            Manager             Provider            Service
-
-### Security Context Holder
+### SecurityContext Holder
 
 ```java
 SecurityContextHolder.getContext().getAuthentication().getName();
@@ -242,13 +234,14 @@ public class HomeController {
 }
 ```
 
-### Custom Authentication Privider
+### Custom Authentication Provider
 
 **CustomAuthenticationProvider.java**
 
 ```java
 @Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+
     @Autowired
     private UserRepository repo;
 
@@ -391,13 +384,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFI
 **security-context.xml**
 
 ```xml
-<bean id="passwordEncoder"
-    class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
+<bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
 <security:password-encoder ref="passwordEncoder"/>
 ```
 
 ```java
-publc class PasswordEncoder {
+public class PasswordEncoder {
     public static void main(String[] args) {
         StandardPasswordEncoder encoder = new StandardPasswordEncoder();
         String encodedPassword = encoder.encode("password");
@@ -407,14 +399,15 @@ publc class PasswordEncoder {
 
 ## LDAP Authentication
 
-**spring-security.ldif** ldap configuration
+**spring-security.ldif** - ldap configuration.
 
 ### LDAP Authentication Provider
 
-- **MAVEN**
+- **MAVEN**:
     - spring-security-ldap
 
-*security-context.xml*
+**security-context.xml**
+
 ```xml
 <security:ldap-server id="server"
     uri="ldap://localhost:10389/dc=panda,dc=panda" manager-dn="uid=admin,ou=admin"
@@ -520,7 +513,7 @@ public String getCheckout(@PathVariable("checkout") long id, Model model) {
 }
 ```
 
-**`@RolesAllowed`** <br/>
+**`@RolesAllowed`**
 
 **dispatcher-servlet.xml**
 
@@ -557,12 +550,11 @@ public List<Checkout> getCheckouts(Authentication authentication) {
 
 ## Access Control
 
-- `acl_sid` - store info about principals or authorities
-- `acl_class` - qualified class name
-- `acl_object_identity` - protected object instances
-- `acl_entry` - entries
-
-- **MAVEN**
+- `acl_sid` - store info about principals or authorities.
+- `acl_class` - qualified class name.
+- `acl_object_identity` - protected object instances.
+- `acl_entry` - entries.
+- **MAVEN**:
     - spring-security-acl
     - ehcache
 
@@ -591,7 +583,7 @@ public List<Checkout> getCheckouts(Authentication authentication) {
 
 ### HTTP channel Security
 
-Create public key using `keytool`
+- Create public key using `keytool`.
 
 **server.xml**
 
@@ -609,7 +601,7 @@ Create public key using `keytool`
 
 ### CSRF
 
-Script rely upon session after click on malicious script.
+- Script rely upon session after click on malicious script..
 
 ```html
 <div>

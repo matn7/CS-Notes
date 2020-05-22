@@ -1,58 +1,48 @@
 # Spring Security
 
-- Spring Framework for Security
-- Using Servlet filters in background
-- Declarative and programmatic methods of securing
+- Spring Framework for Security.
+- Using Servlet filters in background.
+- Declarative and programmatic methods of securing.
 
 ## Spring Security - Servlet Filters
 
-- Servlet filters are used to pre-process / post-process web requests
-- Servlet filters can route web requests based on security logic
-- Spring provides security functionality with servlet filters
+- Servlet filters are used to pre-process / post-process web requests.
+- Servlet filters can route web requests based on security logic.
+- Spring provides security functionality with servlet filters.
 
-## Spring Security - Overview
+### Spring Security - Overview
 
-    +---------+             +----------+    +---------------+
-    | WEB     |-------------| SPRING   |--->| Protected web |
-    | BROWSER |<------------| SECURITY |----| Resource      |
-    |         |             | FILTERS  |    +---------------+
-    +---------+             +----------+
-                                        \
-                                         +----------------------------+    +-------------------------+
-                                         | app security configuration |<-->| users, passowrds, roles |
-                                         +----------------------------+    +-------------------------+
+![Spring Security](images/spring-security.png "Spring Security")
 
-## Security concepts
+### Security concepts
 
-- Authentication
-    - Check user id and password with credentials stored in app / database
-- Authorization
-    - Check if user has an authorized role
+- Authentication - Check user id and password with credentials stored in app / database.
+- Authorization - Check if user has an authorized role.
 
-## Declarative Security
+### Declarative Security
 
-- Security constrains defined in configuration
-    - Java config `@Configuration`
-    - Spring XML config
-- Provides separation of concerns between application code and security
+- Security constrains defined in configuration:
+    - Java config `@Configuration`.
+    - Spring XML config.
+- Provides separation of concerns between application code and security.
 
-## Programmatic Security
+### Programmatic Security
 
-- Spring Security API for custom application config
-- Customization for specific app requirements
+- Spring Security API for custom application config.
+- Customization for specific app requirements.
 
-## Login Methods
+### Login Methods
 
-- HTTP Basic Authentication
-- Default login form
-- Custom login form
+- HTTP Basic Authentication.
+- Default login form.
+- Custom login form.
 
 ### HTTP Basic Authentication
 
-- Build in for Browser
-- Default login form
+- Build in for Browser.
+- Default login form.
 
-## Authentication and Authorization
+### Authentication and Authorization
 
 - In-memory
 - JDBC
@@ -63,17 +53,16 @@
 
 ### Java Configuration
 
-- maven dependencies
+- Maven dependencies:
     - spring-webmvc
     - jstl
     - javax.servlet-api
     - javax.servlet.jsp-api
-
-- Enabling the MVC Java Config
-    - `@EnableWebMvc`
+- Enabling the MVC Java Config:
+    - `@EnableWebMvc`:
         - Provides similar support to `<mvc:annotation-driven/>` in XML.
-        - Adds conversion, formatting and validation support
-        - Processing of `@Controller` classes and `@RequestMapping` methods
+        - Adds conversion, formatting and validation support.
+        - Processing of `@Controller` classes and `@RequestMapping` methods.
 
 ```java
 @Configuration
@@ -96,17 +85,16 @@ public class AppConfig {
 
 ### Web App Initializer
 
-- Spring MVC provides support for web app initializer
-- Code is automatically detected
-- Code used to initialize the servlet container
-- `AbstractAnnotationConfigDispatcherServletInitializer`
-    - Extend this class
-    - Override methods
-    - Specify servlet mapping and location of app config
+- Spring MVC provides support for web app initializer.
+- Code is automatically detected.
+- Code used to initialize the servlet container.
+- `AbstractAnnotationConfigDispatcherServletInitializer`:
+    - Extend this class.
+    - Override methods.
+    - Specify servlet mapping and location of app config.
 
 ```java
-public class SpringMvcDispatcherServletInitializer
-    extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     protected Class<?> getRootConfigClasses() {
         return null;
@@ -136,12 +124,12 @@ public class DemoController {
 
 ### Spring Security - Configuration
 
-- maven dependency
+- Maven dependency:
     - spring-security-web
     - spring-security-config
-- Spring Security Web App Initializer
-    - Code is used to initialize the servlet container
-    - Special class to register to Spring Security Filters
+- Spring Security Web App Initializer:
+    - Code is used to initialize the servlet container.
+    - Special class to register to Spring Security Filters:
         - `AbstractSecurityWebApplicationInitializer`
 
 ```java
@@ -199,7 +187,7 @@ public class LoginController {
 
 ### Spring Security Logout
 
-- Add logout support to Spring Security Configuration
+- Add logout support to Spring Security Configuration.
 
 ```java
 @Configuration
@@ -228,25 +216,25 @@ public class SecurityConfig extends WebSecurityConfigurarAdapter {
 
 ### Spring Security - Cross Site Request Forgery (CSRF)
 
-- CSRF
+- CSRF:
     - A security attack where an evil website tricks you into executing an action on a web application that
     you are currently logged in.
     - Logged in an e-commerce app and buy unwanted stuff
-- Protect
-    - Embed additional authentication aka/token into all HTML forms
-    - On subsequent requests, web app will verify token before processing
-- enabled by default in Spring Security
-- Spring Security uses te Synchronized Token Pattern
-    - Each request includes a session cookie and randomly generated token
-- For request processing, Spring Security verifies token before processing
-- All handles by Spring Security Filters
-- Use for
-    - Any normal browser web requests
-    - Building a service for non-browser clients
-- Use Spring Security CSRF protection
-    - For form submission use POST
-    - Include CSRF token in form submission
-    - `<form:form>` automatically adds CSRF token
+- Protect:
+    - Embed additional authentication aka/token into all HTML forms.
+    - On subsequent requests, web app will verify token before processing.
+- Enabled by default in Spring Security.
+- Spring Security uses te Synchronized Token Pattern:
+    - Each request includes a session cookie and randomly generated token.
+- For request processing, Spring Security verifies token before processing.
+- All handles by Spring Security Filters.
+- Use for:
+    - Any normal browser web requests.
+    - Building a service for non-browser clients.
+- Use Spring Security CSRF protection:
+    - For form submission use POST.
+    - Include CSRF token in form submission.
+    - `<form:form>` automatically adds CSRF token.
 
 ```html
 <form action="..." method="POST">
@@ -291,7 +279,7 @@ protected void configure(HttpSecurity http) throws Exception {
 
 ### Spring Security - JDBC
 
-- Spring Security can read user account info from database
+- Spring Security can read user account info from database.
 
 ```sql
 CREATE TABLE users (
@@ -309,7 +297,7 @@ INSERT INTO users VALUES
 ('samara', '{noop}haslo',1);
 ```
 
-- {noop} - encoding algorithm id
+- {noop} - encoding algorithm id.
 
 ```sql
 CREATE TABLE authorities (
@@ -329,7 +317,7 @@ VALUES
 (samara, ROLE_ADMIN);
 ```
 
-- maven
+- Maven:
     - mysql-connector-java
     - c3p0
 
@@ -347,7 +335,7 @@ connection.pool.maxPoolSize=20
 connection.pool.maxIdelTime=3000
 ```
 
-- DataSource configuration
+- DataSource configuration.
 
 ```java
 @Configuration
@@ -385,7 +373,7 @@ public class AppConfig {
 }
 ```
 
-- Update Spring Security to use JDBC
+- Update Spring Security to use JDBC.
 
 ```java
 @Configuration
@@ -406,43 +394,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ## Spring Security - Password Encryption
 
-- bcrypt algorithm
-    - One way encrypted hashing
-    - Adds random salt to password for protection
-    - Includes support to defeat from brute force attacks
-
-- Password column at leat 68 characters wide
-    - {bcrypt} - 8 chars
-    - encodedPassword - 60 chars
-
+- bcrypt algorithm:
+    - One way encrypted hashing.
+    - Adds random salt to password for protection.
+    - Includes support to defeat from brute force attacks.
+- Password column at least 68 characters wide:
+    - {bcrypt} - 8 chars.
+    - encodedPassword - 60 chars.
 
 ```sql
 ('brajan', '{bcrypt}$2a$sdasd$50sdmkMAKdsmiamLSLM',1),
 ('samara', '{noop}$2a$sdasd$50sdmkMAKdsmiamLSLM',1);
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

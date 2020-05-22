@@ -1,31 +1,18 @@
 # RabbitMQ Message broker
 
 ## JMS
-```
-            RabbitMQ Broker
-                                Message
-                              ----------> App2
-App1 ---> Exchange ---> Queue ----------> App3
-                              ----------> App4
 
-```
+![RabbitMQ Broker](images/rabbit-mq-broker.png "RabbitMQ Broker")
 
 ## Exchange and Queue
 
-```
+![Exchange and Queue](images/exchange-and-queue.png "Exchange and Queue")
 
-Mobile    TV   Laptop           [Different Queues]
-       \  |   /
-        Person                  [Exchange]
-          |
-         User
-```
-
-- Exchange route a message to specific Queue
-- User (Message)
-- Application behind a queue are consumers
-- Exchange to apply some conditions
-- Types of exchanges
+- Exchange route a message to specific Queue.
+- User (Message).
+- Application behind a queue are consumers.
+- Exchange to apply some conditions.
+- Types of exchanges:
     - Direct
     - Fanout authorities
     - Headers
@@ -33,13 +20,13 @@ Mobile    TV   Laptop           [Different Queues]
 
 ### RabbitMQ installation
 
-```bash
-# systemctl enable rabbitmq-server
-# systemctl start rabbitmq-server
-# systemctl status rabbitmq-server
-# systemctl stop rabbitmq-server
+```console
+systemctl enable rabbitmq-server
+systemctl start rabbitmq-server
+systemctl status rabbitmq-server
+systemctl stop rabbitmq-server
 
-# sudo rabbitmq-plugins enable rabbitmq_management
+sudo rabbitmq-plugins enable rabbitmq_management
 // localhost:15672
 // rabbitMQ management: guest, guest
 ```
@@ -47,11 +34,7 @@ Mobile    TV   Laptop           [Different Queues]
 ## Direct Exchange
 
 - Message Key = "mobile"
-```
-                              ---> Mobile (key = mobile) ---> Consumer
-Producer ---> Direct Exchange      TV     (key = TV)     ---> Consumer
-                                   AC     (key = ac)     ---> Consumer
 
-```
+![Direct Exchange](images/direct-exchange.png "Direct Exchange")
 
 

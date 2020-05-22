@@ -32,7 +32,7 @@ public class HomeDataService {
 
 ## Autowiring
 
-### 1. By name
+**By name**
 
 ```java
 @Component
@@ -42,7 +42,7 @@ public class SortServiceImpl {
 }
 ```
 
-### 2. By `@Primary` higher priority than by name
+**By `@Primary` higher priority than by name**
 
 ```java
 @Component
@@ -51,9 +51,9 @@ public class BubbleSortAlgorithm implements SortAlgorithm {
 }
 ```
 
-### 3. `@Qualifier` (highest priority)
+**`@Qualifier` (highest priority)**
 
-- Hint to Spring which bean we want
+- Hint to Spring which bean we want.
 
 ```java
 @Component
@@ -76,26 +76,26 @@ public class SortServiceImpl {
 
 ## Scope of Beans
 
-Bean Scopes default Singleton.
-- Singleton - One instance per Spring Context
-- Prototype - New bean whenever requested
-- Request - One bean per HTTP request
-- Session - One instance per HTTP session
+- Bean Scopes default Singleton:
+    - Singleton - One instance per Spring Context.
+    - Prototype - New bean whenever requested.
+    - Request - One bean per HTTP request.
+    - Session - One instance per HTTP session.
 
 ### Singleton
 
 ```java
 public static void main(String[] args) {
     // ...
-	ApplicationContext applicationContext =
-	    SpringApplication.run(SpringIn5StepsBasicApplication.class, args);
+    ApplicationContext applicationContext =
+        SpringApplication.run(SpringIn5StepsBasicApplication.class, args);
 
-	BinarySearchImpl binarySearch = applicationContext.getBean(BinarySearchImpl.class);
-	BinarySearchImpl binarySearch1 = applicationContext.getBean(BinarySearchImpl.class);
+    BinarySearchImpl binarySearch = applicationContext.getBean(BinarySearchImpl.class);
+    BinarySearchImpl binarySearch1 = applicationContext.getBean(BinarySearchImpl.class);
 
     // The same output
-	System.out.println(binarySearch);
-	System.out.println(binarySearch1);
+    System.out.println(binarySearch);
+    System.out.println(binarySearch1);
 }
 ```
 
@@ -123,13 +123,12 @@ public class JdbcConne {
 }
 ```
 
-## :star: Singleton vs GOF singleton
+### :star: Singleton vs GOF singleton
 
-- GOF singleton - one singleton per JVM
-- Spring singleton - one singleton per ApplicationContext
+- GOF singleton - one singleton per JVM.
+- Spring singleton - one singleton per ApplicationContext.
 
-
-## Component Scan
+### Component Scan
 
 ```java
 @SpringBootApplication
@@ -138,9 +137,9 @@ public class Application {
 }
 ```
 
-## The lifecycle of a bean
+### The lifecycle of a bean
 
-- As soon as bean is created post construct will be called. Initialize content of bean. `@PostConstruct`
+- As soon as bean is created post construct will be called. Initialize content of bean `@PostConstruct`.
 
 ```java
 @RestController
@@ -159,13 +158,12 @@ public class StudentController {
 
 - `@PreDestroy`: Called just before bean is removed.
 
-
 ## CDI
 
-- JavaEE Dependency Injection Standard (JRS-330)
-    - @Inject `@Autowired`
-    - @Named `@Component` & `@Qualifier`
-    - @Singleton
+- JavaEE Dependency Injection Standard (JRS-330):
+    - `@Inject` - `@Autowired`
+    - `@Named` - `@Component` & `@Qualifier`
+    - `@Singleton`
 
 **SomeCDIBusiness.java**
 
@@ -234,7 +232,7 @@ public class BasicApplication {
 }
 ```
 
-## Application Context using xml
+### Application Context using xml
 
 ```xml
 <context:component-scan base-package="com.mybank.spring.basics"></context:component-scan>
@@ -257,24 +255,20 @@ try (ClassPathXmlApplicationContext applicationContext =
 // ...
 ```
 
-## Wrap up IOC, Application Context and BeanFactory
+### Wrap up IOC, Application Context and BeanFactory
 
-- IOC Container
-    - Manages beans
-    - Create instance of WelcomeService
-    - Creates beans for WelcomeController
-    - Autowire WelcomeService bean into the WelcomeController
-    - Wiring, creation of beans
-
-- Application Context
-    - Implementation of IOC
-- Bean Factory
-    - Implementation of IOC
-
+- IOC Container:
+    - Manages beans.
+    - Create instance of WelcomeService.
+    - Creates beans for WelcomeController.
+    - Autowire WelcomeService bean into the WelcomeController.
+    - Wiring, creation of beans.
+- Application Context - Implementation of IOC.
+- Bean Factory - Implementation of IOC.
 - ApplicationContext = **Bean Factory ++**
-    - Spring AOP features
-    - `I18n` capabilities
-    - `WebApplicationContext` for web app
+    - Spring AOP features.
+    - `I18n` capabilities.
+    - `WebApplicationContext` for web app.
 
 ### Without Spring
 
@@ -282,6 +276,7 @@ try (ClassPathXmlApplicationContext applicationContext =
 @RestController
 public class WelcomeController {
   private WelcomeService service = new WelcomeService();
+
   @RequestMapping("/welcome")
   public String welcome() {
       return service.retrieveMsg();
@@ -307,16 +302,16 @@ public class WelcomeController {
 }
 ```
 
-## Component Annotations
+### Component Annotations
 
-- `@Component` - generic component
-- `@Repository` - encapsulating storage, retrieval, typical for relational databases
-- `@Service` - Business service facade
-- `@Controller` - Controller in MVC design pattern
+- `@Component` - generic component.
+- `@Repository` - encapsulating storage, retrieval, typical for relational databases.
+- `@Service` - Business service facade.
+- `@Controller` - Controller in MVC design pattern.
 
-Classify components to different categories. Apply different logic for each category.
+> Classify components to different categories. Apply different logic for each category.
 
-## Read from properties file
+### Read from properties file
 
 **app.properties**
 
@@ -392,7 +387,7 @@ public class Configuration {
 spring.application.name=limits-service
 ```
 
-- Use
+- Use.
 
 ```java
 @RestController
@@ -408,20 +403,17 @@ public class LimitsConfigurationController {
 }
 ```
 
-
 ## Spring Boot Auto Configuration
 
-- :star: `@SpringBootApplication`
+- :star: `@SpringBootApplication`:
     - SpringContext
     - AutoConfiguration
     - ComponentScan
-
-- Spring boot looks at
-    - a) Frameworks available on **CLASSPATH**
-    - b) Existing configuration for the application based on these
-
-- Spring boot provides basic configuration needed to configure the application with these framework. This is called
-`AutoConfiguration`.
+- Spring boot looks at:
+    - Frameworks available on **CLASSPATH**.
+    - Existing configuration for the application based on these.
+- Spring boot provides basic configuration needed to configure the application with these framework.
+- This is called **AutoConfiguration**.
 
 ***
 
@@ -429,40 +421,39 @@ public class LimitsConfigurationController {
 
 ### Spring Framework
 
-- Most important feature of Spring Framework is Dependency Injection. At the core all Spring Modules is
-Dependency Injection or IOC Inversion of Control.
+- Most important feature of Spring Framework is Dependency Injection.
+- At the core all Spring Modules is Dependency Injection or IOC Inversion of Control.
 - Reduce duplication, plumbing code.
-- Integration with other framework
+- Integration with other framework.
 
 ### Spring MVC
 
-- Spring MVC framework provides decoupled way of developing web applications. With simple concepts like
-`DispatcherServlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop web applications.
+- Spring MVC framework provides decoupled way of developing web applications.
+- With simple concepts like `DispatcherServlet`, `ModelAndView` and `ViewResolver`, it makes it easy to develop
+web applications.
 
-## Spring boot
+### Spring boot
 
 **pom.xml**
 
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-actuator</artifactId> <!-- monitor application health -->
+    <artifactId>spring-boot-starter-actuator</artifactId> <!-- monitor application health -->
 </dependency>
-
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-devtools</artifactId> <!-- Restart quickly -->
 </dependency>
-
 <dependency>
     <groupId>org.springframework.data</groupId>
     <artifactId>spring-data-rest-hal-browser</artifactId>
 </dependency>
 ```
 
-## AOP
+### AOP
 
-### @Before
+**@Before**
 
 ```java
 package com.panda.spring.aop.business;
@@ -508,67 +499,67 @@ public class BeforeAspect {
 }
 ```
 
-### Join Point (pointcut)
+**Join Point (pointcut)**
 
-- "execution(* com.mybank.spring.aop.business.*.*(..))" : expression which defines what kind of methods want to intercept
+- "execution(* com.mybank.spring.aop.business.*.*(..))" - expression which defines what kind of methods want to intercept.
 
-### Advice
+**Advice**
 
 ```java
 logger.info("Validation before method call");
 logger.info("Intercepted method call - {}", joinPoint);
 ```
 
-- what should I do when I do interception
+- What should I do when I do interception.
 
-### Aspect
+**Aspect**
 
-- Combination of **Pointcut** and **Advice**
+- Combination of **Pointcut** and **Advice**.
 
-### JoinPoint
+**JoinPoint**
 
-- Specific interception of method call. Specific execution instance. If called 100 method calls they will be
-100 joinPoints.
+- Specific interception of method call.
+- Specific execution instance.
+- If called 100 method calls they will be 100 joinPoints.
+- Process where this whole thing gets executed is called:
+    - **Weaving** - process of implementing AOP around your method calls.
+    - **Weaver** - framework which implements Weaving.
 
-- Process where this whole thing gets executed is called
-    - **Weaving** - process of implementing AOP around your method calls
-    - **Weaver** - framework which implements Weaving
+**@After**
 
-### @After
-
-`@After` = `@AfterReturning` + `@AfterThrowing`
-
-```java
-    // When succeed. Intercept return value
-    @AfterReturning(
-            value = "execution(* com.mybank.spring.aop.business.*.*(..))",
-            returning = "result")
-    public void afterReturning(JoinPoint joinPoint, Object result) {
-        logger.info("{} returned with value {}", joinPoint, result);
-    }
-
-    // When failed. Intercept any thrown exception
-    @AfterThrowing(
-            value = "execution(* com.mybank.spring.aop.business.*.*(..))",
-            throwing = "exception")
-    public void afterThrowing(JoinPoint joinPoint, Object exception) {
-        logger.info("{} throw exception {}", joinPoint, exception);
-    }
-```
-
-### `@Around`
+- `@After` = `@AfterReturning` + `@AfterThrowing`
 
 ```java
-    @Around("execution(* com.mybank.spring.aop.business.*.*(..))")
-    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
-        long startTime = System.currentTimeMillis();
-        joinPoint.proceed();
-        long entTime = System.currentTimeMillis() - startTime;
-        logger.info("Time taken by this {} is {}", joinPoint, entTime);
-    }
+// When succeed. Intercept return value
+@AfterReturning(
+        value = "execution(* com.mybank.spring.aop.business.*.*(..))",
+        returning = "result")
+public void afterReturning(JoinPoint joinPoint, Object result) {
+    logger.info("{} returned with value {}", joinPoint, result);
+}
+
+// When failed. Intercept any thrown exception
+@AfterThrowing(
+        value = "execution(* com.mybank.spring.aop.business.*.*(..))",
+        throwing = "exception")
+public void afterThrowing(JoinPoint joinPoint, Object exception) {
+    logger.info("{} throw exception {}", joinPoint, exception);
+}
 ```
 
-### Best practices
+**`@Around`**
+
+```java
+@Around("execution(* com.mybank.spring.aop.business.*.*(..))")
+public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+    long startTime = System.currentTimeMillis();
+    joinPoint.proceed();
+    long entTime = System.currentTimeMillis() - startTime;
+    logger.info("Time taken by this {} is {}", joinPoint, entTime);
+}
+```
+
+**Best practices**
 
 ```java
 public class CommonJoinpointConfig {
@@ -629,7 +620,7 @@ public class AroundAspect {
 
 ## Spring Boot AutoConfiguration
 
-Some examples loaded by app context for us:
+- Some examples loaded by app context for us:
 
 ```
    DataSourceAutoConfiguration.EmbeddedDatabaseConfiguration:
@@ -705,7 +696,7 @@ public class PersonRepository {
 }
 ```
 
-## Spring Data JPA
+### Spring Data JPA
 
 **SpringDataRepository.java**
 
