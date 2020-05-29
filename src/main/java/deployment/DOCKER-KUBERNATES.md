@@ -236,7 +236,7 @@ docker run -it busybox sh
 
 ## Creating Docker Images
 
-![Creating Docker Images](images/creating-docker-image.png "Creating Docker Images")
+![Creating Docker Images](docker_img/creating-docker-image.png "Creating Docker Images")
 
 - **Creating a Dockerfile**:
     - Specify a base image.
@@ -263,13 +263,13 @@ docker build .
 docker run 81615c9d8a9c
 ```
 
-![Dockerfile Teardown](images/dockerfile-teardown.png "Dockerfile Teardown")
+![Dockerfile Teardown](docker_img/dockerfile-teardown.png "Dockerfile Teardown")
 
 ```
 Writing a Dockerfile == Being given a computer with no OS and being told to install Chrome
 ```
 
-![Create images steps](images/create-images-steps.png "Create images steps")
+![Create images steps](docker_img/create-images-steps.png "Create images steps")
 
 **Rebuilds with cache**
 
@@ -308,11 +308,11 @@ docker run 5a9f892320
 
 ## Project with Docker
 
-![NodeJS app steps](images/nodejs-app-steps.png "NodeJS app steps")
+![NodeJS app steps](docker_img/nodejs-app-steps.png "NodeJS app steps")
 
 **Below steps are not quite correct**
 
-![NodeJS app flow](images/nodejs-app-flow.png "NodeJS app flow")
+![NodeJS app flow](docker_img/nodejs-app-flow.png "NodeJS app flow")
 
 ### Base Images issues
 
@@ -512,7 +512,7 @@ create-react-app frontend
 
 **Dockerfile.dev**
 
-![Env Docker files](images/dev-prod-docker-files.png "Env Docker files")
+![Env Docker files](docker_img/dev-prod-docker-files.png "Env Docker files")
 
 ```Dockerfile
 FROM node:alpine
