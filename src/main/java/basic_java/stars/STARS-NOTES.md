@@ -141,49 +141,52 @@ System.gc();
 
 ## :star: Tuning the VM
 
-- -Xmx set the maximum heap size
-- -Xms set starting heap size
+- `-Xmx` set the maximum heap size
+- `-Xms` set starting heap size
 
 ```
 -Xmx512m -Xms150m
 ```
 
-PermGen Size
-- -XX:MaxPermSize
+- `-XX:MaxPermSize`
 
 ```
 -XX:MaxPermSize=256m
 ```
 
-- verbose:gc // print to the console when garbage collection takes place
+- `verbose:gc`
 
 ```
 -Xmx10m -verbose:gc // print garbage collection
 ```
 
 - Young generation = 1/3 heap size
-    - -Xmn set the size of young generation
-    - -Xms256m
+    - `-Xmn` set the size of young generation
+    - `-Xms256m`
 
 ### Generating heap dumps
 
 ```
--XX:HeapDumpOnOutOfMemory // creates a heap dump file "hprof"
+-XX:HeapDumpOnOutOfMemory
+
+creates a heap dump file "hprof"
 ```
 
 ### Choosing a GC
 
 Types of GC:
-- Serial : -XX:+UseSerialGC
-- Parallel young generation: -XX:+UseParallelGC
+- Serial: `-XX:+UseSerialGC`
+- Parallel young generation: `-XX:+UseParallelGC`
 - Mostly Concurrent:
-    - -XX:+UseConcMarkSweepGC
-    - -XX:+UseG1GC
+    - `-XX:+UseConcMarkSweepGC`
+    - `-XX:+UseG1GC`
 
-use -XX:+PrintCommandLineFlag to find out which is your default
+- use `-XX:+PrintCommandLineFlag` to find out which is your default
+- jmeter to generate load
 
-jmeter to generate load
+```
 apache-jmeter
+```
 
 ***
 
@@ -240,58 +243,7 @@ to the object created in the method. JVM recognizes this and removes the object 
 
 ***
 
-## :star: Tree
-
-```
-                ROOT
-               /    \
-            LEAF   CHILD
-                        \
-                        LEAF
-```
-
-- The binary TREE to 2 child nodes (left, right)
-- The binary tree
-    - Left node is less than root node
-    - Insert like find
-```
-                BALANCED                    UNBALANCED
-
-                     4                           1
-                   /   \                          \
-                  2     5                          2
-                /   \    \                          \
-               1      3    6                         3
-```
-
-- Balanced
-    - insert: O(log(N))
-    - find: O(log(N))
-- Unbalanced
-    - insert: O(N)
-    - find: O(N)
-
-- Traversing:
-    - inorder
-    - pre order
-    - post order
-
-```
-        TRAVERSING
-        INORDER                         PREORDER                    POSTORDER
-        left -> root -> right       root -> left -> right       left -> right -> root
-```
-
-***
-
 ## :star: Garbage Collector
-
-```
-        Young generation    Old Generation      Permanent Generation
-        +-----------------+-----------------+---------------------------+
-        | Eden            | Tenured         | Perm                      |
-        +-----------------+-----------------+---------------------------+
-```
 
 - Permanent generation is used to store metadata. Store String pool also.
 - Types of Garbage collectors:

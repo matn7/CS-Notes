@@ -342,7 +342,7 @@ canceled<boolean>[] = [f,f,f,f,f]
 
 5 is number ? YES move forward
 2 is number ? YES move forward
-C is number ? NO, id C ? YES look for not canceled round, canceled<boolean>[] = [f,t,t,f,f] move forward
+C is number ? NO, is C ? YES look for not canceled round, canceled<boolean>[] = [f,t,t,f,f] move forward
 D is number ? NO, is C ? NO, is D ? YES find previous valid not cancelled and double value is
     C cancelled ? YES, 2 cancelled ? YES, 5 cancelled ? NO, double 5
 + found 2 not cancelled and add them, is D cancelled NO use D, is C cancelled ? YES, is 2 canclled ? YES,
@@ -898,7 +898,7 @@ fd( Node* r ):
 
 ### Euclid Algorithm
 
-- FInd the Greatest Common Divisor between numbers A and B
+- Find the Greatest Common Divisor between numbers A and B
 
 ```
 10 and 2

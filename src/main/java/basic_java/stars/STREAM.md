@@ -1,21 +1,6 @@
 # Java Stream API
 
-### 1. What is a Stream
-### 2. How to use
-### 3. Iterating with Streams
-### 4. Min, Max, Comparator
-### 5. Unique
-### 6. Filtering
-### 7. FindAny, findFirst
-### 8. Statistics
-### 9. Grouping data
-### 10. Reduce and Flatmap
-### 11. Joining
-### 12. More Streams
-
-***
-
-## 1. What is a Stream
+## What is a Stream
 
 - An abstraction
 - Focus on the all instead of the parts
@@ -25,10 +10,9 @@
 
 ***
 
-## 2. How to use
+## How to use
 
-List<Student> :arrow_right: STREAM :arrow_right: STREAM :arrow_right: STREAM :arrow_right: Double avgGrade
-<br/>
+`List<Student>` :arrow_right: STREAM :arrow_right: STREAM :arrow_right: STREAM :arrow_right: Double avgGrade
 
 - :one: Concrete implementation Arrays, Maps, Lists, Set
     - MockData.getStudents()
@@ -82,7 +66,7 @@ public void declarative() {
 
 ***
 
-## 3. Iterating with Streams
+## Iterating with Streams
 
 ### Range
 
@@ -143,7 +127,7 @@ public void intStreamIterate() {
 
 ***
 
-## 4. Min, Max, Comparator
+## Min, Max, Comparator
 
 ### Min
 
@@ -176,7 +160,7 @@ public void max() {
 
 ***
 
-## 5. Unique
+## Unique
 
 ### Distinct
 
@@ -201,9 +185,9 @@ public void distinct() {
 
 ***
 
-## 6. Filtering
+## Filtering
 
-- Predicate<T> - filter method argumants, function converting T to boolean
+- `Predicate<T>` - filter method arguments, function converting `T` to `boolean`
 
 ### Filter
 
@@ -258,7 +242,7 @@ public void averageStudentGrade() {
 
 ***
 
-## 7. FindAny, findFirst
+## FindAny, findFirst
 
 ### FindAny
 
@@ -290,7 +274,7 @@ public void findAny() {
 
 ***
 
-## 8. Statistics
+## Statistics
 
 - Operation Min, Max returns Optional<T>, wraps value or alternative value if null
 
@@ -374,7 +358,7 @@ public void statistics() {
 
 ***
 
-## 9. Grouping data
+## Grouping data
 
 ### Collectors groupingBy
 
@@ -419,7 +403,7 @@ public void groupingAndCounting() {
 
 ***
 
-## 10. Reduce and Flatmap
+## Reduce and Flatmap
 
 - Reduce combine all elements in the stream and produce one single result.
 
@@ -465,7 +449,7 @@ public void flatMap() {
 
 ***
 
-## 11. Joining
+## Joining
 
 ### Joining
 
@@ -493,7 +477,7 @@ public void joinWithStream() {
 
 ***
 
-## 12. More Streams
+## More Streams
 
 ### Collectors toList
 

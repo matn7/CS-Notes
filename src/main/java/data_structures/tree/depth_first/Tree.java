@@ -26,7 +26,7 @@ public class Tree {
         if (root == null) {
             return;
         }
-
+        print(root);
         print(root.getLeftChild());
         print(root.getRightChild());
     }

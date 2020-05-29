@@ -912,19 +912,7 @@ or declared in the method's throws clause.
 - Checked exceptions are so called because both the Java compler and the Java virtual machine
 check to make sure this rule is obeyed.
 
-```
-                    * Throwable
-                    /        \
-            + Exception     * any class besides Exception ---> * any subclass
-           /        \
-* RuntimeException   + any class besides RuntimeException
-        |                       |
-* any subclass             + any subclass
-
-* An unchecked throwable
-+ An checked exception
-```
-
+![Exceptions](images/exceptions.png "Exceptions")
 
 
 

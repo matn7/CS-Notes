@@ -1,64 +1,70 @@
 ## Spring Cloud
 
-- Spring Cloud Config Server and Bus
-- Load Balancing (Ribbon, Feign)
-- Naming Server (Eureka)
-- Api Gateway (Zuul)
-- Distributed Tracing (Zipkin)
-- Fault Tolerance (Hystrix)
+- Spring Cloud Config Server and Bus.
+- Load Balancing (Ribbon, Feign).
+- Naming Server (Eureka).
+- Api Gateway (Zuul).
+- Distributed Tracing (Zipkin).
+- Fault Tolerance (Hystrix).
 
 ### Web Service
 
-- Service delivered over the web
-- Web Layer, Business Layer, Data Layer
-- Interoperability (supports .Net, Java, Python)
-- Format that other application can understand
+- Service delivered over the web.
+- Web Layer, Business Layer, Data Layer.
+- Interoperability (supports .Net, Java, Python).
+- Format that other application can understand.
 
-```
-Software system designed to support interoperable machine-to-machine interaction
-over a network.
-```
+> Software system designed to support interoperable machine-to-machine interaction over a network.
 
-- Designed for machine-to-machine (or app-to-app) interaction
-- Should be interoperable - Not platform dependent
-- Should allow communication over a network
+- Designed for machine-to-machine (or app-to-app) interaction.
+- Should be interoperable - Not platform dependent.
+- Should allow communication over a network.
 
-> How does data exchange between applications take place?
-- Request, Response
+**How does data exchange between applications take place?((
 
-> How make platform independent
-- Request, Response format platform independent (xml, json)
+- Request, Response.
 
-> How app know the format of Request and Response?
-- ServiceDefinition
+**How make platform independent**
+
+- Request, Response format platform independent (xml, json).
+
+**How app know the format of Request and Response?**
+
+- ServiceDefinition:
     - Request/Response Format
     - Request Structure
     - Response Structure
     - Endpoint
 
-> Request and Response
-- Request input, Response output
+**Request and Response**
 
-> Message Exchange Format
-- Format of request and response
+- Request input.
+- Response output.
 
-> Service Provider and Service Consumer
-- Web Service (service provider) hosts webservice
-- Consumer consuming webservice
+**Message Exchange Format((
 
-> Service Definition
-- Contract between service provider and consumer
-- ServiceDefinition
+- Format of request and response.
+
+**Service Provider and Service Consumer**
+
+- Web Service (service provider) hosts webservice.
+- Consumer consuming webservice.
+
+**Service Definition**
+
+- Contract between service provider and consumer.
+- ServiceDefinition:
     - Request/Response Format
     - Request Structure
     - Response Structure
     - Endpoint
 
-> Transport
-- How the service is called
-- HTTP and MQ
+**Transport**
 
-#### SOAP
+- How the service is called.
+- HTTP and MQ.
+
+### SOAP
 
 ```xml
 <getCourseDetailsRequest>
@@ -75,145 +81,106 @@ SOAP-ENV: Envelope
     (content)
 ```
 
-- Format
-    - SOAP XML Request
-    - SOAP XML Response
-- Transport
-    - SOAP over MQ
-    - SOAP over HTTP
-- Service Definition
-    - WSDL (Web Service Definition Language)
-        - Endpoint
-        - All Operations
-        - Request Structure
-        - Response Structure
+- Format:
+    - SOAP XML Request.
+    - SOAP XML Response.
+- Transport:
+    - SOAP over MQ.
+    - SOAP over HTTP.
+- Service Definition:
+    - WSDL (Web Service Definition Language):
+        - Endpoint.
+        - All Operations.
+        - Request Structure.
+        - Response Structure.
 
-#### REST
+### REST
 
-- Make best use of HTTP
+- Make best use of HTTP.
 
-```
-+--------------------------------------------------------------+
-| REST (REpresentional State Transfer)                         |
-+--------------------------------------------------------------+
-|                           HTTP                               |
-+-----------------------------+--------------------------------+
-| HTTP Methods (GET,PUT,POST) | HTTP Status Codes (200, 204..) |
-+-----------------------------+--------------------------------+
-```
+![REST](images/rest.png "REST")
 
-- POST header + body
+- POST - `header + body`.
 
 **Key abstraction - Resource**
 
-- A resource has an URI (Uniform Resource Identifier)
+- A resource has an URI (Uniform Resource Identifier):
     - /user/Majki/notes/1
     - /user/Majki/notes
     - /user/Majki
-- A resource can have different representations
+- A resource can have different representations:
     - XML
     - HTML
     - JSON
-
-- Create a User - POST /users
-- Delete a User - DELETE /users/1
-- Get all Users - GET /users
-- Get one User - GET /users/1
+- Create a User - `POST /users`
+- Delete a User - `DELETE /users/1`
+- Get all Users - `GET /users`
+- Get one User - `GET /users/1`
 
 **REST**
 
-- Data Exchange Format
-    - No Restriction. JSON is popular
-- Transport
-    - Only HTTP
-- Service Definition
-    - No Standard. WADL/Swagger/
+- Data Exchange Format - No Restriction. JSON is popular.
+- Transport - Only HTTP.
+- Service Definition - No Standard. `WADL/Swagger/`.
 
-#### REST vs SOAP
+### REST vs SOAP
 
-- Resrictions vs Architectural Approach
-- Data Exchange Format (only XML in SOAP), (any in REST)
-- Service Definition
-- Transport (SOAP any MQ, HTTP), (REST only HTTP)
-- Ease of implementation
+- Restrictions vs Architectural Approach.
+- Data Exchange Format (only XML in SOAP), (any in REST).
+- Service Definition.
+- Transport (SOAP any MQ, HTTP), (REST only HTTP).
+- Ease of implementation.
 
 ***
 
 ### Micro services
 
-- REST
-- Small deployable units
-- Cloud enabled
+- REST.
+- Small deployable units.
+- Cloud enabled.
 
-```
-microservice1 ---> microservice2 ---> microsevice3
-```
+![Microservices](images/microservices.png "Microservices")
 
 - Cloud enabled
 
-```
-microservice1   A1      A2                  [A1 A2 instances]
-      |
-microservice2   B1      B2      B3      B4
-      |
-microservice3   C1
-```
+![Microservices Instances](images/microservices-instances.png "Microservices Instances")
 
 ### Challenges
 
-- Bounded context
-```
-microservice1 ---> microservice2 ---> microsevice3
-```
-
-- Configuration management
-- Dynamic scale up and scale down
-- Visibility
+- Bounded context.
+- Configuration management.
+- Dynamic scale up and scale down.
+- Visibility.
 
 ### Spring Cloud
 
-- Configuration management
-    - Spring Cloud Config Server
+- Configuration management - Spring Cloud Config Server.
 
-```
-    Service1        Service2        Service3
-            \           |           /
-             SpringCloudConfigServer
-                        |
-                       Git
-```
+![Spring Cloud Config Server](images/spring-cloud-config-server.png "Spring Cloud Config Server")
 
-- Dynamic scale up and down
-    - Naming Server (Eureka)
-    - Ribbon (Client Side Load Balancing)
-    - Feign (Easier REST Clients)
+- Dynamic scale up and down:
+    - Naming Server (Eureka).
+    - Ribbon (Client Side Load Balancing).
+    - Feign (Easier REST Clients).
 
-```
-                    Service
-                       |
-                  ___Ribbon___  ---->   NamingServer
-                 /     |      \
-           Service1  Service2  Service3
-```
+![Spring Cloud Ribbon](images/spring-cloud-ribbon.png "Spring Cloud Ribbon")
 
-- Visibility and monitoring
-    - Zipkin Distributed Tracing
-    - Netflix API Gateway
-
-- Fault Tolerance
-    - Hystrix
+- Visibility and monitoring:
+    - Zipkin Distributed Tracing.
+    - Netflix API Gateway.
+- Fault Tolerance - Hystrix.
 
 ### Microservices advantages
 
-- New technology and processes
-- Dynamic scaling
-- Faster release cycles
+- New technology and processes.
+- Dynamic scaling.
+- Faster release cycles.
 
 ***
 
 ## Feign
 
-- Service invocation
+- Service invocation.
 
 ```java
 @FeignClient(name="currency-exchange-service", url="localhost:8000")
@@ -269,8 +236,8 @@ currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://loca
 
 ## Eureka Naming Server
 
-- Service registration
-- Service discovery
+- Service registration.
+- Service discovery.
 
 ```java
 @SpringBootApplication
@@ -314,10 +281,10 @@ public class CurrencyExchangeServiceApplication {
 
 ## API Gateways
 
-- Authentication, authorization and security
-- Rate Limits
-- Fault toleration
-- Service Aggregation
+- Authentication, authorization and security.
+- Rate Limits.
+- Fault toleration.
+- Service Aggregation.
 
 ### Run through zuul
 
@@ -325,48 +292,41 @@ http://localhost:8765/{application_name}/{uri}
 
 ### Spring cloud sluth
 
-- Adding unique id to request
+- Adding unique id to request.
 
 ### Zipkin distributed tracing
 
-- Centralized log
+- Centralized log.
 
-```
-        Service1    Service2    Service3
-                \       |     /
-                    RabbitMQ
-                        |
-              ZipkinDistributedTracing
-                        |
-                     Database
-```
+![Zipkin Distributed Tracing](images/zipkin-distributed-tracing.png "Zipkin Distributed Tracing")
 
 ### RabbitMQ
 
-```bash
-# sudo apt-get update
-# sudo apt -y install rabbitmq-server
-# sudo systemctl status  rabbitmq-server.service
-# systemctl is-enabled rabbitmq-server.service
-# sudo systemctl enable rabbitmq-server
-# sudo rabbitmq-plugins enable rabbitmq_management
-// listen tcp port
-# ss -tunelp | grep 15672
-# sudo ufw allow proto tcp from any to any port 5672,15672
+```console
+sudo apt-get update
+sudo apt -y install rabbitmq-server
+sudo systemctl status  rabbitmq-server.service
+systemctl is-enabled rabbitmq-server.service
+sudo systemctl enable rabbitmq-server
+sudo rabbitmq-plugins enable rabbitmq_management
+
+# listen tcp port
+ss -tunelp | grep 15672
+sudo ufw allow proto tcp from any to any port 5672,15672
 ```
 
 ### Zipkin
 
-```bash
-# java -jar zipkin-server-2.12.9-exec.jar
-// localhost:9411/zipkin
+```console
+java -jar zipkin-server-2.12.9-exec.jar
+# localhost:9411/zipkin
 
 # RABBIT_URI=amqp://localhost java -jar zipkin-server-2.12.9-exec.jar
 ```
 
 ### Spring cloud bus
 
-POST request http://localhost:8080/actuator/bus-refresh
+> POST request http://localhost:8080/actuator/bus-refresh
 
 ### Fault tolerance with Hystrix
 

@@ -42,12 +42,7 @@ operation, thus making it impossible to operate on it again.
 Without a terminal operation, the stream is not processed. Streams can not be reused. Once a
 terminal operation is called, the Stream object becomes unusable.
 
-```
-                Predicate     Function   Comparator
-                +--------+    +-----+    +--------+
-fruit Stream -> | filter | -> | map | -> | sorted | -> forEach
-                +--------+    +-----+    +--------+
-```
+![Stream](images/stream.png "Stream")
 
 ### Closing Streams
 
@@ -154,12 +149,8 @@ for (String str : iterable) {
 - This works because Iterable declares a single abstract method `Iterator<T> iterator()`. That makes it effectively
 a functional interface, implemented by a lambda that creates a new stream on each call.
 In general, a Stream operates as shown in the following image:
-```
-                Predicate
-                +--------+
-transactions -> | filter | -> collect
-                +--------+
-```
+
+![Stream Transactions](images/stream-transactions.png "Stream Transactions")
 
 - Argument checks are always performed, even without a terminal operation.
 
