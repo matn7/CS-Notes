@@ -598,6 +598,9 @@ gcloud compute instances list
 
 **GCE via console**
 
+```
+
+```
 
 
 ---

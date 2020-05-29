@@ -164,7 +164,7 @@ docker start bb656a399364
 docker kill bb656a399364
 ```
 
-- Multi-command container.
+### Multi-command container
 
 ```console
 redis-server
@@ -175,14 +175,19 @@ redis-cli
 
 - Execute an additional command in a container.
 
-> docker exec -it <conteiner_id> <command>
+> docker exec -it <container_id> <command>
 
 ```console
 docker run redis
+
+# it - type input to container
 docker exec -it b67b8ebf2444 redis-cli
+
+> set myvalue 5
+> get myvalue
 ```
 
-- STDIN, STDOUT, STDERR - communicate information to linux process.
+- STDIN, STDOUT, STDERR - **Communication Channels** - communicate information to linux process.
 - STDIN - communicate information into a process.
 - STDOUT - communicate information outside a process.
 - STDERR - line STDOUT but error info.
@@ -197,39 +202,50 @@ docker exec -it b67b8ebf2444 redis-cli
 docker exec -i b67b8ebf2444 redis-cli
 ```
 
-- Shell access to running container.
+**Shell access to running container**
 
 ```console
 docker exec -it b67b8ebf2444 sh
+
+redis-cli
 ```
 
-> bash | powershell | zsh | sh
+- Command Preprocessor:
+    - bash
+    - powershell
+    - zsh
+    - sh
 
-- Starting with a shell.
+**Starting with a shell**
+
+- Execute an additional command in a container.
 
 ```console
 docker run -it busybox sh
 ```
 
-- Container isolation.
+**Container isolation**
+
+```console
+docker run -it busybox sh
+```
+
+- No sharing data between separate running containers.
 
 ***
 
 ## Creating Docker Images
 
-> Dockerfile -> Docker Client -> Docker Server -> Usable Image!
+![Creating Docker Images](images/creating-docker-image.png "Creating Docker Images")
 
 - **Creating a Dockerfile**:
     - Specify a base image.
     - Run some commands to install additional programs.
     - Specify a command to run on container startup.
 
-```console
-docker build .
-docker run 81615c9d8a9c
-```
+### Building Dockerfile
 
-- Dockerfile.
+- Create an image that runs redis-server.
 
 ```Dockerfile
 # Use an existing docker image as a base
@@ -242,51 +258,91 @@ RUN apk add --update redis
 CMD ["redis-server"]
 ```
 
-- Instruction telling Docker Server what to do:
-    - `FROM alpine` - startup pre installed set of programs that are useful to you! Sort of OS.
-    - `RUN apk add --update redis` - package manager pre-installed in alpine base image.
-    - `CMD`
-- Alpine base image.
+```console
+docker build .
+docker run 81615c9d8a9c
+```
+
+![Dockerfile Teardown](images/dockerfile-teardown.png "Dockerfile Teardown")
+
+```
+Writing a Dockerfile == Being given a computer with no OS and being told to install Chrome
+```
+
+![Create images steps](images/create-images-steps.png "Create images steps")
+
+**Rebuilds with cache**
+
+**Tagging an Image**
+
+- `-t` - tag argument.
+    - `<docker_id>/<repo_project_name>:<version>`
+
+```console
+docker build -t majka/redis:latest .
+
+# run image
+docker run majka/redis
+```
+
+**Manual image generation**
+
+- Alpine base image - They come with a pre-installed set of programs that are useful.
 - Docker commit.
 
 ```console
 docker run -it alpine sh
-// apk add --update redis
+# inside image
+apk add --update redis
 
-// On second terminal
-docker ps // container id from previous step
+# On second terminal
+docker ps
+# container id from previous step
 docker commit -c 'CMD ["redis-server"]' d9332e55b0c9
 
-// Container id from previous step
-docker run 5a9f892320a6e23c098da4c84bbb22986b48bf1272f736a710011e696187c4ab
+# Container id from previous step
+docker run 5a9f892320
 ```
 
 ***
 
-## Docker project
+## Project with Docker
 
-- Node JS application.
-- `alpine` - in Docker world image as small and compact as possible.
+![NodeJS app steps](images/nodejs-app-steps.png "NodeJS app steps")
+
+**Below steps are not quite correct**
+
+![NodeJS app flow](images/nodejs-app-flow.png "NodeJS app flow")
+
+### Base Images issues
+
+- `alpine` - in Docker world image as small and compact as possible. No npm.
+- `node:alpine` - alpine version of node.
+
+**Missing files**
+
+- Make sure that created index.js and package.json are copied to container image. Container has its own filesystem.
 - `COPY` - instruction to move file and folders from our local system to filesystem in container.
+    - `COPY <path on your machine> <path inside container>`
 
 ```console
-// build with tar
+# build with tag
 docker build -t majka/simpleweb .
 docker run majka/simpleweb
 ```
 
-- Container port mapping.
+### Container port mapping
 
-> localhost port : container port
-> docker run -p 8080 : 8080 <image id>
-> docker run -p 8080:8080 majka/simpleweb
+- Any time someone make request on local network, take that request and port it to port in container.
+    - **localhost port : container port**
+- `docker run -p <localhost port> : <inside container port> <image id>`
+- `docker run -p 8080:8080 majka/simpleweb`
+- On windows test with: `http://192.168.99.100:8080/`
 
-- Shell into container.
+**Shell into container.**
 
 ```console
 docker run -it majka/simpleweb sh
-docker run -p 8080:8080 majka/simpleweb
-docker exec -it 15dbf4eedbbf sh
 ```
 
 - Any following command will be executed relative to this path in the container.
@@ -295,20 +351,28 @@ docker exec -it 15dbf4eedbbf sh
 WORKDIR /usr/app
 ```
 
-- Final version.
+**Another way to shell into container**
+
+```console
+docker exec -it 15dbf4eedbbf sh
+```
+
+**Dockerfile**
 
 ```Dockerfile
 # Specify a base image
 FROM node:alpine
 
+# Execute command relative to this path
 WORKDIR /usr/app
 
-# From current working directory to ./ in container
+# Copy required files for npm
 COPY ./package.json ./
 
 # Install some dependencies
-RUN npm Install
+RUN npm install
 
+# Copy rest of files
 COPY ./ ./
 
 # Default command
@@ -319,9 +383,12 @@ CMD ["npm", "start"]
 
 ## Docker Compose
 
-> Node App ---> Redis (in memory data store)
+![Node App - Redis](docker_img/node-app2.png "Node App - Redis")
 
-![Docker Compose](images/docker-compose.png "Docker Compose")
+- Node App.
+- Redis (in memory data store).
+
+![Docker Compose](docker_img/docker-compose.png "Docker Compose")
 
 - Node App.
 
@@ -347,10 +414,17 @@ docker build -t majka/visits:latest .
 docker run redis
 ```
 
-- Docker compose:
-    - Separate CLI that gets installed along with Docker.
-    - Used to start up multiple Docker containers at the same time.
-    - Automates some of the long-winded arguments we were passing to **docker run**.
+![Connecting Containers](docker_img/connecting-containers.png "Connecting Containers")
+
+**Docker Compose**
+
+- Separate CLI that gets installed along with Docker.
+- Used to start up multiple Docker containers at the same time.
+- Automates some of the long-winded arguments we were passing to 'docker run'.
+
+![Docker Compose](docker_img/docker-compose-file.png "Docker Compose")
+
+![Docker Compose File Structure](docker_img/docker-compose-structure.png "Docker Compose Structure")
 
 **docker-compose.yml**
 
@@ -365,9 +439,18 @@ services:
       - "4001:8081"
 ```
 
-> docker run myimage -----> docker-compose up
-> docker build .     -----> docker-compose up --build
-> docker run myimage
+**Docker Compose commands**
+
+| docker | docker-compose |
+|---|---|
+| docker run myimage | docker-compose up |
+| docker build . | docker-compose up --build |
+| docker run myimage | docker-compose up --build |
+
+```console
+docker-compose up
+docker-compose up --build
+```
 
 ```console
 docker run -d redis
@@ -389,12 +472,18 @@ docker-compose down
 
 **Container restarts**
 
+| Status Code | Description |
+|---|---|
+| 0 | We exited and everything is OK |
+| 1,2,3, etc | We exited because something went wrong! |
+
+
 | Case | Description |
 |---|---|
 | no | Never attempt to restart this container if it  stops or crashes |
 | always | If this container stops always attempt to restart it |
 | on-failure | Only restart if the container stops with an error code |
-| unless-stopped | Always restart unless forcibly stoped |
+| unless-stopped | Always restart unless forcibly stopped |
 
 **Docker Container status**
 
@@ -406,6 +495,8 @@ docker-compose ps
 
 ## Production Grade Workflow
 
+![Production workflow](images/production-grade-workflow.png "Production workflow")
+
 - React application.
 
 ```console
@@ -413,11 +504,15 @@ npm install -g create-react-app
 create-react-app frontend
 ```
 
-> npm run start       // Starts up dev server
-> npm run test        // Runs tests
-> npm run build       // Builds a production version of the application
+| Command | Description |
+|---|---|
+| npm run start | Starts up a development server. For development use only |
+| npm run test | Runs tests associated with the project |
+| npm run build | Builds a production version of the application |
 
 **Dockerfile.dev**
+
+![Env Docker files](images/dev-prod-docker-files.png "Env Docker files")
 
 ```Dockerfile
 FROM node:alpine
@@ -432,6 +527,8 @@ COPY . .
 CMD ["npm", "run", "start"]
 ```
 
+- Docker build with specified file `-f` option.
+
 ```console
 docker build -f Dockerfile.dev .
 docker run -p 3000:3000 <image_id>
@@ -443,6 +540,10 @@ docker run -p 3000:3000 <image_id>
 docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image_id>
 docker build -f Dockerfile.dev .
 docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app bef5d9a97007
+
+# Windows
+# http://192.168.99.100:3000/
+docker run -it -p 3000:3000 -v /app/node_modules -v ${PWD}:/app -e CHOKIDAR_USEPOLLING=true CONTAINER_ID
 ```
 
 ### Docker Compose
@@ -494,8 +595,10 @@ tests:
 docker-compose up --build
 docker attach 93e1fcc6fa7f
 
-// Shell into container
+# Shell into container
 docker exec -it 93e1fcc6fa7f sh
+# Run test inside container
+docker exec -it CONTAINER_ID npm run test
 ```
 
 ### NGINX
