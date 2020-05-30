@@ -495,7 +495,7 @@ docker-compose ps
 
 ## Production Grade Workflow
 
-![Production workflow](images/production-grade-workflow.png "Production workflow")
+![Production workflow](docker_img/production-grade-workflow.png "Production workflow")
 
 - React application.
 
@@ -510,9 +510,10 @@ create-react-app frontend
 | npm run test | Runs tests associated with the project |
 | npm run build | Builds a production version of the application |
 
-**Dockerfile.dev**
 
 ![Env Docker files](docker_img/dev-prod-docker-files.png "Env Docker files")
+
+**Dockerfile.dev**
 
 ```Dockerfile
 FROM node:alpine
@@ -568,17 +569,20 @@ services:
 docker-compose up
 ```
 
-- Run test.
+**Executing tests**
 
 ```console
 npm run test
 
 docker build -f Dockerfile.dev .
-docker run -it d3d34d267455 npm run test
+docker run -it CONTAINER_ID npm run test
 
+# Live updating test
 docker-compose up
-docker exec -it 9eb9e2d28f6f npm run test
+docker exec -it CONTAINER_ID npm run test
 ```
+
+**Docker compose for running tests**
 
 ```Dockerfile
 tests:
@@ -588,34 +592,48 @@ tests:
     volumes:
         - /app/node_modules
         - .:/app
+    # override command
     command: ["npm", "run", "test"]
 ```
 
+- `docker attach` - attach to container stdin, stdout, stderr to primary process.
+    - Can now execute commands from our terminal.
+
 ```console
 docker-compose up --build
-docker attach 93e1fcc6fa7f
+docker attach CONTAINER_ID
 
 # Shell into container
-docker exec -it 93e1fcc6fa7f sh
+docker exec -it CONTAINER_ID sh
+
 # Run test inside container
 docker exec -it CONTAINER_ID npm run test
 ```
 
 ### NGINX
 
+**Dev Environment**
+
+![Dev Environment](docker_img/dev-env.png "Dev Environment")
+
+**Prod Environment**
+
+![Prod Environment](docker_img/prod-env.png "Prod Environment")
+
+*Prod Environment nginx**
+
+![Prod Environment Nginx](docker_img/prod-env-nginx.png "Prod Environment Nginx")
+
 - Web server. Taking incoming traffic, route it and response to it.
 
 **Multi-Step Docker Builds**
 
-```
-1. Use node:alpine
-2. Copy the package.json file
-3. Install dependencies     // deps only needed to execute 'npm run build'
-4. Run 'npm run build'
-5. Start nginx              // Where nginx compong from ?
-```
+![Multi Step Build Prod](docker_img/multi-step-build.png "Multi Step Build Prod")
+
+![Multi Step Build Process](docker_img/multi-docker-build-run-phases.png "Multi Step Build Process")
 
 ```Dockerfile
+# Build Phase
 FROM node:alpine as builder
 WORKDIR '/app'
 COPY package.json .
@@ -623,14 +641,17 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+# Run Phase
 FROM nginx
 COPY --from=builder /app/build /usr/share/nginx/html
 ```
 
+**Running nginx**
+
 ```console
 docker build .
-// 80 in nginx port inside docker container
-docker run -p 8080:80 c2edc713ec9c
+# 80 in nginx port inside docker container
+docker run -p 8080:80 CONTAINER_ID
 ```
 
 ***
