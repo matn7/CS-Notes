@@ -620,7 +620,7 @@ docker exec -it CONTAINER_ID npm run test
 
 ![Prod Environment](docker_img/prod-env.png "Prod Environment")
 
-*Prod Environment nginx**
+**Prod Environment nginx**
 
 ![Prod Environment Nginx](docker_img/prod-env-nginx.png "Prod Environment Nginx")
 
@@ -660,21 +660,13 @@ docker run -p 8080:80 CONTAINER_ID
 
 ### Github Setup
 
-```
-1. Create github repo.
-2. Create local git repo.
-3. Connect local git to github remote.
-4. Push work to github.
-```
+![Github setup](docker_img/github-flow.png "Github setup")
 
 ### Travic CI
 
-```
-1. Tell Travis we need a copy of docker running.
-2. Build our image using Dockerfile.dev.
-3. Tell Travis how to run our test suite.
-4. Tell travis how to deploy our code to AWS.
-```
+![Travis CI Flow](docker_img/travis-ci-flow.png "Travis CI Flow")
+
+![Travis CI Flow](docker_img/travis-yml-flow.png "Travis CI Flow")
 
 ```yml
 sudo: required
@@ -688,28 +680,51 @@ script:
 
 ### AWS Elastic Beanstalk
 
+![Elastic beanstalk](docker_img/elastic-beanstalk.png "Elastic beanstalk")
+
+- Automatically scale up.
+
+**travis config for deployment**
+
 **.travis.yml**
 
 ```yml
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t matn7/docker-react -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true matn7/docker-react npm run test
+
 deploy:
   provider: elasticbeanstalk
-  region: us-west-2
+  region: "us-east-1"
   app: "docker"
   env: "Docker-env"
-  bucket-name: "elastickeanstalk-us-west-2-<some_nums>"
-  bucket-path: "docker"
+  bucket_name: "elasticbeanstalk-us-east-1-<ID>"
+  bucket_path: "docker"
   on:
-    branch: "master"
-  access_key_id:
-    secure: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: $AWS_SECRET_KEY
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
 ```
 
-**Exposing port in Dockerfile**
+**Exposing port in Dockerfile - final version**
 
 ```Dockerfile
+FROM node:alpine
+WORKDIR '/app'
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx
 EXPOSE 80
+COPY --from=0 /app/build /usr/share/nginx/html
 ```
 
 ***
@@ -723,11 +738,20 @@ EXPOSE 80
 
 **Multi container**
 
+- Redis - In memory data store.
+- Postgres - Database
+
 ![Deployment](docker_img/deployment.png "Deployment")
+
+**Application Architecture**
+
+![Application Architecture](docker_img/multi-container-app-arch.png "Application Architecture")
 
 ```console
 create-react-app client
 ```
+
+**client - Dockerfile**
 
 ```Dockerfile
 FROM node:alpine
@@ -742,7 +766,7 @@ CMD ["npm", "run", "start"]
 docker build -f Dockerfile.dev .
 ```
 
-**Dockerfile**
+**server - Dockerfile**
 
 ```Dockerfile
 FROM node:alpine
@@ -753,7 +777,57 @@ COPY . .
 CMD ["npm", "run", "dev"]
 ```
 
-**yml**
+**worker - Dockerfile**
+
+```Dockerfile
+FROM node:alpine
+WORKDIR "/app"
+COPY ./package.json ./
+RUN npm install
+COPY . .
+CMD ["npm", "run", "dev"]
+```
+
+**Multi Service docker compose**
+
+![Multi Service docker-compose](docker_img/multi-container-docker-compose.png "Multi Service docker-compose")
+
+### NGINX Path Routing
+
+- NGINX will look for all of these requests (index.html, main.js, values/all, values/current) and decide
+which server route request to.
+
+![Nginx](docker_img/nginx.png "Nginx")
+
+![Routing with nginx](docker_img/routing-with-nginx.png "Routing with nginx")
+
+**default.conf**
+
+```conf
+upstream client {
+    server client:3000;
+}
+
+upstream api {
+    server api:5000;
+}
+
+server {
+    listen: 80;
+
+    location / {
+        proxy_pass http://client;
+    }
+
+    location /api {
+        rewrite /api/(.*) /$1 break;
+        proxy_pass http://api;
+    }
+}
+```
+
+
+**docker-compose.yml**
 
 ```yml
 version: '3'
@@ -800,48 +874,11 @@ services:
       - ./worker:/app
 ```
 
-### NGINX Path Routing
-
-- NGINX will look for all of these requests (index.html, main.js, values/all, values/current) and decide
-which server route request to.
-
-![Alt text](docker_img/nginx.png "Nginx")
-
-**default.conf**
-
-```conf
-upstream client {
-    server client:3000;
-}
-
-upstream api {
-    server api:5000;
-}
-
-server {
-    listen: 80;
-
-    location / {
-        proxy_pass http://client;
-    }
-
-    location /api {
-        rewrite /api/(.*) /$1 break;
-        proxy_pass http://api;
-    }
-}
-```
-
-### Nginx Image
-
-```console
-docker-compose up --build
-```
-
-**test app**
 ```
 http://localhost:3050/
 ```
+
+***
 
 ## CI flow for Multiple Images
 
@@ -849,13 +886,7 @@ http://localhost:3050/
 
 ![Multiple NGINX](docker_img/prod-multiple-nginx.png "Multiple NGINX")
 
-1. Push code to github.
-2. Travis automatically pulls repo.
-3. Travis builds a test image, tests code.
-4. Travis builds prod images.
-5. Travis pushes build prod image to Docker Hub.
-6. Travis pushes project to AWS EB.
-7. EB pulls image from Docker Hub, deploys.
+![Multi Container Setup](docker_img/production-multi-container-deployment.png "Multi Container Setup")
 
 **Dockerfile**
 
