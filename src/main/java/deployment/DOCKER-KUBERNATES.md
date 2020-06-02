@@ -884,11 +884,9 @@ http://localhost:3050/
 
 ### Multi-Container Deployments
 
-![Multiple NGINX](docker_img/prod-multiple-nginx.png "Multiple NGINX")
-
 ![Multi Container Setup](docker_img/production-multi-container-deployment.png "Multi Container Setup")
 
-**Dockerfile**
+**worker, server - Dockerfile**
 
 ```Dockerfile
 FROM node:alpine
@@ -897,6 +895,48 @@ COPY ./package.json ./
 RUN npm install
 COPY . .
 CMD ["npm", "run", "start"]
+```
+
+**nginx - Dockerfile**
+
+```Dockerfile
+FROM nginx
+COPY ./default.conf /etc/nginx/conf.d/default.conf
+```
+
+### Multiple Nginx instances
+
+![Multiple NGINX](docker_img/prod-multiple-nginx.png "Multiple NGINX")
+
+### Travis configuration
+
+![Multi Container Travis](docker_img/multi-container-travis.png "Multi Container Travis")
+
+**.travis.yml**
+
+```yml
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t [:secure:]/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true [:secure:]/react-test npm test
+
+after_success:
+  - docker build -t [:secure:]/multi-client ./client
+  - docker build -t [:secure:]/multi-nginx ./nginx
+  - docker build -t [:secure:]/multi-server ./server
+  - docker build -t [:secure:]/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker jub
+  - docker push [:secure:]/multi-client
+  - docker push [:secure:]/multi-nginx
+  - docker push [:secure:]/multi-server
+  - docker push [:secure:]/multi-worker
 ```
 
 ***
@@ -911,6 +951,12 @@ CMD ["npm", "run", "start"]
 Amazon ECS tasks definitions
 ```
 
+**ECS**
+
+- Tell Elastic Beanstalk how to run containers.
+
+![ECS](docker_img/ecs.png "ECS")
+
 **nginx-links**
 
 ![Alt text](docker_img/nginx-links.png "Multiple container problem")
@@ -921,7 +967,7 @@ aws.amazon.com
 
 ### Managed Data Service Provider
 
-![Alt text](docker_img/prod-arch.png "Production Architecture")
+![Production Architecture](docker_img/prod-arch.png "Production Architecture")
 
 **AWS Elastic Cache**
 
@@ -942,14 +988,26 @@ aws.amazon.com
 
 ### AWS VPC's and Security Groups
 
+![Virtual public cloud](docker_img/vpc-overview.png "Virtual public cloud")
+
 - EB Instance.
 - EC (Redis).
 - RDS (Postgres).
 - Setup links between EB and EC and RDS.
 
-![Alt text](docker_img/vpc.png "Virtual public cloud")
+**VPC**
+
+- Private little network.
+- Isolated to just your account.
+- Implements Security rules.
+
+![Virtual public cloud](docker_img/vpc.png "Virtual public cloud")
 
 **Security Group (Firewall Rules)**
+
+![VPC - security groups](docker_img/vpc-security-groups.png "VPC - security groups")
+
+![VPC - new security groups](docker_img/vpc-new-security-group.png "VPC - new security groups")
 
 - Allow any incoming traffic on Port 80 from any IP.
 - Allow traffic on Port 3010 from IP **172.0.40.2**.
@@ -959,6 +1017,91 @@ aws.amazon.com
 ### RDS Database Creation
 
 ### ElastiCache Redis
+
+**Dockerrun.aws.json**
+
+```json
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "[:secure:]/multi-client",
+            "hostname": "client",
+            "essential": false,
+            "memory": 128
+        },
+        {
+            "name": "server",
+            "image": "[:secure:]/multi-server",
+            "hostname": "api",
+            "essential": false,
+            "memory": 128
+        },
+        {
+            "name": "worker",
+            "image": "[:secure:]/multi-worker",
+            "hostname": "worker",
+            "essential": false,
+            "memory": 128
+        },
+        {
+            "name": "nginx",
+            "image": "[:secure:]/multi-nginx",
+            "hostname": "nginx",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"],
+            "memory": 128
+        }
+    ]
+}
+```
+
+**.travis.yml**
+
+```yml
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t [:secure:]/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true [:secure:]/react-test npm test
+  
+after_success:
+  - docker build -t [:secure:]/multi-client ./client
+  - docker build -t [:secure:]/multi-nginx ./nginx
+  - docker build -t [:secure:]/multi-server ./server
+  - docker build -t [:secure:]/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker jub
+  - docker push [:secure:]/multi-client
+  - docker push [:secure:]/multi-nginx
+  - docker push [:secure:]/multi-server
+  - docker push [:secure:]/multi-worker
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-east-1-NUM
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY 
+```
 
 ***
 
