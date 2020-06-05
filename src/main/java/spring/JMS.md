@@ -159,29 +159,231 @@ sudo rabbitmq-plugins enable rabbitmq_management
     - Makes migration to a non-JMS provider less painful
         - Important since messaging is becoming more and more generic and abstracted
 
+***
 
+##Java Message Service
 
+## Messaging
 
+![Messaging](images/messaging.png "Messaging")
 
+### Why Messaging?
 
+- Heterogeneous Integration.
+- Loosely Couples.
+- Reduce System Bottleneck - Scalable App.
+- Flexibility and Agility.
 
+## What is JMS?
 
+![JMS](images/jms.png "JMS")
 
+## Messaging Models
 
+- Point to Point.
+- Publish / Subscribe.
 
+**Point to Point**
 
+- Message put into queue is consumed only once.
+- Async Fire and Forget.
+- Synchronous request/reply messaging.
+- Example: Mail.
 
+![P2P](images/p2p.png "P2P")
 
+**Publish / Subscribe**
 
+- Producer sends message to topic.
+- JMS Provider ensures that message is sent to all Subscribers.
+- Example: News Paper Subscription.
 
+![Publish / Subscribe](images/pub-sub.png "Publish / Subscribe")
 
+### Apache ActiveMQ Artemis
 
+- JMS Providers:
+    - JMS Specification.
+    - Apache ActiveMQ Artemis.    
 
+![Apache ActiveMQ Artemis](images/active-mq-artemis.png "Apache ActiveMQ Artemis")
 
+**Create the Message Broker**
 
+```console
+cd apache-artemis/bin
+./artemis create some-path/mybroker
 
+cd some-path/mybroker/bin
+./artemis run
 
+# configure queues
+cd some-path/mybroker/bin
+cd etc
+vim broker.xml
+```
 
+## Messaging examples
+
+### JMS 1.X API
+
+- ConnectionFactory - JMS provider.
+- Destination - queue or topic. Access from JNDI.
+- Connection
+- Session:
+    - Message
+    - MessageProducer
+    - MessageConsumer
+
+**Configure jndi**
+
+```properties
+java.naming.factory.initial=org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory
+connectionFactory.ConnectionFactory=tcp://localhost:61616
+queue.queue/myQueue=myQueue
+```
+
+**Writing a message to queue**
+
+- Create a Connection.
+- Create a session.
+- Look up for the Destination.
+- Send/Receive Message.
+
+```java
+InitialContext initialContext = null;
+Connection connection = null;
+try {
+    initialContext = new InitialContext();
+    ConnectionFactory cf = (ConnectionFactory) initialContext.lookup("ConnectionFactory");
+    connection = cf.createConnection();
+    Session session = connection.createSession();
+    Queue queue = (Queue) initialContext.lookup("queue/myQueue");
+    MessageProducer producer = session.createProducer(queue);
+    TextMessage message = session.createTextMessage("I am message creator");
+    producer.send(message);
+    System.out.println("Message Sent: " + message.getText());
+
+    // consume message part
+} catch (NamingException e) {
+    e.printStackTrace();
+} catch (JMSException e) {
+    e.printStackTrace();
+} finally {
+    // close initialContext and connection
+}
+```
+
+**Consume message from the Queue**
+
+```java
+// consume message
+MessageConsumer consumer = session.createConsumer(queue);
+connection.start();
+TextMessage messageReceived = (TextMessage) consumer.receive(5000);
+System.out.printf("Message Received: " + messageReceived.getText());
+```
+
+**Publish Subscribe**
+
+*jndi.properties*
+
+```properties
+topic.topic/myTopic=myTopic
+```
+
+```java
+InitialContext initialContext = new InitialContext();
+Topic topic = (Topic) initialContext.lookup("topic/myTopic");
+ConnectionFactory cf = (ConnectionFactory) initialContext.lookup("ConnectionFactory");
+Connection connection = cf.createConnection();
+
+Session session = connection.createSession();
+MessageProducer producer = session.createProducer(topic);
+
+MessageConsumer consumer1 = session.createConsumer(topic);
+MessageConsumer consumer2 = session.createConsumer(topic);
+
+TextMessage message = session.createTextMessage("I am message creator topic");
+
+producer.send(message);
+
+connection.start();
+
+TextMessage message1 = (TextMessage) consumer1.receive();
+System.out.println("Consumer 1 message received: " + message1.getText());
+
+TextMessage message2 = (TextMessage) consumer2.receive();
+System.out.println("Consumer 2 message received: " + message2.getText());
+
+connection.close();
+initialContext.close();
+```
+
+**Use QueueBrawser**
+
+```java
+QueueBrowser browser = session.createBrowser(queue);
+Enumeration messagesEnum = browser.getEnumeration();
+while (messagesEnum.hasMoreElements()) {
+    TextMessage eachMessage = (TextMessage) messagesEnum.nextElement();
+    System.out.println("Browsing: " + eachMessage.getText());
+}
+```
+
+### JMS 2.X
+
+**Simple API**
+
+```
+JMSContext = Connection + Session
+
+JMSProducer
+                implements java.lang.AutoCloseable
+JMSConsumer
+```
+
+**Message**
+- Body
+- Header
+- Properties
+
+**JEE7**
+
+```java
+@Inject
+@JMSConnectionFactory("jms/connectionFactory")
+private JMSContext context;
+
+@Resource(lookup = "jms/dataQueue")
+private Queue dataQueue;
+```
+
+**ConnectionFactory**
+
+```java
+@JMSConnectionFactoryDefinitions
+@JMSConnectionFactoryDefinition
+```
+
+```xml
+<jms-connection-factory>
+```
+
+**JMS 2.0 demo**
+
+```java
+InitialContext context = new InitialContext();
+Queue queue = (Queue) context.lookup("queue/myQueue");
+
+try (ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory();
+     JMSContext jmsContext = cf.createContext()) {
+    jmsContext.createProducer().send(queue, "JMS 2 demo message");
+    final String messageReceived = jmsContext.createConsumer(queue).receiveBody(String.class);
+
+    System.out.println("MessageReceived --> " + messageReceived);
+}
+```
 
 
 

@@ -1111,13 +1111,13 @@ deploy:
 
 ![Scaling Strategy](docker_img/elasticbeanstalkscalingstrategy.png "Scaling Strategy")
 
-**Prefer Solution**
+**Preferred Solution**
 
-![Alt text](docker_img/scaling_preffered.png "Scaling prefered solution")
+![Preferred Solution](docker_img/scaling_preffered.png "Scaling prefered solution")
 
 **Kubernetes Cluster**
 
-![Alt text](docker_img/kubernates-cluster.png "Kubernates Cluster")
+![Kubernetes Cluster](docker_img/kubernates-cluster.png "Kubernates Cluster")
 
 - What is Kubernetes?
     - System for running many different containers over multiple different machines.
@@ -1126,14 +1126,59 @@ deploy:
 
 ### Kubernetes DEV and PROD
 
-- Development - `minikube`.
-- Production:
-    - Amazon Elastic Container Service for Kubernetes (EKS).
-    - Google Cloud Kubernetes Engine (GKE).
+![Working with Kubernetes](docker_img/working-with-kube-dev-prod.png "Working wiih Kubernetes")
 
-![Alt text](docker_img/kubernates-local.png "Kubernetes local")
+![Kubernetes local](docker_img/kubernates-local.png "Kubernetes local")
+
+![Kubernetes local development](docker_img/local-kube-dev.png "Kubernetes local development")
+
+```console
+minikube start
+minikube status
+kubectl cluster-info
+```
+
+![Docker compose kubertates](docker_img/docker-compose-kube.png "Docker compose Kubernetes")
+
+![Docker compose vs kubertates](docker_img/mapping-knowledge.png "Docker compose vs Kubernetes")
 
 ### Object Types and API Versions
+
+![Object types and API version](docker_img/object-types-and-api.png "Object types and API version")
+
+**client-pod.yaml**
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-pod
+  labels:
+    component: web
+spec:
+  containers:
+    - name: client
+      image: [:secure:]/multi-client
+      ports:
+        - containerPort: 3000
+```
+
+**client-node-port.yaml**
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort
+  ports:
+    - ports: 3050
+      targetPort: 3000
+      nodePort: 31515
+  selector:
+    component: web
+```
 
 - Config File:
     - Pod - Run a container.
@@ -1141,76 +1186,85 @@ deploy:
     - StatefulSet.
     - ReplicaController.
 
-> Config File - Used to create Objects.
-> Objects server - different purposes, running a container, monitoring a container, setting up networking.
-
 ![Object types](docker_img/objectTypes.png "Object types")
 
 ### Pod
 
+- Node used by kubernetes to run some number of different objects.
+- Smallest thing that we can deploy. 
+- Can run one or more container inside it.
+
 ![Alt text](docker_img/pod.png "pod")
 
-- Containers related to each others.
-- Pod for postgres:
-    - postgres container.
-    - logger container  - support container.
-    - backup manager    - support container.
+- Containers related to each other.
+
+![Postgres Pod](docker_img/postgres-pod.png "Postgres Pod")
 
 **Object Types**
 
 - Pods - Runs one or more closely related containers.
-- Services - Sets up networking in a Kubernetes Cluster:
-    - ClusterIP.
+- Services - Sets up networking in a Kubernetes Cluster.
+    - ClusterIP
     - NodePort - Exposes a container to the outside world (for DEV only).
-    - LoadBalancer.
-    - Ingress.
+    - LoadBalancer
+    - Ingress
 
 ![Service Config](docker_img/ServiceConfig.png "Service Config")
 
+![Serivce Config in depth](docker_img/service-config-in-depth.png "Service Config in depth")
+
+**NodePort Service**
+
+![NodePort Service](docker_img/node-port-service.png "NodePort Service")
+
+### Connecting to Running containers
+
 **Feed a config file to Kubectl**
 
-> kubectl apply -f <filename>
+```console
+kubectl apply -f <filename>
+```
 
 ```console
 kubectl apply -f client-node-port.yaml
 kubectl apply -f client-pod.yaml
 
-// print status of all running pods
+# print status of all running pods
 kubectl get pods
+# NAME         READY   STATUS    RESTARTS   AGE
+# client-pod   1/1     Running   0          93s
 
-// print the status of all running services
+# print the status of all running services
 kubectl get services
+# NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+# client-node-port   NodePort    10.106.137.174   <none>        3050:31515/TCP   71s
+# kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          29h
 
-// print ip address of minikube vm
+# print ip address of minikube vm
 minikube ip
 
-// 192.168.99.100:31515
+# 192.168.99.100:31515
 ```
 
 ### Deployment Process
-
-```console
-kubectl get pods
-docker ps
-
-docker kill <pod_container_id>
-docker ps
-// container still there
-```
 
 ![Deployment Flow](docker_img/deployment-flow.png "Deployment Flow")
 
 ### Imperative vs Declarative Deployments
 
-- Kubernetes - is a system to deploy containerized apps.
-- Nodes - are individual machines (or vm's) that run containers.
-- Master - are machines (or vm's) with a set of programs to manage nodes.
+- Kubernetes is a system to deploy containerized apps.
+- **Nodes** are individual machines (or vm's) that run containers.
+- **Master** are machines (or vm's) with a set of programs to manage nodes.
 - Kubernetes didn't build our images - it got them from somewhere else (DockerHub).
 - Kubernetes (the master) decided where to run each container - each node can run a dissimilar set of containers.
 - To deploy something, we update the desired state of the master with a config file.
 - The master works constantly to meet your desired state.
-- **Imperative Deployments** - Do exactly these steps to arrive at this container setup.
-- **Declarative Deployments** - Our container setup should look like this, make it happen.
+
+![Imperative vs Declarative](docker_img/imperative-vs-declarative.png "Imperative vs Declarative")
+
+- Always use Declarative Approach.
+
+***
 
 ## Maintaining Containers
 
@@ -1225,19 +1279,23 @@ docker ps
 
 ```console
 kubectl apply -f client-pod.yaml
-// pod/client-pod configured
+# pod/client-pod configured
 
-// Get detailed info about object
+# Get detailed info about object
 kubectl describe pod client-pod
 
 kubectl apply -f client-pod.yaml
 ```
 
+**Limitations in config updates**
+
 - Pod Config:
     - containers - can't be updated.
-    - name       - can't be updated.
-    - port       - can't be updated.
-    - image      - can be updated.
+    - name - can't be updated.
+    - port - can't be updated.
+    - image - can be updated.
+    
+![Pod config update](docker_img/pod-config-update.png "Pod config update")    
 
 **Object Types**
 
@@ -1253,19 +1311,47 @@ right number exists.
 | Rarely used directly in production | Good for dev |
 | | Good for production |
 
+![Deployment Object](docker_img/deployment-obj.png "Deployment Object")   
+
+### Deployment configuration file
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: [:secure:]/multi-client
+          ports:
+            - containerPort: 3000
+```
+
 ### Applying a Deployment
 
 ```console
 kubectl get pods
+# delete pod
 kubectl delete -f client-pod.yaml
 kubectl get pods
 
+# apply deployment object
 kubectl apply -f client-deployment.yaml
 kubectl get pods
 kubectl get deployments
 
 minikube ip
-// 192.168.99.100:31515
+# 192.168.99.100:31515
 
 kubectl get pods -o wide
 
@@ -1273,48 +1359,83 @@ kubectl get deployments
 kubectl describe pods
 ```
 
-**Update Image Version**
+**Why use service?**
+
+![Kubernetes](docker_img/kubernetes-service.png "Kubernetes")
+
+- Each pods are identified from ip address.
+- How to connect directly to pod?
+- Service looks at pod that maches it selector and automatically route traffic over to.
+
+**Scaling and Changing Deployments**
+
+- Change replicas in yaml file to 5.
+
+```yaml
+...
+spec:
+  replicas: 5
+...
+```
+
+```console
+kubectl apply -f client-deployment.yaml
+
+kubectl get deployments
+# NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+# client-deployment   4/5     5            4           23m
+
+kubectl get pods
+# NAME                                 READY   STATUS    RESTARTS   AGE
+# client-deployment-79cb4cc8f5-2ltfj   1/1     Running   0          33s
+# client-deployment-79cb4cc8f5-6tdkx   1/1     Running   0          33s
+# client-deployment-79cb4cc8f5-8svl2   1/1     Running   0          33s
+# client-deployment-79cb4cc8f5-k59kb   1/1     Running   0          2m57s
+# client-deployment-79cb4cc8f5-wdv2k   1/1     Running   0          33s
+```
+
+### Update Image Version
 
 - Change deployment to use multi-client again.
 - Update the multi-client image, push to Docker-Hub.
 - Get the deployment to recreate our pods with the latest version of multi-client.
 
-```console
-minikube ip
-// 192.168.0.1:31515
-```
-
 ### Triggering Deployment updates
 
 ```console
 kubectl apply -f client-deployment.yaml
+# deployment.apps/client-deployment unchanged
 ```
 
-- Manually delete pods to get the deployment to recreate them with the latest version.
-- Tag built images with a real version number and specify version in the config file:
-    - Adds an extra step in the production deployment process.
-- Use an imperative command to update the image version the deployment should use:
-    - Uses an imperative command.
-
-```console
-docker build -t majki/multi-client:v5 .
-docker push majki/multi-client:v5
-```
+![Kubernetes](docker_img/triggering-deployment-updates.png "Kubernetes")
 
 **Imperative command to update image**
 
-> kubectl set image <Object_type> / <object_name> <container_name> = <new image to use>
+- Tag the image with a version number, push to docker hub.
 
 ```console
-kubectl set image deployment/client-deployment client=majki/multi-client:v5
+docker build -t [:secure:]/multi-client:v5 .
+docker push [:secure:]/multi-client:v5
+```
+
+- Run a `kubectl` command forcing the deployment to use the new image version.
+
+```
+kubectl set image <object_type>/<object_name> <container_name> = <new image name>
+```
+
+```console
+kubectl set image deployment/client-deployment client=[:secure:]/multi-client:v5
 kubectl get pods
-minikube ip
-// 31515 port
+# test on
+# http://192.168.99.100:31515
 ```
 
 ### Reconfiguring docker CLI
 
-- Configure the VM to use your docker server.
+![Multi Docker Installations](docker_img/multi-docker-installations.png "Multi Docker Installations")
+
+**Configure the VM to use your docker server**
 
 ```console
 eval $(minikube docker-env)
@@ -1325,6 +1446,28 @@ eval $(minikube docker-env)
 ```console
 minikube docker-env
 ```
+
+**Why use docker in Node**
+
+- Use debugging techniques from Docker CLI - many commands available through `kubectl`.
+- Manually kill containers to test Kubernetes ability to 'self-heal'.
+- Delete cached image in the node - `docker system prune -a`.
+
+```console
+# see logs/shell to console using docker cli
+docker logs CONTAINER_ID
+docker exec -it CONTAINER_ID sh
+
+# see logs/shell to console using kubectl
+kubectl get pods
+# NAME                                 READY   STATUS    RESTARTS   AGE
+# client-deployment-ID                 1/1     Running   0          31m
+
+kubectl logs client-deployment-ID
+kubectl exec -it client-deployment-ID sh
+```
+
+***
 
 ## Production
 
