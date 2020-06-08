@@ -385,6 +385,291 @@ try (ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory();
 }
 ```
 
+## Anatomy of a JMS Message
+
+![Message](images/jms-message.png "Message")
+
+**Headers**
+
+- Provider:
+    - JMSDestination
+    - JMSDeliveryMode
+    - JMSMessageId
+    - JMSTimestamp
+    - JMSExpiration
+    - JMSRedelivered
+    - JMSPriority
+Developer:
+    - JMSReplyTo
+    - JMSCorrelationID
+    - JMSType
+    
+**Properties**
+
+- ApplicationSpecific:    
+    - setXXXProperty
+    - getXXXProperty
+- Provider Specific:
+    - JMSUserID
+    - JMSXAppID
+    - JMSXProducerTXID
+    - JMSXConsumerTXID
+    - JMSXRcvTimestamp
+    - JMSDeliveryCount
+    - JMSXState
+    - JMSXGroupID
+    - JMSXGroupSeq
+    
+### Prioritize Messages
+
+```java
+final JMSProducer producer = jmsContext.createProducer();
+
+final String[] messages = new String[3];
+messages[0] = "Message One";
+messages[1] = "Message Two";
+messages[2] = "Message Three";
+
+producer.setPriority(3);
+producer.send(queue, messages[0]);
+
+producer.setPriority(1);
+producer.send(queue, messages[1]);
+
+producer.setPriority(9);
+producer.send(queue, messages[2]);
+
+// consumer
+final JMSConsumer consumer = jmsContext.createConsumer(queue);
+for (int i = 0; i < 3; i++) {
+    System.out.println(consumer.receiveBody(String.class));
+}
+// === OUTPUT ===
+// Message Three
+// Message One
+// Message Two
+```    
+
+### Request Reply Message
+
+**jndi.properties**
+
+```properties
+queue.queue/requestQueue=requestQueue
+queue.queue/replyQueue=replyQueue
+```    
+
+```java
+final JMSProducer producer = jmsContext.createProducer();
+producer.send(queue, "JMS message request");
+
+final JMSConsumer consumer = jmsContext.createConsumer(queue);
+final String messageReceived = consumer.receiveBody(String.class);
+System.out.println(messageReceived);
+
+// Reply
+JMSProducer replyProducer = jmsContext.createProducer();
+replyProducer.send(replyQueue, "JMS message reply");
+
+final JMSConsumer replyConsumer = jmsContext.createConsumer(replyQueue);
+System.out.println(replyConsumer.receiveBody(String.class));
+```
+    
+### Use replyTo JMS Header
+
+```java
+final JMSProducer producer = jmsContext.createProducer();
+final TextMessage message = jmsContext.createTextMessage("JMS message request");
+message.setJMSReplyTo(replyQueue);
+producer.send(queue, message);
+
+final JMSConsumer consumer = jmsContext.createConsumer(queue);
+final TextMessage messageReceived = (TextMessage) consumer.receive();
+System.out.println(messageReceived.getText());
+
+// Reply
+JMSProducer replyProducer = jmsContext.createProducer();
+replyProducer.send(messageReceived.getJMSReplyTo(), "JMS message reply");
+
+final JMSConsumer replyConsumer = jmsContext.createConsumer(replyQueue);
+System.out.println(replyConsumer.receiveBody(String.class));
+```    
+    
+**When use replyTo header?**
+
+```java
+// create reply queue from jmsContext
+final TemporaryQueue replyQueue = jmsContext.createTemporaryQueue();
+```    
+
+### MessageId and CorrelationId Header
+
+```java
+final JMSProducer producer = jmsContext.createProducer();
+final TemporaryQueue replyQueue = jmsContext.createTemporaryQueue();
+final TextMessage message = jmsContext.createTextMessage("JMS message request");
+message.setJMSReplyTo(replyQueue);
+producer.send(queue, message);
+System.out.println(message.getJMSMessageID());
+
+Map<String, TextMessage> requestMessages = new HashMap<>();
+requestMessages.put(message.getJMSMessageID(), message);
+
+final JMSConsumer consumer = jmsContext.createConsumer(queue);
+final TextMessage messageReceived = (TextMessage) consumer.receive();
+System.out.println(messageReceived.getText());
+
+// Reply
+JMSProducer replyProducer = jmsContext.createProducer();
+final TextMessage replyMessage = jmsContext.createTextMessage("JMS message reply");
+replyMessage.setJMSCorrelationID(messageReceived.getJMSMessageID());
+replyProducer.send(messageReceived.getJMSReplyTo(), replyMessage);
+
+// Reply received
+final JMSConsumer replyConsumer = jmsContext.createConsumer(replyQueue);
+final Message replyReceived = replyConsumer.receive();
+System.out.println(replyReceived.getJMSCorrelationID());
+System.out.println(requestMessages.get(replyReceived.getJMSCorrelationID()).getText());
+```
+
+### Set message expiry
+
+```java
+// Produce Message
+final JMSProducer producer = jmsContext.createProducer();
+producer.setTimeToLive(2000);
+producer.send(queue, "JMS 2 demo message");
+Thread.sleep(5000);
+
+// Consume Message
+final Message messageReceived = jmsContext.createConsumer(queue).receive(4000);
+System.out.println("MessageReceived --> " + messageReceived);
+```
+
+### Access Expired Message
+
+```console
+cd some-path/mybroker/etc
+vim broker.xml
+```
+
+**broker.xml**
+
+```xml
+<expiry-address>ExpiryQueue</expiry-address>
+...
+<address name="ExpiryQueue">
+    <anycast>
+       <queue name="ExpiryQueue" />
+    </anycast>
+</address>
+```
+
+**jndi.properties**
+
+```properties
+queue.queue/expiryQueue=ExpiryQueue
+```
+
+```java
+Queue expiryqueue = (Queue) context.lookup("queue/expiryQueue");
+// ...
+// Consume Message
+final Message messageReceived = jmsContext.createConsumer(queue).receive(4000);
+System.out.println("MessageReceived --> " + messageReceived);
+System.out.println(jmsContext.createConsumer(expiryqueue).receiveBody(String.class));
+```
+
+### Delay the message delivery
+
+```java
+// Produce Message
+final JMSProducer producer = jmsContext.createProducer();
+producer.setDeliveryDelay(3000);
+```
+
+### Set custom message properties
+
+```java
+// Produce Message
+final JMSProducer producer = jmsContext.createProducer();
+TextMessage textMessage = jmsContext.createTextMessage("JMS 2 demo message");
+textMessage.setBooleanProperty("loggedIn", true);
+textMessage.setStringProperty("userToken", "panda");
+producer.send(queue, textMessage);
+
+// Consume Message
+final Message messageReceived = jmsContext.createConsumer(queue).receive(5000);
+System.out.println(messageReceived);
+System.out.println(messageReceived.getBooleanProperty("loggedIn"));
+System.out.println(messageReceived.getStringProperty("userToken"));
+```
+
+### Message Types
+
+![Message Types](images/message-types.png "Message Types")
+
+```java
+// Produce Message
+final JMSProducer producer = jmsContext.createProducer();
+TextMessage textMessage = jmsContext.createTextMessage("JMS 2 demo message");
+final BytesMessage bytesMessage = jmsContext.createBytesMessage();
+bytesMessage.writeUTF("Miki");
+bytesMessage.writeLong(321L);
+producer.send(queue, bytesMessage);
+
+// Consume Message
+final BytesMessage messageReceived = (BytesMessage) jmsContext.createConsumer(queue).receive(5000);
+System.out.println(messageReceived.readUTF());
+System.out.println(messageReceived.readLong());
+```
+
+### Create Object Message
+
+```java
+final ObjectMessage objectMessage = jmsContext.createObjectMessage();
+final Patient patient = new Patient();
+patient.setId(1);
+patient.setName("Panda");
+objectMessage.setObject(patient);
+
+producer.send(queue, objectMessage);
+
+// Consume Message
+final ObjectMessage messageReceived = (ObjectMessage) jmsContext.createConsumer(queue).receive(5000);
+final Patient object = (Patient) messageReceived.getObject();
+System.out.println(object.getId());
+System.out.println(object.getName());
+```
+
+### JMS 2.X message types
+
+```java
+producer.send(queue, patient);
+
+// Consume Message
+final Patient messageReceived = jmsContext.createConsumer(queue).receiveBody(Patient.class)
+System.out.println(messageReceived.getId());
+System.out.println(messageReceived.getName());
+```
+
+## Point 2 Point Messaging
+
+- One to one communication
+- Interoperability
+- Throughput/Performance
+- QueueBrowser
+
+### Usecases
+
+![P2P usecase](images/p2p-usecase.png "P2P usecase")
+
+### Asynchronous Processing
+
+![Async Processing](images/async-processing.png "Async Processing")
+
+
+
 
 
 

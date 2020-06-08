@@ -1473,31 +1473,39 @@ kubectl exec -it client-deployment-ID sh
 
 ![Kubernetes Production](docker_img/kuernates-prod.png "Kubernetes PROD")
 
-- Create config files for each service and deployment.
-- Test locally on **minikube**/
-- Create a Github/Travis flow to build images and deploy.
-- Deploy app to a cloud provider.
-- Services - Sets up networking in a Kubernates Cluster:
-    - ClusterIP - Exposes a set of pods to other objects in the cluster.
-    - NodePort - Exposes a set of pods to the outside world (only good for dev purposes!!!)
-    - LoadBalancer
-    - Ingress
+![Path to producton](docker_img/kube-path-to-production.png "Path to production")
+
+**NodePort vs ClusterIP service**
+
+![Object Types](docker_img/kube-object-types.png "Object Types")
+
 - NodePort Service:
     - port - OTHER Pod that needs multi-client Pod.
     - targetPort - multi-client Pod.
     - nodePort (random 30000-32767)
 
+**Applying files with kubectl**
+
 ```console
+# delete old deployments
 kubectl get deployments
 kubectl delete deployment client-deployment
+# deployment.apps "client-deployment" deleted
+
 kubectl get deployments
+# No resources found in default namespace.
+
 kubectl get services
 kubectl delete service client-node-port
+# service "client-node-port" deleted
 
+# apply a group of config files
 kubectl apply -f k8s
 kubectl get pods
 kubectl get services
 ```
+
+**Express API Deployment Config**
 
 ![ClusterIP](docker_img/cluster-ip.png "ClusterIP")
 
@@ -1508,12 +1516,16 @@ kubectl get deployments
 kubectl get services
 
 kubectl get pods
-kubectl logs <deployment-name>
+kubectl logs SERVER-DEPLOYMENT-ID
 ```
 
 ### Postgres PVC (Persistent Volume Claim)
 
 ![Postgres deployment](docker_img/postgres-deployment.png "Postgres deployment")
+
+![Postgres pod crash](docker_img/kube-pod-crash.png "Postgres pod crash")
+
+![Need for Volume](docker_img/need-for-volume.png "Need for Volume")
 
 - Volume on host machine exists outside of host machine.
 
@@ -1521,27 +1533,33 @@ kubectl logs <deployment-name>
 
 - Volume in generic container terminology.
 
-> Some type of mechanism that allows a container to access a filesystem outside itself.
+```
+Some type of mechanism that allows a container to access a filesystem outside itself.
+```
 
 - Volume in Kubernetes.
 
-> An object that allows a container to store data at the pod level.
-
 ```
-Persistent Volume Claim
-
-Persistent Volume
-
-Volume
+An object that allows a container to store data at the pod level.
 ```
+
+![Volumes](docker_img/volumes-pv-pvc.png "Volumes")
 
 **Kubernetes Volume**
 
 ![Kubernetes Volume](docker_img/kubernates-volume.png "Kubernetes Volume")
 
+- Volumes is tied to Pod. If Pod crashes volumes crash as well.
+- Not appropriate for storing data.
+
 **Persistent Volume**
 
 ![Persistent Volume](docker_img/persistent-volume.png "Persistent Volume")
+
+- Long term durable storage not tied to specific Pod or container.
+- Statically Provisioned Persistent Volume - Persistent Volumes created ahead of time.
+- Dynamically provisioned Persistent Volume - Created on fly.
+- Persistent Volume Claim - Advertisement of storage options.
 
 **Persistence Volume Claim**
 
@@ -1553,79 +1571,97 @@ Volume
 
 ```console
 kubectl get storageclass
+# NAME                 PROVISIONER                RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+# standard (default)   k8s.io/minikube-hostpath   Delete          Immediate           false                  2d23h
+
 kubectl describe storageclass
 ```
 
-- On a Cloud Provider:
-    - Google Cloud Persistent Disk.
-    - Azure File.
-    - Azure Disk.
-    - AWS Block Store.
+**On Cloud Provider**
+
+![Kubernetes Allocate Volume](docker_img/kube-allocate-volume.png "Kubernetes Allocate Volume")
 
 ```console
 kubectl apply -f k8s
 kubectl get pods
 
-// get persistent volume
+#:q! get persistent volume
 kubectl get pv
 ```
 
 ### Setup Environment Variables
 
-- REDIS_HOST
-- REDIS_PORT
-- PGUSER
-- PGHOST
-- PGDATABASE
-- PGPORT
-- PGPASSWORD
+```yaml
+spec:
+  containers:
+    - name: worker
+      image: [:secure:]/multi-worker
+      env:
+        - name: REDIS_HOST
+          value: redis-cluster-ip-service
+        - name: REDIS_PORT
+          value: 6379
+```
 
 > [Deployment:multi-worker pod] -- http://redis-cluster-ip-service --> ClusterIP Service [Deployment:Redis pod]
 
 ### Secret
 
-- Object Type:
-    - Secrets - Securely stores a piece of information in the cluster, such as a database password.
+![Kubernetes Secrets Object"](docker_img/kube-secrets.png "Kubernetes Secrets Object")
 
 **Create Secret**
 
-> kubectl create secret generic <secret-name> --from-literal key=value
-
 ```
-- create - Imperative command to create a new object
-- secret - Type of object we are going to create
-- generic - Type of secret
+kubectl create secret generic <secret-name> --from-literal key=value
+```
+
+- `create` - Imperative command to create a new object
+- `secret` - Type of object we are going to create
+- `generic` - Type of secret
     - tls
     - docker-registry
-- <secret-name> - Name of secret, for later reference in a pod config
-- --from-literal - We are going to add the secret info into this command, as opposed to from . file
-- key=value - Key-value pair of the secret information
-```
-
-- Run locally
+- `<secret-name>` - Name of secret, for later reference in a pod config
+- `--from-literal` - We are going to add the secret info into this command, as opposed to from . file
+- `key=value` - Key-value pair of the secret information
 
 ```console
 kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345asdf
 kubectl get secrets
-kubectl apply -f k8s
+
+# NAME                  TYPE                                  DATA   AGE
+# default-token-wflvs   kubernetes.io/service-account-token   3      3d5h
+# pgpassword            Opaque                                1      22s
+```
+
+```yaml
+env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: pgpassword
+          key: PGPASSWORD
 ```
 
 ### Load Balancer Services
 
-- Services:
-    - LoadBalancer - Legacy way of getting network traffic into a cluster.
-    - Ingress - Exposes a set of services to the outside world.
+![Load Balanser - Ingress](docker_img/lb-ingress.png "Load Balancer - Ingress")
+
+- Load Balancer give access to one set of Pods.
 
 **Ingress**
 
 - Nginx ingress.
 - **ingress-nginx** - A community project.
 
-> https://github.com/kubernetes/ingress-nginx
+```
+https://github.com/kubernetes/ingress-nginx
+```
 
-- kubernates-ingress - a project led by the company nginx.
+- kubernetes-ingress - a project led by the company nginx.
 - Setup of ingress-nginx changes depending on environment (local, GC, AWS, Azure).
 - Ingress routing rules to get traffic to services.
+
+![Desired State](docker_img/desired-state.png "Desired State")
 
 ![Ingress](docker_img/Ingress.png "Ingress")
 
@@ -1638,14 +1674,32 @@ kubectl apply -f k8s
 
 ![GC Load Balancer Ingress](docker_img/gclb-nginx.png "GC Load Balancer Ingress")
 
+- New serivce `default-backend` pod. Healthchecks make sure cluster is working.
+
 ### Setting up Ingress locally
 
 ```console
+# for mac
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
 minikube addons enable ingress
 ```
 
 ![Ingress Load Balancing Config](docker_img/lb-config.png "Ingress Load Balancing Config")
+
+```yaml
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: client-cluster-ip-service
+              servicePort: 3000
+          - path: /api/
+            backend:
+              serviceName: server-cluster-ip-service
+              servicePort: 5000
+```
 
 ```console
 minikube ip
@@ -1654,31 +1708,155 @@ kubectl apply -f k8s
 
 ### Minikube Dashboard
 
-> http://192.168.99.100
+```
+http://192.168.99.100
+```
 
 ```console
 minikube dashboard
-
-// http://192.168.99.100:30000
 ```
 
 ***
 
 ## Kubernetes Prod Deployment
 
-- Create Github Repo
-- Tie repo to Travis CI
-- Create Google Cloud project
-- Enable billing for the project
-- Add deployment scripts to the repo
+![Prod Deployment](docker_img/kube-prod-deployment.png "Prod Deployment")
 
 ### Google Cloud vs AWS for Kubernetes
 
-- Why Google Cloud ?
-    - Google created Kubernetes!
-    - AWS got Kubernetes support.
-    - Easier to use Kubernetes on Google Cloud.
-    - Good documentation.
+**Why Google Cloud ?**
+
+- Google created Kubernetes!
+- AWS got Kubernetes support.
+- Easier to use Kubernetes on Google Cloud.
+- Good documentation.
+
+### Travis Deployment
+
+![GCP Travis](docker_img/kube-travis-cs.png "GCP Travis")
+
+### Generating a Service Account
+
+![Generating a Service Account](docker_img/kube-generating-service-account.png "Generating a Service Account")
+
+**Install Ruby in container**
+
+```console
+docker run -it -v $(pwd):/app ruby:2.4 sh
+```
+
+**Install Travis CLI inside container**
+
+```console
+docker run -it -v $(pwd):/app ruby:2.4 sh
+
+gem install travis --no-rdoc --no-ri
+gem install travis
+travis login
+# copy json file form GCP into volumed dir
+travis encrypt-file service-account.json -r [:secure:]/multi-k8s
+```
+
+### GCP setup
+
+**.travis.yml**
+
+```yaml
+sudo: required
+services:
+  - docker 
+before_install:
+  - openssl aes-256-cbc -K $encrypted_HASH_key -iv $encrypted_HASH_iv -in service-account.json.enc -out service-account.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project PROJECT_ID
+  - gcloud config set compute/zone PROJECT_ZONE
+  - gcloud container clusters get-credentials KUBERNETES_CLUSTER_NAME
+```
+
+### Run tests
+
+**.travis.yml**
+
+```yaml
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t [:secire:]/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true [:secure:]/docker-react npm run test
+```
+
+### Travis deployment
+
+**.travis.yml**
+
+```yaml
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
+```
+
+**Update image version**
+
+![Update image version](docker_img/kube-update-image-version.png "Update image version")
+
+**GIT_SHA**
+
+```console
+git rev-parse HEAD
+```
+
+```yaml
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+```
+
+**deploy.sh**
+
+```shell script
+docker build -t [:secure:]/multi-client:latest -t [:secure:]/multi-client:$SHA -f ./client/Dockerfile ./client
+docker build -t [:secure:]/multi-server:latest -t [:secure:]/multi-server:$SHA -f ./server/Dockerfile ./server
+docker build -t [:secure:]/multi-worker:latest -t [:secure:]/multi-worker:$SHA -f ./worker/Dockerfile ./worker
+docker push [:secure:]/multi-client:latest
+docker push [:secure:]/multi-server:latest
+docker push [:secure:]/multi-worker:latest
+
+docker push [:secure:]/multi-client:$SHA
+docker push [:secure:]/multi-server:$SHA
+docker push [:secure:]/multi-worker:$SHA
+
+kubectl apply -f k8s
+kubectl set image deployments/server-deployment server=[:secure:]/multi-server:$SHA
+kubectl set image deployments/client-deployment client=[:secure:]/multi-client:$SHA
+kubectl set image deployments/worker-deployment worker=[:secure:]/multi-worker:$SHA
+```
+
+### GCloud CLI on Cloud Console
+
+```console
+gcloud config set project PROJECT_ID
+gcloud config set compute/zone PROJECT_ZONE
+gcloud container clusters get-credentials KUBERNETES_CLUSTER_NAME
+```
+
+**Creating a Secret on Google Cloud**
+
+```console
+kubectl get pods
+
+# create secret
+kubectl create secret generic pgpassword --from-literal PGPASSWORD=mypgpassword123
+```
+
+### Helm setup
+
+- Helm program to administrate third party software inside Kubernetes cluster.
+- Tiller pod inside Kubernetes to make configurations.
 
 ### Kubernetes Security with RBAC
 
@@ -1696,14 +1874,153 @@ minikube dashboard
 - RoleBinding - Authorizes an account to do a certain set of actions in a single namespace.
 
 ```console
+kubectl get namespaces
+# NAME              STATUS   AGE
+# default           Active   165m
+# kube-node-lease   Active   165m
+# kube-public       Active   165m
+# kube-system       Active   165m
+```
+
+**Assigning Tiller a Service Account**
+
+```console
+# Create a new service account called tiller in the kube-system namespace
 kubectl create serviceaccount --namespace kube-system tiller
+
+# Create a new clusterrolebinding with the role 'cluster-admin' and assign it to service account 'tiller'
 kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+# init helm
 helm init --service-account tiller --upgrade
 ```
 
+### Ingress-Nginx with Helm
 
+```console
+helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+```
 
+**A workflow for changing in Prod**
 
+![A workflow for changing Prod](docker_img/kube-workflow-for-prod-change.png "A workflow for changing Prod")
 
+```console
+git checkout -b dev
+```
 
+## HTTPS setup with Kubernetes
 
+### Cert manager
+
+![Cert Manager](docker_img/cert-manager.png "Cert Manager")
+
+**issuer.yaml**
+
+```yaml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: ''
+    privateKeySecretRef:
+     name: letsencrypt-prod
+    http01: {}
+```
+
+**certificate.yaml**
+
+```yaml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: MY-DOMAIN-NAME-tls
+spec:
+  secretName: MY-DOMAIN-NAME
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: MY_DOMAIN_NAME
+  dnsNames:
+    - MY_DOMAIN_NAME
+    - www.MY_DOMAIN_NAME
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - MY_DOMAIN_NAME
+          - www.MY_DOMAIN_NAME
+```
+
+```console
+kubectl get certificates
+kubectl describe certificates 
+```
+
+### Ingress Config for HTTPS
+
+**ingress-service.yaml**
+
+```yaml
+    certmanager.k8s.io/cluster-issuer: 'letsencrypt-prod'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+spec:
+  tls:
+    - hosts:
+      - MY_DOMAIN_NAME
+      - www.MY_DOMAIN_NAME
+    secretName: MY-DOMAIN-NAME
+  rules:
+    - host: MY_DOMAIN_NAME
+```
+
+## Development with Skaffold
+
+![Skaffold](docker_img/skaffold.png "Skaffold")
+
+**skaffold.yaml**
+
+```yaml
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+    - image: [:secure:]/multi-client
+      context: client
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.js': .
+        '**/*.css': .
+        '**/*.html': .
+    - image: [:secure:]/multi-server
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.js': .
+    - image: [:secure:]/multi-worker
+      context: worker
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.js': .
+deploy:
+  kubectl:
+    manifests:
+      - k8s/client-deployment.yaml
+      - k8s/server-deployment.yaml
+      - k8s/worker-deployment.yaml
+      - k8s/server-cluster-ip-service.yaml
+      - k8s/client-cluster-ip-service.yaml
+```
+
+```console
+skaffold dev
+```
