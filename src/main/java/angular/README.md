@@ -1,13 +1,40 @@
 # Angular
 
-- Angular is a JavaScript Framework which allows you to create reactive Single-Page-Applications
-- Every changes is render in the browser
-- Metadata is @ decorator which instruct Angular how to deal with class
+- Angular is a JavaScript Framework which allows you to create reactive Single-Page-Applications.
+- Every changes is render in the browser.
+- Metadata is @ decorator which instruct Angular how to deal with class:
     - @NgModule
     - @Component
     - @Injectable
     - @Input
-    - @output
+    - @Output
+    
+**Angular versioning**
+
+- AngularJS (Angular 1)
+- Angular 2
+- Angular 4
+- ... (New version every 6 months)
+- Angular 9
+- Small, incremental, backwards-compatible changes
+
+**Updating NodeJS**
+
+- By downloaded latest version from website, and uninstall old one.
+
+**Updating npm**
+
+```console
+sudo npm install -g npm
+```
+
+**Updating the CLI**
+
+```console
+sudo npm uninstall -g angular-cli @angular/cli
+npm cache verify
+sudo npm install -g @angular/cli 
+```
 
 ***
 
@@ -15,44 +42,147 @@
 
 - NodeJS : bundle and optimize project, uses npm to add dependencies
 
-```bash
-$ npm install -g @angular/cli@latest
-$ ng new my-first-app
-$ cd my-first-app
-$ ng serve
+```console
+npm install -g @angular/cli@latest
+ng new my-first-appdra
+cd my-first-app
+ng serve
 ```
 
-***
+**Directives**
 
-## TypeScript
-
-- TypeScript : More features than vanilla JS (Types, Classes, Interfaces).
-- TypeScript is compiled to JavaScript, handled by CLI.
-
-***
-
-## Bootstrap styling
-
-```bash
-$ npm install --save bootstrap@3
+```html
+<input type="text" [(ngModel)]="name">
+<p>{{ name }}</p>
 ```
 
-***
-
-## How Angular works
-
-**index.html** - single page that is rendered contains <app-root></app-root> <br/>
-**main.ts** - bootstraping AppModule.ts
-
-## Angular Modules
+- `[(ngModel)]` - listen anything enter in input field and store in **name** property and also 
+output of this property to input.
+- To use `ngModel` add FormsModule to AppModule.
 
 ```ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+### TypeScript
+
+- TypeScript - More features than vanilla JS (Types, Classes, Interfaces).
+- TypeScript is compiled to JavaScript, handled by CLI.
+
+### Setup Bootstrap styling
+
+- Install bootstrap locally in project.
+
+```bash
+npm install --save bootstrap@3
+```
+
+## The Basics
+
+## How Angular gets loaded and started
+
+- **index.html** - single page that is rendered contains `<app-root></app-root>`
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MyFirstApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>  <!--  <-- Root component for our application -->
+</body>
+</html>
+```
+
+- **app.component.html**
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',     // <--- component name used in template
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+}
+```
+
+- **main.ts** - bootstraping app.module.ts
+
+```ts
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+```
+
+![Angular loading](images/angular-loadup.png "Angular loading")
+
+### Components
+
+![Angular Components](images/angular-components.png "Angular Components")
+
+**Creating a new component**
+
+- Decorator - typescript features allowing you enhance elements you use in code.
+    - selector - html tag  which you will be able to use in other components.
+    - templateUrl - html template file path.
+    
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-server',
+    templateUrl: './server.component.html'
+})
+export class ServerComponent {
+}
+```
+
+**AppModule and Component Declaration**
+
+```ts
+import { ServerComponent } from './server/server.component';
+
 @NgModule({
     declarations: [
         // what is a part of this specific Angular module
+        AppComponent,
+        ServerComponent
     ],
     imports: [
         // what is needed to work
+        BrowserModule
     ],
     providers: [
         // for DI
@@ -64,8 +194,250 @@ $ npm install --save bootstrap@3
 })
 ```
 
-- Angular application is group of Angular modules
+- Newly created component (ServerComponent) must be registered in AppModule.
+- Angular application is group of Angular modules.
 - JavaScript Module is any TypeScript or JavaScript file with code in it!
+
+**Creating Component**
+
+```console
+ng g c servers
+```
+
+### Component Template
+
+```ts
+@Component({
+  template: `<app-server></app-server>
+            <app-server></app-server>`,
+})
+```
+
+### Component Styles
+
+```ts
+@Component({
+// styleUrls: ['./app.component.css']
+  styles: [`
+    h3 {
+      color: dodgerblue;
+    }
+  `]
+})
+```
+
+### Component Selector
+
+```ts
+@Component({
+  selector: 'app-servers'
+  // selector: '[app-servers]'
+  // selector: '.app-servers'
+})
+```
+
+**Use in template**
+
+```html
+<app-servers></app-servers>
+<!--<div app-servers></div>-->
+<!--<div class="app-servers"></div>-->
+```
+
+### Databinding
+
+![Databinding](images/databinding.png "Databinding")
+
+- EventBinding - listen to click.
+- String Interpolation - output data.
+- Property binding  
+- Two way binding
+
+**String interpolation**
+
+```ts
+import { Component } from '@angular/core';
+@Component({
+    selector: 'app-server',
+    templateUrl: './server.component.html'
+})
+export class ServerComponent {
+    serverId: number = 10;
+    serverStatus: string = 'offline';
+    getServerStatus() {
+        return this.serverStatus;
+    }
+}
+```
+
+```html
+<p>Server with ID {{ serverId }} is {{ getServerStatus() }}</p>
+```
+
+**Property Binding**
+
+```html
+<button 
+    class="btn btn-primary" 
+    [disabled]="!allowNewServer">Add Server</button>
+```
+
+```html
+<a 
+    href="#" 
+    class="list-group-item clearfix" 
+    *ngFor="let recipe of recipes">
+    <div class="pull-left">
+        <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+        <p class="list-group-item-text">{{ recipe.description }}</p>
+    </div>
+    <span class="pull-right">
+        <img 
+            src="{{ recipe.imagePath }}"
+            [src]="recipe.imagePath"
+            alt="{{ recipe.name }}" 
+            class="img-responsive" 
+            style="max-height: 50px;">
+    </span>
+</a>
+```
+
+**Property Binding vs String Interpolation**
+
+```html
+<p [innerText]="allowNewServer"></p>
+```
+
+- Not use String Interpolation with bindings.
+
+**Event Binding**
+
+```html
+<button 
+    class="btn btn-primary" 
+    [disabled]="!allowNewServer"
+    (click)="onCreateServer()">Add Server</button>
+<p>{{ serverCreationStatus }}</p>
+```
+
+**Passing and Using Data with Event Binding**
+
+```html
+<label>Server Name</label>
+<input 
+    type="text"
+    class="form-control"
+    (input)="onUpdateServerName($event)">
+<p>{{ serverName }}</p>
+```
+
+```ts
+onUpdateServerName(event: any) {
+    console.log(event);
+    this.serverName = (<HTMLInputElement>event.target).value;
+}
+```
+
+**Two-Way Databinding**
+
+```html
+<input 
+    type="text"
+    class="form-control"
+    [(ngModel)]="serverName">    
+<p>{{ serverName }}</p>
+```
+
+### Directives
+
+![Directives](images/directives.png "Directives")
+
+- `ngIf` - structural directive.
+- `ngStyle` - attribute directives don't add or remove elements. They only change the element they
+were placed to.
+- `ngClass`
+- `ngFor`
+
+**ngIf**
+
+```html
+<p *ngIf="serverCreated">Server was created, server name is {{ serverName }}</p>
+```
+
+**ngIf - Else**
+
+```html
+<p *ngIf="serverCreated; else noServer">Server was created, server name is {{ serverName }}</p>
+<ng-template #noServer>
+    <p>No server was created!</p>
+</ng-template>
+```
+
+**ngStyle**
+
+```html
+<p [ngStyle]="{backgroundColor: getColor()}">Server with ID {{ serverId }} is {{ getServerStatus() }}</p>
+```
+
+```ts
+getColor() {
+    return this.serverStatus === 'online' ? 'green' : 'red';
+}
+```
+
+**ngClass**
+
+```html
+<p 
+    [ngStyle]="{backgroundColor: getColor()}"
+    [ngClass]="{online: serverStatus === 'online'}">
+    Server with ID {{ serverId }} is {{ getServerStatus() }}
+</p>
+```
+
+```ts
+@Component({
+    selector: 'app-server',
+    templateUrl: './server.component.html',
+    styles: [`
+        .online {
+            color: white;
+        }
+    `]
+})
+```
+
+**ngFor**
+
+```html
+<app-server *ngFor="let server of servers"></app-server>
+```
+
+- Getting index when working with `ngFor`.
+
+```html
+<div 
+    *ngFor="let logItem of log; let i = index"
+    [ngStyle]="{backgroundColor: i >= 4 ? 'blue' : 'transparent'}"
+    [ngClass]="{'white-text': i >= 4}"
+>{{ logItem }}</div>
+```
+
+### Project setup
+
+- Create component using CLI without spec (test) file.
+
+```console
+ng g c recipes --skipTests true
+ng g c recipes/recipe-list --skipTests true
+ng g c recipes/recipe-detail --skipTests true
+ng g c recipes/recipe-list/recipe-item --skipTests true
+
+ng g c shopping-list --skipTests true
+ng g c shopping-list/shopping-edit --skipTests true
+```
+
+
 
 ## Bootstraping of Angular Application
 
