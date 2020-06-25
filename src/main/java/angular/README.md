@@ -437,7 +437,156 @@ ng g c shopping-list --skipTests true
 ng g c shopping-list/shopping-edit --skipTests true
 ```
 
+## Components & Databinding
 
+### Property & Event Binding
+
+![Property & Event Binding](images/property-event-binding.png "Property & Event Binding")
+
+**server-element.component.ts**
+
+```ts
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-server-element',
+  templateUrl: './server-element.component.html',
+  styleUrls: ['./server-element.component.css']
+})
+export class ServerElementComponent implements OnInit {
+
+  @Input('srvElement') element: {type: string, name: string, content: string};
+
+  constructor() { }
+  ngOnInit(): void {
+  }
+}
+```
+
+**app-component.html**
+
+```html
+<div class="container">
+  <app-cockpit></app-cockpit>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <app-server-element 
+        *ngFor="let serverElement of serverElements"
+        [srvElement]="serverElement"></app-server-element>
+    </div>
+  </div>
+</div>
+```
+
+### Binding to Custom Events
+
+**cockpit.component.ts**
+
+```ts
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-cockpit',
+  templateUrl: './cockpit.component.html',
+  styleUrls: ['./cockpit.component.css']
+})
+export class CockpitComponent implements OnInit {
+  @Output() serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+  @Output('bpCreated') blueprintCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+
+  newServerName = '';
+  newServerContent = '';
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  onAddServer() {
+    this.serverCreated.emit({
+      serverName: this.newServerName, serverContent: this.newServerContent
+    });
+  }
+
+  onAddBlueprint() {
+    this.blueprintCreated.emit({
+      serverName: this.newServerName, serverContent: this.newServerContent
+    });
+  }
+}
+```
+
+**app.component.ts**
+
+```ts
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  serverElements = [{type: 'server', name: 'Testserver', content: 'Just a test!'}];
+  
+  onServerAdded(serverData: {serverName: string, serverContent: string}) {
+    this.serverElements.push({
+      type: 'server',
+      name: serverData.serverName,
+      content: serverData.serverContent
+    });
+  }
+
+  onBlueprintAdded(blueprintData: {serverName: string, serverContent: string}) {
+    this.serverElements.push({
+      type: 'blueprint',
+      name: blueprintData.serverName,
+      content: blueprintData.serverContent
+    });
+  }
+}
+```
+
+**app.component.html**
+
+```html
+<div class="container">
+  <app-cockpit 
+    (serverCreated)="onServerAdded($event)"
+    (bpCreated)="onBlueprintAdded($event)"  
+  ></app-cockpit>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <app-server-element 
+        *ngFor="let serverElement of serverElements"
+        [srvElement]="serverElement"></app-server-element>
+    </div>
+  </div>
+</div>
+```
+
+### View Encapsulation
+
+### Getting Access to the Template & DOM 
+
+```html
+<input 
+    type="text" 
+    class="form-control" 
+    #serverContentInput>
+```
+
+```ts
+@ViewChild('serverContentInput') serverContentInput: ElementRef;
+
+onAddServer(nameInput: HTMLInputElement) {
+    this.serverCreated.emit({
+      serverName: nameInput.value, 
+      serverContent: this.serverContentInput.nativeElement.value
+    });
+}
+```
 
 ## Bootstraping of Angular Application
 

@@ -12,10 +12,7 @@
 
 - Time Span (TS) = Start to finish.
 
-```
-Start time |-----------------------------------------| Finish time
-            \****Task1****/\**Task2**/\****Task1****/
-```
+![Single processor machine](images/single-processor-machine-time-slice.png "Single processor machine")
 
 - `*` is one system-clock tick.
 - Task1 and Task2 share the processor.
@@ -28,14 +25,9 @@ Start time |-----------------------------------------| Finish time
 
 - Better throughput.
 
-```
-Start time |-----------------------| Finish time
-            \********Task1********/         Processor 1
-                    \**Task2**/             Processor 2
-```
+![Multi processor machine](images/multi-processor-machine.png "Multi processor machine")
 
 - Task2 can happen anywhere within TS.
-
 - **Task1 and Task2 are processed concurrently (during the same TS).**
 - Task1 and Task2 are processed in parallel.
 
@@ -81,11 +73,7 @@ Start time |-----------------------| Finish time
 
 ### Node.js example
 
-```
-                                                        system call
-        calls                calls           user space <--+--> kernel space
-Node.js ----> cluster.fork() ----> library function fork() | ---> kernel routine (fork in Unix, clone in Linux)
-```
+![Node.js system call](images/node-js-system-call.png "Node.js system call")
 
 - Standard libraries and kernel routines are written in C with some assembly language.
 
@@ -125,19 +113,7 @@ n = random_num();
 - n is shared memory location among the threads, the result is unpredictable.
 - Scheduling on modern systems: to schedule a process on a processor is to schedule one of its threads.
 
-```
-Process1    scheduled      +------------+
-Thread11 ----------------> | processor3 |
-Thread12                   +------------+
-
-
-
-Process2    scheduled      +------------+
-Thread21 ----------------> | processor7 |
-Thread22                   +------------+
-Thread23
-
-```
+![Processes and threads](images/processes-and-threads.png "Processes and threads")
 
 ## Concurrency & Parallelism: Multithreading
 

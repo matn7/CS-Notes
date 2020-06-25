@@ -89,6 +89,76 @@
 
 ![Data next](images/data-next.png "Data next")
 
+- Linked List only knows about first node.
+
+![Linked List constructor](images/linked-list-constructor.png "Linked List constructor")
+
+**Linked List Remove Last**
+
+![Linked List remove last](images/linked-list-remove-last.png "Linked List remove last")
+
+**Linked List Insert Last**
+
+![Linked List insert last](images/linked-list-insert-last.png "Linked List insert last")
+
+**Linked List get at**
+
+![Linked List get at](images/linked-list-get-at.png "Linked List get at")
+
+**Linked List remove at**
+
+![Linked List remove at](images/linked-list-remove-at.png "Linked List remove at")
+
+**Linked List insert at**
+
+![Linked List insert at](images/linked-list-insert-at.png "Linked List insert at")
+
+**Midpoint**
+
+- Advance slow by one node.
+- Advance fast by two node.
+
+![Linked List midpoint](images/linked-list-midpoint.png "Linked List midpoint")
+
+**Circular Linked List**
+
+![Linked List circular](images/linked-list-circular.png "Linked List circular")
+
+**From Last**
+
+![Linked List from last](images/linked-list-from-last.png "Linked List from last")
+
+### Tree
+
+![Tree](images/tree.png "Tree")
+
+- Iterating through a tree = traversal.
+- There are different orders of traversal.
+
+![Tree Traversal](images/tree-traversal.png "Tree Traversal")
+
+**Tree add**
+
+![Tree Add node](images/tree-add.png "Tree Add node")
+
+**Tree remove**
+
+![Tree remove node](images/tree-remove.png "Tree remove node")
+
+**Tree class**
+
+![Tree Class](images/tree-class.png "Tree Class")
+
+### Binary Search Tree
+
+![BST](images/bst.png "BST")
+
+**Validate**
+
+![BST Validate](images/bst-validate.png "BST Validate")
+
+
+
 ## Sorting Algorithms
 
 ### Bubble Sort
