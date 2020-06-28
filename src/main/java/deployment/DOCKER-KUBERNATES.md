@@ -106,29 +106,28 @@ docker ps | wc -l
 
 ```
 docker run = docker create + docker start
-docker create <image_name>
-docker start <container id>
+docker create IMAGE_NAME
+docker start CONTAINER_ID
 ```
 
 ```console
 docker create hello-world
 
-# -a watch for output from container and prints out in terminal
-docker start -a bc219e7a88bb1fabb72c19fd502dfb16c5cb12f24a43c5699f796c6fe10d61eb
+# '-a' watch for output from container and prints out in terminal
+docker start -a CONTAINER_ID
 ```
 
 **Restarting stopped container**
 
 ```console
 docker ps -all
-docker start 2d178f0b4f4cd
+docker start CONTAINER_ID
 ```
 
 **Removing stopped container**
 
 ```console
 docker ps --all
-
 docker system prune
 ```
 
@@ -136,32 +135,33 @@ docker system prune
 
 ```console
 docker create busybox echo hi there
-docker start e207a006e63dee92d178f0b4f4cd619987c3b6782ad3e332ed6d49bcb9c015a7
+docker start CONTAINER_ID
 
 # retrieve logs from stopped container (no rerun container)
-docker logs e207a006e63dee92d178f0b4f4cd619987c3b6782ad3e332ed6d49bcb9c015a7
+docker logs CONTAINER_ID
 ```
 
 **Stopping Containers**
 
-> docker stop <container_id>
-
-> docker kill <container_id>
+```
+docker stop CONTAINER_ID
+docker kill CONTAINER_ID
+```
 
 - SIGTERM - stop container with cleanup time.
 - SIGKILL - shut down immediately.
 
 ```console
 docker create busybox ping google.com
-docker start bb656a399364f374a4a701fdd34783381894f550979365dca464d407c061205f
-docker logs bb656a399364f374a4a701fdd34783381894f550979365dca464d407c061205f
+docker start CONTAINER_ID
+docker logs CONTAINER_ID
 
 # after 10 s kill signal
-docker stop bb656a399364
+docker stop CONTAINER_ID
 
-docker start bb656a399364
+docker start CONTAINER_ID
 # kill immediately
-docker kill bb656a399364
+docker kill CONTAINER_ID
 ```
 
 ### Multi-command container
@@ -175,14 +175,17 @@ redis-cli
 
 - Execute an additional command in a container.
 
-> docker exec -it <container_id> <command>
+```text
+docker exec -it CONTAINER_ID COMMAND
+```
 
 ```console
 docker run redis
 
 # it - type input to container
-docker exec -it b67b8ebf2444 redis-cli
+docker exec -it CONTEINER_ID redis-cli
 
+# Inside redis-cli docker container
 > set myvalue 5
 > get myvalue
 ```
@@ -199,22 +202,19 @@ docker exec -it b67b8ebf2444 redis-cli
 ```
 
 ```console
-docker exec -i b67b8ebf2444 redis-cli
+docker exec -i CONTAINER_ID redis-cli
 ```
 
 **Shell access to running container**
 
 ```console
-docker exec -it b67b8ebf2444 sh
+docker exec -it CONTAINER_ID sh
 
 redis-cli
 ```
 
 - Command Preprocessor:
-    - bash
-    - powershell
-    - zsh
-    - sh
+    - bash, powershell, zsh, sh
 
 **Starting with a shell**
 
@@ -245,7 +245,7 @@ docker run -it busybox sh
 
 ### Building Dockerfile
 
-- Create an image that runs redis-server.
+**Create an image that runs redis-server**
 
 ```Dockerfile
 # Use an existing docker image as a base
@@ -260,7 +260,7 @@ CMD ["redis-server"]
 
 ```console
 docker build .
-docker run 81615c9d8a9c
+docker run CONTAINER_ID
 ```
 
 ![Dockerfile Teardown](docker_img/dockerfile-teardown.png "Dockerfile Teardown")
@@ -271,7 +271,7 @@ Writing a Dockerfile == Being given a computer with no OS and being told to inst
 
 ![Create images steps](docker_img/create-images-steps.png "Create images steps")
 
-**Rebuilds with cache**
+### Rebuilds with cache
 
 **Tagging an Image**
 
@@ -298,10 +298,10 @@ apk add --update redis
 # On second terminal
 docker ps
 # container id from previous step
-docker commit -c 'CMD ["redis-server"]' d9332e55b0c9
+docker commit -c 'CMD ["redis-server"]' CONTAINER_ID
 
 # Container id from previous step
-docker run 5a9f892320
+docker run CONTAINER_ID
 ```
 
 ***
@@ -335,8 +335,12 @@ docker run majka/simpleweb
 
 - Any time someone make request on local network, take that request and port it to port in container.
     - **localhost port : container port**
-- `docker run -p <localhost port> : <inside container port> <image id>`
-- `docker run -p 8080:8080 majka/simpleweb`
+
+```console
+docker run -p <localhost port> : <inside container port> <image id>`
+docker run -p 8080:8080 majka/simpleweb`
+```
+
 - On windows test with: `http://192.168.99.100:8080/`
 
 **Shell into container.**
@@ -354,7 +358,7 @@ WORKDIR /usr/app
 **Another way to shell into container**
 
 ```console
-docker exec -it 15dbf4eedbbf sh
+docker exec -it CONTAINER_ID sh
 ```
 
 **Dockerfile**
@@ -455,7 +459,7 @@ docker-compose up --build
 ```console
 docker run -d redis
 docker ps
-docker stop <docker_id>
+docker stop CONTAINER_ID
 ```
 
 **Lunch in background**
@@ -540,7 +544,7 @@ docker run -p 3000:3000 <image_id>
 ```console
 docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image_id>
 docker build -f Dockerfile.dev .
-docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app bef5d9a97007
+docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app CONTAINER_ID
 
 # Windows
 # http://192.168.99.100:3000/
@@ -596,7 +600,7 @@ tests:
     command: ["npm", "run", "test"]
 ```
 
-- `docker attach` - attach to container stdin, stdout, stderr to primary process.
+- `docker attach` - attach to container STDIN, STDOUT, STDERR to primary process.
     - Can now execute commands from our terminal.
 
 ```console
@@ -932,7 +936,7 @@ after_success:
   - docker build -t [:secure:]/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker jub
+  # Take those images and push them to docker hub
   - docker push [:secure:]/multi-client
   - docker push [:secure:]/multi-nginx
   - docker push [:secure:]/multi-server

@@ -732,7 +732,7 @@ cooperation to boost performance:
     prevents the disaster of having a huge request interfere with others.
     - On a multiprocessor host, the 'one-thread-per-request' model can lead to true parallelism.
     - The example illustrates the concurrent programming style of real-world web servers such as Tomcat and Jetty.
-- The multithreading_server underscores that local variables (and parameters) are thread-safe: the ide of a
+- The multithreading_server underscores that local variables (and parameters) are thread-safe: the idea of a
 'pure function'.
     - Modern systems allocate separate stack storage per thread, and it's the stack that holds local variables
     and params by default.
@@ -765,9 +765,9 @@ public final class Counter {
 ```
 
 - A 'retrieval' operation is a 'read' operation: it has no side-effect.
-- An 'update' operation has side-effects: ot changes the data structure.
+- An 'update' operation has side-effects: of changes the data structure.
 - `java.util.concurrent.ConcurrentHashMap`:
-    - Same functionality as the Hashtable, but highly efficient:
+    - Same functionality as the `Hashtable`, but highly efficient:
         - The map is partitioned: for example, an update locks only part of the map. Two updates could occur at
         the same time if in different partitions.
         - Retrieval operations generally don't block.
@@ -777,11 +777,11 @@ public final class Counter {
         - In effect, an immutable data structure in the script of Clojure.
 - `java.util.concurrent.BlockingQueue` interface:
     - A retrieval waits for the queue to become non-empty before retrieving the 1st element.
-    - Various implementations, e.g., ArrayBlockingQueue and PriorityBlockingQueue.
+    - Various implementations, e.g., `ArrayBlockingQueue` and `PriorityBlockingQueue`.
 
 **Executors and thread pools:**
 
-- The Executor interface provides a single method, execute, designed to replace the old Thread idiom.
+- The Executor interface provides a single method, `execute()`, designed to replace the old Thread idiom.
 For example, if reference 'runnable' points to a Runnable object and 'exec' to an Executor, then:
     - `new Thread(runnable).start();        // create a new Thread to run runnable`
     - becomes:
@@ -1234,7 +1234,7 @@ lock and enter the 'critical section'):
 - The 'Clojure approach': make most data structures immutable and thereby thread-safe; a few exceptions to the
 rule (in Clojure, the 'reference' types):
     - The challenge now becomes efficiency: for example, an immutable list must be copied on every update.
-- Multiplexing API-level Runnable objects onto s system-managed thread pool (Java ExecutorService, Go goroutine).
+- Multiplexing API-level Runnable objects onto a system-managed thread pool (Java ExecutorService, Go goroutine).
 
 ***
 
@@ -1419,7 +1419,7 @@ as the MMX instruction set.
 - In the original SSE, there was support only for integer operations.
 - SEE has progressed, with new versions: SSE2, SSE3, SSSE3 and SSE4.
 - The newer versions bring SIMD support for both integer and floating-point operations.
-- At tes same time, C/C++ compilers such as GNU and Clang provided support, eventually automatic,
+- At the same time, C/C++ compilers such as GNU and Clang provided support, eventually automatic,
 for SIMD friendly core.
 - Nowadays both compilers are capable of 'automatic vectorization' of appropriately written source code.
 - Elements in the arrays 'array1' and 'array2' should be added pairwise in parallel in order to boost performance.
@@ -1593,7 +1593,7 @@ that, in turn, are compiled into data-parallel instructions.
 
 **Simplest distributed systems**
 
-- Assume just wro hosts, which together run distributed system DS1.
+- Assume just two hosts, which together run distributed system DS1.
 - If both hosts are running DS1 modules (M1 on host1, M2 on host2) at the same time, there's parallelism,
 now in distributed form.
 - How M1 and M2 cooperate in processing a shared task?
@@ -1707,7 +1707,7 @@ style.
     - OpenMPI can use the multiple processors on a given machine together with other processors distributed
     among the 'nodes' (hosts) in a cluster.
 
-### Distributed Systems $ Parallelism Summary
+### Distributed Systems & Parallelism Summary
 
 - Multiple processors accessible at the same time.
 - A means for the processes to communicate (e.g. message passing as an IPC mechanism)
