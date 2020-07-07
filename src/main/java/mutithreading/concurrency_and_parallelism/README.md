@@ -4,7 +4,7 @@
 
 ## Parallelism
 
-- Processing many time at the same time.
+- Processing many tasks at the same time.
 
 ***
 
@@ -52,9 +52,9 @@
     - epoll_create1()
     - epoll_wait()
 
-- **Java (C#) favor multithreading for concurrency**
-- Go have emphasized to multithreading
-- **JavaScript, Ruby, Perl, Python favor multiprocessing**
+- **Java (C#) favor multithreading for an concurrency.**
+- **Go** have emphasized to multithreading.
+- **JavaScript, Ruby, Perl, Python favor multiprocessing.**
 
 ***
 
@@ -62,14 +62,14 @@
 
 ### The system context: user-space and kernel-space code
 
-- **User-space code does not control shared physical resources (processors, memory, I/O devices)**
+- **User-space code does not control shared physical resources (processors, memory, I/O devices).**
 - Applications execute in user space.
 - Kernel-space code comprises the core OS routines that control shared physical resources.
 - A **system-call** originates in user-space, but results in execution of a kernel space routine:
     - Standard library functions (user-space) mediate between ordinary app code and the core OS routines (kernel-space)
     that some library functions call.
-    - Standard library goes by various names: on Unix-type systems, (libc) or variants thereof (glibc on Ubuntu) on
-    Windows (Win32 API)
+    - Standard library goes by various names: on Unix-type systems (libc) or variants thereof (glibc on Ubuntu) on
+    Windows (Win32 API).
 
 ### Node.js example
 
@@ -77,9 +77,7 @@
 
 - Standard libraries and kernel routines are written in C with some assembly language.
 
-***
-
-## Sum up
+### Summary
 
 - Concurrency and parallelism are different:
     - Concurrency involves handling multiple tasks in the same time span.
@@ -101,7 +99,7 @@
 - The address space comprises the memory location accessible to the process (segmentation failed).
 - Separate address spaces effectively partition memory among the processes.
 - A **thread** is a sequence of executable instructions within a process.
-- Threads within a process share the same address space--they have access to exactly the same memory location.
+- Threads within a process share the same address space, they have access to exactly the same memory location.
 - This is a root cause of **race condition**.
 - A race condition arises when two or more threads concurrently access the same memory location and at least one of the
 threads tries to update the location.
@@ -110,7 +108,7 @@ threads tries to update the location.
 n = random_num();
 ```
 
-- n is shared memory location among the threads, the result is unpredictable.
+- **n** is shared memory location among the threads, the result is unpredictable.
 - Scheduling on modern systems: to schedule a process on a processor is to schedule one of its threads.
 
 ![Processes and threads](images/processes-and-threads.png "Processes and threads")
@@ -122,39 +120,39 @@ cat names.txt | sort
 ```
 
 - **cat** and **sort** are executing processes.
-- sort performs blocking I/O it waits for all the bytes from 'cat' before doing the sorting.
-- If multiprocessors machine, 'cat' and 'sort' can execute on different processors.
+- **sort** performs blocking I/O, it waits for all the bytes from **cat** before doing the sorting.
+- If multiprocessors machine, **cat** and **sort** can execute on different processors.
 - Pipe operator `|` performs automatic multithreading:
-    - A pipe is a mechanism for inter-process communication (IPC).
+    - :star: A pipe is a mechanism for inter-process communication (IPC).
 - Task (producing the bytes in the file and then sorting the lines) are divided between two processed.
 - General approaches in code:
-    - A parent process 'forks' (clones, spawns) a child process, and both execute code from the same program:
+    - A parent process **forks** (clones, spawns) a child process, and both execute code from the same program:
         - If-else separates the parent code from the child code.
-    - A parent process forks a child, which then executes a separate program.
+    - A parent process **forks** a child, which then executes a separate program.
 
 ### Tomcat
 
-- Tomcat implements the 'one-thread-per-request' model for handling client requests.
+- Tomcat implements the **one-thread-per-request** model for handling client requests.
 - Tomcat runs as a single process, which is multithreaded.
-- Tomcat delegates each request for any WAR file to a thread, the 'one-thread-per-request' model.
+- Tomcat delegates each request for any WAR file to a thread, the **one-thread-per-request** model.
 - Tomcat creates a thread pool at start-up: indeed, two thread pools one for requests over HTTP,
 another for HTTPS if enables:
     - Thread creation and destruction is relatively expensive process.
-- Other Java web services like Jetty, implement the one-thread-per-request model as well.
+- Other Java web services like Jetty, implement the **one-thread-per-request** model as well.
 
 ### Non-blocking-io
 
-- print('Hello World') is blocking.
+- `print('Hello World');` is blocking.
 
 ### Review
 
-- Multiprocessing - dispatch each task to a separate process ('program in execution'):
+- Multiprocessing - dispatch each task to a separate process (program in execution):
     - **prefork** - the processes by building a pool of these at start-up. Then grab a process from the pool
-    to act as the 'task handler'.
+    to act as the **task handler**.
     - When the task-handling process finishes its work, put it to sleep.
     - Apache2, nginx, IIS are production example.
 - Multithreading - dispatch each task to a separate thread within process:
-    - For efficiency, build a thread-pool at start-up, and grab a thread from the pool to act as the 'task handler'.
+    - For efficiency, build a thread-pool at start-up, and grab a thread from the pool to act as the **task handler**.
     - When the task-handling thread finishes its work, put it to sleep.
     - Tomcat, Jetty examples.
 - Non-blocking I/O - a single-threaded process that jumps quickly from one task to another, doing partial
@@ -164,16 +162,16 @@ processing of each task:
 
 ### Hybrid
 
-- Multiprocessing + multithreading - IIS (Windows web server) and AspNet runtime:
+- `Multiprocessing + multithreading` - IIS (Windows web server) and AspNet runtime:
     - Each worker process is multithreaded (10 thread per worker process), each thread handle single request
-    ('one-thread-per-request' model).
-- Multiprocessing + non-blocking I/O - nginx:
-    - nginx has a 'master process' to read conf file and to watch over worker processes.
-    - A 'worker-process' handles a client request.
+    (one-thread-per-request model).
+- `Multiprocessing + non-blocking I/O` - nginx:
+    - nginx has a **master process** to read conf file and to watch over worker processes.
+    - A **worker-process** handles a client request.
     - Other processes cache loader and manager.
-- Non-blocking I/O + multithreading - Node.js:
-    - a single threaded process managing an event loop.
-    - 'workers' are JavaScript functions reads and handles a clients requests uning non-blocking I/O and
+- `Non-blocking I/O + multithreading` - Node.js:
+    - A single threaded process managing an event loop.
+    - **workers** are JavaScript functions reads and handles a clients requests uning non-blocking I/O and
     callbacks to signal task completion.
     - Long running tasks (DB accessing) are delegated to other threads, with callbacks to signal task completion.
 
@@ -181,25 +179,25 @@ processing of each task:
 
 ## Multiprocessing
 
-- The processes communicate through a 'named pipe' (aka 'FIFO').
+- The processes communicate through a **named pipe** (aka FIFO).
 - A named pipe is a mechanism designed to support IPC among processes on the same host.
 
 ![Named Pipe](images/named-pipe.png "Named Pipe")
 
 - The system implements a FIFO as a temporary file.
-- Named pipe are quite similar in functionality to Unix Domain Sockets, also called 'local sockets':
+- Named pipe are quite similar in functionality to Unix Domain Sockets, also called **local sockets**:
     - Network sockets support communication between processes running on different hosts, whereas named pipes
     and local sockets do the same for processes running on the same host.
-- In the C code, the FIFO is 'written' and 'read' as if it were a regular disk file: the I/O API is the same.
+- In the C code, the FIFO is written and read as if it were a regular disk file: the I/O API is the same.
 
-### Multiprocessing Nginx Web Server
+### Multiprocessing nginx Web Server
 
 - Multiprocessing in production-grade software: the nginx web server.
 - www.nginx.com
     - The web server written in C.
     - nginx combines multiprocessing and non-blocking I/O as concurrency mechanism.
-- nginx, like any modern web server that relies on multiprocessing for concurrency, is a "pre-forking" server.
-    - nginx can be started as a 'system service' (at boot time) and is platform-natural.
+- nginx, like any modern web server that relies on multiprocessing for concurrency, is a **pre-forking** server.
+    - nginx can be started as a system service (at boot time) and is platform-natural.
 
 **nginx.conf**
 
@@ -232,12 +230,12 @@ ps -ef | grep nginx
 
 ![Fork - Exec](images/fork-exec.png "Fork Exec")
 
-- In system, an 'image' is an executable program. For instance, copying the system from one machine to another is
-called 're-imaging'.
-- A new process can be 'spawned' (created) under one of two distinct scenarios, which the difference between the
-fork() function and the exec-family of functions illustrates.
-    - The exec-family consists of library functions that, under the hood, make the same system call.
-- In a successful call to fork(), the new child process executes the 'same' image as the parent that spawned it: the
+- In system, an **image** is an executable program. For instance, copying the system from one machine to another is
+called **re-imaging**.
+- A new process can be spawned (created) under one of two distinct scenarios, which the difference between the
+**fork()** function, and the **exec-family** of functions illustrates.
+    - The **exec-family** consists of library functions that, under the hood, make the same system call.
+- :star: In a successful call to **fork()**, the new child process executes the same image as the parent that spawned it: the
 forked process is a clone.
 
 ```c
@@ -251,7 +249,7 @@ else {
 }
 ```
 
-- In a successful call to an exec-function, replaces the current process image with a new images that's
+- :star: In a successful call to an **exec-function**, replaces the current process image with a new images that's
 loaded into memory.
 
 ```c
@@ -271,10 +269,10 @@ one begins execution.
 
 - Each process has a unique ID (pid), a non-negative integer:
     - A process's pid is recorded in system's process table.
-    - Library function getpid() and getppid() get the pid and the parent's pid.
-    - The pid of 0 is typically reserved for the 'idle process', the one that 'runs' when there's nothing else to run.
+    - Library function `getpid()` and `getppid()` get the pid and the parent's pid.
+    - The pid of 0 is typically reserved for the 'idle process', the one 'runs' when there's nothing else to run.
     - The 'init process' has a pid of 1: the first user-space process that the OS kernel spawns in the boot-up:
-        - On shutdown, the init process is the last process to terminate: it waits for all of its children.
+        - On a shutdown, the init process is the last process to terminate: it waits for all of its children.
         - The init process starts other processes: system services such as the login service, etc.
 - Key data structures in a process 'context':
     - process table - tracks information per process, in particular information that allows a pre-empted
@@ -317,17 +315,17 @@ Process1    Process2    Processor7
 - A process execute in splendid isolation from on another because each has its own address space.
     - A process sees itself as alone on the host, in ownership of all the host's resources.
 - What if processes need to cooperate on a task?
-    - In a production-grade web server such as nginx, the `master` does oversee the workers, creating a
+    - In a production-grade web server such as nginx, the **master** does oversee the workers, creating a
     new worker, for example, if an existing one goes down; but the workers have essentially no contact with one another.
 - IPC covers the various ways in which processes can share information if required to do so.
 - List of IPC mechanisms:
     - A **signal** is a simple command that one process can send to another. Example 'kill' signal to terminate process.
     Signal represent a very lightweight IPC mechanism.
     - A **local file** is accessible to any process that has the file's name. Processes can communicate with one
-    another by writing to and reading from local file.
+    another by writing to and reading from a local file.
     - A **pipe** is byte-level stream that connects two processes, one of which sends bytes that the other receives.
     The output of one process is **piped** into the other process input.
-    - A **socket** is a communications endpoint that complies with a protocol (e.g. UDP or TCP), the endpoint supports
+    - A **socket** is a communication endpoint that complies with a protocol (e.g. UDP or TCP), the endpoint supports
     data exchange. Network sockets allow a process on one host to communicate with a process on another; local sockets
     (aka Unix domain sockets) allow process to communicate with a process on the same host. Sockets support the
     interchange of arbitrary large amounts of information as byte stream.
@@ -375,7 +373,7 @@ can be performed on the shared memory.
 
 - The Unix-domain socket provides IPC between the nginx web server and the Unicorn app server.
 - Requests go from nginx through the socket to a Unicorn worker, and from there to the Rails app.
-- Requests go from the Rails app through the Unicorn worker through the local socket to nginxt, and from
+- Requests go from the Rails app through the Unicorn worker through the local socket to nginx, and from
 there to the client.
 
 **Unix domain sockets vs named pipes**
@@ -486,12 +484,12 @@ arise.
     - A 'semaphore' restricts the number of threads allowed to access a shared resources (e.g. shared function).
     For example, 'semaphore' might allow two threads to access a chunk of code simultaneously, but no more than two.
     A semaphore is thus a set of permission tickets, which enable a thread access a resource.
-        - Semaphores ad 'tickets': a semaphore is like a ticket that grants access to a resource. A semaphore
+        - Semaphores add 'tickets': a semaphore is like a ticket that grants access to a resource. A semaphore
         with a value of three would grant access to three threads at most at a time.
     - A 'mutex' is a semaphore with a value of 1: whichever thread holds the mutex has access to the protected
     resource, whereas all others are excluded.
         - A mutex enforces mutual exclusion, but a semaphore with a value > 1 would not.
-    - A 'monitor' (which the Java 'synchronized' block provides) is a mechanism that enforces mutual exclusion,
+    - :star: A 'monitor' (which the Java 'synchronized' block provides) is a mechanism that enforces mutual exclusion,
     supports progress, and has addition mechanisms for thread cooperation: in Java's case, the 'wait' mechanism
     supports quiet waiting for a lock to be released, and the 'notify' mechanism notifies waiters that a lock
     has been released.
@@ -552,13 +550,13 @@ public class DeadLock {
 ![Multithreading mutable list](images/multithreading-mutable-list.png "Multithreading mutable list")
 
 - Basic Java approach - Ensure mutual exclusion on shared storage through locking:
-    - Locking allows only single-threaded access to the list L during an ADD operation.
+    - Locking allows only single-threaded access to the list **L** during ADD operation.
 - Basic Clojure approach - Make in-memory objects immutable by default, with a few exceptions:
-    - The ADD operation first makes a copy of the original list, and then changes the copy.
+    - ADD operation first makes a copy of the original list, and then changes the copy.
 
 ![Modify List Clojure](images/modify-list-clojure.png "Modify List Clojure")
 
-- The preferred Go approach - have a single thread control access to list L, with other threads sending messages
+- The preferred Go approach - have a single thread control access to list **L**, with other threads sending messages
 such as ADD to this controlling thread:
     - The messages are sent through a thread-safe channel.
 
@@ -1094,7 +1092,7 @@ String s1 = new String("HI");
 System.out.println(s1);         // HI
 String s2 = s1.toLowerCase();   // original string is unchanged
 System.out.println(s1);         // HI
-System.out.println(s2);         // h1
+System.out.println(s2);         // hi
 ```
 
 - ImmutableRGB example.
@@ -1144,7 +1142,7 @@ public final class ImmutableRGB {
     - In effect, a thread-safe channel from one thread to another:
         - Two producers with one consumer to illustrate the thread safety.
         - The particular queue used in this example acts like a pipe, as there's no buffering.
-- file searcher: the fork/join framework as s way to 'divide and conquer' recursive tasks:
+- File searcher: the fork/join framework as s way to 'divide and conquer' recursive tasks:
     - Java's fork/join framework allows less busy threads from an executor-service to 'steal' work from busier
     threads.
     - Basic pattern: divide task into subtasks (etc.), and then aggregate the results.

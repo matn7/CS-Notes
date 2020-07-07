@@ -1056,13 +1056,23 @@ constructor(private router: Router, private authenticate: AuthenticationService)
 
 ## Observables
 
-- Observable : data sources (user input) events, Http Requests, triggered in code<br/>
+![Observable](images/observable.png "Observable")
 
-:arrow_right:
+**Operators**
 
-- Observer : subscribe, Handle Data, Handle Error, Handle Completion
+![Operators](images/operators.png "Operators")
 
 ## Angular and forms
+
+```html
+<form>
+    <label>Name</label>
+    <input type="text" name="name">
+    <label>Mail</label>
+    <input type="text" name="email">
+    <button type="submit">Save</button>
+</form>
+```
 
 ### Template driven
 
