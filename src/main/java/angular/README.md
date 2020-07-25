@@ -1250,6 +1250,114 @@ npm i axios
 npm i --save @angular/cdk @angular/material @angular/animations hammerjs
 
 
+## Angular Http Requests
+
+![Angular http](images/http-angular.png "Angular http")
+
+### Anatomy of a Http Request
+
+![Angular http anatomy](images/http-angular-anatomy.png "Angular http anatomy")
+
+
+## Authentication
+
+**How Authentication Works**
+
+![How Authentication Works](images/angular-authentication.png "How Authentication Works")
+
+## Dynamic Components
+
+![Dynamic Components](images/dynamic-components.png "Dynamic Components")
+
+## Modules
+
+**What are "Modules"?**
+
+- Angular analyzes NgModules to "understand" your application and its features
+- Angular modules define all building blocks your app uses: Components, Directives, Services
+- An app requires at least one module (AppModule) but may be split into multiple modules
+- Core Angular features are included in Angular modules (e.g. FormsModule) to load them only when needed
+- You can't use a feature/building block without including it in a module
+
+**Working with multiple modules (feature modules)**
+
+### Shared Modules
+
+### The CoreModule
+
+### Lazy Loading
+
+### Services & Modules
+
+- AppModule:
+    - Service available app-wide
+    - Use root injector
+    - **Should be the default!**
+- AppComponent (or other Components): 
+    - Service available in component tree
+    - Use component-specific injector
+    
+    - **Use if service is only relevant for component tree**
+- Eager-loaded Module: 
+    - Service available app-wide
+    - Use root injector
+    - **Avoid this!**
+- Lazy-loaded Module:
+    - Service available in loaded module
+    - Use child injector
+    - **Use if service should be scoped to loaded module**
+
+### Ahead of Time (AoT) vs Just in Time (JiT) Compilation
+
+![JiT vs AoT](images/jit-aot.png "JiT vs AoT")
+
+```console
+ng build --prod
+```
+
+- Generated `dist` folder.
+
+## Deployment
+
+- Use & check environment variables
+- Polish & test code
+- `ng build --prod` - Uses ahead-of0time compilation
+- Deploy build artifacts (generated files) to static host - Because it's only HTML, JS, CSS!
+
+***
+
+# NgRx
+
+**What is Application State?**
+
+```console
+ng add @nguniversal/express-engine --clientProject ng4-complete-guide
+
+npm run build:ssr
+npm run serve:ssr
+```
+
+**NestJS**
+
+```console
+ng add @nestjs/ng-universal
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
