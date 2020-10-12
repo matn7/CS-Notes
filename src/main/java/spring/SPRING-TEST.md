@@ -1,12 +1,9 @@
 ## Testing Spring Applications
 
-```
-A test fixture is a fixed state of a set of objects used as a baseline for running tests.
+- **Test Fixture** - A test fixture is a fixed state of a set of objects used as a baseline for running tests.
 The purpose of a test fixture is to ensure that there is a well known and fixed environment in which tests
 are run so that results are repeatable.
-```
-
-- Includes: input data, mock objects, loading databases with known data
+    - Includes: input data, mock objects, loading databases with known data etc.
 - Unit Tests / Unit Testing:
     - Designed to test specific sections of code.
     - Should be `unity` and executed very fast.
@@ -46,12 +43,15 @@ in terms of desired behavior of the unit:
     - Mockito - A Java mocking framework.
     - JSONassert - An assertion library for JSON.
     - JSONPath - XPath for JSON.
+    
+### Spring Boot Annotations
 
-***
+- `@RunWith`, `@SpringBootTest`, `@TestConfiguration`, `@MockBean`, `@SpyBean`, `@JsonTest`, `@WebMvcTest`,
+`@DataJpaTest`, `@TestPropertySource`, `@Transactional`    
 
-## JUnit5
+### JUnit5
 
-- JUnit5 leverages new features of Java8:
+- JUnit5 leverages new features of Java 8:
     - Lambda Expressions.
     - Streams.
     - Java8 or Higher is required.
@@ -60,8 +60,8 @@ in terms of desired behavior of the unit:
 ### JUnit Vintage
 
 - Optional JUnit 5 library.
-- Provides a test runner for Junit 3 and 4 tests using JUnit 5:
-    - Allows easy migration to JUnit 5.
+- Provides a test runner for Junit 3 and 4 tests using JUnit 5.
+- Allows easy migration to JUnit 5.
 
 ### Key differences
 

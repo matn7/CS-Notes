@@ -1,5 +1,13 @@
 ## SOLID Principles of OOP
 
+**Why Use the SOLID Principles of OOP?**
+
+- Object Oriented programming is a powerful concept.
+- The 5 principles focus on dependency management.
+- Poor dependency management leads to code that is hard to change.
+
+**SOLID**
+
 - Single Responsible Principle:
     - Every class should have a single responsibility.
     - Class should be small.
@@ -10,7 +18,7 @@
     - Use private variables with getters and setters only when you need them.
     - Use abstract base class.
 - Liskov substitution principle:
-    - Objects in program would be replaceable with instances of their subtypes WITHOUT altering the correctness
+    - Objects in a program would be replaceable with instances of their subtypes WITHOUT altering the correctness
     of the program.
     - Violations will often fail the **Is a** test.
     - A Square **Is a** Rectangle.
@@ -18,11 +26,12 @@
 - Interface Segregation principle:
     - Make fine grained interfaces that are client specific.
     - Keep component focused and minimize dependencies between them.
-    - Avoid super interface.
+    - Avoid a super interfaces.
 - Dependency Inversion Principle:
     - Abstraction should not depend upon detail.
     - Details should not depend upon abstraction.
-    - How object obtain dependent objects.
+    - Important that higher level and lower level objects depend on the same abstract interaction.
+    - This is not the same as Dependency Injection - which is how object obtain dependent objects.
 
 ### Single Responsibility Principle
 
@@ -285,6 +294,21 @@ public class LightBulb implements Switchable {
 }
 ```
 
+### Interface Naming Conventions
+
+- Interface should be a good object name.
+    - Example Java's List interface:
+        - Implementations: ArrayList, LinkedList, CheckedList, SingletonList
+- Don't Start with 'I'.
+    - No **IList**
+
+**Implementation Naming**
+
+- When just one implementation - generally accepted to use:
+    - '<Interface Name>' + Impl
+- When more than one, name should indicate difference of Implementation.    
+        
+
 ## Spring Dependency Injection
 
 ### Basic of Dependency Injection
@@ -294,9 +318,11 @@ public class LightBulb implements Switchable {
 
 ### Types of Dependency Injection
 
-- By class property.
+- By class property:
+    - Can be public or private properties.
 - By setter.
-- By constructor.
+- By constructor:
+    - Most Preferred.
 
 ### Concrete classes vs interfaces
 
@@ -311,31 +337,45 @@ public class LightBulb implements Switchable {
 
 - Is a technique to allow dependencies to be injected at runtime.
 - Dependencies are not predetermined.
+
+**IoC vs Dependency Injection**
+
 - DI refers much to the composition of your classes:
     - Compose your classes with DI in mind.
 - IoC is the runtime environment of your code:
-    - Spring Framework IoC container.
+    - Spring Framework IoC container.    
+    - Spring is in control of the injection of dependencies.
+    
+**Best Practices with Dependency Injection**
+
+- Favor using Constructor Injection over Setter Injection.
+- Use final properties for injected components.
+- Whenever practical, code to an interface.    
 
 ### :star: Spring Bean Lifecycle
 
+**Create Bean**
+
 ![Spring Bean Lifecycle](images/spring-bean-lifecycle.png "Spring Bean Lifecycle")
 
-**Destroy bean** <br/>
+**Destroy Bean**
 
-Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Call Custom destroy method :arrow_right: Terminated
+![Terminate Bean](images/spring-bean-terminate.png "Terminate Bean")
 
 ### :star: Callback Interfaces
 
 - Spring has two interfaces you can implement for call back events.
-- `InitializingBean.afterPropertiesSet()` - called after properties are set.
-- `DisposableBean.destroy()` - Called during bean destruction in shutdown.
+- `InitializingBean.afterPropertiesSet()` 
+    - called after properties are set.
+- `DisposableBean.destroy()` 
+    - Called during bean destruction in shutdown.
 
 ### Life Cycle Annotations
 
-- Spring has two annotations you can use to hook into the bean life cycle:
-    - `@PostConstruct` - annotated methods will be called after the bean has been constructed, but before
-    its returned to the requesting object.
-    - `@PreDestroy` - is called just before the bean is destroyed by the container.
+- Spring has two annotations you can use to hook into the bean life cycle.
+- `@PostConstruct` annotated methods will be called after the bean has been constructed, but before
+its returned to the requesting object.
+- `@PreDestroy` is called just before the bean is destroyed by the container.
 
 ### Bean Post Processors
 
@@ -349,9 +389,14 @@ Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Cal
 - Spring has over 14 aware interfaces.
 - These are used to access the Spring Framework infrastructure.
 - These are largely used within the framework.
-- Rarely used.
+- Rarely used by Spring developers.
 
-> ApplicationContextAware, ApplicationEventPublisherAware, BeanFactoryAware ...
+```
+ApplicationContextAware, 
+ApplicationEventPublisherAware, 
+BeanFactoryAware
+...
+```
 
 ### IoC
 
@@ -374,15 +419,13 @@ Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Cal
 
 - XML Based Configuration:
     - Since Spring 2.
+    - Common in legacy Spring Applications.
     - Supported in Spring 5.
 - Annotation Based Configuration:
     - Since Spring 3.
-    - Picked up via `ComponentScan`.
-    - Class level annotations:
-        - `@Controller`
-        - `@Service`
-        - `@Component`
-        - `@Repository`
+    - Picked up via `Component Scans`.
+    - Refers to class level annotations:
+        - `@Controller`, `@Service`, `@Component`, `@Repository`
 - :star: Java Based Configuration:
     - Since Spring 3.
     - Java Classes to define Spring Beans.
@@ -398,17 +441,19 @@ Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Cal
 
 ### Stereotypes annotations
 
-- Stereotype a fixed general image or set of characteristics which represent a particular type of person or thing.
+- **Stereotype** - a fixed general image or set of characteristics which represent a particular type of person or thing.
 - Spring Stereotypes are used to define Spring Beans in the Spring context:
-    - `@Controller`
-    - `@RestController`
-    - `@Service`
-    - `@Component`
-    - `@Repository`
+- **Available Stereotypes** - `@Controller`, `@RestController`, `@Service`, `@Component`, `@Repository`
 
 ![Stereotype Annotations](images/stereotype-annotations.png "Stereotype Annotations")
 
-**Spring ComponentScan**
+- `@RestController` - Convenience annotation representing `@Controller` and `@ResponseBody`
+- `@Repository` - Indicates that an annotated class is a "Repository", originally defined by Domain-Driven Design
+as "a mechanism for encapsulating storage, retrieval and search behavior which emulates a collection of objects."
+- `@Service` - Indicates that and annotated class is a "Service", originally defined by Domain-Driven Design as
+"an operation offered as an interface that stands alone in the model, with no encapsulated state."
+
+### Spring ComponentScan
 
 ```java
 @ComponentScan(basePackages = {"com.mybank.services"})
@@ -445,12 +490,31 @@ public class TaxDiscountsConfiguration {
 
 ## Spring Boot Configuration
 
+**Dependency Management**
+
+- Maven or Gradle are supported for curated dependencies.
+- Each version of Spring Boot is configured to work with a specific version of Spring Framework.
+- Overriding the Spring Framework Version is not recommended.
+- Other build systems such as Ant can be used.
+
 ### Maven Support
 
 - Maven projects inherit from a Spring Boot Parent POM:
-    - When possible, do not specify versions in your POM.
-    - Allow the versions to inherit from the parent
+    - When possible, do not specify versions in your POM. Allow the versions to inherit from the parent.
 - The Spring Boot Maven Plugin allows for packaging the executable jar.
+
+### Gradle Support
+
+- Gradle support depends on a Spring Boot Gradle plugin.
+- Requires Gradle 3.4 or later.
+- The Gradle plugin provides support of curated dependencies, packaging as jar or war, and allows you to run
+the application from the command line.
+
+### Ant + Ivy Support
+
+- Spring Boot can be built using Ant with Ivy.
+- Ivy is used for dependency management.
+- Complete directions are available via the official Spring Boot documentation.
 
 ### Spring Boot Starters
 
@@ -486,6 +550,14 @@ context of a web-aware Spring ApplicationContext.
 Spring ApplicationContext.
 - Custom Scope - Spring Scopes are extensible, and you can define your own scope by implementing Spring's Scope
 interface. You cannot override the built in Singleton and Prototype Scopes.
+
+**Singleton Scope**
+
+![Spring Singleton Scope](images/spring-singleton-scope.png "Spring Singleton Scope")
+
+**Prototype Scope**
+
+![Spring Prototype Scope](images/spring-prototype-scope.png "Spring Prototype Scope")
 
 ### Declaring Bean Scope
 
@@ -703,6 +775,69 @@ private Set<Author> authors = new HashSet<>();
 
 ***
 
+## JPA Entity Relationship
+
+- One to One - `@OneToOne` - One entity is related to one other entity.
+- One to Many - `@OneToMany` - One entity is related to many entities (List, Set, Map, SortedSet, SortedMap).
+- Many to One - `@ManyToOne` - The inverse relationship of One to Many.
+- Many to Many - `@ManyToMany`:
+    - Many entities are related to many entities.
+    - Each has a List or Set reference to the other.
+    - A join table is used to define the relationships.
+    
+### Unidirectional vs Bidirectional
+
+- Unidirectional is one-way:
+    - Mapping is only done one way. One side of the relationship will not know about the other.
+- Bidirectional is two way:
+    - Both sides know about each other.
+    - Generally recommended to use Bidirectional, since you can navigate the graph in either direction.
+    
+### Fetch Type
+
+- Lazy Fetch Type - Data is not queried until referenced.
+- Eager Fetch Type - Data is queried up front.
+- Hibernate 5 Supports the JPA 2.1 Fetch Type Defaults.
+- JPA 2.1 Fetch Type Defaults:
+    - OneToMany - Lazy.
+    - ManyToOne - Eager.
+    - ManyToMany - Lazy.
+    - OneToOne - Eager.
+    
+### JPA Cascade Types
+
+- JPA Cascade Types Control how state changes are cascaded from parent objects to child objects.
+- JPA Cascade Types:
+    - PERSIST - Save operations will cascade to related entities.
+    - MERGE - Related entities are merged when the owning entity is merged.
+    - REFRESH - Related entities are refreshed when the owning entity is refreshed.
+    - REMOVE - Removes all related entities when the owning entity is deleted.
+    - DETACH - Detaches all related entities if a manual detach occurs.
+    - ALL - Applies all the above cascade options.
+- By default, no operations are cascaded.                    
+
+### Embeddable Types
+
+- JPA / Hibernate support embeddable types.
+- These are used to define a common set of properties.
+- For example, an order might have a billing address, and a shipping address.
+- An embeddable type could be used for the address properties.
+
+### Inheritance
+
+- MappedSuperclass - Entities inherit from a super class. A database table IS NOT created for the super class.
+- Single Table - (Hibernate Default) - One Table is used for all subclasses.
+- Joined Table - Base class and subclass have their own tables. Fetching subclass entities require a join to the
+parent table.
+- Table Per Class - Each subclass has its own table.
+
+### Create and Update Timestamps
+
+- Often a best practice to use create and update timestamps on your entities for audit purposes.
+- JPA supports `@PrePersist` and `@PreUpdate` which can be used to support audit timestamps via JPA lifecycle
+callbacks.
+- Hibernate provides `@CreationTimestamp` and `@UpdateTimestamp`.
+
 ## Spring Data Repositories
 
 - Provides an Implementation of the Repository Pattern.
@@ -740,7 +875,7 @@ telnet mybank.com 80
     transfer encodings, and request pipelining.
 - Http/1.1 - Updated by RFC 2616 in 1999.
 - Updated again by RFC 7230 in 2014.
-- Still in use today.
+- Still, in use today.
 - Request - Added encoding, charset, and cookies.
 - Response - Added encoding, charset, and cookies.
 - Http/2.0 Standardized in 2015.
@@ -755,18 +890,19 @@ telnet mybank.com 80
 ### HTTP Request Methods
 
 - Request methods, also known as verbs, are used to indicate the desired action to be performed.
-- GET - is a request for a resource:
-    - GET - is used when you visit a website.
-- HEAD - is like GET, but only asks for meta information without the body.
-- POST - is used to post data to the server.
-- POST is a create request.
-- PUT - is a request for enclosed entity be stored at the supplied URI. If the entity exists, it is expected to
+- GET - Is a request for a resource (html file, javascript, image, etc).
+- GET - Is used when you visit a website.
+- HEAD - Is like a GET, but only asks for meta information without the body.
+- POST - Is used to post data to the server.
+- POST - Is create request.
+- PUT - Is a request for enclosed entity be stored at the supplied URI. If the entity exists, it is expected to
 be updated.
-- PUT is a create or update request.
+- PUT - Is create or update request.
 - DELETE - Is a request to delete the specified resource.
 - TRACE - Will echo the received request. Can be used to see if request was altered by intermediate servers.
 - OPTIONS - Returns the HTTP methods supported by the server for the specified URL.
-- CONNECT - Converts the request to a transparent TCP/IP tunnel, typically for HTTPS through an unencrypted HTTP proxy.
+- CONNECT - Converts the request to a transparent TCP/IP tunnel, typically for HTTPS through an unencrypted 
+HTTP proxy.
 - PATCH - Applies partial modifications to the specified resource.
 
 ### Safe Methods
@@ -809,6 +945,8 @@ be updated.
 
 ![MVC](images/MVC.png "MVC")
 
+![Spring MVC](images/spring-mvc.png "Spring MVC")
+
 ***
 
 ## Database Initialization with Spring
@@ -818,12 +956,7 @@ be updated.
 - DDL - `Data Definition Language`.
 - DML - `Data Manipulation Language`.
 - Hibernate property is set by the Spring property `spring.jpa.hibernate.ddl-auto`.
-- :star: Options are:
-    - none
-    - validate
-    - update
-    - create
-    - create-drop
+- :star: Options are: none, validate, update, create, create-drop.
 - Spring Boot will use `create-drop` for embedded databases (hsql, h2, derby) or none.
 
 ### Initialize with Hibernate
@@ -839,8 +972,101 @@ be updated.
 from root of the classpath.
 - Spring Boot will also load from **schema-${platform}.sql** and **data-${platform}.sql**:
     - Must set `spring.datasource.platform`.
-- May conflict with Hibernate's DDL Auto property:
+- May conflicts with Hibernate's DDL Auto property:
     - Should use setting of 'none' or 'validate'.
+    
+### Q & A
+
+**What are the 4 types of entity relationships?**    
+
+- `@OneToOne`, `@oneToMany`, `@ManyToOne`, `@ManyToMany`
+
+**Which JPA Relationship will require the use of a join table?**
+
+- Many To Many
+
+**What is the diff between a unidirectional relationship and a bidirectional relationship?**
+
+- In unidirectional, the mapping is done one-way, meaning one side of the relationship will not know about the other.
+While bidirectional both sides will know about the relationship.
+
+**Which type of relationship is recommended?**
+
+- bidirectional - allows to navigate the object graph from either direction.
+
+**What two fetch types can be used with JPA?**
+
+- LAZY, EAGER
+
+**What do JPA Cascade Types do?**
+
+- Cascade Types control how changes are cascaded from parent objects to child objects.
+
+**What is the default Cascade Type in JPA 2.1?**
+
+- None
+
+**What are the 6 available Cascade Types in JPA 2.1?**
+
+- PRESIST, MERGE, REFRESH, REMOVE, DETACH, ALL
+
+**Can you embed a type in JPA for reuse?**
+
+- Yes, Address for instance
+
+**Does JPA supports object inheritance?**
+
+- Yes, in JPA classes can inherit from a super class.
+
+**What is Hibernate's default persistence strategy for inheritance?**
+
+- Single Table - One table is created for the superclass and inheriting subclasses.
+
+**What is a disadvantage of the Single Table strategy for inheritance?**
+
+- Single Table can lead to a lot of unused database columns.
+
+**What is a disadvantage of the Join Table strategy for inheritance?**
+
+- Fetching subclass entities require a join to the table of the superclass.
+
+**Can JPA automatically update timestamp properties for audit purposes?**
+
+- Yes, using `@PrePersist` or `@PreUpdate` within JPA. Or Hibernate specific `@CreationTimestamp` or
+`@UpdateTimestamp`
+
+**What does DDL stands for?**
+
+- Data Definition Language
+
+**What does DML stands for?**
+
+- Data Manipulation Language
+
+**What is the difference between DDL and DML?**
+
+- DDL is used to define database structures such as tables and indexes. While DML is used with data operations
+such as inserts and updates.
+
+**What does Hibernate's ddl-auto property control?**
+
+- Controls what if any DDL operations Hibernate will perform on startup.
+
+**What are the 5 valid options for Hibernate's ddl-auto property?**
+
+- none, validate, update, create, create-drop
+
+**When using an embedded database, which ddl-auto setting will Spring Boot set by default?**
+
+- create-drop
+
+**When using an NON-embedded database, which ddl-auto setting will Spring Boot set by default?**
+
+- none
+
+**What two file will Spring Boot use to initialize the database?**
+
+- schema.sql and data.sql
 
 ***
 
@@ -856,7 +1082,8 @@ from root of the classpath.
 
 - Hooks in via the Annotation processor API.
 - The AST (raw source code) is passed to Lombok for code generation before java continues.
-- Thus, produces properly compiled Java code in conjunction with the Java compiler.
+- Thus, produces properly compiled Java code in conhuction with the Java compiler.
+- Under the 'target/classes' you can view the compiled class files.
 - Since compiled code is changed, and source files are not, IDEs can get confused by this.
 - More of an issue for IDEs several years old.
 - Modern IDEs such as IntelliJ, Eclipse, Netbeans support Project Lombok:
@@ -867,7 +1094,7 @@ from root of the classpath.
 - `@Getter` - Creates getter methods for all properties.
 - `@Setter` - Creates setter for all non-final properties.
 - `@ToString`
-- `@EqualsAndHashCode`"
+- `@EqualsAndHashCode`:
     - Generates implementations of `equals(Object other)` and `hashCode()`.
     - By default will use all non-static, non-transient properties.
     - Can optionally exclude specific properties.
@@ -878,22 +1105,25 @@ from root of the classpath.
 - `@RequiredArgsConstructor`:
     - Generates a constructor for all fields that are final or marked `@NonNull`.
     - Constructor will throw a `NullPointerException` if any `@NonNull` fields are null.
+- `@AllArgsConstructor`:
+    - Generates a constructor for all properties of class.
+    - Any `@NotNull` properties will have null check.    
 - `@Data`:
     - Generates typical boilerplate code for POJOs.
     - Combines - `@Getter`, `@Setter`, `@ToString`, `@EqualsAndHashCode`, `@RequiredArgsConstructor`.
-    - No constructor is generated if constructors have been explicitly declared/
+    - No constructor is generated if constructors have been explicitly declared.
 - `@Value`:
     - The immutable variant of `@Data`.
     - All fields are made private and final by default.
 - `@NonNull` - Set on parameter of method or constructor and a NullPointerException will be thrown if parameter is null.
-- `@Builder` - Implements the **builder** pattern for object creation.
-
-```java
-Person.builder().name("Majki").city("LA").build();
-```
-
+- `@Builder`:
+    - Implements the **builder** pattern for object creation.
+    - `Person.builder().name("Majki").city("LA").build();`
 - `@SneakyThrows` - Throw checked exceptions without declaring in calling method's throws clause.
 - `@Synchronized` - A safer implementation of Java's synchronized.
+- `@Getter(lazy = true)` - for expensive getters:
+    - Will calculate value first time and cache.
+    - Additional gets will read from cache.
 - `@Log` - Creates a Java util logger.
 - `@Slf4j`:
     - Creates a SLF4J logger.
@@ -950,9 +1180,9 @@ that exception is thrown.
 ### Internal Spring MVC Exception Handlers
 
 - Spring MVC has 3 implementations of HandlerExceptionResolver:
-    - ExceptionHandlerExceptionResolver - Matches uncaught exceptions to `@ExceptionHandler`.
-    - ResponseStatusExceptionResolver - Looks for uncaught exceptions matching `@ResponseStatus`.
-    - DefaultHandlerExceptionResolver - Converts standard Spring Exceptions to HTTP status codes.
+- ExceptionHandlerExceptionResolver - Matches uncaught exceptions to `@ExceptionHandler`.
+- ResponseStatusExceptionResolver - Looks for uncaught exceptions matching `@ResponseStatus`.
+- DefaultHandlerExceptionResolver - Converts standard Spring Exceptions to HTTP status codes.
 
 ### Custom HandlerExceptionResolver
 
@@ -981,6 +1211,7 @@ that exception is thrown.
 
 ### JSR 303 - Java Bean Validation
 
+- Primary focus was to define annotations for data validation.
 - Standard validations are found in the package `javax.validation.constraints`.
 - From the jar `javax.validation:validation-api`.
 - API Implementation is - `org.hibernate.hibernate-validator`.
@@ -1004,16 +1235,20 @@ that exception is thrown.
 - @Null
 - @Past
 - @Pattern
-- @Size
+- `@Size` - checks if string or collection is between a min and max.
+- `@NotEmpty` - Checks if value is null or empty (white space characters or empty collections).
+- `@NonBlank` - Checks string is not null or not whitespace characters.
+- `@Email` - Checks if string value is an email address.
 
 ### Hibernate Validators
 
 - @CreditCardNumber
 - @Currency
 - @EAN
-- @Email
+- `@Email`
+- `@ISBN`
 - @Length
-- @LunhCheck
+- @LuhnCheck
 - @Mod10Check
 - @Mod11Check
 - @NotBlank
@@ -1217,6 +1452,650 @@ public class DefaultProfile {
     }
 }
 ```
+
+## Docker
+
+**What is Docker?**
+
+- Docker is a standard for Linux containers.
+- A "Container" is an isolated runtime inside of Linux.
+- A "Container" provides a private machine like space under Linux.
+- Containers will run under any modern Linux Kernel.
+
+**Containers can**
+
+- Have their own process space.
+- Their own network interface.
+- 'Run' processes as root (inside the container).
+- Have their own disk space:
+    - can share with host too.
+
+![VMs vs Containers](images/vm-vs-containers.png "VMs vs Containers")
+
+**Docker Terminology**
+
+- Docker Image - The representation of a Docker Container. Kind of like a JAR or WAR file in Java.
+- Docker Container - The standard runtime of Docker. Effictively a deployed and running Docker Image.
+Like a Spring Boot Executable JAR.
+- Docker Engine - The code which manages Docker stuff. Creates and runs Docker Containers.
+
+![Docker Engine Runtime](images/docker-engine-runtime.png "Docker Engine Runtime")
+
+### Docker Editions
+
+- **Docker Enterprise Edition**
+- **Docker Community Edition**
+
+**Edition for Java Developers?**
+
+- Functionally, the two editions are the same.
+- Java developers should be fine using the Docker Community Edition.
+
+**Hello World**
+
+```console
+docker run hello-world
+```
+
+**Mongo DB**
+
+```console
+docker run --name some-mongo -d mongo:tag
+
+docker pull mongo
+
+docker run mongo
+
+docker run -d mongo
+
+docker stop CONTAINER_ID
+
+docker run -p 27017:27017 -d mongo
+
+docker logs -f CONTAINER_ID
+
+mvn spring-boot:run
+```
+
+### Docker Images
+
+- An Image defines a Docker Container:
+    - Similar in concept to a snapshot of a VM.
+    - Or a class vs instance of the class.
+- Images are immutable:
+    - Once built, the files making up an image do not change.
+    
+**Image Layers**
+
+- Images are built in layers.
+- Each layer is an immutable file, but is a collection of files and directories.
+- Layers receive an ID, calculated via a SHA 256 hash of the layer contents.
+    - Thus, if the layer contents change, the SHA 256 hash changes also.        
+
+```console
+docker image inspect mongo
+```
+
+**Image Ids**
+
+- Image Ids are a SHA 256 hash derived from the layers.
+    - Thus, if the layers of the image changes, the SHA 256 hash changes.
+- The Image ID listed by docker commands (docker images) is the first 12 characters of the hash.    
+
+**Image Tag Names**
+
+- The hash values of images are referred to by 'tag' names.
+
+**Image Tag Names**
+
+- The format of the full tag name is: `[REGISTRYHOST/][USERNAME/]NAME[:TAG]`
+- Example: `registry.hub.docker.com/mongo:latest`
+
+**Docker Files**
+
+![Docker Files](images/docker-files.png "Docker Files")
+
+**Storage on host**
+
+```console
+docker run -p 27017:27017 -v /home/mati/dockerdata/mongo:/data/db -d mongo
+```
+
+**Rabbit MQ**
+
+```console
+docker run -d --hostname panda-rabbit --name some-rabbit -p 8080:15672 -p 5671:5671 -p 5672:5672 rabbitmq:3-management
+```
+
+**MySQL**
+
+```console
+docker run --name panda-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /home/mati/dockerdata/mysql:/var/lib/mysql -p 3306:3306 -d mysql
+```
+
+### Cleaning Up After Docker
+
+- There are 3 key areas of house keeping:
+    - Containers
+    - Images
+    - Volumes
+    
+**Containers**
+
+- Kill all Running Docker Containers: 
+    - `docker kill $(docker ps -q)`
+- Delete all Stopped Docker Containers: 
+    - `docker rm $(docker ps -a -q)`
+
+**Images**
+
+- Remove a Docker Image:
+    - `docker rmi IMAGE_NAME`
+- Delete Untagged (dangling) Images:
+    - `docker rmi $(docker images -q -f dangling=true)`        
+- Delete All Images:
+    - `docker rmi $(docker images -q)`
+    
+**Volumes**    
+
+- Once a volume is no longer associated with a container, it is considered 'dangling'.
+- Remove all dangling volumes:
+    - `docker volumes rm $(docker volume ls -f dangling=true -q)`
+- NOTE: Does not remove files from host system in shared volumes.    
+
+**Questions**
+
+- What command is used to build a docker image?
+    - `docker build -t TAG_NAME`
+- How do you list all docker images on your system?
+    - `docker images`
+- How do you map host port to container port?
+    - `-p HOST_PORT:CONTAINER_PORT`    
+- What is like a .java file to a docker image? ie, the source code?
+    - The Dockerfile.
+- How do you shell into a running docker container?
+    - `docker exec -it CONTAINER_NAME bash`
+
+### Docker CentOS image
+
+```console
+docker run -d centos
+
+docker logs IMAGE_NAME
+
+docker run -d centos tail -f /dev/null
+
+docker exec -it NAMES bash
+------------------------------------------
+docker exec -it confident_brahmagupta bash
+[root@c13aba60f569 /]# whoami
+root
+[root@c13aba60f569 /]# ls
+bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+[root@c13aba60f569 /]# 
+[root@c13aba60f569 /]# yum install java
+```
+
+**Dockerfile**
+
+```console
+cd docker
+$ ls -la
+-rw-rw-r--  1 mati mati      211 wrz 29 14:40 Dockerfile
+-rw-rw-r--  1 mati mati 44447242 wrz 29 14:37 spring-boot-app.jar
+
+$ docker build -t spring-boot-docker .
+
+------- run ------- 
+
+$ docker run -d -p 8080:8080 spring-boot-docker
+```
+
+```
+FROM centos
+
+RUN yum install -y java-11
+
+VOLUME /tmp
+ADD /spring-boot-app.jar myapp.jar
+RUN sh -c 'touch /myapp.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/myapp.jar"]
+```
+
+## MySQL
+
+**MySQL Features**
+
+- Stored Procedures
+- Triggers
+- Cursors
+- Updated Views
+- Query Catching
+- Subselects
+- ACID Compliance:
+    - Atomicity - all or nothing.
+    - Consistency - transactions are valid to rules of the DB.
+    - Isolation - Results of transactions are as if they are done end to end.
+    - Durability - Once a transaction is committed, it remains so.
+    
+**RDBMS Deployment Architecture**
+
+- Deployment typically driven by needs of scalability and availability.
+- Can be done on a single non-dedicated server, or many dedicated servers.
+- Communication is typically over a network socket.
+- The client will need software called a 'driver' to talk to the database over the network socket.    
+
+**Simple Non-Dedicated Server**
+
+- Single Server (COmputer).
+- RDBMS is installed.
+- User logs in and accesses database from command line.
+- Simplest configuration.
+- Often will talk over 'localhost' and a network socket on localhost.
+
+![Simple Non-Dedicated Server](images/simple-db-server.png "Simple Non-Dedicated Server")
+
+**LAMP Stack**
+
+- LAMB = Linux, Apache, MySQL, PHP
+- Most websites will run off a single server.
+- Downside is database and Apache compete for the limited server resources.
+
+![LAMP](images/lamp.png "LAMP")
+
+**Client Server**
+
+- Concept of moving application code to the client and different hardware, while using dedicated hardware for
+database server.
+- Offloads the application load from the database server.
+
+![Client Server](images/client-server.png "Client Server")
+
+**Scaling Client Server**
+
+- Scalability is achieved by doing processing on application servers.
+- Database Server is dedicated.
+- Often companies will increase the size of the database server to grow further.
+- Data storage is off loaded to dedicated hardware.
+
+![Scaling Client Server](images/scaling-client-server.png "Scaling Client Server")
+
+**Scaling Higher**
+
+- Multiple Servers are used for the database.
+- Example - Oracle Real Application Cluster.
+- Improves Scalability over a single database server.
+- Improves Reliability since a node can be lost, and the database cluster will continue.
+- "Mainframe" like performance.
+
+![Scaling Higher](images/scaling.png "Scaling Higher")
+
+**Scaling Higher**
+
+- Cloud Scale - Amazon, Google.
+- Distributed computing - load is spread to many many servers.
+- Often cheap commodity servers are used.
+- Large mainframe like systems are avoided.
+- Different paradigm than Client Server.
+- RDBMS's are typically not used due to scalability limitations.
+
+### MySQL Data Types
+
+- A Data Type defines the data type of a column - ie text, number, date, etc.
+- MySQL does support the standard ANSI SQL Data types.
+- Data Types are broken down into the following categories:
+    - Numeric Data Types
+    - Date and Time Data Types.
+    - String Data Types.
+    - Spatial Data Types.
+    - JSON Data Type.
+    
+**Character Sets**    
+
+- ASCII - American Standard Code for Information Interchange:
+    - One of the first 'character' sets.
+    - Limited to 128 characters.
+- UTF-8 is highly popular used for email/web: 1 - 4 bytes long:
+    - Up to 1,112,064 characters.
+    
+**String Data Types**
+
+- CHAR, VARCHAR, BINARY, VARBINARY, BLOB, TEXT, ENUM, SET
+
+**Spatial Data Types**
+
+- MySQL has features to support the storage and analysis of geographic features:
+    - Data types for spatial values.
+    - Functions for manipulating spatial values.
+    - Spatial indexing for improve performance.
+    
+**JSON Data Type**
+
+- JSON - JavaScript Object Notation:
+    - This is a complex, structured document containing properties and values.
+- Storage for JSON data types is similar to BLOB or TEXT data types.
+- MySQL will convert the JSON to an internal format for optimized storage and searching:
+    - Some formatting may be lost and ordering of properties may change.
+- MySQL supports searching of JSON document properties.
+- MySQL allows you to update portions of a JSON document (no replace needed).
+
+**Client Protocols**
+
+- TCP/IP - Most common.
+- SOCKET - Unix/OSX/Linux Only.                     
+- PIPE - Windows Only.
+- MEMORY - Windows Only.
+
+**TCP/IP**
+
+- TCP/IP - Transmission Control Protocol / Internet Protocol.
+- DNS - Domain Name Service - Associates an IP address with a human readable name.
+- "localhost" is the computer you are on.
+- "port" is a logical connection endpoint of an IP Address.
+- Ports range from 0 to 65535.
+- MySQL by default will connect on port 3306.
+
+```console
+mysql -u root -p
+
+--------------------------
+
+mysql> status
+mysql> show databases;
+mysql> use mysql;
+mysql> show tables;
+mysql> describe user;
+mysql> select host, user from user;
+```
+
+**MySQL docker**
+
+```console
+docker run --name panda-mysql -e MYSQL_ROOT_PASSWORD=password -d mysql
+docker exec -it panda-mysql bash
+
+--------------DOCKER_CONTAINER--------------------
+# mysql -u root -p
+---------------------MYSQL------------------------
+mysql> 
+```
+
+## Spring Boot App and MySQL
+
+**Configure docker mysql**
+
+```console
+docker run --name mysqldb -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql
+```
+
+**Configure mysql**
+
+```console
+#Create Databases
+CREATE DATABASE dev;
+CREATE DATABASE prod;
+
+------------------------
+#Create database service accounts
+CREATE USER 'dev_user'@'localhost' IDENTIFIED BY 'password';
+CREATE USER 'prod_user'@'localhost' IDENTIFIED BY 'password';
+CREATE USER 'dev_user'@'%' IDENTIFIED BY 'password';
+CREATE USER 'prod_user'@'%' IDENTIFIED BY 'password';
+
+------------------------
+#Database grants
+GRANT SELECT ON dev.* to 'dev_user'@'localhost';
+GRANT INSERT ON dev.* to 'dev_user'@'localhost';
+GRANT DELETE ON dev.* to 'dev_user'@'localhost';
+GRANT UPDATE ON dev.* to 'dev_user'@'localhost';
+GRANT SELECT ON prod.* to 'prod_user'@'localhost';
+GRANT INSERT ON prod.* to 'prod_user'@'localhost';
+GRANT DELETE ON prod.* to 'prod_user'@'localhost';
+GRANT UPDATE ON prod.* to 'prod_user'@'localhost';
+GRANT SELECT ON sfg_dev.* to 'sfg_dev_user'@'%';
+GRANT INSERT ON sfg_dev.* to 'sfg_dev_user'@'%';
+GRANT DELETE ON sfg_dev.* to 'sfg_dev_user'@'%';
+GRANT UPDATE ON sfg_dev.* to 'sfg_dev_user'@'%';
+GRANT SELECT ON prod.* to 'prod_user'@'%';
+GRANT INSERT ON prod.* to 'prod_user'@'%';
+GRANT DELETE ON prod.* to 'prod_user'@'%';
+GRANT UPDATE ON prod.* to 'prod_user'@'%';
+```
+
+## MongoDB
+
+- MongoDB is a document oriented database.
+- Developed in C++.
+- MongoDB is a NoSQL database.
+- MongoDB documents are stored in BSON:
+    - Binary JSON.
+- Originally Developed as a PAAS - Platform as a Service.
+
+**Why Use MongoDB?**
+
+- MongoDB is great for high insert systems:
+    - Such as sensor readings, social media systems, advertising systems.
+- Good when you need schema flexibility.
+- Can also support a high number of reads per second.
+
+**Why Avoid MongoDB?**
+
+- MongoDB has no concept of transactions.
+    - No A.C.I.D
+    - No locking for transactional support, hence faster inserts.
+- Not good for concurrent updates.
+
+| RDBMS | MongoDB |
+|---|---|
+| Database | Database |
+| Table | Collection |
+| Row | Document |
+| Column | Field |
+| Table Join | Embedded Documents |
+| Primary Key | Primary Key |
+| Aggregation | Aggregation Pipeline |
+
+## Swagger
+
+**REST vs SOAP**
+
+- A cornerstone of SOAP is the WSDL (Web Services Description Language).
+- WSDL is an XML document, describing a web service.
+- Can also be thought of as a 'contract'.
+- There is no formal WSDL for RESTful APIs. Hence Swagger.
+
+**Swagger**
+
+- Swagger is a Specification.
+- JSON for Metadata.
+- JSON for API Definition.
+- JSON for Schema for the Model Specification.
+- The Swagger Specification is Machine Readable.
+- Also is Language Agnostic.
+- Not just for Java and Spring.
+- Swagger is supported for most popular server side and client side languages.
+
+**The Swagger Eco System**
+
+- Swagger UI - HTML, Javascript and CSS components dynamically generate documentation from a Swagger Compliant API.
+- Swagger Editor - Edit API Specifications in YAML and preview documentation real time.
+- Swagger Codegen - Create client libraries and server stubs from a Swagger definition.
+
+**The Swagger Specification**
+
+- Can be JSON or YAML.
+- Field names are case sensitive.
+- Data types are based on JSON-Schema.
+- Models are described using Schema Object, of JSON Schema.
+- Swagger 2 uses JSON Schema Draft 4.
+
+***
+
+## Content Negotiation in Spring
+
+**Content Negotiating View Resolver**
+
+- Used by Spring MVC to determine view handler to use.
+- Auto Configured by Spring Boot.
+- The Content Negotiating View Resolver will determine the view to use to render the data of the model 
+to the client.
+
+**Content Type**
+
+- View to use is determined by Content Type in HTTP Header:
+    - application/json, application/xml, text/html
+- If view for requested Content Type is not found, HTTP Status 406 Not Acceptable is returned.    
+
+## JMS Messaging
+
+- **JMS** - Java Messaging Service.
+- JMS is a Java API which allows a Java Application to send a message to another application.
+    - Generally the other application is a Java application.
+- JMS is a standard Java API which requires an underlying implementation to be provided:
+    - Much like JPA - where JPA is the API standard, and Hibernate is the implementation.
+- JMS is highly scalable and allows you to loosely couple applications using asynchronous messaging.        
+
+### JMS Implementation
+
+- Amazon SQS
+- **Apache ActiveMQ**
+- JBoss Messaging
+- IBM MQ - (Closed source / paid)
+- OracleAQ - (Closed Source / paid)
+- RabbitMQ
+
+### Why Use JMS over REST?
+
+- JMS is a true messaging service.
+- Asynchronous - send and forget!
+- Greater throughput - the HTTP protocol is slow comparatively.
+    - JMS protocols are VERY performant.
+- Flexibility in message delivery - Deliver to one or many consumers.
+- Security - JMS has a very robust security.
+- Reliability - Can guarantee message delivery.    
+
+### Types of Messaging
+
+- **Point to Point**
+    - Message is queued and delivered to one consumer.
+    - Can have multiple consumers - but message will be delivered only ONCE.
+    - Consumers connect to a queue.
+- **Publish / Subscribe**
+    - Message is delivered to one or more subscribers.
+    - Subscribers will subscribe to a topic, then receive a copy of all messages sent to the topic.     
+
+**Point to Point**
+
+![Point to Point](images/p2p-msg.png "Point to Point")
+
+**Publish / Subscribe**
+
+![Publish / Subscribe](images/pblish-subscribe-message.png "Publish / Subscribe")
+
+### Key Terms
+
+- JMS Provider - JMS Implementation.
+- JMS Client - Application which sends or receives messages from the JMS provider.
+- JMS Producer or Publisher - JMS Client which sends messages.
+- JMS Consumer or Subscriber - JMS Client which receives messages.
+- JMS Message - the entity of data sent.
+- JMS Queue - Queue for point to point messages. Often FIFO.
+- JMS Topic - Similar to queue - but for publish and subscribe.
+
+### JMS Message
+
+- A JMS Message contains:
+    - **Header** - contains metadata about the message.
+    - **Properties** - Message properties are in 3 sections:
+        - **Application** - From Java Application sending message.
+        - **Provider** - Used by the JMS provider and are implementation specific.
+        - **Standard Properties** - Defined by the JMS API - Might not be supported by the provider.
+    - **Payload** - the message itself.        
+
+### JMS Header Properties
+
+- **JMSCorrelationID** - String value, typically a UUID. Set by application, often used to trace a 
+message through multiple consumers.
+- **JMSExpires** - Long - zero, does not expire. Else, time when message will expire and be removed from the queue.
+- **JMSMessageId** - String value, typically set by the JMS Provider.
+- **JMSPriority** - Integer - Priority of the message.
+- **JMSTimestamp** - Long - Time message was sent.
+- **JMS** - String - The type of the message.
+- **JMSReplyTo** - Queue or topic which sender is expecting replies.
+- **JMSRedelivery** - Boolean - Has message been re-delivered?
+- **JMSDeliveryMode** - Integer, set by JMS Provider for delivery mode:
+    - **Persistent** - JMS Provider should make best effort to deliver message.
+    - **Non-Persistent** - Occasional message lost is acceptable.
+
+### JMS Message Properties
+
+- **JMSXUserID** - String User Id sending message. Set by JMS Provider.
+- **JMSXAppID** - String Id of the application sending the message. Set by JMS Provider.
+- **JMSXDeliveryCount** - Int Number of delivery attempts. Set by JMS Provider.
+- **JMSXGroupID** - String the message group which the message is part of. Set by CLient.
+- **JMSXGroupSeq** - Int sequence number of message in group. Set by CLient.
+- **JMSXProducerTDIX** - String Transaction id when message was produced. Set by JMS Producer. 
+- **JMSXConsumerTXID** - String Transaction Id when the message was consumed. Set by JMS Provider.
+- **JMSXRcvTimestamp** - Long Timestamp when message delivered to consumer. Set by JMS Provider.
+- **JMSXState** - Int state of the JMS Message. Set by JMS Provider.
+
+### JMS Custom Properties
+
+- The JMS Client can set custom properties on messages.
+- Properties are set as key / value pairs (String value).
+- Values must be of type:
+    - String, boolean, byte, double, float, int, short, long, Object.
+    
+### JMS Provider Properties
+
+- The JMS Client can also set JMS Provider Specific properties.
+- These properties are set as JMS_<PROVIDER_NAME>
+- JMS Provider specific properties allow the client to utilize features specific to the JMS Provider.
+
+### JMS Message Types
+
+- **Message** - Just message, no payload. Often used to notify about events.
+- **ByteMessage**  - Payload is an array of bytes.
+- **TextMessage** - Message is stored as a string (JSON or XML).
+- **StreamMessage** - sequence of Java primitives.
+- **MapMessage** - message is name value pairs.
+- **ObjectMessage** - Message is a serialized Java object.
+
+**Which Message Type Use**
+
+- JMS 1.0 - Java to Java messaging.
+- JMS TextMessages with JSON or XML payloads are favored:
+    - Decoupled from Java.
+    - Bridge to non-java providers.
+    - Make migration to a non-JMS provider less painful.
+        - Important since messaging is becoming more generic and abstracted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

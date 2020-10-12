@@ -1,5 +1,132 @@
 # Reactive Programming
 
+**Reactive**
+
+- Reactive Systems - Architecture and Design, ie Cloud Native.
+- Reactive Programming - Generally Event Based.
+- Functional Reactive Programming (FRP) - Often confused with Reactive Programming.
+
+## Reactive Manifesto
+
+![Reactive Manifesto](images/reactive-manifesto.png "Reactive Manifesto")
+
+**Responsive**
+
+- The system responds in a timely manner.
+- Responsiveness is the cornerstone of usability and utility.
+- Responsiveness also means problems may be detected quickly and dealt with effectively.
+- Responsive systems provide rapid and consistent response times.
+- Consistent behavior simplifies error handling, builds end user confidence, and encourages further interaction.
+
+**Resilient**
+
+- System stays responsive in the face of failure.
+- Resilience is achieved by replication, containment, isolation and delegation.
+- Failures are contained within each component.
+- Parts of the system can fail, without compromising the system as a whole.
+- Recovery of each component is delegated to another.
+- High-availability is ensured by replication where necessary.
+
+**Elastic**
+
+- The system stays responsive under varying workload.
+- Reactive Systems can react to changes in the input rate by increasing or decreasing resources allocated to service inputs.
+- Reactive Systems achieve elasticity in a cost effective way on commodity hardware and software platforms.
+
+**Message Driven**
+
+- Reactive Systems rely on asynchronous message passing to establish a boundary between components:
+    - This ensures loose coupling, isolation and location transparency.
+- Message passing enables load management, elasticity and flow control.
+- Location transparent messaging makes management of failures possible.
+- Non-blocking communication allows recipients to only consume resources whike active, leading to less system overhead.    
+
+**Reactive Programming with Reactive Systems**
+
+- Reactive Programming is a useful implementation technique.
+- Reactive programming focuses on non-blocking, asynchronous execution - a key characteristic of Reactive Systems.
+- Reactive Programming is just one tool in building Reactive Systems.
+
+### Features of Reactive Programming
+
+- Data Streams
+- Asynchronous
+- Non-blocking
+- Backpressure
+- Failures as Messages
+
+**Data Stream**
+
+- Data Streams can be just about anything.
+- Mouse clicks, or other user interactions.
+- JMS Messages, RESTful Service calls, Twitter feed, Stock Trades, list of data from a database.
+- A stream is a sequence of events ordered in time.
+- Events you want to listen to.
+
+**Asynchronous**
+
+- Events are captured asynchronously.
+- A function is defined to execute when an event is emitted.
+- Another function is defined if an error is emitted.
+- Another function is defined when complete is emitted.
+
+![GoF Observer Pattern](images/gof-observer-pattern.png "GoF Observer Pattern")
+
+**ReactiveX Observable**
+
+![ReactiveX Observable](images/reactiveX-observable.png "ReactiveX Observable")
+
+**Non-Blocking**
+
+- In Blocking, the code will stop and wait for more data (ie reading from disk, network, etc).
+- Non-blocking in contrast, will process available data, ask to be notified when more is available, then continue.
+
+*Multi Threaded Server*
+
+![Multi Threaded Server](images/multi-threaded-server.png "Multi Threaded Server")
+
+*Node.js Server*
+
+![Node.js Server](images/node-js-server.png "Node.js Server")
+
+**Back Pressure**
+
+- The ability of the subscriber to throttle data.
+
+**Failures as Messages**
+
+- Exceptions are not thrown in a traditional sense.
+    - Would break processing of stream.
+- Exceptions are processed by a handler function.
+
+### Reactive Streams API
+
+- Goal is to create a standard for asynchronous stream processing with non-blocking back pressure.
+- Reactive Streams is a set of 4 interfaces which define the API.
+    - Publisher
+    - Subscriber
+    - Subscription
+    - Processor
+- Adoptions: Akka Streams, MongoDB, Reactive Rabbit, RxJava, Cassandra, ElasticSearch, Kafka, Play.
+
+**Reactive Streams with Backpressure**
+
+![Reactive Streams with Backpressure](images/rs-with-backpressure.png "Reactive Streams with Backpressure")
+
+**[Spring MVC & Spring WebFlux**
+
+![Spring MVC & Spring WebFlux](images/spring-mvc-spring-webflux.png "Spring MVC & Spring WebFlux")
+
+**Spring Reactive Types**
+
+- 'Mono' is a publisher with zero or one element in data stream.
+- 'Flux' is a publisher with zero or MANY elements in the data stream. 
+- Both implement the Reactive Streams Publisher interface.
+
+## Spring Web Flux
+
+
+
 ## Evolution of Programming
 
 - Past:

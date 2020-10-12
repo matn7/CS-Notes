@@ -1,5 +1,70 @@
 # SPRING REST
 
+## RESTful Web Services
+
+- Because of their simplicity and versatility, RESTful web services have cecome the de facto standard of web services.
+- REST - Representational State Transfer:
+    - Representation - Typically JSON or XML.
+    - State Transfer - Typically via HTTP.
+    
+**RESTful Terminology**
+
+- Verbs - HTTP Methods: GET, PUT, POST, DELETE.
+- Messages - the payload of the action (JSON/XML).
+- URI - Uniform Resource Identifier:
+    - A unique string identifying a resource.
+- URL - Uniform Resource Locator.
+- Idempotence - execute operation multiple times, without changing the result.
+    - Refreshing a web page (HTTP GET operation).    
+- Stateless - Service does not maintain any client state.
+- HATEOAS - Hypermedia As the Engine of application state.        
+
+### Richardson Maturity Model (RMM)
+
+- A model used to describe the maturity of RESTful services.
+- Unlike SOAP, there is no formal specification for REST.
+- RMM is used to describe the quality of the RESTful service.
+
+**RMM Levels**
+
+![RMM Levels](images/rmm-levels.png "RMM Levels")
+
+**Core Technologies**
+
+- Hypermedia
+- HTTP
+- URI
+
+**Level 0: Swamp of POX**
+
+- POX - Plain Old XML.
+- Uses implementing protocol as a transport protocol.
+- Typically, uses one URI and one kind of method.
+- Examples - RPC, SOAP, XML-RPC.
+
+**Level 1: Resources**
+
+- Uses Multiple URIs to identify specific resources.
+- Still uses a single method (GET).
+- Breaks large service into distinct URIs.
+
+**Level 2: HTTP Verbs**
+
+- HTTP Verbs are used with URIs for described actions.
+    - GET /products/1234
+    - PUT /products/1234
+    - DELETE /products/1234
+- Most common in practical use.
+- Introduces Verbs to implement actions.
+
+**Level 3: Hypermedia**
+
+- Representation now contains URIs which may be useful to consumers.
+- Helps client developers explore the resource.
+- No clear standard at time.
+- Spring provides an implementation of HATEOS.
+- Provides discoverability, making the API more self documenting.
+
 ## JSON Data Binding
 
 - Process of converting JSON data to a Java POJO.
