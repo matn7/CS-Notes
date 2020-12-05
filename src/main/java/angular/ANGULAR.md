@@ -660,7 +660,13 @@ most recent values.
 - Reply Subject - Same as subject, but also new subscribers instantly get sent all previously emitted values.
 
 
+```console
+npm install angular-notifier
 
+ng g c login --skipTests --module app
+
+mvn spring-boot:run
+```
 
 
 

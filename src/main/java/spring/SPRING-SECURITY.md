@@ -406,3 +406,104 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ('brajan', '{bcrypt}$2a$sdasd$50sdmkMAKdsmiamLSLM',1),
 ('samara', '{noop}$2a$sdasd$50sdmkMAKdsmiamLSLM',1);
 ```
+
+***
+
+## Web Application Security
+
+- Security Threats:
+    - Cross-site scripting
+    - SQL injection
+    - Denial-of-service attack
+    - Cross-site request forgery
+
+### Authentication & Authorization
+
+**Authentication** 
+
+- Verifies you are who you say you are.
+- Method:
+    - Login form
+    - HTTP authentication
+    - Custom auth. method
+
+**Authorization**
+
+- Determines if you have permission to access a resource.
+- Method:
+    - Access control URLs
+    - Access control lists (ACLs)
+
+### Json Web Token (JWT)
+
+**Header**
+
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+**Payload**
+
+```json
+{
+  "sub": "john25",
+  "name": "John Doe",
+  "iat": 1782766618,
+  "claims": "create,edit"
+}
+```
+
+**Signature**
+
+```
+256-bit-secret
+```
+
+### Security with Json Web Token (JWT)
+
+![Security with Json Web Token (JWT)](images/security-jwt.png "Security with Json Web Token (JWT)")
+
+### JPA Repository
+
+![JPA Repository](images/jpa-repository.png "JPA Repository")
+
+## Exception Handling
+
+**Exception**
+
+- An error event that can happen during the execution of a program and disrupts its normal flow.
+
+## Brute Force Attack
+
+```
+an attacker submitting many passwords or passphrases with the hope of eventually guessing correctly
+```
+
+## Front End Design
+
+![Front End Design](images/front-end-design.png "Front End Design")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
