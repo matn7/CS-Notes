@@ -2,25 +2,25 @@
 
 - Angular is a JavaScript Framework which allows you to create reactive Single-Page-Applications.
 - Every changes is render in the browser.
-- Metadata is @ decorator which instruct Angular how to deal with class:
-    - @NgModule
-    - @Component
-    - @Injectable
-    - @Input
-    - @Output
+- Metadata is `@` decorator which instruct Angular how to deal with class:
+    - `@NgModule`
+    - `@Component`
+    - `@Injectable`
+    - `@Input`
+    - `@Output`
     
 **Angular versioning**
 
-- AngularJS (Angular 1)
-- Angular 2
-- Angular 4
-- ... (New version every 6 months)
-- Angular 9
-- Small, incremental, backwards-compatible changes
+- AngularJS (Angular 1).
+- Angular 2.
+- Angular 4.
+- ... (New version every 6 months).
+- Angular 9.
+- Small, incremental, backwards-compatible changes.
 
 **Updating NodeJS**
 
-- By downloaded latest version from website, and uninstall old one.
+- By downloaded the latest version from a website, and uninstall old one.
 
 **Updating npm**
 
@@ -40,7 +40,7 @@ sudo npm install -g @angular/cli
 
 ## Project setup
 
-- NodeJS : bundle and optimize project, uses npm to add dependencies
+- NodeJS: bundle and optimize project, uses npm to add dependencies.
 
 ```console
 npm install -g @angular/cli@latest
@@ -97,7 +97,7 @@ npm install --save bootstrap@3
 
 ## How Angular gets loaded and started
 
-- **index.html** - single page that is rendered contains `<app-root></app-root>`
+- **index.html** - single page that is rendered, contains `<app-root></app-root>`.
 
 ```html
 <!doctype html>
@@ -129,7 +129,7 @@ export class AppComponent {
 }
 ```
 
-- **main.ts** - bootstraping app.module.ts
+- **main.ts** - bootstraping app.module.ts.
 
 ```ts
 import { enableProdMode } from '@angular/core';
@@ -154,9 +154,9 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 
 **Creating a new component**
 
-- Decorator - typescript features allowing you enhance elements you use in code.
-    - selector - html tag  which you will be able to use in other components.
-    - templateUrl - html template file path.
+- Decorator - Typescript features allowing you to enhance elements you use in code.
+    - `selector` - html tag  which you will be able to use in other components.
+    - `templateUrl` - html template file path.
     
 ```ts
 import { Component } from '@angular/core';
@@ -246,7 +246,7 @@ ng g c servers
 
 ### Databinding
 
-![Databinding](images/databinding.png "Databinding")
+![Databinding](images/databinding.png "Data binding")
 
 - EventBinding - listen to click.
 - String Interpolation - output data.
