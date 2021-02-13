@@ -2,22 +2,18 @@
 
 ```java
 public static void swap(int[] listToSort, int iIndex, int jIndex) {
-
-    // i j
     int temp = listToSort[iIndex];
-    // j j
     listToSort[iIndex] = listToSort[jIndex];
-    // j i
     listToSort[jIndex] = temp;
 }
 ```
 
-### 1. Selection sort O(N^2)
+### 1. Selection sort `O(N^2)`.
 
 - At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
-- Complexity `O(N^2)`
-- `O(N^2)` - comparisons
-- `O(N)` - swaps
+- Complexity `O(N^2)`.
+- `O(N^2)` - comparisons.
+- `O(N)` - swaps.
 
 ```java
 public static void selectionSort(int[] list) {
@@ -32,14 +28,14 @@ public static void selectionSort(int[] list) {
 }
 ```
 
-### 2. Bubble sort O(N^2)
+### 2. Bubble sort `O(N^2)`.
 
 - At each iteration, every element is compared with its neighbor and swapped if they are not in order.
 - Smaller element bubbling to the beginning of the list.
 - If no swaps that means list is sorted.
-- Complexity `O(N^2)`
-- `O(N^2)` - comparisons
-- `O(N^2)` - swaps
+- Complexity `O(N^2)`.
+- `O(N^2)` - comparisons.
+- `O(N^2)` - swaps.
 
 ```java
 public static void bubbleSort(int[] list) {
@@ -59,13 +55,13 @@ public static void bubbleSort(int[] list) {
 }
 ```
 
-### 3.Insertion Sort O(N^2)
+### 3.Insertion Sort `O(N^2)`.
 
 - Start with sorted list of size 1. Insert next element into list at right position.
-- Find element bubbling to right position
-- Complexity `O(N^2)`
-- `O(N^2)` - comparisons
-- `O(N^2)` - swaps
+- Find element bubbling to right position.
+- Complexity `O(N^2)`.
+- `O(N^2)` - comparisons.
+- `O(N^2)` - swaps.
 
 ```java
 public static void insertionSort(int[] list) {
@@ -82,39 +78,39 @@ public static void insertionSort(int[] list) {
 }
 ```
 
-### 4. Shell Sort between O(N) and O(N^2)
+### 4. Shell Sort between `O(N)` and `O(N^2)`.
 
 - Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
 - Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
 - Sort on almost sorted list. Complexity depends on increment value chosen.
-- Complexity `O(N) and O(N^2)`
+- Complexity `O(N) and O(N^2)`.
 
-### 5. Merge Sort O(N(Log(N)))
+### 5. Merge Sort `O(N(Log(N)))`.
 
 - Follows divide and conquer approach to create smaller sub problems.
 - Then merge together sorted lists to get fully sorted list.
-- Complexity `O(N(Log(N)))`
-- Is not adaptive = takes advantage over input (nearly sorted list)
+- Complexity `O(N(Log(N)))`.
+- Is not adaptive = takes advantage over input (nearly sorted list).
 
-### 6. Quick Sort
+### 6. Quick Sort `O(N(loh(N)))`.
 
 - Divide and conquer algorithm which partitions the list at every step.
 - Partition is based on **pivot** element from the list.
 - The list is partitioned with all elements smaller than pivot on one side and larger than pivot on the other.
 - Pivots is usually first or last element in the list.
-- `Complexity O(N(Log(N)))`
-- `O(Log(N))` extra space
-- Is not adaptive
+- `Complexity O(N(Log(N)))`.
+- `O(Log(N))` extra space.
+- Is not adaptive.
 
-### Stability of sorting algorithm
+**Stability of sorting algorithm**
 
 - Elements with the same hashCode stays on the same position after sorting.
-- For example in bubble sort, panda, panda, pies.
-- panda would change position with other panda in even though of a fact that they have the same hashCode.
+- For example in bubble sort, panda, panda, pies:
+    - panda would change position with other panda in even though of a fact that they have the same hashCode.
 
 ***
 
-## :star: Check Rectangle
+## :star: Check Rectangle.
 
 ```java
 public class Rectangle {
@@ -132,22 +128,24 @@ public class Rectangle {
 
 ***
 
-## :star: Singleton vs GOF singleton
+## :star: Singleton vs GOF singleton.
 
-- GOF singleton : one singleton per JVM
-- Spring singleton : one singleton per Application Context
+- GOF singleton, one singleton per JVM.
+- Spring singleton, one singleton per Application Context.
 
 ***
 
 ## :star: equals
 
-- By default equals comparing a object by comparing their address in memory
-- By default equals method tests for object identity it returns true if and only if the 2 objects are literally the same
-(point to the same location in memory)
-- In flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are actually different objects
+- By default, equals comparing a object by comparing their address in memory
+- By default, equals method tests for object identity it returns true if and only if the 2 objects are literally the same
+(point to the same location in memory).
+- In a flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are 
+actually different objects.
 - The default implementation of `.equals()` relies on object identity, which may cause problems if we end up with multiple
-flyweights referring to the same underlying value
-- Concurrency issues sometimes give rise to decouple flyweight - there duplicates are fine so long as they return true when called `.equals()`
+flyweights referring to the same underlying value.
+- Concurrency issues sometimes give rise to decouple flyweight - there duplicates are fine so long as they return true 
+when called `.equals()`.
 
 ```java
 public class Item {
@@ -173,7 +171,7 @@ public class Item {
 
 ***
 
-## :star: How to build own annotation
+## :star: How to build own annotation.
 
 ```java
 @Target(ElementType.METHOD)
@@ -219,7 +217,7 @@ public class Dao1 {
 
 ***
 
-## :star: How to generate stack overflow ?
+## :star: How to generate stack overflow?
 
 ```java
 public class StackOverflowException {
@@ -237,7 +235,7 @@ public class StackOverflowException {
 
 ***
 
-## :star: Count numbers
+## :star: Count numbers.
 
 ```java
 public class CountNumbers {
@@ -257,7 +255,7 @@ public class CountNumbers {
 
 ***
 
-## :star: Find the least common ancestor for 2 nodes
+## :star: Find the least common ancestor for 2 nodes.
 
 ```
                 1
@@ -301,9 +299,20 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
 }
 ```
 
+```
+leastCommonAncestor(1,8,6)
+lCA = leastCommonAncestor(2,8,6)
+    lCA = leastCommonAncestor(null,a,b) -> null
+rCA = leastCommonAncestor(3,8,6)
+    lCA = leastCommonAncestor(7,8,6)
+        lCA = leastCommonAncestor(8,8,6) -> 7
+    rCA = leastCommonAncestor(6,8,6) -> 3
+
+```
+
 ***
 
-## :star: Builder design patterns [Creational]
+## :star: Builder design patterns [Creational].
 
 ```java
 public class Customer {
@@ -390,7 +399,7 @@ public class Main {
 
 ***
 
-## :star: Decorator Pattern [Structural]
+## :star: Decorator Pattern [Structural].
 
 ```java
 public interface Order {
@@ -429,9 +438,9 @@ public class Pizza implements Order {
 ```java
 public abstract class Extra implements Order {
 
-    protected Order order;
     protected String label;
     protected double price;
+    protected Order order;
 
     public Extra(String label, double price, Order order) {
         this.label = label;
@@ -481,7 +490,7 @@ public class Main {
 
 ***
 
-## :star:  Factory Pattern [Creational]
+## :star:  Factory Pattern [Creational].
 
 ```java
 public interface Plane {
@@ -529,7 +538,7 @@ public class Main {
 
 ***
 
-## :star: Observer pattern [Behavioral]
+## :star: Observer pattern [Behavioral].
 
 ```java
 public interface Publisher {
@@ -740,12 +749,13 @@ public class SomeClass {
 
 - HashCode if two objects are equals then their hashCode values should be equals as well,
 so if implement just equals method and leave hashCode unimplemented the hashCode will always
-**create 2 students** objects as if they are different objects. Even when their enrId are the same
-- If two objects are equal, then their hashCode values must also be equal. Whenever you implement `equals(Object)`, you must also implement `hashCode()`
-- For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return
-- If your entity will be part of a Set collection, override its equals and hashCode methods
-- Hash is integer number that identify an object
-- If x and y are different objects, `x.hashCode()` and `y.hashCode()` should also be different (but not always are)
+**create 2 students** objects as if they are different objects. Even when their enrId are the same.
+- If two objects are equal, then their hashCode values must also be equal. Whenever you implement `equals(Object)`, 
+you must also implement `hashCode()`.
+- For List Collection, even if you had not implement hashCode method in the Student class you would have a true in return.
+- If your entity will be part of a Set collection, override its equals and hashCode methods.
+- Hash is integer number that identify an object.
+- If x and y are different objects, `x.hashCode()` and `y.hashCode()` should also be different (but not always are).
 
 ```java
      @Override
@@ -759,23 +769,24 @@ so if implement just equals method and leave hashCode unimplemented the hashCode
 ```
 
 - HashCode must be compatible.
-- if `x.equals(y)` return true, **x.hashCode() == y.hashCode()**
+    - if `x.equals(y)` return true, **x.hashCode() == y.hashCode()**
 - If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
-data structures HasSet, HashMap could be lost
+data structures HasSet, HashMap could be lost.
 
 ```java
 Object.hash(some, some2);
 ```
 
-- HashCode's are used in hashing to decide which group (or bucket) an object should be placed into
-- A group of object's might share the same hashCode
+- HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
+- A group of object's might share the same hashCode.
 - The implementation of hashCode decides effectiveness of Hashing. A good hashing function evenly
-distributes object's into different groups or buckets
+distributes objects into different groups or buckets.
 - A good hashCode should have the following properties:
     - if `obj1.equals(obj2)` is true, then `obj1.hashCode()` should be equal to `obj2.hashCode()`
-    - `obj.hashCode()` should return the same value when run multiple times, if values of obj used in equals() have not change
+    - `obj.hashCode()` should return the same value when run multiple times, if values of obj used in 
+    `equals()` have not change.
     - if `obj1.equals(obj2)` is false, it is **NOT** required that `obj1.hashCode()` is not equal to `obj2.hashCode()`.
-      Two unequals objects might have the same hashCode
+      Two unequals objects might have the same hashCode.
 
 ```java
 @Override
@@ -787,19 +798,18 @@ public int hashCode() {
 }
 ```
 
-
 ### toString
 
 ### equals
-- Check whether one object can be equal to another
-- Equals method implemented in Object class, check whether two references to object are identical
-- Override equal method if you want to check equality based on state of object
-- Two object are equals when they have the same value
-- Equals method is used when we compare two objects. Default implementation of equals method is defined in Object class
-- Two object references are equals only if they are pointing to the same object
-- We need to override equals method, if we would want to compare the contents of an object
-- We can override equals method in the class to check the content of the objects
-- The implementation of equals method checks if the id's of both objects are equal, if so return true
+- Check whether one object can be equal to another.
+- Equals method implemented in Object class, check whether two references to object are identical.
+- Override equal method if you want to check equality based on state of object.
+- Two object are equals when they have the same value.
+- Equals method is used when we compare two objects. Default implementation of equals method is defined in Object class.
+- Two object references are equals only if they are pointing to the same object.
+- We need to override equals method, if we would want to compare the contents of an object.
+- We can override equals method in the class to check the content of the objects.
+- The implementation of equals method checks if the id's of both objects are equal, if so return true.
 
 ```java
 @Override
@@ -811,14 +821,15 @@ public boolean equals(Object obj) {
 }
 ```
 
-Important things to consider when implementing equals method.
-- Reflexive: For any reference value x, `x.equals(x)` return true
-- Symmetric: For any reference values x and y, if `x.equals(y)` should return true if and only if `y.equals(x)` returns true
-- Transitive: For any reference values x, y and z, if `x.equals(y)` returns true and `y.equals(z)` returns true,
-    then `x.equals(z)` must return true
-- Consistent: For any reference values x and y, multiple invocations of `x.equals(y)` consistently return true
-    if no information used in equals is modified
-- For any non-null reference value x, `x.equals(null)` should return false
+- Important things to consider when implementing equals method.
+    - Reflexive: For any reference value x, `x.equals(x)` return true.
+    - Symmetric: For any reference values x and y, if `x.equals(y)` should return true if and only if `y.equals(x)` 
+    returns true.
+    - Transitive: For any reference values x, y and z, if `x.equals(y)` returns true and `y.equals(z)` returns true,
+    then `x.equals(z)` must return true.
+    - Consistent: For any reference values x and y, multiple invocations of `x.equals(y)` consistently return true
+    if no information used in equals is modified.
+    - For any non-null reference value x, `x.equals(null)` should return false.
 
 ```java
 @Override
@@ -844,35 +855,39 @@ public boolean equals(Object obj) {
 ```
 
 ### wait and notify
-- work in tandem – when one thread calls wait() on an object, that thread will block until
-  another thread calls notify() or notifyAll() on that same object.
+
+- work in tandem – when one thread calls `wait()` on an object, that thread will block until
+  another thread calls `notify()` or `notifyAll()` on that same object.
 
 ### getClass
 
 ### clone
-- For the method to be used all classes calling the method must implement the Cloneable interface
+
+- For the method to be used all classes calling the method must implement the Cloneable interface.
 
 ### Object constructor
+
 - All constructors in Java must make a call to the Object constructor. This is done with the call `super()`.
 This has to be the first line in a constructor. The reason for this is so that the object can actually be created on the heap before
-any additional initialization is performed
+any additional initialization is performed.
 
 ### finalize
-- This is a protected and non-static method of the Object class
-- This method is used to perform some final operations or clean up operations on an object before it gets removed from memory
+
+- This is a protected and non-static method of the Object class.
+- This method is used to perform some final operations or clean up operations on an object before it gets removed from memory.
 - According to the doc, this method gets called by the garbage collector on an object when garbage
-collection determines that there are no more references to the object
+collection determines that there are no more references to the object.
 - But there are no guarantees that `finalize()` method would gets called if the object is still reachable or no Garbage
-Collectors run when the object become eligible. That's why it's better not rely on this method
-- Generally it's considered bad practice to use `finalize()` method in applications of any kind and should be avoided
+Collectors run when the object become eligible. That's why it's better not rely on this method.
+- Generally it's considered bad practice to use `finalize()` method in applications of any kind and should be avoided.
 - Finalizers are not meant for freeing resources (e.g., closing files). The garbage collector gets called when (if!) the
 system runs low on heap space. You can't rely on it to be called when the system is running low on file handles or,
-for any other reason
+for any other reason.
 - The intended use-case for finalizers is for an object that is about to be reclaimed to notify some other object about
 its impending doom. A better mechanism now exists for that purpose, the `java.lang.ref.WeakReference<T>`
 class. If you think you need write a `finalize()` method, then you should look into whether you can solve the same
 problem using WeakReference instead. If that won't solve your problem, then you may need to re-think your design
-on a deeper level
+on a deeper level.
 
 ***
 
@@ -886,7 +901,7 @@ Set<String> threadSafeSet = Collections.synchronizedSet(new HashSet<String>());
 Map<String, String> threadSafeMap = Collections.synchronizedMap(new HashMap<String, String>());
 ```
 
-- Since Java 5
+- Since Java 5.
 
 ```java
 List<String> threadSafeList = new CopyOnWriteArrayList<String>();
@@ -894,53 +909,56 @@ Set<String> threadSafeSet = new ConcurrentHashSet<String>();
 Map<String, String> threadSafeMap = new ConcurrentHashMap<String, String>();
 ```
 
-- ConcurrentHashMap insertions
+- ConcurrentHashMap insertions.
 
 ```java
 SomeObject previousValue = concurrentHashMap.putIfAbsent(1, value);
 ```
 
-- Methods in atomic ways sets or replace elements if it is the same at a point of time
-- There are couple of mass operations to search, modify or look for ConcurrentHashMap
-    - search, reduce, forEach
-- ConcurrentHashMap **does not allow null for keys or values**
+- Methods in atomic ways sets or replace elements if it is the same at a point of time.
+- There are a couple of mass operations to search, modify or look for ConcurrentHashMap:
+    - search
+    - reduce
+    - forEach
+- ConcurrentHashMap **does not allow null for keys or values**.
 - ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
-thread safety, ConcurrentSkipListMap
+thread safety, ConcurrentSkipListMap.
 
 ### Concurrent Collections
 
 - Concurrent collections are a generalization of thread-safe collections, that allow for a broader usage in a concurrent
-environment
+environment.
 - While thread-safe collections have safe element addition or removal from multiple threads, they do not necessarily
 have safe iteration in the same context (one may not be able to safely iterate through the collection in one thread,
-while another one modifies it by adding/removing elements)
-- **java.util.concurrent.CopyOnWriteArrayList**
+while another one modifies it by adding/removing elements).
+- **java.util.concurrent.CopyOnWriteArrayList**:
     - The **snapshot** style iterator method uses a reference to the state of the array at the point that the
-iterator was created. This array never changes during the lifetime of the iterator, so interference is
-impossible and the iterator is guaranteed not to throw ConcurrentModificationException
+    iterator was created. 
+    - This array never changes during the lifetime of the iterator, so interference is impossible and the iterator 
+    is guaranteed not to throw ConcurrentModificationException.
 - **ConcurrentLinkedQueue**
     - Iterators are weakly consistent, returning elements reflecting the state of the queue at some point at or
-since the creation of the iterator. They do not throw **java.util.ConcurrentModificationException**, and may
-proceed concurrently with other operations. Elements contained in the queue since the creation of the
-iterator will be returned exactly once
+    since the creation of the iterator. 
+    - They do not throw **java.util.ConcurrentModificationException**, and may proceed concurrently with other operations. 
+    - Elements contained in the queue since the creation of the iterator will be returned exactly once.
 
 ```java
-public static final List<Integer> LIST = Collections.synchronizedList(new ArrayList<>());
+public static final List<Integer> list = Collections.synchronizedList(new ArrayList<>());
 ```
 
-Could (and statistically will on most modern, multi CPU/core architectures) lead to exceptions.
-Synchronized collections from the Collections utility methods are thread safe for addition/removal of elements,
-but not iteration (unless the underlying collection being passed to it already is)
+- Could (and statistically will on most modern, multi CPU/core architectures) lead to exceptions.
+- Synchronized collections from the Collections utility methods are thread safe for addition/removal of elements,
+but not iteration (unless the underlying collection being passed to it already is).
 
 ***
 
 ## :star: WeakHashMap
 
-- Weak References : The objects that are referenced only by weak references are garbage collected eagerly; the GC
-won’t wait until it needs memory in that case
-- **Difference between HashMap and WeakHashMap:**
+- Weak References: The objects that are referenced only by weak references are garbage collected eagerly; the GC
+won’t wait until it needs memory in that case.
+- **Difference between HashMap and WeakHashMap**:
     - If the Java memory manager no longer has a strong reference to the object specified as a key, then the entry in the
-map will be removed in WeakHashMap
+    map will be removed in WeakHashMap.
 
 ***
 
@@ -982,8 +1000,8 @@ map will be removed in WeakHashMap
 
 ## :star: Example `@Override`
 
-- Override method, we are telling a compiler we override method exactly as present in interface or parent class
-- Compiler check that we actually override method, if some issue they will be compile time error
+- Override method, we are telling a compiler we override method exactly as present in interface or parent class.
+- Compiler checks that we actually override method, if some issue they will be compiled time error.
 
 ***
 
@@ -1007,70 +1025,74 @@ Custom Init method <br/>
 :arrow_down: <br/>
 Post Initialization (BeanPostProcessors) :arrow_right: Bean redy to use
 
-- **Destroy bean** <br/>
+### Destroy a Bean
 
-Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Call Custom destroy method :arrow_right: Terminated
+- Container Shutdown :arrow_right: Disposable Bean's `destroy()` :arrow_right: Call Custom destroy method :arrow_right: Terminated
 
 ***
 
 ## :star: Rules that Relational Database follows
 
-- **Entity Integrity** : Every table has a primary key.
-- **Referential Integrity** : A foreign key points at a value that is the primary key of another table. Null value are valid for FK
+- **Entity Integrity**: Every table has a primary key.
+- **Referential Integrity**: A foreign key points at a value that is the primary key of another table. Null value are valid for FK.
 
 ***
 
-## :star: object states
+### :star: object states
 
-- Transient state - object does not associated with any table row
-- Persistent - object with database identify. Primary key is set as database identifier
-- Detached - no longer managed by EntityManager. setText will only change state in JVM memory
+- Transient state: Object does not associated with any table row.
+- Persistent: Object with database identify. Primary key is set as database identifier.
+- Detached: No longer managed by EntityManager. setText will only change state in JVM memory.
 
 ***
 
-## :star: Declaring a **volatile** Java variable
+### :star: Declaring a **volatile** Java variable
 
-Means the value of this variable will never be called
-thread-locally all reads and writes will go straight to **main memory**. Access to the variable
-acts as through it is enclosed in a synchronized block, synchronized on itself
-- A class loader is a part of JVM. Technically namespaces are unique per class loader.
-Usually there is just 1 class loader per program
-- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with the same object
-    - Thread interference : different thread access the same data
-    - Memory Consistency Errors : A thread sees a state inconsistent value of a variable
-    - Thread Contention : Thread get in each other's way, and slow down-or sometimes even have to be killed in Java
-- Thread interference and memory consistency errors
+- Means the value of this variable will never be called thread-locally all reads and writes will go straight to 
+**main memory**. 
+- Access to the variable acts as through it is enclosed in a synchronized block, synchronized on itself.
+- A class loader is a part of JVM. Technically namespaces are unique per class loader. Usually there is just 1 class 
+loader per program.
+- In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with 
+the same object:
+    - Thread Interference: Different thread access the same data.
+    - Memory Consistency Errors: A thread sees a state inconsistent value of a variable.
+    - Thread Contention: Thread get in each other's way, and slow down-or sometimes even have to be killed in Java.
+- Thread interference and memory consistency errors:
     - If two thread access the same variable, it's possible for them to get in each other's way.
-      That's because Java might switch execution from one thread to another even midway through a simple, seemingly atomic instruction
+    - That's because Java might switch execution from one thread to another even midway through a simple, 
+    seemingly atomic instruction.
     - For example two threads incrementing the same variable could simply lose one of the two increments.
     - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
       is a powerful concept used widely in computer science especially in databases.
-    - Locking variables correctly can eliminate thread interference and memory consistency error
-        - But it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock)
+    - Locking variables correctly can eliminate thread interference and memory consistency error:
+        - It slows down performance and can lead to thread contention issues (Starvation, Livelock, Deadlock).
 
 ***
 
-## :star: What is the best way to subclass Singleton?
+### :star: What is the best way to subclass Singleton?
 
-- Singleton classes should never be subclassed or extended
+- Singleton classes should never be subclassed or extended.
 - Every object in Java has a lock associated with it:
-    - This lock is called the intrinsic lock or monitor
-    - This lock is usually always open, any number of threads can access the object simultaneously
-    - It is possible to specify that a thread can only execute a section of code once it has acquired the lock on source object
+    - This lock is called the intrinsic lock or monitor.
+    - This lock is usually always open, any number of threads can access the object simultaneously.
+    - It is possible to specify that a thread can only execute a section of code once it has acquired the lock on 
+    source object.
     - If some other thread currently holds that lock, the current thread must wait its turn.
-    **This is achieved using the Synchronized keyword**
+    - **This is achieved using the Synchronized keyword**.
 
 ***
 
-## :star: Synchronized
+### :star: Synchronized
 
 ### Methods
 
-- Any method in java can be marked as synchronized
-- Only one thread at a time only applies to the same method of the same object
-- Only one thread can be executing this member function on this object at a given point in time
-- So for instance if the same method does something to a static class variable (not an object variable), errors can still result
-- Used right making a method as synchronized can help eliminate thread interference and memory consistency error
+- Any method in java can be marked as synchronized.
+- Only one thread at a time only applies to the same method of the same object.
+- Only one thread can be executing this member function on this object at a given point in time.
+- So for instance if the same method does something to a static class variable (not an object variable), errors can 
+still result.
+- Used right making a method as synchronized can help eliminate thread interference and memory consistency error.
 
 ```java
 public class SynchronizedCounter {
@@ -1091,9 +1113,9 @@ public class SynchronizedCounter {
 
 ### Blocks of code
 
-- Since every object in Java has an intrinsic lock associated with it, it is possible to lock
-  any section of code by making it as synchronized
-- Any object can be used as lock using a synchronized statement
+- Since every object in Java has an intrinsic lock associated with it, it is possible to lock any section of code 
+by making it as synchronized.
+- Any object can be used as lock using a synchronized statement.
 
 ```java
 public void addName(String name) {
@@ -1104,26 +1126,29 @@ public void addName(String name) {
     nameList.add(name);
 }
 ```
+
 - Threads never gets blocked on itself which means that one synchronized method of an object can always call
-  another synchronized method of the same object without blocking
-- Making method as synchronized is a shortcut to making the entire body of the method as synchronized
-  on **this**
+another synchronized method of the same object without blocking.
+- Making method as synchronized is a shortcut to making the entire body of the method as synchronized on **this**.
 
 
 ### Thread Contention
 
-| Deadlock | Two thread each is blocked on a lock held by the other |
+| Contention | Description |
 |---|---|
-| Livelock | Two thread don't deadlock, but keep blocking on locks held by each other, neither really can progress |
-| Starvation | Some threads keep acquiring locks greedily. And cause other threads to be unable to get anything done |
+| Deadlock | Two thread each is blocked on a lock held by the other. |
+| Livelock | Two thread don't deadlock, but keep blocking on locks held by each other, neither really can progress. |
+| Starvation | Some threads keep acquiring locks greedily. And cause other threads to be unable to get anything done. |
 
 ***
 
 ## :star: Make sure your singleton objects can't be cloned
 
-- The `.clone()` method belongs to object class (every object has this method), when it ought to belong to cloneable interface
-- Object have a `.clone()` method, but if you try to clone an object that does not implement cloneable, a not cloneable exception is thrown
-- So make sure that your singleton class does not implement cloneable - or if for some reason it does
+- The `.clone()` method belongs to object class (every object has this method), when it ought to belong to cloneable 
+interface.
+- Object have a `.clone()` method, but if you try to clone an object that does not implement cloneable, 
+a not cloneable exception is thrown.
+- So make sure that your singleton class does not implement cloneable - or if for some reason it does.
 Override the `.clone()` method to thrown an exception.
 
 ```java

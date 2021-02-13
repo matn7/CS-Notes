@@ -9,21 +9,22 @@
 
 - A class is a blueprint for a house, using the blueprint (plans) we can build as many houses as we like based on
 those plans. 
-- Each house you build (in other words **instantiate** using the **new** operator) is an `object` also known as an instance.
-- Each house you build has an address (a physical location). In other words if you want to tell someone where you live,
-you give them your address (perhaps written on a piece of paper). This is known as a **reference**.
-- You can copy that **reference** as many times as you like but there is still just one house. In other words we are 
-copying the paper that has address on it not the house itself.
+- Each house you build (in other words **instantiate** using the **new** operator) is an `Object` also known as an instance.
+- Each house you build has an address (a physical location). 
+- In other words if you want to tell someone where you live, you give them your address (perhaps written on a piece of paper). 
+- This is known as a **reference**.
+- You can copy that **reference** as many times as you like but there is still just one house. 
+- In other words we are copying the paper that has address on it not the house itself.
 - We can pass **references** as **parameters** to **constructors** and **methods**.
 - In Java you always have **reference** to an **object** in memory, there is no way to access an **object** directly
 everything is done using a **reference**.
 
 ### this vs super
 
-- The keyword **super** is used to access/call the parent class members (variables and methods).
+- The keyword **super** is used to access / call the parent class members (variables and methods).
 - The keyword **this** is used to call the current class members (variables and methods). This is required when we have
 a parameter with the same name as an instance variable (field).
-- NOTE: We can use both of them anywhere is a class except static area (the static block or a static method).
+- We can use both of them anywhere is a class except static area (the static block or a static method).
 Any attempt to do so will lead to compile-time error.
 
 **Keyword this**
@@ -54,7 +55,8 @@ class House {
 **Keyword super**
 
 - The keyword **super** is commonly used with **method overriding**, when we call a method with the same name from the 
-parent class. In example we have a method printMethod that calls super.printMethod.
+parent class. 
+- In example, we have a method `printMethod` that calls `super.printMethod`.
 
 ```java
 class SuperClass { // parent class aka super class
@@ -82,20 +84,20 @@ class MainClass {
 
 **this() vs super() call**
 
-- In Java we have the **this()** call and the **super()** call. Notice the braces it is known as a call since it looks like 
+- In Java, we have the **this()** call, and the **super()** call. Notice the braces it is known as a call since it looks like 
 a regular method call.
 - Use **this()** to call a constructor from another overloaded constructor is the same class.
 - The call to **this()** can be used only in a constructor, and it must be the first statement in a constructor.
-It's used with constructor chaining, in other words when one constructor calls another constructor, and helps to
+- It's used with constructor chaining, in other words when one constructor calls another constructor, and helps to
 reduce duplicated code.
-- The only way to call a parent constructor is by calling super(). This calls the parent constructor.
+- The only way to call a parent constructor is by calling **super()**. This calls the parent constructor.
 - The Java Compiler puts a default call to **super()** if we don't add it, and it is always the no-args **super** which is
 inserted by compiler (constructor without arguments).
 - The call to **super()** must be the first statement in each constructor.
 - Even Abstract classes have constructors, although you can never instantiate an abstract class using the new keyword.
 - An abstract class is still a **super** class, so its constructors run when someone makes an instance of a 
 concrete subclass.
-- NOTE: A constructor can have a call to **super()** or **this()** but never both.
+- A constructor can have a call to **super()** or **this()** but never both.
 
 ```java
 class Rectangle {
@@ -162,14 +164,14 @@ class Rectangle extends Shape {
 }
 ```
 
-- The parent constructor will initialize x, y variables while 2nd Rectangle constructor will initialize the width and
-height variables.
+- The parent constructor will initialize `x`, `y` variables while 2nd Rectangle constructor will initialize the `width` 
+and, `height` variables.
 
 ### Method overriding vs overloading
 
 #### Method Overloading
 
-- Method **overloading** means providing two or more separate methods in a class with **same name** but 
+- Method **Overloading** means providing two or more separate methods in a class with **same name** but 
 **different parameters**.
 - Method return type may or may not be different and that allows us to **reuse** the same method name.
 - **Overloading** is very handy, it reduces duplicated code and we don't have to remember multiple method names.
@@ -178,7 +180,7 @@ overloading as Compile Time Polymorphism.
 - In other words the compiler decided which method is going to be called based on the method name, return type and
 argument list.
 - We **can overload static** and **instance** methods.
-- Usually **overloading** happens inside a single class, but a method can also be treated as **overloaded** in the
+- Usually **Overloading** happens inside a single class, but a method can also be treated as **Overloaded** in the
 subclass of that class.
 - That is because a **subclass inherits** one version of the method from the parent class and then the subclass can have 
 another overloaded version of the method.
@@ -209,14 +211,14 @@ class Dog {
 
 #### Method Overriding
 
-- Method **overriding** means defining a method in a child class that already exists in the parent class with same
+- Method **Overriding** means defining a method in a child class that already exists in the parent class with same
 signature (same name, same arguments).
 - By extending the parent class the child class gets all the methods defined in the parent class (those methods are
 also known as derived methods).
-- Method **overriding** is also known as **Runtime Polymorphism** and **Dynamic Method Dispatch**, because the method
+- Method **Overriding** is also known as **Runtime Polymorphism** and **Dynamic Method Dispatch**, because the method
 that is going to be called is decided at runtime by the JVM.
-- When we **override** a method it's recommended to put **@Override** immediately above the method definition.
-This is an annotation that the compiler reads and will then show us an error if we don't follow overriding rules
+- When we **Override** a method it's recommended to put **@Override** immediately above the method definition.
+- This is an annotation that the compiler reads and will then show us an error if we don't follow overriding rules
 correctly.
 - We **can't override static** methods **only instance** methods.
 - There are also some **important points** about method overriding to keep in mind:
@@ -295,8 +297,8 @@ class HealthyBurgerFactory extends BurgerFactory {
 - They are usually used for operations that don't require any data from an instance of the class (from 'this').
 This keyword is the current instance of a class.
 - In **static methods** we can't use the **this** keyword.
-- Whenever you see a method that **does not use instance variables** that method should be declared as a **static method**.
-- For example main is a static method and it is called by the JVM when it starts an application.
+- :star: Whenever you see a method that **does not use instance variables** that method should be declared as a **static method**.
+- For example main is a static method, and it is called by the JVM when it starts an application.
 
 **Static Method Example**
 
@@ -422,13 +424,13 @@ public class Main {
 range is from 0 to 9.
 - If we try to access index that is out of range Java will give us an ArrayIndexOutOfBoundsException, which indicates 
 that the index is out of range in other words out of bounds.
-- To access array elements we use the square braces [ and ], also known as array access operator.
+- To access array elements we use the square braces `[` and `]`, also known as array access operator.
 
 ```java
 int[] array = new int[5];
 ```
 
-- This array contains elements from array[0] to array[4].
+- This array contains elements from `array[0]` to `array[4]`.
 - It has 5 elements and index range 0 to 4.
 - The **new** operator or keyword is used to create the array and initialize the array elements to their default values.
 - In this example, all the array elements are initialized to zero:
@@ -439,7 +441,7 @@ int[] array = new int[5];
 int[] myNumbers = {12. 34, 56, 1, 234};
 ```    
 
-- We can also initialize an array inline by using array initializer block { and }. Values we defined need to be
+- We can also initialize an array inline by using array initializer block `{` and `}`. Values we defined need to be
 separated by a comma.
 - This way of initializing an array is also known as an anonymous array.
 - It has 5 elements and index range 0 to 4.
@@ -470,7 +472,7 @@ System.out.println("anotherArray = " + Arrays.toString(anotherArray));
 declared with or without an implementation.
 - However, with Abstract classes, you can declare fields that are not static and final, and define public, protected
 and private concrete methods.
-- An Abstract class can extend only one parent class but it can implement multiple interfaces.
+- An Abstract class can extend only one parent class, but it can implement multiple interfaces.
 - When an Abstract class is subclassed, the subclass usually provides implementations for all of the abstract methods 
 in its parent class.
 - However, if it does not, then the subclass must also be declared abstract.
@@ -502,9 +504,9 @@ implementation.
 - By introducing interfaces into your program, you are really introduce points of variation at which you can plug in
 different implementations for that interface. An Interfaces primary purpose is abstraction, decoupling the "what"
 from the "how". 
-- NOTE: Since Java 8 interfaces can contain default methods. In other words methods with implementation. The keyword
+- Since Java 8 interfaces can contain default methods. In other words methods with implementation. The keyword
 default is used (mostly for backward compatibility), and static methods as well before Java 8 that was not possible.
-- NOTE: Since Java 9 an Interface can also contain private methods (commonly used when two default methods
+- Since Java 9 an Interface can also contain private methods (commonly used when two default methods
 in an Interface share common code).
 
 **Use an Interface when...**
@@ -514,12 +516,10 @@ Cloneable are implemented by many unrelated classes.
 - You want to specify the behavior of a particular data type, but you are not concerned about who implements
 its behavior.
 - You want to separate different behavior.
-- The Collections API is an excellent wxample, we have the List interface and implementations ArrayList and
+- The Collections API is an excellent example, we have the List interface and implementations ArrayList and
 LinkedList.
-- The JDBC API is another example. It exist of almost only interfaces. The concreate implementations are provided
-as "JDBC drivers". This enables
- 
- you to write all the JDBC code independent of the database (DB) vendor.
+- The JDBC API is another example. It exist of almost only interfaces. The concrete implementations are provided
+as "JDBC drivers". This enables you to write all the JDBC code independent of the database (DB) vendor.
 
 **Series, Factorial, Fibonacci**
 
@@ -567,21 +567,21 @@ public class Series {
 
 - Only classes, interfaces and enums can exist at the top level, everything else must be included within on of
 these.
-- **public:** the object is visible to all classes everywhere, whether they are in the same package of have 
+- **public:** The object is visible to all classes everywhere, whether they are in the same package of have 
 imported the package containing the public class.
-- **package-private:** the object is only available within its own package (and is visible to every class within
+- **package-private:** The object is only available within its own package (and is visible to every class within
 the same package). Package-private is specified by not specifying, i.e it is the default is you do not specify
 public. There is not a "package-private" keyword.
 
 ### Member level
 
-- **public:** at the member level, public has the same meaning as at top level. A public class member (or field) 
+- **public:** At the member level, public has the same meaning as at top level. A public class member (or field) 
 and public method can be accessed from any other class anywhere, even in different package.
-- **package-private:** this also has the same meaning as it does at the top level. An object with no access
+- **package-private:** This also has the same meaning as it does at the top level. An object with no access
 modifier is visible to every class within the same package (but not to classes in external packages).
-- **private:** the object is only visible within the class it is declared. It is not visible anywhere else
+- **private:** The object is only visible within the class it is declared. It is not visible anywhere else
 (including in subclasses of its class).
-- **protected:** the object is visible anywhere in its own package (like package-private) but also in subclasses 
+- **protected:** The object is visible anywhere in its own package (like package-private) but also in subclasses 
 even if they are in another package.
 
 ## Concurrency in Java
@@ -941,7 +941,7 @@ Because of CPU caching, the following can happen:
     - Thread1 writes the value of 1 to its CPU cache.
     - Thread2 reads the value of counter from main memory and gets 0, rather than the latest value, which is 1.
 - This is where volatile variables came in. When we use a non-volatile variable the JVM doesn't guarantee when
-it writes and updated value back to main memory. But when we use a volatile variable, the JVM writes the value back to main
+it writes and updated value back to main memory. When we use a volatile variable, the JVM writes the value back to main
 memory immediately after a thread updates the value in its CPU cache. It also guarantees that every time a variable reads
 from a volatile variable, it will get the latest value.
 - If more than one thread can update the value of a volatile variable, we can still get a race condition.
@@ -961,7 +961,7 @@ counter++;
     - Thread2 reads the value of counter and gets 1.
     - Thread1 increments the value and gets 2. It writes 2 to its cache. The JVM immediately writes 2 to main memory.
     - Thread2 increments the value and gets 2. It writes 2 to its cache. The JVM immediately write 2 to main memory.
-    - The counter has beccn incremented twice, so its value should now be 3.
+    - The counter has beecn incremented twice, so its value should now be 3.
 - A memory consistency error like this can occur when a thread can update the value of the variable in a way that 
 depends on the existing value of the variable. In the counter++ case, the result of the increment depends on the existing 
 value of the variable.
@@ -998,7 +998,9 @@ class Counter {
 java.util.concurrent.atomic package "support lock-free thread-safe programming on single variables".
 
 ```java
-import java.util.concurrent.atomic.AtomicInteger;class Counter {
+import java.util.concurrent.atomic.AtomicInteger;
+
+class Counter {
     private AtomicInteger counter = new AtomicInteger(0);
     
     public void inc() {
@@ -1023,9 +1025,9 @@ and double.
 - Atomic classes are really meant to be used in situations when a value is being incremented or decremented.
 They're intended to be used when the code is using a loop counter, or generating a sequence of numbers for some other 
 reason.
-- compareAndSet() method takes two parameters, the expected value and the new value that you want to set. If the current
+- `compareAndSet()` method takes two parameters, the expected value and the new value that you want to set. If the current
 value doesn't equal the expected value, the method returns false and set doesn't take place.
-- If the current value equals the expected value, then the set goes ahead and the method return true. We can see how this 
+- If the current value equals the expected value, then the set goes ahead, and the method return true. We can see how this 
 would be useful when a thread knows that it might be suspended between getting a value and updating it.
 
 ## Lambdas
@@ -1040,9 +1042,14 @@ would be useful when a thread knows that it might be suspended between getting a
 | Function | apply() | 1 or 2 (Bi) | Yes | Yes |
 | UnaryOperator | depends on type | 1 | Yes - same type s argument | Yes |
 
+### Best Practices
 
-
-
+- Specified the types of parameters vs. letting the compiler infer them.
+- Used a return statement with curly braces for one-statement lambda expressions vs. not using return because
+it's implied (and hence not requiring curly braces).
+- Used lambda expressions that contain one statement vs. Lambda expressions that have more than one statement.
+- Using parenthesis when a lambda expression only has one argument vs. not using parenthesis, since they're optional
+when there's only one argument.
 
 
 

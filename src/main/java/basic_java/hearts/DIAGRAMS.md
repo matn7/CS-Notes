@@ -55,8 +55,8 @@
 
 ### Stack
 
-- FILO - first in last out
-- LIFO - last in first out
+- FILO - first in last out.
+- LIFO - last in first out.
 
 ![Stack](images/stack.png "Stack")
 
@@ -116,7 +116,7 @@
 **Midpoint**
 
 - Advance slow by one node.
-- Advance fast by two node.
+- Advance fast by two nodes.
 
 ![Linked List midpoint](images/linked-list-midpoint.png "Linked List midpoint")
 

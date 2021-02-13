@@ -250,8 +250,8 @@ ng g c servers
 
 - EventBinding - listen to click.
 - String Interpolation - output data.
-- Property binding  
-- Two way binding
+- Property binding.
+- Two way binding.
 
 **String interpolation**
 
@@ -283,10 +283,7 @@ export class ServerComponent {
 ```
 
 ```html
-<a 
-    href="#" 
-    class="list-group-item clearfix" 
-    *ngFor="let recipe of recipes">
+<a href="#" class="list-group-item clearfix" *ngFor="let recipe of recipes">
     <div class="pull-left">
         <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
         <p class="list-group-item-text">{{ recipe.description }}</p>
@@ -355,8 +352,8 @@ onUpdateServerName(event: any) {
 - `ngIf` - structural directive.
 - `ngStyle` - attribute directives don't add or remove elements. They only change the element they
 were placed to.
-- `ngClass`
-- `ngFor`
+- `ngClass`.
+- `ngFor`.
 
 **ngIf**
 
@@ -437,7 +434,7 @@ ng g c shopping-list --skipTests true
 ng g c shopping-list/shopping-edit --skipTests true
 ```
 
-## Components & Databinding
+## Components & Data Binding
 
 ### Property & Event Binding
 
@@ -640,39 +637,31 @@ export class AppComponent {
 <router-outlet></router-outlet>
 ```
 
-```
-+---------------------+     +---------------------------+     +-------------------------------+
-| Angular Application | --> | Angular Modules @NgModule | --> | Angular Components @Component |
-+---------------------+     +---------------------------+     +-------------------------------+
-```
+![View Source](images/view-source.png "View Source")
 
 ## Components
 
-- Component
-    - Template HTML .component.html
-    - Style CSS .component.css
-    - Code TypeScript .component.ts
-
-- Types of directives in Angular
-    - Components directives
-    - Structural directives
-    - Attribute directives
-
-- Key part of application
-    - AppComponent - root component
-- Header
-    - Items on header
-- Main area
-- Sidebar
-<br/>
+- Component:
+    - Template HTML `.component.html`.
+    - Style CSS `.component.css`.
+    - Code TypeScript `.component.ts`.
+- Types of directives in Angular:
+    - Components directives.
+    - Structural directives.
+    - Attribute directives.
+- Key part of application:
+    - AppComponent root component.
+- Header:
+    - Items on header.
+- Main area.
+- Sidebar.
 
 ### Component decorator
 
-Like annotations in Java
-
-- selector: tag name for component
-- templateUrl: location of html template
-- styleUrls: styles location
+- Like annotations in Java:
+    - selector: tag name for component.
+    - templateUrl: location of html template.
+    - styleUrls: styles location.
 
 ```ts
 @Component({
@@ -682,12 +671,14 @@ Like annotations in Java
 export class ServersComponent implements OnInit {
 ```
 
-Directly define template
- template: "<h1>{{title}}</h1>",
+- Directly define template.
 
-{{ interpolation }}
+```ts
+template: "<h1>{{title}}</h1>",
+``` 
 
-- Every Angular Component (@Component) has to be associated with an Angular Module (@NgModule)
+- {{ interpolation }}
+- Every Angular Component `@Component` has to be associated with an Angular Module `@NgModule`.
 
 ### To use component
 
@@ -717,8 +708,8 @@ export class AppModule { }
 
 ### Creating component using CLI
 
-```bash
-$ ng g c videogames
+```console
+ng g c videogames
 ```
 
 ### Components template and styles
@@ -738,7 +729,9 @@ $ ng g c videogames
 export class ServerComponent {
 ```
 
-### Component selector (unique identifier of component)
+### Component selector 
+
+- Unique identifier of component.
 
 ```ts
 @Component({
@@ -747,7 +740,7 @@ export class ServerComponent {
 })
 ```
 
-- Use in template
+- Use in template.
 
 ```html
 <app-servers></app-servers>
@@ -761,25 +754,13 @@ export class ServerComponent {
 
 - Databinding = Communication
 
-```
-                               Output data
-TypeScript Code     --------------------------------->       Template HTML
-                    String Interpolation {{ data }}
-                    Property binding [property]="data"
-
-                               User Events
-                    <----------------------------------
-                    Event binding (event)="expression"
-
-
-                    [(ngModel)]="data"  two way binding
-```
+![Databinding](images/databinding.png "Databinding")
 
 - Supported binding (DOM Component):
-    - {{ value }}
-    - [property] = value            component -> template
-    - (event) = "functionHandler"   template -> component
-    - [(ng-model)] = "property"     template <-> component
+    - `{{ value }}`.
+    - `[property] = value            component -> template`
+    - `(event) = "functionHandler"   template -> component`
+    - `[(ng-model)] = "property"     template <-> component`
 
 ### String Interpolation
 
@@ -820,7 +801,7 @@ Password: <input type="password" nmae="password" value="{{password}}" />
 <button (click)="handleLogin()">Login</button> <!-- event binding -->
 ```
 
-- Take data from view element, 2 way data binding, banana in box approach
+- Take data from view element, 2 way data binding, banana in box approach.
 
 ```html
 User Name: <input type="text" name="username" [(ngModel)]="username" />
@@ -829,13 +810,10 @@ Password: <input type="password" name="password" [(ngModel)]="password" />
 <button (click)="handleLogin()">Login</button>
 ```
 
-- Summing up
-
-```html
-{{username}} : string interpolation, bind up view to value of component property
-(client)="handleLogin()" : event binding, user event to component event
-[(ngModel)]="username" : two way data binding, ngModel -> angular directive adding on top of regular html
-```
+- Summing up:
+    - `{{username}}`: string interpolation, bind up view to value of component property.
+    - `(client)="handleLogin()"`: event binding, user event to component event.
+    - `[(ngModel)]="username"`: two way data binding, ngModel -> angular directive adding on top of regular html.
 
 ```ts
 buttonSays: string = "Waiting"; // component property
@@ -852,7 +830,7 @@ onButtonClicked() { // component event
 <p>{{ buttonSays }}</p>
 ```
 
-- Passing data using event binding $event
+- Passing data using event binding `$event`.
 
 ```html
 <label>Text to display</label>
@@ -891,7 +869,7 @@ onUpdateButton(event: Event) {
   </fieldset>
 ```
 
-- Is equivalent to
+- Is equivalent to.
 
 ```html
   <fieldset class="form-group">
@@ -909,7 +887,7 @@ onUpdateButton(event: Event) {
 
 ### Two way binding
 
-- To use two way binding FormsModule need to be added to imports[] array in the AppModule
+- To use two way binding FormsModule need to be added to `imports[]` array in the AppModule.
 
 ```html
 <input
@@ -925,7 +903,7 @@ onUpdateButton(event: Event) {
 
 - Directives are Instructions in the DOM!
     - Components
-- <p lightsUp>5 lights light up</p>
+    - `<p lightsUp>5 lights light up</p>`
 
 ```ts
 @Directive({
@@ -950,9 +928,7 @@ export class LightsUpDirective {
 
 <div>
   User Name : <input type="text" name="username" [(ngModel)]="username" />
-
   Password: <input type="password" name="password" [(ngModel)]="password" />
-
   <button (click)="handleLogin()">Login</button>
 </div>
 ```
@@ -994,46 +970,43 @@ getColor() {
 
 ## Property & Event Binding
 
-HTML Elements :arrow_forward: Directives :arrow_forward: Components
-
-Native Properties & Events  :arrow_forward: Custom Properties & Events  :arrow_forward: Custom Properties & Events
+- HTML Elements :arrow_forward: Directives :arrow_forward: Components
+- Native Properties & Events  :arrow_forward: Custom Properties & Events  :arrow_forward: Custom Properties & Events
 
 ## Lifecycle
 
-1. ngOnChanges              Called after a bound input property changed
-2. ngOnInit                 Called once the component is initialized
-3. ngDoCheck                Called during every change detection run
-4. ngAfterContentInit       Called after content (ng-content) has been projected into view
-5. ngAfterContentChecked    Called every time the projected content has been checked
-6. ngAfterViewInit          Called after the content's view (and child views) has been initialized
-7. ngAfterViewChecked       Called every time the view (and child views) has been checked
-8. ngOnDestroy              Called once the component is about to be destroyed
+1. `ngOnChanges` - Called after a bound input property changed..
+2. `ngOnInit` - Called once the component is initialized.
+3. `ngDoCheck` - Called during every change detection run.
+4. `ngAfterContentInit` - Called after content (ng-content) has been projected into view.
+5. `ngAfterContentChecked` - Called every time the projected content has been checked.
+6. `ngAfterViewInit` - Called after the content's view (and child views) has been initialized.
+7. `ngAfterViewChecked` - Called every time the view (and child views) has been checked.
+8. `ngOnDestroy` - Called once the component is about to be destroyed.
 
 ## Attribute vs Structural
 
-- Attribute Directives
-    - Looks like normal HTML Attribute
-    - Only affect element they are added to
-
-- Structural Directives
-    - Looks like normal HTML Attribute, have a leading *
-    - Affect whole area in DOM
+- Attribute Directives:
+    - Looks like normal HTML Attribute.
+    - Only affect element they are added to.
+- Structural Directives:
+    - Looks like normal HTML Attribute, have a leading `*`.
+    - Affect on whole area in DOM.
 
 ## Services & Dependency Injection
 
-- Service: logic common for multiple components
+- Service: logic common for multiple components.
 
-```bash
+```console
 ng g s service/authentication
 ```
 
-- Normal class with @Injectable annotation, i can inject in any place i want use
-
-- Get info about your services from @NgModule provider so that it can use the dependencies in components
-- Services are singletons shared across components
-- Service is place where app business logic is
-- Should has only one purpose
-- @Injectable annotation to make service ready to be injected
+- Normal class with `@Injectable` annotation, i can inject in any place i want use.
+- Get info about your services from `@NgModule` provider so that it can use the dependencies in components.
+- Services are singletons shared across components.
+- Service is place where app business logic is.
+- Should have only one purpose.
+- `@Injectable` annotation to make service ready to be injected.
 
 ```ts
 // Router
@@ -1046,13 +1019,13 @@ constructor(private router: Router, private authenticate: AuthenticationService)
 
 ### Hierarchical Injector
 
-- AppModule : Same Instance of Service is available Application-wide
-- AppComponent : Same Instance of Service is available from all Components (but not for other Services)
-- Any other Component : Same Instance of Service is available for the Component and all its child components
+- `AppModule`: Same Instance of Service is available Application-wide.
+- `AppComponent`: Same Instance of Service is available from all Components (but not for other Services).
+- Any other Component: Same Instance of Service is available for the Component and all its child components.
 
 ## Routing
 
-- Relative path, appends to current path
+- An Relative path, appends to current path.
 
 ## Observables
 
@@ -1076,87 +1049,84 @@ constructor(private router: Router, private authenticate: AuthenticationService)
 
 ### Template driven
 
-- Angular infers the Form Object from the DOM
+- Angular infers the Form Object from the DOM.
 
 ### Reactive
 
-- Form is created programmatically and synchronized with the DOM
+- Form is created programmatically and synchronized with the DOM.
 
 ## Pipes
 
-- Allows to transform output in template
+- Allows to transform output in template.
 
 ```html
 <p>{{ username | uppercase }}</p>
 ```
 
-- Create custom pipe, implements PipeTransform, override transform method
-- Pipe arguments after :, for example shorten:8
+- Create a custom pipe, implements PipeTransform, override transform method
+- Pipe arguments after `:`, for example shorten:8
 
 ## Compilation
 
 ### Just in Time
 
-Development :arrow_forward: Production :arrow_forward: App download in browser :arrow_forward: Parses and compiles template to Java Script
+Development :arrow_forward: Production :arrow_forward: App download in browser :arrow_forward: 
+Parses and compiles template to Java Script.
 
 ### Ahead of Time
 
-Development :arrow_forward: Parses and compiles template to Java Script :arrow_forward: Production :arrow_forward: App download in browser
-
-- Faster Startup, parsing and compilation doesn't happen in browser
-- Templates checked during Development
-- Smaller File Size
+Development :arrow_forward: Parses and compiles a template to Java Script :arrow_forward: Production :arrow_forward: 
+App download in a browser.
+- Faster Startup, parsing and compilation doesn't happen in browser.
+- Templates checked during Development.
+- Smaller File Size.
 
 ## Deployment
 
-- Build App
-- AOT Compilation
-- Set base element
-- Return index.html in case of 404 error
+- Build App.
+- AOT Compilation.
+- Set base element.
+- Return `index.html` in case of 404 error.
 
 ## Questions
 
-- convert String to number use `+`<br/>
-this.id = +params['id'];
-
-- Make link active<br/>
-routerLinkActive="active"
+- convert String to number use `+`: `this.id = +params['id'];`
+- Make link active: `routerLinkActive="active"`
 
 ## Change detector
 
-- Each component has own change detector
-- You can eventually also trigger manually the change detector
-- When a component change it triggers change detector in all other components
-- changeDetection input parameter of @Component, you can change strategy
-- Zone.js library for Angular2 is used in change detection
+- Each component has own change detector.
+- You can eventually also trigger manually the change detector.
+- When a component change it triggers change detector in all other components.
+- changeDetection input parameter of `@Component`, you can change strategy.
+- `Zone.js` library for Angular2 is used in change detection.
 - Zone trigger change detection for:
-    - DOM Events is fired
-    - XHR call get resolved
-    - Timer is triggered (setInterval)
+    - DOM Events is fired.
+    - XHR call get resolved.
+    - Timer is triggered (setInterval).
 
 ## Http call
 
-- HttpModule
-    - @angular/http
-    - import HttpModule in AppModule.ts
-    - Http Module use XMLHttpRequest (XHR) to transfer data from the server to the client
-    - RequestOptions to add options and headers to the calls
-- RequestHeader
-- RequestOptions
-- Response
-
-- Supported REST methods
+- HttpModule:
+    - `@angular/http`
+    - import HttpModule in AppModule.ts.
+    - Http Module use XMLHttpRequest (XHR) to transfer data from the server to the client.
+    - RequestOptions to add options and headers to the calls.
+- RequestHeader.
+- RequestOptions.
+- Response.
+- Supported REST methods:
     - GET
     - POST
     - PUT
     - DELETE
     - PATCH
 
-
 ## Single page application
 
-- Spring boot application packaging war
-- angular.json
+- Spring boot application packaging war.
+- angular.json.
+
 ```json
 "outputPath": "../src/main/resources/static",
 "outputPath": "dist",
@@ -1164,11 +1134,10 @@ routerLinkActive="active"
 
 ## Session Storage
 
-- Associate with browser window
-- Allows us access to session storage object
-- When close browser no session is reloaded
-
-- You can only access data from Local/Session Storage that was set from your website
+- Associate with browser window.
+- Allows us to access to session storage object.
+- When close browser no session is reloaded.
+- You can only access data from `Local/Session Storage` that was set from your website.
 - Values set into Local Storage persist across browser restarts. Hence, it's less secure!
 
 ```ts
@@ -1230,25 +1199,32 @@ export class WelcomeDataService {
 ```
 
 ## Commands
-ng new project-name <br/>
-npm install <br/>
-ng g d directive-name <br/>
-ng g c page-not-found <br/>
-npm install --save rxjs-compat <br/>
-<br/><br/>
-**Ahead of time compilation** <br/>
-ng build --prod --aot <br/>
-ng build --prod --aot --base-href /application/ <br/>
+
+```console
+ng new project-name 
+npm install
+ng g d directive-name
+ng g c page-not-found
+npm install --save rxjs-compat
+```
+
+**Ahead of time compilation** 
+
+```console
+ng build --prod --aot
+ng build --prod --aot --base-href /application/
 ng build --watch
 npm install rxjs-compat --save
-
 // React, Redux, Axios
 npm i redux react-redux redux-thunk
 npm i axios
+```
 
-### angular material
+**Angular material**
+
+```console
 npm i --save @angular/cdk @angular/material @angular/animations hammerjs
-
+```
 
 ## Angular Http Requests
 
@@ -1257,7 +1233,6 @@ npm i --save @angular/cdk @angular/material @angular/animations hammerjs
 ### Anatomy of a Http Request
 
 ![Angular http anatomy](images/http-angular-anatomy.png "Angular http anatomy")
-
 
 ## Authentication
 
@@ -1273,39 +1248,33 @@ npm i --save @angular/cdk @angular/material @angular/animations hammerjs
 
 **What are "Modules"?**
 
-- Angular analyzes NgModules to "understand" your application and its features
-- Angular modules define all building blocks your app uses: Components, Directives, Services
-- An app requires at least one module (AppModule) but may be split into multiple modules
-- Core Angular features are included in Angular modules (e.g. FormsModule) to load them only when needed
-- You can't use a feature/building block without including it in a module
+- Angular analyzes NgModules to "understand" your application and its features.
+- Angular modules define all building blocks your app uses: Components, Directives, Services.
+- An app requires at least one module (AppModule) but may be split into multiple modules.
+- Core Angular features are included in Angular modules (e.g. FormsModule) to load them only when needed.
+- You can't use a feature/building block without including it in a module.
 
-**Working with multiple modules (feature modules)**
-
-### Shared Modules
-
-### The CoreModule
-
-### Lazy Loading
-
-### Services & Modules
-
+- **Working with multiple modules (feature modules)**:
+    - Shared Modules.
+    - The CoreModule.
+    - Lazy Loading.
+    - Services & Modules.
 - AppModule:
-    - Service available app-wide
-    - Use root injector
+    - Service available app-wide.
+    - Use root injector.
     - **Should be the default!**
 - AppComponent (or other Components): 
-    - Service available in component tree
-    - Use component-specific injector
-    
-    - **Use if service is only relevant for component tree**
+    - Service available in component tree.
+    - Use component-specific injector.
+    - **Use if service is only relevant for component tree**.
 - Eager-loaded Module: 
-    - Service available app-wide
-    - Use root injector
-    - **Avoid this!**
+    - Service available app-wide.
+    - Use root injector.
+    - **Avoid this!**.
 - Lazy-loaded Module:
-    - Service available in loaded module
-    - Use child injector
-    - **Use if service should be scoped to loaded module**
+    - Service available in loaded module.
+    - Use child injector.
+    - **Use if service should be scoped to loaded module**.
 
 ### Ahead of Time (AoT) vs Just in Time (JiT) Compilation
 
@@ -1319,14 +1288,14 @@ ng build --prod
 
 ## Deployment
 
-- Use & check environment variables
-- Polish & test code
-- `ng build --prod` - Uses ahead-of0time compilation
+- Use & check environment variables.
+- Polish & test code.
+- `ng build --prod` - Uses ahead-of0time compilation.
 - Deploy build artifacts (generated files) to static host - Because it's only HTML, JS, CSS!
 
 ***
 
-# NgRx
+## NgRx
 
 **What is Application State?**
 
@@ -1341,33 +1310,4 @@ npm run serve:ssr
 
 ```console
 ng add @nestjs/ng-universal
-
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

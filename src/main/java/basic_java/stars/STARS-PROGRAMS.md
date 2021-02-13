@@ -3,6 +3,37 @@
 - The max depth will be furthest distance of the leaf node from the root
 
 ```java
+public static class Node<T> {
+    private T data;
+    // Node can have Max 2 child
+    private Node<T> leftChild;
+    private Node<T> rightChild;
+
+    public Node(T data) {
+        this.data = data;
+    }
+
+    public Node<T> getRightChild() {
+        return rightChild;
+    }
+
+    public void setRightChild(Node<T> rightChild) {
+        this.rightChild = rightChild;
+    }
+
+    public Node<T> getLeftChild() {
+        return leftChild;
+    }
+
+    public void setLeftChild(Node<T> leftChild) {
+        this.leftChild = leftChild;
+    }
+
+    public T getData() {
+        return data;
+    }
+}
+
 public static int maxDepth(Node root) {
     if (root == null) {
         // Base case if the root is null then the tree has no nodes, the max depth is 0
@@ -22,40 +53,6 @@ public static int maxDepth(Node root) {
     // Find the max depth between the left and right subtrees
     return Math.max(leftMaxDepth, rightMaxDepth);
 }
-
- public static class Node<T> {
-
-        private T data;
-
-        // Node can have Max 2 child
-        private Node<T> leftChild;
-        private Node<T> rightChild;
-
-        public Node(T data) {
-            this.data = data;
-        }
-
-        public Node<T> getRightChild() {
-            return rightChild;
-        }
-
-        public void setRightChild(Node<T> rightChild) {
-            this.rightChild = rightChild;
-        }
-
-        public Node<T> getLeftChild() {
-            return leftChild;
-        }
-
-        public void setLeftChild(Node<T> leftChild) {
-            this.leftChild = leftChild;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-    }
 ```
 
 ***
@@ -89,7 +86,6 @@ public class Palindrome {
         return false;
     }
 }
-
 // ABCDCBA ==> true
 // BCDCB   ==> true
 // CDC     ==> true
@@ -118,11 +114,7 @@ public class Singleton {
         return singleton;
     }
 }
-```
 
-- With enum
-
-```java
 // enum is thread safe
 enum Downloader {
     INSTANCE;
@@ -341,7 +333,7 @@ public static int minimumValue(Node<Integer> head) {
 
 ## :star: Mirror a binary tree
 
-- Every left child is now right child and vice versa
+- Every left child is now right child and vice versa.
 
 ```java
 public static void mirror(Node<Integer> root) {
@@ -373,6 +365,13 @@ public static void mirror(Node<Integer> root) {
 
 ```java
 public class MatchParenthesis {
+    // `{[]}()`
+    // 
+    // |
+    // |
+    // | [
+    // | {
+    // +----
     private static final Map<Character, Character> matchParenthesis = new HashMap<>();
     private static final Set<Character> openingParenthesis = new HashSet<>();
 
@@ -396,7 +395,7 @@ public class MatchParenthesis {
                 if (matchParenthesis.containsKey(ch)) { // ) ] }
                     Character lastParenthesis = parenthesisStack.pop();
 
-                    if (lastParenthesis != matchParenthesis.get(ch)) {
+                    if (lastParenthesis != matchParenthesis.get(ch)) { // [ [
                         return false;
                     }
                 }
@@ -409,7 +408,6 @@ public class MatchParenthesis {
         }
         return false;
     }
-
 }
 ```
 

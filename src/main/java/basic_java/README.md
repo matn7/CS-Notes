@@ -2,19 +2,18 @@
 
 ### ClassCastException
 
-- When references to objects points to objects different classes
-- When argument is wrong type, method compareTo should throw ClassCastException
-- No explicit casting
-- Try add wrong data type to collection or array
-- SerialVersionUID
-
+- When references to object points to objects different classes.
+- When argument is wrong type, method `compareTo` should throw ClassCastException.
+- No explicit casting.
+- Try add wrong data type to collection or array.
+- SerialVersionUID.
 
 ### Constructor Chaining
 
-- Call in the same class this()
-- Call from parent class super()
-- Use to execute more tasks in one constructor
-- Improve readability of code
+- Call in the same class `this()`.
+- Call from parent class `super()`.
+- Use to execute more tasks in one constructor.
+- Improve readability of code.
 
 ```java
 public Temporary(int x, int y) {//23,34
@@ -34,61 +33,58 @@ public Temporary() {
 
 ### Overloading
 
-- Compile time polymorphism
-- Use the same method name but with different arguments
-- static binding binds private, final, static method, fields, class, variables
-
+- Compile time polymorphism.
+- Use the same method name but with different arguments.
+- Static binding binds private, final, static method, fields, class, variables.
 
 ### Overriding
 
-- Runtime polymorphism
-- The same method name with exactly the same arguments
-- Dynamic binding
+- Runtime polymorphism.
+- The same method name with exactly the same arguments.
+- Dynamic binding.
 
+```
 We cannot override private methods in Java as if we declare any variable, method as private that variable or method
 will be visible for that class only and also if we declare any method as private than they are bounded with class at **compile
-time** not in runtime so we can't reference those method using any object
+time** not in runtime so we can't reference those method using any object.
+```
 
-You cannot override static method in Java because method overriding is based upon dynamic binding at runtime
-and **static method are bounded using static binding at compile time**
-
+- You cannot override static method in Java because method overriding is based upon dynamic binding at runtime
+and **static method are bounded using static binding at compile time**.
 
 ### final
 
-- Value of member variable cannot be changed
-- Object reference cannot be changed
-- Class cannot be inherited
-- Method cannot be Overriding
-
+- Value of member variable cannot be changed.
+- Object reference cannot be changed.
+- Class cannot be inherited.
+- Method cannot be Overriding.
 
 ### finally
 
-- Try, catch block. Stuff in finally always be executed, even when in try return statement
-- Finally does't execute in cases like program crash before go to this block or `System.exit(0)` in try
-
+- Try, catch block. Stuff in finally always be executed, even when in try return statement.
+- `Finally` does't execute in cases like program crash before go to this block or `System.exit(0)` in `try`.
 
 ### finalize
 
-- JVM call this method when GC is about to be called
+- JVM call this method when GC is about to be called.
 
-### == vs equals
+### `==` vs `equals`
 
-- `==` - check whether object are the same (point to the same place in memory, the same object)
-- `.equals()` - when compare content of objects
+- `==`: check whether object are the same (point to the same place in memory, the same object).
+- `.equals()` : when compare content of objects.
 
 ### Class Loaders
 
 - A Java class is made up of a number of custom classes (written by programmers) and core classes
 (which come pre-packed with Java).
 - When program is executed, JVM needs to load the content of the needed class.
-- JVM uses class loader to find the classes.
-    - Bootstrap Class Loader - Loads all the Java core files
-    - Extension Class Loader - Loads all classes from extension directory
-    - System Class Loader - Loads all classes from CLASSPATH
-
-- When JVM needs to find a class, it starts with System Class Loader.
-- If it is not found, it checks with Extension Class Loader.
-- If it not found, it goes to the Bootstrap Class Loader.
+- JVM uses class loader to find the classes:
+    - **Bootstrap Class Loader**: Loads all the Java core files.
+    - **Extension Class Loader**: Loads all classes from extension directory.
+    - **System Class Loader**: Loads all classes from CLASSPATH.
+- When JVM needs to find a class, it starts with **System Class Loader**.
+- If it is not found, it checks with **Extension Class Loader**.
+- If it not found, it goes to the **Bootstrap Class Loader**.
 - If class is still not found, a **ClassNotFoundException** is thrown.
 
 System Class Loader :arrow_right: Extension Class Loader :arrow_right: Bootstrap Class Loader :arrow_right: ClassNotFoundException
@@ -101,7 +97,7 @@ corresponding object wrapper classes.
 - If conversions goes the other way it is called **unboxing**.
 - Autoboxing helps in saving memory by reusing already created wrapper objects.
 - However wrapper classes created using new are not reused.
-- Two wrapper objects created using new are not same object
+- Two wrapper objects created using new are not same object.
 
 ```java
 Integer nineA = new Integer(9);
@@ -110,7 +106,7 @@ System.out.println(nineA == nineB); // false
 System.out.println(nineA.equals(nineB)); // true
 ```
 
-- Two wrapper objects created using boxing are same object
+- Two wrapper objects created using boxing are same object.
 
 ```java
 Integer nineC = 9;
@@ -130,12 +126,12 @@ System.out.println(nineC.equals(nineD)); // true
 
 - Can separate local variables from instance variables.
 - `this` determines instance variables.
-- Use this reference when instance and local variables have the same name.
+- Use `this` reference when instance and local variables have the same name.
 
 ### static
 
 - For specified class can be only one static variable.
-- Initialization is during class loading. Static method does not work on objects. `Math.pow(x,a)`
+- Initialization is during class loading. Static method does not work on objects. `Math.pow(x,a)`.
 - Gets memory only once in class are at time class loading.
 - Refer to common property of all objects, company name for example.
 - Static methods belongs to class rather than object of class.
@@ -144,13 +140,13 @@ System.out.println(nineC.equals(nineD)); // true
 
 ### Why java main method is static?
 
-- Because object is not required to call static method if it were non static method, jvm create object first
-then call main() method that will lead the problem of extra memory allocation.
+- Because object is not required to call static method if it were non static method, JVM creates object first
+then call `main()` method that will lead the problem of extra memory allocation.
 - Static block is used to initialize the static data member. It is executing before main method at the time of class
 loading.
 - Static, variable (class variable), method (class method), block, nested class.
-- Factories methods - static methods that returns new class instance.
-- You cannot override static method in Java because they are resolved at compile time rather than runtime
+- Factories methods: Static methods that returns new class instance.
+- You cannot override static method in Java because they are resolved at compile time rather than runtime.
 - In Java6 it was possible to run program without main method by using static initialization block. It is not a case anymore.
 
 ```java
@@ -162,16 +158,17 @@ public class Foo {
 }
 ```
 
-### What are Initialization Blocks
+### What are Initialization Blocks.
 
-- Initialization blocks - code which runs when an object is created or class is loaded.
+- Initialization Blocks: Code which runs when an object is created or class is loaded.
 - There are two types of Initialization blocks.
-    - Static Initializer - Code runs when a class is loaded
-    - Instance Initializer - Code runs when a new object is created
+    - Static Initializer: Code runs when a class is loaded.
+    - Instance Initializer: Code runs when a new object is created.
 
-### What is static initializer
+### What is a static initializer.
 
-- Code within static `{}` is called a static initializer. This is run only when class is first loaded.
+- Code within `static {}` is called a static initializer. 
+- This is run only when class is first loaded.
 - Only static variables can be accessed in a static initializer.
 - Even though three instances are created static initializer is run only once.
 
@@ -197,27 +194,29 @@ public class InitializerExamples() {
 
 ### Enum
 
-Sometimes you need to define connected constants like
+- Sometimes you need to define connected constants like.
+
 ```java
 public static final int MONDAY = 0;
+public static final int TUESDAY = 1;
 ```
 
-- You can do this using enum. Now weekday is data type with values `Weekday.MON`
+- You can do this using enum. Now weekday is data type with value `Weekday.MON`.
 
 ```java
 enum Weekday {MON, TUE};
+
 public Enum Size { SMALL, MEDIUM, LARGE; }
 ```
 
 - Named constants. No need to use equals method. No need to override toString.
 - Thread safe.
-- Enum is subclass class of Enum class, which contains toString, valueOf and compareTo method
-- Compare element using `==`
-- Methods - valueOf, ordinal
+- Enum is subclass class of Enum class, which contains toString, valueOf and compareTo method.
+- Compare element using `==`.
+- Methods valueOf, ordinal.
 - Enum constructors are always private.
-- Variables Enum type can contains static variables
-- static import now can use SMALL instead of Size.SMALL
-
+- Variables Enum type can contain static variables.
+- static import now can use **SMALL** instead of **Size.SMALL**.
 - Enum allows specifying a list of values for a Type.
 - Example below declares an enum Season with 4 possible values
 
@@ -227,24 +226,24 @@ enum Season {
 };
 ```
 
-- Value of enums can be compared using `==` or equals function.
+- Value of enums can be compared using `==` or `equals` function.
 
-### Variable arguments
+### Variable arguments.
 
 - Variable arguments allow calling method with different number of parameters.
 
 ```java
 public int sum(int... numbers) {
-    ...
+    // ...
 }
 ```
 
 ### String
 
-- Immutable and final
-    - Thread safe - prevent from change cache
-    - String pool cache - optimization
-    - Hash codes - keys in hashCodes are Strings
+- Immutable and final:
+    - Thread safe: Prevents from change cache.
+    - String pool cache: Optimization.
+    - Hash codes: Keys in hashCodes are Strings.
 
 ### Why String is immutable?
 
@@ -257,7 +256,7 @@ str3.concat("string2");
 System.out.println(str3); // string1
 ```
 
-- The result should be assigned to a new reference variable (or some variable can be reused)
+- The result should be assigned to a new reference variable (or some variable can be reused).
 
 ```java
 String concat = str3.concat("string2");
@@ -266,16 +265,16 @@ System.out.println(concat); // string1string2
 
 ### Where are String literals store in memory?
 
-- All strings literals are stored in `String constant pool`.
+- All strings literals are stored in **String constant pool**.
 - If compiler finds a String literal, it checks if it exists, if is reused.
-- Following statement creates 1 String object **created on pool** and 1 referenced variable
+- Following statement creates 1 String object **created on pool** and 1 referenced variable.
 
 ```java
 String str1 = "Value";
 ```
 
 - However if `new` operator is used to create String object, the new object is created on **heap**.
-- Following piece of code created 2 objects
+- Following piece of code created 2 objects.
 
 ```java
 // 1. String Literal "Value" - created in the "string constant pool"
@@ -285,27 +284,27 @@ String str2 = new String("Value");
 ```
 
 - Some methods:
-    - charAt()
-    - length()
-    - equalsIgnoreCase()
-    - substring()
+    - `charAt()`
+    - `length()`
+    - `equalsIgnoreCase()`
+    - `substring()`
 
 ### toString method
 
 - Is used to print a content of an object.
 - If not overridden default implementation is printed.
 - It prints hashCode and class name.
-- If is overridden new content is printed
+- If is overridden new content is printed.
 
 ### Interfaces
 
-- All methods public abstract (Since Java8 can also be static and default methods)
-- All properties public static final
-- Implement interfaces, want to imitate behavior of class. Use to impose behavior on other classes
-- You can implements more than one interface (impose behavior), example implements Comparable interface (strategy pattern)
+- All methods public abstract (Since Java8 can also be static and default methods).
+- All properties public static final.
+- Implement interfaces, want to imitate behavior of class. Use to impose behavior on other classes.
+- You can implement more than one interface (impose behavior), example implements Comparable interface (strategy pattern)
 to extort sorting behavior.
 - You cannot put instance variables. Interface determines behavior not state of object.
-- You can provide default implementation of interface. Mark such method with `default` modifier
+- You can provide default implementation of interface. Mark such method with `default` modifier.
 
 ```java
 public interface IntSequence {
@@ -317,56 +316,57 @@ public interface IntSequence {
 
 - Keyword super allows to call super type methods.
 - Comparable interface when class want to allow sort their elements.
-- Callback - code fragment is call as a result on user response.
+- Callback: Code fragment is call as a result on user response.
 - Interface is used heavily in API to define contract of a class.
 - You cannot create non abstract method in interface. All methods are for default abstract.
-- Since Java8 methods in interfaces can contain `default`, `static` and `abstract` methods.
+- Since Java 8 methods in interfaces can contain `default`, `static` and `abstract` methods.
 
 ### Class Object
 
-- Parent class of all classes
-    - hashCode
-    - equals
-    - toString
-    - clone
-    - finalize
-    - notify
-    - notifyAll
-    - wait
+- Parent class of all classes:
+    - `hashCode()`
+    - `equals()`
+    - `toString()`
+    - `clone()`
+    - `finalize()`
+    - `notify()`
+    - `notifyAll()`
+    - `wait()`
 
-### Abstract class and methods
+### Abstract class and methods.
 
-- Cannot instantiate abstract class
-- Are needed during inheritance
-- Want something to be overridden to not forget about it later
-- Additional responsibilities added to class
+- Cannot instantiate abstract class.
+- Are needed during inheritance.
+- Want something to be overridden to not forget about it later.
+- Additional responsibilities added to class.
 
 ### OOP
 
-- Objects - containers that keep variables functions thematically connected to each others, to use it easier later
-- Classes - frame to build instances of objects
+- Objects: Containers that keep variables functions thematically connected to each other, to use it easier later.
+- Classes: Frame to build instances of objects.
 - Objects have:
     - properties
     - methods
-- Constructor - reserve space in memory for object
-- Creating an object from a class is called instantiation
-- Constructor references - Are counterpart to method references.
+- Constructor: Reserve space in memory for object.
+- Creating an object from a class is called instantiation.
+- Constructor references: Are counterpart to method references.
 
 ```java
 Employee::new
 int[]::new === n->new int[n]
 ```
 
-- Local class is not declared as public or private as it isn't available outside of method
+- Local class is not declared as public or private as it isn't available outside of method.
 - Abstract method does not have implementation, abstract class can not have instantiation.
-- Class can define methods without implementation forcing subclasses to implement them. Such method and class that contain it are called abstract.
+- Class can define methods without implementation forcing subclasses to implement them. 
+- Such method and class that contain it are called abstract.
 - Abstract classes can have instance variables or constructors.
 - **Abstract class is used to provide default implementation with something left to customize.**
-- Encapsulation - use of objects implemented by someone else, use their methods without know what sits inside
-- Instance variable are in default initialized
-- Local variables need to be explicitly initialized
-- If part can exists without whole then relationship between two class is known as **aggregation**
-- If part cannot exists without whole the relationship between two class is known as **composition**
+- Encapsulation: Use of objects implemented by someone else, use their methods without know what sits inside.
+- Instance variable are in default initialized.
+- Local variables need to be explicitly initialized.
+- If part can exist without whole then relationship between two class is known as **aggregation**.
+- If part cannot exists without whole the relationship between two class is known as **composition**.
 
 ### What is the difference between composition and inheritance ?
 
@@ -394,7 +394,7 @@ int[]::new === n->new int[n]
 ![Composition](images/composition.png "Composition")
 
 - Relations between objects only differ in their strength.
-- Composition strongest relationship, ASSOCIATION the most general.
+- Composition the strongest relationship, ASSOCIATION the most general.
 
 ![Relationship](images/relationship.png "Relationship")
 
@@ -402,27 +402,27 @@ int[]::new === n->new int[n]
 
 ### How are the Strategy Pattern and Dependency Injection related ?
 
-- Each defines behavior by setting member variables of a class
+- Each defines behavior by setting member variables of a class.
 
 ### Reflection
 
-- Reflection is a way to invoke methods of objects on the fly at run-time
-- Reflection is slow and complicated. Method call via reflection may take 10x longer than usual
-- Instantiation an object from a name of a class
-- Reflection is the ability at runtime to actually create objects of classes, invoke methods, manipulate metadata
-- Type introspection is the ability at runtime to explore the type of an object.
+- Reflection is a way to invoke methods of objects on the fly at run-time.
+- Reflection is slow and complicated. Method call via reflection may take **10x** longer than usual.
+- Instantiation an object from a name of a class.
+- Reflection is the ability at runtime to actually create objects of classes, invoke methods, manipulate metadata.
+- **Type introspection**: Is the ability at runtime to explore the type of an object.
 - Reflection drawbacks:
-    - complexity
-    - performance overhead
-    - security consideration
-    - violation of abstraction
-- Reflection is good for unit testing jUnit
+    - Complexity
+    - Performance overhead
+    - Security consideration
+    - Violation of abstraction
+- Reflection is good for unit testing jUnit.
 
 ### Volatile
 
-- Declaring variable volatile means the value of this variable will never be cached thread locally
+- Declaring variable volatile means the value of this variable will never be cached thread locally.
 - All reads and writes will go straight to main memory.
-- Access to the variable acts as through it is enclosed in a synchronized bock, synchronized on itself
+- Access to the variable acts as through it is enclosed in a synchronized bock, synchronized on itself.
 - Slower than cache, make sure value be read every time.
 - Happens-before relationship means any writes happens before any read in volatile variable (write first then read).
 - Every thread reads its value from main memory and don't used cached value available in every thread stack.
@@ -432,27 +432,28 @@ int[]::new === n->new int[n]
 
 ### Synchronized
 
-- Every objects in Java has a lock associated with it.
+- Every object in Java has a lock associated with it.
 - This lock is called the intrinsic lock or monitor.
 - It is possible to specify that only one thread can execute a section of code once it has acquired the lock on same object.
 - If some other thread currently holds that lock, the current thread must waits its turn.
 - This is achieved using synchronized keyword.
 - Using right making a method synchronized can help eliminate thread interference and memory consistency error.
 - Making method synchronized is a shortcut to making the entire body of the method as synchronized on "this".
-- If we use synchronized we don't need to use volatile keyword.
+- If we use synchronized we don't need to use a volatile keyword.
 
-### Enumerator and Iterator differences
+### Enumerator and Iterator differences.
 
-- Iterator allows you to remove elements from collection. Methods for iterator hasNext(), next()
+- Iterator allows you to remove elements from collection. 
+- Methods for iterator `hasNext()`, `next()`.
 - Iterator does not allow other thread to modify the collection object while some thread is iterating over it and throws
-ConcurrentModificationException.
-- Enumerator `hasMoreElements()`. For Collections read only
+`ConcurrentModificationException`.
+- Enumerator `hasMoreElements()`: For Collections read only.
 
-### What is load factor of HashMap
+### What is load factor of HashMap.
 
-- HashMap performance depends on two things
-    - initial capacity
-    - load factor
+- HashMap performance depends on two things:
+    - Initial capacity.
+    - Load factor.
 - Whenever create HashMap initial capacity number of buckets is created initially.
 - Load factor is criteria to decide when we have to increase the size of HashMap when its about to get full.
 
@@ -467,25 +468,26 @@ rather than Thread class.
 ### Why wait and notify called from synchronized method in Java?
 
 - To avoid:
-    - IllegalMonitorStateException which will occur if we don't call wait(), notify() or notifyAll() method
-from synchronized context
-    - Any potential race condition between wait and notify method in Java
+    - **IllegalMonitorStateException** which will occur if we don't call `wait()`, `notify()` or `notifyAll()` method
+from synchronized context.
+    - Any potential race condition between `wait()` and `notify()` method in Java.
 
 ### What will happen if we put a key object in a HashMap which is already there?
 
 - It will replace the old mapping because HashMap doesn't allow duplicate keys.
 - The same key will result in the same hashcode and will end up at the same position in the bucket.
-- Each bucket contains a linked list of Map.Entry object, which contains both Key and Value.
-- Now Java will take the Key object from each entry and compare with this new key using equals() method.
+- Each bucket contains a Linked List of Map.Entry object, which contains both Key and Value.
+- Now Java will take the Key object from each entry and compare with this new key using `equals()` method.
 - If that return true then value object in that entry will be replaced by new value.
 
 ### Casting
 
 - Casting is used when we want to convert one data type to another. Two types of casting:
-    - Implicit casting (Widening)
-    - Explicit casting (Narrowing)
-- Implicit Casting is done by compiler.
-- Good example of implicit casting are all the automatic widening conversions i.e. storing smaller values in larger variables types.
+    - Implicit casting (Widening).
+    - Explicit casting (Narrowing).
+- Implicit Casting is done by a compiler.
+- Good example of implicit casting are all the automatic widening conversions i.e. storing smaller values in larger 
+variables types.
 
 ```java
 int value = 100;
@@ -494,18 +496,18 @@ float f = 100; // Implicit casting
 ```
 
 - Explicit Casting is done through code.
-- Example are narrowing conversions - storing larger values into smaller variables.
+- Example are narrowing conversions, storing larger values into smaller variables.
 - Explicit casting would cause truncation of value if the value stored is greater than the size of variable.
 
 ```java
 long number1 = 12345;
-int x = (int) numer1; // Explicit castig
+int x = (int) numer1; // Explicit casting
 ```
 
-### Variables initialization in Java
+### Variables initialization in Java.
 
 - Member object and static class variables are always initialized with default values.
-- Local/block variables are NOT initialized by compiler.
+- Local / block variables are **NOT** initialized by a compiler.
 
 ```java
 public class VariableInit {
@@ -523,23 +525,23 @@ public class VariableInit {
 }
 ```
 
-### Variables in JAVA
+### Variables in JAVA.
 
-- Instance Variables (Non-Static Fields) - declared outside a method but inside a class.
-- Class Variables (Static Fields) - one copy of this variable in existence.
-- Local Variables - methods stores its temporary state in local variables.
-    - Declared between {} in method.
+- Instance Variables (Non-Static Fields): Declared outside a method but inside a class.
+- Class Variables (Static Fields): One copy of this variable in existence.
+- Local Variables: Methods stores its temporary state in local variables.
+    - Declared between `{}` in method.
     - Accessible only in method declared.
-- Parameters - classified as variables.
+- Parameters: Classified as variables.
 
 ***
 
-## Java Memory Management
+## Java Memory Management.
 
 ### Stack
 
 - All local variables are defined in stack.
-- No more data after last }. Tide scoping.
+- No more data after last `}`. Tide scoping.
 - Local variable short lifetime.
 
 ### Heap
@@ -556,7 +558,7 @@ public class VariableInit {
 - Variables are a reference to the object.
 - Local variables are stored on the stack.
 
-### Passing variables by value
+### Passing variables by value.
 
 ```java
 class Main {
@@ -572,10 +574,10 @@ class Main {
 }
 ```
 
-### How objects are passed
+### How objects are passed.
 
 - For object passed into methods, the **REFERENCE** to the object is passed **BY VALUE**.
-- "No object passed to method but rather pointer to object".
+- :star: No object passed to method but rather pointer to object.
 - Passing Values.
 
 ```java
@@ -591,9 +593,9 @@ public class Main {
 }
 ```
 
-### The final keyword
+### The final keyword.
 
-- Can be assigned only once
+- Can be assigned only once.
 
 ```java
 final Customer c;
@@ -602,40 +604,36 @@ c = new Customer("Amanda"); // ERROR
 c.setName("Robert"); // OK
 ```
 
-### Immutable collections
+### Immutable collections.
 
-- Collections.unmodifableMap()
-- Collections.unmodifableList()
+- `Collections.unmodifableMap()`
+- `Collections.unmodifableList()`
 
 ```java
 String three = new Integer(67).toString().intern(); // JVM optimizes of building object
 String four = "67";
 ```
 
-### Garbage Collector
+### Garbage Collector.
 
-- In other languages you must state when an object is no longer needed by calling a method like free().
+- In other languages you must state when an object is no longer needed by calling a method like `free()`.
 - Object that are not freed continue to consume memory ... this is a memory leak.
 - Java avoids memory leak by:
     - Running on a virtual machine.
     - Adapts a Garbage Collection strategy.
-- Garbage collection - any object on the heap which cannot be reached through a reference from a stack
+- Garbage collection: Any object on the Heap which cannot be reached through a reference from a stack
 is eligible for garbage collection.
-- Soft leaks - an object is referenced on the stack even though it will never be used again.
-
+- Soft leaks: An object is referenced on the stack even though it will never be used again.
 - Vm arguments.
-```
--Xmx100m - run application with small heap size
-jvisualvm.exe
-```
-
+    - `-Xmx100m`: Run application with small heap size.
+    - `jvisualvm.exe`
 - Generational Garbage Collection:
     - Most object's don't live for long.
     - If an object survives it is likely for live forever.
 - GC young generation deletes unused objects.
 - After that String go to old generation.
 - Actually it can be 8 GC, but the VM changes the number of generations based on the amount of memory available.
-- **Program VirtualGC to view some memory leaks**
+- **Program VirtualGC to view some memory leaks**.
 
 ### PermGen / MetaSpace
 
@@ -645,19 +643,17 @@ jvisualvm.exe
 - Problem to many classes or internalized strings.
 - Increase size of PermGen.
 - If you redeploy number of times the PermGen will run out of space.
-
 - **Java 7**:
     - No internalized Strings are stored in PermGen.
     - They are an old part of heap and can be GC.
-
 - **Java 8**:
-    - Remove PermGen introduce metaspace where all metadata of classes are placed. No part of heap.
+    - Remove PermGen introduce metaspace where all metadata of classes are placed. No part of Heap.
     - Max size of metaspace is your computer Space.
 
-### Tuning the VM
+### Tuning the VM.
 
-- `-Xmx` set the maximum heap size.
-- `-Xms` set starting heap size.
+- `-Xmx`: Set the maximum heap size.
+- `-Xms`: Set starting heap size.
 
 ```
 -Xmx512m -Xms150m
@@ -669,67 +665,68 @@ jvisualvm.exe
 -XX:MaxPermSize=256m
 ```
 
-- `-verbose:gc` - print to the console when garbage collection takes place.
+- `-verbose:gc`: Print to the console when garbage collection takes place.
 
 ```
 -Xmx10m -verbose:gc
 ```
 
-- Young generation = 1/3 heap size:
-    - `-Xmn` set the size of young generation.
+- Young generation, **1/3 heap size**:
+    - `-Xmn`: Set the size of young generation.
     - `-Xms256m`.
 
-### Generating heap dumps
+### Generating heap dumps.
+
+- Creates a heap dump file "hprof".
 
 ```
--XX:HeapDumpOnOutOfMemory // creates a heap dump file "hprof"
+-XX:HeapDumpOnOutOfMemory 
 ```
 
 ### Choosing a GC
 
 - Types of GC:
-    - Serial - `-XX:+UseSerialGC`
-    - Parallel young generation - `-XX:+UseParallelGC`
+    - Serial: `-XX:+UseSerialGC`.
+    - Parallel young generation: `-XX:+UseParallelGC`.
     - Mostly Concurrent:
         - `-XX:+UseConcMarkSweepGC`
         - `-XX:+UseG1GC`
-- use `-XX:+PrintCommandLineFlag` to find out which is your default.
-
+- Use `-XX:+PrintCommandLineFlag` to find out which is your default.
 - **jmeter** to generate load.
 
 ```
 apache-jmeter
 ```
 
-- WeakReferences - might not survive GC. If not variable will be equal to null.
-- Soft - stronger than weak, can be destroy if GC claims that space is needed.
+- **WeakReferences**: Might not survive GC. If not variable will be equal to null.
+- **Soft**: Stronger than weak, can be destroyed if GC claims that space is needed.
 
 ```java
 WeakReferencs<Book> mybook = book1;
 SoftReference<Book> mybook = book2;
 ```
 
-- WeakHashMap - reference between key and values are weak.
+- **WeakHashMap**: Reference between key and values are weak.
 
 ```java
 Map<Book, BookImage> imageCache = new WeakHashMap<>();
 ```
 
-- Guava Library can make soft hash map
+- Guava Library can make soft Hash Map.
 
 ### hashCode, equals, toString
 
 **hashCode**
 
 - You must override hashcode in every class that overrides equals.
-- Failure to do so affect working with hash based collections like HashMap, HashSet
-- In Map objects are stored as key and value.
-- put(key,value) method is used to store objects in HashMap at this time.
-- hashCode() method is used to calculate the hash code of key object and both key and value object is stored
-as map.entry.
+- Failure to do so affect working with hash based collections like **HashMap**, **HashSet**.
+- In **Map** objects are stored as key and value.
+- `put(key,value)` method is used to store objects in **HashMap** at this time.
+- `hashCode()` method is used to calculate the hash code of key object and both key and value object is stored
+as `map.entry`.
 - If two keys object have some hash code then only one value object is stored in the same bucket location but
 as a linked list value is stored and if hash code is different then another bucket location is created.
-- While retrieving get(key) method is used at this time hashCode of key object is calculated and then equals() method
+- While retrieving `get(key)` method is used at this time hashCode of key object is calculated and then `equals()` method
 is called to compare value object.
 
 **equals**
@@ -746,43 +743,47 @@ is called to compare value object.
 - The implementation of equals method checks if the id's of both objects are equal. If so return true.
 
 ```java
-    @override
-     public boolean equals(Object obj) {
-       Client other = (Client) obj;
-       if (id != other.id)
-           return false;
-       return true;
-     }
+@Override
+public boolean equals(Object obj) { 
+    Client other = (Client) obj;
+    if (id != other.id) {
+        return false;
+    }
+    return true;
+ }
 ```
 
 - Important things to consider when implementing equals method:
-    - Reflexive - For any reference value x, `x.equals(x)` return true.
-    - Symmetric - For any reference values x and y, if `x.equals(y)` should return true if and only if `y.equals(x)`
+    - **Reflexive**: For any reference value x, `x.equals(x)` return true.
+    - **Symmetric**: For any reference values x and y, if `x.equals(y)` should return true if and only if `y.equals(x)`
     returns true.
-    - Transitive - For any reference values x, y and z, if `x.equals(y)` returns true and `y.equals(z)` returns true,
-    then `x.equals(z)` must return true
-    - Consistent - For any reference values x and y, multiple invocations of `x.equals(y)` consistently return true
+    - **Transitive**: For any reference values x, y and z, if `x.equals(y)` returns true and `y.equals(z)` returns true,
+    then `x.equals(z)` must return true.
+    - **Consistent**: For any reference values x and y, multiple invocations of `x.equals(y)` consistently return true
     if no information used in equals is modified.
     - For any non-null reference value x, `x.equals(null)` should return false.
 
 ```java
-          @Override
-          public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            Client other = (Client) obj;
-            if (id != other.id) {
-                return false;
-            }
-            return true;
-          }
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) {
+        return true;
+    }
+
+    if (obj == null) {
+        return false;
+    }
+
+    if (getClass() != obj.getClass()) {
+        return false;
+    }
+    
+    Client other = (Client) obj;
+    if (id != other.id) {
+        return false;
+    }
+    return true;
+}
 ```
 
 **hashCode**
@@ -791,20 +792,20 @@ is called to compare value object.
 - If x and y are different objects, `x.hashCode` and `y.hashCode` should also be different (but not always are).
 
 ```java
-     @Override
-     public int hashCode() {
-       int hash = 1;
-       for (int i = 0; i < str.length(); i++) {
-             hash = 31 * hash + chartAt(i)
-       }
-       return hash;
-     }
+@Override
+public int hashCode() {
+    int hash = 1;
+    for (int i = 0; i < str.length(); i++) {
+        hash = 31 * hash + chartAt(i)
+    }
+    return hash;
+}
 ```
 
 - HashCode must be compatible.
 - If `x.equals(y)` return true, `x.hashCode() == y.hashCode()`.
-- If you change equals method you have to change hashCode also.
-- Failure to do so results in objects put in hash based data structures HasSet, HashMap could be lost.
+- If you change equals method you have to change `hashCode()`.
+- Failure to do so results in objects put in hash based data structures **HashSet**, **HashMap** could be lost.
 
 ```java
 Object.hash(some, some2);
@@ -813,13 +814,13 @@ Object.hash(some, some2);
 - HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
 - A group of object's might share the same hashCode.
 - The implementation of hashCode decides effectiveness of Hashing.
-- A good hashing function evenly distributes object's into different groups or buckets.
+- A good hashing function evenly distributes objects into different groups or buckets.
 - A good hashCode should have the following properties:
-    - if `obj1.equals(obj2)` is true, then `obj1.hashCode()` should be equal to `obj2.hashCode()`.
-    - `obj.hashCode()` should return the same value when run multiple times, if values of obj used in equals()
-    have not change.
-    - if `obj1.equals(obj2)` is false, it is NOT required that `obj1.hashCode()` is not equal to `obj2.hashCode()`.
-      Two unequals objects might have the same hashCode.
+    - If `obj1.equals(obj2)` is true, then `obj1.hashCode()` should be equal to `obj2.hashCode()`.
+    - `obj.hashCode()` should return the same value when run multiple times, if values of obj used in `equals()`
+    have not changed.
+    - If `obj1.equals(obj2)` is false, it is **NOT** required that `obj1.hashCode()` is not equal to `obj2.hashCode()`.
+    Two unequals objects might have the same hashCode.
 
 ```java
 @Override
@@ -833,58 +834,56 @@ public int hashCode() {
 
 ## :star: Serialization
 
-- Abstract class - high level class, by who inherits.
+- Abstract class: High level class, by who inherits.
 - Data serialization allows to know about all references (extends).
 - Serialized object will be read to file.
 - They will acquire some special identification number (SerialVersionUID), object will use this number to other objects.
 - To perform serialization class need to implements **Serializable** interface.
 - Serializable marker interface (without method), safety guard to make sure you know what you are doing.
 - **transient** data that we don't want to be serialized.
-- Fragile data should be marked as transient, or should not implement Serializable.
+- Fragile data should be marked as transient, or should not implement **Serializable**.
 - Serialization is a mechanism to transform in collection of bytes, which can be then deliver to other place
 save on disk, and reconstruct objects based on this collection of bytes.
 - Deliver object from one VM to another.
 - To make object serializable that means can transform to bytes states it has to be an instance of Serializable interface.
-- It is an marker interface without methods. All object must be serializable.
-- Serializable mechanism supports version mechanism `serialVersionUID = 1L;` is used to enhanced state,
+- Serializable mechanism supports version `serialVersionUID = 1L;` is used to enhanced state,
 what would happen when class would change.
 - Static variables are no serialized only instance variables are serialized.
-- Serialization is a process saving state of an object to a sequence of bytes. These sequence of bytes
-can be sent over a network or stored in a file.
 
 ![Serialization](images/serialization.png "Serialization")
 
 - Serialization helps us to save and retrieve state of an object:
-    - Serialization - convert object state to some internal object representation.
-    - Deserialization - To reverse convert internal representation to object.
-- Two important methods
-    - ObjectOutputStream.writeObject() - serialize and write to file.
-    - ObjectInputStream.readObject() - read from file and deserialize.
+    - Serialization: Convert object state to some internal object representation.
+    - Deserialization: To reverse convert internal representation to object.
+- Two important methods:
+    - `ObjectOutputStream.writeObject()`: Serialize and write to file.
+    - `ObjectInputStream.readObject()`: Read from file and deserialize.
 
-**How to serialize object using Serializable interface**
+**How to serialize a object using Serializable interface**
 
-- To serialize object it should implements Serializable interface.
+- To serialize a object it should implement a Serializable interface.
 - In the example below, Rectangle class implements Serializable interface.
 - Note that Serializable interface does not declare any method to be implemented.
 - Create new Rectangle object and serializing it to a file Rectangle.ser.
 
 ```java
- class Rectangle implements Serializable {
-   int length;
-   int breadth;
-   int area;
-   public Rectangle(int length, int breadth) {
-       this.length = length;
-       this.breadth = breadth;
-       area = length * breadth;
-   }
- }
+class Rectangle implements Serializable {
+    int length;
+    int breadth;
+    int area;
 
- // ...
- FileOutputStream fileStream = new FileOutputStream("Rectangle.ser");
- ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
- objectStream.writeObject(new Rectangle(5,6));
- objectStream.close();
+    public Rectangle(int length, int breadth) {
+        this.length = length;
+        this.breadth = breadth;
+        area = length * breadth;
+    }
+}
+
+// ...
+FileOutputStream fileStream = new FileOutputStream("Rectangle.ser");
+ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+objectStream.writeObject(new Rectangle(5,6));
+objectStream.close();
 ```
 
 **How to deserialize on Java**
@@ -915,18 +914,18 @@ mark this variable as transient.
 **Different between Serializable and Externalizable**
 - Serializable is marker interface with no method defined. Use default serialization process which can be very slow
 for some application.
-- Externalizable interface has two methods readExternal() and writeExternal() which allows you to control
+- Externalizable interface has two methods `readExternal()` and `writeExternal()` which allows you to control
 the serialization process.
 
 ### :star: How HashMap works?
 
-- It's a map implementation.
-- A map is an associative array data structure "key1"->value, "key2"->value.
-- Hashing - transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
+- It's a Map implementation.
+- A Map is an associative array data structure `"key1"->value`, `"key2"->value`.
+- **Hashing**: Transformation of a string of characters(Text) to a shorted fix-length value that represents original string.
 - A shorter value helps in indexing and faster searches.
 - In Java every object has a method `public int hashCode()` that will return a hash value for given object.
-- If two object are equal they should have the same hashcode as well.
-- Hashcode is used to storing values in hash map. If hashcode is wrong you could not get corresponding value.
+- If two objects are equal they should have the same hashcode as well.
+- Hashcode is used to storing values in Hash Map. If hashcode is wrong you could not get corresponding value.
 - Index of null key is always 0, as hash of null is always 0.
 
 ![Hash Map](images/hash-map.png "Hash Map")
@@ -1029,12 +1028,12 @@ the serialization process.
 ```
 
 - In Java 8, when we have too many unequal keys which gives some hashcode(index).
-- When the number of items in a hash bucket grows beyond threshold(TREEIFY_TRESHOLD = 8), content of that bucket
-switches from using linked list of Entry objects to a balanced tree.
+- When the number of items in a hash bucket grows beyond `threshold(TREEIFY_TRESHOLD = 8)`, content of that bucket
+switches from using Linked List of Entry objects to a Balanced Tree.
 - This theoretically improves the worst-case performance from `O(n)` to `O(log n)`.
-- Balanced search tree, where leaf nodes have lesser weight (HashCode or Comparable result) for the Keys involved.
+- Balanced Search Tree, where leaf nodes have lesser weight (HashCode or Comparable result) for the Keys involved.
 
-### Exception Handling
+### Exception Handling.
 
 - Exception handling helps us to recover from an unexpected situations like file not found, connection is lost.
 - Important part is try-catch block.
@@ -1052,7 +1051,7 @@ switches from using linked list of Entry objects to a balanced tree.
 
 ```java
 } finally {
-    connection.close();|
+    connection.close();
 }
 ```
 
@@ -1090,7 +1089,7 @@ class RuntimeException extends Exception {}
 
 ### Difference between Error and Exception
 
-- Error is used in situation where there is nothing programmer can do about an error, StackOverflow, OutOfMemory.
+- Error is used in a situation where there is nothing programmer can do about an error, StackOverflow, OutOfMemory.
 - Programmer can handle Exception.
 
 ### Difference between checked and un-checked exceptions
@@ -1141,20 +1140,20 @@ catch (IOException | SQLException e)
 
 ```java
 class MyListGeneric<T> {
-       private List<T> values;
+   private List<T> values;
 
-       void add(T value) {
-           values.add(value);
-       }
+   void add(T value) {
+       values.add(value);
+   }
 
-       void remove(T value) {
-           values.remove(value);
-       }
+   void remove(T value) {
+       values.remove(value);
+   }
 
-       T get(int index) {
-           return values.get(index);
-       }
-     }
+   T get(int index) {
+       return values.get(index);
+   }
+}
 ```
 
 - To restrict Generics to a subclass of particular class we can use Generic Restrictions `T extends Number`.
@@ -1166,42 +1165,42 @@ class MyListGeneric<T> {
 
 ```java
 class MyListRestricted<T extends Number> {
-       private List<T> values;
+   private List<T> values;
 
-       void add(T value) {
-           values.add(value);
-       }
+   void add(T value) {
+       values.add(value);
+   }
 
-       void remove(T value) {
-           values.remove(value);
-       }
+   void remove(T value) {
+       values.remove(value);
+   }
 
-       T get(int index) {
-           return values.get(index);
-       }
-     }
+   T get(int index) {
+       return values.get(index);
+   }
+}
 ```
 
-- **PECS** - Produces extends, Consumer super
+- **PECS** - Produces extends, Consumer super.
 
 ### File API
 
 | Action | Usage Example |
 |---|---|
-| Create file | File file = new File("nazwa.txt"); |
-| Check if exists | file.exists(); |
-| Create new file | file.createNewFile() |
-| Full path | file.getAbsolutePath() |
-| Create new directory | File newDir = new File("newDir"); newDir.mkdir(); |
+| Create file | `File file = new File("nazwa.txt");` |
+| Check if exists | `file.exists();` |
+| Create new file | `file.createNewFile();` |
+| Full path | `file.getAbsolutePath();` |
+| Create new directory | `File newDir = new File("newDir"); newDir.mkdir();` |
 
 - File class represents files and directories.
 - Write to file using FileWriter:
-    - write()
-    - flush()
-    - close()
+    - `write()`
+    - `flush()`
+    - `close()`
 - Read from file using FileReader:
-    - read()
-    - close()
+    - `read()`
+    - `close()`
 - BufferedWriter and BufferedReader provide better buffering in addition to basic file writing and reading operations.
 - For example instead reading entire file, we can read file line by line.
 - BufferedWriter class helps writing to a class with better Buffering than FileWriter.
@@ -1224,9 +1223,11 @@ fileWriter.close();
 FileReader fileReader = new FileReader("text.txt");
 BufferedReader bufferedReader = new BufferedReader(fileReader);
 String line;
+
 while ((line = bufferedReader.readLine()) != null) {
-System.out.println(line);
+    System.out.println(line);
 }
+
 bufferedReader.close();
 fileWriter.close();
 ```
@@ -1250,30 +1251,30 @@ printWriter.close();
 
 - Arrays are not dynamic.
 - Once an array of particular size is created, the size cannot be modified.
-- To add new element new array have to be created with bigger size and all elements from the old array copied to new array.
+- To add a new element new array have to be created with bigger size and all elements from the old array copied to new array.
 - Collections are used in situations where data is dynamic.
-- Collections allow adding an elements, deleting an elements and lots of other operations.
-
+- Collections allow adding elements, deleting an elements and lots of other operations.
 - Some methods in collection class:
-    - add
-    - remove
-    - size
-    - isEmpty
-    - clear
-    - contains
-    - containsAll
-    - retainAll
-- Collection interface provides methods for all collections except Map which are provided by Map interface.
+    - `add()`
+    - `remove()`
+    - `size()`
+    - `isEmpty()`
+    - `clear()`
+    - `contains()`
+    - `containsAll()`
+    - `retainAll()`
+- Collection interface provides methods for all collections except **Map** which are provided by **Map** interface.
 
-**Thread safe data structures**
+### Thread safe data structures
 
 - In such collections iterators presents elements which exists on the beginning of iteration but can reflect
 all modifications that being processed after their creation.
 - Such iterator does not throw ConcurrentModificationException.
-- In multithreading Java application synchronized collection classes like `HashTable` and `Vector` quickly becomes
+- In multithreading Java application synchronized collection classes like **HashTable** and **Vector** quickly becomes
 the bottleneck, to address that Java 5 introduced some concurrent collections.
 
-| | Collection | Concurrent |
+| **Interface** | **Collection** | **Concurrent** |
+|---|---|---|
 | List | ArrayList | CopyOnWriteArrayList |
 | List | LinkedList | Vector |
 | Set | HashSet | CopyOnWriteArraySet |
@@ -1284,10 +1285,10 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 | Map | LinkedHashMap | ConcurrentSkipListMap |
 | Queue | PriorityQueue | LinkedBlockingQueue |
 | Queue | ArrayDequeue | ArrayBlockingQueue |
-| Queue | | BlockingQueue |
-| Queue | | PriorityBlockingQueue |
+| Queue | **-** | BlockingQueue |
+| Queue | **-** | PriorityBlockingQueue |
 
-### LIST
+### List
 
 - List interface extends Collection interface. It contains all methods defined in Collection interface.
 - In addition List interface allows operation specifying the position of the element in the Collection.
@@ -1295,33 +1296,35 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 - When new element is inserted without specifying a position it is inserted at the end of the List of elements.
 - We can also use void `add(int position, E param)` method to insert an element at specific position.
 - Methods:
-    - get, set, add, remove, indexOf, lastIndexOf
+    - `get()`, `set()`, `add()`, `remove()`, `indexOf()`, `lastIndexOf()`
 - List is sequential collection in which every element has index in form of integral number.
-- List interface has methods which allow to access to `n'th` element of List.
+- List interface has methods which allow to access to **n'th** element of List.
 - To do so Class should implement **RandomAccess** interface.
 - It is a marker interface which does not have any methods.
-- For instance ArrayList implements List and RandomAccess, but LinkedList only List interface.
+- For instance **ArrayList** implements **List** and **RandomAccess**, but **LinkedList** only **List** interface.
 - RandomAccess means random search if you know the index, LinkedList only allows sequential search.
 - Adding and removing elements from middle of LinkedList is fast compared to ArrayList, because it only
 require to modify links and no other elements are rearranged.
 
 **ArrayList**
 
-- ArrayList implements the List interface. So ArrayList stores the elements in insertion order.
+- ArrayList implements the List interface. 
+- ArrayList stores the elements in insertion order.
 - Elements can be inserted into and removed from ArrayList based on their positions.
 - ArrayList can have duplicate elements.
 - Iterate around ArrayList using Iterator.
 
 ```java
 Iterator<String> arrayListIterator = arrayList.iterator();
+
 while (arrayListIterator.hasNext()) {
     String str = arrayListIterator.next();
     System.out.println(str);
 }
 ```
 
-- We can sort ArrayList using Collection.sort method.
-- We can also use Comparable interface, with method compareTo.
+- We can sort ArrayList using `Collection.sort()` method.
+- We can also use Comparable interface, with method `compareTo()`.
 
 ```java
 class DescendingSorter implements Comparator<Cricket> {
@@ -1349,26 +1352,28 @@ Object[] numObj = numberArray.toArray();
 - Convert Array to List.
 
 ```java
-List<String> valueList = Arrays.asList(valueArray)
+List<String> valueList = Arrays.asList(valueArray);
 ```
 
-### SET
+### Set
 
-- Java has implementation of HashSet and TreeSet.
+- Java has implementation of **HashSet** and **TreeSet**.
 - Does not allow duplicates.
 
 **What is a difference between Set and SortedSet?**
 
-- SortedSet interface extends the Set interface. Both Set and SortedSet does not allow duplicate elements.
-- SortedSet maintains its elements in a sorted order. Set interface does not guaranteed any order.
-- Methods of Sorted Set:
-    - subset(), headSet(), tailSet()
+- SortedSet interface extends the Set interface. 
+- Both Set and SortedSet does not allow duplicate elements.
+- SortedSet maintains its elements in a sorted order. 
+- Set interface does not guarantee any order.
+- Methods of SortedSet:
+    - `subset()`, `headSet()`, `tailSet()`
 
 **HashSet**
 
 - HashSet implements Set interface.
 - HashSet does not allow duplicates.
-- HashSet does not supports ordering.
+- HashSet does not support ordering.
 - The order in which elements are inserted is not maintained.
 
 ```java
@@ -1382,16 +1387,19 @@ Set<String> hashSet = new HashSet<>();
 
 **TreeSet**
 
-- TreeSet implements Set, SortedSet and NavigableSet interfaces.
+- TreeSet implements:
+    - **Set**
+    - **SortedSet**
+    - **NavigableSet**
 - TreeSet is similar to HashSet except that it stores elements in sorted order.
 - Some methods:
-    - lower(), floor(), higher(), ceiling()
+    - `lower()`, `floor()`, `higher()`, `ceiling()`
 
 ```java
 Set<String> treeSet = new TreeSet<>();
 ```
 
-### MAP
+### Map
 
 - Map interface does not extends Collection.
 - A Map interface supports Collections that use a key value pair.

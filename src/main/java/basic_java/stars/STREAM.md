@@ -2,11 +2,11 @@
 
 ## What is a Stream
 
-- An abstraction
-- Focus on the all instead of the parts
+- An abstraction.
+- Focus on the all instead of the parts.
 - Move from imperative (how to put everything together, loops while, for) to functional programming
-(chain operations together, sentence like code)
-- Used with collections
+(chain operations together, sentence like code).
+- Used with collections.
 
 ***
 
@@ -14,14 +14,14 @@
 
 `List<Student>` :arrow_right: STREAM :arrow_right: STREAM :arrow_right: STREAM :arrow_right: Double avgGrade
 
-- :one: Concrete implementation Arrays, Maps, Lists, Set
-    - MockData.getStudents()
-- :two: Call stream() on concrete type
-    - MockData.getStudents().stream()
-- :three: Process stream
-    - MockData.getStudents().filter().limit()
-- :four: From Abstract to concrete implementation
-    - MockData.getStudents().filter().limit().collect()
+- :one: Concrete implementation Arrays, Maps, Lists, Set.
+    - `MockData.getStudents()`
+- :two: Call `stream()` on concrete type.
+    - `MockData.getStudents().stream()`
+- :three: Process stream.
+    - `MockData.getStudents().filter().limit()`
+- :four: From Abstract to concrete implementation.
+    - `MockData.getStudents().filter().limit().collect()`
 
 ### Imperative
 
@@ -129,7 +129,7 @@ public void intStreamIterate() {
 
 ## Min, Max, Comparator
 
-### Min
+### min
 
 ```java
 public void min() {
@@ -147,7 +147,7 @@ public void min() {
 }
 ```
 
-### Max
+### max
 
 ```java
 public void max() {
@@ -162,7 +162,7 @@ public void max() {
 
 ## Unique
 
-### Distinct
+### distinct
 
 ```java
 public void distinct() {
@@ -173,7 +173,7 @@ public void distinct() {
 }
 ```
 
-### ToSet
+### toSet
 
 ```java
 public void distinct() {
@@ -187,12 +187,12 @@ public void distinct() {
 
 ## Filtering
 
-- `Predicate<T>` - filter method arguments, function converting `T` to `boolean`
+- :star:`Predicate<T>` - filter method arguments, function converting `T` to `boolean`.
 
-### Filter
+### filter
 
 ```java
-public void filterEx() {
+public void filterExample() {
     ImmutableList<Student> students = MockData.getStudents();
     // Predicate expression that evaluates true or false
     // Predicate what we want to keep
@@ -206,10 +206,10 @@ public void filterEx() {
 }
 ```
 
-### Map
+### map
 
 ```java
-public void mapEx() {
+public void mapExample() {
     // Transform from one data type to another
     List<Student> students = MockData.getStudents();
 
@@ -242,9 +242,9 @@ public void averageStudentGrade() {
 
 ***
 
-## FindAny, findFirst
+## findAny, findFirst
 
-### FindAny
+### findAny
 
 ```java
 public void findAny() {
@@ -258,12 +258,11 @@ public void findAny() {
 }
 ```
 
-### FindFirst
+### findFirst
 
 ```java
-public void findAny() {
+public void findFirst() {
     // Returns optional
-
     Integer[] nums = {1,2,3,4,5,6,7,8,9};
     int firstNum = Arrays.stream(nums)
         .filter(n -> n < 10)
@@ -276,9 +275,9 @@ public void findAny() {
 
 ## Statistics
 
-- Operation Min, Max returns Optional<T>, wraps value or alternative value if null
+- Operation `min`, `max` returns `Optional<T>`, wraps value or alternative value if null.
 
-### Count
+### count
 
 ```java
 public void count() {
@@ -289,10 +288,10 @@ public void count() {
 }
 ```
 
-### Min
+### min
 
 ```java
-public void count() {
+public void min() {
     double worstStudentGrade = MockData.getStudents()
         .stream()
         .filter(student -> student.getFieldOfStudy().equalIgnoreCase("engineering"))
@@ -302,10 +301,10 @@ public void count() {
 }
 ```
 
-### Max
+### max
 
 ```java
-public void count() {
+public void max() {
     double bestStudentGrade = MockData.getStudents()
         .stream()
         .filter(student -> student.getFieldOfStudy().equalIgnoreCase("engineering"))
@@ -315,7 +314,7 @@ public void count() {
 }
 ```
 
-### Average
+### average
 
 ```java
 public void average() {
@@ -328,7 +327,7 @@ public void average() {
 }
 ```
 
-### Sum
+### sum
 
 ```java
 public void sum() {
@@ -342,7 +341,7 @@ public void sum() {
 }
 ```
 
-### SummaryStatistics
+### summaryStatistics
 
 ```java
 public void statistics() {
@@ -405,9 +404,9 @@ public void groupingAndCounting() {
 
 ## Reduce and Flatmap
 
-- Reduce combine all elements in the stream and produce one single result.
+- Reduce combines all elements in the stream and produce one single result..
 
-### Reduce
+### reduce
 
 ```java
 public void reduce() {
@@ -418,7 +417,7 @@ public void reduce() {
 }
 ```
 
-### FlatMap
+### flatMap
 
 ```java
 private static final List<ArrayList<String>> arrayListOfNames = Lists.newArrayList(
@@ -427,7 +426,7 @@ private static final List<ArrayList<String>> arrayListOfNames = Lists.newArrayLi
             Lists.newArrayList("Samara", "Rysia"));
 
 public void withoutFlatMap() {
-    List<String> names - Lists.newArrayList();
+    List<String> names = Lists.newArrayList();
 
     for (List<String> list : arrayListOfNames) {
         for (String name : list) {
@@ -496,13 +495,13 @@ public void collectors() {
 
 ### Collectors, Multithreading
 
-- Very big array compute in multiple threads and get results
+- Very big array compute in multiple threads and get results.
 
 ### Intermediate and terminal operators
 
-- **Intermediate** Perform transformation or filtering
-    - filter
-    - map
+- **Intermediate**: Perform transformation or filtering.
+    - `filter`
+    - `map`
 
 ```java
 .stream()
@@ -514,8 +513,8 @@ public void collectors() {
 }); // java.util.stream.ReferencePipeLine
 ```
 
-- **Terminal** From abstraction to concrete type
-    - collect
+- **Terminal**: From abstraction to concrete type.
+    - `collect`
 
 ```java
 .collect(Collectors.toList())
@@ -550,30 +549,6 @@ filter apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow
 mapping apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850} <br/>
 mapping price 2072 <br/>
 filter apartment Apartment{id=3, localization="Wadowicka", city="Krakow", size=78, price=2850} <br/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

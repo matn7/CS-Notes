@@ -22,7 +22,6 @@ public final class Complex {
     }
 
     // only getters
-
     public float getRe() {
         return re;
     }
@@ -38,9 +37,9 @@ public final class Complex {
 }
 ```
 
-- Add operation creates and return **new** object without modify current object.
+- Add operation creates and return **new** object without modify a current object.
 - Immutable objects are simple. They have exactly one state one that was created.
-- Immutable objects are thread safe, don't requires synchronization.
+- Immutable objects are thread safe, don't require synchronization.
 
 ### Class no final but with static factory method
 
@@ -63,7 +62,6 @@ public class Complex2 {
     }
 
     // only getters
-
     public float getRe() {
         return re;
     }
@@ -79,8 +77,8 @@ public class Complex2 {
 }
 ```
 
-- Alternative for declare class as final. Declare all constructors as private or protected,
-next add public static factory methods.
+- Alternative for declare class as final. Declare all constructors as private or protected, next add public static 
+factory methods.
 
 ### Rules
 
@@ -91,25 +89,25 @@ next add public static factory methods.
 
 ### Which classes can you use for-each with?
 
-Class which implements the **Iterable<T>** interface can be used in for-each statement.
+- Class which implements the `Iterable<T>` interface can be used in for-each statement.
 
 ### When topological sort is impossible
 
-When there no vertices with 0 in degree, then there would have been no topological sort.
+- When there no vertices with 0 in degree, then there would have been no topological sort.
 
 ### Negative hashCode
 
-Sometimes hashCode calculation itself goes beyond their Integer.MAX 2147483647,
-what happen then is that we got a negative integer after the overflow.
+- Sometimes hashCode calculation itself goes beyond their `Integer.MAX = 2147483647`.
+- @hat happen then is that we got a negative integer after the overflow.
 
 ### ACID
 
-- `Atomicity` - Cannot stop in between.
-- `Consistence` - data should meet validation requirements.
-- `Isolation` - multithreading protection.
-- `Durability` - once committed transaction leave committed even after power loss.
+- `Atomicity`: Cannot stop in between.
+- `Consistence`: Data should meet validation requirements.
+- `Isolation`: Multithreading protection.
+- `Durability`: Once committed transaction leave committed even after power loss.
 
-### Optional<T> methods
+### `Optional<T>` methods
 
 - `orElse()`
 - `orElseGet()`
@@ -118,12 +116,12 @@ what happen then is that we got a negative integer after the overflow.
 
 ## Rules that DB follows
 
-- `Entity integrity` - Every table has primary key.
-- `Referential integrity` - A foreign key points to value tat is a primary key of another table.
+- `Entity integrity`: Every table has primary key.
+- `Referential integrity`: A foreign key points to value that is a primary key of another table.
 
 ### final
 
-- Can not change reference but can modify object
+- Can not change reference but can modify object.
 
 ```java
 final Customer c;
@@ -194,18 +192,18 @@ public class Main {
 
 - An object of **entity type** has its own DB identity primary key.
 - An object of **value type** has no DB identity, it belongs to an entity.
-- By default equals comparing an object by comparing their address in memory.
+- By default, equals comparing an object by comparing their address in memory.
 - Leave unimplemented hashCode will always create **new object** as if they different objects.
 - To declare side as not responsible for relationship the attribute **mapped by** is used.
-- A Business Key is also called natural key.
-- Synthetic identifier is an identifier with no business meaning.
+- A **Business Key** is also called natural key.
+- **Synthetic Identifier** is an identifier with no business meaning.
 - Object states:
-    - `TRANSIENT STATE` - object don't associated with any table row.
-    - `PERSISTENT STATE` - object with database identity. Primary key is set of database identity.
-    - `DETACHED` - no longer manage by Entity Manager.
+    - `TRANSIENT STATE`: Object don't associated with any table row.
+    - `PERSISTENT STATE`: Object with database identity. Primary key is set of database identity.
+    - `DETACHED`: No longer manage by Entity Manager.
 - No argument constructor for hibernate to be able to instantiate objects using Java Reflection.
 - Owner is the entity that is persisted to the table that has the foreign key column.
-- `LazyInitializationException` - When we try to Lazy Load data but entity manager is closed.
+- `LazyInitializationException`: When we try to Lazy Load data but entity manager is closed.
 
 | Hibernate | JPA |
 |---|---|
@@ -213,7 +211,7 @@ public class Main {
 | Session | EntityManager |
 | Transaction | EntityTransaction |
 
-### Hash Table vs HashMap
+### HashTable vs HashMap
 
 | HashTable | HashMap |
 |---|---|
@@ -223,11 +221,13 @@ public class Main {
 
 ### Optimistic Locking
 
-Official name of the **versioning**. Strategy to prevent lost updates. No database locking.
+- An official name of the **versioning**. 
+- Strategy to prevent lost updates. 
+- No database locking.
 
 ### When to use pessimistic locking
 
-When you've got multiple database queries being executed on the same data within a single transaction.
+- When you've got multiple database queries being executed on the same data within a single transaction.
 
 ### ConcurrentHashMap
 
@@ -246,47 +246,12 @@ When you've got multiple database queries being executed on the same data within
     - Faster GC through use multiple CPU.
     - Do not want to stop application, performance of application is key.
 - Parallel Compaction Collector:
-    - Parallel GC plus algorithm which reduce GC time. Use in app with pause time constraint.
-- Concurrent Mark-Sweep Collector CMS:
+    - Parallel GC plus algorithm which reduce GC time. 
+    - Use in app with a pause time constraint.
+- Concurrent Mark Sweep Collector CMS:
     - CMS has algorithm which service big collections which results in long pauses.
     - Reply time is more important than throughput.
 - Garbage first G1 Collector:
     - Multi processors machines with vast memory.
     - Server style GC, high time probability and high throughput.
     - Late heap operations Global Marking sre executed parallelly with application thread.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
