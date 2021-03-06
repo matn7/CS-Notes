@@ -3,7 +3,7 @@
 ## The tree
 
 - A tree is a data structure which is made up of nodes. Each node can point to a number of nodes.
-- Unlike Stacks, Queues, Linked Lists the order of the elements is not important in a tree.
+- Unlike Stacks, Queues, LinkedLists the order of the elements is not important in a tree.
 - It is a non linear data structure.
 - A trees is typically used to represent hierarchical information.
 
@@ -11,9 +11,9 @@
 
 - In general tree Data Structure can have any number of children but these trees are less useful and not very commonly
 used as data structure.
-- In binary tree each node can have, **0, 1 or 2** children.
-- **Root** a node with no parents, every tree has exactly one root.
-- **Edge** a link from a parent node to a child node.
+- In binary tree each node can have, **0**, **1** or **2** children.
+- **Root**: A node with no parents, every tree has exactly one root.
+- **Edge**: link from a parent node to a child node.
 
 ### A tree node
 
@@ -105,17 +105,17 @@ public static void breadthFirst(Node root) throws Queue.QueueUnderflowException,
 - Going deep before moving up.
 - Here there are a whole variety of possibilities in how the nodes are processed.
 - Depth first traversal can be:
-    - pre order
-    - in order
-    - post order
+    - Pre Order.
+    - In Order.
+    - Post Order.
 - All depth first traversal are most efficiently and intuitively implemented using recursion.
 - The base case is when the root is null.
 - At every point we work with a subtree rooted at some Node.
 - The recursive step is on 2 subtrees the left and right.
 - The processing can be performed:
-    - Before       [PRE-ORDER]
-    - In between   [IN-ORDER]
-    - After        [POST-ORDER]
+    - Before: PRE-ORDER.
+    - In between: IN-ORDER.
+    - After: POST-ORDER.
 
 **PRE-ORDER**
 
@@ -138,9 +138,9 @@ public static void preOrder(Node<Character> root) {
 
 **IN-ORDER**
 
-- The left subtree is processed first, then the NODE, then the right subtree.
+- The left subtree is processed first, then the node, then the right subtree.
 - The subtree rooted at B is processed before A and the subtree rooted at C.
-- Each time a NODE not a left child, we have to move deeper into the left subtree.
+- Each time a node not a left child, we have to move deeper into the left subtree.
 
 ```java
 public static void inOrder(Node root) {
@@ -156,7 +156,8 @@ public static void inOrder(Node root) {
 
 **POST-ORDER**
 
-- Both subtrees are processed before the node itself. The node is processed after POST the subtree.
+- Both subtrees are processed before the node itself. 
+- The node is processed after POST the subtree.
 - The subtree rooted at B is processed before the subtree rooted at C. A is processed last.
 
 ```java
@@ -171,9 +172,9 @@ public static void postOrder(Node root) {
 }
 ```
 
-### Binary search trees
+### Binary Search Trees
 
-- This is also called an Ordered binary tree and it's a tree with some specific characteristics.
+- This is also called an Ordered binary tree, and it's a tree with some specific characteristics.
 - For every node in the tree:
     - Each node in the left subtree of that node has a value less than or equal to the value of the node.
     - Each node in the right subtree of that node has a value greater than the value of the node.
@@ -206,32 +207,32 @@ the left subtree is <= 8    the right subtree is > 8
 
 **Insertion and lookup in binary search tree**
 
-- Insert the node `2` into the tree.
+- Insert the node **2** into the tree.
 
 ```
-                8
-               / \
-              6   14
-             / \    \
-            4   7    16
-                       \
-                        18
+        8
+       / \
+      6   14
+     / \    \
+    4   7    16
+               \
+                18
 ```
 
 - Steps:
-    - Compare node `2` with root `8`
-    - Root `8` has left child so continue comparing
-    - `6` has left child continue comparing
-    - `2` < `4` insert `2` in this place
+    - Compare node **2** with root **8**.
+    - Root **8** has left child so continue comparing.
+    - **6** has left child continue comparing.
+    - **2** < **4** insert **2** in this place.
 
 ```
-                8
-               / \
-              6   14
-             / \    \
-            4   7    16
-           /           \
-         [2]            18
+        8
+       / \
+      6   14
+     / \    \
+    4   7    16
+   /           \
+ [2]            18
 ```
 
 ```java
@@ -256,22 +257,22 @@ public static Node<Integer> insert(Node<Integer> head, Node<Integer> node) {
 
 **Lookup in a binary search tree**
 
-- Lookup the value `7` in the tree.
+- Lookup the value **7** in the tree.
 
 ```
-                8
-               / \
-              6   14
-             / \    \
-            4   7    16
-                       \
-                        18
+        8
+       / \
+      6   14
+     / \    \
+    4   7    16
+               \
+                18
 ```
 
 - Steps:
-    - Compare `7` with root.
-    - `8` has left child so we continue comparing.
-    - Compare `7` with `6` go to right child.
+    - Compare **7** with root.
+    - **8** has left child, so we continue comparing.
+    - Compare **7** with **6** go to right child.
     - Match the node has been found.
 
 ```java
@@ -295,17 +296,17 @@ public static Node<Integer> lookup(Node<Integer> head, int data) {
 }
 ```
 
-### The binary search tree
+### The Binary Search Tree
 
 - Insertion:
-    - The Complexity for node insertion is `O(log(N))` in average case `O(LG(N)) ln(e^x) = x`.
-    - The actual complexity depends on the shape of the tree for example if all left or right
-    children only complexity is `O(N)`
+    - The Complexity for node insertion is **O(log(N))** in average case **O(LG(N)) ln(e^x) = x**.
+    - The actual complexity depends on the shape of the tree for example if all left or right.
+    children only complexity is **O(N)**.
 - Lookup:
-    - The Complexity for value lookup is `O(log(N))` in the average case.
-    - For both insertion and lookup we have tree traverse at every step. This gives us the `log(N)` Complexity.
+    - The Complexity for value lookup is **O(log(N))** in the average case.
+    - For both insertion and lookup we have tree traverse at every step. This gives us the **log(N)** Complexity.
 
-### Binary tree problems
+### Binary Tree Problems
 
 **:star: Find the minimum value in a binary search tree**
 
@@ -331,7 +332,7 @@ public static int minimumValue(Node<Integer> head) {
 
 **:star: Find the maximum depth of a binary tree**
 
-- The max depth will be furthest distance of the leaf node from the root.
+- The max depth will be the furthest distance of the leaf node from the root.
 
 ```java
 public static int maxDepth(Node root) {
@@ -377,11 +378,11 @@ public static void mirror(Node<Integer> root) {
 - For example for 3 nodes.
 
 ```
-                O           O               O
-               / \           \               \
-              O   O           O               O        .....
-                               \             /
-                                O           O
+        O           O               O
+       / \           \               \
+      O   O           O               O        .....
+                       \             /
+                        O           O
 ```
 
 ```java
@@ -434,7 +435,7 @@ public static void printRange(Node<Integer> root, int low, int high) {
 }
 ```
 
-**Check if a binary tree is a binary search tree**
+**Check if a binary tree is a binary search tree.**
 
 - For every node in a binary search tree the nodes with values `<=` node are in the left subtree and nodes with
 values `>` node are in a right subtree.
@@ -473,10 +474,12 @@ public static boolean isBinarySearchTree(Node<Integer> root, int min, int max) {
 // Pass in the current running sum
 public static boolean hasPathSum(Node<Integer> root, int sum) {
     if (root.getLeftChild() == null && root.getRightChild() == null) {
-        return sum = root.getData();    // In the case of a leaf node, check if the sum is exactly equal to the value of the node
+        // In the case of a leaf node, check if the sum is exactly equal to the value of the node
+        return sum = root.getData();    
     }
 
-    int subSum = sum - root.getData();  // For internal non leaf nodes subtract the current node value from the sum
+    // For internal non leaf nodes subtract the current node value from the sum
+    int subSum = sum - root.getData();  
 
     // Recurse left and right to see if the sub sum is satisfied in any of the paths
     if (root.getLeftChild() != null) {
@@ -524,20 +527,20 @@ public static void printPaths(Node<Integer> root, List<Node<Integer>> pathList) 
 }
 ```
 
-**Find the least common ancestor for 2 nodes**
+**Find the least common ancestor for 2 nodes.**
 
 ```
-                1
-               / \
-              2   3
-                 / \
-                7  [6]
-               / \    \
-             [8]  5    4
+        1
+       / \
+      2   3
+         / \
+        7  [6]
+       / \    \
+     [8]  5    4
 ```
 
-- 3 is the least common ancestor for 8 and 6
-- 1 is also a common ancestor but not the least one
+- 3 is the least common ancestor for 8 and 6.
+- 1 is also a common ancestor but not the least one.
 
 ```java
 // I. leastCommonAncestor(1, 6, 8)
@@ -563,11 +566,14 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
     Node<Integer> rightCA = leastCommonAncestor(root.getRightChild(), a, b); // 6
 
     if (leftCA != null && rightCA != null) {
-        return root;    // If both exists it means either the node or it's ancestor exists in the left and right subtree so the current node is LCA
+        // If both exists it means either the node or it's ancestor exists in the left and right subtree so the current 
+        // node is LCA
+        return root;    
     }
 
     if (leftCA != null)  {
-        return leftCA;  // If only of the common ancestor is non null return that
+        // If only of the common ancestor is non null return that
+        return leftCA;  
     }
 
     // 6 ??
@@ -584,15 +590,15 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
 - At every step we access the element with the highest priority.
 - The data structure needs to understand the priorities of the elements it holds.
 - Common operations on a priority queue:
-    - Insert elements
-    - Access the highest priority element
-    - Remove the highest priority element
+    - Insert elements.
+    - Access the highest priority element.
+    - Remove the highest priority element.
+- Priority queues has a whole number of practical use cases in event simulation, thread scheduling, 
+handling emergency room cases.
 
-- Priority queues has a whole number of practical use cases in event simulation, thread scheduling, handling emergency room cases.
+**An Array or a List**
 
-**An array or a list**
-
-| event | Unordered | Ordered |
+| Event | Unordered | Ordered |
 |---|---|---|
 | Insertion | Can be anywhere in the list or array **O(1)** | Requires finding right position **O(N)** |
 | Access | Accessing the highest priorities element requires going through all elements of list **O(N)** | Easy access highest priority element **O(1)** |
@@ -602,9 +608,9 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
 
 | Action | Complexity |
 |---|---|
-| Insertion | O(log(N)) |
-| Access | O(log(N)) |
-| Remove | O(log(N)) |
+| Insertion | `O(log(N))` |
+| Access | `O(log(N))` |
+| Remove | `O(log(N))` |
 
 - Both insertion and access moderately fast.
 - List solutions make one of these super fast while comparing heavily on the other.
@@ -613,29 +619,29 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
 
 | Action | Complexity |
 |---|---|
-| Insertion | O(log(N)) |
-| Access | O(1) |
-| Remove | O(log(N)) |
+| Insertion | `O(log(N))` |
+| Access | `O(1)` |
+| Remove | `O(log(N))` |
 
 ### The Binary Heap
 
 - A heap is just a tree with a special properties or constraints on the values of it's nodes.
 - This is called heap property.
 - Heaps can be of two types:
-    - Minimum heap - Every node should be `<=` value of its children, the node with the smallest value should be the root of the tree.
-    - Maximum heap - Every node should be `>=` value of its children, the node with the largest value should be the root of the tree.
+    - **Minimum Heap**: Every node should be `<=` value of its children, the node with the smallest value should be the root of the tree.
+    - **Maximum heap**: Every node should be `>=` value of its children, the node with the largest value should be the root of the tree.
 - If **H** is the high of the tree - the leaf nodes should be only at level **H** or **H - 1** (shape property).
-- The heap should form a complete binary tree, all levels except the last should be filled.
+- The heap should form a **complete binary tree**, all levels except the last should be filled.
 
 ```
-                    47          maximum value in the entire tree
-                   /  \
-                  32   28
-                 /  \    \
-                9   12    7
+        47          maximum value in the entire tree
+       /  \
+      32   28
+     /  \    \
+    9   12    7
 ```
 
-- All leaf nodes are at high H or H - 1.
+- All leaf nodes are at high **H** or **H - 1**.
 - These nodes cannot have children till all the nodes at level **H-1** have both left and right children.
 - All nodes at level **H-1** have to be filled before moving on to level **H**.
 
@@ -648,18 +654,18 @@ a tree.
     - Traverse upwards from the leaf node towards the root.
 - Each node would have a pointer to the left and right child.
 - On a heap we want to be able to:
-    - Get left child
-    - Get right child
-    - Get parent
-- A node would need 2 child pointers and a parent pointer.
+    - Get left child.
+    - Get right child.
+    - Get parent.
+- A node would need 2 childs pointers and a parent pointer.
 - This is a lot of extra space.
 - Heaps can be represented much more efficiently by using an array and having an implicit relationship to determine
 the parent, left and right child of a node.
 - Contiguous slots in an array can be used to represent binary tree levels.
-- Node at index: 0              `(i)`
-- Left child at index: 1        `(2*i + 1)`
-- Right child at index: 2       `(2*i + 2)`
-- Node at index `i` get parent has parent at index: `(i-1)/2`
+- Node at index: 0 - `(i)`
+- Left child at index: 1 - `(2*i + 1)`
+- Right child at index: 2 - `(2*i + 2)`
+- Node at index **i** get parent has parent at index: `(i-1)/2`.
 
 ```
                  5                  [ 5 8 6 9 12 11 7 15 10 ]
@@ -692,7 +698,8 @@ public abstract class Heap<T extends Comparable> {
 
 ```java
 public int getLeftChildIndex(int index) {
-    int leftChildIndex = 2 * index + 1;     // Calculate the left child index using the formula
+    // Calculate the left child index using the formula
+    int leftChildIndex = 2 * index + 1;     
 
     if (leftChildIndex >= count) {
         // Check to see if a left child of this node is present.
@@ -707,7 +714,8 @@ public int getLeftChildIndex(int index) {
 
 ```java
 public int getRightChildIndex(int index) {
-    int rightChildIndex = 2 * index + 2;     // Calculate the right child index using the formula
+    // Calculate the right child index using the formula
+    int rightChildIndex = 2 * index + 2;     
 
     if (rightChildIndex >= count) {
         // Check to see if a right child of this node is present.
@@ -721,12 +729,14 @@ public int getRightChildIndex(int index) {
 **Get parent index**
 
 ```java
-public int getParentIndex(int index) {
-    if (index < 0 || index > count) {       // Check that the index is not out of range
+public int getParentIndex(int index) {  
+    // Check that the index is not out of range
+    if (index < 0 || index > count) {       
         return -1;
     }
 
-    return (index - 1)/2;                   // Formula to get the parent index
+    // Formula to get the parent index
+    return (index - 1) / 2;                   
 }
 ```
 
@@ -756,30 +766,31 @@ public T getElementAtIndex(int index) {
 }
 ```
 
-### The binary heap
+### The Binary Heap
 
-- While inserting or removing an element into the heap how do we know which is the right position for the element to occupy?
+- While inserting or removing an element into the heap how do we know which is the right position for the element 
+to occupy?
 - We place a single element in the wrong place.
 - Then try to find the right position for the element.
 - This process is called **heapify**.
 
-**Sift down**
+**Shift down**
 
 - An element is in the wrong position with respect to other elements below it in the heap.
 - It has to be moved downwards in the heap towards the leaf node to find it's right position.
 
-**Sift up**
+**Shift up**
 
 - An element is in the wrong position with respect to other elements above it in the heap.
 - It has to be moved upwards in the heap towards the root node to find it's right position.
 
 **Heap**
 
-- Insertion `O(log(N))`
-- Access highest priority element `O(1)`
-- Remove `O(log(N))`
+- Insertion: `O(log(N))`
+- Access the highest priority element: `O(1)`
+- Remove: `O(log(N))`
 
-### The heap sort
+### The Heap Sort
 
 - First converts the unsorted list or array into the heap.
 - Use the heap to access the maximum element and put it in the right position in the Array.
@@ -795,9 +806,9 @@ public T getElementAtIndex(int index) {
     - Remove the largest element from the heap and position it at the end of sorted array.
     - The sorted array will grow to encompass all elements in the array.
 
-**Heap sort heapify**
+**Heap Sort Heapify**
 
-- We'll use a maximum heap so we can always access the largest element in `O(1)` time.
+- We'll use a maximum heap, so we can always access the largest element in `O(1)` time.
 - A heap can be represented using an array.
 - Heapify is the operation to convert the unsorted array to a heap.
 - We use the same array with no additional space to do the heapify.
@@ -809,7 +820,7 @@ heap sort id `O(NLog(N))`.
 - It is not a stable sort.
 - It does not need additional space, space complexity `O(1)`.
 
-### Heap problems
+### Heap Problems
 
 **Find the maximum element in a minimum heap**
 
@@ -848,39 +859,51 @@ public static int getMaximum(MinHeap<Integer> minHeap) {
 
 **EDGE**
 
-- Professional relationships - people work together.
-- Personal relationships - people are friends.
+- Professional relationships: People work together.
+- Personal relationships: People are friends.
 - A way to get from one location to another road, rail, air.
 - Graphs are used to represent information in many real world applications.
 - There are many algorithms to optimize different problems represented using graph.
 
 **What is a graph**
 
-- Graph is a set of vertices and edges (V, E)               A --------------- B
+- Graph is a set of vertices and edges.
 
-- Two vertices and a single edge is also valid graph        A, B                Vertex
-                                                            ---------------     Edge
+```
+(V, E) A --------------- B
+```
 
-- Arrow on the edge means the relationship is directed      A --------------> B
+- Two vertices and a single edge is also valid graph.        
+
+```
+A, B                | Vertex
+---------------     | Edge
+```
+
+- Arrow on the edge means the relationship is directed.      
+
+```
+A --------------> B
+```
 
 - Undirected edges represent 2 way relationship such as:
     - Two ways road.
-    - I am his friend and he is mine.
+    - I am his friend, and he is mine.
 - Directed edges represent 1 way relationship such as:
     - One way road.
     - I report to my manager.
 
-**UNDIRECTED GRAPH**
+**Undirected Graph**
 
 ![Undirected Graph](images/undirected-graph.png "Undirected Graph")
 
-- `A - C` are ADJACENT Nodes.
+- **A - C** are ADJACENT Nodes.
 - 3 edges are INDICENT Vertex F.
 - The way to go from C to B:
-    - `C -> A -> B`
-- This series of Edges is called a **PATH**.
+    - **C -> A -> B**
+- This series of edges is called a **PATH**.
 
-**UNDIRECTED ACYCLIC GRAPH**
+**Undirected Acyclic Graph**
 
 ![Undirected Acyclic Graph](images/undirected-acyclic-graph.png "Undirected Acyclic Graph")
 
@@ -900,13 +923,13 @@ public static int getMaximum(MinHeap<Integer> minHeap) {
 
 - :star: Graph with no cycle is tree.
 
-**DIRECTED GRAPH**
+**Directed Graph**
 
 ![Directed Graph](images/directed-graph.png "Directed Graph")
 
-- Nodes `A,B,D,A` form a cycle.
+- Nodes **A,B,D,A** form a cycle.
 
-**DIRECTED ACYCLIC GRAPH (DAG)**
+**Directed Acyclic Graph (DAG)**
 
 ![Directed Acyclic Graph](images/dag.png "Directed Acyclic Graph")
 
@@ -915,15 +938,14 @@ public static int getMaximum(MinHeap<Integer> minHeap) {
 - To represent a Graph there is a need a way to model a vertex which may held some information.
 - A way to model directed or undirected EDGES.
 - There are 3 standard ways that Graphs can be represented:
-    - ADJACENCY MATRIX
-    - ADJACENCY SET
-    - ADJACENCY LIST
+    - ADJACENCY MATRIX.
+    - ADJACENCY SET.
+    - ADJACENCY LIST.
 
 ```java
-// Set up an interface with methods all graph should implement, the implementations can use the adjacency matrix,
-// adjacency list or adjacency set
+// Set up an interface with methods all graph should implement, the implementations can use the 
+// adjacency matrix, adjacency list or adjacency set
 public interface Graph {
-
     // An Enum to indicate whether the Graph represents an Undirected or Directed Graph
     enum GraphType {
         DIRECTED,
@@ -941,8 +963,8 @@ public interface Graph {
 
 **ADJACENCY MATRIX**
 
-- Use a matrix with ROWS and COLUMNS a matrix is table.
-- The Row labels and the column labels represent the Vertices.
+- Use a matrix with Rows and Columns a matrix is table.
+- The Row labels and, the column labels represent the Vertices.
 - Each cell represent relationship between the vertices i.e. the EDGES.
 
 ```
@@ -1043,7 +1065,7 @@ public class AdjacencyMatrixGraph implements Graph {
 }
 ```
 
-**ADJACENCY LIST (adjacent means neighbors cells)**
+**Adjacency List (adjacent means neighbors cells)**
 
 - Each vertex is a node.
 - Each vertex as a pointer to a LinkedList.
@@ -1083,16 +1105,16 @@ public class AdjacencyMatrixGraph implements Graph {
     - Certain operation become tricky e.g. deleting a Node involves looking through all the adjacency List
     to remove the Node from all Lists.
 
-**ADJACENCY SET**
+**Adjacency Set**
 
 - Similar to AdjacencyList.
-- Instead of a LinkedList to maintain the adjacent vertices USE A SET.
-- The GRAPH Representations.
+- Instead of a LinkedList to maintain the adjacent vertices Use A Set.
+- The Graph Representations.
 
 ![Adjacency Matrix vs Adjacency List, Set](images/adjacency-list-set-matrix.png "Adjacency Matrix vs Adjacency List, Set")
 
-- E - Number of Edges.
-- V - Number of Vertices.
+- **E**: Number of Edges.
+- **V**: Number of Vertices.
 
 | | Adjacency Matrix | Adjacency List | Adjacency Set |
 |---|---|---|---|
@@ -1100,7 +1122,7 @@ public class AdjacencyMatrixGraph implements Graph {
 | Is edge present | 1 | Degree of V | Log(Degree of V) |
 | Iterate over edges on a vertex | V | Degree of V | Degree of V |
 
-### THE GRAPH Traversal
+### The Graph Traversal
 
 - DEPTH-FIRST, BREADTH-FIRST:
     - In a graph multiple paths can lead from one node to another
@@ -1158,7 +1180,7 @@ public int getIndegree(int v) {
 
     int indegree = 0;
     for (int i = 0; i < numVertices; i++) {
-        if (adjacencyMatrix[o][v] != 0) {
+        if (adjacencyMatrix[0][v] != 0) {
             indegree++;
         }
     }
@@ -1166,31 +1188,3 @@ public int getIndegree(int v) {
     return indegree;
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

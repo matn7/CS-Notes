@@ -16,17 +16,17 @@ GNU/Linux.
 
 ### Popular Linux Distributions
 
-- Debian - non commercial, maintained by a volunteer developer community:
+- Debian: Non commercial, maintained by a volunteer developer community:
     - Knoppix
     - Linux Mint Debian Edition.
-    - Ubuntu - maintained by Canonical Ltd.
-- Fedora - a community distribution sponsored by Red Hat:
-    - Red Hat Enterprise Linux (RHEL) - Commercially licensed and supported by Red Hat:
-        - CentOS - same sources as RHEL.
-        - Oracle Linux - Based on RHEL.
-        - Amazon Linux - Based on RHEL.
-- openSUSE - a community edition sponsered by the company SUSE:
-    - SUSE Linux Enterprise - commercially licensed and supported by SUSE.
+    - Ubuntu: Maintained by Canonical Ltd.
+- Fedora: A community distribution sponsored by Red Hat:
+    - Red Hat Enterprise Linux (RHEL): Commercially licensed and supported by Red Hat.
+        - CentOS: same sources as RHEL.
+        - Oracle Linux: Based on RHEL.
+        - Amazon Linux: Based on RHEL.
+- openSUSE: A community edition sponsered by the company SUSE.
+    - SUSE Linux Enterprise: Commercially licensed and supported by SUSE.
 
 ### Which Linux Distribution to Use
 
@@ -35,14 +35,14 @@ GNU/Linux.
 - SUSE Enterprise Linux has 20%.
 - Oracle Linux has 12%.
 - Fedora derived Linux Distributions have 79% of the enterprise market share (RHEL / Oracle).
-- CentOS - effectively is RHEL, with any references to "Red Hat" removed:
+- CentOS: Effectively is RHEL, with any references to "Red Hat" removed.
     - Red Hat enforces licensing via Trademark low of the term "Red Hat".
 
 ## Amazon Web Services
 
-- EC2 - Virtual Machines via AMIs (Amazon Machine Images).
-- RDS - Relational Database Service - Managed MySQL.
-- Route 53 - DNS Services.
+- EC2: Virtual Machines via AMIs (Amazon Machine Images).
+- RDS: Relational Database Service - Managed MySQL.
+- Route 53: DNS Services.
 
 ## Docker
 
@@ -57,9 +57,8 @@ docker rmi $(docker images -q)
 docker rmi -f $(docker images -a -q)
 docker rm $(docker ps --all -q)
 
-# docker inspect <NAME>
-
-/# run hello world
+# docker inspect NAME
+# run hello world
 docker run hello-world
 docker images -a
 
@@ -91,7 +90,7 @@ docker run --name panda-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /{some_path}/
 ### Docker Images
 
 - An Image defines a Docker Container:
-    - Similar in concept to a snapshot of a VM.
+    - Similar in a concept to a snapshot of a VM.
     - Or a class vs an instance of the class.
 - Images are immutable:
     - Once built, the files making up an image do not change.
@@ -101,7 +100,7 @@ docker run --name panda-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /{some_path}/
     - Thus, if the layer contents change, the SHA 256 hash changes also.
 - Image Ids are a SHA 256 hash derived from the layer:
     - Thus if the layers of the image changes, the SHA 256 hash changes.
-- The Image ID listed by docker commands ('docker image') is the first 12 characters of the hash.
+- The Image ID listed by docker commands (`docker image`) is the first 12 characters of the hash.
 - The hash values of images are referred to by 'tag' names.
 - The format of the full tag name is: `[REGISTRYHOST/][USERNAME/]NAME[:TAG]`.
 - For Registry Host 'registry.hub.docker.com' is inferred.
@@ -125,7 +124,7 @@ docker run --name panda-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /{some_path}/
 ### Images cleaning up
 
 - Remove a Docker Image:
-    - `docker rmi <image name>`
+    - `docker rmi IMAGE_NAME`
 - Delete Untagged (dangling) Images:
     - `docker rmi $(docker images -q -f dangling=true)`
 - Delete All Images:
@@ -140,28 +139,42 @@ docker run --name panda-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /{some_path}/
 
 ### Questions
 
-- Show running containers - `docker ps`
-- Show all containers? Running and stopped - `docker ps -a`
-- What s the default tag? - `latest` is selected if no other value is specified.
-- Command to run docker image - `docker run <image name>`
-- How to see the console output of a docker container? - `docker logs <container name>`
-- Command to build a docker image? - `docker build -t <tag name>`
-- Stop a docker container - `docker stop <container name>` OR `docker kill <container name>`
-- Parameter tells docker to run the container as a background process - `-d`, `docker run -d <<image name>`
-- List all docker images on your system - `docker images`
+- Show running containers: 
+    - `docker ps`
+- Show all containers? Running and stopped: 
+    - `docker ps -a`
+- What s the default tag? 
+    - `latest` is selected if no other value is specified.
+- Command to run docker image: 
+    - `docker run IMAGE_NAME`
+- How to see the console output of a docker container? 
+    - `docker logs CONTAINER_NAME`
+- Command to build a docker image? 
+    - `docker build -t TAG_NAME`
+- Stop a docker container: 
+    - `docker stop CONTAINER_NAME` or `docker kill CONTAINER_NAME`
+- Parameter tells docker to run the container as a background process: 
+    - `-d`, `docker run -d IMAGE_NAME`
+- List all docker images on your system: 
+    - `docker images`
 - Map a host port to a container port:
-    - `-p <host port>:<container port>`
-    - `docker run -p 8080:8080 <image name>`
-- Tail the console output of a running docker container? - `docker logs -f <container name>`
-- What is like a .java file to a docker image? ie, the source code? - The Dockerfile.
-- Command to remove a stopped docker container? - `docker rm <container name>`
+    - `-p HOST_PORT:CONTAINER_PORT`
+    - `docker run -p 8080:8080 IMAGE_NAME`
+- Tail the console output of a running docker container? 
+    - `docker logs -f CONTAINER_NAME`
+- What is like a .java file to a docker image? ie, the source code?
+    - The Dockerfile.
+- Command to remove a stopped docker container? 
+    - `docker rm CONTAINER_NAME`
 - Specify an environment variable for a docker container:
-    - `docker run -e MY_VAR=my_prop <image name>`
-- Remove a docker image from your system - `docker rmi <image name>`
-- Shell into a running docker container - `docker exec -it <container name> bash`
+    - `docker run -e MY_VAR=my_prop IMAGE_NAME`
+- Remove a docker image from your system:
+    - `docker rmi IMAGE_NAME`
+- Shell into a running docker container: 
+    - `docker exec -it CONTAINER_NAME bash`
 - Share storage on the host system with a docker container:
-    - `-v <host path>:<container path>`
-    - `docker run -v <my host path>:<the container path> <image name>`
+    - `-v HOST_PATH:CONTAINER_PATH`
+    - `docker run -v MY_HOST_PATH:THE_CONTAINER_PATH IMAGE_NAME`
 
 ***
 
@@ -231,7 +244,7 @@ GRANT UPDATE ON ptr-dev.* to 'ptr'@'localhost';
 
 ### :red_circle: Encrypting properties
 
-SpringDevOps Lecture 30
+- SpringDevOps Lecture 30
 
 ```xml
 <dependency>

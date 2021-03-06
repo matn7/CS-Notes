@@ -2,9 +2,6 @@ package data_structures.graph;
 
 import java.util.*;
 
-/**
- * Created by Mati on 01.08.2017.
- */
 public class AdjacencySetGraph implements Graph {
 
     // Setup a list of vertex Nodes, each node holds a set of adjacent vertex
@@ -56,21 +53,19 @@ public class AdjacencySetGraph implements Graph {
         for (int i = 0; i < numVertices; i++) {
             if (getAdjacentVertices(i).contains(v)) {
                 // If the current vertex is present as an adjacent vertex for any
-                // othervertex then increment the indegree count for the current index
+                // other vertex then increment the indegree count for the current index
                 indegree++;
             }
         }
         return indegree;
     }
 
-    // Class which represnet a vertex +---+
-    //                                | A |
-    //                                +---+
+    // Class which represent a vertex
     public static class Node {
         private int vertexNumber;
 
         // Each Node holds a set of Adjacent Vertices
-        private Set<Integer> adjaencySet = new HashSet<>();
+        private Set<Integer> adjacencySet = new HashSet<>();
 
         public Node(int vertexNumber) {
             // Each vertex has an index or unique number associated with it
@@ -83,12 +78,12 @@ public class AdjacencySetGraph implements Graph {
 
         // Helper method to add an edge with this node as the source
         public void addEdge(int vertexNumber) {
-            adjaencySet.add(vertexNumber);
+            adjacencySet.add(vertexNumber);
         }
 
         // Get the Adjacent Vertices for this Node
         public List<Integer> getAdjacentVertices() {
-            List<Integer> sortedList = new ArrayList<>(adjaencySet);
+            List<Integer> sortedList = new ArrayList<>(adjacencySet);
             Collections.sort(sortedList);
             return sortedList;
         }

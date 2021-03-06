@@ -8,7 +8,7 @@
 
 **Linux Kernel**
 
-- The kernel is the core
+- The kernel is the core.
 - Linux Kernel + Apps = Distro
 - RedHat
     - Banks
@@ -35,21 +35,21 @@
 
 ### Common Directory
 
-- `/` - "Root" the top of the file system hierarchy.
-- `/bin` - Binaries and other executable programs.
-- `/etc` - System configuration files.
-- `/home` - Home directories.
-- `/opt` - Optional or third party software.
-- `/tmp` - Temporary space, typically cleared on reboot.
-- `/usr` - User relate programs.
-- `/var` - Variable data, most notably log data.
-- `/boot` - Files needed to boot the operating system.
-- `/cdrom` - Mount point for CD-ROMs.
-- `/cgroup` - Control Groups hierarchy.
-- `/srv`  - Contains data which is served by the system.
-- `/srv/www` - Web server files.
-- `/srv/ftp` - FTP files.
-- `/sys` - Used to display and sometimes configure the devices known to the Linux kernel.
+- `/`: "Root" the top of the file system hierarchy.
+- `/bin`: Binaries and other executable programs.
+- `/etc`: System configuration files.
+- `/home`: Home directories.
+- `/opt`: Optional or third party software.
+- `/tmp`: Temporary space, typically cleared on reboot.
+- `/usr`: User relate programs.
+- `/var`: Variable data, most notably log data.
+- `/boot`: Files needed to boot the operating system.
+- `/cdrom`: Mount points for CD-ROMs.
+- `/cgroup`: Control Groups hierarchy.
+- `/srv`: Contains data which is served by the system.
+- `/srv/www`: Web server files.
+- `/srv/ftp`: FTP files.
+- `/sys`: Used to display and sometimes configure the devices known to the Linux kernel.
 
 **App Directory Structure**
 
@@ -69,7 +69,7 @@
 
 - The default interface to Linux.
 - A program that accepts your commands and executes those commands.
-- Also called a command line interpreter.
+- Called a command line interpreter.
 - Server distributions do not include GUIs.
 
 **The Prompt**
@@ -98,19 +98,19 @@
 
 **Basic Linux Commands**
 
-- `ls` - Lists directory contents.
-- `cd` - Changes the current directory.
-- `pwd` - Displays the present working directory.
-- `cat` - Concatenates and displays files.
-- `echo` - Displays arguments to the screen.
-- `man` - Displays the online manual.
-- `exit` - Exits the shell or your current session.
-- `clear` - Clears the screen.
+- `ls`: Lists directory contents.
+- `cd`: Changes the current directory.
+- `pwd`: Displays the present working directory.
+- `cat`: Concatenates and displays files.
+- `echo`: Displays arguments to the screen.
+- `man`: Displays the online manual.
+- `exit`: Exits the shell or your current session.
+- `clear`: Clears the screen.
 
 ### Environment Variables
 
 - Storage location that has a name and a value.
-- Typically uppercase.
+- Typically, uppercase.
 - Access the contents by executing.
 
 ```console
@@ -127,7 +127,7 @@ echo $VAR_NAME
 echo $PATH
 ```
 
-- `which` - Locate a command.
+- `which`: Locate a command.
 
 ```console
 which tac
@@ -145,7 +145,7 @@ which tac
 
 **Symbolic Links**
 
-- A link is a points to the actual file or directory.
+- A link is a point to the actual file or directory.
 - Use the link as if it were the file.
 - A link can be used to create a shortcut:
     - Use for long file or directory names.
@@ -189,9 +189,9 @@ ls -l
 
 | Permission | File | Directory |
 |---|---|---|
-| Read (r) | Allows a file to be read. | Allows file names in the directory to be read. |
-| Write (w) | Allows a file to modified. | Allows entries to be modified within the directory. |
-| Execute (x) | Allows the execution of a file. | Allows access to contents and metadata for entries. |
+| Read (r) | Allows a file to be read | Allows file names in the directory to be read |
+| Write (w) | Allows a file to modified | Allows entries to be modified within the directory |
+| Execute (x) | Allows the execution of a file | Allows access to contents and metadata for entries |
 
 **Permission Categories**
 
@@ -219,7 +219,7 @@ groups pat
 
 | Item | Meaning |
 |---|---|
-| chmod | Change mode command. |
+| chmod | Change mode command |
 | ugoa | User category user, group, other, all. |
 | +-= | Add, subtract, or set permissions. |
 | rwx | Read, Write, Execute. |
@@ -234,9 +234,9 @@ chmod g+wx sales.data
 chmod u+rwx,g-x sales.data
 ```
 
-**Order Has Meaning**
+**Order has meaning**
 
-| | U | G | O |
+| | u | g | o |
 |---|---|---|---|
 | Symbolic | rwx | r-x | r-- |
 | Binary | 111 | 101 | 100 |
@@ -277,8 +277,8 @@ my-cat/cat
 
 - File creation mask determines default permissions.
 - If no mask were used permissions would be:
-    - `777` for directories.
-    - `666` for files.
+    - `777`: for directories.
+    - `666`: for files.
 
 **The Umask Command**
 
@@ -291,37 +291,37 @@ umask [-S] [mode]
 
 **Special Modes**
 
-- umask `0022` is the same as umask `022`
-- chmod `0644` is the same as chmod `644`
+- umask `0022` is the same as umask `022`.
+- chmod `0644` is the same as chmod `644`.
 - The special modes are:
-    - setuid
-    - setgid
-    - sticky
+    - `setuid`
+    - `setgid`
+    - `sticky`
 
 ```console
 mkdir testumask
 cd testumask
 umask
-    0022
+> 0022
 
 umask -S
-    u=rwx,g=rx,o=rx
+> u=rwx,g=rx,o=rx
 
 mkdir a-dir
 touch a-file
 ls -l
-    drwxr-xr-x a-dir
-    -rw-r--r-- a-file
+> drwxr-xr-x a-dir
+> -rw-r--r-- a-file
 
 umask 007
 umask -S
-    u=rwx,g=rwx,o=
+> u=rwx,g=rwx,o=
 
 mkdir a-dir
 touch a-file
 ls -l
-    drwxrwx--- a-dir
-    -rw-rw---- a-file
+> drwxrwx--- a-dir
+> -rw-rw---- a-file
 ```
 
 ### Finding Files and Directories
@@ -346,7 +346,7 @@ file .bash_profile
 locate pattern
 ```
 
-- Lists files that match pattern.
+- Lists file that match pattern.
 - Faster than the find command.
 - Queries an index.
 - Results are not in real time.
@@ -359,30 +359,32 @@ locate tpsre
 
 ### Viewing files
 
-- `cat file` - Display the contents of file.
-- `more file` - Browse through a text file.
-- `less file` - More features than more.
-- `head file` - Output the beginning (or top) portion of file.
-- `tail file` - Output the ending (or bottom) portion of file.
+- `cat file`: Display the contents of file.
+- `more file`: Browse through a text file.
+- `less file`: More features than more.
+- `head file`: Output the beginning (or top) portion of file.
+- `tail file`: Output the ending (or bottom) portion of file.
 
 **Head and Tail**
 
 - Displays only 10 lines by default.
-- Change this behavior with -n:
-    - `n` - number of lines.
+- Change this behavior with `-n`:
+    - `n`: Number of lines.
     - `tail -15 file.txt`.
 
 **Viewing Files in Real Time**
 
-> tail -f file        Follow the file.
+```
+tail -f file        Follow the file.
+```
 
 - Displays data as it is being written to the file.
 
 **Sort Options**
 
-- `-k F` - Sort by key. F is the field number.
-- `-r` - Sort in reverse order.
-- `-u` - Sort unique.
+- `-k F`: Sort by key. F is the field number.
+- `-r`: Sort in reverse order.
+- `-u`: Sort unique.
 
 **Creating a Collection of Files**
 
@@ -394,45 +396,45 @@ tar [-] c|x|t f tarfile [pattern]
 
 **Compressing Files To Save Space**
 
-- `gzip` - Compress files.
-- `gunzip` - Uncompress files.
-- `gzcat` - Concatenates compressed files.
-- `zcat` - Concatenates compressed files.
+- `gzip`: Compress files.
+- `gunzip`: Uncompress files.
+- `gzcat`: Concatenates compressed files.
+- `zcat`: Concatenates compressed files.
 
 **Disk Usage**
 
-- `du` - Estimates file usage.
-- `du -k` - Display sizes in Kilobytes.
-- `du -h` - Display sizes in human readable format.
+- `du`: Estimates file usage.
+- `du -k`: Display sizes in Kilobytes.
+- `du -h`: Display sizes in human readable format.
 
 **Wildcards**
 
-- A character or string used for pattern matching.
-- Globbing expands the wildcard pattern into a list of files and/or directories. (paths)
+- A character or string used for a pattern matching.
+- Globbing expands the wildcard pattern into a list of files and/or directories.
 - Wildcards can be used with most commands:
     - `ls`
     - `rm`
     - `cp`
-- `*` - matches zero or more characters:
+- `*`: Matches zero or more characters:
     - `*.txt`
     - `a*`
     - `a*.txt`
-- `?` - matches exactly one character:
+- `?`: Matches exactly one character:
     - `?.txt`
     - `a?`
     - `a?.txt`
-- `[]` - A character class:
+- `[]`: A character class:
     - Matches any of the characters included between the brackets. Matches exactly one character.
     - `[eaiou]`
     - `ca[nt]`:
         - `can, cat, candy, catch`
-- `[!]` - Matches any of the characters NOT included between the brackets. Matches exactly one character.
+- `[!]`: Matches any of the characters NOT included between the brackets. Matches exactly one character.
     - `[!aeiou]*`
         - baseball (first character in not a, e, i, o or u)
         - `cricket`
 - Use two characters separated by a hyphen to create a range in a character class.
-- `[a-g]*` - Matches all files that start with `a, b, c, d, e, f or g`.
-- `[3-6]*` - Matches all files that start with `3,4,5 or 6`.
+- `[a-g]*`: Matches all files that start with `a, b, c, d, e, f or g`.
+- `[3-6]*`: Matches all files that start with `3,4,5 or 6`.
 
 **Named Character Classes**
 
@@ -447,10 +449,9 @@ tar [-] c|x|t f tarfile [pattern]
 
 **Matching Wildcard patterns**
 
-- `\` - escape character. Use if you want to match a wildcard character.
+- `\`: Escape character. Use if you want to match a wildcard character.
 - Match all files that end with a question mark:
-    - `*\?`
-    - done?
+    - `*\?`: Example done?
 
 ### Input, Output and Redirection
 
@@ -462,13 +463,13 @@ tar [-] c|x|t f tarfile [pattern]
 
 **Redirection**
 
-- `>` - Redirects standard output to a file. Overwrites (truncating) existing contents.
-- `>>` - Redirects standard output to a file. Appends to any existing content.
-- `<` - Redirects input from a file to a command.
-- `&` - Used with redirection to signal that file descriptor is being used.
-- `2>&1` - Combine stderr and standard output.
-- `2>file` - Redirect standard error to a file.
-- `>/dev/null` -  Redirect output to nowhere.
+- `>`: Redirects standard output to a file. Overwrites (truncating) existing contents.
+- `>>`: Redirects standard output to a file. Appends to any existing content.
+- `<`: Redirects input from a file to a command.
+- `&`: Used with redirection to signal that file descriptor is being used.
+- `2>&1`: Combine stderr and standard output.
+- `2>file`: Redirect standard error to a file.
+- `>/dev/null`:  Redirect output to nowhere.
 
 ```console
 ls here not-here 2> /dev/null
@@ -483,9 +484,9 @@ sort files.txt === sort < files.txt
 
 **Comparing the Contents of Files**
 
-- `diff file1 file2` - Compare two files.
-- `sdiff file1 file2` - Side-by-side comparision.
-- `vimdiff file1 file2` - Highlight differences in vim.
+- `diff file1 file2`: Compare two files.
+- `sdiff file1 file2`: Side-by-side comparision.
+- `vimdiff file1 file2`: Highlight differences in vim.
 
 **diff Output**
 
@@ -494,12 +495,14 @@ diff file1 file2
 3c3
 ```
 
+```
 > LineNumFile1-Action-LineNumFile2
 > Action = (A)dd (C)hange (D)elete
+```
 
 ## Searching in files
 
-- `grep` - Display lines matching a pattern.
+- `grep`: Display lines matching a pattern.
 
 ```
 grep pattern file
@@ -527,13 +530,15 @@ json.tar: POSIX tar archive
 
 **Searching for Text in Binary Files**
 
-- `strings` - Display printable strings.
+- `strings` : Display printable strings.
 
 **Pipes**
 
-- `|` - Pipe symbol
+- `|` : Pipe symbol
 
-> command-output | command-input
+```
+command-output | command-input
+```
 
 ```
 grep pattern file
@@ -543,9 +548,9 @@ cat file | grep pattern
 
 **The cut Command**
 
-- `cut [file]` - Cut out selected portions of file. If file is omitted, use standard input.
-- `-d delimiter` - Use delimiter as the field separator.
-- `-f N` - Display the `Nth` field.
+- `cut [file]` : Cut out selected portions of file. If file is omitted, use standard input.
+- `-d delimiter` : Use delimiter as the field separator.
+- `-f N` : Display the `Nth` field.
 
 ```console
 grep -i john jezz.mp3
@@ -569,8 +574,8 @@ bob     Bob     Smith
 
 **Piping Output to a Pager**
 
-- more
-- less
+- `more`
+- `less`
 
 ```console
 cat /etc/passwd | less
@@ -580,14 +585,14 @@ grep bin /etc/passwd | less
 
 **Transferring files over the network**
 
-- `SCP` - Secure copy.
-- `SFTP` - SSH file transfer protocol.
+- `scp` : Secure copy.
+- `sftp` : SSH file transfer protocol.
 
 | Command | Description |
 |---|---|
-| scp <source> <destination> | Copy source to destination. |
-| sftp <host> | Start a secure file transfer session with host. |
-| ftp <host> | Start file transfer session with host. |
+| scp SOURCE DESTINATION | Copy source to destination |
+| sftp HOST | Start a secure file transfer session with host |
+| ftp HOST | Start file transfer session with host |
 
 **Customizing the Shell Prompt**
 
@@ -603,7 +608,9 @@ echo 'export PS1="[\u@\h \w]\$ "' >> ~/.bash_profile
 
 **Creating Aliases**
 
-> alias [name=[=value]]
+```
+alias [name=[=value]]
+```
 
 - List or create aliases.
 - Use `name=value` to create a new alias.
@@ -623,7 +630,7 @@ alias cls='clear'
 
 | Command | Description |
 |---|---|
-| unalias <name> | Remove the "name" alias. |
+| unalias NAME | Remove the "name" alias. |
 | unalias -a | Remove all aliases. |
 
 **Persisting Aliases**
@@ -676,26 +683,27 @@ echo $TZ
 
 ### Processes and Job Control
 
-> ps - Display process status
+```
+ps - Display process status
+```
 
 **ps Options**
 
-- `-e` - Everything, all processes.
-- `-f` - Full format listing.
-- `-u username` - Display username's processes.
-- `-p pid` - Display information for PID.
+- `-e` : Everything, all processes.
+- `-f` : Full format listing.
+- `-u username` : Display username's processes.
+- `-p pid` : Display information for PID.
 
 **Common ps Commands**
 
-- `ps -e` - Display all processes.
-- `ps -ef` - Display all processes, full.
-- `ps -eH` - Display a process tree.
-- `ps -e --forest` - Display a process tree.
-- `ps -u username` - Display user's processes.
-- `pstree` - Display processes in a tree format.
-- `top` - Interactive process viewer.
-- `htop` - Interactive process viewer.
-
+- `ps -e` : Display all processes.
+- `ps -ef` : Display all processes, full.
+- `ps -eH` : Display a process tree.
+- `ps -e --forest` : Display a process tree.
+- `ps -u username` : Display user's processes.
+- `pstree` : Display processes in a tree format.
+- `top` : Interactive process viewer.
+- `htop` : Interactive process viewer.
 
 ```console
 ps
@@ -715,19 +723,19 @@ htop
 
 | Action | Description |
 |---|---|
-| `command` & | Start command in background. |
+| `command` & | Start command in background |
 | ctrl-c | Kill the foreground process |
-| ctrl-z | Suspend the foreground process. |
-| bg [%num] | Background a suspended process. |
-| fg [%num] | Foreground a background process. |
-| kill | Kill a process by job number or PID. |
-| jobs [%num] | List jobs. |
+| ctrl-z | Suspend the foreground process |
+| `bg [%num]` | Background a suspended process |
+| `fg [%num]` | Foreground a background process |
+| `kill` | Kill a process by job number or PID |
+| `jobs [%num]` | List jobs |
 
 **Killing Processes**
 
-- `Ctrl-c` - Kills the foreground process.
-- `kill [-sig] pid` - Send a signal to a process.
-- `kill -l` - Display a list of signals.
+- `Ctrl-c` : Kills the foreground process.
+- `kill [-sig] pid` : Send a signal to a process.
+- `kill -l` : Display a list of signals.
 
 ```console
 kill 123
@@ -764,8 +772,8 @@ kill -9 2396
 
 **Cron**
 
-- cron - A time based job scheduling service.
-- crontab - A program to create, read, update and delete your job schedules.
+- `cron` : A time based job scheduling service.
+- `crontab` : A program to create, read, update and delete your job schedules.
 - Use cron to schedule and automate tasks.
 
 **Crontab Format**
@@ -782,7 +790,9 @@ kill -9 2396
 
 **Run every Monday at 07:00.**
 
-> 0 7 * * 1 /opt/sales/bin/weekly-report
+```
+0 7 * * 1 /opt/sales/bin/weekly-report
+```
 
 **Redirecting Output**
 
@@ -819,40 +829,42 @@ kill -9 2396
 
 **Using the Crontab Command**
 
-- `crontab file` - Install a new crontab from file.
-- `crontab -l` - List your crontab jobs.
-- `crontab -e` - Edit your cron jobs.
-- `crontab -r` - Remove all of your cron jobs.
+- `crontab file` : Install a new crontab from a file.
+- `crontab -l` : List your crontab jobs.
+- `crontab -e` : Edit your cron jobs.
+- `crontab -r` : Remove all of your cron jobs.
 
 ### Switching Users and Running Commands
 
 **The su Command**
 
-- `su [username]` - Change user ID or become superuser.
+- `su [username]` : Change user ID or become superuser.
 
 **su Options**
 
-- `-` - A hyphen is used to provide an environment similar to what the user would expect had the user logged in directly.
-- `-c command` - Specify a command to be executed.
-- `whoami` - Displays the effective username.
+- `-` : A hyphen is used to provide an environment similar to what the user would expect had the user logged in directly.
+- `-c command` : Specify a command to be executed.
+- `whoami` : Displays the effective username.
 
-**Sudo - Super User Do**
+**sudo - Super User Do**
 
-- `sudo` - Execute a command as another user, typically the superuser.
-- `sudo -l` - List available commands.
-- `sudo command` - Run command as root.
+- `sudo` : Execute a command as another user, typically the superuser.
+- `sudo -l` : List available commands.
+- `sudo command` : Run command as root.
 - `sudo -u root command`
 - `sudo -u user command`
-- `sudo su` - Switch to the superuser account.
-- `sudo su -` - Switch to the superuser account with root's environment.
-- `sudo su - username` - Switch to the username account.
-- `sudo -s` - Start a shell.
+- `sudo su` : Switch to the superuser account.
+- `sudo su -` : Switch to the superuser account with root's environment.
+- `sudo su - username` : Switch to the username account.
+- `sudo -s` : Start a shell.
 - `sudo -u root -s`
 - `sudo -u user -s`
 
-**Sudoers Format**
+**sudoers Format**
 
-> user host=(users)[NOPASSWD:]commands
+```
+user host=(users)[NOPASSWD:]commands
+```
 
 ```console
 adminuser ALL=(ALL)NOPASSWD:ALL
@@ -861,8 +873,8 @@ majka linuxsvr=(root) /etc/init.d/oracle
 
 ### History command
 
-- `history` - Displays the shell history.
-- `HISTSIZE` - Controls the number of commands to retain in history.
+- `history` : Displays the shell history.
+- `HISTSIZE` : Controls the number of commands to retain in history.
 
 ```console
 export HISTSIZE=1000
@@ -887,33 +899,33 @@ export HISTSIZE=1000
 **RPM**
 
 - RedHat; CentOS; Fedore; Oracle Linux; Scientific Linux.
-- `rpm -qa` - List all installed packages.
-- `rpm -qf /path/to/file` - List the file's package.
-- `rpm -ql package` - List package's files.
-- `rpm -ivh package.rpm` - Install package.
-- `rpm -e package` - Erase (uninstall) package.
+- `rpm -qa` : List all installed packages.
+- `rpm -qf /path/to/file` : List the file's package.
+- `rpm -ql package` : List package's files.
+- `rpm -ivh package.rpm` : Install package.
+- `rpm -e package` : Erase (uninstall) package.
 
 **yum**
 
-- `yum search string` - Search for string.
-- `yum info [package]` - Display info.
-- `yum install [-y] package` - Install package.
-- `yum remove package` - Remove package.
+- `yum search string`: Search for string.
+- `yum info [package]`: Display info.
+- `yum install [-y] package`: Install package.
+- `yum remove package`: Remove package.
 
 **APT - Advanced Packaging Tool**
 
-- `apt-cache search string` - Search for string.
-- `apt-get install [-y] package` - Install package.
-- `apt-get remove package` - Remove package, leaving configuration.
-- `apt-get purge package` - Remove package, deleting configuration.
-- `apt-cache show package` - Display information about package.
+- `apt-cache search string`: Search for string.
+- `apt-get install [-y] package`: Install package.
+- `apt-get remove package`: Remove package, leaving configuration.
+- `apt-get purge package`: Remove package, deleting configuration.
+- `apt-cache show package`: Display information about package.
 
 **dpkg**
 
-- `dpkg -l` - List installed packages.
-- `dpkg -S /apth/to/file` - List file's package.
-- `dpkg -L package` - List all files in package.
-- `dpkg -i package.deb` - Install package.
+- `dpkg -l`: List installed packages.
+- `dpkg -S /apth/to/file`: List file's package.
+- `dpkg -L package`: List all files in package.
+- `dpkg -i package.deb`: Install package.
 
 ### Linux Boot Process
 
@@ -934,7 +946,7 @@ export HISTSIZE=1000
 
 **Boot Loaders**
 
-- LILO - Linux Loader.
+- LILO: Linux Loader.
 - GRUB:
     - Grand Unified Bootloader.
     - Replaced LILO.
@@ -943,17 +955,17 @@ export HISTSIZE=1000
 
 **Initial RAM Disk**
 
-- `initrd` - initial RAM disk.
-- Temporary filesystem that is loaded from disk and stored in memory.
+- `initrd`: Initial RAM disk.
+- A temporary filesystem that is loaded from disk and stored in memory.
 - Contains helpers and modules required to load the permanent OS file system.
 
 **The /boot Directory**
 
 - `/boot`:
     - Contains the files required to boot Linux.
-    - initrd
-    - kernel
-    - boot loader configuration.
+    - `initrd`
+    - `kernel`
+    - Boot loader configuration.
 
 ```console
 ls -F /boot
@@ -970,7 +982,7 @@ ls -F /boot
 | Runlevel | Description |
 |---|---|
 | 0 | Shuts down the system |
-| 1,S,s | Single user mode. Used for maintenance |
+| 1,S,s | Single user mode, used for maintenance |
 | 2 | Multi-user mode with graphical interface |
 | 3 | Multi-user text mode (RedHat/CentOS)
 | 4 | Undefined |
@@ -989,7 +1001,7 @@ id:3:initdefault:
 
 **Systemd**
 
-- Uses targets instead of runlevels.
+- Use targets instead of run-levels.
 
 ```console
 cd /lib/systemd/system
@@ -1000,8 +1012,8 @@ systemctl set-default graphical.target
 
 **Changing runlevels or targets**
 
-- telinit RUNLEVEL - `telinit 5`
-- systemctl isolate TARGET - `systemctl isolate graphical.target`
+- telinit RUNLEVEL: `telinit 5`
+- systemctl isolate TARGET: `systemctl isolate graphical.target`
 
 **Rebooting**
 
@@ -1011,7 +1023,9 @@ systemctl isolate reboot.target
 reboot
 ```
 
-> shutdown    [options]   time    [message]
+```
+shutdown    [options]   time    [message]
+```
 
 ```console
 shutdown -r 15:30 "rebooting!"
@@ -1053,22 +1067,24 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 **Logging Rules**
 
 - Selector field:
-    - FACILITY.SEVERITY
-    - main.*
-    - main
-    - FACILITY.none
-    - FACILITY_1.SEVERITY;FACILITY_2.SEVERITY
-- Action field - Determines how a message is processed.
+    - `FACILITY.SEVERITY`
+    - `main.*`
+    - `main`
+    - `FACILITY.none`
+    - `FACILITY_1.SEVERITY;FACILITY_2.SEVERITY`
+- Action field: Determines how a message is processed.
 
 **Caching vs Non-caching**
 
-- Caching is used if the path starts with a hyphen - `mail.info    -/var/log/mail.info`.
+- Caching is used if the path starts with a hyphen: `mail.info    -/var/log/mail.info`.
 - You may lose some messages during a system crash if you are using caching mode.
 - Using caching mode can improve I/O performance.
 
 **logger**
 
-> logger [options] message
+```
+logger [options] message
+```
 
 - Options:
     - `-p FACILITY.SEVERITY`
@@ -1104,7 +1120,7 @@ logrotate -fv /etc/logrotate.conf
 - MBR
 - GPT
 - Mount points
-- fdisk
+- `fdisk`
 
 **Partitions**
 
@@ -1132,11 +1148,11 @@ df -h
 
 **GPT**
 
-- GPT - GUID Partition Table.
-- GUID - Global Unique Identifier.
+- GPT: GUID Partition Table.
+- GUID: Global Unique Identifier.
 - Replacing the MBR partitioning scheme.
 - Part of UEFI.
-- UEFI - Unified Extensible Firmware Interface.
+- UEFI: Unified Extensible Firmware Interface.
 - UEFI is replacing BIOS.
 - Supports up to 128 partitions.
 - Supports up to 9.4 ZB disk sizes.
@@ -1146,11 +1162,11 @@ df -h
 **Mount Points**
 
 - A directory used to access the data on a partition.
-- `/` - is always a mount point.
-- `/home` - `/home/majka` is on the partition mounted on /home.
-- `/export/home` - `/export/home/majka`.
+- `/`: Is always a mount point.
+- `/home`: `/home/majka` is on the partition mounted on `/home`.
+- `/export/home`: `/export/home/majka`.
 
-**Mounting over existing data**
+:star: **Mounting over existing data**
 
 ```console
 mkdir /home/sarah
@@ -1173,8 +1189,8 @@ unmount /home
 
 **fdisk**
 
-- Alternatives - gdisk, parted.
-- Earlier versions of fdisk did not support GPT.
+- Alternatives: `gdisk`, `parted`.
+- Earlier versions of `fdisk` did not support GPT.
 
 ```console
 fdisk /path/to/device
@@ -1189,20 +1205,23 @@ fdisk -l
 
 **File System**
 
-- ext - Extended file system:
-    - ext2, ext3 and ext4 are later releases.
+- `ext`: Extended file system:
+    - `ext2`, `ext3` and `ext4` are later releases.
     - Often the default file system type.
 - Other file systems:
-    - ReiserFS
-    - JFS
-    - XFS
-    - ZFS
-    - Btrfs
+    - `ReiserFS`
+    - `JFS`
+    - `XFS`
+    - `ZFS`
+    - `Btrfs`
 
 **mkfs**
 
-```console
+```
 mkfs -t TYPE DEVICE
+```
+
+```console
 mkfs -t ext3 /dev/sdb2
 mkfs -t ext4 /dev/sdb3
 mkfs.ext4 /dev/sdb3
@@ -1211,7 +1230,9 @@ ls -1 /sbin/mkfs*
 
 **Mounting with mount**
 
-> mount DEVICE MOUNT_POINT
+```
+mount DEVICE MOUNT_POINT
+```
 
 ```console
 mount /dev/sdb3 /opt
@@ -1227,7 +1248,9 @@ df -h
 
 **Unmount**
 
-> unmount DEVICE_OR_MOUNT_POINT
+```
+unmount DEVICE_OR_MOUNT_POINT
+```
 
 ```console
 umount /opt
@@ -1358,7 +1381,7 @@ pvremove /dev/sdb
 **Accounts have**
 
 - Username (or login ID).
-- UID (user ID) - This is unique number.
+- UID (user ID): This is unique number.
 - Default group.
 - Comments.
 - Shell.
@@ -1372,7 +1395,9 @@ root:x:0:0:root:/root:/bin/bash
 
 - The format of the `/etc/passwd`.
 
-> username:password:UID:GUI:comments:home_dir:shell
+```
+username:password:UID:GUI:comments:home_dir:shell
+```
 
 ```console
 joe:x:1000:1000:Joe Jones:/home/joe:bin/bash
@@ -1395,16 +1420,16 @@ ps -fu joe
 **Passwords are stored in /etc/shadow**
 
 - Encrypted password used to be stored in `/etc/passwd`.
-- `/etc/passwd` - Is readable by everyone.
+- `/etc/passwd`: Is readable by everyone.
 - Now, encrypted passwords are stored in `/etc/shadow`.
-- `/etc/shadow` - is only readable by root.
+- `/etc/shadow`: Is only readable by a root.
 - Prevents users trying to crack passwords.
 
 **UIDs**
 
 - The root account is always UID 0.
 - UIDs are unique numbers.
-- System accounts have **UIDs < 1000** - Configured in `/etc/login.defs`.
+- System accounts have **UIDs < 1000**, configured in `/etc/login.defs`.
 
 **GID**
 
@@ -1414,7 +1439,7 @@ ps -fu joe
 
 **Comment Field**
 
-- Typically contains the user's full name.
+- Typically, contains the user's full name.
 - In the case of a system or application account, it often contains what the account is used for.
 - May contain additional information like a phone number.
 - Also called the GECOS field.
@@ -1422,7 +1447,7 @@ ps -fu joe
 **Home Directory**
 
 - Upon login the user is placed in their home directory.
-- If that directory does not exists, they are placed in "/".
+- If that directory does not exist, they are placed in `/`.
 
 **Shell**
 
@@ -1477,7 +1502,7 @@ tail -1 /etc/passwd
 
 - When using `-m` the home directory for the account is created.
 - The contents of `/etc/skel` are copied into the home directory.
-- `/etc/skel` typically contains shell configuration files (.profile, .bashrc).
+- `/etc/skel` typically, contains shell configuration files (.profile, .bashrc).
 
 **Use -u to specify the UID**
 
@@ -1513,7 +1538,9 @@ sales:x:1001:john,mary
 
 - The format of `/etc/group` file.
 
-> group_name:password:GID:account1,accountN
+```
+group_name:password:GID:account1,accountN
+```
 
 **groups [username]**
 
@@ -1526,11 +1553,11 @@ groups root
 ```console
 groupadd web
 tail -1 /etc/group
-  web:x:1003:
+> web:x:1003:
 
 groupadd -g 2500 db
 tail -1 /etc/group
-  db:x:2500:
+> db:x:2500:
 ```
 
 **groupdel group_name**
@@ -1562,14 +1589,14 @@ groupadd writers
 groupadd tv
 groupadd movie
 tail -3 /etc/group
- writers:x:1002:
- tv:x:1003
- movie:x:1004
+> writers:x:1002:
+> tv:x:1003
+> movie:x:1004
 
 useradd -c "Carlot Cuse" -g writers -G tv -m -s /bin/bash ccuse
 passwd ccuse
 groups ccuse
-  ccuse : writers tv
+> ccuse : writers tv
 
 useradd -c "Levis Fury" -g writers -G tv -m -s /bin/bash lfury
 passwd lfury
@@ -1593,13 +1620,13 @@ tail -3 /etc/group
     - Comment
     - home directory
     - shell
-- `useradd` - Create accounts.
-- `userdel` - Delete accounts.
-- `usermod` - Modify accounts.
+- `useradd`: Create accounts.
+- `userdel`: Delete accounts.
+- `usermod`: Modify accounts.
 - Group information is stored in - `/etc/group`.
-- `groupadd` - Create groups.
-- `groupdel` - Delete group.
-- `groupmod` - Modify groups.
+- `groupadd`: Create groups.
+- `groupdel`: Delete group.
+- `groupmod`: Modify groups.
 - To view group memberships use **groups**.
 
 ## Networking TCP/IP
@@ -1615,29 +1642,29 @@ tail -3 /etc/group
 
 - TCP/IP:
     - Used for network communications.
-    - TCP - Transmission Control Protocol.
-    - IP - Internet Protocol.
-- TCP - controls data exchange.
-- IP - sends data from one device to another.
-- Hosts - devices on a network that have an IP address.
+    - TCP: Transmission Control Protocol.
+    - IP: Internet Protocol.
+- TCP: Controls data exchange.
+- IP: Sends data from one device to another.
+- Hosts: Devices on a network that have an IP address.
 
 **IP Networking**
 
-- IP address - example `201.88.129.187`
-- subnet mask - example: `255.255.255.0`
-- broadcast address - example: `201.88.129.255`
+- IP address: `201.88.129.187`
+- subnet mask: `255.255.255.0`
+- broadcast address: `201.88.129.255`
 - Network Address.
 - Host Address.
 - Each must be unique for proper routing.
-- Address Classes - Used to determine the network address and host address.
+- Address Classes: Used to determine the network address and host address.
 
 **Class full Networks**
 
 | Class | Network | Hosts Allowed |
 |---|---|---|
-| A | 1.0 -> 127.0              Ex: 17.24.88.9 | 16,777,216 |
-| B | 128.0 -> 191.255          Ex: 183.194.46.31 | 65,536 |
-| C | 192.0.0 -> 233.255.255    Ex: 199.83.131.186 | 255 |
+| A | 1 -> 127                  ### 17.24.88.9 | 16,777,216 |
+| B | 128.0 -> 191.255          ### 183.194.46.31 | 65,536 |
+| C | 192.0.0 -> 233.255.255    ### 199.83.131.186 | 255 |
 
 
 **Subnet Masks**
@@ -1658,15 +1685,15 @@ tail -3 /etc/group
 
 **Classless Inter-Domain Routing / CIDR**
 
-- IP - `121.67.198.94`:
-    - Class A network - `121.0.0.0`
-    - Class A subnet - `255.0.0.0`
-    - Class A broadcast - `121.255.255.255`
-- IP - `121.67.198.94`:
-    - Subnet - `255.255.255.0`
-    - CIDR network - `121.67.198.0`
-    - CIDR subnet - `255.255.255.0`
-    - CIDR broadcast - `121.67.198.255`
+- IP `121.67.198.94`:
+    - Class A network: `121.0.0.0`
+    - Class A subnet: `255.0.0.0`
+    - Class A broadcast: `121.255.255.255`
+- IP: `121.67.198.94`:
+    - Subnet: `255.255.255.0`
+    - CIDR network: `121.67.198.0`
+    - CIDR subnet: `255.255.255.0`
+    - CIDR broadcast: `121.67.198.255`
 
 **Reserved Private Address Space**
 
@@ -1677,11 +1704,11 @@ tail -3 /etc/group
 | C | 192.0.0.0 - 233.255.255.255 | 192.168.0.0 - 192.168.255.255 |
 
 
-### Networking - DNS and hostnames
+### Networking - DNS and Hostnames
 
 - Determining your IP address.
 - `ip` and `ifconfig` utilities.
-- `hostnames`.
+- `hostnames`
 - DNS and name resolution.
 - `/etc/hosts`.
 - `/etc/nsswitch.conf`.
@@ -1691,21 +1718,21 @@ tail -3 /etc/group
 ```console
 ip address
 
-// deprecated
+# deprecated
 ifconfig
 ```
 
 **hostnames**
 
-- human-readable name for an IP address - `webprod01 = 10.109.155.174`
+- Human-readable name for an IP address: `webprod01 = 10.109.155.174`
 
 **DNS hostnames**
 
-- FQDN - fully qualified domain name - `webprod01.mycompany.com`
-- TLD - `.com, .net, .org, etc.`
-- Domains - below (to the left of) TLD.
-- sub-domain:
-    - below (to the left of) the domain
+- FQDN, Fully Qualified Domain Name: `webprod01.mycompany.com`
+- TLD: `.com, .net, .org, etc.`
+- Domains: Delow (to the left of) TLD.
+- Sub domain:
+    - Below (to the left of) the domain.
     - `webprod01.ny.us.mycompany.com`
 
 **Displaying the hostname**
@@ -1721,11 +1748,11 @@ hostname -f
 ```console
 hostname webprod01
 
-// ubuntu, redhat
+# ubuntu, redhat
 echo 'webprod01' > /etc/hostname
 
 vim /etc/sysconfig/network
-  HOSTNAME=webprod01
+> HOSTNAME=webprod01
 ```
 
 **Resolving DNS Names**
@@ -1744,7 +1771,7 @@ host www.mycompany.com
     - `10.11.12.13 webprod02.mycorp.com webprod02`.
 - Now we can refer to the host by name:
     - `webprod02.mycorp.com OR webprod02`
-- `/etc/hosts` - is local to your linux system. It does not propagate to the rest of the network.
+- `/etc/hosts`: Is local to your linux system. It does not propagate to the rest of the network.
 
 **/etc/hosts**
 
@@ -1756,7 +1783,7 @@ host www.mycompany.com
 
 **/etc/nsswitch.conf**
 
-- NSS - Name Service Switch.
+- NSS: Name Service Switch.
 - Controls the search order for resolutions.
 
 ```
@@ -1767,15 +1794,15 @@ hosts: files nis dns
 ### Networking - DHCP, Dynamic and Static Addressing
 
 - Network ports.
-- DHCP.
+- DHCP
 - Static IP addresses.
-- ifup / ifdown.
+- `ifup` / `ifdown`.
 - GUI / TUI tools.
 
 **Network Ports**
 
 - When a service starts it binds itself to a port.
-- Ports 1 - 1023 are well-known ports:
+- Ports **1 - 1023** are well-known ports:
     - 22 - SSH
     - 25 - SMTP
     - 80 - HTTP
@@ -1808,7 +1835,7 @@ https   443/tcp     # http protocol over TLS/SSL
     - The client must renew the lease if it wants to keep using the IP address. If no renewal is received, the IP
     is available to other DHCP clients.
 
-**Configuring a DHCP Client -RHEL**
+**Configuring a DHCP Client - RHEL**
 
 ```console
 ifconfig -a or -ip link
@@ -1852,16 +1879,18 @@ ONBOOT=yes
 ```
 auto eth0
 iface eth0 inet static
-        address 10.109.155.174
-        netmask 255.255.255.0
-        gateway 10.109.155.1
+> address 10.109.155.174
+> netmask 255.255.255.0
+> gateway 10.109.155.1
 ```
 
 **Manually Assigning an IP Address**
 
 - Format.
 
-> ip address add IP[/netmask] dev NETWORK_DEVICE
+```
+ip address add IP[/netmask] dev NETWORK_DEVICE
+```
 
 ```console
 ip address add 10.11.12.13 dev eth0
@@ -1871,7 +1900,9 @@ ip address add 10.11.12.13/255.255.255.0 dev eth0
 ip link set eth0 up
 ```
 
-> ifconfig NETWORK_DEVICE addr netmask SUBNET_MASK
+```
+ifconfig NETWORK_DEVICE addr netmask SUBNET_MASK
+```
 
 ```console
 ifconfig eth0 10.11.12.13
@@ -1916,8 +1947,10 @@ ifdown enp5s2
 
 - Uses ICMP.
 
-> ping HOST
-> ping -c COUNT HOST
+```
+ping HOST
+ping -c COUNT HOST
+```
 
 ```console
 ping -c 3 google.com
@@ -1938,13 +1971,13 @@ tracepath -n google.com
 
 **The netstat Command**
 
-- `-n` - Display numerical address and ports.
-- `-i` - Displays a list of network interfaces.
-- `-r` - Displays the route table. (netstat -rn)
-- `-p` - Display the PID and program used.
-- `-l` - Display listening sockets. (netstat -nlp)
-- `-t` - Limit the output to TCP (netstat -ntlp)
-- `-u` - Limit the output to UDP (netstat -nulp)
+- `-n`: Display numerical address and ports.
+- `-i`: Displays a list of network interfaces.
+- `-r`: Displays the route table (netstat -rn).
+- `-p`: Display the PID and program used.
+- `-l`: Display listening sockets (netstat -nlp).
+- `-t`: Limit the output to TCP (netstat -ntlp).
+- `-u`: Limit the output to UDP (netstat -nulp).
 
 ```console
 netstat -l
@@ -1954,17 +1987,19 @@ sudp netstat -ntlp
 
 **Packet sniffing with tcpdump**
 
-- `-n` - Display numerical addresses and ports.
-- `-A` - Display ASCII (text) output.
-- `-v` - Verbose mode. Produce more output.
-- `-vvv` - Even more verbose output.
+- `-n`: Display numerical addresses and ports.
+- `-A`: Display ASCII (text) output.
+- `-v`: Verbose mode. Produce more output.
+- `-vvv`: Even more verbose output.
 
 ```console
 sudo tcpdump
 sudo tcpdump -Anvvv
 ```
 
-> telnet HOST_OR_IP PORT_NUMBER
+```
+telnet HOST_OR_IP PORT_NUMBER
+```
 
 ```console
 telnet google.com 80
@@ -2019,13 +2054,13 @@ find / -perm /4000 -ls
 
 | | Symbolic | Octal |
 |---|---|---|
-| Good: | -rwsr-xr-x | 4755 |
-| Bad: | -rwsrwxr-x | 4775 |
-| Really bad: | -rwsrwxrwx | 4777 |
+| Good | -rwsr-xr-x | 4755 |
+| Bad | -rwsrwxr-x | 4775 |
+| Really bad | -rwsrwxrwx | 4777 |
 
 **setgid**
 
-- setgid - Set Group ID upon execution.
+- `setgid`: Set Group ID upon execution.
 - `-rwxr-sr-x 1 root tty /usr/bin/wall`.
 - `crw--w---- 1 bob  tty /dev/pts/0`.
 
@@ -2116,7 +2151,7 @@ chmod 755 script.sh
 - Storage locations that have a name.
 - Name-value pairs.
 - Syntax: `VARIABLE_NAME="Value"`.
-- Variables are case sensitive.
+- Variables are a case sensitive.
 - By convention variables are uppercase.
 
 **Variable Usage**
@@ -2140,10 +2175,10 @@ echo ${SERVER_NAME}
 
 **Tests**
 
-- Syntax - `[ condition-to-test-for ]`
-- Example - `[ -e /etc/passwd ]`
+- Syntax: `[ condition-to-test-for ]`
+- Example :`[ -e /etc/passwd ]`
 
-**The if/elif/else statement**
+**The `if/elif/else` statement**
 
 ```bash
 if [ condition-is-true ]
@@ -2210,7 +2245,9 @@ $@
 - Terminal is the window to the shell.
 - Commands are case-sensitive.
 
-> commandName options input
+```
+commandName options input
+```
 
 ```console
 echo $PATH
@@ -2222,9 +2259,9 @@ which cal
 ### Redirection - Standard Output
 
 - Data Streams have numbers associated with them:
-    - 0 - standard input.
-    - 1 - standard output.
-    - 2 - standard error.
+    - `0`: Standard input.
+    - `1`: Standard output.
+    - `2`: Standard error.
 
 ```console
 cat 1> output.txt
@@ -2294,12 +2331,12 @@ date | tee fulldate.txt | cut --delimiter " " --field 1
 date | tee fulldate.txt | cut --delimiter " " --field 1 > today.txt
 ```
 
-- tee - take snapshot and continue piping.
+- `tee`: Take a snapshot and continue piping.
 
 ### xargs command
 
-- :star: `xargs` - takes data from standard input and convert to command line arguments.
-- `echo` - does not accept standard input.
+- :star: `xargs`: Takes data from standard input and convert to command line arguments.
+- `echo`: Does not accept standard input.
 
 ```console
 date | xargs echo
@@ -2324,7 +2361,7 @@ cat filestodelete.txt | xargs rm
 
 ### Aliases
 
-- `.filename` - hidden file.
+- `.filename`: Hidden file.
 
 **.bash_aliases**
 
@@ -2356,23 +2393,23 @@ echo "12 2017" | calmagic
 
 ![Alt text](images/linux-filesystem.png "Linux filesystem")
 
-- `/` - The Very Top (Root) of The File Tree. Holds Everything Else.
-- `/bin` - Stores Common Linux user command binaries, e.g. date, cat, cal commands are in there.
-- `/boot` - Bootable linux Kernel and bootloader config files http://192.168.99.100.
-- `/dev` - Files representing devices, tty=terminal, fd=floppydisk, (sd or hd) = harddisk, ram=RAM, cd=CD-ROM.
-- `/etc` - Administrative Configuration files.
-- `/home` - Where the home directories for regular users are stored.
-- `/media` - Is usually where removable media (USB sticks, external hard drives etc.) are mounted.
-- `/lib` - Contains shared libraries needed by applications in /bin and /sbin to boot the system.
-- `/mnt` - A place to mount external devices. Superseded by `/media`.
-- `/misc` - A directory used to sometimes automount filesystems on request.
-- `/opt` - Directory Structure used to store additional (i.e. optional) software.
-- `/proc` - Information about System Resources.
-- `/root` - The home folder for the root user aka the superuser (similar to the administrator on Windows).
-- `/sbin` - Contains administrative commands (binaries) for the root (super) user.
-- `/tmp` - Contains temporary files used by running applications.
-- `/usr` - Contains files pertaining to users that in theory don't change after installation.
-- `/var` - Contains directives of variable data that could be used by various applications. System log files are
+- `/`: The Very Top (Root) of The File Tree. Holds Everything Else.
+- `/bin`: Stores Common Linux user command binaries, e.g. date, cat, cal commands are in there.
+- `/boot`: Bootable linux Kernel and bootloader config files `http://192.168.99.100`.
+- `/dev`: Files representing devices, `tty=terminal`, `fd=floppydisk`, `(sd or hd)=harddisk`, `ram=RAM`, `cd=CD-ROM`.
+- `/etc`: Administrative Configuration files.
+- `/home`: Where the home directories for regular users are stored.
+- `/media`: Is usually where removable media (USB sticks, external hard drives etc.) are mounted.
+- `/lib`: Contains shared libraries needed by applications in `/bin` and `/sbin` to boot the system.
+- `/mnt`: A place to mount external devices. Superseded by `/media`.
+- `/misc`: A directory used to sometimes automount filesystems on request.
+- `/opt`: Directory Structure used to store additional (i.e. optional) software.
+- `/proc`: Information about System Resources.
+- `/root`: The home folder for the root user aka the superuser (similar to the administrator on Windows).
+- `/sbin`: Contains administrative commands (binaries) for the root (super) user.
+- `/tmp`: Contains temporary files used by running applications.
+- `/usr`: Contains files pertaining to users that in theory don't change after installation.
+- `/var`: Contains directives of variable data that could be used by various applications. System log files are
 usually found there.
 
 ### Navigating the File System
@@ -2384,7 +2421,7 @@ ls -F
 ls -l
 ls -lh
 
-cd /home/matikomp/Downloads
+cd /home/KOMP_NAME/Downloads
 cd ~/Downloads
 cd Downloads
 
@@ -2401,9 +2438,9 @@ file today.txt
 
 - Wildcards are used to build patterns called "regular expressions".
 - Anything that matches the pattern will pass as a command line argument to a command.
-- `*` - matches anything, regardless of length.
-- `?` - matches anything, but just for one place.
-- `[]`` - matches just one place, but allows you to specify options.
+- `*`: Matches anything, regardless of length.
+- `?`: Matches anything, but just for one place.
+- `[]`: Matches just one place, but allows you to specify options.
 
 ```console
 ls Documents/ Downloads/ Pictures/
@@ -2447,8 +2484,8 @@ echo "hello" > hello.txt
 mkdir -p thing/more/things
 ```
 
-- create 100 files.
-- braces expansion.
+- Create 100 files.
+- Braces expansion.
 
 ```console
 mkdir {jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec}_{2017,2018,2019,2020,2021,2022}
@@ -2461,7 +2498,7 @@ ls {jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec}_{2017..2022}
 touch file{A..C}.txt
 ```
 
-- `mkdir -p` - can be used to create entire folder paths.
+- `mkdir -p`: Can be used to create entire folder paths.
 - Don't put spaces in your filenames. User underscores instead.
 
 ### Deleting Files and Folders
@@ -2511,9 +2548,9 @@ mv ~/Documents/newfolder
 mv ~/Documents/newfolder/ ./jackpot
 ```
 
-### The Locate Command
+### Locate Command
 
-- The locate command searches a database for files and returns a list of results.
+- Locate command searches a database for files and returns a list of results.
 - Using a database is very fast, but requires updating.
 - To help protect against errors you can use the --existing and --follow options.
 - Best thing to do is update the database (done automatically daily).
@@ -2539,7 +2576,7 @@ sudo updatedb
 
 - The find command can be used to execute sophisticated search tasks.
 - You can search by `-name`, `-type`, `-size` and more.
-- You can use the -exec option to execute another command on each of the results - remember to end with \;
+- You can use the `-exec` option to execute another command on each of the results - remember to end with `\`.
 
 ```console
 find /
@@ -2585,7 +2622,7 @@ find haystack/ -type f -name "needle.txt" -exec mv {} ~/Desktop \;
 
 ### Viewing Files
 
-- `cat` - concatenate.
+- `cat`: Concatenate.
 - You can join files together using the `cat` command.
 - Reverse files vertically using `tac` command.
 - Reverse files horizontally using the `rev` command.
@@ -2651,13 +2688,13 @@ find | tail -n 3 > filtered.txt
 ### Sorting data
 
 - You can sort data using the `sort` command.
-- The `sort` command tends to sort "smallest first" (a-z, 0-9 etc).
+- The `sort` command tends to sort "the smallest first" (a-z, 0-9 etc).
 - You can reverse this using the `-r` option.
 - To sort numerically give the `-n` option.
 - To only provide unique results, use the `-u` option.
 - You can sort tabular data using the `-k` option.
 - You need to give the `-k` option a KEYDEF.
-- 3nr means sort using column 3, and use the `-n` and `-r` option.
+- `3nr` means sort using column 3, and use the `-n` and `-r` option.
 - To sort human readable data use the `-h` option.
 - To sort month data use the `-M` option.
 - Order of options in the KEYDEF don't matter.
@@ -2693,7 +2730,7 @@ ls -lh /etc | head -n 20 | sort -k 2nr
 - `grep` is used to search data for certain text.
 - `grep` returns lines that contain a piece of text (wildcards too).
 - The `-c` option will return the line count.
-- The `-i` option will search in a case insensitive manner.
+- The `-i` option will search in a case-insensitive manner.
 - The `-v` option will invert the search.
 - `grep` works great with piped data.
 
@@ -2739,8 +2776,10 @@ man -k print | grep files
 - `gzip` and `bzip2` are common options on Linux. `xz` is another option.
 - You can also use the `zip` and `unzip` commands to create/extract .zip files.
 
-> 1) make tarball
-> 2) compress tarball
+```
+1) make tarball
+2) compress tarball
+```
 
 ```console
 ls -lh
@@ -2759,8 +2798,8 @@ tar -xvf ourarchive.tar
 tar -tf ourarchive.tar
 ```
 
-> gzip - faster compression, less power.
-> bzip2 - compress to smaller size, require more power.
+- `gzip`: Faster compression, less power.
+- `bzip2`: Compress to smaller size, require more power.
 
 ```console
 gzip ourarchive.tar

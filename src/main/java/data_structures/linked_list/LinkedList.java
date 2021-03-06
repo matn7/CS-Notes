@@ -1,8 +1,5 @@
 package data_structures.linked_list;
 
-/**
- * Created by Mati on 28.07.2017.
- */
 public class LinkedList {
 
     private Node head;
@@ -28,7 +25,7 @@ public class LinkedList {
     // 1) slow and fast will point to the same node i.e. they meet on the other hand if fast will point to null
     // or next node of fast will point to null then LinkdedList does not contains cycle
 
-    public boolean isCucle() {
+    public boolean isCycle() {
         Node fast = head;
         Node slow = head;
         while (fast != null && fast.next != null) {

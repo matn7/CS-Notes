@@ -84,7 +84,7 @@ public class AdjacencyMatrixGraph implements Graph {
         }
         System.out.println(currectVertex + "->");
 
-        // Iterate through all Nodes and starts the DFS at every Node to ensure that even unconnected nodex are covered
+        // Iterate through all Nodes and starts the DFS at every Node to ensure that even unconnected node are covered
         /*for (int i = 0; i < N; i++) {
             depthFirstTraversal(graph, visited, i);
         }*/
@@ -107,7 +107,7 @@ public class AdjacencyMatrixGraph implements Graph {
             // Process and visit the Node
             visited[vertex] = 1;
 
-            // For all Adjacent vertices - Add it to the Queue to visit in BFS Befors
+            // For all Adjacent vertices - Add it to the Queue to visit in BFS Before
             List<Integer> list = graph.getAdjacentVertices(vertex);
 
             for (int v : list) {

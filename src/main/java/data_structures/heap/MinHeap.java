@@ -3,9 +3,6 @@ package data_structures.heap;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mati on 29.07.2017.
- */
 public class MinHeap <T extends Comparable> extends Heap<T> {
 
     private T[] array;

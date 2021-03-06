@@ -1,8 +1,6 @@
 package data_structures.linked_list;
 
-/**
- * Created by Mati on 28.07.2017.
- */
+
 public class Main {
 
     public static void main(String[] args) {
@@ -14,7 +12,7 @@ public class Main {
         linkedList.appendIntoTail(new LinkedList.Node("401"));
         linkedList.appendIntoTail(cycle);
 
-        if (linkedList.isCucle()) {
+        if (linkedList.isCycle()) {
             System.out.print("Is cycle");
         }
     }

@@ -1,16 +1,14 @@
 package data_structures.tree.binary_search_tree;
 
-/**
- * Created by Mati on 28.07.2017.
- */
+
 public class BinarySearchTree {
 
     // Check if binary tree is a binary search tree
     // For every Node in a binary search tree. The Nodes with values <= Node are in the left
-    // subtree and Nodes awith values > Node are in the right subtree
-    // Pass the min and MAX indicating the range for the subtree
+    // subtree and Nodes with values > Node are in the right subtree
+    // Pass the MIN and MAX indicating the range for the subtree
     public static boolean isBinarySearchTree(Node<Integer> root, int min, int max) {
-        // A Null Node is a valis binary tree
+        // A Null Node is a valid binary tree
         if (root == null) {
             return true;
         }
@@ -79,7 +77,7 @@ public class BinarySearchTree {
         root.setRightChild(temp);
     }
 
-    // The MAX depth will be furhest distance of the leaf Node from the ROOT
+    // The MAX depth will be furthest distance of the leaf Node from the ROOT
     // MAXIMUM depth of a binary tree
     public static int maxDepth(Node root) {
         if (root == null) {
@@ -99,7 +97,7 @@ public class BinarySearchTree {
 
 
     // The minimum value in A binary search tree can be found by traversing the left subtree of every Node
-    // If Node has no left child thet is the NODE with the smallest value. The left most node of the tree
+    // If Node has no left child that is the NODE with the smallest value. The left most node of the tree
     // Minimum value in a BST
     public static int minimumValue(Node<Integer> head) {
         if (head == null) {
@@ -119,7 +117,7 @@ public class BinarySearchTree {
         }
 
         if (head.getData() == data) {
-            return head; // check if value of the head mathc value we are looking for
+            return head; // check if value of the head match value we are looking for
         }
 
         if (data <= head.getData()) {
@@ -133,13 +131,13 @@ public class BinarySearchTree {
         if (head == null) {
             return node; // base case if the head is null then the Node itself is the Head
         }
-        // If the node alues is smaller than the head then it's correct place s somewhere in the left
+        // If the node values is smaller than the head then it's correct place s somewhere in the left
         // subtree we insert the node into the left subtree
         if (node.getData() <= head.getData()) {
             head.setLeftChild(insert(head.getLeftChild(), node));
         } else {
-            // If the Node is Greater than the head then it's correct place is somewhere in the right subtree we insert the node into
-            // right subtree
+            // If the Node is Greater than the head then it's correct place is somewhere in the right subtree we
+            // insert the node into right subtree
             head.setRightChild(insert(head.getRightChild(), node));
         }
         return head;

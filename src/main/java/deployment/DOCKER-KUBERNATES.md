@@ -16,15 +16,15 @@ docker run -it redis
 
 ![Docker Images Containers](docker_img/docker-images-containers.png "Docker Images Containers")
 
-- Image - Single file with all the dependencies and config required to run a program.
-- Container - Instance of an image. Runs a program (running program).
+- Image: Single file with all the dependencies and config required to run a program.
+- Container: Instance of an image. Runs a program (running program).
 
 **Docker for Windows/Mac**
 
 ![Docker Hello World](docker_img/docker-hello-world.png "Docker hello world")
 
-- Docker Client CLI - Tool that we are going to issue commands to.
-- Docker Server (Docker Daemon) - Tool that is responsible for creating images, running containers etc.
+- Docker Client CLI: Tool that we are going to issue commands to.
+- Docker Server (Docker Daemon): Tool that is responsible for creating images, running containers etc.
 
 ```console
 docker run hello-world
@@ -44,16 +44,15 @@ docker run hello-world
 
 ![Container](docker_img/container.png "Container")
 
-- Namespacing - Isolating resources per process (or group of processes)
-(say - this area of hard drive is for this process):
+- Namespacing: Isolating resources per process (or group of processes), say - this area of hard drive is for 
+this process:
     - Processes
     - Hard drive
     - Network
     - Users
     - Hostnames
     - IPC
-- Control Groups (cgroups) - Limit amount of resources used per process
-(say - amount of bandwidth process can use):
+- Control Groups (cgroups): Limit amount of resources used per process, say - amount of bandwidth process can use:
     - Memory
     - CPU Usage
     - HD I/O
@@ -79,7 +78,9 @@ docker run hello-world
 docker run hello-world
 ```
 
-> docker run <image_name> <command>
+```
+docker run <image_name> <command>
+```
 
 ```console
 docker run busybox echo hi there
@@ -148,8 +149,8 @@ docker stop CONTAINER_ID
 docker kill CONTAINER_ID
 ```
 
-- SIGTERM - stop container with cleanup time.
-- SIGKILL - shut down immediately.
+- SIGTERM: Stop container with cleanup time.
+- SIGKILL: Shut down immediately.
 
 ```console
 docker create busybox ping google.com
@@ -190,10 +191,10 @@ docker exec -it CONTEINER_ID redis-cli
 > get myvalue
 ```
 
-- STDIN, STDOUT, STDERR - **Communication Channels** - communicate information to linux process.
-- STDIN - communicate information into a process.
-- STDOUT - communicate information outside a process.
-- STDERR - line STDOUT but error info.
+- STDIN, STDOUT, STDERR: **Communication Channels**, communicate information to linux process.
+- STDIN: Communicate information into a process.
+- STDOUT: Communicate information outside a process.
+- STDERR: Line STDOUT but error info.
 
 ```
 -it flag
@@ -214,7 +215,10 @@ redis-cli
 ```
 
 - Command Preprocessor:
-    - bash, powershell, zsh, sh
+    - bash
+    - powershell
+    - zsh
+    - sh
 
 **Starting with a shell**
 
@@ -238,10 +242,11 @@ docker run -it busybox sh
 
 ![Creating Docker Images](docker_img/creating-docker-image.png "Creating Docker Images")
 
-- **Creating a Dockerfile**:
-    - Specify a base image.
-    - Run some commands to install additional programs.
-    - Specify a command to run on container startup.
+**Creating a Dockerfile**
+
+- Specify a base image.
+- Run some commands to install additional programs.
+- Specify a command to run on container startup.
 
 ### Building Dockerfile
 
@@ -275,7 +280,7 @@ Writing a Dockerfile == Being given a computer with no OS and being told to inst
 
 **Tagging an Image**
 
-- `-t` - tag argument.
+- `-t`: Tag argument.
     - `<docker_id>/<repo_project_name>:<version>`
 
 ```console
@@ -287,7 +292,7 @@ docker run majka/redis
 
 **Manual image generation**
 
-- Alpine base image - They come with a pre-installed set of programs that are useful.
+- Alpine base image: They come with a pre-installed set of programs that are useful.
 - Docker commit.
 
 ```console
@@ -316,13 +321,14 @@ docker run CONTAINER_ID
 
 ### Base Images issues
 
-- `alpine` - in Docker world image as small and compact as possible. No npm.
-- `node:alpine` - alpine version of node.
+- `alpine`: In Docker world image as small and compact as possible. No npm.
+- `node:alpine`: Alpine version of node.
 
 **Missing files**
 
-- Make sure that created index.js and package.json are copied to container image. Container has its own filesystem.
-- `COPY` - instruction to move file and folders from our local system to filesystem in container.
+- Make sure that created index.js and package.json are copied to container image. 
+- Container has its own filesystem.
+- `COPY`: Instruction to move file and folders from our local system to filesystem in a container.
     - `COPY <path on your machine> <path inside container>`
 
 ```console
@@ -333,11 +339,11 @@ docker run majka/simpleweb
 
 ### Container port mapping
 
-- Any time someone make request on local network, take that request and port it to port in container.
-    - **localhost port : container port**
+- Any time someone makes request on a local network, take that request and port it to port in a container.
+    - **localhost_port:container_port**
 
 ```console
-docker run -p <localhost port> : <inside container port> <image id>`
+docker run -p LOCALHOST_PORT:INSIDE_CONTAINER_PORT IMAGE_ID`
 docker run -p 8080:8080 majka/simpleweb`
 ```
 
@@ -355,7 +361,7 @@ docker run -it majka/simpleweb sh
 WORKDIR /usr/app
 ```
 
-**Another way to shell into container**
+**Another way to shell into a container**
 
 ```console
 docker exec -it CONTAINER_ID sh
@@ -536,13 +542,13 @@ CMD ["npm", "run", "start"]
 
 ```console
 docker build -f Dockerfile.dev .
-docker run -p 3000:3000 <image_id>
+docker run -p 3000:3000 IMAGE_ID
 ```
 
 ### Docker Volumes
 
 ```console
-docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image_id>
+docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app IMAGE_ID
 docker build -f Dockerfile.dev .
 docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app CONTAINER_ID
 
@@ -600,7 +606,7 @@ tests:
     command: ["npm", "run", "test"]
 ```
 
-- `docker attach` - attach to container STDIN, STDOUT, STDERR to primary process.
+- `docker attach`: Attach to container STDIN, STDOUT, STDERR to primary process.
     - Can now execute commands from our terminal.
 
 ```console
@@ -620,9 +626,13 @@ docker exec -it CONTAINER_ID npm run test
 
 ![Dev Environment](docker_img/dev-env.png "Dev Environment")
 
+***
+
 **Prod Environment**
 
 ![Prod Environment](docker_img/prod-env.png "Prod Environment")
+
+***
 
 **Prod Environment nginx**
 
@@ -660,7 +670,7 @@ docker run -p 8080:80 CONTAINER_ID
 
 ***
 
-## CI deployment with AWS
+## CI Deployment with AWS
 
 ### Github Setup
 
@@ -688,7 +698,7 @@ script:
 
 - Automatically scale up.
 
-**travis config for deployment**
+### Travis config for deployment
 
 **.travis.yml**
 
@@ -708,7 +718,7 @@ deploy:
   region: "us-east-1"
   app: "docker"
   env: "Docker-env"
-  bucket_name: "elasticbeanstalk-us-east-1-<ID>"
+  bucket_name: "elasticbeanstalk-us-east-1-ID"
   bucket_path: "docker"
   on:
     branch: master
@@ -736,14 +746,14 @@ COPY --from=0 /app/build /usr/share/nginx/html
 ## Multi Container Deployment
 
 - Single Container Deployment Issues:
-    - The app was simple - no outside dependencies.
+    - The app was simple, no outside dependencies.
     - Our image was built multiple times.
     - How do we connect to a database from a container?
 
 **Multi container**
 
-- Redis - In memory data store.
-- Postgres - Database
+- Redis: In memory data store.
+- Postgres: Database.
 
 ![Deployment](docker_img/deployment.png "Deployment")
 
@@ -884,7 +894,7 @@ http://localhost:3050/
 
 ***
 
-## CI flow for Multiple Images
+## CI Flow for Multiple Images
 
 ### Multi-Container Deployments
 
@@ -1087,7 +1097,7 @@ after_success:
   - docker build -t [:secure:]/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker jub
+  # Take those images and push them to docker hub
   - docker push [:secure:]/multi-client
   - docker push [:secure:]/multi-nginx
   - docker push [:secure:]/multi-server
@@ -1123,10 +1133,13 @@ deploy:
 
 ![Kubernetes Cluster](docker_img/kubernates-cluster.png "Kubernates Cluster")
 
-- What is Kubernetes?
-    - System for running many different containers over multiple different machines.
-- Why use Kubernetes?
-    - When you need to run many different containers with different images.
+**What is Kubernetes?**
+
+- System for running many containers over multiple different machines.
+
+**Why use Kubernetes?**
+
+- When you need to run many containers with different images.
 
 ### Kubernetes DEV and PROD
 
@@ -1184,32 +1197,33 @@ spec:
     component: web
 ```
 
-- Config File:
-    - Pod - Run a container.
-    - Service - setup networking inside Kubernetes cluster.
-    - StatefulSet.
-    - ReplicaController.
+**Config File**
+
+- Pod: Run a container.
+- Service: Setup networking inside Kubernetes cluster.
+- StatefulSet.
+- ReplicaController.
 
 ![Object types](docker_img/objectTypes.png "Object types")
 
 ### Pod
 
-- Node used by kubernetes to run some number of different objects.
-- Smallest thing that we can deploy. 
+- Node used by Kubernetes to run some number of different objects.
+- The smallest thing that we can deploy. 
 - Can run one or more container inside it.
 
 ![Alt text](docker_img/pod.png "pod")
 
-- Containers related to each other.
+**Containers related to each other**
 
 ![Postgres Pod](docker_img/postgres-pod.png "Postgres Pod")
 
 **Object Types**
 
-- Pods - Runs one or more closely related containers.
-- Services - Sets up networking in a Kubernetes Cluster.
+- Pods: Runs one or more closely related containers.
+- Services: Sets up networking in a Kubernetes Cluster.
     - ClusterIP
-    - NodePort - Exposes a container to the outside world (for DEV only).
+    - NodePort: Exposes a container to the outside world (for DEV only).
     - LoadBalancer
     - Ingress
 
@@ -1223,10 +1237,10 @@ spec:
 
 ### Connecting to Running containers
 
-**Feed a config file to Kubectl**
+**Feed a config file to kubectl**
 
-```console
-kubectl apply -f <filename>
+```
+kubectl apply -f FILENAME
 ```
 
 ```console
@@ -1266,18 +1280,21 @@ minikube ip
 
 ![Imperative vs Declarative](docker_img/imperative-vs-declarative.png "Imperative vs Declarative")
 
-- Always use Declarative Approach.
+- **Always use Declarative Approach.**
 
 ***
 
 ## Maintaining Containers
 
-- Imperative:
-    - Run a command to list out current running pods.
-    - Run a command to update the current pod to use a new image.
-- Declarative:
-    - Update our config file that originally created the pod.
-    - Throw the updated config file into kubectl.
+**Imperative**
+
+- Run a command to list out current running pods.
+- Run a command to update the current pod to use a new image.
+
+**Declarative**
+
+- Update our config file that originally created the pod.
+- Throw the updated config file into kubectl.
 
 **Update existing object**
 
@@ -1294,18 +1311,18 @@ kubectl apply -f client-pod.yaml
 **Limitations in config updates**
 
 - Pod Config:
-    - containers - can't be updated.
-    - name - can't be updated.
-    - port - can't be updated.
-    - image - can be updated.
+    - containers: Can't be updated.
+    - name: Can't be updated.
+    - port: Can't be updated.
+    - image: Can be updated.
     
 ![Pod config update](docker_img/pod-config-update.png "Pod config update")    
 
 **Object Types**
 
-- Pods - Runs one or more closely related containers.
-- Services - Sets up networking in a Kubernetes cluster.
-- Deployment - Maintains a set of identical pods, ensuring that they have the correct config and  that the
+- Pods: Runs one or more closely related containers.
+- Services: Sets up networking in a Kubernetes cluster.
+- :star: Deployment: Maintains a set of identical pods, ensuring that they have the correct config and  that the
 right number exists.
 
 | Pods | Deployment |
@@ -1317,7 +1334,7 @@ right number exists.
 
 ![Deployment Object](docker_img/deployment-obj.png "Deployment Object")   
 
-### Deployment configuration file
+**Deployment configuration file**
 
 ```yaml
 apiVersion: apps/v1
@@ -1341,7 +1358,7 @@ spec:
             - containerPort: 3000
 ```
 
-### Applying a Deployment
+**Applying a Deployment**
 
 ```console
 kubectl get pods
@@ -1367,9 +1384,9 @@ kubectl describe pods
 
 ![Kubernetes](docker_img/kubernetes-service.png "Kubernetes")
 
-- Each pods are identified from ip address.
-- How to connect directly to pod?
-- Service looks at pod that maches it selector and automatically route traffic over to.
+- Each Pods are identified from ip address.
+- How to connect directly to Pod?
+- Service looks at Pod that matches it selector and **automatically route traffic over to**.
 
 **Scaling and Changing Deployments**
 
@@ -1402,9 +1419,9 @@ kubectl get pods
 
 - Change deployment to use multi-client again.
 - Update the multi-client image, push to Docker-Hub.
-- Get the deployment to recreate our pods with the latest version of multi-client.
+- Get the deployment to recreate our Pods with the latest version of multi-client.
 
-### Triggering Deployment updates
+**Triggering Deployment updates**
 
 ```console
 kubectl apply -f client-deployment.yaml
@@ -1425,7 +1442,7 @@ docker push [:secure:]/multi-client:v5
 - Run a `kubectl` command forcing the deployment to use the new image version.
 
 ```
-kubectl set image <object_type>/<object_name> <container_name> = <new image name>
+kubectl set image OBJECT_TYPE/OBJECT_NAME CONTAINER_NAME = NEW_IMAGE_NAME
 ```
 
 ```console
@@ -1445,7 +1462,7 @@ kubectl get pods
 eval $(minikube docker-env)
 ```
 
-- This only configures current terminal window.
+**This only configures current terminal window**
 
 ```console
 minikube docker-env
@@ -1483,10 +1500,11 @@ kubectl exec -it client-deployment-ID sh
 
 ![Object Types](docker_img/kube-object-types.png "Object Types")
 
-- NodePort Service:
-    - port - OTHER Pod that needs multi-client Pod.
-    - targetPort - multi-client Pod.
-    - nodePort (random 30000-32767)
+**NodePort Service (outside world)**
+
+- port: Other Pod that needs multi-client Pod.
+- targetPort: multi-client Pod.
+- nodePort: Random 30000-32767.
 
 **Applying files with kubectl**
 
@@ -1544,7 +1562,7 @@ Some type of mechanism that allows a container to access a filesystem outside it
 - Volume in Kubernetes.
 
 ```
-An object that allows a container to store data at the pod level.
+An object that allows a container to store data at the Pod level.
 ```
 
 ![Volumes](docker_img/volumes-pv-pvc.png "Volumes")
@@ -1553,7 +1571,8 @@ An object that allows a container to store data at the pod level.
 
 ![Kubernetes Volume](docker_img/kubernates-volume.png "Kubernetes Volume")
 
-- Volumes is tied to Pod. If Pod crashes volumes crash as well.
+- Volumes is tied to Pod. 
+- If Pod crashes volumes crash as well.
 - Not appropriate for storing data.
 
 **Persistent Volume**
@@ -1561,16 +1580,16 @@ An object that allows a container to store data at the pod level.
 ![Persistent Volume](docker_img/persistent-volume.png "Persistent Volume")
 
 - Long term durable storage not tied to specific Pod or container.
-- Statically Provisioned Persistent Volume - Persistent Volumes created ahead of time.
-- Dynamically provisioned Persistent Volume - Created on fly.
-- Persistent Volume Claim - Advertisement of storage options.
+- Statically Provisioned Persistent Volume: Persistent Volumes created ahead of time.
+- Dynamically provisioned Persistent Volume: Persistent Volumes created on fly.
+- Persistent Volume Claim: Advertisement for storage options.
 
 **Persistence Volume Claim**
 
 - Access Modes:
-    - ReadWriteOnce - Can be used by a single node.
-    - ReadOnlyMany - Multiple nodes can read from this.
-    - ReadWriteMany - Can be read and written by many nodes.
+    - ReadWriteOnce: Can be used by a single node.
+    - ReadOnlyMany: Multiple nodes can read from this.
+    - ReadWriteMany: Can be read and written by many nodes.
 - Allocate Persistent Volume.
 
 ```console
@@ -1607,7 +1626,9 @@ spec:
           value: 6379
 ```
 
-> [Deployment:multi-worker pod] -- http://redis-cluster-ip-service --> ClusterIP Service [Deployment:Redis pod]
+```
+[Deployment:multi-worker pod] -- http://redis-cluster-ip-service --> ClusterIP Service [Deployment:Redis pod]
+```
 
 ### Secret
 
@@ -1616,17 +1637,17 @@ spec:
 **Create Secret**
 
 ```
-kubectl create secret generic <secret-name> --from-literal key=value
+kubectl create secret generic SECRET_NAME --from-literal key=value
 ```
 
-- `create` - Imperative command to create a new object
-- `secret` - Type of object we are going to create
-- `generic` - Type of secret
+- `create`: Imperative command to create a new object.
+- `secret`: Type of object we are going to create.
+- `generic`: Type of secret.
     - tls
     - docker-registry
-- `<secret-name>` - Name of secret, for later reference in a pod config
-- `--from-literal` - We are going to add the secret info into this command, as opposed to from . file
-- `key=value` - Key-value pair of the secret information
+- SECRET_NAME - Name of secret, for later reference in a Pod config.
+- `--from-literal`: We are going to add the secret info into this command, as opposed to from . file.
+- `key=value`: Key-value pair of the secret information.
 
 ```console
 kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345asdf
@@ -1654,14 +1675,14 @@ env:
 
 **Ingress**
 
-- Nginx ingress.
+- NGINX Ingress.
 - **ingress-nginx** - A community project.
 
 ```
 https://github.com/kubernetes/ingress-nginx
 ```
 
-- kubernetes-ingress - a project led by the company nginx.
+- kubernetes-ingress: A project led by the company nginx.
 - Setup of ingress-nginx changes depending on environment (local, GC, AWS, Azure).
 - Ingress routing rules to get traffic to services.
 
@@ -1669,8 +1690,8 @@ https://github.com/kubernetes/ingress-nginx
 
 ![Ingress](docker_img/Ingress.png "Ingress")
 
-- Ingress Controller - Watches for changes to the ingress and updates the **thing** that handles traffic.
-- Ingress Config - Object that has a set of configuration rules describing how traffic should be routed.
+- Ingress Controller: Watches for changes to the ingress and updates the **thing** that handles traffic.
+- Ingress Config: Object that has a set of configuration rules describing how traffic should be routed.
 
 ![Node using NGINX Ingress](docker_img/nginx-ingress.png "Node using Nginx Ingress")
 
@@ -1678,7 +1699,8 @@ https://github.com/kubernetes/ingress-nginx
 
 ![GC Load Balancer Ingress](docker_img/gclb-nginx.png "GC Load Balancer Ingress")
 
-- New serivce `default-backend` pod. Healthchecks make sure cluster is working.
+- New service `default-backend` pod. 
+- Health checks make sure cluster is working.
 
 ### Setting up Ingress locally
 
@@ -1710,7 +1732,7 @@ minikube ip
 kubectl apply -f k8s
 ```
 
-### Minikube Dashboard
+**minikube Dashboard**
 
 ```
 http://192.168.99.100
@@ -1728,14 +1750,14 @@ minikube dashboard
 
 ### Google Cloud vs AWS for Kubernetes
 
-**Why Google Cloud ?**
+**Why Google Cloud?**
 
 - Google created Kubernetes!
 - AWS got Kubernetes support.
 - Easier to use Kubernetes on Google Cloud.
-- Good documentation.
+- A good documentation.
 
-### Travis Deployment
+**Travis Deployment**
 
 ![GCP Travis](docker_img/kube-travis-cs.png "GCP Travis")
 
@@ -1780,7 +1802,7 @@ before_install:
   - gcloud container clusters get-credentials KUBERNETES_CLUSTER_NAME
 ```
 
-### Run tests
+**Run tests**
 
 **.travis.yml**
 
@@ -1792,7 +1814,7 @@ script:
   - docker run -e CI=true [:secure:]/docker-react npm run test
 ```
 
-### Travis deployment
+**Travis deployment**
 
 **.travis.yml**
 
@@ -1857,10 +1879,10 @@ kubectl get pods
 kubectl create secret generic pgpassword --from-literal PGPASSWORD=mypgpassword123
 ```
 
-### Helm setup
+**Helm setup**
 
 - Helm program to administrate third party software inside Kubernetes cluster.
-- Tiller pod inside Kubernetes to make configurations.
+- Tiller Pod inside Kubernetes to make configurations.
 
 ### Kubernetes Security with RBAC
 
@@ -1872,10 +1894,10 @@ kubectl create secret generic pgpassword --from-literal PGPASSWORD=mypgpassword1
 
 **Terminology**
 
-- User Accounts - Identifies a person administering our cluster.
-- Service Accounts - Identifies a pod administering a cluster.
-- ClusterRoleBinding - Authorizes an account to do a certain set of actions across the entire cluster.
-- RoleBinding - Authorizes an account to do a certain set of actions in a single namespace.
+- User Accounts: Identifies a person administering our cluster.
+- Service Accounts: Identifies a Pod administering a cluster.
+- ClusterRoleBinding: Authorizes an account to do a certain set of actions across the entire cluster.
+- RoleBinding: Authorizes an account to do a certain set of actions in a single namespace.
 
 ```console
 kubectl get namespaces
@@ -1899,7 +1921,7 @@ kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admi
 helm init --service-account tiller --upgrade
 ```
 
-### Ingress-Nginx with Helm
+### Ingress-NGINX with Helm
 
 ```console
 helm install stable/nginx-ingress --name my-nginx --set rbac.create=true

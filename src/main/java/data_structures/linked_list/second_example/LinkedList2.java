@@ -1,17 +1,13 @@
 package data_structures.linked_list.second_example;
 
-/**
- * Created by Mati on 05.10.2017.
- */
 class Node {
     Node next;
     int data;
     public Node(int data) {
         this.data = data;
     }
-
-
 }
+
 public class LinkedList2 {
     Node head;
     public void append(int data) {

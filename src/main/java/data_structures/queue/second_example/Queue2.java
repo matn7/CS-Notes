@@ -1,10 +1,5 @@
 package data_structures.queue.second_example;
 
-/**
- * Created by Mati on 05.10.2017.
- */
-
-
 public class Queue2 {
 
     public static class Queue {

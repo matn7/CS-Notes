@@ -1,8 +1,5 @@
 package data_structures.stack.second_example;
 
-/**
- * Created by Mati on 05.10.2017.
- */
 public class Stack2 {
 
     private static class Node {

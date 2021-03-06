@@ -1,14 +1,11 @@
 package data_structures.heap;
 
-/**
- * Created by Mati on 29.07.2017.
- */
 public class HeapSort<T extends Comparable> {
 
     private static int[] array;
     private int count = 0;
 
-    // Get right child index
+    // Get left child index
     private static int getLeftChildIndex(int index, int endIndex) {
         // calculate left child index using formula
         int leftChildIndex = 2 * index + 1;
@@ -49,7 +46,7 @@ public class HeapSort<T extends Comparable> {
         int leftChildIndex = getLeftChildIndex(index, endIndex);
         int rightChildIndex = getRightChildIndex(index, endIndex);
 
-        // For left and right child in range check f the max heap property is satisfied
+        // For left and right child in range check if the max heap property is satisfied
         if (leftChildIndex != -1 && array[leftChildIndex] > array[index]) {
             swap(leftChildIndex, index);
             prelocateDown(leftChildIndex, endIndex);
@@ -75,9 +72,9 @@ public class HeapSort<T extends Comparable> {
         heapify(array.length - 1);
         int endIndex = array.length - 1;
         while (endIndex > 0) {
-            // Start with the very last idex and place the largest element in the last position
+            // Start with the very last index and place the largest element in the last position
             swap(0, endIndex);
-            // Reduce the end index indicatng that the heap o longer includes the elements
+            // Reduce the end index indicating that the heap o longer includes the elements
             // which are in the correctly sorted position
             endIndex--;
             prelocateDown(0, endIndex);

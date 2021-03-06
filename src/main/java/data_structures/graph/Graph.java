@@ -2,9 +2,6 @@ package data_structures.graph;
 
 import java.util.List;
 
-/**
- * Created by Mati on 01.08.2017.
- */
 public interface Graph {
 
     enum GraphType {

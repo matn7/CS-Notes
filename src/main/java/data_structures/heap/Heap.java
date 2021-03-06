@@ -1,15 +1,8 @@
 package data_structures.heap;
 
 import java.lang.reflect.Array;
-import java.util.Comparator;
 
-/**
- * Created by Mati on 28.07.2017.
- */
 public abstract class Heap<T extends Comparable>  {
-
-
-
 
     // Get parent index
     public int getParentIndex(int index) {
@@ -33,7 +26,7 @@ public abstract class Heap<T extends Comparable>  {
         // calculate using formula
         int leftChildIndex = 2 * index + 1;
         // Check to see if a left child of this node is present.
-        // If it's less than count the Nuber of nodes then it's a valid left child
+        // If it's less than count the Number of nodes then it's a valid left child
         if (leftChildIndex >= count) {
             return -1;
         }
@@ -42,7 +35,7 @@ public abstract class Heap<T extends Comparable>  {
     }
 
     // A generic heap can hold data of any type.
-    // Generic type has to extends Comparable this is how we check for the highest prioritity
+    // Generic type has to extends Comparable this is how we check for the highest priority
     private static int MAX_SIZE = 40;
     // Use an array to store heap elements
     private T[] array;

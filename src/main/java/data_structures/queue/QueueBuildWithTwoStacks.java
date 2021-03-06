@@ -2,16 +2,13 @@ package data_structures.queue;
 
 import data_structures.stack.Stack;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class QueueBuildWithTwoStacks<T> {
 
     // Set up forward and reverse stack
     private Stack<T> forwardStack = new Stack<>();
     private Stack<T> reverseStack = new Stack<>();
-    public QueueBuildWithTwoStacks() {
 
+    public QueueBuildWithTwoStacks() {
     }
 
     // ENQUEUE

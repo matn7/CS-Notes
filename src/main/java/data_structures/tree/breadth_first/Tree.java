@@ -4,7 +4,6 @@ import data_structures.queue.Queue;
 
 public class Tree {
 
-
     // Breadth first traversal
     public static void breadthFirst(Node root) throws Queue.QueueUnderflowException, Queue.QueueOverflowException {
         if (root == null) {

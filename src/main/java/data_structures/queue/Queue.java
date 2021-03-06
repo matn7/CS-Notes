@@ -2,16 +2,13 @@ package data_structures.queue;
 
 import java.lang.reflect.Array;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Queue<T> {
-    private static final int SPECIAL_EMPTY_VALUE = -1; // head of quee no elements in queue
+    private static final int SPECIAL_EMPTY_VALUE = -1; // head of queue no elements in queue
     private static int MAX_SIZE = 40;
     private T[] elements;
 
     // The head element is initialized to a special value which
-    // indicate thet quee is empty
+    // indicate that queue is empty
     private int headIndex = SPECIAL_EMPTY_VALUE;
     private int tailIndex = SPECIAL_EMPTY_VALUE;
 
@@ -24,7 +21,7 @@ public class Queue<T> {
         if (isFull()) {
             throw new QueueOverflowException();
         }
-        tailIndex = (tailIndex + 1) % elements.length; // get nxt tail index and isert new element there
+        tailIndex = (tailIndex + 1) % elements.length; // get nth tail index and insert new element there
         elements[tailIndex] = data;
         // first element enqueued set head index to tail index
         if (headIndex == SPECIAL_EMPTY_VALUE) {

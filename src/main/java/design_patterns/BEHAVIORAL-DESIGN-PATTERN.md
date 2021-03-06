@@ -4,7 +4,7 @@
 
 - Comparator interface:
     - Algorithm to sort list of strings.
-    - Each algorithm implements the interface `Comparator<String>`
+    - Each algorithm implements the interface `Comparator<String>`.
     - Any object that implements this interface has a method that takes in 2 strings, and specifies which string
     comes first.
 
@@ -12,7 +12,7 @@
 int compare(String s1, String s2);
 ```
 
-- Comparing by returning -1,0,1 to say if the first string is **LESS_THAN**, **EQUAL_TO**, **GREATER_THAN**
+- Comparing by returning -1, 0, 1 to say if the first string is **LESS_THAN**, **EQUAL_TO**, **GREATER_THAN**
 the second String.
 - Each Algorithm object can specify it's own logic for determining order.
 
@@ -62,7 +62,7 @@ instantiate and inject into particular class.
 - Composition refers to defining behavior by the member variables a class includes.
 - Inheritance refers to defining behavior by the interfaces or classes that a class inherits from.
 - Composition = **has-a**
-- Inheritance = **Is-a**
+- Inheritance = **is-a**
 
 ### How are Strategy Pattern and Dependency injection related?
 

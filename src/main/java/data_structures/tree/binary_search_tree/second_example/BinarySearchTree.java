@@ -1,9 +1,5 @@
 package data_structures.tree.binary_search_tree.second_example;
 
-/**
- * Created by Mati on 05.10.2017.
- */
-
 class Node {
     Node left;
     Node right;

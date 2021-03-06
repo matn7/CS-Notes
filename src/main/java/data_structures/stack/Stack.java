@@ -1,8 +1,5 @@
 package data_structures.stack;
 
-/**
- * Created by Mati on 22.07.2017.
- */
 public class Stack<T> {
 
     private static int MAX_SIZE = 40;

@@ -11,24 +11,26 @@
 - Their own network interface.
 - Run processes as **root** (inside the container).
 - Have their own disk space:
-    - Can share with host.
+    - Can share with a host.
 
 ## Docker Terminology
 
 - Docker Image:
     - The representation of a Docker Container.
-    - Like JAR or WAR file in Java.
+    - :star: Like JAR or WAR file in Java.
 - Docker Container:
     - The standard runtime of Docker.
     - Effectively a deployed and running Docker Image.
-    - Like a Spring Boot Executable JAR.
+    - :star: Like a Spring Boot Executable JAR.
 - Docker Engine:
     - The code which manages Docker stuff.
     - Creates and runs Docker Containers.
 
 ## Docker Engine Runtime
 
-Client docker CLI :arrow_forward: REST API :arrow_forward: server docker daemon
+```
+Client Docker CLI ---> REST API ---> Server Docker Daemon
+```
 
 ***
 
@@ -79,9 +81,9 @@ of physical server.
 
 ### Docker
 
-- Open source platform and it consists:
-    - Docker Engine - a runtime and software packaging tool.
-    - Docker Hub - Service for sharing the application in the cloud similar to github.
+- Open source platform, and it consists:
+    - Docker Engine: A runtime and software packaging tool.
+    - Docker Hub: Service for sharing the application in the cloud similar to github.
 - The output of a Docker build is a Docker Image.
 - To run Docker, we need to have docker running in our machine.
 - When the Docker image is run it creates a container.
@@ -94,14 +96,13 @@ of physical server.
 
 **Dockerfile**
 
-- FROM - It pulls the image from the docker hub. Here it pulls the java image `alpine-oraclejdk8:slim`.
-- ADD - Add command takes two arguments, one is source and the destination.
-- COPY:
-    - `./docker-entrypoint.sh /docker-endpoint.sh`
+- `FROM`: It pulls the image from the docker hub. 
+    - Here it pulls the java image `alpine-oraclejdk8:slim`.
+- `ADD`: Add command takes two arguments, one is source and the destination.
+- `COPY`: `./docker-entrypoint.sh /docker-endpoint.sh`.
     - This step copies the `docker-entrypoint.sh` in to the docker image that gets built.
-- RUN:
-    - `chmod +x / docker-entrypoint.sh`
-- ENTRYPOINT:
+- `RUN`: `chmod +x / docker-entrypoint.sh`
+- `ENTRYPOINT`:
     - Argument sets the concrete default app that is used every time a container is created using the image.
     - Often times ENTRYPOINT with CMS, you can remove "application" from CMS and just leave "arguments"
     which will be passed to the ENTRYPOINT.
@@ -198,19 +199,19 @@ docker ps
 
 ```console
 docker logs c4174507511b
-docker run --name panda-mysql-4 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /home/matikomp/udemy_courses/DOCKER/mysqldata:/var/lib/mysql  -p 3306:3306 -d mysql
+docker run --name panda-mysql-4 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /[PATH]/DOCKER/mysqldata:/var/lib/mysql  -p 3306:3306 -d mysql
 ```
 
 ## Docker House Keeping
 
 - There are 3 key areas of house keeping:
-    - Containers.
-    - Images.
-    - Volumes.
+    - Containers
+    - Images
+    - Volumes
 - Shell to running docker image.
 
-```console
-docker exec -it <container_name> bash
+```
+docker exec -it CONTAINER_NAME bash
 ```
 
 ### Containers
@@ -232,7 +233,7 @@ docker rm $(docker ps -a -q)
 - Remove a Docker Image.
 
 ```console
-docker rmi <image name>
+docker rmi IMAGE_NAME
 ```
 
 - Delete Untagged (dangling) Images.
@@ -265,10 +266,10 @@ docker volume rm $(docker volume ls -f dangling=true -q)
 ```console
 docker run -d centos tail -f /dev/null
 
-// shell into docker centos
+# shell into docker centos
 docker exec -it epic_snyder bash
 
-// inside centos docker
+# inside centos docker
 java -version
 yum install java
 java -version
@@ -276,7 +277,7 @@ java -version
 
 **Dockerfile**
 
-```
+```Dockerfile
 FROM centos
 
 RUN yum install -y java
@@ -322,7 +323,7 @@ mvn clean package
 mvn clean package docker:build
 ```
 
-### Publishing to dockerhub
+### Publishing to Docker Hub
 
 ```console
 mvn clean package docker:build docker:push
@@ -335,7 +336,7 @@ mvn docker:stop
 
 mvn clean package docker:build
 
-docker rm <container name>
+docker rm CONTAINER_NAME
 
 mvn docker:start
 ```
@@ -376,19 +377,20 @@ mvn docker:run
 ```console
 systemctl stop mysql
 
-// Use to run mysql db docker image
+# Use to run mysql db docker image
 docker run --name mysqldb -p 3306:3306 -e MYSQL_DATABASE=pageviewservice -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql
 
 systemctl stop rabbitmq-server.service
 
-// Use to run RabbitMQ
+# Use to run RabbitMQ
 docker run --name rabbitmq -p 5671:5671 -p 5672:5672 rabbitmq
 
-// Does not work
-docker run --name pageviewservice -p 8081:8081  springframeworkguru/pageviewservice
+# Does not work
+docker run --name pageviewservice -p 8081:8081  spring/pageviewservice
 
 // Does not work
-docker run --name pageviewservice -p 8081:8081 -e SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/pageviewservice -e SPRING_PROFILES_ACTIVE=mysql springframeworkguru/pageviewservice
+docker run --name pageviewservice -p 8081:8081 -e SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/pageviewservice \ 
+-e SPRING_PROFILES_ACTIVE=mysql spring/pageviewservice
 
 docker run --name pageviewservice2 -p 8081:8081 \
 --link rabbitmq:rabbitmq \
