@@ -64,14 +64,14 @@ public class Main {
 
 ## Abstract Factory
 
-- Reflection - is a way to invoke methods of objects on the fly (at run-time).
+- Reflection: Ss a way to invoke methods of objects on the fly (at run-time).
 - Reflection is slow and complicated:
     - A method call via reflection may take 10 x longer than usual.
 - The implementation details of how an object of database type is instantiated in Abstract Factory, is completely
 hidden and decoupled from the user.
 - Use abstract factory to create families of related classes.
 
-### Who are the Factory and the Abstract Factory pattern related?
+### How are the Factory and the Abstract Factory pattern related?
 
 - The Factory Pattern is a way to create any one of bunch of classes that implement the same interface,
 while the abstract factory pattern is a way to create groups of related classes that implements different interfaces.
@@ -113,7 +113,7 @@ public class Singleton {
 
 ### What are standard parts of implementing the Singleton
 
-- Private constructor.
+- A private constructor.
 - Synchronized getter for the Singleton.
 
 ### Double check locking
@@ -162,7 +162,7 @@ public class Singleton {
 
 ### Double checked locking
 
-- In software engineering, double checked locking is a software design pattern used to reduce overhead of acquiring a lock
+- In software engineering, double-checked locking is a software design pattern used to reduce overhead of acquiring a lock
 by first testing the lock creation without actually acquiring a lock.
 
 ```java
@@ -182,21 +182,21 @@ if (singleton == null) {
 thread-locally all reads and writes will go straight to **main memory**.
 - Access to the **volatile** variable acts as through it is enclosed in a synchronized block, synchronized on itself.
 - A class loader is a part of JVM. Technically namespaces are unique per class loader.
-Usually there is just 1 class loader per program.
+- Usually there is just 1 class loader per program.
 - In Java Threading support, thread mostly communicate with each other via shared objects or shared member
 variables with the same object:
-    - Thread interference - different thread access the same data.
-    - Memory Consistency Errors - A thread sees a state inconsistent value of a variable.
-    - Thread Contention - Thread get in each other's way, and slow down-or sometimes even have to be killed in Java.
+    - Thread interference: Different thread access the same data.
+    - Memory Consistency Errors: A thread sees a state inconsistent value of a variable.
+    - Thread Contention: Thread get in each other's way, and slow down-or sometimes even have to be killed in Java.
 - Thread interference and memory consistency errors:
-    - If two thread access the same variable, it's possible for them to get in each other's way
+    - If two thread access the same variable, it's possible for them to get in each other's way.
       That's because Java might switch execution from one thread to another even midway through a simple,
       seemingly atomic instruction.
     - For example two threads incrementing the same variable could simply lose one of the two increments.
-    - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
+    - Restricting access to an object or, a variable-akin to locking the variable so only thread can access at a time
       is a powerful concept used widely in computer science especially in databases.
     - Locking variables correctly can eliminate thread interference and memory consistency error:
-        - But it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock).
+        - But, it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock).
 
 ### What is the best way to subclass Singleton?
 
@@ -380,7 +380,7 @@ public class Main {
 - Object of class can be created as clone of another object of that class.
 - That means that the class has a constructor that takes in another object of the same class. Such
 a constructor is called a copy constructor.
-- In java it is effected via the clone method of the interface `Cloneable`.
+- In Java, it is effected via the clone method of the interface `Cloneable`.
 - In general Java Cloneable interface is not highly regarded:
     - The `.clone()` method belongs in the object class (i.e. every object has this method) when it ought to have belonged
     in the Cloneable interface.

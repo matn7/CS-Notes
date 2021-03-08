@@ -96,7 +96,7 @@ abstract base class.
 - Template pattern **frameworks**:
     - Using framework gives more power, but less control than coding from scratch.
 - Frameworks exposes specific parts that programmer need to take care of **Event**.
-- Place where waiting for event is called **Listeners**.
+- Place where waiting for an event is called **Listeners**.
 
 ***
 
@@ -172,22 +172,22 @@ alphabets.forEach(operand -> operand.toUpperCase());
 
 - Variables announce changes to their states.
 - Other object subscribe to listen to those changes.
-- Publishers - Object that publish these updates.
-- Subscribers - Objects that subscribe to listen to these updates.
-- The callback - The code that gets executed when an update is published.
-- Publishers announce different types of updates - each of which is referred to as **An event** Button clicked, hover.
+- Publishers: Object that publish these updates.
+- Subscribers: Objects that subscribe to listen to these updates.
+- The callback: The code that gets executed when an update is published.
+- Publishers announce different types of updates - each of which is referred to as **AN EVENT** Button clicked, hover.
 - The term callback refers to the fact that this code belongs to the subscriber object.
 - But is called by the publisher object when the event occurs.
 
 ### Publisher, Subscriber, Listener or Event?
 
-- Listener - The command object with the code that gets executed when something happens.
-- Publisher - The object that announces that something has happened.
-- Subscribers, Observers - The object that wait for something to happen.
-- Subscribers, Observers - The object that register to be informed of changes.
-- Event - The something that happens.
+- Listener: The command object with the code that gets executed when something happens.
+- Publisher: The object that announces that something has happened.
+- Subscribers, Observers: The object that wait for something to happen.
+- Subscribers, Observers: The object that register to be informed of changes.
+- Event: The something that happens.
 
-### How are the observer and the command pattern related?
+### How are the observer and, the command pattern related?
 
 - The publisher maintains a list of command objects and executes their code when an event occurs.
 - The command objects are part of the controller, and the observer are part of the view.
@@ -289,14 +289,14 @@ output stream.
 ### Command pattern in action - threading
 
 - Old school:
-    - `Runnable` interface - Is implemented by a class with the operations to be carried out on the other thread.
-    - `Thread` in-build class - Object of the thread class take in the runnable objects and run them on individual threads.
-    - `Thread.join()` on the thread - The main class calls the `.join()` method on each thread which will wait
+    - `Runnable`: Is implemented by a class with the operations to be carried out on the other thread.
+    - `Thread`: Object of the thread class take in the runnable objects and run them on individual threads.
+    - `Thread.join()`: The main class calls the `.join()` method on each thread which will wait
     until the thread finishes.
 - New School:
-    - `Callable` interface - Is implemented by a class with the operations to be carried out on the other thread.
-    - `Executors` In-build class- Java provides helper objects that know how to start, manage and stop callable objects.
-    - `Future.get()` - Future are objects which will hold results in the future, once the callable object
+    - `Callable`: Is implemented by a class with the operations to be carried out on the other thread.
+    - `Executors`: Java provides helper objects that know how to start, manage and stop callable objects.
+    - `Future.get()`: Future are objects which will hold results in the future, once the callable object
     finishes whatever stuff it had to do on other thread.
 - The command pattern separates the execution of an action from the action itself.
 - In threading we define the action that we would like the new thread to undertake.
@@ -325,14 +325,14 @@ thread.start();
 
 - Examples of command pattern:
     - Undo
-    - Logging - need command object to know how to write themselves out to a file, an object that know how to do
+    - Logging: Need command object to know how to write themselves out to a file, an object that know how to do
     this is said to be serializable.
 
 ### What is a basic idea of command Pattern?
 
 - Execution of an action is separated from action itself.
 - A class with a single method is essentially an action.
-- The command pattern is a construct from functional programming adopted into OO programming.
+- The command pattern is a construct from functional programming adopted into Object Oriented programming.
 
 ### What does the command pattern has to do with multithreading?
 
@@ -402,7 +402,7 @@ public class Main {
 
 - Objects sometimes need to know how to save their state and go back to that saved state.
 - The ability of an object to save its state.
-- If an object can save its state, a relatively easy way to implement undo is to have the object **Reset**
+- If an object can save its state, a relatively easy way to implement undo is to have the object **RESET**
 to a previously saved state.
 - Java have in build support for the Memento Pattern via the `Serializable` interface.
 - Any class that implements serializable, and in which all member variables are serializable
@@ -501,26 +501,3 @@ implement a common interface.
 
 - When class hierarchies got too complicated, they can be simplified using Mediators.
 - A mediator object decouples peer objects in a hierarchy from needing to know all about each peer.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
