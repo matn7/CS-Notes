@@ -13,7 +13,7 @@ it we use it within a composite or any other way.
     - FileInputStream
     - AudioInputStream
     - ByteArrayInputStream
-- Each of there objects can be constructed from an object of type InputStream.
+- Each of their objects can be constructed from an object of type InputStream.
 - Saving objects to files is a standard operation called **serialization**.
 
 **Chain of Input Stream**
@@ -126,7 +126,7 @@ public class Main {
 
 ## Adapter Pattern
 
-- An adapter takes in an object that implements an interface, and gives out object that
+- An adapter takes in an object that implements an interface, and gives out an object that
 implements a different interface.
 
 ![Adapter Design Pattern](images/adapter-dp.png "Adapter Design Pattern")
@@ -160,7 +160,7 @@ reader.close();
 - The Java NET library which manages complexity assures that you neither know nor care how exactly
 the contents of url are obtained.
 
-### The principle of least knowledge
+### The principle of the least knowledge
 
 - Design guideline for developing software, particularly object-oriented programs. Specify case of loose coupling.
 - Each unit should have only limited knowledge about other units; only unit closely related to current unit.
@@ -168,7 +168,7 @@ the contents of url are obtained.
 - Only talk to your immediate friends.
 - Facade pattern is used in:
     - Reflection, networking, database access, file access.
-- However complicated your classes and their interactions, offer up a very simple interface to use them.
+- However, complicated your classes and their interactions, offer up a very simple interface to use them.
 - Don't relay on the internal implementation of any code written by others that you use.
 - Provide a clean interface so that others using your code don't need to reach inside your classes to done stuff.
 
@@ -183,7 +183,7 @@ the contents of url are obtained.
 
 ### What motivates a facade pattern?
 
-- Classes should know as little as possible about other classes that they use (principle of least knowledge).
+- Classes should know as little as possible about other classes that they use (principle of the least knowledge).
 - Relay on abstractions - interfaces, not on concrete implementation.
 - Loosely coupled code is always preferable to tightly code.
 
@@ -248,7 +248,7 @@ public class WashingMachine {
 
 ## Flyweight pattern
 
-- Is an object that minimalize memory use by sharing as much data as possible with other similar objects.
+- Is an object that minimize memory use by sharing as much data as possible with other similar objects.
 - It is a way to use objects in large numbers when a simple repeated representation would use an
 unacceptable amount of memory.
 - Often some parts of object state can be shared, and it is common practice to hold them in external data structure
@@ -270,7 +270,7 @@ only these distinct values.
 performance hit.
 - :star: By default equals method tests for object identity it returns true if and only if the 2 objects are
 literally the same (point to the same location in memory).
-- In flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are actually
+- In a flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are actually
 different objects.
 
 ### :star: Why does the implementation of `.equals()` matter in the flyweight pattern?
@@ -348,23 +348,3 @@ or those involving file or database IO.
 
 - Proxies are objects that **stand in** for other objects.
 - Proxy objects control access or abstract functionality of other objects.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

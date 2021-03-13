@@ -88,7 +88,7 @@ public List<Integer> getList() {
 - Composition:
     - If take in member variables to determine behavior, you allow extension via Composition **(Strategy pattern)**.
 
-### Principle of least knowledge, "Only talk to friends, don't talk to strangers"
+### Principle of the least knowledge, "Only talk to friends, don't talk to strangers"
 
 :disappointed_relieved:
 
@@ -102,7 +102,7 @@ int number = document.getCurrentPage().getNumber();
 int number = document.getCurrentPageNumber();
 ```
 
-### 4. Dependency Inversion and Hollywood Principle
+### 4. Dependency Inversion and Hollywood Principle.
 
 - Depend on abstraction, never on details.
 - Don't call us we will call you.
@@ -113,9 +113,9 @@ int number = document.getCurrentPageNumber();
 
 ## MVC
 
-- Model - Storing the data underlying the user interface.
-- View - Visual representation of data.
-- Controller - Interacts with the user and modifies the model and view.
+- Model: Storing the data underlying the user interface.
+- View: Visual representation of data.
+- Controller: Interacts with the user and modifies the model and view.
 - What is the basic of the MVC pattern:
     - Separating data from its visual representation.
     - Separating data from its manipulation.
@@ -123,9 +123,9 @@ int number = document.getCurrentPageNumber();
 - How does the client interact with the model in the MVC paradigm:
     - User sees the model through the view, and manipulates it via the controller.
 - Model, View, Controller:
-    - Controller - A slider to adjust volume in a media player app.
-    - Model - The MP4 file of a movie to be played in a media player app.
-    - View - The area of the media player app that actually displays video.
+    - Controller: A slider to adjust volume in a media player app.
+    - Model: The MP4 file of a movie to be played in a media player app.
+    - View: The area of the media player app that actually displays video.
 
 ***
 
@@ -153,7 +153,7 @@ for better organization of object-oriented programs.
 - The single responsibility principle revolves around the claim that a certain code module (most often, a class)
 should only have responsibility over one part of the functionality provided by the software.
 - This approach contributes to the **high cohesion** – since methods related to the same concern (same part of the functionality)
-will be members of the same class, and **robustness** – since this reduces the possibility of error.
+will be members of the same class, and **robustness** – since these reduces the possibility of error.
 
 **:disappointed_relieved: Bad example**
 
@@ -207,11 +207,13 @@ class Printer {
 - For good application design and the code writing part, you should avoid change in the existing code when requirements change.
 - Instead, you should extend the existing functionality by adding new code to meet the new requirements.
 
-> “software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification“
+```
+“software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification“
+```
 
-- “Open for extension “: This means that the behavior of a software module, say a class can be extended to make it behave
+- “Open for extension“: This means that the behavior of a software module, say a class can be extended to make it behave
 in new and different ways
-- “Closed for modification “: This means that the source code of such a module remains unchanged
+- “Closed for modification“: This means that the source code of such a module remains unchanged.
 
 ### :blush: Better example
 
@@ -222,8 +224,8 @@ public abstract class InsuranceSurveyor {
 ```
 
 ```java
-public class HealthInsuranceSurveyor extends InsuranceSurveyor{
-    public boolean isValidClaim(){
+public class HealthInsuranceSurveyor extends InsuranceSurveyor {
+    public boolean isValidClaim() {
         System.out.println("HealthInsuranceSurveyor: Validating health insurance claim...");
         /*Logic to validate health insurance claims*/
         return true;
@@ -232,8 +234,8 @@ public class HealthInsuranceSurveyor extends InsuranceSurveyor{
 ```
 
 ```java
-public class VehicleInsuranceSurveyor extends InsuranceSurveyor{
-    public boolean isValidClaim(){
+public class VehicleInsuranceSurveyor extends InsuranceSurveyor {
+    public boolean isValidClaim() {
        System.out.println("VehicleInsuranceSurveyor: Validating vehicle insurance claim...");
         /*Logic to validate vehicle insurance claims*/
         return true;
@@ -243,8 +245,8 @@ public class VehicleInsuranceSurveyor extends InsuranceSurveyor{
 
 ```java
 public class ClaimApprovalManager {
-    public void processClaim(InsuranceSurveyor surveyor){
-        if(surveyor.isValidClaim()){
+    public void processClaim(InsuranceSurveyor surveyor) {
+        if(surveyor.isValidClaim()) {
             System.out.println("ClaimApprovalManager: Valid claim. Currently processing claim for approval....");
         }
     }
@@ -263,11 +265,11 @@ program (correctness, task performed, etc.)”.
 
 ### Inheritance
 
-- It is when an object or a class are based on another object or class.
+- It is when an object, or a class are based on another object or class.
 - When a class is “inherited” from another class, it means that the inherited class
 (also called subclass, or child class) contains all the characteristics of the superclass
 (parent class), but can also contain new properties:
-    - Class Watch , you can inherit from that class to get a class PocketWatch.
+    - Class Watch, you can inherit from that class to get a class PocketWatch.
     - A pocket watch is still a watch, it just has some additional features.
 
 ### Polymorphism
@@ -279,11 +281,10 @@ program (correctness, task performed, etc.)”.
 
 - Functions that reference base classes must be able to use objects of derived (child) classes without knowing it.
 
-### :disappointed_relieved: Bad example
+**:disappointed_relieved: Bad example**
 
 ```java
-class TrasportationDevice
-{
+class TransportationDevice {
    String name;
    double speed;
    Engine engine;
@@ -298,24 +299,22 @@ class TrasportationDevice
    void setEngine(Engine e) { ... }
    void startEngine() { ... }
 }
-class Car extends TransportationDevice
-{
+
+class Car extends TransportationDevice {
    @Override
    void startEngine() { ... }
 }
 
-class Bicycle extends TransportationDevice
-{
+class Bicycle extends TransportationDevice {
    @Override
    void startEngine() /*problem!*/
 }
 ```
 
-### :blush: Better example
+**:blush: Better example**
 
 ```java
-class TrasportationDevice
-{
+class TransportationDevice {
    String name;
    double speed;
 

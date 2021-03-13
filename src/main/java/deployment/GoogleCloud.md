@@ -39,7 +39,7 @@
 ### Open APIs
 
 - Open APIs and open source mean customers can leave.
-- Open APIs; capability with open-source services:
+- Open APIs, capability with open-source services:
     - Cloud Bigtable
     - Cloud Dataproc
 - Open source for a rich ecosystem:
@@ -104,6 +104,8 @@ and scalable infrastructure.
     - Allocation quota: 5 networks per project.
     - Many quotas are changeable.
 
+***
+
 ## Google Cloud Platform
 
 **Cloud security requires collaboration**
@@ -130,8 +132,8 @@ and scalable infrastructure.
 
 **Projects have three identifying attributes**
 
-| | | |
-|---|---|---|
+| Attribute |  |  | |
+|---|---|---|---|
 | Project ID | Globally unique | Chosen by you | Immutable |
 | Project name | Need not to be unique | Chosen by you | Mutable |
 | Project number | Globally unique | Assigned by GCP | Immutable |
@@ -158,6 +160,8 @@ and scalable infrastructure.
 - Resources inherit policies from parent.
     - Resource policies are a union of parent and resource.
 - A less restrictive parent policy overrides a more restrictive resource policy.
+
+***
 
 ## Identity and Access Management (IAM)
 
@@ -200,18 +204,18 @@ and scalable infrastructure.
 
 **IAM predefined roles offer more find-grained permissions on particular services**
 
-- Google Group, on project_a, **InstanceAdmin** role:
-    - compute.instance.delete
-    - compute.instance.get
-    - compute.instance.list
-    - compute.instance.setMachineType
-    - compute.instance.start
-    - compute.instance.stop
-- Google Group, on project_a, **InstanceOperator** role:
-    - compute.instance.get
-    - compute.instance.list
-    - compute.instance.start
-    - compute.instance.stop
+- Google Group, on **project_a**, **InstanceAdmin** role:
+    - `compute.instance.delete`
+    - `compute.instance.get`
+    - `compute.instance.list`
+    - `compute.instance.setMachineType`
+    - `compute.instance.start`
+    - `compute.instance.stop`
+- Google Group, on **project_a**, **InstanceOperator** role:
+    - `compute.instance.get`
+    - `compute.instance.list`
+    - `compute.instance.start`
+    - `compute.instance.stop`
 
 **Service Accounts control server-to-server interactions**
 
@@ -220,8 +224,8 @@ and scalable infrastructure.
 - Used to **control privileges** used by resources:
     - So that apps can perform actions on behalf of authenticated end users.
 - Identity with an **email** address:
-    - PROJECT_NUMBER-compute@developer.gserviceaccount.com
-    - PROJECT_ID@appspot.gserviceaccount.com    
+    - `PROJECT_NUMBER-compute@developer.gserviceaccount.com`
+    - `PROJECT_ID@appspot.gserviceaccount.com`    
 
 **Service Accounts an IAM**
 
@@ -229,15 +233,12 @@ and scalable infrastructure.
     - Google manages keys for Compute Engine and App Engine.
 - You can assign a predefined or custom IAM role to the service account.    
 
-```
-    Identity    ------>     IAM Role       ------>      Resource
-Service Account         InstanceAdmin Role          Compute Instances
-```
+![Service Accounts an IAM](gcp-img/gcp-service-acct-iam-role.png "Service Accounts an IAM")
 
 **Example: Service Accounts and IAM**
 
-- VMs running component_1 are granted **Editor** access to project_b using Service Account 1.
-- VMs running component_2 are granted **objectViewer** access to bucket_1 using Service Account 2.
+- VMs running **component_1** are granted **Editor** access to **project_b** using **Service Account 1**.
+- VMs running **component_2** are granted **objectViewer** access to **bucket_1** using **Service Account 2**.
 - Service account permissions can be changed without recreating VMs.
 
 ### Interacting with Google Cloud Platform
@@ -257,7 +258,7 @@ Service Account         InstanceAdmin Role          Compute Instances
 **Google Cloud SDK**
 
 - Includes command-line tools for Cloud Platform products and services:
-    - gcloud, gsutil (Cloud Storage), bq (BigQuery).
+    - `gcloud`, `gsutil` (Cloud Storage), `bq` (BigQuery).
 - Available via Cloud Shell.
 - Available as docker image.
 
@@ -326,11 +327,11 @@ Service Account         InstanceAdmin Role          Compute Instances
 - Fast and consistent performance.
 - Create VMs with GCP Console or **gcloud**.
 - Run images of Linux or Windows Server.
-- Pick memory and CPU: use predefined types, or make a custom VM.
+- Pick memory and CPU, use predefined types, or make a custom VM.
 - Pick GPUs if you need them.
-- Pick persistent disks: standard or SSD.
+- Pick persistent disks, standard or SSD.
 - Pick local SSD for scratch space too if you need it.
-- Pick a boot image: Linux or Windows Server.
+- Pick a boot image, Linux or Windows Server.
 - Define a startup script if you like.
 - Take disk snapshots as backups or as migration tools.
 
@@ -363,7 +364,7 @@ Service Account         InstanceAdmin Role          Compute Instances
 - Only healthy backends receive traffic.
 - No pre-warming is required.
 
-**Google VPC offers a suite of load-balancing options**
+**Google VPC offers a suite of load-balancing options** <--
 
 - **Global HTTP(S)**:
     - Layer 7 load balancing based on load.
@@ -414,7 +415,7 @@ at Google POPs.
 - Data encryption in transit by default from Google to endpoint.    
 - Online and offline import services are available.
 
-**Your Cloud Storage files are organized into buckets**
+**Cloud Storage files are organized into buckets**
 
 | Bucket attributes | Bucket contents |
 |---|---|
@@ -515,7 +516,7 @@ External read replicas can be configured.
 - SQL queries:
     - ANSI 2011 with extensions.
 - Automatic replication.    
-- Financial / inventory applications.
+- Financial/Inventory applications.
 - Cloud Spanner offers transactional consistency at global scale.
 
 ### Cloud Datastore
@@ -807,7 +808,7 @@ spec:
  - **3**: App Engine automatically scales & reliably serves your web app.
     - App Engine can access a variety of services using dedicated APIs.
 
-## App Engine Flexible Environment
+### App Engine Flexible Environment
 
 - Build and deploy containerized apps with a click.
 - No sandbox constraints.
@@ -831,10 +832,6 @@ spec:
 | Language support | Any | Any | Java, Python, Go, PHP |
 | Service model | Hybrid | PaaS | PaaS |
 | Primary use case | Container-based workloads | Web and mobile apps, container-based workloads | Web and mobile apps |
-
-```
-Toward managed infrastructure <--------------------------------------------------------> Toward dynamic infrastructure
-```
 
 ### Cloud Endpoints and Apigee Edge
 
@@ -958,8 +955,8 @@ Toward managed infrastructure <-------------------------------------------------
 **Why use Cloud Dataflow?**
 
 - ETL (extract/transform/load) pipelines to move, filter, enrich, shape data.
-- Data analysis: batch computation or continuous computation using streaming.
-- Orchestration: create pipelines that coordinate services, including external services.
+- Data analysis: Batch computation or continuous computation using streaming.
+- Orchestration: Create pipelines that coordinate services, including external services.
 - Integrates with GCP services like Cloud Storage, Cloud Pub/Sub, BigQuery and Bigtable:
     - Open source Java and Python SDKs.
     
@@ -1017,12 +1014,12 @@ Toward managed infrastructure <-------------------------------------------------
 **Why use the Cloud Machine Learning platform?**
 
 - **For structured data**:
-    - Classification and regression.
-    - Recommendation.
-    - Anomaly detection.
+    - Classification and regression
+    - Recommendation
+    - Anomaly detection
 - **For unstructured data**:
-    - Image and video analytics.
-    - Text analytics.    
+    - Image and video analytics
+    - Text analytics
 
 ### Machine Learning API
 
@@ -1079,7 +1076,7 @@ Each table belongs to a dataset.
 - Scalability and High Availability.
 - Security.
 
-**Impl best practice to build scalable, secure and highly available apps**
+**Implement best practice to build scalable, secure and highly available applications**
 
 - Code and Environment Management.
 - Scalability and Reliability.
@@ -1107,7 +1104,7 @@ Each table belongs to a dataset.
 
 - Keep UI responsive; perform backend operations asynchronously.
 - Use event-driven processing.
-    - Cloud Storage: User uploads image. Cloud FUnction is triggered.
+    - Cloud Storage: User uploads image. Cloud Function is triggered.
     - Cloud Function: Uploads output image.
 
 **Design for loose coupling**
@@ -1353,17 +1350,588 @@ mvn spring-boot:run
 
 ## Cloud Storage, Datastore, Cloud Bigtable, Cloud SQL, and Cloud Spanner
 
+### Overview of Data Storage Options
 
+**Google Cloud provides a full suite of storage service options**
 
+```
+Cloud Storage, Firestore, Datastore, Cloud Bigtable, Cloud SQL, Cloud Spanner, BigQuery
+```
 
+- Cost-effective.
+- Varied choices based on your:
+    - Application
+    - Workload
 
+**Cloud Storage**
 
+| Overview | Ideal for |
+|---|---|
+| Fully managed, highly reliable | Images and videos |
+| Cost-effective, scalable object/blob store | Objects and blobs |
+| Objects access via HTTP requests | Unstructured Data |
+| Object name is the only key | Static website hosting |
 
+**Firestore**
 
+| Overview | Ideal for |
+|---|---|
+| Fully managed, serverless, NoSQL | Native mobile and web clients |
+| Scalable | Document-oriented data |
+| Native mobile and web client libraries | Large collections of small documents |
+| Real-time updates and offline features | Durable key-value data |
+| | Hierarchical data |
+| | Managing multiple indexes |
+| | Transactions |
 
+**Datastore (Firestore in Datastore mode)**
 
+| Overview | Ideal for |
+|---|---|
+| Fully managed NoSQL | Server applications |
+| Scalable | Semi-structured app data |
+| No mobile and web client libraries | Durable key-value data |
+| No real-time and offline features | Hierarchical data |
+| | Managing multiple indexes |
+| | Transactions |
 
+**Cloud Bigtable**
 
+| Overview | Ideal for |
+|---|---|
+| High performance wide column NoSQL database service | Operational applications |
+| Sparsely populated table | Analytical applications |
+| Can scala to billions of rows and thousands of columns | Storing large amounts of single-keyed data |
+| Can store TB to PB of data | MapReduce operations |
 
+**Cloud SQL**
+
+| Overview | Ideal for |
+|---|---|
+| Managed service (replication, failover, backups) | Web frameworks |
+| MySQL, PostgreSQL, and SQL Server | Structured data |
+| Relational database service | OLTP workloads (Online Transaction Processes) |
+| Proxy allows for secure access to your Cloud SQL Second Generation instances without setting Allow rules | Applications using MySQL/PGS |
+
+**Cloud Spanner**
+
+| Overview | Ideal for |
+|---|---|
+| Mission-critical relational database service | Mission-critical applications |
+| Transactional consistency | High transactions |
+| Global scale | Scale and consistency requirements |
+| High availability | |
+| Multi-region replication | |
+| 99.999% SLA | |
+
+**BigQuery**
+
+| Overview | Ideal for |
+|---|---|
+| Low-cost enterprise data warehouse for analytics | Online Analytical Processing (OLAP) workloads |
+| Fully-managed | Big data exploration and processing |
+| Petabyte scale | Reporting via Business Intelligence (BI) tools |
+| Fast response times | |
+| Serverless | |
+
+**Run Microsoft SQL Server on Google Cloud**
+
+- SQL images on Google Compute Engine.
+- Compute Engine VMs can be preloaded with SQL Server.
+- Licensing from Microsoft is included automatically.
+- Supported versions:
+    - SQL Server Standard
+    - SQL Server Web
+    - SQL Server Enterprise
+
+### Storage options for mobile
+
+**Cloud Store for Firebase**
+
+- Overview:
+    - Mobile and web access to Google Cloud Storage.
+    - Serverless third-party authentication and authorization.
+- Ideal for:
+    - Images, pictures and videos.
+    - Objects and blobs.
+    - Unstructured data.
+    
+**Firebase Relational Database**
+
+- Overview:
+    - Realtime.
+    - NoSQL JSON database
+- Ideal for:
+    - Mobile and web applications.
+    - Realtime.
+    
+**Firebase Hosting**
+
+- Overview:
+    - Web and mobile content hosting.
+    - Production-grade.
+- Ideal for:
+    - Atomic release management.
+    - JS app support.
+    - Firebase integration.             
+
+**Cache your application data**
+
+- Memorystore automates complex tasks for Redis and Memcached caching engine.
+- Fully protocol compatible with each engine.
+- Ideal for high-performance, scalable web applications, gaming, and stream processing.
+- Fully managed service.
+- Google-grade security.
+
+**Summary**
+
+| Product | Description | Ideal for | Not ideal for |
+|---|---|---|---|
+| Cloud Storage | Binary/Object store | Large or rarely accessed unstructured data | Structured data, building fast apps |
+| Firestore | Real-time NoSQL database to store and sync data | Mobile, web, multi-user, IoT & real-time apps | Analytic data, heavy writes |
+| Datastore | Scalable store for structured data | App Engine and server apps, heavy read/write | Relational or analytic data |
+| BigTable | High-volume, low-latency database | "Flat", heavy read/write, or analytic data | High structure or transactional data |
+| Cloud SQL | Well-understood VM-based RDBMS | Web frameworks, existing apps | Scaling, analytics, heavy writes |
+| Spanner | Relational database service | Low-latency transactional systems | Analytic data |
+| BigQuery | Auto-scaling analytic data warehouse | Interactive analysis of static datasets | Building fast apps |
+
+| Product | Read/Write latency | Typical size | Storage type |
+|---|---|---|---|
+| Cloud Storage | Medium (100s of ms) | Any | Object |
+| Firestore | Medium (10 of ms) | <200 TB | Document |
+| Datastore | Medium (10s of ms) | <200 TB | Document |
+| Bigtable | Low (ms) | 2 TB - 10 PB | Key-Value |
+| Cloud SQL | Low (ms) | < 30 TB | Relational |
+| Spanner | Low (ms) | Any | Relational |
+| BigQuery | High(s) | Any | Columnar |
+
+### Datastore Concepts and Indexes
+
+**Datastore = Firestore in Datastore mode**
+
+- Fully backward compatibile with original Datastore but uses Firestore's improved storage layer.
+- The Datastore page is used to manage the database.
+- A project can have onlt a Firestore Native mode database or Datastore mode database, but not both.
+- How to decide:
+    - Choose Datastore mode when creating a new server application.
+        - Automatically scales to millions of writes per second.
+    - Choose Native mode for new mobile and web apps or when requiring real-time and offline features.
+        - Automatically scales to millions of concurrent clients.        
+
+**Datastore concepts**
+
+- Data objects are called entities.
+- Entities are made up of one or more properties.
+- Each entity has a key that uniquely identifies it, composed of:
+    - Namespace
+    - Entity kind
+    - Identifier (either a string or numeric ID)
+    - Ancestor Path (optional)
+- Operations on one more entities are called transactions.    
+
+![Datastore entity](gcp-img/gcp-entity.png "Datastore entity")
+
+**You can specify ancestors of an entity**
+
+- Complete key of Pencil entity:
+```yaml
+[Customer:John, Invoice: April, Product: Pencil]
+```
+
+**Datastore has two types of indexes**
+
+| Built-in indexes | Composite indexes |
+|---|---|
+| Automatically pre-defined indexes for each property of each entity kind | Index multiple property values for indexed entity |
+| Are suitable for simple types of queries | Support complex queries |
+| | Are defined in an index configuration file |
+
+**Create and delete your composite indexes**
+
+- Defined in configuration file named index.yaml
+- To create a composite index:
+    - Add index definition to index.yaml
+    - Run: `gcloud datastore indexes create`
+- To delete a composite index:
+    - Remove indexes you no longer need from index.yaml
+    - Run: `gcloud datastore indexes cleanup`    
+
+**Datastore as compared to relational databases**
+
+- Datastore:
+    - Is designed to automatically scale to very large data sets.
+    - Doesn't support join operations, inequality filtering on multiple properties, or filtering on data base on 
+    results of a subquery.
+    - Doesn't require entities of the same kind to have a consistent property set.
+    
+| Concept | Datastore | Relational database |
+|---|---|---|
+| Category of an object | Kind | Table |
+| One object | Entity | Row |
+| Individual data for an object | Property | Field |
+| Unique ID for an object | Key | Primary Key |    
+
+### Design Considerations & Sharding
+
+**Design your app with these considerations in mind**
+
+- Use UTF-8 characters for:
+    - Namespace names
+    - Kind names
+    - Property names
+    - Key names
+- Avoid forward shlash (/) in:
+    - Kind names
+    - Custom key names
+    
+**OK**
+
+```
+key = client.key('Task', 'hard_task')
+```
+
+**Not OK**
+
+```
+key = client.key('Task', 'hard/task')
+```
+
+**Use sharding to increase rate of writes**
+
+- Datastore will shard entities automatically.
+- You can shard manually if the number of writes exceeds Datastore limits.
+
+**Shard counters to avoid contention with high writes**
+
+- Reduce contention by building a shared counter, breaking the counter up into N different counters in N entities.
+- To increment, pick a shard at random and increment its counter.
+- To retrieve the count, read all of the sharded entities and sum their individual counts.
+
+**Use replication to read a portion of the key range**
+
+- Use replication to read a portion of the key range at higher rate.
+- You can store N copies of the same entity, allowing an N times higher rate of reads.
+
+### Replication, Query Types, Transactions, and Handling Errors
+
+- Use batch operations for reads, writes, and deletes.
+- Roll back failed transactions.
+- Use asynchronous calls.
+
+**Use query types based on needs**
+
+- Keys-only:
+    - Retrieve only the key.
+    - Return results at lower latency and cost (free).
+    - `SELECT __key__ FROM Task`
+- Projection:
+    - Retrieve specific properties from an entity.
+    - Retrieve only the properties included in the query filter.
+    - Return results at lower latency and cost (free).
+    - `SELECT priority, percent_complete FROM Task`    
+- Ancestor:
+    - Limits results to the specified entity and its descendants.
+    - `SELECT * FROM Task WHERE __key__ HAS ANCESTOR KEY(TaskList, 'default')`
+- Entity:
+    - Retrieve an entity kind, zero or more filters, and zero or more sort orders.
+    - `SELECT * FROM Task WHERE done = FALSE`    
+
+**Improve query latency by using cursors instead of offsets**
+
+- Integer offsets:
+    - Don't return skipped entities to your application.
+    - Still retrieve the entities internally.
+    - Cause your app to be billed for read operations.
+- Query cursors:
+    - Retrieve a query's results in convenient batches.
+    - Don't incur the overhead of query offset.    
+
+**Numeric IDs as keys**
+
+- Do not use a negative number.
+- Do not use the value 0.
+- If you wish to manually assign numeric IDs to your entities, get a block of IDs using the allocateIds() method.
+- Avoid monotonically increasing values.
+
+**Transaction design considerations**
+
+- Atomic:
+    - All are applied or.
+    - None are applied.
+- Max duration: 270 sec.
+- Idle expiration: 60 sec.
+- Can fail when:
+    - Too many concurrent modifications are attempted on the same entity.
+    - A resource limits is exceeded.
+    - Datastore encounters an internal error.
+
+> Make your Datastore transaction idempotent whenever possible!
+
+**Design app to handle errors**        
+
+***
+
+## Cloud Storage Concepts & Classes
+
+**Google Cloud Storage Concepts**
+
+- Resources are entities in Google Cloud Platform including:
+    - Projects
+    - Buckets: The basic Cloud Storage container.
+    - Objects: The individual pieces of data that you store in Google Cloud Storage.
+
+### Storage Classes
+
+**Multi-Regional**
+
+- Characteristics:
+    - 99.95% availability.
+    - Geo-redundant.
+- Use Cases:
+    - Serving website  content.
+    - Streaming videos.
+    - Mobile apps.
+- Price (per GB per month):
+    - $0.026
+- APIs name:    
+    - `multi_regional`
+    
+**Regional Storage**
+
+- Characteristics:
+    - 99.9% availability.
+    - Data stored in a narrow geographic region.
+- Use Cases:
+    - Data analytics.
+- Price (per GB per month):
+    - $0.02    
+- APIs name:
+    - `regional`    
+    
+**Nearline Storage**
+
+- Characteristics:
+    - 99.0% availability.
+    - Data retrieval costs.
+    - Higher per-operation costs.
+    - 30-day minimum storage duration.
+- Use Cases:
+    - Back-up.
+    - Serving long-tail multimedia content.
+- Price (per GB per month):
+    - $0.01
+- APIs name:
+    - `nearline`
+    
+**Coldline Storage**
+
+- Characteristics:
+    - 99.0% availability.
+    - Data retrieval costs.
+    - Higher per-operation costs.
+    - 90-day minimum storage duration.
+- Use Cases:
+    - Disaster recovery.
+    - Data archiving.
+- Price (per GB per month):
+    - $0.007
+- APIs name:
+    - `coldline`
+    
+### Bucket / Object Operations and Truncated Exponential Backoff
+
+**The following operations are strongly consistent**
+
+```
+Strongly consistent: When you perform an operation in Cloud Storage and receive a success response, the object is
+immediately available for download and metadata operations.
+```
+
+- Read-after-write
+- Read-after-metadata-update
+- Read-after-delete
+- Bucket listing
+- Object listing
+- Granting access to resources.
+
+**The following operations are eventually consistent**
+
+```
+Eventually consistent: When you perform an operation, it may take some time for the operations to take effect.
+```
+
+- Revoking access from objects.
+- Accessing publicly readable cached objects.
+                          
+**Use the following request endpoints**
+
+- Typical API requests: 
+    - XML, JSON.
+- CNAME redirects: 
+    - Use the following URI in the host name portion of your CNAME record: `c.storage.googleapis.com`.
+- Authenticated browser downloads:
+    - To download an object using cookie-based authentications.
+- Content-based load balancing:
+    - Create backend Cloud Storage buckets and serve content based on the URL sent to an external HTTPS load balancer.                    
+
+**Composite objects and parallel uploads**
+
+- Combine up to 32 objects into a single new object.
+- Use cases include:
+    - Dividing your data and uploading each chunk to a distinct object, composing your final object, and deleting
+    any temporary objects.
+    - Uploading data to a temporary new object, composing it with the object you want to append to it, and delete
+    the temporary object.
+- Compose object of smaller chunks using gsutil:
+
+```
+gsutil compose gs://example-bucket/component-obj-1
+gs://example-bucket/component-obj-2
+gs://example-bucket/composite-object
+```    
+
+**Design your app to handle network failures with truncated exponential backoff**
+
+- Truncated exponential backoff:
+    - Is a standard error-handling strategy for network applications.
+    - Periodically retries failed requests with increasing delays between requests.
+    - Should be used for all requests to Cloud Storage that return HTTP 5xx and 429 response codes.
+
+```python
+@retry(wait_exponential_multiplier=1000, wait_exponential_max=10000)
+
+def wait_exponential_1000():
+    print "Wait 2^x * 1000 milliseconds between each retry, up to 10 seconds, then 10 seconds afterwards"
+```    
+
+### Best Practices for Cloud Storage
+
+**Follow these best practices for naming**
+
+- Use globally unique names: `eu-west1-app-bucket01`.
+- Use GIDs or the equivalent if your application needs a lot of buckets.
+- Confirm to standard DNS naming conventions: `app-unique-bucket01`.
+
+**Don't**
+
+- Use personally identifiable information (PII): `majkiseba`.
+- Use user IDs, email, project names/IDs, etc: `majki`, `project-gcp-marketing`.
+- Use IP address notation: `192.169.0.1`.
+- Use the **goog** prefix or include any spelling or close misspelling to google: `goog_backet56555`.
+
+**Follow these best practices for Cloud Storage traffic**
+
+- Consider:
+    - Operations per second
+    - Bandwidth
+    - Cache control
+- Design your app to minimize spikes in traffic.
+- Use a exponential backoff if you get an error.
+- For request rates > **1000 write requests.second** or **5000 read requests/second** :
+    - Start with a request rate below or near the threshold.
+    - Double the request rate no faster than every 20 minutes.   
+
+**Consider the characteristics of your data**
+
+- Standard Storage:
+    - Use for data served at a high rate with high availability.
+    - No minimum storage duration and lowest operation charges.
+- Nearline Storage and Coldline Storage:
+    - Use for infrequently accessed data that tolerates slightly lower availability.
+    - 30 and 90 day minimum storage durations respectively with proportionate operation and storage charges.
+- Archive Storage:
+    - Use for data accessed less than once a year with no availability SLA.
+    - 365 days minimum storage duration and lowest per-month storage charges.        
+
+**Secure buckets using the following options**
+
+- Use Cloud Identity and Access Management (Cloud IAM) permissions to grant:
+    - Access to buckets.
+    - Bulk access to a bucket's objects.
+- Use Access Control Lists (ACLs) to grant:
+    - Read or write access to users for indicidual buckets or objects.
+    - Access when fine-grained control over individual objects is required.
+- Signed URLs (query string authentication):
+    - Provide time-limited read or write access to an object through a generated URL.        
+    - Can be created using **gsutil** or programmatically.
+- Use Signed Policy Documents to:
+    - Specify what can be uploaded to a bucket.
+    - Control size, content type, and other upload characteristics.
+- Firebase Security Rules provide:
+    - Granular, attribute-based access control to mobile and web apps using the Firebase SDKs for Cloud Storage.
+    
+**Consider these additional security best practices**
+
+- Use TLS (HTTPS) to transport data.
+- Use an HTTPS library that validates server certificates.
+- Revoke authentication credentials for apps that no longer need access to data.
+- Securely store credentials.
+- Use groups instead of large numbers of users.
+- Bucket and object ACLs are independent for each other.
+- Avoid making buckets publicly readable or publicly writable.            
+
+**Consider retention policies and retention policy locks**
+
+- Add a retention policy to a bucket to specify a retention period.
+    - If no policy exists, you can delete or replace objects.
+    - If a policy exists, objects can only be deleted or replaced once their age is greater than the policy.
+    - Applies retroactively to existing and new objects added to the bucket.
+- Lock a retention policy to permanently set it on the bucket:
+    - Once set, you cannot remove or reduce the retention period.
+    - A bucket cannot be deleted unless every object in the bucket has met the retention period.
+    - The retention period of a locked object can be increased.
+    - Locking a retention policy can help with data compliance regulations.
+
+**Uniformly control access to Cloud Storage resources**
+
+- Uniform bucket-level access allows you to uniformly control access to Cloud Storage resources.
+- The feature disables ACLs. Only IAM permissions grant access to the bucket and it's objects.
+- Uniform bucket-level access is recommended, because it unifies and simplifies how you grant access to your 
+Cloud Storage resources.
+
+**Best practices for uploading data**
+
+- If using XMLHttpRequest:
+    - Don't close and re-open the connection.
+    - Set reasonably long timeouts for upload traffic.
+- Make the request to create the resumable upload URL from the same region as the bucket and upload location.    
+- Avoid breaking transfers into smaller chunks.
+- Avoid uploading content that has both:
+    - `content-encoding gzip`
+    - `content-type that is compressed`
+
+**Consider the following when using gsutil for Cloud Storage**
+
+- `gsutil -D` will include OAuth2 refresh and access tokens in the output.
+- `gsutil --trace-token` will include OAuth2 tokens and the contents of any files accessed during the trace.
+- Customer-supplied encryption key information in **.boto** config security-sensitive.
+- In a production environment, use a service account for `gsutil`.
+
+**Validate your data**
+
+- Data can be corrupted during upload or download by:
+    - Noisy network links.
+    - Memory errors on:
+        - Client computer
+        - Server computer
+        - Routes along the path
+    - Software bugs
+- Validate data transferred to/from bucket using:
+    - CRC32c Hash:
+        - Is available for all cloud storage objects.
+        - Can be computed using these libraries:
+            - Boost for C++
+            - crcmod for Python
+            - digest-crc for Ruby
+        - gsutil automatically performs integrity checks on all uploads and downloads.
+    - MD5 Hash:
+        - Is supported for non-composite objects.
+        - Cannot be used for partial downloads.                                
+
+**You can host static websites**
+
+- You can allow scripts hosted on other websites to access static resources stored in a Cloud Storage bucket.
+- You can also allow scripts hosted in Cloud Storage to access static resources hosted on a website external to
+Cloud Storage.
 
 

@@ -64,7 +64,7 @@ public class Main {
 
 ## Abstract Factory
 
-- Reflection: Ss a way to invoke methods of objects on the fly (at run-time).
+- Reflection: Is a way to invoke methods of objects on the fly (at run-time).
 - Reflection is slow and complicated:
     - A method call via reflection may take 10 x longer than usual.
 - The implementation details of how an object of database type is instantiated in Abstract Factory, is completely
@@ -196,7 +196,7 @@ variables with the same object:
     - Restricting access to an object or, a variable-akin to locking the variable so only thread can access at a time
       is a powerful concept used widely in computer science especially in databases.
     - Locking variables correctly can eliminate thread interference and memory consistency error:
-        - But, it slows down performance and can lead to thread contention issues (starvation, livelock, deadlock).
+        - It slows down performance and can lead to thread contention issues (starvation, livelock, deadlock).
 
 ### What is the best way to subclass Singleton?
 
