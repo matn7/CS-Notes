@@ -1384,6 +1384,7 @@ Cloud Storage, Firestore, Datastore, Cloud Bigtable, Cloud SQL, Cloud Spanner, B
 | | Managing multiple indexes |
 | | Transactions |
 
+
 **Datastore (Firestore in Datastore mode)**
 
 | Overview | Ideal for |
