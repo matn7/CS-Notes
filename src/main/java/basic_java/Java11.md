@@ -2,7 +2,7 @@
 
 ## OOP
 
-- Object: state, behavior.
+- Object: State, behavior.
 - Class: Template for objects.
 
 ### Reference vs Object vs Instance vs Class
@@ -131,7 +131,7 @@ class Rectangle {
 the instance variables.
 - The 3rd constructor does all the work.
 - No matter what constructor we call, the variables will always be initialized in 3rd constructor.
-- This is known as constructor chaining, the last constructor has the "responsibility" to initialize the variables.
+- This is known as **constructor chaining**, the last constructor has the "responsibility" to initialize the variables.
 
 **super() call example**
 
@@ -167,7 +167,7 @@ class Rectangle extends Shape {
 - The parent constructor will initialize `x`, `y` variables while 2nd Rectangle constructor will initialize the `width` 
 and, `height` variables.
 
-### Method overriding vs overloading
+## Method overriding vs overloading
 
 #### Method Overloading
 
@@ -209,7 +209,7 @@ class Dog {
 }
 ```    
 
-#### Method Overriding
+### Method Overriding
 
 - Method **Overriding** means defining a method in a child class that already exists in the parent class with same
 signature (same name, same arguments).
@@ -288,14 +288,14 @@ class HealthyBurgerFactory extends BurgerFactory {
 }
 ```
 
-### Static vs Instance methods
+## Static vs Instance methods
 
-#### Static Methods
+### Static Methods
 
 - **Static methods** are declared using a **static** modifier.
 - **Static methods can't** access instance methods and instance variables directly.
 - They are usually used for operations that don't require any data from an instance of the class (from 'this').
-This keyword is the current instance of a class.
+- **this** keyword is the current instance of a class.
 - In **static methods** we can't use the **this** keyword.
 - :star: Whenever you see a method that **does not use instance variables** that method should be declared as a **static method**.
 - For example main is a static method, and it is called by the JVM when it starts an application.
@@ -312,7 +312,7 @@ class Calculator {
 public class Main {
     public static void main(String[] args){
         Calculator.printSum(5, 10);
-        printHello();; // shorter form of Main.printHello(); 
+        printHello(); // shorter form of Main.printHello(); 
     }
     
     public static void printHello() {
@@ -321,7 +321,7 @@ public class Main {
 }
 ```
 
-#### Instance Methods
+### Instance Methods
 
 - **Instance methods** belong to an instance of a class.
 - To use an **instance method** we have to instantiate the class first usually by using the **new** keyword.
@@ -345,13 +345,13 @@ public class Main {
 }
 ```
 
-#### Static or Instance Method?
+**Static or Instance Method?**
 
 ![Static or Instance Method?](images/static-vs-instance-method.png "Static or Instance Method?")
 
-### Static vs Instance Variables
+## Static vs Instance Variables
 
-#### Static Variables
+### Static Variables
 
 - Declared by using the keyword **static**.
 - **Static variables** are also known as **static member variables**.
@@ -384,7 +384,7 @@ public class Main {
 }
 ```
 
-#### Instance Variables
+### Instance Variables
 
 - They **don't** sue the **static** keyword.
 - Instance variables are also known as fields or member variables.
@@ -409,7 +409,7 @@ class Dog {
 public class Main {
     public static void main(String[] args){
         Dog rex = new Dog("rex"); // create instance (rex)
-        Dog fluffy = new DOg("fluffy"); // create instance (fluffy)
+        Dog fluffy = new Dog("fluffy"); // create instance (fluffy)
         rex.printName(); // prints rex
         fluffy.printName(); // prints fluffy
     }
@@ -441,8 +441,8 @@ int[] array = new int[5];
 int[] myNumbers = {12. 34, 56, 1, 234};
 ```    
 
-- We can also initialize an array inline by using array initializer block `{` and `}`. Values we defined need to be
-separated by a comma.
+- We can also initialize an array inline by using array initializer block `{` and `}`. 
+- Values we defined need to be separated by a comma.
 - This way of initializing an array is also known as an anonymous array.
 - It has 5 elements and index range 0 to 4.
 
@@ -464,12 +464,14 @@ System.out.println("anotherArray = " + Arrays.toString(anotherArray));
 
 ![Array in memory](images/array-in-memory.png "Array in memory")
 
+***
+
 ## Abstract class vs an Interface
 
 ### Abstract Class
 
-- Abstract classes are similar to Interfaces. You cannot instantiate them, and they may contain a mix of methods 
-declared with or without an implementation.
+- Abstract classes are similar to Interfaces. 
+- You cannot instantiate them, and they may contain a mix of methods declared with or without an implementation.
 - However, with Abstract classes, you can declare fields that are not static and final, and define public, protected
 and private concrete methods.
 - An Abstract class can extend only one parent class, but it can implement multiple interfaces.
@@ -479,7 +481,7 @@ in its parent class.
 
 **Use an Abstract class when...**
 
-- You want to share code among serveral closely related classes (Animal - with fields name, age...)
+- You want to share code among several closely related classes (Animal - with fields name, age...)
 - You expect classes that extend your abstract class to have many common methods or fields or required access 
 modifiers other than public (protected, private).
 - You want to declare non static or non final fields (for example name, age), this enables you to define methods
@@ -492,27 +494,28 @@ classes can share.
 ### Interface
 
 - An interface is just the declaration of methods of an Class, it's not the implementation.
-- In an Interface, we define what kind of operation an object can perform. These operations are defined by the
-class that implement the Interface.
+- In an Interface, we define what kind of operation an object can perform. 
+- These operations are defined by the class that implement the Interface.
 - Interfaces form a contract between the class and the outside world, and this contract is enforced at build time
-bt the compiler.
+by the compiler.
 - You cannot instantiate them, and they may contain a mix of methods declared with or without an implementation.
-All methods in interfaces are automatically public and abstract.
+- All methods in interfaces are automatically public and abstract.
 - An Interface can extend another interface.
 - Interfaces are more flexible and can deal with a lot more stress on the design of your program than the 
 implementation.
 - By introducing interfaces into your program, you are really introduce points of variation at which you can plug in
-different implementations for that interface. An Interfaces primary purpose is abstraction, decoupling the "what"
-from the "how". 
-- Since Java 8 interfaces can contain default methods. In other words methods with implementation. The keyword
-default is used (mostly for backward compatibility), and static methods as well before Java 8 that was not possible.
+different implementations for that interface. 
+- An Interfaces primary purpose is abstraction, decoupling the "what" from the "how". 
+- Since Java 8 interfaces can contain default methods. In other words methods with implementation. 
+- The keyword default is used (mostly for backward compatibility), and static methods as well before Java 8 that was 
+not possible.
 - Since Java 9 an Interface can also contain private methods (commonly used when two default methods
 in an Interface share common code).
 
 **Use an Interface when...**
 
-- You expect that unrelated classes will implement your interface. For example, the interfaces Comparable and
-Cloneable are implemented by many unrelated classes.
+- You expect that unrelated classes will implement your interface. 
+- For example, the interfaces Comparable and Cloneable are implemented by many unrelated classes.
 - You want to specify the behavior of a particular data type, but you are not concerned about who implements
 its behavior.
 - You want to separate different behavior.
@@ -584,34 +587,40 @@ modifier is visible to every class within the same package (but not to classes i
 - **protected:** The object is visible anywhere in its own package (like package-private) but also in subclasses 
 even if they are in another package.
 
+***
+
 ## Concurrency in Java
 
-- A process is a unit of execution that has its own memory space. Each instance of JVM runs as a process.
-When we run a Java console application, we're kicking off a process.
+- A process is a unit of execution that has its own memory space. 
+- Each instance of JVM runs as a process.
+- When we run a Java console application, we're kicking off a process.
 - If one Java application is running and we run another one, each application has its own memory space of **heap**.
-- The first Java application can't access the heap that belongs to the second Java application. The heap isn't shared
-between them. They each have their own.
+- The first Java application can't access the heap that belongs to the second Java application. 
+- The heap isn't shared between them. They each have their own.
 
 ### Thread
 
-- A **thread** is a unit of execution within a process. Each process can have multiple threads. In Java, every process
-(or application) has at least one thread, the **main thread** (for UI applications, this is called the JavaFX 
-application thread). In fact, just about every Java process also has multiple system threads that handle tasks like
-memory management and I/O. We the developers, don't explicitly create and code those threads. Our code runs on the main
-thread, or in other threads that we explicitly create.
-- Creating a thread doesn't require as many resources as creating a process. Every thread created by process shares the
-process's memory and files.
+- A **thread** is a unit of execution within a process. 
+- Each process can have multiple threads. 
+- In Java, every process (or application) has at least one thread, the **main thread** (for UI applications, this is 
+called the JavaFX  application thread). 
+- In fact, just about every Java process also has multiple system threads that handle tasks like memory management and I/O. 
+- We the developers, don't explicitly create and code those threads. 
+- Our code runs on the main thread, or in other threads that we explicitly create.
+- Creating a thread doesn't require as many resources as creating a process. 
+- Every thread created by process shares the process's memory and files.
 - In addition to the process's memory, or heap, each thread has what's called a thread stack, which is the memory
 that only that thread can access. 
-- Every Java application runs as a single process, and each process can have multiple threads. Every process has a heap,
-and every thread has a thread stack.
+- Every Java application runs as a single process, and each process can have multiple threads. 
+- Every process has a heap, and every thread has a thread stack.
 
 ### Concurrency
 
-- Refers to an application doing more than one thing at a time. That doesn't necessarily mean that the application is doing
-more than one thing at the same time. It means that progress can be made on more than one task.
-- Concurrency means that one task doesn't have to complete before another can start. Java provides thread-related
-classes so that we can create Java concurrent applications.
+- Refers to an application doing more than one thing at a time. 
+- That doesn't necessarily mean that the application is doing more than one thing at the same time. 
+- It means that progress can be made on more than one task.
+- Concurrency means that one task doesn't have to complete before another can start. 
+- Java provides thread-related classes so that we can create Java concurrent applications.
 
 ### Producer - Consumer
 
@@ -795,8 +804,8 @@ public class Deadlock {
 
     private static class Thread2 extends Thread {
         public void run() {
-            synchronized (lock1) {
-                System.out.println("Thread 2: Has lock1");
+            synchronized (lock1) { // <-- lock 1
+                System.out.println("Thread 2: Has lock1"); // <-- thread 2
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -960,7 +969,7 @@ counter++;
     - Thread1 reads the value of counter and gets 1.
     - Thread2 reads the value of counter and gets 1.
     - Thread1 increments the value and gets 2. It writes 2 to its cache. The JVM immediately writes 2 to main memory.
-    - Thread2 increments the value and gets 2. It writes 2 to its cache. The JVM immediately write 2 to main memory.
+    - Thread2 increments the value and gets 2. It writes 2 to its cache. The JVM immediately writes 2 to main memory.
     - The counter has beecn incremented twice, so its value should now be 3.
 - A memory consistency error like this can occur when a thread can update the value of the variable in a way that 
 depends on the existing value of the variable. In the counter++ case, the result of the increment depends on the existing 
@@ -1050,33 +1059,4 @@ it's implied (and hence not requiring curly braces).
 - Used lambda expressions that contain one statement vs. Lambda expressions that have more than one statement.
 - Using parenthesis when a lambda expression only has one argument vs. not using parenthesis, since they're optional
 when there's only one argument.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

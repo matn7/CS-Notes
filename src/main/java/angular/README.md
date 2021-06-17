@@ -40,11 +40,11 @@ sudo npm install -g @angular/cli
 
 ## Project setup
 
-- NodeJS: bundle and optimize project, uses npm to add dependencies.
+- NodeJS: Bundle and optimize project, uses npm to add dependencies.
 
 ```console
 npm install -g @angular/cli@latest
-ng new my-first-appdra
+ng new my-first-app
 cd my-first-app
 ng serve
 ```
@@ -56,7 +56,7 @@ ng serve
 <p>{{ name }}</p>
 ```
 
-- `[(ngModel)]` - listen anything enter in input field and store in **name** property and also 
+- `[(ngModel)]`: Listen anything enter in input field and store in **name** property and also 
 output of this property to input.
 - To use `ngModel` add FormsModule to AppModule.
 
@@ -82,7 +82,7 @@ export class AppModule { }
 
 ### TypeScript
 
-- TypeScript - More features than vanilla JS (Types, Classes, Interfaces).
+- TypeScript: More features than vanilla JS (Types, Classes, Interfaces).
 - TypeScript is compiled to JavaScript, handled by CLI.
 
 ### Setup Bootstrap styling
@@ -97,7 +97,7 @@ npm install --save bootstrap@3
 
 ## How Angular gets loaded and started
 
-- **index.html** - single page that is rendered, contains `<app-root></app-root>`.
+*index.html*: Single page that is rendered, contains `<app-root></app-root>`.
 
 ```html
 <!doctype html>
@@ -115,7 +115,7 @@ npm install --save bootstrap@3
 </html>
 ```
 
-- **app.component.html**
+*app.component.html*
 
 ```ts
 import { Component } from '@angular/core';
@@ -129,7 +129,7 @@ export class AppComponent {
 }
 ```
 
-- **main.ts** - bootstraping app.module.ts.
+*main.ts*: Bootstraping app.module.ts.
 
 ```ts
 import { enableProdMode } from '@angular/core';
@@ -154,9 +154,9 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 
 **Creating a new component**
 
-- Decorator - Typescript features allowing you to enhance elements you use in code.
-    - `selector` - html tag  which you will be able to use in other components.
-    - `templateUrl` - html template file path.
+- Decorator: Typescript features allowing you to enhance elements you use in code.
+    - `selector`: Html tag which you will be able to use in other components.
+    - `templateUrl`: Html template file path.
     
 ```ts
 import { Component } from '@angular/core';
@@ -248,8 +248,8 @@ ng g c servers
 
 ![Databinding](images/databinding.png "Data binding")
 
-- EventBinding - listen to click.
-- String Interpolation - output data.
+- EventBinding: Listen to click.
+- String Interpolation: Output data.
 - Property binding.
 - Two way binding.
 
@@ -257,6 +257,7 @@ ng g c servers
 
 ```ts
 import { Component } from '@angular/core';
+
 @Component({
     selector: 'app-server',
     templateUrl: './server.component.html'
@@ -349,11 +350,11 @@ onUpdateServerName(event: any) {
 
 ![Directives](images/directives.png "Directives")
 
-- `ngIf` - structural directive.
-- `ngStyle` - attribute directives don't add or remove elements. They only change the element they
+- `ngIf`: Structural directive.
+- `ngStyle`: ttribute directives don't add or remove elements. They only change the element they
 were placed to.
-- `ngClass`.
-- `ngFor`.
+- `ngClass`
+- `ngFor`
 
 **ngIf**
 
@@ -518,6 +519,7 @@ export class CockpitComponent implements OnInit {
 
 ```ts
 import { Component } from '@angular/core';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -659,9 +661,9 @@ export class AppComponent {
 ### Component decorator
 
 - Like annotations in Java:
-    - selector: tag name for component.
-    - templateUrl: location of html template.
-    - styleUrls: styles location.
+    - `selector`: Tag name for component.
+    - `templateUrl`: Location of html template.
+    - `styleUrls`: Styles location.
 
 ```ts
 @Component({
@@ -677,7 +679,7 @@ export class ServersComponent implements OnInit {
 template: "<h1>{{title}}</h1>",
 ``` 
 
-- {{ interpolation }}
+- `{{ interpolation }}`
 - Every Angular Component `@Component` has to be associated with an Angular Module `@NgModule`.
 
 ### To use component
@@ -752,15 +754,15 @@ export class ServerComponent {
 
 ## Databinding
 
-- Databinding = Communication
+- `Databinding = Communication`
 
 ![Databinding](images/databinding.png "Databinding")
 
 - Supported binding (DOM Component):
-    - `{{ value }}`.
-    - `[property] = value            component -> template`
-    - `(event) = "functionHandler"   template -> component`
-    - `[(ng-model)] = "property"     template <-> component`
+    - `{{ value }}`
+    - `[property] = value` `component -> template`
+    - `(event) = "functionHandler"` `template -> component`
+    - `[(ng-model)] = "property"` `template <-> component`
 
 ### String Interpolation
 
@@ -795,8 +797,8 @@ getUserLocation() {
 ### Event binding
 
 ```html
-User Name : <input type="text" name="username" value="{{username}}" /> <!-- interpolation -->
-Password: <input type="password" nmae="password" value="{{password}}" />
+User Name: <input type="text" name="username" value="{{username}}" /> <!-- interpolation -->
+Password: <input type="password" name="password" value="{{password}}" />
 
 <button (click)="handleLogin()">Login</button> <!-- event binding -->
 ```
@@ -811,9 +813,9 @@ Password: <input type="password" name="password" [(ngModel)]="password" />
 ```
 
 - Summing up:
-    - `{{username}}`: string interpolation, bind up view to value of component property.
-    - `(client)="handleLogin()"`: event binding, user event to component event.
-    - `[(ngModel)]="username"`: two way data binding, ngModel -> angular directive adding on top of regular html.
+    - `{{username}}`: String interpolation, bind up view to value of component property.
+    - `(client)="handleLogin()"`: Event binding, user event to component event.
+    - `[(ngModel)]="username"`: Two way data binding, `ngModel` -> angular directive adding on top of regular html.
 
 ```ts
 buttonSays: string = "Waiting"; // component property
@@ -910,7 +912,6 @@ onUpdateButton(event: Event) {
     selector: '[lightsUp]'
 })
 export class LightsUpDirective {
-
 }
 ```
 
@@ -927,7 +928,7 @@ export class LightsUpDirective {
 <small *ngIf="invalidLogin">{{ errorMessage }}</small>
 
 <div>
-  User Name : <input type="text" name="username" [(ngModel)]="username" />
+  User Name: <input type="text" name="username" [(ngModel)]="username" />
   Password: <input type="password" name="password" [(ngModel)]="password" />
   <button (click)="handleLogin()">Login</button>
 </div>
@@ -975,14 +976,14 @@ getColor() {
 
 ## Lifecycle
 
-1. `ngOnChanges` - Called after a bound input property changed..
-2. `ngOnInit` - Called once the component is initialized.
-3. `ngDoCheck` - Called during every change detection run.
-4. `ngAfterContentInit` - Called after content (ng-content) has been projected into view.
-5. `ngAfterContentChecked` - Called every time the projected content has been checked.
-6. `ngAfterViewInit` - Called after the content's view (and child views) has been initialized.
-7. `ngAfterViewChecked` - Called every time the view (and child views) has been checked.
-8. `ngOnDestroy` - Called once the component is about to be destroyed.
+1. `ngOnChanges`: Called after a bound input property changed..
+2. `ngOnInit`: Called once the component is initialized.
+3. `ngDoCheck`: Called during every change detection run.
+4. `ngAfterContentInit`: Called after content (ng-content) has been projected into view.
+5. `ngAfterContentChecked`: Called every time the projected content has been checked.
+6. `ngAfterViewInit`: Called after the content's view (and child views) has been initialized.
+7. `ngAfterViewChecked`: Called every time the view (and child views) has been checked.
+8. `ngOnDestroy`: Called once the component is about to be destroyed.
 
 ## Attribute vs Structural
 
@@ -995,7 +996,7 @@ getColor() {
 
 ## Services & Dependency Injection
 
-- Service: logic common for multiple components.
+- Service: Logic common for multiple components.
 
 ```console
 ng g s service/authentication
@@ -1063,8 +1064,8 @@ constructor(private router: Router, private authenticate: AuthenticationService)
 <p>{{ username | uppercase }}</p>
 ```
 
-- Create a custom pipe, implements PipeTransform, override transform method
-- Pipe arguments after `:`, for example shorten:8
+- Create a custom pipe, implements PipeTransform, override transform method.
+- Pipe arguments after `:`, for example `shorten:8`.
 
 ## Compilation
 
@@ -1109,12 +1110,12 @@ App download in a browser.
 
 - HttpModule:
     - `@angular/http`
-    - import HttpModule in AppModule.ts.
+    - `import HttpModule` in AppModule.ts.
     - Http Module use XMLHttpRequest (XHR) to transfer data from the server to the client.
     - RequestOptions to add options and headers to the calls.
-- RequestHeader.
-- RequestOptions.
-- Response.
+- RequestHeader
+- RequestOptions
+- Response
 - Supported REST methods:
     - GET
     - POST
@@ -1254,11 +1255,15 @@ npm i --save @angular/cdk @angular/material @angular/animations hammerjs
 - Core Angular features are included in Angular modules (e.g. FormsModule) to load them only when needed.
 - You can't use a feature/building block without including it in a module.
 
-- **Working with multiple modules (feature modules)**:
-    - Shared Modules.
-    - The CoreModule.
-    - Lazy Loading.
-    - Services & Modules.
+**Working with multiple modules (feature modules)**
+
+- Shared Modules
+- CoreModule
+- Lazy Loading
+- Services & Modules
+
+**Modules**
+
 - AppModule:
     - Service available app-wide.
     - Use root injector.
@@ -1290,7 +1295,7 @@ ng build --prod
 
 - Use & check environment variables.
 - Polish & test code.
-- `ng build --prod` - Uses ahead-of0time compilation.
+- `ng build --prod`: Uses ahead-of-time compilation.
 - Deploy build artifacts (generated files) to static host - Because it's only HTML, JS, CSS!
 
 ***

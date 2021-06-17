@@ -1,4 +1,4 @@
-## :heart: Exceptions and exception handling.
+# :heart: Exceptions and exception handling.
 
 - Object of type Throwable and its subtypes can be sent up the stack with the throw keyword and caught
 with `try...catch` statement.
@@ -16,14 +16,14 @@ try {
 
 - The statements in the try block are executed.
 - If no exception is thrown by the statements in the try block, then control passes to the next statement after
-the try...catch.
+the `try...catch`.
 - If an exception is thrown in the try block:
     - The exception object is tested to see if it is an instance of SomeException or a subtype.
     - If it is, then the catch block will catch the exception:
         - The variable `e` is bound to exception object.
         - The code within the catch block is executed.
         - If that code throws an exception, then the newly thrown exception is propagated in place to the original one.
-        - Otherwise, control process to the next statement after the try...catch.
+        - Otherwise, control process to the next statement after the `try...catch`.
     - If it is not, the original exception continues to propagate.
 
 ### Try-catch with multiple catches.
@@ -41,7 +41,7 @@ try {
 
 - If there are multiple catch blocks, they are tried one at a time starting with the first one, until a match is found for
 the exception.
-- The corresponding handler is executed, and then control is passed to the next statement after try...catch.
+- The corresponding handler is executed, and then control is passed to the next statement after `try...catch`.
 - The catch blocks after the one that matches are always skipped, even if the handler code throws the exception.
 
 ```java
@@ -230,9 +230,9 @@ try {
 - If you need the exception to carry a simple error message.
     - In that case, RuntimeException is usually preferred, since it is not checked Exception.
 - Other exception classes exist for common classes of errors:
-    - UnsupportedOperationException - a certain operation is not supported.
-    - IllegalArgumentException - an invalid parameter value was passed to a method.
-    - IllegalStateException
+    - UnsupportedOperationException, a certain operation is not supported.
+    - IllegalArgumentException, an invalid parameter value was passed to a method.
+    - IllegalStateException.
 - Cases where you do want to use a custom exception class include the following:
     - You are writing an API or library for use by others, and you want to allow users of your API to be able to
     specifically catch and handle exceptions from your API, and be able to differentiate those exceptions from other,
@@ -282,8 +282,8 @@ void anotherMethod(String value) {
 }
 ```
 
-- If a client can reasonably be expected or recover from an exception, make it checked exception.
-- If client cannot do anything to recover from the exception, make it unchecked exception (Runtime).
+- :star: If a client can reasonably be expected or recover from an exception, make it checked exception.
+- :star: If client cannot do anything to recover from the exception, make it unchecked exception (Runtime).
 
 **Why does runtime exception not require an explicit exception handling.**
 
@@ -455,7 +455,7 @@ making use of the method can define its own flow control for the situation via e
 a range of functionality common to all exceptions:
     - `java.lang.Exception` this is the superclass of all normal exceptions.
         - Various standard and custom exception classes.
-        - `java.lang.RuntimeException`: This the superclass of all normal exceptions that are unchecked exceptions:
+        - `java.lang.RuntimeException` this the superclass of all normal exceptions that are unchecked exceptions:
             - Various standard and custom runtime exception classes.
     - `java.lang.Error` this is the superclass of all "fatal error" exceptions.
 - The Throwable, Exception and RuntimeException class should be treated as abstract.
@@ -515,7 +515,7 @@ public void methodThrowingCheckedException(boolean flag) {
 public void methodThrowingCheckedException(boolean flag) throws MyException {
     int i = 1 / 0; // Compiles OK
     if (flag) {
-        throw new MyException(); // Compilation ok
+        throw new MyException(); // Compilation OK
     } else {
         throw new MyException2(); // Compiles OK
     }
@@ -703,7 +703,7 @@ public class MyException extends Exception {
 
 ### Erasing or replacing the stacktrace.
 
-- Throwable.setStackTrace can be used to replace the array of StackTraceElement objects that holds the information.
+- `Throwable.setStackTrace` can be used to replace the array of StackTraceElement objects that holds the information.
 
 ```java
 exception.setStackTrace(new StackTraceElement[0]);
@@ -720,7 +720,7 @@ try (Writer w = new BufferedWriter(new FileWriter(someFilename))) {
 }
 ```
 
-- When the exception is thrown, the try will call close() on the `w` which will flush any buffered output and then close
+- When the exception is thrown, the try will call `close()` on the `w` which will flush any buffered output and then close
 the FileWriter.
 - When IOException is thrown while flushing output data exception while cleaning up a resource is suppressed.
 The exception is caught, and added to the primary exception's suppressed exception list. Next the try-with-resources 
@@ -818,9 +818,9 @@ public void checkEven(Double number) throws OddNumberException, ArithmeticExcept
 **What is the point of declaring unchecked exceptions as thrown?.**
 
 - The throws clause in a method declaration serves two purposes:
-    - 1. It tells the compiler which exceptions are thrown so that the compiler can report uncaught (checked) exceptions
+    - :one: It tells the compiler which exceptions are thrown so that the compiler can report uncaught (checked) exceptions
     as errors.
-    - 2. It tells a programmer who is writing code that calls the method what exceptions to expect. For this purpose,
+    - :two: It tells a programmer who is writing code that calls the method what exceptions to expect. For this purpose,
     it often makes to senses to include unchecked exceptions in a throws list.
 
 **Throws and method overriding.**

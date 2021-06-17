@@ -8,46 +8,56 @@ are run so that results are repeatable.
     - Designed to test specific sections of code.
     - Should be `unity` and executed very fast.
     - Should have no external dependencies - no db, no Spring context.
-- Integration Tests - Designed to test behaviors between objects and parts of the overall system:
+- Integration Tests: Designed to test behaviors between objects and parts of the overall system.
     - Much larger scope.
     - Can include the Spring Context, database and message brokers.
     - Will run much slower than unit tests.
-- Functional Tests - Typically means you are testing the running application:
+- Functional Tests: Typically means you are testing the running application.
     - Application is live, likely deployed in a known environment.
     - Functional touch points are tested:
-        - Using a web driver, calling web services, sending / receiving messages.
-- TDD (Test Driven Development) - Write tests first, which will fail, then code to `fix` test.
-- BDD (Behavior Driven Development) - Builds on TDD and specifies that tests of any unit of software should be specified
+        - Using a web driver.
+        - Calling web services.
+        - Sending / receiving messages.
+- TDD (Test Driven Development): Write tests first, which will fail, then code to `fix` test.
+- BDD (Behavior Driven Development): Builds on TDD and specifies that tests of any unit of software should be specified
 in terms of desired behavior of the unit:
     - Often implemented with DSLs to crete natural language tests.
     - JBehave, Cucumber, Spock.
     - Example: given, when, then.
-- Mock - A fake implementation of a class used for testing. Like a test double.
-- Spy - A partial mock, allowing you to override selected methods of a real class
+- Mock: A fake implementation of a class used for testing. Like a test double.
+- Spy: A partial mock, allowing you to override selected methods of a real class.
 
 ### Testing Goals
 
 - Generally, you will want the majority of your tests to be unit tests.
 - Bringing up the Spring Context makes your tests exponentially slower.
 - Try to test specific business logic in unit tests.
-- Use integration Tests to test interactions.
+- Use integration tests to test interactions.
 - Think of a pyramid. Base is unit tests, middle is integration tests, top is functional tests.
 
 ### Test Scope Dependencies
 
 - Using `spring-boot-starter-test` (default from Spring Initializr) will load the following dependencies:
-    - JUnit - The de-facto standard for unit testing Java applications.
-    - Spring Test and Spring Boot Test - Utilities and integration test support for Spring Boot applications.
-    - AssertJ - A fluent assertion library.
-    - Hamcrest - A library of matcher objects.
-    - Mockito - A Java mocking framework.
-    - JSONassert - An assertion library for JSON.
-    - JSONPath - XPath for JSON.
+    - JUnit: The de-facto standard for unit testing Java applications.
+    - Spring Test and Spring Boot Test: Utilities and integration test support for Spring Boot applications.
+    - AssertJ: A fluent assertion library.
+    - Hamcrest: A library of matcher objects.
+    - Mockito: A Java mocking framework.
+    - JSONassert: An assertion library for JSON.
+    - JSONPath: XPath for JSON.
     
 ### Spring Boot Annotations
 
-- `@RunWith`, `@SpringBootTest`, `@TestConfiguration`, `@MockBean`, `@SpyBean`, `@JsonTest`, `@WebMvcTest`,
-`@DataJpaTest`, `@TestPropertySource`, `@Transactional`    
+- `@RunWith`
+- `@SpringBootTest`
+- `@TestConfiguration`
+- `@MockBean`
+- `@SpyBean`
+- `@JsonTest`
+- `@WebMvcTest`
+- `@DataJpaTest`
+- `@TestPropertySource`
+- `@Transactional`    
 
 ### JUnit5
 

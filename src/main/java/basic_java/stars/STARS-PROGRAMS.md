@@ -1,6 +1,6 @@
-## :star: Find the maximum depth of a binary tree
+### :star: Find the maximum depth of a binary tree
 
-- The max depth will be furthest distance of the leaf node from the root
+- The max depth will be furthest distance of the leaf node from the root.
 
 ```java
 public static class Node<T> {
@@ -57,23 +57,20 @@ public static int maxDepth(Node root) {
 
 ***
 
-## :star: Palindrome
+### :star: Palindrome
 
 ```java
 public class Palindrome {
     public boolean checkPalindrome(String word) {
         boolean result = true;
         char[] wordchar = word.toCharArray();
-
         for (int i = 0; i < word.length()/2; i++) {
             if (wordchar[i] != wordchar[word.length()-1-i]) {
                 result = false;
                 break;
             }
         }
-
         return result;
-
     }
 
     public boolean checkRecursive(String word) {
@@ -94,7 +91,7 @@ public class Palindrome {
 
 ***
 
-## :star: Singleton
+### :star: Singleton
 
 ```java
 public class Singleton {
@@ -140,11 +137,9 @@ enum Downloader {
             e.printStackTrace();
         }
     }
-
 }
 
 public class SingletonEnumImproved {
-
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
         for (int i = 0; i < 5; i++) {
@@ -162,7 +157,7 @@ public class SingletonEnumImproved {
 
 ***
 
-## :star: Multiply without `*`
+### :star: Multiply without `*`
 
 ```java
 public static double multiply(double x, double y) {
@@ -177,13 +172,13 @@ public static double multiply(double x, double y) {
 
 ***
 
-## :star: First non repeat character
+### :star: First non repeat character
 
 ```java
 public class FirstNonRepeat {
     public char findCharacter(String testWord) throws Exception {
 
-        if (testWord == "") {
+        if (testWord.equals("")) {
             throw new Exception("Empty String");
         }
 
@@ -211,7 +206,7 @@ public class FirstNonRepeat {
 
 ***
 
-## :star: Binary search
+### :star: Binary search
 
 ```java
 public static int binarySearch(int[] sortedList, int number) {
@@ -238,7 +233,7 @@ public static int binarySearch(int[] sortedList, int number) {
 
 ***
 
-## :star: Binary search recursive
+### :star: Binary search recursive
 
 ```java
 public static int binarySearch(int[] sortedArray, int number, int min, int max) {
@@ -263,7 +258,7 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 
 ***
 
-## :star: Sort 00110101001000 -> 00000000011111
+### :star: Sort 00110101001000 -> 00000000011111
 
 ```java
 public class ZeroOneSort {
@@ -292,7 +287,7 @@ public class ZeroOneSort {
 
 ***
 
-## :star: Reverse string recursive
+### :star: Reverse string recursive
 
 ```java
 public static String reverseRec(String str) {
@@ -309,7 +304,7 @@ public static String reverseRec(String str) {
 
 ***
 
-## :star: Find the minimum value in a binary search tree
+### :star: Find the minimum value in a binary search tree
 
 ```java
 public static int minimumValue(Node<Integer> head) {
@@ -331,7 +326,7 @@ public static int minimumValue(Node<Integer> head) {
 
 ***
 
-## :star: Mirror a binary tree
+### :star: Mirror a binary tree
 
 - Every left child is now right child and vice versa.
 
@@ -357,7 +352,7 @@ public static void mirror(Node<Integer> root) {
 
 ***
 
-## :star: Match parenthesis
+### :star: Match parenthesis
 
 - Match `{[(`
 - Ok example: `{[]}()`
@@ -392,7 +387,7 @@ public class MatchParenthesis {
                     parenthesisStack.push(ch); // ( [ {
                 }
 
-                if (matchParenthesis.containsKey(ch)) { // ) ] }
+                if (matchParenthesis.containsKey(ch)) { // ): (, ]: [, }: {
                     Character lastParenthesis = parenthesisStack.pop();
 
                     if (lastParenthesis != matchParenthesis.get(ch)) { // [ [
@@ -410,28 +405,3 @@ public class MatchParenthesis {
     }
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

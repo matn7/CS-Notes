@@ -1,4 +1,4 @@
-# Java Memory Model.
+# Java Memory Model
 
 ## Motivation for the Memory Model.
 
@@ -87,21 +87,21 @@ performance benefits in not doing this. In cases where the JLS does not require 
 another thread, the Java JIT compiler is likely to not add the "read barrier" and "write barrier" instructions that will
 force main memory reads and writes. Once again, the performance benefits of doing this are significant.
 
-### Proper synchronization.
+### Proper synchronization
 
 - So far, we have seen that the JLS allows the JIT compiler to generate code that makes single-threaded code faster by
 reordering or avoiding memory operations. But what happens when other threads can observe the state of the (shared)
 variables in main memory?
 - The answer is, that the other threads are liable to observe variable states which would appear to be impossible ...
 based on the code order of the Java statements. The solution to this is to use appropriate synchronization.
-The three main approaches are:
+- The three main approaches are:
     - Using primitive mutexes and the synchronized constructs.
     - Using volatile variables.
     - Using higher level concurrency support, classes in the `java.util.concurrent` packages.
 - But even with this, it is important to understand where synchronization is needed, and what effects that you can relay on.
 This is where the Java Memory Model comes in.
 
-### The Memory Model.
+### The Memory Model
 
 - The Java Memory Model is the section of the JLS that specifies the conditions under which one thread is guaranteed
 to see the effects of memory writes made by another thread. The Memory Model is specified with a fair degree of
@@ -112,7 +112,7 @@ generate code that will ensure that the read operation sees the value written by
 - Armed with this, it is possible to reason about memory coherency in a Java program, and decide whether this will
 be predictable and consistent for all execution platforms.
 
-## Happens-before relationships.
+## Happens-before relationships
 
 - Happens-before relationships are the part of the Memory Model that allow us to understand and reason about memory
 visibility. As the JLS says.
@@ -122,7 +122,7 @@ Two actions can be ordered by a happens-before relationship. If one action happe
 the first is visible to and ordered before second.
 ```
 
-### Actions.
+### Actions
 
 - There are 5 kinds of action listed defined by the spec:
     - Read: Reading a non-volatile variable.
@@ -130,14 +130,14 @@ the first is visible to and ordered before second.
     - Synchronization actions:
         - Volatile read: Reading a volatile variable.
         - Volatile write: Writing a volatile variable.
-        - Lock. Locking a monitor.
-        - Unlock. Unlocking a monitor.
+        - Lock: Locking a monitor.
+        - Unlock: Unlocking a monitor.
         - The (synthetic) first and last actions of a thread.
         - Actions that start a thread or detect that a thread has terminated.
-    - External Actions. An action that has a result that depends on the environment in which the program.
+    - External Actions: An action that has a result that depends on the environment in which the program.
     - Thread divergence actions. These model the behavior of certain kinds of infinite loop.
 
-### Program Order and Synchronization Order.
+### Program Order and Synchronization Order
 
 - These two orderings govern the execution of statements in a Java.
 - Program order describes the order of statement execution within a single thread.
@@ -153,23 +153,23 @@ synchronization:
     - If one thread interrupts another thread, the interrupt call in the first thread synchronizes-with the point
     where another thread detects that the thread was interrupted.
 
-### Happens-before order.
+### Happens-before order
 
 - This ordering is what determines whether a memory write is guaranteed to be visible to a subsequent memory read.
 - More specifically, a read of a variable **v** is guaranteed to observe a write to **v** if and only if **write(v)**
 happens-before **read(v)** AND there is no intervening write to **v**. If there are intervening writes, then the **read(v)**
 may see the results of them rather than the earlier one.
 - The rules that define the happens-before ordering:
-    - Happens-Before Rule #1 - If x and y are actions of the same thread and x comes before y in program order, then
+    - Happens-Before Rule #1: If x and y are actions of the same thread and x comes before y in program order, then
     x happens-before y.
-    - Happens-Before Rule #2 - There is a happens-before edge from the end of a constructor of an object to the start
+    - Happens-Before Rule #2: There is a happens-before edge from the end of a constructor of an object to the start
     of a finalizer for that object.
-    - Happens-Before Rule #3 - If an action x synchronized-with a subsequent action y, then x happens-before y.
-    - Happens-Before Rule #4 - If x happens-before y and y happens-before z then x happens-before z.
+    - Happens-Before Rule #3: If an action x synchronized-with a subsequent action y, then x happens-before y.
+    - Happens-Before Rule #4: If x happens-before y and y happens-before z then x happens-before z.
 - Various classes in the Java standard libraries are specified as defining happens-before relationships. You can
 interpret this as meaning that it happens somehow, without needing to know exactly how to guarantee is going to be met.
 
-## How to avoid needing to understand the Memory Model.
+## How to avoid needing to understand the Memory Model
 
 - Memory Model is useful if you need to reason about the correctness of multi-threaded code, but you do not want to have
 to do this reasoning for every multi-threaded application that you write.
@@ -188,9 +188,9 @@ reasoning:
 - Not all objects need to be thread safe. For example, if an object or objects is thread-confined (i.e. it is only accessible
 to one thread), then its thread-safety is not relevant.
 
-## Happens-before reasoning applied to some examples.
+## Happens-before reasoning applied to some examples
 
-### Single-threaded code.
+### Single-threaded code
 
 - Writes are always visible to subsequent reads in a single-threaded program.
 

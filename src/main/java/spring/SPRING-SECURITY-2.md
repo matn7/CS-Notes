@@ -6,19 +6,19 @@
 
 ### Authentication & Authorization
 
-- Authentication - ensuring a user who they claim to be:
+- Authentication: Ensuring a user who they claim to be:
     - HTTP basic
     - Form Based
     - LDAP
     - OpenID
     - X.509
-- Authorization - determining if a user is allowed to perform an action.
+- Authorization: Determining if a user is allowed to perform an action.
 
 ### Security capabilities
 
-- Protection web resources - Requires specific roles to access URLs.
-- Authorizing method invocations - Requiring specific roles to access methods.
-- Restricting entity access - Constantly Access Lists (CAL) to determine domain object access.
+- Protection web resources: Requires specific roles to access URLs.
+- Authorizing method invocations: Requiring specific roles to access methods.
+- Restricting entity access: Constantly Access Lists (CAL) to determine domain object access.
 
 ### Extra Features
 
@@ -54,8 +54,8 @@
 ## Spring Security Basics
 
 - **MAVEN**:
-    - spring-security-web
-    - spring-security-config
+    - `spring-security-web`
+    - `spring-security-config`
 
 ### Basic XML Configuration
 
@@ -103,7 +103,7 @@
 
 ### CSRF Token
 
-- spring-security-taglib
+- `spring-security-taglib`
 
 **login.jsp**
 
@@ -167,7 +167,7 @@ public class SampleController {
 
 ![Security Process](images/security-interceptor-process.png "Security Process")
 
-### SecurityContext Holder
+### SecurityContextHolder
 
 ```java
 SecurityContextHolder.getContext().getAuthentication().getName();
@@ -301,13 +301,13 @@ public class CustomAuthenticationToken extends UsernamePasswordAuthenticationTok
 **CustomAuthenticationFilter.java**
 
 ```java
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFIlter {
+public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException {
         String username = super.obtainUsername(request);
         String password = super.obtainPassword(request);
-        String maki = request.getParameter("make");
+        String maki = request.getParameter("maki");
 
         CustomAuthenticationToken token = new CustomAuthenticationToken(username, password, maki);
         super.setDetails(request, token);

@@ -187,7 +187,7 @@ public void distinct() {
 
 ## Filtering
 
-- :star:`Predicate<T>` - filter method arguments, function converting `T` to `boolean`.
+- :star:`Predicate<T>`: Filter method arguments, function converting `T` to `boolean`.
 
 ### filter
 
@@ -404,7 +404,7 @@ public void groupingAndCounting() {
 
 ## Reduce and Flatmap
 
-- Reduce combines all elements in the stream and produce one single result..
+- Reduce combines all elements in the stream and produce one single result.
 
 ### reduce
 
@@ -447,8 +447,6 @@ public void flatMap() {
 ```
 
 ***
-
-## Joining
 
 ### Joining
 
@@ -544,11 +542,10 @@ MockData.getApartments()
     .collect(Collectors.toList());
 ```
 
-filter apartment Apartment{id=1, localization="Miodowa", city="Krakow", size=100, price=6700} <br/>
-filter apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850} <br/>
-mapping apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850} <br/>
-mapping price 2072 <br/>
-filter apartment Apartment{id=3, localization="Wadowicka", city="Krakow", size=78, price=2850} <br/>
-
-
-
+```
+filter apartment Apartment{id=1, localization="Miodowa", city="Krakow", size=100, price=6700}
+filter apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850}
+mapping apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850}
+mapping price 2072
+filter apartment Apartment{id=3, localization="Wadowicka", city="Krakow", size=78, price=2850}
+```

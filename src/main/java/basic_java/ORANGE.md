@@ -1,6 +1,6 @@
 ## Complexity
 
-- Is a measure of how resource requirements change as the size of problem gets larger. <br/>
+- Is a measure of how resource requirements change as the size of problem gets larger.
 - **Big O Notation:** allows express complexity as a resource of input size.
 
 ## Sorting
@@ -54,7 +54,8 @@ public static void bubbleSort(int[] list) {
 
 ### 3. Insertion Sort O(N^2)
 
-- Start with sorted list of size 1. Insert next element into list at right position.
+- Start with sorted list of size 1. 
+- Insert next element into list at right position.
 - Complexity `O(N^2)`.
 - `O(N^2)` comparisons.
 - `O(N^2)` swaps.
@@ -77,8 +78,10 @@ public static void insertionSort(int[] list) {
 ### 4. Shell Sort between O(N) and O(N^2)
 
 - Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
-- Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
-- Sort on almost sorted list. Complexity depends on increment value chosen.
+- Each sub-list is then sorted using insertion sort. 
+- The increment is reduced by 1.
+- Sort on almost sorted list. 
+- Complexity depends on increment value chosen.
 - Complexity `O(N)` and `O(N^2)`.
 
 ### 5. Merge Sort O(N(Log(N)))
@@ -115,9 +118,9 @@ public static int binarySearch(int[] list, int number) {
             return mid;
         }
         if (list[mid] > number) {
-            max = mid - 1;
+            max = mid - 1; // first half
         } else {
-            min = mid + 1;
+            min = mid + 1; // second half
         }
     }
     return -1;
@@ -203,7 +206,7 @@ public static boolean sameTree(Node head1, Node head2) {
         return false;
     }
 
-    if (sameTree(head1.getLeft(),head2.getLeft()) && sameTree(head1.getRight(), head2.getRight()) {
+    if (sameTree(head1.getLeft(), head2.getLeft()) && sameTree(head1.getRight(), head2.getRight()) {
         return head1.getId() == head2.getId();
     }
 
@@ -222,8 +225,8 @@ public static boolean sameTree(Node head1, Node head2) {
 - **ISEMPTY:** `O(1)`
 - **ISFULL:** `O(1)`
 - **SIZE:** `O(1)`
-- `StackOverflowException`: Pushing into full stack.
-- `StackUnderflowException`: Popping or peeking empty element.
+- **StackOverflowException:** Pushing into full stack.
+- **StackUnderflowException:** Popping or peeking empty element.
 - **LinkedList:** Is used to build a stack.
 - Stack is used to implementing undo, back button.
 
@@ -272,7 +275,8 @@ public static class Element<T> {
 ### Binary Tree
 
 - Tree is a data structure which is made up of nodes.
-- The order of element is not important in a Tree. Non-linear data structure (data organized without any sequence).
+- The order of element is not important in a Tree. 
+- Non-linear data structure (data organized without any sequence).
 - In binary tree each node can have 0, 1 or 2 children.
     - ROOT: Parent node.
     - EDGE: Link from parent to leaf.
@@ -295,9 +299,9 @@ public static class Node<T> {
 
 - **Breadth-First:** Visit node at every level before moving the next level.
 - **Depth-First:** Involves going right to the leaf of the binary tree first before moving up the tree.
-  - PRE-ORDER - `NODE - LEFT SUBTREE - RIGHT SUBTREE`
-  - IN-ORDER - `LEFT SUBTREE - NODE - RIGHT SUBTREE`
-  - POST-ORDER - `LEFT SUBTREE - RIGHT SUBTREE - NODE`
+  - PRE-ORDER: `NODE - LEFT SUBTREE - RIGHT SUBTREE`
+  - IN-ORDER: `LEFT SUBTREE - NODE - RIGHT SUBTREE`
+  - POST-ORDER: `LEFT SUBTREE - RIGHT SUBTREE - NODE`
 
 ```java
 public static void preOrder(Node<Character> root) {
@@ -559,11 +563,13 @@ elements in collection.
 
 ### 13. Collections vs Streams.
 
-- Collections in memory data structures. Each element is calculated before become part of collection.
+- Collections in memory data structures. 
+- Each element is calculated before become part of collection.
 - Streams are computed on demand.
 - Streams can be defined as sequences of elements that supports aggregate operations like:
     - `filter`, `map`, `reduce`, `find`.
-- Streams don't have methods like foreach which internally iterate through elements. Code is unaware iteration logic.
+- Streams don't have methods like foreach which internally iterate through elements. 
+- Code is unaware iteration logic.
 
 ### 14. How map and filter works in Java.
 
@@ -592,6 +598,7 @@ public interface IntSeq {
     }
 }
 ```
+
 - Class that implements this interface can override this method or provide new implementation.
 
 ### 17. In what format keep prices.
@@ -962,6 +969,7 @@ public class AroundAspect {
 ```
 
 **Use**
+
 ```java
 @Repository
 public class Dao1 {
@@ -975,9 +983,9 @@ public class Dao1 {
 
 ### 38. Thread Local.
 
-- Allow building variables that can be saved and read through the same thread. Thus, ever though two threads
-are executed the same code, and it has a reference to thread local, as a result both threads cannot see
-their ThreadLocal variables.
+- Allow building variables that can be saved and read through the same thread. 
+- Thus, ever though two threads are executed the same code, and it has a reference to thread local, as a result 
+both threads cannot see their ThreadLocal variables.
 
 ```java
 private ThreadLocal myThreadLocal = new ThreadLocal();
@@ -1037,10 +1045,11 @@ and then to **Survivor2**.
 - XSD extension.
     - Deliver contract between 2 users (to not send unnecessary information).
     - If xml follows scheme that means it is valid document
+    
 ```xml
-    <xsd:schema>            <!-- root element -->
-        <xsd:restriction>   <!-- restricted dane -->
-        <xsd:sequence>      <!-- elements order assured -->
+<xsd:schema>            <!-- root element -->
+    <xsd:restriction>   <!-- restricted data -->
+    <xsd:sequence>      <!-- elements order assured -->
 ```
 
 ### 45. HTTP errors protocols qualification.
@@ -1123,8 +1132,8 @@ and then to **Survivor2**.
 ### 54. What is a trigger?
 
 - Code or programs that automatically execute with response to some event on a table or view in a database.
-- Mainly trigger helps to maintain the integrity of the database. Student is added to DB, new record should be created in
-related tables like Exams, Score.
+- Mainly trigger helps to maintain the integrity of the database. 
+- Student is added to DB, new record should be created in related tables like Exams, Score.
 
 ### 55. What is constraint?
 
@@ -1168,15 +1177,15 @@ public class StackOverflowException {
 ###  59. Stability of sorting algorithms.
 
 - Elements with the same hashCode stays on the same position after sorting. 
-- For example in bubble sort, panda, panda, pies. panda would change position with other panda in even though of a fact 
-that they have the same hashCode.
+- For example in bubble sort, panda, panda, pies. 
+- panda would change position with other panda in even though of a fact that they have the same hashCode.
 
 ***
 
 ## Multithreading
 
 - Access to variable marked **volatile** is synchronized on the variable itself.
-- Variable marked as **volatil**e are safe to use in a different thread.
+- Variable marked as **volatile** are safe to use in a different thread.
 - The default single thread is called the main thread.
 - Command Pattern: Separates execution of an action from an action itself.
     - In Threading we define the action that we would like to new thread to undertake.
@@ -1251,7 +1260,7 @@ and wraps the action in the body of an object that implements an interface with 
 | State | Description |
 |---|---|
 | New | A thread that is created but not started. |
-| RUNNABLE | A thread state that is available to run .|
+| RUNNABLE | A thread state that is available to run. |
 | BLOCKED | An alive thread that is blocked waiting for a monitor lock. |
 | WAITING | An alive thread that calls its own wait() and join() while waiting on another thread. |
 | THREAD_WAITING | An alive thread that is waiting on another thread for a specified period of time, sleeping. |
@@ -1354,8 +1363,8 @@ interface to provide configurable, flexible thread pools.
 
 - Is used for multiprocessor machines with large memories.
 - This server-style GC meets pause time goal with high probability, while achieving high throughput.
-- Whole heap operations (global marking) are performed
-concurrently with the app thread, which prevents interruptions proportional to the heap or live-data size.
+- Whole heap operations (global marking) are performed concurrently with the app thread, which prevents interruptions 
+proportional to the heap or live-data size.
 
 | Memory Management Tools | Description |
 |---|---|

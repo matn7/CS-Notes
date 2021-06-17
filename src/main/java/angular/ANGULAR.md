@@ -34,7 +34,7 @@ ng serve
 
 **Deploying Angular Apps**
 
-- `now.sh` - Free, CLI-based deployments. Automatically figures out how to build your app.
+- `now.sh`: Free, CLI-based deployments. Automatically figures out how to build your app.
 
 ```console
 npm install -g now
@@ -122,6 +122,7 @@ class ChildComponent {
 
 ```ts
 import { Directive, ElementRef, Input } from '@angular/core';
+
 @Directive({
   selector: '[appClass]'
 })
@@ -147,11 +148,11 @@ ng new comps --routing
 
 **Module Types**
 
-- Domain - Wraps up all the components needed to implement one single feature.
-- Routed - Domain module plus tied to routes.
-- Routing - Defines routing rules.
-- Service - Defines services that will be used in multiple parts of the app.
-- Widget - Defines some reusable components that will be used in multiple other modules.
+- Domain: Wraps up all the components needed to implement one single feature.
+- Routed: Domain module plus tied to routes.
+- Routing: Defines routing rules.
+- Service: Defines services that will be used in multiple parts of the app.
+- Widget: Defines some reusable components that will be used in multiple other modules.
 
 **Generating Modules**
 
@@ -165,22 +166,22 @@ ng g m MODULE_NAME --routing
 ng generate component elements/ElementsHome
 ```
 
-- 'Routing' flag tells Angular to make this module ready for navigation.
+- `--routing` flag tells Angular to make this module ready for navigation.
 
 **Module Property Definitions**
 
 - **Modules:**
-    - declarations - List of components, pipes, directives that are created in this module.
-    - imports - List of other modules that this module depends upon.
-    - exports - List of components, pipes, directives that this module makes available to other modules.
-    - providers - Old way of connecting modules and services.
-    - bootstrap - Used by the AppModule only to declare what component will be displayed first.
+    - declarations: List of components, pipes, directives that are created in this module.
+    - imports: List of other modules that this module depends upon.
+    - exports: List of components, pipes, directives that this module makes available to other modules.
+    - providers: Old way of connecting modules and services.
+    - bootstrap: Used by the AppModule only to declare what component will be displayed first.
 
 ![Router Outlet](images/router-outlet.png "Router Outlet")
 
 **app.component.html**
 
-```ts
+```html
 <router-outlet></router-outlet>
 ```
 
@@ -202,11 +203,11 @@ ng generate component elements/ElementsHome
 
 ## Lifecycle Hooks
 
-- **ngOnInit** - Called once after this component is first displayed on the screen and after Angular has
+- **ngOnInit**: Called once after this component is first displayed on the screen and after Angular has
 set any properties passed down from the parent component.
-- **ngOnDestroy** - Called once when Angular is about to remove this component (for example, when we navigate
+- **ngOnDestroy**: Called once when Angular is about to remove this component (for example, when we navigate
 to a different route!).
-- **ngOnChanges** - Called anytime a property of the component is changed (including when a parent component passed
+- **ngOnChanges**: Called anytime a property of the component is changed (including when a parent component passed
 down ned data).
 
 ## Typescript
@@ -258,7 +259,7 @@ const valueWrapper = <T>(value: T): T[] => {
 
 **Services**
 
-- Used to fetch/store/update any kind of data in our app.
+- Used to `fetch/store/update` any kind of data in our app.
 - Almost always where we are going to put network requests.
 - Data flows from a service to a component.
 - Services are implemented as classes.
@@ -270,10 +271,10 @@ const valueWrapper = <T>(value: T): T[] => {
 constructor(private wikipedia: WikipediaService) {}
 ```
 
-- `constructor` - Gets called automatically whenever an instance of AppComponent is created.
-- `private wikipedia` - wikipedia will be added as a private property automatically to the instance of 
+- `constructor`: Gets called automatically whenever an instance of AppComponent is created.
+- `private wikipedia`: wikipedia will be added as a private property automatically to the instance of 
 the App component.
-- `WikipediaService` - wikipedia will be of type 'Instance of WikipediaService'.
+- `WikipediaService`: wikipedia will be of type 'Instance of WikipediaService'.
 
 ![Service Injector](images/service-injector.png "Service Injector")
 
@@ -346,9 +347,9 @@ you need to implement your app.
 
 **Major Operator Groups**
 
-- Transform - Take in a value, do some processing, return a new value.
-- Filtering - Modifies the flow of events in a pipe (group them together, pause them, delete them).
-- Creation - Creates a new observable.
+- Transform: Take in a value, do some processing, return a new value.
+- Filtering: Modifies the flow of events in a pipe (group them together, pause them, delete them).
+- Creation: Creates a new observable.
 
 **Specific Operators**
 
@@ -375,8 +376,8 @@ you need to implement your app.
 
 ![Hot vs Cold Observables](images/hot-cold-observable.png "Hot vs Cold Observables")
 
-- Hot Observable - Single event stream shared for all subscribers old and new.
-- Cold Observable - Event stream recreated for each new subscriber.
+- Hot Observable: Single event stream shared for all subscribers old and new.
+- Cold Observable: Event stream recreated for each new subscriber.
 
 ![Hot Observable](images/hot-observable.png "Hot Observable")
 
@@ -425,14 +426,14 @@ observable.subscribe(value => {
 
 **Form Properties**
 
-- valid - Angular has validated whatever the user entered successfully .
-- invalid - The value in the input is invalid.
-- pending - Validation is currently running on this field.
-- disabled - Ignore user input this field and don't validate it.
-- touched - User clicked into then out of a field.
-- untouched - User hasn't clicked into then out of this field.
-- pristine - User hasn't clicked on this field at all.
-- dirty - User has changed the value of this field.
+- valid: Angular has validated whatever the user entered successfully.
+- invalid: The value in the input is invalid.
+- pending: Validation is currently running on this field.
+- disabled: Ignore user input this field and don't validate it.
+- touched: User clicked into then out of a field.
+- untouched: User hasn't clicked into then out of this field.
+- pristine: User hasn't clicked on this field at all.
+- dirty: User has changed the value of this field.
 
 ![Reactive vs Template](images/reactive-vs-template-forms.png "Reactive vs Template")
 
@@ -458,9 +459,9 @@ ng g c shared/Input
 
 ### Guard
 
-- canActivate - User can visit the route.
-- canActivateChild - User can visit this child route.
-- canLoad - User can load this lazily-loaded module and access the routes inside of it.
+- `canActivate`: User can visit the route.
+- `canActivateChild`: User can visit this child route.
+- `canLoad`: User can load this lazily-loaded module and access the routes inside of it.
 
 ```console
 ng generate guard auth/Auth
@@ -468,8 +469,8 @@ ng generate guard auth/Auth
 
 ### Route Information
 
-- Observable - Emits values whenever some specific part of the URL changes.
-- Snapshot - Simple description of what the URL is *right now*.
+- Observable: Emits values whenever some specific part of the URL changes.
+- Snapshot: Simple description of what the URL is *right now*.
 
 ***
 
@@ -528,9 +529,9 @@ for (let i = 0; i < numbers.length; i++) {
 
 **Annotations Around Functions**
 
-- Type annotations for functions - Code we add to tell Typescript what type of arguments a function will
+- Type annotations for functions: Code we add to tell Typescript what type of arguments a function will
 receive and what type of values it will return.
-- Type inference for functions - Typescript tries to figure out what type of value a function will return. 
+- Type inference for functions: Typescript tries to figure out what type of value a function will return. 
 
 **Annotations and Objects**
 
@@ -554,7 +555,7 @@ const { coords: { lat, lng } }: { coords: {lat: number, lng: number} } = profile
 
 **Tuple**
 
-- Tuple - Array-like structure where each element represents some property of a record.
+- Tuple: Array-like structure where each element represents some property of a record.
 
 ```ts
 const drink = {
@@ -577,18 +578,18 @@ const tea: Drink = ['brown', false, 0];
 Interfaces + Classes = How we get really strong code reuse in TS
 ```
 
-- Interfaces - Creates a new type, describing the property names and value types of an object.
+- Interfaces: Creates a new type, describing the property names and value types of an object.
 
 **Classes**
 
-- Classes - Blueprint to create an object with some fields (values) and methods (functions) to represent
+- Classes: Blueprint to create an object with some fields (values) and methods (functions) to represent
 a 'thing'.
 
 **Class Method Modifiers**
 
-- public - This method can be called anywhere, any time.
-- private - This method can be called by other methods in this class.
-- protected - This method can be called by other methods in this class, or by other methods in child classes.
+- public: This method can be called anywhere, any time.
+- private: This method can be called by other methods in this class.
+- protected: This method can be called by other methods in this class, or by other methods in child classes.
 
 ```console
 npm install -g parcel-bundler
@@ -649,15 +650,15 @@ npm install nodemon concurrently
 **How to Wire Up Services in a Module World**
 
 - Add the Service to a module's 'providers' array.
-- Use '@injectable' decorator.
+- Use `@injectable` decorator.
 
 ### Subject Variations
 
-- Async Subject - Same as subject, but also doesn't emit any values unitil it is marked as 'complete'. Only last
+- Async Subject: Same as subject, but also doesn't emit any values unitil it is marked as 'complete'. Only last
 value is emitted.
-- Behavior Subject - Same as subject, but also takes an initial 'seed' value. New subscribers instantly get the
+- Behavior Subject: Same as subject, but also takes an initial 'seed' value. New subscribers instantly get the
 most recent values.
-- Reply Subject - Same as subject, but also new subscribers instantly get sent all previously emitted values.
+- Reply Subject: Same as subject, but also new subscribers instantly get sent all previously emitted values.
 
 ```console
 npm install angular-notifier
@@ -671,8 +672,6 @@ npm install --save ngx-loading@2.0.1
 
 ng build
 ```
-
-
 
 
 

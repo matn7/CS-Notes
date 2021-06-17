@@ -1,4 +1,4 @@
-## :heart: Generics
+# :heart: Generics
 
 - Generics are used to create Generic Classes and Generic Methods which can work with different Types (classes).
 Make class type parameter to a class.
@@ -75,7 +75,7 @@ public class Param<T> {
 }
 ```
 
-- Use.
+**Use**
 
 ```java
 Param<Integer> integerParam = new Param<Integer>();
@@ -120,7 +120,7 @@ public class MultiParam<T, E> extends AbstractParam<E> {
 }
 ```
 
-- Use
+**Use**
 
 ```java
 Email email = new Email();
@@ -177,7 +177,7 @@ public class MultiGenericParam<T, S> {
 }
 ```
 
-- Use.
+**Use**
 
 ```java
 MultiGenericParam<String, String> aParam = new MultiGenericParam<String, String>("name1","name2");
@@ -211,7 +211,7 @@ public class FruitHelper {
 }
 ```
 
-- Use
+**Use**
 
 ```java
 public class GenericTest {
@@ -246,9 +246,7 @@ public class GenericTest {
         objects.add(new Shoe());
         objects.add(new IPhone());
 //        fruitHelper.eatAll(objects);
-
     }
-
 }
 ```
 

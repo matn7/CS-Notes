@@ -1,4 +1,4 @@
-## :star: :heart: Immutable class.
+# :star: :heart: Immutable class.
 
 - Immutable objects are instances whose state doesn't change after it has been initialized.
 - Advantage of immutability comes with **concurrency**. It is difficult to maintain correctness in mutable objects
@@ -10,14 +10,14 @@ the state of an immutable object will not change.
     - Don't provide **setter methods** - methods that modify fields or objects referred to by fields.
     - Make all fields **final** and **private**.
     - Don't allow subclasses to override methods. The simplest way to do this is to declare the class as **final**.
-    A more sophisticated approach is to make the constructor private and construct instances in factory methods.
+        - A more sophisticated approach is to make the constructor private and construct instances in factory methods.
     - If the instance fields include reference to mutable objects, don't allow these objects to be changed.
     - Don't provide methods that modify the mutable objects.
     - Don't share references to the mutable objects. Never store references to external, mutable object passed to constructor.
-    If necessary create copies, and store reference to the copies. Similarly, create copies of your internal mutable objects
-    when necessary to avoid returning the originals in your methods.
+        - If necessary create copies, and store reference to the copies. 
+        - Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
 
-### Example with mutable refs.
+### Example with mutable refs
 
 ```java
 class Point {
@@ -59,12 +59,12 @@ public final class ImmutableCircle {
 }
 ```
 
-### Rules.
+### Rules
 
-- Class should be immutable
-- All fields should be final
+- Class should be immutable.
+- All fields should be final.
 
-## :star: Immutable Objects.
+## :star: Immutable Objects
 
 - Some basic types and classes in Java are fundamentally mutable:
     - All array types are mutable.
@@ -89,7 +89,7 @@ public class ImmutableIntArray {
     - The constructor uses `clone()` to create a distinct copy of the parameter array.
     - The `getValue()` method also uses `clone()` to create the array that is returned.
 
-### Recipe for an immutable class.
+### Recipe for an immutable class
 
 - An immutable object is an object whose state cannot be changed.
 - An immutable class is a class whose instances are immutable by design, and implementation.
@@ -207,7 +207,7 @@ Person person = new Person("Majk");
 person.name = "Bożenka";    // NOT OK, new name for person after creation
 ```
 
-- Fix declare name property as private final
+- Fix declare name property as private final.
 
 ```java
 public final class Person {
@@ -376,12 +376,10 @@ public final class Person {
 ## :star: Immutable example.
 
 ```java
-
 // Planet is an immutable class, since there is no way to change its state
 // after construction
 public final class Planet {
 
-    // PRIVATE
     // final primitive data is always immutable
     private final double mass;
 
@@ -437,7 +435,7 @@ public final class Planet {
     // Returns a defensive copy of the field.
     // The caller of this method can do anything they want with the
     // returned Date object, without affecting the internals of this
-    // class in any way. Why? Becouse they do not have a reference to
+    // class in any way. Why? Because they do not have a reference to
     // fDate. Rather, they are playing with a second Date that initially has the
     // same data as fDate.
     public Date getDateOfDiscovery() {
@@ -445,28 +443,4 @@ public final class Planet {
     }
 
 }
-
-
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

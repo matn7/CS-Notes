@@ -44,7 +44,7 @@
 
 ### Queue
 
-- FIFO - first in first out
+- **FIFO**: First in first out.
 
 ![Queue](images/queue.png "Queue")
 
@@ -55,14 +55,14 @@
 
 ### Stack
 
-- FILO - first in last out.
-- LIFO - last in first out.
+- **FILO**: First in last out.
+- **LIFO**: Last in first out.
 
 ![Stack](images/stack.png "Stack")
 
-- push - Add a record to the stack.
-- pop - Remove the "top" record in the stack.
-- peek - Return the "top" record without popping it.
+- push: Add a record to the stack.
+- pop: Remove the "top" record in the stack.
+- peek: Return the "top" record without popping it.
 
 **Build Queue using 2 Stacks**
 

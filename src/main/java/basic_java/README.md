@@ -16,17 +16,20 @@
 - Improve readability of code.
 
 ```java
-public Temporary(int x, int y) {//23,34
+public Temporary(int x, int y) { // 23, 34
    this(5);
    System.out.print(" " + x * y + " ");
 }
+
 public Temporary(int x) {     //5
     this();
     System.out.print(" " + x + " ");
 }
+
 public Temporary() {
     System.out.print(" Default ");
 }
+
 //Temporary temp = new Temporary(23, 34);
 //-> Default  5  782
 ```
@@ -45,8 +48,8 @@ public Temporary() {
 
 ```
 We cannot override private methods in Java as if we declare any variable, method as private that variable or method
-will be visible for that class only and also if we declare any method as private than they are bounded with class at **compile
-time** not in runtime so we can't reference those method using any object.
+will be visible for that class only and also if we declare any method as private than they are bounded with class at 
+**compile time** not in runtime so we can't reference those method using any object.
 ```
 
 - You cannot override static method in Java because method overriding is based upon dynamic binding at runtime
@@ -70,13 +73,13 @@ and **static method are bounded using static binding at compile time**.
 
 ### `==` vs `equals`
 
-- `==`: check whether object are the same (point to the same place in memory, the same object).
-- `.equals()` : when compare content of objects.
+- `==`: Check whether object are the same (point to the same place in memory, the same object).
+- `.equals()`: When compare content of objects.
 
 ### Class Loaders
 
-- A Java class is made up of a number of custom classes (written by programmers) and core classes
-(which come pre-packed with Java).
+- A Java class is made up of a number of custom classes (written by programmers) and core classes, which come 
+pre-packed with Java.
 - When program is executed, JVM needs to load the content of the needed class.
 - JVM uses class loader to find the classes:
     - **Bootstrap Class Loader**: Loads all the Java core files.
@@ -131,7 +134,8 @@ System.out.println(nineC.equals(nineD)); // true
 ### static
 
 - For specified class can be only one static variable.
-- Initialization is during class loading. Static method does not work on objects. `Math.pow(x,a)`.
+- Initialization is during class loading. 
+- Static method does not work on objects. `Math.pow(x,a)`.
 - Gets memory only once in class are at time class loading.
 - Refer to common property of all objects, company name for example.
 - Static methods belongs to class rather than object of class.
@@ -142,12 +146,13 @@ System.out.println(nineC.equals(nineD)); // true
 
 - Because object is not required to call static method if it were non static method, JVM creates object first
 then call `main()` method that will lead the problem of extra memory allocation.
-- Static block is used to initialize the static data member. It is executing before main method at the time of class
-loading.
+- Static block is used to initialize the static data member. 
+- It is executing before main method at the time of class loading.
 - Static, variable (class variable), method (class method), block, nested class.
 - Factories methods: Static methods that returns new class instance.
 - You cannot override static method in Java because they are resolved at compile time rather than runtime.
-- In Java6 it was possible to run program without main method by using static initialization block. It is not a case anymore.
+- In Java6 it was possible to run program without main method by using static initialization block. 
+- It is not a case anymore.
 
 ```java
 public class Foo {
@@ -209,7 +214,9 @@ enum Weekday {MON, TUE};
 public Enum Size { SMALL, MEDIUM, LARGE; }
 ```
 
-- Named constants. No need to use equals method. No need to override toString.
+- Named constants. 
+- No need to use equals method. 
+- No need to override toString.
 - Thread safe.
 - Enum is subclass class of Enum class, which contains toString, valueOf and compareTo method.
 - Compare element using `==`.
@@ -228,7 +235,7 @@ enum Season {
 
 - Value of enums can be compared using `==` or `equals` function.
 
-### Variable arguments.
+### Variable arguments
 
 - Variable arguments allow calling method with different number of parameters.
 
@@ -469,7 +476,7 @@ rather than Thread class.
 
 - To avoid:
     - **IllegalMonitorStateException** which will occur if we don't call `wait()`, `notify()` or `notifyAll()` method
-from synchronized context.
+    from synchronized context.
     - Any potential race condition between `wait()` and `notify()` method in Java.
 
 ### What will happen if we put a key object in a HashMap which is already there?
@@ -482,7 +489,8 @@ from synchronized context.
 
 ### Casting
 
-- Casting is used when we want to convert one data type to another. Two types of casting:
+- Casting is used when we want to convert one data type to another. 
+- Two types of casting:
     - Implicit casting (Widening).
     - Explicit casting (Narrowing).
 - Implicit Casting is done by a compiler.
@@ -832,7 +840,7 @@ public int hashCode() {
 }
 ```
 
-## :star: Serialization
+### :star: Serialization
 
 - Abstract class: High level class, by who inherits.
 - Data serialization allows to know about all references (extends).
@@ -898,8 +906,8 @@ objectInputStream.close();
 ```
 
 - We mark all the properties of the Object that should not be serialized as transient.
-- Transient attributes in an object are not serialized. As we don't need to serialize **area** we can calculate it later
-mark this variable as transient.
+- Transient attributes in an object are not serialized. 
+- As we don't need to serialize **area** we can calculate it later mark this variable as transient.
 - All classes that need to be serialized have to implement Serializable interface.
 
 **Are the constructors in an object invoked when it is de-serialized?**
@@ -912,8 +920,9 @@ mark this variable as transient.
 - Static variables are not part of the object they are not serialized.
 
 **Different between Serializable and Externalizable**
-- Serializable is marker interface with no method defined. Use default serialization process which can be very slow
-for some application.
+
+- Serializable is marker interface with no method defined. 
+- Use default serialization process which can be very slow for some application.
 - Externalizable interface has two methods `readExternal()` and `writeExternal()` which allows you to control
 the serialization process.
 
@@ -925,7 +934,8 @@ the serialization process.
 - A shorter value helps in indexing and faster searches.
 - In Java every object has a method `public int hashCode()` that will return a hash value for given object.
 - If two objects are equal they should have the same hashcode as well.
-- Hashcode is used to storing values in Hash Map. If hashcode is wrong you could not get corresponding value.
+- **Hashcode** is used to storing values in HashMap. 
+- If hashcode is wrong you could not get corresponding value.
 - Index of null key is always 0, as hash of null is always 0.
 
 ![Hash Map](images/hash-map.png "Hash Map")
@@ -1033,14 +1043,14 @@ switches from using Linked List of Entry objects to a Balanced Tree.
 - This theoretically improves the worst-case performance from `O(n)` to `O(log n)`.
 - Balanced Search Tree, where leaf nodes have lesser weight (HashCode or Comparable result) for the Keys involved.
 
-### Exception Handling.
+### Exception Handling
 
 - Exception handling helps us to recover from an unexpected situations like file not found, connection is lost.
 - Important part is try-catch block.
 - If exception is handled it does not propagate further.
 - In a try block, the lines after the line throwing exception are not executed.
 
-### finally block
+**finally block**
 
 - When an exception happens the code after the line throwing exception is not executed.
 - If code like closing connection is present in these lines of code, it is not executed.
@@ -1204,7 +1214,7 @@ class MyListRestricted<T extends Number> {
 - BufferedWriter and BufferedReader provide better buffering in addition to basic file writing and reading operations.
 - For example instead reading entire file, we can read file line by line.
 - BufferedWriter class helps writing to a class with better Buffering than FileWriter.
-- BufferedWriter constructor only accept another writer as argument
+- BufferedWriter constructor only accept another writer as argument.
 
 ```java
 FileWriter fileWriter = new FileWriter("text.txt");
@@ -1217,7 +1227,8 @@ bufferedWriter.close();
 fileWriter.close();
 ```
 
-- BufferedReader helps to read the file line by line. BufferedReader constructors only accept another Reader as argument.
+- BufferedReader helps to read the file line by line. 
+- BufferedReader constructors only accept another Reader as argument.
 
 ```java
 FileReader fileReader = new FileReader("text.txt");
@@ -1290,7 +1301,8 @@ the bottleneck, to address that Java 5 introduced some concurrent collections.
 
 ### List
 
-- List interface extends Collection interface. It contains all methods defined in Collection interface.
+- List interface extends Collection interface. 
+- It contains all methods defined in Collection interface.
 - In addition List interface allows operation specifying the position of the element in the Collection.
 - Any implementation of List interface would maintain the insertion order.
 - When new element is inserted without specifying a position it is inserted at the end of the List of elements.
@@ -1523,7 +1535,7 @@ hash table is created.
 - The load factor a measure of how full the hash table is allowed to get before its capacity automatically increased.
 - When the number of entries in the hash table exceeds the product of load factor and the current capacity, the hash
 table is rehashed (internal structure rebuild). So the hash table has approximately twice the number of buckets.
-- As a general rule the default load factor .75 offers a good trade off between time and space cost.
+- As a general rule the default load factor `.75` offers a good trade off between time and space cost.
 - Higher value decrease space overhead but increase the lookup cost (put and get operations).
 
 **What is a different between fail safe and fail fast?**
@@ -1537,7 +1549,8 @@ collection is modified.
 **ConcurrentHashMap vs HashTable vs SynchronizedMap**
 
 - All are thread safe.
-- HashTable uses synchronized method to achieve thread-safety. Quite slow if number of thread increases.
+- HashTable uses synchronized method to achieve thread-safety. 
+- Quite slow if number of thread increases.
 - SynchronizedMap not very different from HashTable similar performance in concurrent Java program.
 - You can create synchronized Map version by using `Collections.synchronizedMap()`.
 - ConcurrentHashMap is specially designed for concurrent use i.e. more than one thread.
@@ -1553,7 +1566,8 @@ segments and locking is done on those.
 - An atomic action cannot stop in the middle.
 - It either happens completely or it doesn't happen at all.
 - No side effect of an atomic action are visible until the action is completed.
-- Even small operation like i++ is not thread safe. Operation involves three steps:
+- Even small operation like **i++** is not thread safe. 
+- **i++** operation involves three steps:
     - Read the value which is currently stored in i.
     - Add one to it (atomic operation).
     - Store it in i.
@@ -1571,7 +1585,8 @@ segments and locking is done on those.
 
 **TreeSet and TreeMap differences?**
 
-- TreeSet and TreeMap are both sorted. TreeSet is a Set data structure so it does not allow duplicates.
+- TreeSet and TreeMap are both sorted. 
+- TreeSet is a Set data structure so it does not allow duplicates.
 - TreeMap is an implementation of Map.
 - TreeSet is implemented via TreeMap much like how HashSet is implemented using HashMap.
 
@@ -1583,17 +1598,19 @@ segments and locking is done on those.
 
 **What is a LinkedList**
 
-- LinkedList extends List and Queue interfaces. Other than operations exposed by Queue interface, LinkedList
-has the same operations as ArrayList.
-- ArrayList uses an Array kind of structure to share elements. So inserting and deleting from an ArrayList are expensive operations.
-However search of an ArrayList is faster than LinkedList.
-- LinkedList uses Linked representation. Each object holds a link to the next element. Hence insertion and deletion are faster than
-ArrayList, but searching is slower.
+- LinkedList extends List and Queue interfaces. 
+- Other than operations exposed by Queue interface, LinkedList has the same operations as ArrayList.
+- ArrayList uses an Array kind of structure to share elements. 
+- Inserting and deleting from an ArrayList are expensive operations.
+- However search of an ArrayList is faster than LinkedList.
+- LinkedList uses Linked representation. 
+- Each object holds a link to the next element. 
+- Insertion and deletion are faster than ArrayList, but searching is slower.
 
 **HashMap, Collections.synchronizedMap, ConcurrentHashMap**
 
-- The Map object is an associative containers that store elements, formed by a
-combination of a unique identify key and a mapped value.
+- The Map object is an associative containers that store elements, formed by a combination of a unique identify key 
+and a mapped value.
 - If very highly concurrent application in which may want to modify or read key value in different threads then
 it's ideal to use ConcurrentHashMap.
 - If multiple threads access a hash map concurrently, and at least one of the threads
@@ -1605,6 +1622,7 @@ modifies the map structurally, it must be synchronized externally to avoid incon
 ```java
 // Hashtable
 Map<String, String> normalMap = new Hashtable<>();
+
 // synchronizedMap
 synchronizedHashMap = Collections.synchronizedMap(new HashMap<String, String>());
 ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap<String, String>();
@@ -1650,24 +1668,19 @@ for persistent storage.
 ### Complexity
 
 - Complexity is a measure of how resource requirements change as the size of the problem gets larger.
-- Affects performance. The higher the complexity the problem the lower the performance
+- The higher the complexity the problem the lower the performance
 - Time required by code to run depends on the basic operations it performs.
-- Arithmetic operations read, assignment write. How performance changes based on input size.
+    - Arithmetic operations read, assignment write. 
+    - How performance changes based on input size.
 - Focus on the worst case performance.
-- Code uses time, space and network resource. The amount of resource used determines code's performance.
+- Code uses time, space and network resource. 
+- The amount of resource used determines code's performance.
 - Complexity is a measure of performance.
-- **Big O Notation** allows us express complexity as a measure of input size. This express the complexity of an algorithm.
-- A algorithm which complexity does not change with input size is **O(1)**, is said to have constant time complexity.
-- The Complexity of an algorithm is **O(N)** is the time taken by the algorithm increases linearly when N increases.
-- The Complexity of an algorithm is **O(N^2)** if the time taken by the algorithm increases quadratically when N increases.
-
-```java
-for (int i = 1; i < n;) {
-   i = i * 2;
-}
-```
-
-- The complexity of this operation is **O(log(N))**
+- **Big O Notation** allows us express complexity as a measure of input size. 
+    - This express the complexity of an algorithm.
+    - A algorithm which complexity does not change with input size is **O(1)**, is said to have constant time complexity.
+    - The Complexity of an algorithm is **O(N)** is the time taken by the algorithm increases linearly when N increases.
+    - The Complexity of an algorithm is **O(N^2)** if the time taken by the algorithm increases quadratically when N increases.
 
 | Lists and Sets |  get  | add   | remove | contains |
 |---|---|---|---|---|
@@ -1690,8 +1703,8 @@ for (int i = 1; i < n;) {
 
 | Sorting algorithms | Time Complexity | Space Complexity |
 |---|---|---|
-| MergeSort          |     O(NlogN)    |       O(n)       |
-| TreeSort           |     O(NlogN)    |       O(n)       |
+| MergeSort          |     O(n log(n))    |       O(n)       |
+| TreeSort           |     O(n log(n))    |       O(n)       |
 
 
 ### Sorting
@@ -1718,7 +1731,7 @@ for (int i = 1; i < n;) {
 
 ### Data Structure
 
-**TREE DATA STRUCTURE**
+**Tree Data Structure**
 
 - Tree is a structure which is made up of nodes.
 - Each node can point to a number of nodes.
@@ -1740,7 +1753,7 @@ in data structure.
 
 - Visiting nodes of a tree is called **TRAVERSING TREE**
 
-**BREADTH-FIRST TRAVERSAL**
+**Breadth-First Traversal**
 
 - Involves visiting nodes at every leaf before moving on to the next level.
 - Start at root node it is at level 0 and is the first node to visit.
@@ -1748,30 +1761,30 @@ in data structure.
 - Once a level is exhausted then we can move to the next level.
 - Continue process till every node is visited.
 - A root node is ancestor of all nodes.
-- A Binary tree is one where every node can have a maximum of two children. The left and right.
+- A Binary tree is one where every node can have a maximum of two children - the left and right.
 - Two binary trees are the same if:
     - Every corresponding node has the same value.
     - The structure of the tree at every corresponding node is the same.
 
-**DEPTH-FIRST TRAVERSAL**
+**Depth-First Traversal**
 
 - Depth first traversal involves going right to the leaf of the binary Tree first before moving up tree.
 - Depth first can be:
-    - **PRE-ORDER**
-    - **IN-ORDER**
-    - **POST-ORDER**
-- All depth first traversal are most efficiently and intuitively implemented using RECURSION.
+    - **Pre-order**
+    - **In-order**
+    - **Post-order**
+- All depth first traversal are most efficiently and intuitively implemented using recursion.
 
-**PRE-ORDER**
+**Pre-order**
 
 - Each node is processed first (pre) before it's right and left subtrees.
 - The left sub-trees are processed before the right sub trees.
 
-**IN-ORDER**
+**In-order**
 
 - The Left subtree is processed first, then the NODE, then RIGHT SUBTREE.
 
-**POST-ORDER**
+**Post-order**
 
 - Both subtrees are processed BEFORE the node itself. The node is processed AFTER (POST) the subtree.
 
@@ -1792,11 +1805,11 @@ in data structure.
       2   5    13   18
 ```
 
-- Binary search tree are typically used for **FAST INSERTION** and **FAST LOOKUP**.
-- The structure of a tree depends on the order in which the nodes are ADDED:
-    - INSERTION
+- Binary search tree are typically used for **Fast Instertion** and **Fast Lookup**.
+- The structure of a tree depends on the order in which the nodes are added:
+    - Insertion
 - We can simply follow the RIGHT or LEFT subtrees based on the value we want to find:
-    - LOOKUP
+    - Lookup
 - Insertion and Lookup:
     - Insert the Node 2 in the tree
 
@@ -1828,54 +1841,53 @@ in data structure.
 - Insertion:
     - The Complexity for Node insertion is `O(logN)`.
     - The actual complexity depends on the shape of the tree, i.e. all right or left child can have `O(N)`.
-
 - Lookup:
     - The Complexity for value lookup is `O(logN)` in average case.
-    - For both insertion and lookup we have the TREE we have to traverse at every step. This gives us the `log(N)` complexity.
+    - For both insertion and lookup we have the TREE we have to traverse at every step. 
+    - This gives us the `log(N)` complexity.
 
-### HEAPS
+### HEAPHeaps
 
-**THE PRIORITY QUEUE**
+**The priority queue**
 
 - When a certain element in a collection has HIGHEST WEIGHT-AGE OR PRIORITY - A common use case is to process that first.
-- The data structure to store elements where the highest priority has to be processed first can be called a
-**Priority Queue**.
+- The data structure to store elements where the highest priority has to be processed first can be called a **Priority Queue**.
 - At every step we access the element with the highest priority.
 - Common operations on a priority Queue:
-    - INSERT ELEMENTS.
-    - ACCESS the highest priority element.
-    - REMOVE the highest priority element.
+    - Insert elements.
+    - Access the highest priority element.
+    - Remove the highest priority element.
 - An Array or List.
 
 ![Heap](images/heap-table.png "Heap")
 
-**BALANCED BINARY SEARCH TREE**
+**Balanced Binary Heap**
 
 | Action | Complexity |
 |---|---|
-| Insertion | O(logN) |
-| Access | O(logN) |
-| Remove | O(logN) |
+| Insertion | O(log(n)) |
+| Access | O(log(n)) |
+| Remove | O(log(n)) |
 
 - Both insertion and access moderately fast.
 - List solutions make one of these super fast while comparing heavily on the other.
 
-**BINARY HEAP**
+**Binary Heap**
 
 | Action | Complexity |
 |---|---|
-| Insertion | O(logN) |
+| Insertion | O(log(n)) |
 | Access | O(1) |
-| Remove | O(logN) |
+| Remove | O(log(n)) |
 
 - A Heap is just a tree with a special properties or constraints on the vales of it's Nodes.
-- This is called a HEAP Property.
+- This is called a Heap Property.
 - Types of Heap:
-    - MINIMUM HEAP:
-        - Every node value should be <= value of it's children.
+    - Minimum Heap:
+        - Every node value should be `<=` value of it's children.
         - The node with the smallest value should be the root of the tree.
-    - MAXIMUM HEAP
-        - Every Node value should be >= Value of it's children.
+    - Maximum Heap:
+        - Every Node value should be `>=` Value of it's children.
         - The node with the largest value should be the root of the tree.
 - The heap should form a complete binary tree:
     - All levels except the last one should be filled.
@@ -1897,7 +1909,7 @@ in data structure.
      5 | 8 | 6 | 9 | 12 | 11 | 7 | 15 | 10
 ```
 
-**THE BINARY HEAP**
+**The Binary Heap**
 
 - Place a single element in the wrong place.
 - Then try to find the right position for the element.
@@ -1930,22 +1942,22 @@ in data structure.
 
 | Action | Complexity |
 |---|---|
-| Insertion | O(logN) |
+| Insertion | O(log(n)) |
 | Access highest priority element | O(1) |
-| Remove | O(logN) |
+| Remove | O(log(n)) |
 
 **Heap Sort**
 
 | Action | Complexity |
 |---|---|
-|Insertion and removal | O(logN) |
-|Sorting | O(NlogN) |
+|Insertion and removal | O(log(n)) |
+|Sorting | O(n log(n)) |
 
 - Heap sort is not adaptive.
 - It's not a stable sort.
 - It does not need additional space - space complexity is `O(1)`.
 
-### STACK DATA STRUCTURE
+### Stack Data Structure
 
 - A stack is data structure to hold elements such that the last element you add to the stack is first one you access.
 - LIFO list in first out.
@@ -1973,17 +1985,18 @@ in data structure.
 |---|---|---|---|---|---|---|
 | Stack | O(1) | O(1) | O(1) | O(1) | O(1) | O(1) |
 
-### QUEUE DATA STRUCTURE
+### Queue Data Structure
 
 - Queue is a Data Structure where you add elements to the End of the Queue and remove elements
 from the beginning of the QUEUE.
 - FIFO: First in first out.
 - LILO: Last in last out.
-- The operations are performed at two ends. Removal its at the beginning and addition is at the end of the queue.
+- The operations are performed at two ends. 
+- Removal is at the beginning and addition is at the end of the queue.
 - Adding a new element to the end of the Queue is called **ENQUEUE** - enqueue an element from the queue.
 - Removing an element from the beginning of a queue is called **DEQUEUE** - dequeue an element from the queue.
-- Similar to stack you might just want to see what the first element in a queue is without removing it
-**PEEK** the first element in a queue.
+- Similar to stack you might just want to see what the first element in a queue is without removing it **PEEK** 
+the first element in a queue.
 - The Queue implementation in Java:
     - OFFER: Adds to a queue if space is available.
 - If you try to dequeue from an empty queue or enqueue into full queue:
@@ -1994,7 +2007,7 @@ from the beginning of the QUEUE.
 - Performance:
     - Enqueueing and dequeueing implemented in this way is **O(1)**.
     - `isEmpty()`, `isFull()`,  **O(1)**.
-    - Space complexity **O(N)**.
+    - Space complexity **O(n)**.
 - Useful:
     - Calls.
     - Queueing job to be printed.
@@ -2007,14 +2020,15 @@ from the beginning of the QUEUE.
 ### :star: Garbage Collection GC
 
 - Java provides automatic memory management through a program called Garbage Collector. 
-"Remove object that are not use":
+- Remove object that are not use:
     - Live object: Reachable (referenced by someone else).
     - Dead object: Unreachable (unreferenced).
 - Objects are allocated in the **heap** of java memory.
 - Static members, class definition are stored in **method area** PermGen/Metaspace.
 - Garbage Collection is carried out by a daemon thread called **Garbage Collector**.
 - Force GC to happen `System.gc()` (no guaranteed).
-- When failed to allocated because of full heap. Error message `java.lang.OutOfMemoryError`.
+- When failed to allocated because of full heap. 
+    - Error message `java.lang.OutOfMemoryError`.
 - Garbage Collector involves:
     - Mark: Go through all program structure, mark reachable objects as live.
     - Delete/Sweep: Delete unreachable objects.
@@ -2024,7 +2038,8 @@ from the beginning of the QUEUE.
     - Concurrent Collector: GC execute as application runs, not wait the old generation to full stop the world
       execute only during mark/re-mark phase.
     - Parallel Collector:
-        - Uses multiple CPUs to perform GC. Multiple threads doing mark/sweep.
+        - Uses multiple CPUs to perform GC. 
+        - Multiple threads doing mark/sweep.
         - Does not start until a heap is full/near-full.
         - "Stop the world" when runs.
 - Use Concurrent collector when:
@@ -2056,21 +2071,26 @@ void method() {
 calendar.
 - After method ends execution the reference variable calendar is no longer valid.
 - Hence, there are no reference to the object created in the method.
-- JVM recognizes this and removes the object from the heap. This is called GC.
+- JVM recognizes this and removes the object from the heap. 
+- This is called GC.
 
 **When Garbage Collection is run**
 
-- Based on fancies of JVM. Possible situations:
+- Based on fancies of JVM. 
+- Possible situations:
     - When available memory on the heap is low.
     - When CPU is free.
+
+***
 
 ## Concurrency
 
 - **fail-safe**: Does not throw ConcurrentModificationException.
 - **fail-fast**: throw ConcurrentModificationException.
-- volatile: Value read always from main memory no cache.
-- synchronized: Acquire intrinsic lock on a object. Only one object can execute this part of code.
-- join: Wait until other thread finish executing.
+- **volatile**: Value read always from main memory no cache.
+- **synchronized**: Acquire intrinsic lock on a object. 
+    - Only one object can execute this part of code.
+- **join**: Wait until other thread finish executing.
 - **wait and notify for inter thread communication**:
     - Must be called from synchronized context method, block.
 
@@ -2089,13 +2109,14 @@ calendar.
     - Exists within a process.
     - Every process has at least one thread.
 - `join()`: Method waits until a thread to finish.
-- Threads priority: Importance of a thread to the scheduler. Lower priority thread tend to run less often.
+- Threads priority: Importance of a thread to the scheduler. L
+- ower priority thread tend to run less often.
     - `setPriority()`
     - `getPriority()`
     - MAX_PRIORITY, NORM_PRIORITY, MIN_PRIORITY
 - `yield()`: This static method is essentially used to notify the system that the current thread is willing to
-give up CPU for a while, but scheduler can immediately pick them back. Is put back into the ready queue of the processor,
-and waits for it next turn.
+give up CPU for a while, but scheduler can immediately pick them back. 
+- Is put back into the ready queue of the processor, and waits for it next turn.
 
 **Start Thread**
 
@@ -2104,7 +2125,8 @@ and waits for it next turn.
 - Implements Runnable:
     - Override `run()` method, pass Runnable object to Thread class constructor.
     - Call start method on thread object.
-- Executor Service: Dynamically reuse thread. Check if threads are already working.
+- Executor Service: Dynamically reuse thread. 
+    - Check if threads are already working.
 - **Executors.newCachedThreadPool()**:
     - Return an executor service that can dynamically reuse threads before starting a job, it going to check whether
     there are any threads that finished the job if so reuse them.
@@ -2161,7 +2183,8 @@ and waits for it next turn.
 - Is a record of how many units of particular resource are available.
 - Semaphores track how many resources are free, it does not keep track of which of the resources are free.
 - Mutexes are binary semaphores.
-- Mutex has a concept of an owner. Only process that locked a mutex is supposed to unlock it.
+- Mutex has a concept of an owner. 
+- Only process that locked a mutex is supposed to unlock it.
 - Methods `acquire()` if permit is a available take it, `release()` add a permit.
 
 **Callable and Future**
@@ -2171,7 +2194,7 @@ and waits for it next turn.
 **Thread States**
 
 - Runnable: Create a new thread and call start method.
-- Blocked : Enter synchronized block, lock.
+- Blocked: Enter synchronized block, lock.
 - Waiting: After `wait()`.
 - Terminated: Run method is over.
 
@@ -2179,10 +2202,10 @@ and waits for it next turn.
 
 **CountDownLatch**
 
-- Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations
-being performed by other tasks.
-- Give initial count to count down latch object and task that calls `await()` on that
-object will block until count reaches zero.
+- Used to synchronize one or more tasks by forcing them to wait for completion of a set of operations being performed 
+by other tasks.
+- Give initial count to count down latch object and task that calls `await()` on that object will block until count 
+reaches zero.
 - The count cannot be reset.
 - Typically, use is to divide a problem into "n" independently solvable tasks and create a CountDownLatch with
 value of "n".
@@ -2204,7 +2227,7 @@ until they are still finished before moving on to the next step, like `join()` o
 - Callable: Tasks that return results or throw exception.
 - Results without synchronization are unpredictable.
 - Better use thread safe data structures than use locks.
-- ConcurrentHashMap: Ss thread safe array allows to update elements using atomic operations.
+- ConcurrentHashMap: Is thread safe array allows to update elements using atomic operations.
 - To interrupt task set interrupt flag or throw InterruptedException.
 - Thread is mechanism that allow to execute sequence of instruction, these instructions are provided by OS.
 - Couple of threads work in parallel using multiple processors of different time slice of the same processor.
@@ -2248,9 +2271,11 @@ Future<V> result = exec.submit(call);
     - Changes after release a lock are visible for all that acquire this lock.
     - Volatile keyword: Compiler generates needed instructions to make sure that all changes that being applied in
     one task are visible in another.
-- Chasing: Are problems always when shared variables are modified. Locks to critical section make atomic.
+- Chasing: Are problems always when shared variables are modified. 
+- Locks to critical section make atomic.
 - :star: Strategy of safety concurrency:
-    - Avoid shared data between tasks. One task z1, second task z2, third z3 = z1 + z2.
+    - Avoid shared data between tasks. 
+        - One task z1, second task z2, third z3 = z1 + z2.
     - Use immutable objects.
     - Lock allows only one task access to data at a time. 
     - Use data structures and algorithms from java concurrent libraries.
@@ -2270,7 +2295,8 @@ Future<V> result = exec.submit(call);
 Long results = coll.parallelStream().filter(s->s.startsWith('a')).count();
 ```
 
-- ParallelStream method returns parallel stream. Stream is parted on segments.
+- ParallelStream method returns parallel stream. 
+- Stream is parted on segments.
 - Filtering and counting is executed for each segments and results are joined together without your further interactions.
 - Parallel operations on arrays:
     - Arrays operations part array on segments, parallelly process them and join results.
@@ -2303,7 +2329,7 @@ long sum = IntStream.of(value).parallel().sum(); |
 
 ```java
 AtomicLong nextNumber = new AtomicLong();
-long id = nextWord.incrementAndGet();
+long id = nextNumber.incrementAndGet();
 ```
 
 - Atomic operation:
@@ -2314,7 +2340,10 @@ long id = nextWord.incrementAndGet();
 **Design Principle #1 : Relay on Interfaces, not implementation**
 
 ```
-Program to an interface not implementation: decorator, iterator, adapter
+Program to an interface not implementation: 
+    * decorator
+    * iterator
+    * adapter
 ```
 
 - Interface is a surface that a unit offers to outside world.
@@ -2333,12 +2362,13 @@ List<String> list = new ArrayList<>(); // correct
 Classes should be open for extension but closed for modification
 ```
 
-- Once you have written a class, it's done. Never add anything to it after that.
+- Once you have written a class, it's done. 
+- Never add anything to it after that.
 - No new member variables, no new methods, no new interfaces implemented, no modification.
-- Other code should be able to use your class in new ways. New applications via extension.
+- Other code should be able to use your class in new ways. 
+- New applications via extension.
 - Inheritance, **template pattern**:
-    - If you structure your code into abstract base class, other classes can find
-      new way to use it via Inheritance.
+    - If you structure your code into abstract base class, other classes can find new way to use it via Inheritance.
 - Delegation, **observer, MVC, Chain of Responsibility**:
     - If you fire events and expose properties, other code can listen in, and use your code via Delegation.
 - Composition, **strategy pattern**"
@@ -2382,9 +2412,10 @@ Don't call us we will call you
 
 **MVC Paradigm**
 
-- Model View Controller is an architectural pattern. In Java API Swing.
-- Basic idea of MVC is to separate data from its representation, separating data from its manipulation,
-allowing different simultaneous representations of the same data.
+- Model View Controller is an architectural pattern. 
+- In Java API Swing.
+- Basic idea of MVC is to separate data from its representation, separating data from its manipulation, allowing different 
+simultaneous representations of the same data.
 - MediaPlayer Example:
     - Controller: A slider to adjust volume in a media player app.
     - Model the mp4 file of a movie to be played in a media player app.

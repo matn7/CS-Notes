@@ -1,4 +1,4 @@
-## :star: Sorting
+# :star: Sorting
 
 ```java
 public static void swap(int[] listToSort, int iIndex, int jIndex) {
@@ -8,12 +8,12 @@ public static void swap(int[] listToSort, int iIndex, int jIndex) {
 }
 ```
 
-### 1. Selection sort `O(N^2)`.
+### 1. Selection sort `O(N^2)`
 
 - At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
 - Complexity `O(N^2)`.
-- `O(N^2)` - comparisons.
-- `O(N)` - swaps.
+- `O(N^2)` comparisons.
+- `O(N)` swaps.
 
 ```java
 public static void selectionSort(int[] list) {
@@ -28,14 +28,14 @@ public static void selectionSort(int[] list) {
 }
 ```
 
-### 2. Bubble sort `O(N^2)`.
+### 2. Bubble sort `O(N^2)`
 
 - At each iteration, every element is compared with its neighbor and swapped if they are not in order.
 - Smaller element bubbling to the beginning of the list.
 - If no swaps that means list is sorted.
 - Complexity `O(N^2)`.
-- `O(N^2)` - comparisons.
-- `O(N^2)` - swaps.
+- `O(N^2)` comparisons.
+- `O(N^2)` swaps.
 
 ```java
 public static void bubbleSort(int[] list) {
@@ -55,13 +55,14 @@ public static void bubbleSort(int[] list) {
 }
 ```
 
-### 3.Insertion Sort `O(N^2)`.
+### 3. Insertion Sort `O(N^2)`
 
-- Start with sorted list of size 1. Insert next element into list at right position.
+- Start with sorted list of size 1. 
+- Insert next element into list at right position.
 - Find element bubbling to right position.
 - Complexity `O(N^2)`.
-- `O(N^2)` - comparisons.
-- `O(N^2)` - swaps.
+- `O(N^2)` comparisons.
+- `O(N^2)` swaps.
 
 ```java
 public static void insertionSort(int[] list) {
@@ -78,21 +79,22 @@ public static void insertionSort(int[] list) {
 }
 ```
 
-### 4. Shell Sort between `O(N)` and `O(N^2)`.
+### 4. Shell Sort between `O(N)` and `O(N^2)`
 
 - Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
-- Each sub-list is then sorted using insertion sort. The increment is reduced by 1.
-- Sort on almost sorted list. Complexity depends on increment value chosen.
+- Each sub-list is then sorted using insertion sort, the increment is reduced by 1.
+- Sort on almost sorted list. 
+- Complexity depends on increment value chosen.
 - Complexity `O(N) and O(N^2)`.
 
-### 5. Merge Sort `O(N(Log(N)))`.
+### 5. Merge Sort `O(N(Log(N)))`
 
 - Follows divide and conquer approach to create smaller sub problems.
 - Then merge together sorted lists to get fully sorted list.
 - Complexity `O(N(Log(N)))`.
 - Is not adaptive = takes advantage over input (nearly sorted list).
 
-### 6. Quick Sort `O(N(loh(N)))`.
+### 6. Quick Sort `O(N(Log(N)))`
 
 - Divide and conquer algorithm which partitions the list at every step.
 - Partition is based on **pivot** element from the list.
@@ -105,12 +107,12 @@ public static void insertionSort(int[] list) {
 **Stability of sorting algorithm**
 
 - Elements with the same hashCode stays on the same position after sorting.
-- For example in bubble sort, panda, panda, pies:
-    - panda would change position with other panda in even though of a fact that they have the same hashCode.
+- For example in bubble sort, **panda**, **panda**, **dog**:
+    - **panda** would change position with other **panda** in even though of a fact that they have the same hashCode.
 
 ***
 
-## :star: Check Rectangle.
+### :star: Check Rectangle.
 
 ```java
 public class Rectangle {
@@ -128,24 +130,24 @@ public class Rectangle {
 
 ***
 
-## :star: Singleton vs GOF singleton.
+### :star: Singleton vs GOF singleton.
 
 - GOF singleton, one singleton per JVM.
 - Spring singleton, one singleton per Application Context.
 
 ***
 
-## :star: equals
+### :star: equals
 
 - By default, equals comparing a object by comparing their address in memory
 - By default, equals method tests for object identity it returns true if and only if the 2 objects are literally the same
 (point to the same location in memory).
 - In a flyweight pattern we need this method to return true if the 2 objects have the same value, even if they are 
 actually different objects.
-- The default implementation of `.equals()` relies on object identity, which may cause problems if we end up with multiple
+- The default implementation of `equals()` relies on object identity, which may cause problems if we end up with multiple
 flyweights referring to the same underlying value.
 - Concurrency issues sometimes give rise to decouple flyweight - there duplicates are fine so long as they return true 
-when called `.equals()`.
+when called `equals()`.
 
 ```java
 public class Item {
@@ -153,7 +155,7 @@ public class Item {
     private double price;
 
     public boolean equals(Object otherObject) {
-        // check whether objects are equals
+        // Check whether objects are equals
         if (this == otherObject) return true;
 
         // Must return false if parameter is null
@@ -171,7 +173,7 @@ public class Item {
 
 ***
 
-## :star: How to build own annotation.
+### :star: How to build own annotation.
 
 ```java
 @Target(ElementType.METHOD)
@@ -198,8 +200,8 @@ public class AroundAspect {
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         joinPoint.proceed();
-        long entTime = System.currentTimeMillis() - startTime;
-        logger.info("Time taken by this {} is {}", joinPoint, entTime);
+        long endTime = System.currentTimeMillis() - startTime;
+        logger.info("Time taken by this {} is {}", joinPoint, endTime);
     }
 
 }
@@ -217,7 +219,7 @@ public class Dao1 {
 
 ***
 
-## :star: How to generate stack overflow?
+### :star: How to generate stack overflow?
 
 ```java
 public class StackOverflowException {
@@ -235,7 +237,7 @@ public class StackOverflowException {
 
 ***
 
-## :star: Count numbers.
+### :star: Count numbers.
 
 ```java
 public class CountNumbers {
@@ -255,7 +257,7 @@ public class CountNumbers {
 
 ***
 
-## :star: Find the least common ancestor for 2 nodes.
+### :star: Find the least common ancestor for 2 nodes.
 
 ```
                 1
@@ -302,17 +304,17 @@ public static Node<Integer> leastCommonAncestor(Node<Integer> root, Node<Integer
 ```
 leastCommonAncestor(1,8,6)
 lCA = leastCommonAncestor(2,8,6)
-    lCA = leastCommonAncestor(null,a,b) -> null
+    lCA = leastCommonAncestor(null,8,6) -> null
 rCA = leastCommonAncestor(3,8,6)
     lCA = leastCommonAncestor(7,8,6)
         lCA = leastCommonAncestor(8,8,6) -> 7
-    rCA = leastCommonAncestor(6,8,6) -> 3
+    rCA = leastCommonAncestor(6,8,6) -> *3
 
 ```
 
 ***
 
-## :star: Builder design patterns [Creational].
+### :star: Builder design patterns [Creational].
 
 ```java
 public class Customer {
@@ -390,16 +392,13 @@ public class Main {
         Customer customer = builder.withAge("89").withSalary("2500").build();
 
         System.out.println(customer);
-
     }
-
 }
-
 ```
 
 ***
 
-## :star: Decorator Pattern [Structural].
+### :star: Decorator Pattern [Structural].
 
 ```java
 public interface Order {
@@ -490,7 +489,7 @@ public class Main {
 
 ***
 
-## :star:  Factory Pattern [Creational].
+### :star:  Factory Pattern [Creational].
 
 ```java
 public interface Plane {
@@ -528,7 +527,6 @@ public class PlaneFactory {
 
 ```java
 public class Main {
-
     public static void main(String[] args) {
         Plane plane = PlaneFactory.getPlane(PlaneType.JUNKERS);
         plane.model();
@@ -538,7 +536,7 @@ public class Main {
 
 ***
 
-## :star: Observer pattern [Behavioral].
+### :star: Observer pattern [Behavioral].
 
 ```java
 public interface Publisher {
@@ -611,7 +609,7 @@ public class Main {
         RadioChannel radioChannel = new RadioChannel();
         TVChannel tvChannel = new TVChannel();
 
-        // registrtion observer
+        // registration observer
         newsAgency.register(radioChannel);
         //newsAgency.register(tvChannel);
 
@@ -619,21 +617,17 @@ public class Main {
         newsAgency.addNews("News 2");
         newsAgency.addNews("News 3");
     }
-
 }
 ```
 
 ***
 
-## :star: Factorial
+### :star: Factorial
 
 ```java
 public class Factorial {
-
     public int calculateFactorial(int num) {
-
         int result = 1;
-
         if (num == 0 || num == 1) {
             return result;
         } else {
@@ -643,7 +637,6 @@ public class Factorial {
         }
         return result;
     }
-
 }
 
 public class FactorialRecursive {
@@ -654,13 +647,12 @@ public class FactorialRecursive {
             return num * calculateFactorial(num - 1);
         }
     }
-
 }
 ```
 
 ***
 
-## :star: Fibonacci
+### :star: Fibonacci
 
 ```java
 // 0, 1, 1, 2, 3, 5, 8, 13
@@ -695,32 +687,30 @@ public class FibonacciIterative {
 
 public class FibonacciRecursive {
     public int calculate(int number) {
-            if (number == 0) {
-                return 0;
-            }
-            if (number == 1) {
-                return 1;
-            } else {
-                return calculate(number - 1) + calculate(number - 2);
-            }
+        if (number == 0) {
+            return 0;
         }
+        if (number == 1) {
+            return 1;
+        } else {
+            return calculate(number - 1) + calculate(number - 2);
+        }
+    }
 }
 ```
 
 ***
 
-## :star: Synchronized
+### :star: Synchronized
 
 ```java
 public class SomeClass {
     synchronized static void foo() {
-
     }
 
     // Equivalent of above is
     static void foo() {
         synchronized(SomeClass.class) {
-
         }
     }
 }
@@ -729,13 +719,11 @@ public class SomeClass {
 ```java
 public class SomeClass {
     synchronized void foo() {
-
     }
 
     // Equivalent of above is
     void foo() {
         synchronized(this) {
-
         }
     }
 }
@@ -758,20 +746,20 @@ you must also implement `hashCode()`.
 - If x and y are different objects, `x.hashCode()` and `y.hashCode()` should also be different (but not always are).
 
 ```java
-     @Override
-     public int hashCode() {
-       int hash = 1;
-       for (int i = 0; i < str.length(); i++) {
-             hash = 31 * hash + chartAt(i)
-       }
-       return hash;
-     }
+@Override
+public int hashCode() {
+    int hash = 1;
+    for (int i = 0; i < str.length(); i++) {
+         hash = 31 * hash + chartAt(i)
+    }
+    return hash;
+}
 ```
 
 - HashCode must be compatible.
-    - if `x.equals(y)` return true, **x.hashCode() == y.hashCode()**
-- If you change equals method you have to change hashCode also. Failure to do so results in objects put in hash based
-data structures HasSet, HashMap could be lost.
+    - If `x.equals(y)` return true, **x.hashCode() == y.hashCode()**
+- If you change equals method you have to change hashCode also. 
+- Failure to do so results in objects put in hash based data structures HasSet, HashMap could be lost.
 
 ```java
 Object.hash(some, some2);
@@ -779,14 +767,13 @@ Object.hash(some, some2);
 
 - HashCode's are used in hashing to decide which group (or bucket) an object should be placed into.
 - A group of object's might share the same hashCode.
-- The implementation of hashCode decides effectiveness of Hashing. A good hashing function evenly
-distributes objects into different groups or buckets.
+- The implementation of hashCode decides effectiveness of Hashing. 
+- A good hashing function evenly distributes objects into different groups or buckets.
 - A good hashCode should have the following properties:
-    - if `obj1.equals(obj2)` is true, then `obj1.hashCode()` should be equal to `obj2.hashCode()`
-    - `obj.hashCode()` should return the same value when run multiple times, if values of obj used in 
-    `equals()` have not change.
-    - if `obj1.equals(obj2)` is false, it is **NOT** required that `obj1.hashCode()` is not equal to `obj2.hashCode()`.
-      Two unequals objects might have the same hashCode.
+    - If `obj1.equals(obj2)` is true, then `obj1.hashCode()` should be equal to `obj2.hashCode()`.
+    - `obj.hashCode()` should return the same value when run multiple times, if values of obj used in `equals()` have not changed.
+    - If `obj1.equals(obj2)` is false, it is **NOT** required that `obj1.hashCode()` is not equal to `obj2.hashCode()`.
+        - Two unequals objects might have the same hashCode.
 
 ```java
 @Override
@@ -801,11 +788,13 @@ public int hashCode() {
 ### toString
 
 ### equals
+
 - Check whether one object can be equal to another.
 - Equals method implemented in Object class, check whether two references to object are identical.
 - Override equal method if you want to check equality based on state of object.
 - Two object are equals when they have the same value.
-- Equals method is used when we compare two objects. Default implementation of equals method is defined in Object class.
+- Equals method is used when we compare two objects. 
+- Default implementation of equals method is defined in Object class.
 - Two object references are equals only if they are pointing to the same object.
 - We need to override equals method, if we would want to compare the contents of an object.
 - We can override equals method in the class to check the content of the objects.
@@ -821,7 +810,7 @@ public boolean equals(Object obj) {
 }
 ```
 
-- Important things to consider when implementing equals method.
+- Important things to consider when implementing equals method:
     - Reflexive: For any reference value x, `x.equals(x)` return true.
     - Symmetric: For any reference values x and y, if `x.equals(y)` should return true if and only if `y.equals(x)` 
     returns true.
@@ -856,8 +845,9 @@ public boolean equals(Object obj) {
 
 ### wait and notify
 
-- work in tandem – when one thread calls `wait()` on an object, that thread will block until
-  another thread calls `notify()` or `notifyAll()` on that same object.
+- Work in tandem. 
+- When one thread calls `wait()` on an object, that thread will block until another thread calls `notify()` 
+or `notifyAll()` on that same object.
 
 ### getClass
 
@@ -867,9 +857,11 @@ public boolean equals(Object obj) {
 
 ### Object constructor
 
-- All constructors in Java must make a call to the Object constructor. This is done with the call `super()`.
-This has to be the first line in a constructor. The reason for this is so that the object can actually be created on the heap before
-any additional initialization is performed.
+- All constructors in Java must make a call to the Object constructor. 
+- This is done with the call `super()`.
+- This has to be the first line in a constructor. 
+- The reason for this is so that the object can actually be created on the heap before any additional initialization 
+is performed.
 
 ### finalize
 
@@ -878,16 +870,18 @@ any additional initialization is performed.
 - According to the doc, this method gets called by the garbage collector on an object when garbage
 collection determines that there are no more references to the object.
 - But there are no guarantees that `finalize()` method would gets called if the object is still reachable or no Garbage
-Collectors run when the object become eligible. That's why it's better not rely on this method.
+Collectors run when the object become eligible. 
+- That's why it's better not rely on this method.
 - Generally it's considered bad practice to use `finalize()` method in applications of any kind and should be avoided.
-- Finalizers are not meant for freeing resources (e.g., closing files). The garbage collector gets called when (if!) the
-system runs low on heap space. You can't rely on it to be called when the system is running low on file handles or,
-for any other reason.
+- Finalizers are not meant for freeing resources (e.g., closing files). 
+- The garbage collector gets called when (if!) the system runs low on heap space. 
+- You can't rely on it to be called when the system is running low on file handles or, for any other reason.
 - The intended use-case for finalizers is for an object that is about to be reclaimed to notify some other object about
-its impending doom. A better mechanism now exists for that purpose, the `java.lang.ref.WeakReference<T>`
-class. If you think you need write a `finalize()` method, then you should look into whether you can solve the same
-problem using WeakReference instead. If that won't solve your problem, then you may need to re-think your design
-on a deeper level.
+its impending doom. 
+- A better mechanism now exists for that purpose, the `java.lang.ref.WeakReference<T>` class. 
+- If you think you need write a `finalize()` method, then you should look into whether you can solve the same
+problem using WeakReference instead. 
+- If that won't solve your problem, then you may need to re-think your design on a deeper level.
 
 ***
 
@@ -901,7 +895,7 @@ Set<String> threadSafeSet = Collections.synchronizedSet(new HashSet<String>());
 Map<String, String> threadSafeMap = Collections.synchronizedMap(new HashMap<String, String>());
 ```
 
-- Since Java 5.
+**Since Java 5**
 
 ```java
 List<String> threadSafeList = new CopyOnWriteArrayList<String>();
@@ -909,7 +903,7 @@ Set<String> threadSafeSet = new ConcurrentHashSet<String>();
 Map<String, String> threadSafeMap = new ConcurrentHashMap<String, String>();
 ```
 
-- ConcurrentHashMap insertions.
+**ConcurrentHashMap insertions.**
 
 ```java
 SomeObject previousValue = concurrentHashMap.putIfAbsent(1, value);
@@ -917,9 +911,9 @@ SomeObject previousValue = concurrentHashMap.putIfAbsent(1, value);
 
 - Methods in atomic ways sets or replace elements if it is the same at a point of time.
 - There are a couple of mass operations to search, modify or look for ConcurrentHashMap:
-    - search
-    - reduce
-    - forEach
+    - `search`
+    - `reduce`
+    - `forEach`
 - ConcurrentHashMap **does not allow null for keys or values**.
 - ConcurrentHashMap and CopyOnWriteArrayList implementations provide much higher concurrency while preserving
 thread safety, ConcurrentSkipListMap.
@@ -936,7 +930,7 @@ while another one modifies it by adding/removing elements).
     iterator was created. 
     - This array never changes during the lifetime of the iterator, so interference is impossible and the iterator 
     is guaranteed not to throw ConcurrentModificationException.
-- **ConcurrentLinkedQueue**
+- **ConcurrentLinkedQueue**:
     - Iterators are weakly consistent, returning elements reflecting the state of the queue at some point at or
     since the creation of the iterator. 
     - They do not throw **java.util.ConcurrentModificationException**, and may proceed concurrently with other operations. 
@@ -952,7 +946,7 @@ but not iteration (unless the underlying collection being passed to it already i
 
 ***
 
-## :star: WeakHashMap
+### :star: WeakHashMap
 
 - Weak References: The objects that are referenced only by weak references are garbage collected eagerly; the GC
 won’t wait until it needs memory in that case.
@@ -998,32 +992,16 @@ won’t wait until it needs memory in that case.
 
 ***
 
-## :star: Example `@Override`
+### :star: Example `@Override`
 
 - Override method, we are telling a compiler we override method exactly as present in interface or parent class.
 - Compiler checks that we actually override method, if some issue they will be compiled time error.
 
 ***
 
-## :star: Spring Bean Lifecycle
+### :star: Spring Bean Lifecycle
 
-Instantiate <br/>
-:arrow_down: <br/>
-Populate properties <br/>
-:arrow_down: <br/>
-Call setBeanName of BeanNameAware <br/>
-:arrow_down: <br/>
-Call setBeanFactory of BeanFactoryAware <br/>
-:arrow_down: <br/>
-Call setApplicationContext of ApplicationContextAware <br/>
-:arrow_down: <br/>
-Preinitialization (BeanPostProcessor) <br/>
-:arrow_down: <br/>
-afterPropertiesSet of initializing Beans <br/>
-:arrow_down: <br/>
-Custom Init method <br/>
-:arrow_down: <br/>
-Post Initialization (BeanPostProcessors) :arrow_right: Bean redy to use
+![Spring Bean Lifecycle](../../spring/images/spring-bean-lifecycle.png "Spring Bean Lifecycle")
 
 ### Destroy a Bean
 
@@ -1031,14 +1009,14 @@ Post Initialization (BeanPostProcessors) :arrow_right: Bean redy to use
 
 ***
 
-## :star: Rules that Relational Database follows
+### :star: Rules that Relational Database follows
 
 - **Entity Integrity**: Every table has a primary key.
 - **Referential Integrity**: A foreign key points at a value that is the primary key of another table. Null value are valid for FK.
 
 ***
 
-### :star: object states
+### :star: Object states
 
 - Transient state: Object does not associated with any table row.
 - Persistent: Object with database identify. Primary key is set as database identifier.
@@ -1046,13 +1024,14 @@ Post Initialization (BeanPostProcessors) :arrow_right: Bean redy to use
 
 ***
 
-### :star: Declaring a **volatile** Java variable
+### :star: Declaring a `volatile` Java variable
 
 - Means the value of this variable will never be called thread-locally all reads and writes will go straight to 
 **main memory**. 
 - Access to the variable acts as through it is enclosed in a synchronized block, synchronized on itself.
-- A class loader is a part of JVM. Technically namespaces are unique per class loader. Usually there is just 1 class 
-loader per program.
+- A class loader is a part of JVM. 
+- Technically namespaces are unique per class loader. 
+- Usually there is just 1 class  loader per program.
 - In Java Threading support, thread mostly communicate with each other via shared objects or shared member variables with 
 the same object:
     - Thread Interference: Different thread access the same data.
@@ -1060,8 +1039,8 @@ the same object:
     - Thread Contention: Thread get in each other's way, and slow down-or sometimes even have to be killed in Java.
 - Thread interference and memory consistency errors:
     - If two thread access the same variable, it's possible for them to get in each other's way.
-    - That's because Java might switch execution from one thread to another even midway through a simple, 
-    seemingly atomic instruction.
+    - That's because Java might switch execution from one thread to another even midway through a simple, seemingly 
+    atomic instruction.
     - For example two threads incrementing the same variable could simply lose one of the two increments.
     - Restricting access to an object or a variable-akin to locking the variable so only thread can access at a time
       is a powerful concept used widely in computer science especially in databases.
@@ -1083,7 +1062,7 @@ the same object:
 
 ***
 
-### :star: Synchronized
+## :star: Synchronized
 
 ### Methods
 
@@ -1100,11 +1079,9 @@ public class SynchronizedCounter {
     public synchronized void increment() {
         counter++;
     }
-
     public synchronized void decrement() {
         counter--;
     }
-
     public synchronized int value() {
         return counter;
     }
@@ -1130,7 +1107,6 @@ public void addName(String name) {
 - Threads never gets blocked on itself which means that one synchronized method of an object can always call
 another synchronized method of the same object without blocking.
 - Making method as synchronized is a shortcut to making the entire body of the method as synchronized on **this**.
-
 
 ### Thread Contention
 
@@ -1158,7 +1134,6 @@ public class SingletonImproved implements Cloneable {
     private volatile static SingletonImproved singleton;
 
     private SingletonImproved() {
-
     }
 
     // double-check-locking
@@ -1181,17 +1156,3 @@ public class SingletonImproved implements Cloneable {
     }
 }
 ```
-
-***
-
-
-
-
-
-
-
-
-
-
-
-
