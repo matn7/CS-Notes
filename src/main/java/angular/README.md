@@ -1316,3 +1316,58 @@ npm run serve:ssr
 ```console
 ng add @nestjs/ng-universal
 ```
+
+### Compiling an Angular project 
+
+```console
+ng build -c local
+
+ng build --prod
+
+cd /dist/<PROJECT_NAME>
+# copy content to server to deploy app
+```
+
+**configure nginx**
+
+```conf
+events {
+  worker_connections  4096;  ## Default: 1024
+}
+
+http {
+   map $http_upgrade $connection_upgrade {
+       default upgrade;
+      '' close;
+   }
+
+   include /etc/nginx/mime.types;
+
+   server {
+      listen 80;
+
+      location / {
+         root /usr/share/nginx/html;
+         try_files $uri $uri/ /index.html;
+      }
+    }
+}
+```
+
+**Dockerfile**
+
+```dockerfile
+FROM nginx:1.14.0-alpine
+
+MAINTAINER Your name "youremail@server.com"
+
+RUN apk add --update bash && rm -rf /var/cache/apk/*
+
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY /dist/YOUR_PROJECT_NAME/ /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/
+
+CMD ["nginx", "-g", "daemon off;"]
+```

@@ -207,11 +207,11 @@ public class Programmer implements RNDService {
 <beans>
     <bean id="myService" class="com.mybank.SecurityService"></bean>
 
-    <bean id="myProgrammer" class="com.mybank.Programmer"></bean>
-    <property name="securityService" ref="myService" />
-
-    <property name="emailAddress" value="email@example.com" />
-    <property name="team" value="interceptors" />
+    <bean id="myProgrammer" class="com.mybank.Programmer">
+        <property name="securityService" ref="myService" />
+        <property name="emailAddress" value="email@example.com" />
+        <property name="team" value="interceptors" />
+    </bean>
 </beans>
 
 ```
@@ -270,7 +270,7 @@ foo.team=interceptors
 
 ## Bean lifecycle
 
-![Bean lifecycle](images/dependency-injection.png "Bean lifecycle")
+![Bean lifecycle](images/spring-bean-lifecycle.png "Bean lifecycle")
 
 ### Bean is ready for use
 
