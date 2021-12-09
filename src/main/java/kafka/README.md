@@ -3,13 +3,13 @@
 ## Why Apache Kafka
 
 - Messaging is one of the popular trend in sharing the data between the applications/systems real time.
-- There are two popular legacy messaging solutions **Publish-Subscribe(Topic)** and **Queue**:
-    - Publish-Subscribe:
-        - Messages are published to a message broker and message will be distributed to all of the consumers.
+- There are two popular legacy messaging solutions **Publish-Subscribe (Topic)** and **Queue**:
+    - **Publish-Subscribe:**
+        - Messages published to a message broker and message will be distributed to all the consumers.
         - Topics retain messages only as long as it takes to distribute them to current subscribers.
         - The subscriber must continue to be active for it to consume the messages.
-    - Queue:
-        - Messages are published to a queue and the consumer will read from it.
+    - **Queue:**
+        - Messages published to a queue, and the consumer will read from it.
         - Limitation is you can have only one consumer per queue.
 - There is always a limit on the size of the message because larger message may end up breaking
 the message broker or make the broker to perform slower.
@@ -18,16 +18,16 @@ the message broker or make the broker to perform slower.
 ## What is Apache Kafka
 
 - Apache Kafka is a scalable, reliable, high volume and high throughput distributed messaging system.
-- Apache Kafka is mainly used for sharing high volume data from one system to another system
+- Apache Kafka mainly used for sharing high volume data from one system to another system
 in real time and retention of data.
 - LinkedIn started their development in 2009 and implemented in 2010.
 - Outsourced to Apache software foundation by 2011.
-- Currently this is one of the mostly used tools in Apache software foundation.
+- Currently, this is one of the mostly used tools in Apache software foundation.
 - Advantages:
-    - Messages are not removed from the topic as soon as the consumers consume it.
+    - Messages not removed from the topic as soon as the consumers consume it.
     - Kafka is Horizontally scalable.
     - Kafka has stronger ordering guarantees than a traditional messaging system.
-    - Kafka can handle high volume and it has very high throughput.
+    - Kafka can handle high volume, and it has very high throughput.
     - Kafka design supports loosely coupled Producers and Consumers.
     - Kafka can also be used as a storage system.
 
@@ -35,7 +35,7 @@ in real time and retention of data.
 
 ![Kafka Producers Consumers Topics](images/kafka-prod-cons.png "Kafka Producers Consumers - Topics")
 
-- Topic live inside KAFKA BROKER (server that can hold n number of topics).
+- Topic lives inside KAFKA BROKER (server that can hold n number of topics).
 
 ![Kafka Cluster](images/kafka-cluster.png "Kafka Cluster")
 
@@ -43,14 +43,11 @@ in real time and retention of data.
 
 ### What is a Distributed System
 
-- Systems are designed in such a way that it distributes the load within the system
-and process the load simultaneously.
-- To achieve simultaneous processing the load needs to be distributed across the cluster and
-there needs to be coordination mechanism - meaning each and every system in the cluster needs
-to talk to each other.
+- Systems designed in such a way that it distributes the load within the system and process the load simultaneously.
+- To achieve simultaneous processing the load needs to be distributed across the cluster and there needs to be 
+coordination mechanism - meaning each and every system in the cluster needs to talk to each other.
 - In world of distributed systems these are achieved using a protocol called **gossip protocol**.
-- There need to be a system in place in order to monitor the health and metadata information
-about the brokers:
+- There need to be a system in place in order to monitor the **health and metadata information** about the brokers:
     - That's when **Zookeeper** comes in to picture.
 
 ### Zookeeper
@@ -69,12 +66,12 @@ Kafka cluster and balancing the broker assignments and reassignments:
 ### Kafka Topics and Partitions
 
 - The Kafka cluster stores streams of records in categories called **topics**.
-- A topic is a category or feed name to which records are published.
-- We can compare this to a data store in which data is persisted.
+- A topic is a category or feed name to which records published.
+- We can compare this to a data store in which data persisted.
 - For each topic, Kafka maintains one or more physical log file based on the number
 of partitions in a topic.
-- When a producer sends a record to the topic the records are appended in an **ordered, sequence of records**.
-- In topics messages are stored in **partitions**.
+- When a producer sends a record to the topic the records appended in an **ordered, sequence of records**.
+- In topics messages stored in **partitions**.
 - A topic can have n number of partitions and this will be defined during the topic creation.
 - Each record in the partition will be assigned a sequential id number called the **offset** that
 uniquely identifies each record within the partition.
@@ -84,21 +81,21 @@ uniquely identifies each record within the partition.
     - Offset Value
     - Payload (Actual Message content)
 - From consumer point of view, it is possible to have infinite number of consumers.
-- Each and every consumers are autonomous to each other.
+- Each and every consumer are autonomous to each other.
 - Some erroneous behavior of one of the consumer does not impact the other one.
-- Offset which is available in the message. The Offset is maintained by the consumer and
-it is independent of each other with the other consumers.
-- When the consumers are created you can either create the consumer to start reading the message
+- Offset which is available in the message. 
+- The Offset maintained by the consumer, and it is independent of each other with the other consumers.
+- When the consumers created you can either create the consumer to start reading the message
 from the beginning or read it from the least.
-- **Multiple Partition Topic**:
+- **Multiple Partition Topic:**
     - In real world most of the topics will have more than one partition.
-- Each and every partition maintains its own offset and ordering is guaranteed only within the partition:
+- Each and every partition maintains its own offset and ordering guaranteed only within the partition:
     - Multiple partitions are foundation for:
-        - Scaling.
-        - Fault tolerance.
-        - High levels of throughput.
+        - Scaling
+        - Fault tolerance
+        - High levels of throughput
 
-#### Message Retention in Kafka
+**Message Retention in Kafka**
 
 - The retention period of records in Kafka is configurable.
 - On cluster each topic can have their own retention period.
@@ -127,56 +124,57 @@ from the beginning or read it from the least.
 
 ### Leader
 
-- In the world of distributed systems. Each server in the cluster needs to talk to each other
+- In the world of distributed systems, each server in the cluster needs to talk to each other
 in order to maintain the state of the cluster this is called as **QUORUM**.
-- So when a broker is created there will be a Leader assigned to it by the zookeeper.
+- So when a broker created there will be a Leader assigned to it by the zookeeper.
 - This leader is responsible for communicating to other brokers about the partitions it owns.
 
 ![Kafka Loader](images/kafka-loader.png "Kafka Loader")
 
 ### Replication Factor
 
-- **Replication factor > 1** for any topic in Kafka.
-- Higher availability.
-- Stronger Durability.
-- Fault Tolerance.
+- Replication factor `>1` for any topic in Kafka
+- Higher availability
+- Stronger Durability
+- Fault Tolerance
 
 ### ISR (IN SYNC REPLICA)
 
-- Ideal Scenario **ISR == REPLICATION FACTOR**
+- Ideal Scenario `ISR == REPLICATION FACTOR`
 
 ### Partitioning Mechanism in Kafka Producer.
 
-- Approach 1 - Providing the Partition Number as part of the Producer Record. This is sometimes called Direct partitioning.
+- Approach 1: 
+    - Direct partitioning
+    - Providing the Partition Number as part of the Producer Record. 
 
 ```java
-myProducer.send(new  ProducerRecord<String, String>("demo-topic", 0, "message 1",
-                        "Message Value : " + Integer.toString(i)));
+myProducer.send(new ProducerRecord<String, String>("demo-topic", 0, "message 1", "Message Value : " + Integer.toString(i)));
 ```
 
-- Approach 2: (Round-Robin)
-    - No key and partition is provided as part of the producer record.
+- Approach 2: 
+    - Round-Robin
+    - No key and partition provided as part of the producer record.
     - This will follow a round robin approach in order to allocate the messages to the partitions.
 
 ```java
-myProducer.send(new  ProducerRecord<String, String>("demo-topic",
-                        "Message Value : " + Integer.toString(i)));
+myProducer.send(new ProducerRecord<String, String>("demo-topic", "Message Value : " + Integer.toString(i)));
 ```
 
-- Approach 3: (Key-Hashing)
-    - If you provide a key and ther is no custom partition implementation then the partition is
-    decided by the formula. key.hashcode % no of Partitions.
-    - There is a drawback with this approach, If the key is the same for every record then some
-    of the partitions will never receive any message.
+- Approach 3: 
+    - Key-Hashing
+    - If you provide a key and ther is no custom partition implementation then the partition decided by the formula. 
+    `key.hashcode % no of Partitions.`
+    - There is a drawback with this approach, If the key is the same for every record then some partitions will never 
+    receive any message.
 
 ```java
-myProducer.send(new  ProducerRecord<String, String>("demo-topic", "message",
-                    "Message Value : " + Integer.toString(i)));
+myProducer.send(new ProducerRecord<String, String>("demo-topic", "message", "Message Value : " + Integer.toString(i)));
 ```
 
-- Approach 4: (Custom Partition Implementation)
+- Approach 4: 
+    - Custom Partition Implementation
     - We need to provide a custom partition implementation as part of this approach.
-    - This can be done by providing the implementation class against the.
 
 ## Kafka Consumers
 
@@ -188,10 +186,10 @@ properties.put("value.deserializer", "org.apache.kafka.common.serialization.Stri
 properties.put("group.id","test1");
 ```
 
-- `bootstrap.servers` - You need to provide the Broker address against this property.
-- `key.deserializer` - How to deserialize the key that was published from the producer.
-- `value.deserializer` - Similar to key deserializer.
-- `group.id` - Unique string that identifies the consumer group this consumer belongs to.
+- **bootstrap.servers:** You need to provide the Broker address against this property.
+- **key.deserializer:** How to deserialize the key that was published from the producer.
+- **value.deserializer:** Similar to key deserializer.
+- **group.id:** Unique string that identifies the consumer group this consumer belongs to.
 
 ### Consumer Pool API
 
@@ -199,9 +197,9 @@ properties.put("group.id","test1");
 ConsumerRecords<String, String> records = consumer.poll(10);
 ```
 
-- Consumers sends heartbeat to cluster which makes sure this broker is an active consumer.
-- If not heart bet is received within the session.timeout.ms then this will indicate the consumer and
-rebalance will happen at the consumer end.
+- Consumer sends heartbeat to cluster which makes sure this broker is an active consumer.
+- If not heart bet received within the `session.timeout.ms` then this will indicate the consumer, and re-balance will 
+happen at the consumer end.
 
 ***
 
@@ -209,7 +207,8 @@ rebalance will happen at the consumer end.
 
 **Camel**
 
-- Enterprise apps needs to talk to different apps or departments. Integration in order to interact with each system.
+- Enterprise apps needs to talk to different apps or departments. 
+- Integration in order to interact with each system.
 - Integrations always involves some challenges.
 - Enterprise Integration Pattern.
 - Lightweight integration framework.
@@ -264,9 +263,9 @@ ssl.key.password=kafka123
 
 - **TrustStore** and **KeyStore** are very much similar in terms of construct and structure
 as both are management by the keytool command.
-- **KayStore**:
+- **KayStore:**
     - The keystore file stores the certificate and private key of that certificate.
-    - This is server side set up and this file is required at the server level.
+    - This is server side set up and this file required at the server level.
 - **TrustStore**:
     - The truststore of a client stores all the certificates that the client should trust.
     - This is required at client side.
@@ -286,24 +285,3 @@ openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days
 keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert
 keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

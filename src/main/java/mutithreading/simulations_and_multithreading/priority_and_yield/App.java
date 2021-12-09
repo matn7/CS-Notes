@@ -16,8 +16,8 @@ public class App {
 
         // Thread.yield() - static method is essentially used to notify the system that the current thread
         // is willing to give up the CPU for the while.
-        // Technically in process scheduler is terminology, the executing thread is put back into the ready queue of the processor,
-        // and waits for its next turn.
+        // Technically in process scheduler is terminology, the executing thread is put back into the ready queue
+        // of the processor, and waits for its next turn.
 
         Thread t1 = new Thread(new Worker("T1"));
         Thread t2 = new Thread(new Worker("T2"));

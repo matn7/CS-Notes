@@ -60,18 +60,4 @@ npm start
 - JSX can reference JS variables
 
 ![JSX vs HTML](images/jsx-vs-html.png "JSX vs HTML")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+ 

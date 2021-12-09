@@ -14,18 +14,18 @@
 
 - The system responds in a timely manner.
 - Responsiveness is the cornerstone of usability and utility.
-- Responsiveness also means problems may be detected quickly and dealt with effectively.
+- Responsiveness also means problems may detect quickly and dealt with effectively.
 - Responsive systems provide rapid and consistent response times.
 - Consistent behavior simplifies error handling, builds end user confidence, and encourages further interaction.
 
 **Resilient**
 
 - System stays responsive in the face of failure.
-- Resilience is achieved by replication, containment, isolation and delegation.
-- Failures are contained within each component.
+- Resilience achieved by replication, containment, isolation and delegation.
+- Failures contained within each component.
 - Parts of the system can fail, without compromising the system as a whole.
-- Recovery of each component is delegated to another.
-- High-availability is ensured by replication where necessary.
+- Recovery of each component delegated to another.
+- High-availability ensured by replication where necessary.
 
 **Elastic**
 
@@ -65,10 +65,10 @@
 
 **Asynchronous**
 
-- Events are captured asynchronously.
-- A function is defined to execute when an event is emitted.
-- Another function is defined if an error is emitted.
-- Another function is defined when complete is emitted.
+- Events captured asynchronously.
+- A function defined to execute when an event emitted.
+- Another function defined if an error emitted.
+- Another function defined when complete is emitted.
 
 ![GoF Observer Pattern](images/gof-observer-pattern.png "GoF Observer Pattern")
 
@@ -81,11 +81,11 @@
 - In Blocking, the code will stop and wait for more data (ie reading from disk, network, etc).
 - Non-blocking in contrast, will process available data, ask to be notified when more is available, then continue.
 
-*Multi Threaded Server*
+**Multi Threaded Server**
 
 ![Multi Threaded Server](images/multi-threaded-server.png "Multi Threaded Server")
 
-*Node.js Server*
+**Node.js Server**
 
 ![Node.js Server](images/node-js-server.png "Node.js Server")
 
@@ -95,9 +95,9 @@
 
 **Failures as Messages**
 
-- Exceptions are not thrown in a traditional sense.
+- Exceptions not thrown in a traditional sense.
     - Would break processing of stream.
-- Exceptions are processed by a handler function.
+- Exceptions processed by a handler function.
 
 ### Reactive Streams API
 
@@ -119,28 +119,26 @@
 
 **Spring Reactive Types**
 
-- 'Mono' is a publisher with zero or one element in data stream.
-- 'Flux' is a publisher with zero or MANY elements in the data stream. 
+- `Mono` is a publisher with zero, or one element in data stream.
+-`'Flux` is a publisher with zero, or MANY elements in the data stream. 
 - Both implement the Reactive Streams Publisher interface.
 
 ## Spring Web Flux
 
-
-
 ## Evolution of Programming
 
 - Past:
-    - Monolith Applications.
-    - Run in App Servers.
-    - Does not embrace Distributed Systems.
+    - Monolith Applications
+    - Run in App Servers
+    - Does not embrace Distributed Systems
 - Now:
-    - Micro Services.
-    - Run in cloud.
-    - Embrace Distributed Systems.
+    - Micro Services
+    - Run in cloud
+    - Embrace Distributed Systems
 - Expectations of the App:
-    - Scale based on load.
-    - Use resources efficiently.
-    - Latency or Response Time should be faster.
+    - Scale based on load
+    - Use resources efficiently
+    - Latency or Response Time should be faster
 
 ### Rest API
 
@@ -149,14 +147,14 @@
 - Thread per request model.
 - Managed by property (thread pool size):
     - `server.tomcat.max-threads`
-- By default it can handle 200 connections.
-- Can be overriden in application.properties or application.yaml.
+- By default, it can handle 200 connections.
+- Can be overriden in `application.properties` or `application.yaml`.
 - Each thread takes some memory.
 - Common Stack size is 1MB.
 - Higher the thread pool size, Higher the memory consumption.
 - Application really perform poor with less memory available.
 - **Handled today**:
-    - Load is handled today **horizontal scaling** - Kubernetes or some container orchestration.
+    - Load handled today **horizontal scaling** - Kubernetes or some container orchestration.
 - Limitation on handling many concurrent users.
 - Move away from "Thread Per Request Model".
 
@@ -182,17 +180,17 @@ public ResponseEntity<Item> getItem(@PathVariable Integer id) {
     - Top-down approach.
     - Inefficient use of resources.
 - **Blocking** and **Synchronous**.
-- Need to make calls asynchronous, basically non blocking.
-- Currently in Java we have::
+- Need to make calls asynchronous, basically non-blocking.
+- Currently, in Java we have::
     - Callback
     - Futures
 - Callbacks:
-    - Complex.
-    - No return value.
-    - Code is hard to read and maintain.
+    - Complex
+    - No return value
+    - Code is hard to read and maintain
 - Future:
-    - Returns Future instance.
-    - Hard to compose multiple asynchronous operations.
+    - Returns Future instance
+    - Hard to compose multiple asynchronous operations
 - Comparable Future:
     - Introduced as part of Java8.
     - Supports functional style API.
@@ -210,7 +208,7 @@ public ResponseEntity<Item> getAllItems() {
 - Application may crash with Out Of Memory error.
 - Client might be overwhelmed with huge data.
 - How to avoid this?
-    - BackPressure.
+    - BackPressure
 - **Summing up**:
     - Limit on the number of Concurrent users.
     - Synchronous and Blocking.
@@ -236,9 +234,9 @@ public ResponseEntity<Item> getAllItems() {
 
 - One **Event of Message** for a every result item from Data Source.
 - Data Sources:
-    - Data Base.
-    - External Service.
-    - File.
+    - Data Base
+    - External Service
+    - File
 - One **Event or Message** form **completion or error**.
 
 ![Reactive Programming](images/reactive-programming.png "Reactive Programming")
@@ -280,8 +278,8 @@ public interface Publisher<T> {
 }
 ```
 - Represents the Data Source:
-    - Data Base.
-    - External Service.
+    - Data Base
+    - External Service
 
 **Subscriber**
 
@@ -333,10 +331,10 @@ public interface Processor<T,R extends Subscriber<T>, Publisher<R>> { }
 
 - Core library for project reactor.
 - Implementation of Reactive Streams Specification.
-- **Flux** and **Mono**.
+- `Flux` and `Mono`.
 - Reactive Types of project reactor.
-- **Flux** - Represents 0 to N elements.
-- **Mono** - Represents 0 to 1 element.
+- `Flux` - Represents 0 to N elements.
+- `Mono` - Represents 0 to 1 element.
 
 ### Flux - 0 to N elements
 
@@ -374,17 +372,17 @@ Mono.just("Spring")
 
 ***
 
-## Spring WebFlux - Functional Web:
+## Spring WebFlux - Functional Web
 
-- Use **Functions** to route the request and response.
-- **RouterFunction** and **HandlerFunction**
+- Use `Functions` to route the request and response.
+- `RouterFunction` and `HandlerFunction`
 
 ![Spring WebFlux](images/spring-webflux.png "Spring WebFlux")
 
 ### RouterFunction
 
-- Use to route the incoming request.
-- Similar to the functionality of **@RequestMapping** annotation.
+- Used to route the incoming request.
+- Similar to the functionality of `@RequestMapping` annotation.
 
 ```java
 @GetMapping("/flux")
@@ -398,7 +396,7 @@ public Flux<Integer> returnFlux() {
 ### Handler Function
 
 - Handles the request and response.
-- Similar to the body of the **@RequestMapping** annotation.
+- Similar to the body of the `@RequestMapping` annotation.
 
 ```java
 @GetMapping("/flux")
@@ -462,10 +460,10 @@ of maintainable high performance protocol servers & clients.
 
 ### Events in Netty
 
-- Client requesting for a new connection is treated as an event.
-- Client requesting for data is treated as an event.
-- Client posting for data is treated as an event.
-- Errors are treated as event.
+- Client requesting for a new connection treated as an event.
+- Client requesting for data treated as an event.
+- Client posting for data treated as an event.
+- Errors treated as event.
 
 ### Netty - Channel
 
@@ -487,7 +485,7 @@ of maintainable high performance protocol servers & clients.
 
 ### Channel LifeCycle
 
-- Channel is Created.
+- Channel created.
 - Channel registered with event loop.
 - Channel is Active.
 - Channel is InActive.
@@ -529,8 +527,7 @@ client as the new data is available.
 ### MongoDB
 
 - Tailable Cursor:
-    - Connections remains open after all the results are retrieved.
+    - Connection remains open after all the results retrieved.
 - Capped Collections:
     - Collection of fixed-size in MongoDB.
     - Preserves the insertion Order.
-

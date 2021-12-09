@@ -77,10 +77,10 @@ public class SortServiceImpl {
 ## Scope of Beans
 
 - Bean Scopes default Singleton:
-    - Singleton - One instance per Spring Context.
-    - Prototype - New bean whenever requested.
-    - Request - One bean per HTTP request.
-    - Session - One instance per HTTP session.
+    - Singleton: One instance per Spring Context.
+    - Prototype: A new bean whenever requested.
+    - Request: One bean per HTTP request.
+    - Session: One instance per HTTP session.
 
 ### Singleton
 
@@ -125,8 +125,8 @@ public class JdbcConne {
 
 ### :star: Singleton vs GOF singleton
 
-- GOF singleton - one singleton per JVM.
-- Spring singleton - one singleton per ApplicationContext.
+- GOF singleton: One singleton per JVM.
+- Spring singleton: One singleton per ApplicationContext.
 
 ### Component Scan
 
@@ -139,7 +139,8 @@ public class Application {
 
 ### The lifecycle of a bean
 
-- As soon as bean is created post construct will be called. Initialize content of bean `@PostConstruct`.
+- As soon as bean created post construct will be called. 
+- Initialize content of bean `@PostConstruct`.
 
 ```java
 @RestController
@@ -156,7 +157,7 @@ public class StudentController {
 }
 ```
 
-- `@PreDestroy`: Called just before bean is removed.
+- `@PreDestroy:` Called just before bean removed.
 
 ## CDI
 
@@ -258,14 +259,14 @@ try (ClassPathXmlApplicationContext applicationContext =
 ### Wrap up IOC, Application Context and BeanFactory
 
 - IOC Container:
-    - Manages beans.
-    - Create instance of WelcomeService.
-    - Creates beans for WelcomeController.
-    - Autowire WelcomeService bean into the WelcomeController.
+    - Manage beans.
+    - Create an instance of `WelcomeService`.
+    - Create beans for `WelcomeController`.
+    - Autowire `WelcomeService` bean into the `WelcomeController`.
     - Wiring, creation of beans.
 - Application Context - Implementation of IOC.
 - Bean Factory - Implementation of IOC.
-- ApplicationContext = **Bean Factory ++**
+- ApplicationContext = **`Bean Factory ++`**
     - Spring AOP features.
     - `I18n` capabilities.
     - `WebApplicationContext` for web app.
@@ -304,12 +305,15 @@ public class WelcomeController {
 
 ### Component Annotations
 
-- `@Component` - generic component.
-- `@Repository` - encapsulating storage, retrieval, typical for relational databases.
-- `@Service` - Business service facade.
-- `@Controller` - Controller in MVC design pattern.
+- `@Component:` Generic component.
+- `@Repository:` Encapsulating storage, retrieval, typical for relational databases.
+- `@Service:` Business service facade.
+- `@Controller:` Controller in MVC design pattern.
 
-> Classify components to different categories. Apply different logic for each category.
+```
+Classify components to different categories. 
+Apply different logic for each category.
+```
 
 ### Read from properties file
 
@@ -406,13 +410,13 @@ public class LimitsConfigurationController {
 ## Spring Boot Auto Configuration
 
 - :star: `@SpringBootApplication`:
-    - SpringContext
-    - AutoConfiguration
-    - ComponentScan
+    - `@SpringContext`
+    - `@AutoConfiguration`
+    - `@ComponentScan`
 - Spring boot looks at:
     - Frameworks available on **CLASSPATH**.
-    - Existing configuration for the application based on these.
-- Spring boot provides basic configuration needed to configure the application with these framework.
+    - An existing configuration for the application based on these.
+- Spring boot provides a basic configuration needed to configure the application with framework.
 - This is called **AutoConfiguration**.
 
 ***
@@ -421,7 +425,7 @@ public class LimitsConfigurationController {
 
 ### Spring Framework
 
-- Most important feature of Spring Framework is Dependency Injection.
+- A most important feature of Spring Framework is Dependency Injection.
 - At the core all Spring Modules is Dependency Injection or IOC Inversion of Control.
 - Reduce duplication, plumbing code.
 - Integration with other framework.
@@ -453,7 +457,7 @@ web applications.
 
 ### AOP
 
-**@Before**
+**`@Before`**
 
 ```java
 package com.panda.spring.aop.business;
@@ -501,7 +505,7 @@ public class BeforeAspect {
 
 **Join Point (pointcut)**
 
-- "execution(* com.mybank.spring.aop.business.*.*(..))" - expression which defines what kind of methods want to intercept.
+- `execution(* com.mybank.spring.aop.business.*.*(..)):` Expression which defines what kind of methods want to intercept.
 
 **Advice**
 
@@ -522,10 +526,10 @@ logger.info("Intercepted method call - {}", joinPoint);
 - Specific execution instance.
 - If called 100 method calls they will be 100 joinPoints.
 - Process where this whole thing gets executed is called:
-    - **Weaving** - process of implementing AOP around your method calls.
-    - **Weaver** - framework which implements Weaving.
+    - **Weaving:** Process of implementing AOP around your method calls.
+    - **Weaver:** Framework which implements Weaving.
 
-**@After**
+**`@After`**
 
 - `@After` = `@AfterReturning` + `@AfterThrowing`
 
@@ -620,7 +624,7 @@ public class AroundAspect {
 
 ## Spring Boot AutoConfiguration
 
-- Some examples loaded by app context for us:
+- Some examples loaded by app context for us.
 
 ```
    DataSourceAutoConfiguration.EmbeddedDatabaseConfiguration:

@@ -1,8 +1,8 @@
 # Docker
 
 - Docker is a standard for Linux containers.
-- A "Container" is an isolated runtime inside of Linux.
-- A "Container" provides a private machine like space under Linux.
+- A **Container** is an isolated runtime inside of Linux.
+- A **Container** provides a private machine like space under Linux.
 - Containers will run under any modern Linux Kernel.
 
 ## Containers
@@ -15,14 +15,14 @@
 
 ## Docker Terminology
 
-- Docker Image:
+- **Docker Image:**
     - The representation of a Docker Container.
     - :star: Like JAR or WAR file in Java.
-- Docker Container:
+- **Docker Container:**
     - The standard runtime of Docker.
     - Effectively a deployed and running Docker Image.
     - :star: Like a Spring Boot Executable JAR.
-- Docker Engine:
+- **Docker Engine:**
     - The code which manages Docker stuff.
     - Creates and runs Docker Containers.
 
@@ -42,14 +42,14 @@ Client Docker CLI ---> REST API ---> Server Docker Daemon
 - CaaS (Container as a Service) platform subscription.
 - Enterprise class support.
 - Quarterly Released.
-- Backported patches for 1 year.
+- Back ported patches for 1 year.
 - Certified infrastructure.
 - Important for regulatory compliance (PCI, SOX, SAS-70).
 
 ### Docker Community Edition
 
 - Free Docker edition for developers and operations.
-- Monthly edge release with latest features for developers.
+- Monthly edge release with the latest features for developers.
 - Quarterly releases for operations.
 
 ### Which use
@@ -63,8 +63,7 @@ Client Docker CLI ---> REST API ---> Server Docker Daemon
 
 ## Why Docker
 
-- Before containers and docker the apps are deployed and run on Application server created on top
-of physical server.
+- Before containers and docker the apps deployed and run on Application server created on top of physical server.
 
 ### What is container
 
@@ -82,29 +81,29 @@ of physical server.
 ### Docker
 
 - Open source platform, and it consists:
-    - Docker Engine: A runtime and software packaging tool.
-    - Docker Hub: Service for sharing the application in the cloud similar to github.
+    - **Docker Engine:** A runtime and software packaging tool.
+    - **Docker Hub:** Service for sharing the application in the cloud similar to github.
 - The output of a Docker build is a Docker Image.
 - To run Docker, we need to have docker running in our machine.
-- When the Docker image is run it creates a container.
+- When the Docker image runs it creates a container.
 
 **Advantages**
 
 - Rapid application deployment.
 - Easy sharing of artifacts.
-- Faster and Light Weight.
+- Faster and lightweight.
 
 **Dockerfile**
 
-- `FROM`: It pulls the image from the docker hub. 
-    - Here it pulls the java image `alpine-oraclejdk8:slim`.
-- `ADD`: Add command takes two arguments, one is source and the destination.
-- `COPY`: `./docker-entrypoint.sh /docker-endpoint.sh`.
-    - This step copies the `docker-entrypoint.sh` in to the docker image that gets built.
-- `RUN`: `chmod +x / docker-entrypoint.sh`
-- `ENTRYPOINT`:
+- **FROM:** It pulls the image from the docker hub. 
+    - Here it pulls the java image **alpine-oraclejdk8:slim**.
+- **ADD:** Add command takes two arguments, one is source and the destination.
+- **COPY:** **./docker-entrypoint.sh /docker-endpoint.sh**.
+    - This step copies the **docker-entrypoint.sh** in to the docker image that gets built.
+- **RUN:** **chmod +x / docker-entrypoint.sh**
+- **ENTRYPOINT:**
     - Argument sets the concrete default app that is used every time a container is created using the image.
-    - Often times ENTRYPOINT with CMS, you can remove "application" from CMS and just leave "arguments"
+    - Often times **ENTRYPOINT** with CMS, you can remove application from CMS and just leave arguments
     which will be passed to the ENTRYPOINT.
 
 ```
@@ -146,10 +145,10 @@ docker ps
 
 ### Docker Images
 
-- Images like class file in Java.
+- Images like **Class** file in Java.
 - Instance of class is docker container.
-- An Image defines a Docker Container:
-    - Similar in concept to a snapshot of a VM.
+- An Image defines a **Docker Container:**
+    - Similar in a concept to a snapshot of a VM.
     - Or a class vs an instance of the class.
 - Images are immutable:
     - Once built, the files making up an image do not change.
@@ -168,8 +167,8 @@ docker image inspect mongo
 **Image Ids**
 
 - Image Ids are a SHA 256 hash derived from the layers:
-    - Thus if the layers of the image changes, the SHA 256 hash changes.
-- The Image ID listed by docker commands (ie 'docker images') is the first 12 characters of the hash.
+    - Thus, if the layers of the image changes, the SHA 256 hash changes.
+- The Image ID listed by docker commands (ie **docker images**) is the first 12 characters of the hash.
 
 ```
 docker images -q --no-trunc
@@ -178,13 +177,13 @@ docker images
 
 **Image Tag Names**
 
-- The hash value of images are referred to by 'tag' names.
+- The hash value of images referred to by **tag** names.
 - The format of the full tag name is:
-    - `[REGISTRYHOST/][USERNAME/]NAME[:TAG]`
-- For Registry Host 'registry.hub.docker.com' is inferred.
-- For `:TAG` - `latest` is default, and inferred.
+    - **[REGISTRYHOST/][USERNAME/]NAME[:TAG]**
+- For Registry Host **registry.hub.docker.com** is inferred.
+- For **:TAG** - **latest** is default, and inferred.
 - Full tag example:
-    - `registry.hub.docker.com/mongo:latest`
+    - **registry.hub.docker.com/mongo:latest**
 
 ![Docker Layers](docker_img/docker-layers.png "Docker Layers")
 
@@ -205,9 +204,9 @@ docker run --name panda-mysql-4 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /[PATH]/DOC
 ## Docker House Keeping
 
 - There are 3 key areas of house keeping:
-    - Containers
-    - Images
-    - Volumes
+    - **Containers**
+    - **Images**
+    - **Volumes**
 - Shell to running docker image.
 
 ```
@@ -257,7 +256,7 @@ docker rmi $(docker images -q)
 docker volume rm $(docker volume ls -f dangling=true -q)
 ```
 
-- NOTE: Does not remove files from host system in shared volumes.
+- Does not remove files from host system in shared volumes.
 
 ***
 
@@ -301,11 +300,13 @@ docker logs bcf1b6fbb61a
 docker logs -f bcf1b6fbb61a
 ```
 
+***
+
 ## Automatic Building of Docker Images
 
 ### Creating Docker Image in Fabric 8
 
-- Add fabric8 dependency to pom.xml.
+- Add **fabric8** dependency to **pom.xml**.
 
 **Dockerfile**
 

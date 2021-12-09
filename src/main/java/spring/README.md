@@ -5,41 +5,41 @@
 - Lightweight development with Java POJOs.
 - Dependency injection, loose coupling.
 - Declarative programming AOP.
-- Minimalize boilerplate Java code.
+- Minimize boilerplate Java code.
 
 ## Components
 
 - Core Container:
     - Factory for creating beans.
     - Manage beans dependencies:
-        - :one: - Beans
-        - :two: - Core
-        - :three: - Spel
-        - :four: - Context
+        - :one: Beans
+        - :two: Core
+        - :three: Spel
+        - :four: Context
 - AOP - Aspect Oriented Programming, add functionality to objects declaratively:
     - Logging
     - Security
     - Transactions
 - Data Access:
-    - :one: - JDBC
-    - :two: - ORM
-    - :three: - Transactions
-    - :four: - OXM
-    - :five: - JMS
+    - :one: JDBC
+    - :two: ORM
+    - :three: Transactions
+    - :four: OXM
+    - :five: JMS
 - Web Layer:
     - All web related classes.
     - Spring MVC Framework:
-        - :one: - Servlet
-        - :two: - WebSocket
-        - :three: - Web
-        - :four: - Portlet
+        - :one: Servlet
+        - :two: WebSocket
+        - :three: Web
+        - :four: Portlet
 - Instrumentation:
-    - JMX - (Java Management Extension) Java agents to remotely monitor app.
+    - JMX (Java Management Extension) Java agents to remotely monitor app.
 - Test Layer.
 
 ## Spring Projects
 
-- Additional Spring modules build on top of core Framework
+- Additional Spring modules build on top of core Framework:
     - Spring Cloud
     - Spring Data
     - Spring Batch
@@ -51,7 +51,8 @@
 
 ## Inversion of Control (IoC)
 
-- Outsourcing the construction and management of objects. Outsource to object factory.
+- Outsourcing the construction and management of objects. 
+- Outsource to object factory.
 
 ## Spring Container
 
@@ -59,9 +60,9 @@
     - Create and manage objects (inversion of control).
     - Inject object's dependencies (Dependency Injection).
 - Configure Spring Container:
-    - XML Configuration.
-    - Java Annotations.
-    - Java Source Code.
+    - XML Configuration
+    - Java Annotations
+    - Java Source Code
 - Development process:
     - Configure Spring Beans.
     - Create Spring Container.
@@ -101,12 +102,12 @@ Account theAccount = context.getBean("myAccountBean", Account.class);
 ### What is a Spring Bean?
 
 - A **Spring Bean** is simply a Java object.
-- When Java objects are created by the Spring Container, then Spring refers to them as **Spring Beans**.
-- Spring Beans are created from normal Java classes like Java objects.
+- When Java objects created by the Spring Container, then Spring refers to them as **Spring Beans**.
+- Spring Beans created from normal Java classes like Java objects.
 
 ### Why do we specify the interface in getBean()?
 
-- Behaves the same as getBean(String), but provides a measure of type safety by throwing a BeanNotOfRequiredTypeException
+- Behaves the same as `getBean(String)`, but provides a measure of type safety by throwing a BeanNotOfRequiredTypeException
 if the bean is not of the required type.
 - This means that ClassCastException can't be thrown on casting the result correctly, as can happen with getBean(String).
 
@@ -116,8 +117,8 @@ if the bean is not of the required type.
 
 - Dependency = helper.
 - Injection Types:
-    - Constructor injection.
-    - Setter Injection.
+    - Constructor injection
+    - Setter Injection
 - Development Process - Constructor Injection:
     - Define the dependency interface and class.
     - Create a constructor in your class for injections.
@@ -247,8 +248,7 @@ foo.team=interceptors
 
 ```xml
 <beans >
-    <bean id="myTeam" class="com.springdemo.FootballTeam"
-        scope="singleton">
+    <bean id="myTeam" class="com.springdemo.FootballTeam" scope="singleton">
     </bean>
 </beans>
 ```
@@ -269,6 +269,12 @@ foo.team=interceptors
 | global-session | Scoped to a global HTTP web session. Only used for web apps |
 
 ## Bean lifecycle
+
+```
+Instantiate -> Populate Properties -> Call setBeanName of BeanNameAware -> Call setApplicationCOntext of ApplicationContextAware
+-> Preinitialization BeanPostProcessor -> afterPropertiesSet -> Custom Init Method -> Post Initialization (BeanPostProcessor)
+-> Bean Ready to use
+```
 
 ![Bean lifecycle](images/spring-bean-lifecycle.png "Bean lifecycle")
 
@@ -298,15 +304,15 @@ foo.team=interceptors
 
 - Init and destroy method signatures:
     - Any access modifier.
-    - Any return types. Void most popular.
-    - Any method name.
+    - Any return types,  void most popular.
+    - Any method names.
     - No arguments allowed.
 - For the prototype scope spring does not call **destroy** method.
 - In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean
 the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client,
 with no further record of that prototype instance.
-- Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
-in the case of prototypes, configured destruction lifecycle callbacks are not called.
+- Thus, although initialization lifecycle callback methods called on all objects regardless of scope,
+in the case of prototypes, configured destruction lifecycle callbacks not called.
 - The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s)
 are holding.
 
@@ -318,7 +324,7 @@ are holding.
     - Processed at compile time or run-time for special processing.
 - :star: Example `@Override`:
     - Override method, we are telling a compiler we override method exactly as present in interface or parent class.
-    - Compiler check that we actually override method, if some issue they will be compile time error.
+    - Compiler checks that we actually override method, if some issue they will be compiled time error.
 
 ### Scanning for Component Classes
 
@@ -363,14 +369,14 @@ Service stockService = context.getBean("stockService", StockService.class);
 - What is Spring **Autowiring**:
     - For dependency injection, Spring can use Autowiring.
     - Spring will look for a class that matches the property:
-        - By type.
-        - By class.
-        - By interface.
+        - By type
+        - By class
+        - By interface
     - Spring will inject it automatically.
 - Autowiring Injection Types:
-    - Constructor injection.
-    - Setter injection.
-    - Field Injections.
+    - Constructor injection
+    - Setter injection
+    - Field Injections
 
 **StockService.java**
 
@@ -485,29 +491,9 @@ public class BillingService implements Service {
 
 
 - For Prototype Scope Spring does not call `@PreDestroy` method.
-- Thus, although initialization lifecycle callback methods are called on all objects regardless of scope,
-in the case of prototypes, configured destruction lifecycle callbacks are not called.
+- Thus, although initialization lifecycle callback methods called on all objects regardless of scope,
+in the case of prototypes, configured destruction lifecycle callbacks not called.
 - The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s)
 are holding.
-- :star: - To get the Spring container to release resources held by prototype-scoped beans,
-try using a custom bean post-processor, which holds a reference to beans that need to be cleaned up.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- :star: To get the Spring container to release resources held by prototype-scoped beans,
+try using a **custom bean post-processor**, which holds a reference to beans that need to be cleaned up.

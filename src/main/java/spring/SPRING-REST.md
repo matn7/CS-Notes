@@ -2,19 +2,19 @@
 
 ## RESTful Web Services
 
-- Because of their simplicity and versatility, RESTful web services have cecome the de facto standard of web services.
+- Because of their simplicity and versatility, RESTful web services have become the de-facto standard of web services.
 - REST - Representational State Transfer:
-    - Representation - Typically JSON or XML.
-    - State Transfer - Typically via HTTP.
+    - Representation - Typically `JSON` or `XML`.
+    - State Transfer - Typically via `HTTP`.
     
 **RESTful Terminology**
 
-- Verbs - HTTP Methods: GET, PUT, POST, DELETE.
-- Messages - the payload of the action (JSON/XML).
+- Verbs - HTTP Methods: `GET`, `PUT`, `POST`, `DELETE`.
+- Messages: The payload of the action (`JSON/XML`).
 - URI - Uniform Resource Identifier:
     - A unique string identifying a resource.
 - URL - Uniform Resource Locator.
-- Idempotence - execute operation multiple times, without changing the result.
+- Idempotence - Execute operation multiple times, without changing the result.
     - Refreshing a web page (HTTP GET operation).    
 - Stateless - Service does not maintain any client state.
 - HATEOAS - Hypermedia As the Engine of application state.        
@@ -50,10 +50,10 @@
 
 **Level 2: HTTP Verbs**
 
-- HTTP Verbs are used with URIs for described actions.
-    - GET /products/1234
-    - PUT /products/1234
-    - DELETE /products/1234
+- HTTP Verbs used with URIs for described actions.
+    - GET `/products/1234`
+    - PUT `/products/1234`
+    - DELETE `/products/1234`
 - Most common in practical use.
 - Introduces Verbs to implement actions.
 
@@ -71,14 +71,14 @@
 
 ![JSON Data Binding](images/json-data-binding.png "JSON Data Binding")
 
-- Also called as :
-    - Serialization / Deserialization
-    - Marshalling / Unmarshalling
+- Also, called as:
+    - `Serialization / Deserialization`
+    - `Marshalling / Unmarshalling`
 
 ## JSON Data Binding with Jackson
 
 - Handles data binding between JSON and Java.
-- Package - **com.fasterxml.jackson.databind**.
+- Package - `com.fasterxml.jackson.databind`.
 
 ![JSON Data Binding with Jackson](images/json-jackson.png "JSON Data Binding with Jackson")
 
@@ -101,15 +101,15 @@ mapper.writeValue(new File("output.json"), student);
 ### Spring Jackson Support
 
 - Spring automatically handle Jackson.
-- JSON data binding passed to REST controller is converted to POJO.
-- Java object returned from REST controller is converted to JSON.
+- JSON data binding passed to REST controller converted to POJO.
+- Java object returned from REST controller converted to JSON.
 
 ### Creating Spring REST
 
 - Add maven dependency:
-    - spring-webmvc
-    - jackson-databind
-    - javax.servlet-api
+    - `spring-webmvc`
+    - `jackson-databind`
+    - `javax.servlet-api`
 - Java Configuration - `@Configuration`.
 
 ```java
@@ -140,7 +140,6 @@ public class DemoController {
         return "Hello World";
     }
 }
-
 ```
 
 - Spring REST and Jackson POJOs are automatically converted to JSON.
@@ -162,17 +161,18 @@ public Student getStudent(@PathVariable int id) {
 - Error response class:
     - Java POJOs.
     - Jackson converts it to JSON.
-- Exception class - extends RuntimeException.
+- Exception class - extends `RuntimeException`.
 - Update REST to throw exception if necessary.
 - Add exception handler `@ExceptionHandler`:
-    - Exception handler will return a ResponseEntity.
-    - ResponseEntity is a wrapper for the HTTP response object.
-    - ResponseEntity provides control to specify:
-        - HTTP status code, HTTP headers and Response body.
+    - Exception handler will return a `ResponseEntity`.
+    - `ResponseEntity` is a wrapper for the HTTP response object.
+    - `ResponseEntity` provides control to specify:
+        - HTTP status code.
+        - HTTP headers and Response body.
 
-### @ControllerAdvice
+### `@ControllerAdvice`
 
-- ControllerAdvice interceptor/filter.
+- `ControllerAdvice` interceptor/filter.
 - Pre-process request to controller.
 - Post-process responses to handel exceptions.
 - For global exception handling.
@@ -191,7 +191,7 @@ public class GlobalExceptionHandler {
 - Identify resources:
     - Plural forms of resources `/api/customers`.
 - HTTP methods to assign actions on resources:
-    - GET, POST, PUT, DELETE
+    - `GET`, `POST`, `PUT`, `DELETE`
 
 | Http Method | Endpoint | CRUD Action |
 |---|---|---|
@@ -201,7 +201,7 @@ public class GlobalExceptionHandler {
 | PUT | /api/students | Update existing student |
 | DELETE | /api/students/{id} | Delete student |
 
-- Don't include actions in endpoint, instead use HTTP to assign actions.
+- Don't include actions in an endpoint, instead use HTTP to assign actions.
 
 ## CRUD
 
@@ -236,7 +236,8 @@ public Student addStudent(@RequestBody Student student) {
 ```
 
 - Sending JSON data to Spring REST Controller.
-- For controller to process JSON data, need to set a HTTP request header - `Content-type: application/json`.
+- For a controller to process JSON data, need to set a HTTP request header:
+    - `Content-type: application/json`.
 - Configure REST client to send the correct HTTP request header (using Postman for instance).
 
 ### Update PUT
@@ -280,8 +281,8 @@ public String deleteStudent(@PathVariable int studentId) {
 
 - POX - Plain Old XML.
 - Uses implementing protocol as a transport protocol.
-- Typically uses one URI and one kind of method.
-- Examples - RPC, SOAP, XML-RPC.
+- Typically, uses one URI and one kind of method.
+- Examples - `RPC`, `SOAP`, `XML-RPC`.
 
 ```
 http://localhost/getPost
@@ -299,7 +300,7 @@ http://localhost/doThis
 
 ### Level 2 - HTTP Verbs
 
-- HTTP Verbs are used with URIs for desired actions.
+- HTTP Verbs used with URIs for desired actions.
 - Examples:
     - GET `/students/123` - return student with id 123.
     - PUT `/students/123` - (with XML/JSON body) to update data for student 123.
@@ -317,21 +318,22 @@ http://localhost/doThis
 
 ### Summary
 
-- Level 1 - breaks large service into distinct URIs.
-- Level 2 - Introduces Verbs to implement actions.
-- Level 3 - provides discoverability, making the API more self documenting.
+- Level 1: Breaks large service into distinct URIs.
+- Level 2: Introduces Verbs to implement actions.
+- Level 3: Provides discoverability, making the API more self documenting.
 - Best Practice:
     - Consumer first, good documentation.
     - Make best use of HTTP.
     - Proper response status:
-        - 200 - success.
-        - 404 - resource not found.
-        - 400 - bad request.
-        - 201 - created.
-        - 401 - unauthorized.
-        - 500 - server error.
+        - 200 - Success
+        - 201 - Created
+        - 404 - Resource not found
+        - 400 - Bad request
+        - 401 - Unauthorized
+        - 500 - Server error
     - No secure info in uri.
-    - Use plurals - Prefer /users/1 to /user/1.
+    - Use plurals. 
+    - Prefer `/users/1` to `/user/1`.
     - Use nouns for resources.
 
 ***
@@ -348,35 +350,35 @@ http://localhost/doThis
 
 **Q1: How does data exchange between applications take place?**
 
-- Request (input).
-- Response (Output).
+- Request (Input)
+- Response (Output)
 
 **Q2: How can we make web service platform independent?**
 
 - Request and Response in platform independent format.
-- Request format: json, xml.
+- Request format: `json`, `xml`.
 
 **Q3: How does the Application A know the format of Request and Response?**
 
 - Service definition:
-    - Request/Response Format.
-    - Request Structure.
-    - Response Structure.
-    - Endpoint.
+    - Request/Response Format
+    - Request Structure
+    - Response Structure
+    - Endpoint
 
 ### Key terminology
 
 - Request - Input to web service.
 - Response - Output of web service.
 - Message Exchange Format:
-    - Format of request nad response - XML and JSON.
+    - Format of request nad response - `XML` and `JSON`.
 - Service provider or Server - WebService, host the webservice.
 - Service consumer or Client - Application, consuming webservice.
 - Service Definition - contract between service provider and service consumer:
-    - defines format request and response.
-    - what is structure of request and response.
-    - where is service available.
-- Transport: how a service is called:
+    - Defines format request and response.
+    - What is structure of request and response.
+    - Where is service available.
+- Transport: How a service called:
     - HTTP and MQ communication over a queue (WebSphere MQ).
 
 ## REST
@@ -386,52 +388,56 @@ http://localhost/doThis
     - `/user/majka/todos`
     - `/user/majka`
 - Resource representations:
-    - XML
-    - HTML
-    - JSON
+    - `XML`
+    - `HTML`
+    - `JSON`
 - Create a User - `POST /users`
 - Delete a User - `DELETE /users/1`
 - Get all Users - `GET /users`
 - Get one Users - `GET /users/1`
-- Data Exchange Format - No restrictions. JSON popular.
+- Data Exchange Format: 
+    - No restrictions. 
+    - JSON popular.
 - Transport - Only HTTP.
-- Service Definition - No standard. WADL/Swagger/.
+- Service Definition: 
+    - No standard
+    - `WADL/Swagger/`
 - Dispatcher servlet handling all requests, front controller for Spring MVC, which is right controller
 to execute this request:
     - `@RestController`
     - `@ResponseBody`
 
-**What is dispatcher servlet?**
+**What is a dispatcher servlet?**
 
 - Front controller pattern for spring mvc framework.
 
 **Who is configuring dispatcher servlet?**
 
-- SpringBootAutoConfiguration
+- `SpringBootAutoConfiguration`
 
-**What does dispatcher servlet do?**
+**What does a dispatcher servlet do?**
 
-- Dispatcher servlet is handling all the requests, tells Jackson do the conversion to JSON.
+- Dispatcher servlet is handling all the requests, tells Jackson to do the conversion to JSON.
 
 **How does the HelloWorldBean object get converted to JSON?**
 
-- SpringBootAutoConfiguration, message converter Jackson beans are getting initialized.
+- `SpringBootAutoConfiguration`, message converter Jackson beans are getting initialized.
 
 **Who is configuring error mapping?**
 
-- SpringBootAutoConfiguration
+- `SpringBootAutoConfiguration`
 
 ### AUTO-CONFIGURATION
 
-- `DispatcherServletAutoConfiguration` - found dispatcher servlet on classpath.
-- `ErrorMvcAutoConfiguration` - configure error page, error controller, few error attributes,
+- `DispatcherServletAutoConfiguration:` Found a dispatcher servlet on classpath.
+- `ErrorMvcAutoConfiguration:` Configure error page, error controller, few error attributes,
  default error view resolver.
-- `HttpMessageConvertersAutoConfiguration` - bean automatically converted to JSON:
+- `HttpMessageConvertersAutoConfiguration:` Bean automatically converted to JSON:
     - `Jackson2ObjectMapper` - does conversion from JSON to object and object to JSON.
 - Mapping servlet - `dispatcherServlet` to `[/]` - dispatcher servlet is handling all the requests:
     - Front controller pattern for spring mvc framework.
-- Mapper {[hello-world], methods=[GET]}:
-    - Which method is executed.
+- Mapper `{[hello-world], methods=[GET]}`:
+    - Which method executed.
     - `@RestController`:
         - `@ResponseBody`, response from that will be mapped to message converter to the same format.
 
@@ -439,8 +445,8 @@ to execute this request:
 
 ### Configuration
 
-- LocaleResolver - Default locale - Locale.US.
-- ResourceBundleMessageSource.
+- `LocaleResolver:` Default locale - Locale.US.
+- `ResourceBundleMessageSource`
 
 ### Usage
 
@@ -486,7 +492,7 @@ Locale locale messageSource.getMessage("helloWorld.message", null, locale) {
 
 ### JWT
 
-- Standard.
+- Standard
 - Can contain user details and authorizations.
 
 ### Token processing
@@ -505,7 +511,7 @@ Locale locale messageSource.getMessage("helloWorld.message", null, locale) {
 POST to http://localhost:8080/authenticate
 ```
 
-- Request.
+- Request
 
 ```json
 {
@@ -514,7 +520,7 @@ POST to http://localhost:8080/authenticate
 }
 ```
 
-- Response.
+- Response
 
 ```json
 {
@@ -533,8 +539,8 @@ Header - Authorization: 'Bearer JWT_TOKEN'
 ### Authorize all other requests
 
 - GET/POST/PUT/DELETE to `http://localhost:8080/resource`:
-    - Header - Authorization: "Bearer JWT_TOKEN".
-- Filter - JwtTokenAuthorizationOncePerRequestFilter.
+    - Header - `Authorization: "Bearer JWT_TOKEN"`
+- Filter - `JwtTokenAuthorizationOncePerRequestFilter`.
 
 ### All together
 
@@ -542,8 +548,8 @@ Header - Authorization: 'Bearer JWT_TOKEN'
 JWTWebSecurityConfig extends WebSecurityConfigurerAdapterConfigures
 ```
 
-- userDetailService with BCryptPasswordEncoder.
-- Statelessness.
-- AuthenticationEntryPoint.
-- JwtTokenAuthorizationOncePerRequestFilter.
-- h2-console.
+- userDetailService with BCryptPasswordEncoder
+- Statelessness
+- AuthenticationEntryPoint
+- JwtTokenAuthorizationOncePerRequestFilter
+- h2-console

@@ -6,7 +6,7 @@
 
 ## Spring Security - Servlet Filters
 
-- Servlet filters are used to pre-process / post-process web requests.
+- Servlet filters used to pre-process / post-process web requests.
 - Servlet filters can route web requests based on security logic.
 - Spring provides security functionality with servlet filters.
 
@@ -16,8 +16,8 @@
 
 ### Security concepts
 
-- Authentication - Check user id and password with credentials stored in app / database.
-- Authorization - Check if user has an authorized role.
+- **Authentication:** Check user id and password with credentials stored in app / database.
+- **Authorization:** Check if user has an authorized role.
 
 ### Declarative Security
 
@@ -54,12 +54,12 @@
 ### Java Configuration
 
 - Maven dependencies:
-    - spring-webmvc
-    - jstl
-    - javax.servlet-api
-    - javax.servlet.jsp-api
+    - `spring-webmvc`
+    - `jstl`
+    - `javax.servlet-api`
+    - `javax.servlet.jsp-api`
 - Enabling the MVC Java Config:
-    - `@EnableWebMvc`:
+    - `@EnableWebMvc:`
         - Provides similar support to `<mvc:annotation-driven/>` in XML.
         - Adds conversion, formatting and validation support.
         - Processing of `@Controller` classes and `@RequestMapping` methods.
@@ -86,9 +86,9 @@ public class AppConfig {
 ### Web App Initializer
 
 - Spring MVC provides support for web app initializer.
-- Code is automatically detected.
+- Code automatically detected.
 - Code used to initialize the servlet container.
-- `AbstractAnnotationConfigDispatcherServletInitializer`:
+- `AbstractAnnotationConfigDispatcherServletInitializer:`
     - Extend this class.
     - Override methods.
     - Specify servlet mapping and location of app config.
@@ -125,17 +125,15 @@ public class DemoController {
 ### Spring Security - Configuration
 
 - Maven dependency:
-    - spring-security-web
-    - spring-security-config
+    - `spring-security-web`
+    - `spring-security-config`
 - Spring Security Web App Initializer:
     - Code is used to initialize the servlet container.
     - Special class to register to Spring Security Filters:
         - `AbstractSecurityWebApplicationInitializer`
 
 ```java
-public class SpringSecurityWebApplicationInitializer
-    extends AbstractSecurityWebApplicationInitializer {
-}
+public class SpringSecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer { }
 ```
 
 ```java
@@ -216,7 +214,7 @@ public class SecurityConfig extends WebSecurityConfigurarAdapter {
 
 ### Spring Security - Cross Site Request Forgery (CSRF)
 
-- CSRF:
+- **CSRF:**
     - A security attack where an evil website tricks you into executing an action on a web application that
     you are currently logged in.
     - Logged in an e-commerce app and buy unwanted stuff
@@ -279,7 +277,7 @@ protected void configure(HttpSecurity http) throws Exception {
 
 ### Spring Security - JDBC
 
-- Spring Security can read user account info from database.
+- Spring Security can read user account info from a database.
 
 ```sql
 CREATE TABLE users (
@@ -297,7 +295,7 @@ INSERT INTO users VALUES
 ('samara', '{noop}haslo',1);
 ```
 
-- {noop} - encoding algorithm id.
+- `{noop}` - encoding algorithm id.
 
 ```sql
 CREATE TABLE authorities (
@@ -318,8 +316,8 @@ VALUES
 ```
 
 - Maven:
-    - mysql-connector-java
-    - c3p0
+    - `mysql-connector-java`
+    - `c3p0`
 
 **mysql.properties**
 
@@ -362,10 +360,10 @@ public class AppConfig {
         dataSource.setPassword(env.getProperty("jdbc.password"));
 
     	// set connection pool props
-    	dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
-	    dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
-	    dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
-	    dataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+        dataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+        dataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+        dataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+        dataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
 
     	return dataSource;
     }
@@ -394,7 +392,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ## Spring Security - Password Encryption
 
-- bcrypt algorithm:
+- **bcrypt algorithm:**
     - One way encrypted hashing.
     - Adds random salt to password for protection.
     - Includes support to defeat from brute force attacks.
@@ -425,7 +423,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 - Method:
     - Login form
     - HTTP authentication
-    - Custom auth. method
+    - Custom auth method
 
 **Authorization**
 
@@ -485,25 +483,3 @@ an attacker submitting many passwords or passphrases with the hope of eventually
 ## Front End Design
 
 ![Front End Design](images/front-end-design.png "Front End Design")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

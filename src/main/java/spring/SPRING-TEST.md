@@ -1,9 +1,9 @@
 ## Testing Spring Applications
 
-- **Test Fixture** - A test fixture is a fixed state of a set of objects used as a baseline for running tests.
-The purpose of a test fixture is to ensure that there is a well known and fixed environment in which tests
-are run so that results are repeatable.
-    - Includes: input data, mock objects, loading databases with known data etc.
+- **Test Fixture:** A test fixture is a fixed state of a set of objects used as a baseline for running tests.
+- The purpose of a test fixture is to ensure that there is a well-known and fixed environment in which tests
+run so that results are repeatable.
+    - Includes: Input data, mock objects, loading databases with known data etc.
 - Unit Tests / Unit Testing:
     - Designed to test specific sections of code.
     - Should be `unity` and executed very fast.
@@ -14,17 +14,17 @@ are run so that results are repeatable.
     - Will run much slower than unit tests.
 - Functional Tests: Typically means you are testing the running application.
     - Application is live, likely deployed in a known environment.
-    - Functional touch points are tested:
+    - Functional touch points tested:
         - Using a web driver.
         - Calling web services.
         - Sending / receiving messages.
-- TDD (Test Driven Development): Write tests first, which will fail, then code to `fix` test.
+- TDD (Test Driven Development): Write tests first, which will fail, then code to fix test.
 - BDD (Behavior Driven Development): Builds on TDD and specifies that tests of any unit of software should be specified
 in terms of desired behavior of the unit:
     - Often implemented with DSLs to crete natural language tests.
     - JBehave, Cucumber, Spock.
     - Example: given, when, then.
-- Mock: A fake implementation of a class used for testing. Like a test double.
+- Mock: A fake implementation of a class used for testing.
 - Spy: A partial mock, allowing you to override selected methods of a real class.
 
 ### Testing Goals
@@ -33,7 +33,8 @@ in terms of desired behavior of the unit:
 - Bringing up the Spring Context makes your tests exponentially slower.
 - Try to test specific business logic in unit tests.
 - Use integration tests to test interactions.
-- Think of a pyramid. Base is unit tests, middle is integration tests, top is functional tests.
+- Think of a pyramid. 
+- Base is unit tests, middle is integration tests, top is functional tests.
 
 ### Test Scope Dependencies
 
@@ -62,9 +63,9 @@ in terms of desired behavior of the unit:
 ### JUnit5
 
 - JUnit5 leverages new features of Java 8:
-    - Lambda Expressions.
-    - Streams.
-    - Java8 or Higher is required.
+    - Lambda Expressions
+    - Streams
+    - Java8 or Higher is required
 - Designed for better integration and extensibility.
 
 ### JUnit Vintage

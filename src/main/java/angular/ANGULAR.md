@@ -34,7 +34,7 @@ ng serve
 
 **Deploying Angular Apps**
 
-- `now.sh`: Free, CLI-based deployments. Automatically figures out how to build your app.
+- **now.sh:** Free, CLI-based deployments. Automatically figures out how to build your app.
 
 ```console
 npm install -g now
@@ -42,17 +42,23 @@ npm install -g now
 now login
 ```
 
+***
+
 ## Angular Components
 
 **Angular Components**
 
-- All Angular apps are made of multiple different components.
-- Each component is designed to implement one 'thing' in the app that is visible on the screen.
+- All Angular apps made of multiple different components.
+- Each component designed to implement one **thing** in the app that is visible on the screen.
 - A component wraps up all the HTML and code to make one little widget work correctly.
 - A component can be reused multiple times in the same application.
 - Components can be nested, or shown inside of each other.
-- Every app has a component called the 'App' component, and it is always the most parent component.
-- Each component has its own Component Class, Component Template, Component CSS File, and Spec File.
+- Every app has a component called the **App** component, and it is always the most parent component.
+- Each component has its own:
+    - Component Class
+    - Component Template
+    - Component CSS File
+    - Spec File
 
 **Generating a New Component**
 
@@ -62,16 +68,14 @@ ng generate component <name>
 
 **App Bootup Process**
 
-- Angular loads up each component class file, inspects the 'selector' property.
+- Angular loads up each component class file, inspects the **selector** property.
 - Angular then takes a look at the HTML document that got loaded into the browser.
-- `<app-root>` found! Angular finds a component with a matching 'selector'.
+- `<app-root>` found! Angular finds a component with a matching **selector**.
 - Angular creates an instance of that component.
-- Angular turns the instance's template into real HTML, then sticks it into the app-root element
-(the 'host' element).
-- While inspecting the app's template, Angular sees the 'app-card' element.
+- Angular turns the instance's template into real HTML, then sticks it into the **app-root** element (the **host** element).
+- While inspecting the app's template, Angular sees the **app-card** element.
 - Angular creates an instance of that component.
-- Angular turns the instance's template into real HTML, then sticks it into the app-card element
-(the 'host' element).
+- Angular turns the instance's template into real HTML, then sticks it into the **app-card** element (the **host** element).
 
 **CSS Styling**
 
@@ -83,20 +87,20 @@ ng generate component <name>
 
 ![Input Binding - Diagram](images/component-communication.png "Input Binding Diagram")
 
-## Pipes
+### Pipes
 
 - Functions that format data for use in a template.
 - Only used in a template.
-- Some pipes are built into Angular.
+- Some pipes built into Angular.
 
 ```console
 ng generate pipe convert
 ```
 
-## Directives
+### Directives
 
 - Can be used to modify the structure or properties of HTML elements.
-- Used only in template.
+- Used only in a template.
 
 ```console
 ng generate directive class
@@ -140,7 +144,7 @@ export class ClassDirective {
 }
 ```
 
-## Module System
+### Module System
 
 ```console
 ng new comps --routing
@@ -148,11 +152,11 @@ ng new comps --routing
 
 **Module Types**
 
-- Domain: Wraps up all the components needed to implement one single feature.
-- Routed: Domain module plus tied to routes.
-- Routing: Defines routing rules.
-- Service: Defines services that will be used in multiple parts of the app.
-- Widget: Defines some reusable components that will be used in multiple other modules.
+- **Domain:** Wraps up all the components needed to implement one single feature.
+- **Routed:** Domain module plus tied to routes.
+- **Routing:** Defines routing rules.
+- **Service:** Defines services that will be used in multiple parts of the app.
+- **Widget:** Defines some reusable components that will be used in multiple other modules.
 
 **Generating Modules**
 
@@ -166,7 +170,7 @@ ng g m MODULE_NAME --routing
 ng generate component elements/ElementsHome
 ```
 
-- `--routing` flag tells Angular to make this module ready for navigation.
+- **--routing** flag tells Angular to make this module ready for navigation.
 
 **Module Property Definitions**
 
@@ -185,15 +189,15 @@ ng generate component elements/ElementsHome
 <router-outlet></router-outlet>
 ```
 
-## Lazy Loading with Modules
+### Lazy Loading with Modules
 
 **Implementing Lazy Loading**
 
 - Choose which module should be lazy loaded.
 - For each of these modules, remove any import statements for those modules from anywhere else in your project.
-- In the AppRoutingModule, define a Route in the 'routes' array to specify when to load up that module.
-- In your loaded module's Routing file, edit the 'path' of each route to be relative to the path you specified in the
-'AppRoutingModule'.
+- In the **AppRoutingModule**, define a **Route** in the **routes** array to specify when to load up that module.
+- In your loaded module's Routing file, edit the **path** of each route to be relative to the path you specified in the
+**AppRoutingModule**.
 
 ![Lazy Loading](images/lazy-loading.png "Lazy Loading")
 
@@ -201,14 +205,15 @@ ng generate component elements/ElementsHome
 
 ![NgContent](images/ng-content.png "NgContent")
 
-## Lifecycle Hooks
+### Lifecycle Hooks
 
-- **ngOnInit**: Called once after this component is first displayed on the screen and after Angular has
+- **ngOnInit:** Called once after this component first displayed on the screen and after Angular has
 set any properties passed down from the parent component.
-- **ngOnDestroy**: Called once when Angular is about to remove this component (for example, when we navigate
+- **ngOnDestroy:** Called once when Angular is about to remove this component (for example, when we navigate
 to a different route!).
-- **ngOnChanges**: Called anytime a property of the component is changed (including when a parent component passed
-down ned data).
+- **ngOnChanges:** Called anytime a property of the component changed (including when a parent component passed down the data).
+
+***
 
 ## Typescript
 
@@ -243,7 +248,7 @@ npx typescript --init
 **Decorators**
 
 - Plain functions.
-- Called when the file first gets executed, not when an instance of class is created.
+- Called when the file first gets executed (runtime), not when an instance of class is created.
 - Can be applied to a class, a property, a method, an accessor, or an argument method.
 - Receives different arguments depending on where it gets used.
 - Can be a plain decorator or a decorator factory.
@@ -255,11 +260,13 @@ const valueWrapper = <T>(value: T): T[] => {
 };
 ```
 
+***
+
 ## Data and HTTP Requests
 
 **Services**
 
-- Used to `fetch/store/update` any kind of data in our app.
+- Used to **fetch/store/update** any kind of data in our app.
 - Almost always where we are going to put network requests.
 - Data flows from a service to a component.
 - Services are implemented as classes.
@@ -271,21 +278,23 @@ const valueWrapper = <T>(value: T): T[] => {
 constructor(private wikipedia: WikipediaService) {}
 ```
 
-- `constructor`: Gets called automatically whenever an instance of AppComponent is created.
-- `private wikipedia`: wikipedia will be added as a private property automatically to the instance of 
-the App component.
-- `WikipediaService`: wikipedia will be of type 'Instance of WikipediaService'.
+- **constructor:** Gets called automatically whenever an instance of **AppComponent** is created.
+- **private wikipedia:** wikipedia will be added as a private property automatically to the instance of the App component.
+- **WikipediaService:** wikipedia will be of type **Instance of WikipediaService**.
 
 ![Service Injector](images/service-injector.png "Service Injector")
 
 **Dependency Injection**
 
-- Components, services and other things in Angular 'ask' for dependencies, rather than creating them directly.
-- Components need other things to work correctly. Our components could create an instance of those things 
-themselves. Instead, we create them separately and pass them in to the constructor.
-- The 'automatic' nature of DI is not strictly required, we could do this all manually by hand.
+- Components, services and other things in Angular **ask** for dependencies, rather than creating them directly.
+- Components need other things to work correctly. 
+- Our components could create an instance of those things themselves. 
+- Instead, we create them separately and pass them in to the constructor.
+- The **automatic** nature of DI not strictly required, we could do this all manually by hand.
 - The goal is to make testing easier.
 - Theoretically makes code reuse and code changes easier.
+
+***
 
 ## App Security in Angular 
 
@@ -295,7 +304,7 @@ themselves. Instead, we create them separately and pass them in to the construct
 
 **Cross-Site Scripting (XSS) Attacks**
 
-- Allows malicious users to run JS code on other user's browsers.
+- Allows malicious users to run JS a code on other user's browsers.
 - This bad JS code can be used to steal credentials, make requests, etc.
 - **Angular has you covered** - it will automatically escape HTML.
 
@@ -317,15 +326,17 @@ xss = '<img src="" onerror="alert(123)" />';
 <div [innerHTML]="xss"></div>
 ```
 
+***
+
 ## RxJs
 
 **Notes on Rxjs**
 
 - Separate library from Angular.
 - Used extensively by Angular for managing data.
-- We use this instead of promises or async/await for handling async stuff.
-- Not strictly required! We can use promises and async/await!
-- RxJs makes building some kinds of features really easy compared to writing normal code.
+- We use this instead of **promises** or **async/await** for handling async stuff.
+- Not strictly required! We can use **promises** and **async/await**!
+- **RxJs** makes building some kinds of features really easy compared to writing normal code.
 - Hard, probably the hardest thing in the world of JS.
 
 ![Event Diagram](images/rxjs-diagram-event.png "Event Diagram")
@@ -347,9 +358,9 @@ you need to implement your app.
 
 **Major Operator Groups**
 
-- Transform: Take in a value, do some processing, return a new value.
-- Filtering: Modifies the flow of events in a pipe (group them together, pause them, delete them).
-- Creation: Creates a new observable.
+- **Transform:** Take in a value, do some processing, return a new value.
+- **Filtering:** Modifies the flow of events in a pipe (group them together, pause them, delete them).
+- **Creation:** Creates a new observable.
 
 **Specific Operators**
 
@@ -358,7 +369,7 @@ you need to implement your app.
 **Unicast Observables**
 
 - Emit a separate set of values for each observer that subscribes.
-- All of the operators in a pipe will be executed for each separate observer that subscribes.
+- All the operators in a pipe will be executed for each separate observer that subscribes.
 - Can easily lead to bad behavior!
 
 ![Unicast Observables](images/unicast-observables.png "Unicast Observables")
@@ -366,8 +377,8 @@ you need to implement your app.
 **Multicast Observables**
 
 - Emit a single set of values for all observers that subscribe.
-- All of the operators in a pipe are executed just once.
-- The observable will be 'reset' if it gets 'completed' or 'errored' then another subscriber is added.
+- All the operators in a pipe executed just once.
+- The observable will be **reset** if it gets **completed** or **errored** then another subscriber added.
 - Quickly runs into issues with a later subscriber not seeing earlier events!
 
 ![Multicast Observables](images/multicast-observables.png "Multicast Observables")
@@ -376,15 +387,15 @@ you need to implement your app.
 
 ![Hot vs Cold Observables](images/hot-cold-observable.png "Hot vs Cold Observables")
 
-- Hot Observable: Single event stream shared for all subscribers old and new.
-- Cold Observable: Event stream recreated for each new subscriber.
+- **Hot Observable:** Single event stream shared for all subscribers old and new.
+- **Cold Observable:** Event stream recreated for each new subscriber.
 
 ![Hot Observable](images/hot-observable.png "Hot Observable")
 
 - Describe the term Observable:
     - An Observable is an object that will emit events.
 - Describe the term Operator:
-    - An Operator is added to a pipe, and processed values flowing through pipe.
+    - An Operator added to a pipe, and processed values flowing through pipe.
 - Describe the term Observer:
     - An Observer handles values or errors that flow out of an operator or pipe.
 
@@ -420,22 +431,26 @@ observable.subscribe(value => {
 });
 ```
 
+***
+
 ## Forms
 
 ![Reactive vs Template](images/reactive-template-form.png "Reactive vs Template")
 
 **Form Properties**
 
-- valid: Angular has validated whatever the user entered successfully.
-- invalid: The value in the input is invalid.
-- pending: Validation is currently running on this field.
-- disabled: Ignore user input this field and don't validate it.
-- touched: User clicked into then out of a field.
-- untouched: User hasn't clicked into then out of this field.
-- pristine: User hasn't clicked on this field at all.
-- dirty: User has changed the value of this field.
+- **valid:** Angular has validated whatever the user entered successfully.
+- **invalid:** The value in the input is invalid.
+- **pending:** Validation is currently running on this field.
+- **disabled:** Ignore user input this field and don't validate it.
+- **touched:** User clicked into then out of a field.
+- **untouched:** User hasn't clicked into then out of this field.
+- **pristine:** User hasn't clicked on this field at all.
+- **dirty:** User has changed the value of this field.
 
 ![Reactive vs Template](images/reactive-vs-template-forms.png "Reactive vs Template")
+
+***
 
 ## Authentication app
 
@@ -453,15 +468,15 @@ ng g c shared/Input
 
 ![Async Error Validation](images/async-error-validation.png "Async Error Validation")
 
-### Signup
+**Signup**
 
 ![Signup process](images/signup-process.png "Signup process")
 
-### Guard
+**Guard**
 
-- `canActivate`: User can visit the route.
-- `canActivateChild`: User can visit this child route.
-- `canLoad`: User can load this lazily-loaded module and access the routes inside of it.
+- **canActivate:** User can visit the route.
+- **canActivateChild:** User can visit this child route.
+- **canLoad:** User can load this lazily-loaded module and access the routes inside of it.
 
 ```console
 ng generate guard auth/Auth
@@ -469,8 +484,8 @@ ng generate guard auth/Auth
 
 ### Route Information
 
-- Observable: Emits values whenever some specific part of the URL changes.
-- Snapshot: Simple description of what the URL is *right now*.
+- **Observable:** Emits values whenever some specific part of the URL changes.
+- **Snapshot:** Simple description of what the URL is **right now**.
 
 ***
 
@@ -487,8 +502,8 @@ ng generate guard auth/Auth
     
 **Typescript Types**
 
-- Primitive Types:  number, boolean, void, undefined, string, symbol, null. 
-- Object Types: functions, arrays, classes, objects.
+- **Primitive Types:**  number, boolean, void, undefined, string, symbol, null. 
+- **Object Types:** functions, arrays, classes, objects.
     
 **Type inference**
 
@@ -555,7 +570,7 @@ const { coords: { lat, lng } }: { coords: {lat: number, lng: number} } = profile
 
 **Tuple**
 
-- Tuple: Array-like structure where each element represents some property of a record.
+- **Tuple:** Array-like structure where each element represents some property of a record.
 
 ```ts
 const drink = {
@@ -578,18 +593,17 @@ const tea: Drink = ['brown', false, 0];
 Interfaces + Classes = How we get really strong code reuse in TS
 ```
 
-- Interfaces: Creates a new type, describing the property names and value types of an object.
+- **Interfaces:** Creates a new type, describing the property names and value types of an object.
 
 **Classes**
 
-- Classes: Blueprint to create an object with some fields (values) and methods (functions) to represent
-a 'thing'.
+- **Classes:** Blueprint to create an object with some fields (values) and methods (functions) to represent a **thing**.
 
 **Class Method Modifiers**
 
-- public: This method can be called anywhere, any time.
-- private: This method can be called by other methods in this class.
-- protected: This method can be called by other methods in this class, or by other methods in child classes.
+- **public:** This method can be called anywhere, any time.
+- **private:** This method can be called by other methods in this class.
+- **protected:** This method can be called by other methods in this class, or by other methods in child classes.
 
 ```console
 npm install -g parcel-bundler
@@ -628,11 +642,11 @@ npm install nodemon concurrently
 
 **Interfaces vs Abstract Classes**
 
-- Interfaces:
+- **Interfaces:**
     - Sets up a contract between different classes.
     - Use when we have very different objects that we want to work together.
     - Promotes loose coupling.
-- Inheritance / Abstract Classes:
+- **Inheritance / Abstract Classes:**
     - Sets up a contract between different classes.
     - Use when we are trying to build up a definition of an object.
     - Strongly couples classes together.
@@ -641,7 +655,7 @@ npm install nodemon concurrently
 
 - Organizes code in a project.
 - Contains a set of components, services, pipes and directives.
-- Some modules are built into Angular, others we create on our own.
+- Some modules built into Angular, others we create on our own.
 - Forces you to organize your code.
 - Can have a huge impact on how quickly your app starts up.      
 
@@ -649,16 +663,19 @@ npm install nodemon concurrently
 
 **How to Wire Up Services in a Module World**
 
-- Add the Service to a module's 'providers' array.
+- Add the Service to a module's **providers** array.
 - Use `@injectable` decorator.
 
 ### Subject Variations
 
-- Async Subject: Same as subject, but also doesn't emit any values unitil it is marked as 'complete'. Only last
-value is emitted.
-- Behavior Subject: Same as subject, but also takes an initial 'seed' value. New subscribers instantly get the
-most recent values.
-- Reply Subject: Same as subject, but also new subscribers instantly get sent all previously emitted values.
+- **Async Subject:** 
+    - Same as subject, but also doesn't emit any values unitil it is marked as **complete**. 
+    - Only last value emitted.
+- **Behavior Subject:** 
+    - Same as subject, but also takes an initial **seed** value. 
+    - New subscribers instantly get the most recent values.
+- **Reply Subject:**
+    - Same as subject, but also new subscribers instantly get sent all previously emitted values.
 
 ```console
 npm install angular-notifier
@@ -672,13 +689,3 @@ npm install --save ngx-loading@2.0.1
 
 ng build
 ```
-
-
-
-
-
-
-
-
-
-

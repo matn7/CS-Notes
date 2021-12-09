@@ -12,19 +12,19 @@ docker run -it redis
 
 ![Docker Ecosystem](docker_img/docker-ecosystem.png "Docker Ecosystem")
 
-- **What is Docker** - Docker is a platform or ecosystem around creating and running containers.
+- **What is Docker:** Docker is a platform or ecosystem around creating and running containers.
 
 ![Docker Images Containers](docker_img/docker-images-containers.png "Docker Images Containers")
 
-- Image: Single file with all the dependencies and config required to run a program.
-- Container: Instance of an image. Runs a program (running program).
+- **Image:** Single file with all the dependencies and config required to run a program.
+- **Container:** Instance of an image. Runs a program (running program).
 
 **Docker for Windows/Mac**
 
 ![Docker Hello World](docker_img/docker-hello-world.png "Docker hello world")
 
-- Docker Client CLI: Tool that we are going to issue commands to.
-- Docker Server (Docker Daemon): Tool that is responsible for creating images, running containers etc.
+- **Docker Client CLI:** Tool that we are going to issue commands to.
+- **Docker Server (Docker Daemon):** Tool that is responsible for creating images, running containers etc.
 
 ```console
 docker run hello-world
@@ -44,20 +44,19 @@ docker run hello-world
 
 ![Container](docker_img/container.png "Container")
 
-- Namespacing: Isolating resources per process (or group of processes), say - this area of hard drive is for 
-this process:
+- **Namespacing:** Isolating resources per process (or group of processes), say - this area of hard drive is for this process:
     - Processes
     - Hard drive
     - Network
     - Users
     - Hostnames
     - IPC
-- Control Groups (cgroups): Limit amount of resources used per process, say - amount of bandwidth process can use:
+- **Control Groups (cgroups):** Limit amount of resources used per process, say - amount of bandwidth process can use:
     - Memory
     - CPU Usage
     - HD I/O
     - Network Bandwidth
-- Container - group of processes assignee to it.
+- **Container:** group of processes assignee to it.
 
 ![Container](docker_img/container-details.png "Container")
 
@@ -67,19 +66,19 @@ this process:
 
 **How Docker Running on Your Computer?**
 
-- Namespacing and Control groups are Linux OS features.
-- On MacOS/Windows docker is run through Linux Virtual Machine.
+- **Namespacing** and **Control groups** are Linux OS features.
+- On MacOS/Windows docker runs through Linux Virtual Machine.
 
 ***
 
 ## Docker Client CLI
 
-```console
-docker run hello-world
-```
-
 ```
 docker run <image_name> <command>
+```
+
+```console
+docker run hello-world
 ```
 
 ```console
@@ -149,8 +148,8 @@ docker stop CONTAINER_ID
 docker kill CONTAINER_ID
 ```
 
-- SIGTERM: Stop container with cleanup time.
-- SIGKILL: Shut down immediately.
+- **SIGTERM:** Stop container with cleanup time.
+- **SIGKILL:** Shut down immediately.
 
 ```console
 docker create busybox ping google.com
@@ -159,13 +158,13 @@ docker logs CONTAINER_ID
 
 # after 10 s kill signal
 docker stop CONTAINER_ID
-
 docker start CONTAINER_ID
+
 # kill immediately
 docker kill CONTAINER_ID
 ```
 
-### Multi-command container
+### Multi command container
 
 ```console
 redis-server
@@ -176,7 +175,7 @@ redis-cli
 
 - Execute an additional command in a container.
 
-```text
+```
 docker exec -it CONTAINER_ID COMMAND
 ```
 
@@ -191,10 +190,10 @@ docker exec -it CONTEINER_ID redis-cli
 > get myvalue
 ```
 
-- STDIN, STDOUT, STDERR: **Communication Channels**, communicate information to linux process.
-- STDIN: Communicate information into a process.
-- STDOUT: Communicate information outside a process.
-- STDERR: Line STDOUT but error info.
+- Communication Channels, communicate information to linux process:
+    - **STDIN:** Communicate information into a process.
+    - **STDOUT:** Communicate information outside a process.
+    - **STDERR:** Like STDOUT but error info.
 
 ```
 -it flag
@@ -206,12 +205,12 @@ docker exec -it CONTEINER_ID redis-cli
 docker exec -i CONTAINER_ID redis-cli
 ```
 
-**Shell access to running container**
+**Shell access (exec) to running container**
 
 ```console
 docker exec -it CONTAINER_ID sh
 
-redis-cli
+> redis-cli
 ```
 
 - Command Preprocessor:
@@ -270,9 +269,7 @@ docker run CONTAINER_ID
 
 ![Dockerfile Teardown](docker_img/dockerfile-teardown.png "Dockerfile Teardown")
 
-```
-Writing a Dockerfile == Being given a computer with no OS and being told to install Chrome
-```
+**Writing a Dockerfile == Being given a computer with no OS and being told to install Chrome**
 
 ![Create images steps](docker_img/create-images-steps.png "Create images steps")
 
@@ -280,8 +277,8 @@ Writing a Dockerfile == Being given a computer with no OS and being told to inst
 
 **Tagging an Image**
 
-- `-t`: Tag argument.
-    - `<docker_id>/<repo_project_name>:<version>`
+- **-t:** Tag argument.
+    - **<docker_id>/<repo_project_name>:<version>**
 
 ```console
 docker build -t majka/redis:latest .
@@ -292,13 +289,13 @@ docker run majka/redis
 
 **Manual image generation**
 
-- Alpine base image: They come with a pre-installed set of programs that are useful.
+- **Alpine base image:** They come with a pre-installed set of programs that are useful.
 - Docker commit.
 
 ```console
 docker run -it alpine sh
 # inside image
-apk add --update redis
+> apk add --update redis
 
 # On second terminal
 docker ps
@@ -321,14 +318,14 @@ docker run CONTAINER_ID
 
 ### Base Images issues
 
-- `alpine`: In Docker world image as small and compact as possible. No npm.
-- `node:alpine`: Alpine version of node.
+- **alpine:** In Docker world image as small and compact as possible (no npm).
+- **node:alpine:** Alpine version of node.
 
 **Missing files**
 
-- Make sure that created index.js and package.json are copied to container image. 
+- Make sure that created **index.js** and **package.json** are copied to container image. 
 - Container has its own filesystem.
-- `COPY`: Instruction to move file and folders from our local system to filesystem in a container.
+- **COPY:** Instruction to move file and folders from our local system to filesystem in a container.
     - `COPY <path on your machine> <path inside container>`
 
 ```console
@@ -340,16 +337,16 @@ docker run majka/simpleweb
 ### Container port mapping
 
 - Any time someone makes request on a local network, take that request and port it to port in a container.
-    - **localhost_port:container_port**
+    - **LOCALHOST_PORT:INSIDE_CONTAINER_PORT**
 
 ```console
 docker run -p LOCALHOST_PORT:INSIDE_CONTAINER_PORT IMAGE_ID`
 docker run -p 8080:8080 majka/simpleweb`
 ```
 
-- On windows test with: `http://192.168.99.100:8080/`
+- On windows **http://192.168.99.100:8080/**
 
-**Shell into container.**
+**Shell into container**
 
 ```console
 docker run -it majka/simpleweb sh
@@ -405,7 +402,7 @@ CMD ["npm", "start"]
 ```Dockerfile
 FROM node:alpine
 
-WORKDIR '/app'
+WORKDIR /app
 
 COPY package.json .
 RUN npm install
@@ -429,8 +426,8 @@ docker run redis
 **Docker Compose**
 
 - Separate CLI that gets installed along with Docker.
-- Used to start up multiple Docker containers at the same time.
-- Automates some of the long-winded arguments we were passing to 'docker run'.
+- Used to start up **multiple Docker containers** at the same time.
+- Automates some long-winded arguments we were passing to **docker run**.
 
 ![Docker Compose](docker_img/docker-compose-file.png "Docker Compose")
 
@@ -487,7 +484,6 @@ docker-compose down
 | 0 | We exited and everything is OK |
 | 1,2,3, etc | We exited because something went wrong! |
 
-
 | Case | Description |
 |---|---|
 | no | Never attempt to restart this container if it  stops or crashes |
@@ -528,7 +524,7 @@ create-react-app frontend
 ```Dockerfile
 FROM node:alpine
 
-WORKDIR '/app'
+WORKDIR /app
 
 COPY package.json .
 RUN npm install
@@ -538,7 +534,7 @@ COPY . .
 CMD ["npm", "run", "start"]
 ```
 
-- Docker build with specified file `-f` option.
+- Docker build with specified file **-f** option.
 
 ```console
 docker build -f Dockerfile.dev .
@@ -559,7 +555,7 @@ docker run -it -p 3000:3000 -v /app/node_modules -v ${PWD}:/app -e CHOKIDAR_USEP
 
 ### Docker Compose
 
-- Makes execute `docker run` easier.
+- Makes execute **docker run** easier.
 
 ```yml
 version: '3'
@@ -606,8 +602,8 @@ tests:
     command: ["npm", "run", "test"]
 ```
 
-- `docker attach`: Attach to container STDIN, STDOUT, STDERR to primary process.
-    - Can now execute commands from our terminal.
+- **docker attach:** Attach to container STDIN, STDOUT, STDERR to primary process.
+    - Can now execute commands from **our terminal**.
 
 ```console
 docker-compose up --build
@@ -640,7 +636,7 @@ docker exec -it CONTAINER_ID npm run test
 
 - Web server. Taking incoming traffic, route it and response to it.
 
-**Multi-Step Docker Builds**
+**Multi Step Docker Builds**
 
 ![Multi Step Build Prod](docker_img/multi-step-build.png "Multi Step Build Prod")
 
@@ -649,7 +645,7 @@ docker exec -it CONTAINER_ID npm run test
 ```Dockerfile
 # Build Phase
 FROM node:alpine as builder
-WORKDIR '/app'
+WORKDIR /app
 COPY package.json .
 RUN npm install
 COPY . .
@@ -676,7 +672,7 @@ docker run -p 8080:80 CONTAINER_ID
 
 ![Github setup](docker_img/github-flow.png "Github setup")
 
-### Travic CI
+### Travis CI
 
 ![Travis CI Flow](docker_img/travis-ci-flow.png "Travis CI Flow")
 
@@ -706,13 +702,10 @@ script:
 sudo: required
 services:
   - docker
-
 before_install:
   - docker build -t matn7/docker-react -f Dockerfile.dev .
-
 script:
   - docker run -e CI=true matn7/docker-react npm run test
-
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
@@ -730,7 +723,7 @@ deploy:
 
 ```Dockerfile
 FROM node:alpine
-WORKDIR '/app'
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
@@ -747,13 +740,13 @@ COPY --from=0 /app/build /usr/share/nginx/html
 
 - Single Container Deployment Issues:
     - The app was simple, no outside dependencies.
-    - Our image was built multiple times.
+    - Our image built multiple times.
     - How do we connect to a database from a container?
 
 **Multi container**
 
-- Redis: In memory data store.
-- Postgres: Database.
+- **Redis:** In memory data store
+- **Postgres:** Database
 
 ![Deployment](docker_img/deployment.png "Deployment")
 
@@ -769,7 +762,7 @@ create-react-app client
 
 ```Dockerfile
 FROM node:alpine
-WORKDIR '/app'
+WORKDIR /app
 COPY ./package.json ./
 RUN npm install
 COPY . .
@@ -784,7 +777,7 @@ docker build -f Dockerfile.dev .
 
 ```Dockerfile
 FROM node:alpine
-WORKDIR "/app"
+WORKDIR /app
 COPY ./package.json ./
 RUN npm install
 COPY . .
@@ -795,7 +788,7 @@ CMD ["npm", "run", "dev"]
 
 ```Dockerfile
 FROM node:alpine
-WORKDIR "/app"
+WORKDIR /app
 COPY ./package.json ./
 RUN npm install
 COPY . .
@@ -808,8 +801,8 @@ CMD ["npm", "run", "dev"]
 
 ### NGINX Path Routing
 
-- NGINX will look for all of these requests (index.html, main.js, values/all, values/current) and decide
-which server route request to.
+- NGINX will look for all of these requests (**index.html**, **main.js**, **/api/values/all**, **/api/values/current**) 
+and decide which server route request to.
 
 ![Nginx](docker_img/nginx.png "Nginx")
 
@@ -839,7 +832,6 @@ server {
     }
 }
 ```
-
 
 **docker-compose.yml**
 
@@ -896,7 +888,7 @@ http://localhost:3050/
 
 ## CI Flow for Multiple Images
 
-### Multi-Container Deployments
+### Multi Container Deployments
 
 ![Multi Container Setup](docker_img/production-multi-container-deployment.png "Multi Container Setup")
 
@@ -904,7 +896,7 @@ http://localhost:3050/
 
 ```Dockerfile
 FROM node:alpine
-WORKDIR "/app"
+WORKDIR /app
 COPY ./package.json ./
 RUN npm install
 COPY . .
@@ -932,13 +924,10 @@ COPY ./default.conf /etc/nginx/conf.d/default.conf
 sudo: required
 services:
   - docker
-
 before_install:
   - docker build -t [:secure:]/react-test -f ./client/Dockerfile.dev ./client
-
 script:
   - docker run -e CI=true [:secure:]/react-test npm test
-
 after_success:
   - docker build -t [:secure:]/multi-client ./client
   - docker build -t [:secure:]/multi-nginx ./nginx
@@ -957,13 +946,11 @@ after_success:
 
 ## Multi Container Deployments to AWS
 
-### Multi-Container Definition Files
+### Multi Container Definition Files
 
 ![Multiple Container Problem](docker_img/multi-container-def.png "Multiple container problem")
 
-```
-Amazon ECS tasks definitions
-```
+**Amazon ECS tasks definitions**
 
 **ECS**
 
@@ -973,11 +960,9 @@ Amazon ECS tasks definitions
 
 **nginx-links**
 
-![Alt text](docker_img/nginx-links.png "Multiple container problem")
+![Multiple container problem](docker_img/nginx-links.png "Multiple container problem")
 
-```
-aws.amazon.com
-```
+**aws.amazon.com**
 
 ### Managed Data Service Provider
 
@@ -1023,14 +1008,14 @@ aws.amazon.com
 
 ![VPC - new security groups](docker_img/vpc-new-security-group.png "VPC - new security groups")
 
-- Allow any incoming traffic on Port 80 from any IP.
-- Allow traffic on Port 3010 from IP **172.0.40.2**.
-- Allow any traffic from any other AWS service that has this security group (new group):
+- Allow any incoming traffic on Port **80** from any IP.
+- Allow traffic on Port **3010** from IP **172.0.40.2**.
+- Allow any traffic from any other AWS service has this security group (new group):
     - If any instance EB, RDS, EC belong to this group let the traffic go between them.
 
-### RDS Database Creation
+## RDS Database Creation
 
-### ElastiCache Redis
+### ElasticCache (EC) Redis
 
 **Dockerrun.aws.json**
 
@@ -1083,13 +1068,10 @@ aws.amazon.com
 sudo: required
 services:
   - docker
-
 before_install:
   - docker build -t [:secure:]/react-test -f ./client/Dockerfile.dev ./client
-
 script:
   - docker run -e CI=true [:secure:]/react-test npm test
-  
 after_success:
   - docker build -t [:secure:]/multi-client ./client
   - docker build -t [:secure:]/multi-nginx ./nginx
@@ -1102,7 +1084,6 @@ after_success:
   - docker push [:secure:]/multi-nginx
   - docker push [:secure:]/multi-server
   - docker push [:secure:]/multi-worker
-
 deploy:
   edge: true
   provider: elasticbeanstalk
@@ -1135,7 +1116,7 @@ deploy:
 
 **What is Kubernetes?**
 
-- System for running many containers over multiple different machines.
+- System for running **many containers over multiple different machines**.
 
 **Why use Kubernetes?**
 
@@ -1199,10 +1180,10 @@ spec:
 
 **Config File**
 
-- Pod: Run a container.
-- Service: Setup networking inside Kubernetes cluster.
-- StatefulSet.
-- ReplicaController.
+- **Pod:** Run a container.
+- **Service:** Setup networking inside Kubernetes cluster.
+- **StatefulSet**
+- **ReplicaController**
 
 ![Object types](docker_img/objectTypes.png "Object types")
 
@@ -1220,12 +1201,12 @@ spec:
 
 **Object Types**
 
-- Pods: Runs one or more closely related containers.
-- Services: Sets up networking in a Kubernetes Cluster.
-    - ClusterIP
-    - NodePort: Exposes a container to the outside world (for DEV only).
-    - LoadBalancer
-    - Ingress
+- **Pods:** Runs one or more closely related containers.
+- **Services:** Sets up **networking** in a Kubernetes Cluster.
+    - **ClusterIP**
+    - **NodePort:** Exposes a container to the outside world (for DEV only).
+    - **LoadBalancer**
+    - **Ingress**
 
 ![Service Config](docker_img/ServiceConfig.png "Service Config")
 
@@ -1294,7 +1275,7 @@ minikube ip
 **Declarative**
 
 - Update our config file that originally created the pod.
-- Throw the updated config file into kubectl.
+- Throw the updated config file into **kubectl**.
 
 **Update existing object**
 
@@ -1310,19 +1291,19 @@ kubectl apply -f client-pod.yaml
 
 **Limitations in config updates**
 
-- Pod Config:
-    - containers: Can't be updated.
-    - name: Can't be updated.
-    - port: Can't be updated.
-    - image: Can be updated.
+- **Pod Config:**
+    - **containers:** Can't be updated.
+    - **name:** Can't be updated.
+    - **port:** Can't be updated.
+    - **image:** Can be updated.
     
 ![Pod config update](docker_img/pod-config-update.png "Pod config update")    
 
 **Object Types**
 
-- Pods: Runs one or more closely related containers.
-- Services: Sets up networking in a Kubernetes cluster.
-- :star: Deployment: Maintains a set of identical pods, ensuring that they have the correct config and  that the
+- **Pods:** Runs one or more closely related containers.
+- **Services:** Sets up networking in a Kubernetes cluster.
+- :star: **Deployment:** Maintains a set of identical pods, ensuring that they have the correct config and  that the
 right number exists.
 
 | Pods | Deployment |
@@ -1390,7 +1371,7 @@ kubectl describe pods
 
 **Scaling and Changing Deployments**
 
-- Change replicas in yaml file to 5.
+- Change replicas in **yaml** file to 5.
 
 ```yaml
 ...
@@ -1417,9 +1398,9 @@ kubectl get pods
 
 ### Update Image Version
 
-- Change deployment to use multi-client again.
-- Update the multi-client image, push to Docker-Hub.
-- Get the deployment to recreate our Pods with the latest version of multi-client.
+- Change deployment to use **multi-client** again.
+- Update the **multi-client** image, push to Docker Hub.
+- Get the deployment to recreate our Pods with the latest version of **multi-client**.
 
 **Triggering Deployment updates**
 
@@ -1439,7 +1420,7 @@ docker build -t [:secure:]/multi-client:v5 .
 docker push [:secure:]/multi-client:v5
 ```
 
-- Run a `kubectl` command forcing the deployment to use the new image version.
+- Run a **kubectl** command forcing the deployment to use the new image version.
 
 ```
 kubectl set image OBJECT_TYPE/OBJECT_NAME CONTAINER_NAME = NEW_IMAGE_NAME
@@ -1470,9 +1451,9 @@ minikube docker-env
 
 **Why use docker in Node**
 
-- Use debugging techniques from Docker CLI - many commands available through `kubectl`.
-- Manually kill containers to test Kubernetes ability to 'self-heal'.
-- Delete cached image in the node - `docker system prune -a`.
+- Use debugging techniques from Docker CLI - many commands available through **kubectl**.
+- Manually kill containers to test Kubernetes ability to **self-heal**.
+- Delete a cached image in the node - **docker system prune -a**.
 
 ```console
 # see logs/shell to console using docker cli
@@ -1480,12 +1461,12 @@ docker logs CONTAINER_ID
 docker exec -it CONTAINER_ID sh
 
 # see logs/shell to console using kubectl
-kubectl get pods
+> kubectl get pods
 # NAME                                 READY   STATUS    RESTARTS   AGE
 # client-deployment-ID                 1/1     Running   0          31m
 
-kubectl logs client-deployment-ID
-kubectl exec -it client-deployment-ID sh
+> kubectl logs client-deployment-ID
+> kubectl exec -it client-deployment-ID sh
 ```
 
 ***
@@ -1502,9 +1483,9 @@ kubectl exec -it client-deployment-ID sh
 
 **NodePort Service (outside world)**
 
-- port: Other Pod that needs multi-client Pod.
-- targetPort: multi-client Pod.
-- nodePort: Random 30000-32767.
+- **port:** Other Pod that needs multi-client Pod.
+- **targetPort:** multi-client Pod.
+- **nodePort:** Random 30000-32767.
 
 **Applying files with kubectl**
 
@@ -1571,7 +1552,7 @@ An object that allows a container to store data at the Pod level.
 
 ![Kubernetes Volume](docker_img/kubernates-volume.png "Kubernetes Volume")
 
-- Volumes is tied to Pod. 
+- Volumes tied to Pod. 
 - If Pod crashes volumes crash as well.
 - Not appropriate for storing data.
 
@@ -1580,16 +1561,16 @@ An object that allows a container to store data at the Pod level.
 ![Persistent Volume](docker_img/persistent-volume.png "Persistent Volume")
 
 - Long term durable storage not tied to specific Pod or container.
-- Statically Provisioned Persistent Volume: Persistent Volumes created ahead of time.
-- Dynamically provisioned Persistent Volume: Persistent Volumes created on fly.
-- Persistent Volume Claim: Advertisement for storage options.
+- **Statically Provisioned Persistent Volume:** Persistent Volumes created ahead of time.
+- **Dynamically provisioned Persistent Volume:** Persistent Volumes created on fly.
+- **Persistent Volume Claim:** Advertisement for storage options.
 
 **Persistence Volume Claim**
 
-- Access Modes:
-    - ReadWriteOnce: Can be used by a single node.
-    - ReadOnlyMany: Multiple nodes can read from this.
-    - ReadWriteMany: Can be read and written by many nodes.
+- **Access Modes:**
+    - **ReadWriteOnce:** Can be used by a single node.
+    - **ReadOnlyMany:** Multiple nodes can read from this.
+    - **ReadWriteMany:** Can be read and written by many nodes.
 - Allocate Persistent Volume.
 
 ```console
@@ -1626,9 +1607,7 @@ spec:
           value: 6379
 ```
 
-```
-[Deployment:multi-worker pod] -- http://redis-cluster-ip-service --> ClusterIP Service [Deployment:Redis pod]
-```
+**[Deployment:multi-worker pod] -- http://redis-cluster-ip-service --> ClusterIP Service [Deployment:Redis pod]**
 
 ### Secret
 
@@ -1640,14 +1619,14 @@ spec:
 kubectl create secret generic SECRET_NAME --from-literal key=value
 ```
 
-- `create`: Imperative command to create a new object.
-- `secret`: Type of object we are going to create.
-- `generic`: Type of secret.
+- **create:** Imperative command to create a new object.
+- **secret:** Type of object we are going to create.
+- **generic:** Type of secret.
     - tls
     - docker-registry
-- SECRET_NAME - Name of secret, for later reference in a Pod config.
-- `--from-literal`: We are going to add the secret info into this command, as opposed to from . file.
-- `key=value`: Key-value pair of the secret information.
+- **SECRET_NAME:** Name of secret, for later reference in a Pod config.
+- **--from-literal:** We are going to add the secret info into this command, as opposed to from **.** file.
+- **key=value:** Key-value pair of the secret information.
 
 ```console
 kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345asdf
@@ -1676,13 +1655,11 @@ env:
 **Ingress**
 
 - NGINX Ingress.
-- **ingress-nginx** - A community project.
+- **ingress-nginx:** A community project.
 
-```
-https://github.com/kubernetes/ingress-nginx
-```
+**https://github.com/kubernetes/ingress-nginx`**
 
-- kubernetes-ingress: A project led by the company nginx.
+- **kubernetes-ingress:** A project led by the company nginx.
 - Setup of ingress-nginx changes depending on environment (local, GC, AWS, Azure).
 - Ingress routing rules to get traffic to services.
 
@@ -1690,8 +1667,8 @@ https://github.com/kubernetes/ingress-nginx
 
 ![Ingress](docker_img/Ingress.png "Ingress")
 
-- Ingress Controller: Watches for changes to the ingress and updates the **thing** that handles traffic.
-- Ingress Config: Object that has a set of configuration rules describing how traffic should be routed.
+- **Ingress Controller:** Watches for changes to the ingress and updates the **thing** that handles traffic.
+- **Ingress Config:** Object that has a set of configuration rules describing how traffic should be routed.
 
 ![Node using NGINX Ingress](docker_img/nginx-ingress.png "Node using Nginx Ingress")
 
@@ -1699,7 +1676,7 @@ https://github.com/kubernetes/ingress-nginx
 
 ![GC Load Balancer Ingress](docker_img/gclb-nginx.png "GC Load Balancer Ingress")
 
-- New service `default-backend` pod. 
+- New service **default-backend** pod. 
 - Health checks make sure cluster is working.
 
 ### Setting up Ingress locally
@@ -1734,9 +1711,7 @@ kubectl apply -f k8s
 
 **minikube Dashboard**
 
-```
-http://192.168.99.100
-```
+**http://192.168.99.100**
 
 ```console
 minikube dashboard
@@ -1765,7 +1740,7 @@ minikube dashboard
 
 ![Generating a Service Account](docker_img/kube-generating-service-account.png "Generating a Service Account")
 
-**Install Ruby in container**
+**Install Ruby in a container**
 
 ```console
 docker run -it -v $(pwd):/app ruby:2.4 sh
@@ -1809,7 +1784,6 @@ before_install:
 ```yaml
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t [:secire:]/react-test -f ./client/Dockerfile.dev ./client
-
 script:
   - docker run -e CI=true [:secure:]/docker-react npm run test
 ```
@@ -1851,11 +1825,9 @@ docker build -t [:secure:]/multi-worker:latest -t [:secure:]/multi-worker:$SHA -
 docker push [:secure:]/multi-client:latest
 docker push [:secure:]/multi-server:latest
 docker push [:secure:]/multi-worker:latest
-
 docker push [:secure:]/multi-client:$SHA
 docker push [:secure:]/multi-server:$SHA
 docker push [:secure:]/multi-worker:$SHA
-
 kubectl apply -f k8s
 kubectl set image deployments/server-deployment server=[:secure:]/multi-server:$SHA
 kubectl set image deployments/client-deployment client=[:secure:]/multi-client:$SHA
@@ -1894,10 +1866,10 @@ kubectl create secret generic pgpassword --from-literal PGPASSWORD=mypgpassword1
 
 **Terminology**
 
-- User Accounts: Identifies a person administering our cluster.
-- Service Accounts: Identifies a Pod administering a cluster.
-- ClusterRoleBinding: Authorizes an account to do a certain set of actions across the entire cluster.
-- RoleBinding: Authorizes an account to do a certain set of actions in a single namespace.
+- **User Accounts:** Identifies a person administering our cluster.
+- **Service Accounts:** Identifies a **Pod** administering a cluster.
+- **ClusterRoleBinding:** Authorizes an account to do a certain set of actions across the entire cluster.
+- **RoleBinding:** Authorizes an account to do a certain set of actions in a single namespace.
 
 ```console
 kubectl get namespaces

@@ -20,7 +20,7 @@
 - Should be interoperable - Not platform dependent.
 - Should allow communication over a network.
 
-**How does data exchange between applications take place?((
+**How does data exchange between applications take place?**
 
 - Request, Response.
 
@@ -38,10 +38,10 @@
 
 **Request and Response**
 
-- Request input.
-- Response output.
+- Request input
+- Response output
 
-**Message Exchange Format((
+**Message Exchange Format**
 
 - Format of request and response.
 
@@ -61,7 +61,7 @@
 
 **Transport**
 
-- How the service is called.
+- How the service called.
 - HTTP and MQ.
 
 ### SOAP
@@ -89,10 +89,10 @@ SOAP-ENV: Envelope
     - SOAP over HTTP.
 - Service Definition:
     - WSDL (Web Service Definition Language):
-        - Endpoint.
-        - All Operations.
-        - Request Structure.
-        - Response Structure.
+        - Endpoint
+        - All Operations
+        - Request Structure
+        - Response Structure
 
 ### REST
 
@@ -105,23 +105,27 @@ SOAP-ENV: Envelope
 **Key abstraction - Resource**
 
 - A resource has an URI (Uniform Resource Identifier):
-    - /user/Majki/notes/1
-    - /user/Majki/notes
-    - /user/Majki
+    - `/user/majki/notes/1`
+    - `/user/majki/notes`
+    - `/user/majki`
 - A resource can have different representations:
-    - XML
-    - HTML
-    - JSON
-- Create a User - `POST /users`
-- Delete a User - `DELETE /users/1`
-- Get all Users - `GET /users`
-- Get one User - `GET /users/1`
+    - `XML`
+    - `HTML`
+    - `JSON`
+- Create a User: `POST /users`
+- Delete a User: `DELETE /users/1`
+- Get all Users: `GET /users`
+- Get one User: `GET /users/1`
 
 **REST**
 
-- Data Exchange Format - No Restriction. JSON is popular.
-- Transport - Only HTTP.
-- Service Definition - No Standard. `WADL/Swagger/`.
+- Data Exchange Format: 
+    - No Restriction. 
+    - JSON is popular.
+- Transport: Only HTTP.
+- Service Definition 
+    - No Standard. 
+    - `WADL/Swagger/`.
 
 ### REST vs SOAP
 
@@ -135,9 +139,9 @@ SOAP-ENV: Envelope
 
 ### Micro services
 
-- REST.
-- Small deployable units.
-- Cloud enabled.
+- REST
+- Small deployable units
+- Cloud enabled
 
 ![Microservices](images/microservices.png "Microservices")
 
@@ -147,10 +151,10 @@ SOAP-ENV: Envelope
 
 ### Challenges
 
-- Bounded context.
-- Configuration management.
-- Dynamic scale up and scale down.
-- Visibility.
+- Bounded context
+- Configuration management
+- Dynamic scale up and scale down
+- Visibility
 
 ### Spring Cloud
 
@@ -166,8 +170,8 @@ SOAP-ENV: Envelope
 ![Spring Cloud Ribbon](images/spring-cloud-ribbon.png "Spring Cloud Ribbon")
 
 - Visibility and monitoring:
-    - Zipkin Distributed Tracing.
-    - Netflix API Gateway.
+    - Zipkin Distributed Tracing
+    - Netflix API Gateway
 - Fault Tolerance - Hystrix.
 
 ### Microservices advantages
@@ -236,8 +240,8 @@ currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://loca
 
 ## Eureka Naming Server
 
-- Service registration.
-- Service discovery.
+- Service registration
+- Service discovery
 
 ```java
 @SpringBootApplication
@@ -282,9 +286,9 @@ public class CurrencyExchangeServiceApplication {
 ## API Gateways
 
 - Authentication, authorization and security.
-- Rate Limits.
-- Fault toleration.
-- Service Aggregation.
+- Rate Limits
+- Fault toleration
+- Service Aggregation
 
 ### Run through zuul
 
@@ -329,19 +333,3 @@ java -jar zipkin-server-2.12.9-exec.jar
 > POST request http://localhost:8080/actuator/bus-refresh
 
 ### Fault tolerance with Hystrix
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

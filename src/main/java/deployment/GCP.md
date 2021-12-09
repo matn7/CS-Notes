@@ -1,53 +1,5 @@
 # GCP
 
-- How do I properly set up my Google Cloud Platform (GCP) account and projects?
-- How do I set up and use the various GCP services?
-- How can I build a GCP system I have designed?
-
-## Exam Guide (Blueprint)
-
-**Job Role**
-
-- Deploys applications.
-- Monitors operations of multiple projects.
-- Maintains enterprise solutions to ensure they meet target performance metrics.
-- Experience working with public clouds and on-premises solutions.
-- Able to use Google Cloud Console and the command line interface.
-- Performs common platform-based tasks.
-- Maintains one or more deployed solutions.
-- Leverages Google-managed or self managed services on Google Cloud.
-
-**Domains**
-
-- Section 1: Setting up a cloud solution environment:
-    - Setting up cloud projects and accounts.
-    - Managing billing configuration.
-    - Installing and configuring the CLI.
-- Section 2: Planning and configuring a cloud solution:
-    - Planning and estimating GCP product use using the Pricing Calculator.
-    - Planning and configuring compute resources.
-    - Planning and configuring data storage options.
-    - Planning and configuring network resources.
-- Section 3: Deploying and implementing a cloud solution:
-    - Deploying and implementing Compute Engine resources.
-    - Deploying and implementing Kubernetes Engine resources.
-    - Deploying and implementing App Engine and Cloud Functions resources.
-    - Deploying and implementing data solutions.
-    - Deploying and implementing networking resources.
-    - Deploying a Solution using Cloud Launcher.
-    - Deploying and Application using Deployment Manager.
-- Section 4: Ensuring successful operation of a cloud:
-    - Managing Compute Engine resources.
-    - Managing Kubernetes Engine resources.
-    - Managing App Engine resources.
-    - Managing data solutions.
-    - Managing networking resources.
-    - Monitoring and logging.
-- Section 5: Configuring access and security:
-    - Managing Identity and Access Management (IAM).
-    - Managing service accounts.
-    - Viewing audit logs for project and management services.
-
 ## GCP Intro
 
 ### GCP Context
@@ -58,7 +10,7 @@
 
 - Google is all about Big Data; huge scales.
 - Lots of internal innovation.
-- Published many whitepapers:
+- Published many white papers:
     - MapReduce, Google File System, Colossus.
 - Released some things as open source:
     - Kubernetes (from Borg).
@@ -95,40 +47,41 @@
 
 - GCP is intrinsically global.
 - AWS is intrinsically region-scoped.
-- Regional model:
+- **Regional model:**
     - Simplifies data sovereignty.
-- Global model:
-    - Easier to handle latency and failures in a global way.
-    - Could be more sensitive to multi-region/global failure modes.
+- **Global model:**
+    - Easier to handle latency and failures in global way.
+    - Could be more sensitive to **multi-region/global** failure modes.
         - Due to service failures, not underlying hardware issues.
 
 **Physical Infrastructure**
 
 - vCPU
-- An Physical server
+- Physical server
 - Rack
 - Data center (building)
 - Zone
 - Region
 - Multi-Region
 - Private global network, (connect google global centers).
-- Points to Presence (POPs) - Network edges and CDN locations.
+- **Points to Presence (POPs):** Network edges and CDN locations.
 - Global system.
 
 **Network Ingress & Egress**
 
-- Normal Network: Routes via Internet to edge location closest to destination.
-- Google: Routes so traffic enters from a internet at edge closest to source:
+- **Normal Network:** Routes via Internet to edge location closest to destination.
+- **Google:** 
+    - Routes so traffic enters from an internet at edge closest to source.
     - Enables very interesting scenarios.
     - Single global IP address can load balance worldwide.
     - Sidesteps many DNS issues.
-- Can now opt for "normal" network routing to reduce price (and functionality).
+- Can now opt for **normal** network routing to reduce price (and functionality).
 
 **Pricing**
 
-- Provisioned: "Make sure you're ready to handle X".
-- Usage: "Handle whatever I use, and charge me for that".
-- Network traffic:
+- **Provisioned:** Make sure you're ready to handle X.
+- **Usage:** Handle whatever I use, and charge me for that.
+- **Network traffic:**
     - Free on the way in (ingress).
     - Charges on the way out (egress), by GBs used.
     - Egress to GCP services sometimes free:
@@ -140,7 +93,7 @@
 - Separation of duties and physical security.
 - Absolutely everything always encrypted at rest.
 - Strong key and identity management.
-- Network encryption:
+- **Network encryption:**
     - All control info encrypted.
     - All WAN traffic to be encrypted automatically.
     - Moving towards encrypting all local traffic within data centers.
@@ -149,20 +102,20 @@
 **Scale and Automation**
 
 - Scalability must be unbounded.
-- Devs don't want to answer pages.
+- Developers don't want to answer pages.
 
 **Resource Quotas (Soft Limits)**
 
-- Scope:
+- **Scope:**
     - Regional
     - Global
-- Changes:
+- **Changes:**
     - Automatic
     - By request:
         - Response in 24-48h.
         - May be refused.
-- Queryable:
-    - `gcloud compute project-info describe --project MY_PROJECT_ID`
+- **Queryable:**
+    - **gcloud compute project-info describe --project MY_PROJECT_ID**
 
 **Organization**
 
@@ -173,63 +126,65 @@
 
 **Key Building Blocks**
 
-- Compute Products:
-    - Compute Engine: Virtual Machine, Disks, Network.
-    - Cloud Functions: Event-driven serverless functions.
-    - Kubernetes Engine: Managed Kubernetes/Containers.
-- Storage Products:
-    - Cloud Storage: Object Storage and Serving.
-    - Nearline: Archival Occasional Access Storage.
-    - Coldline: Archival Rare Access Storage.
-    - Persistent Disk: VM-attached Disks.
-    - Cloud Filestore: Managed NFS Server.
-- AI and Machine Learning Products:
-    - Cloud TPU: Specialized Hardware for ML.
-    - Cloud Translation API: Language Detection and Translation.
-    - Cloud Video Intelligence: Scene-level Video Annotation.
-    - Cloud Vision API: Image Recognition and Classification.
-    - Cloud Natural Language: Text Parsing and Analysis.
-    - Cloud Speech-To-Text: Convert Audio to Text.
-    - Cloud Text-To-Speech: Convert Text to Audio.
-    - Cloud Machine Learning Engine: Managed Platform for ML.
-    - Cloud Deep Learning VM Image: Preconfigured VMs for deep learning.
-    - Cloud AutoML Natural Language: Custom text classification models.
-    - Cloud AutoML Translate: Custom domain-specific translation.
-    - Cloud AutoML Vision: Custom image classification models.
-- Databases Products:
-    - Cloud SQL: Managed MySQL and PostgreSQL.
-    - Cloud Spanner: Horizontally Scalable Relational DB.
-    - Cloud Firestore: Strongly-consistent Serverless Document DB.
-    - Cloud Datastore: Horizontally Scalable Document DB.
-    - Cloud Bigtable: Petabyte-scale, low-latency non-relational.
-- Data and Analytics Products:
-    - Cloud Dataflow: Stream/batch data processing.
-    - Cloud Dataproc: Managed Spark and Hadoop.
-    - Google Genomics: Managed Genomics Platform.
-    - Cloud Pub/Sub: Global Real-time Messaging.
-    - Google BigQuery: Data Warehouse/Analytics.
-- Networking Products:
-    - Virtual Private Cloud: Software Defined Network.
-    - Dedicated Interconnect: Dedicated private network connection.
-    - Cloud NAT: Network Address Translation Service.
-    - Cloud Load Balancing: Multi-region Load Distribution.
-    - Network Service Tiers: Price vs Performance Tiering.
-    - Cloud Armor: DDos Protection and WAF (Web Application Firewall).
-    - Cloud CDN: Content Delivery Network.
-    - Cloud DNS: Programmable DNS Serving.
-- Management Tools Products:
-    - Stackdriver Debugger: Live Production Debugger.
-    - Stackdrive Error Reporting: App Error Reporting.
-    - Stackdriver Logging: Centralized Logging.
-    - Stackdriver Monitoring: Infrastructure and Application Monitoring.
-    - Stackdriver Profiler: CPU and Heap profiling.
-    - Stackdriver Transparent SLIs: Monitor GCP Services.
-    - Stackdriver Trace: App Performance Insights.
-- Identity and Security Products:
-    - Cloud Identity: Manage Users, Devices & Apps.
-    - Cloud IAM: Resource Access Control.
-    - Cloud HSM: Hardware Security Module Service.
-    - Cloud Data Loss Prevention API: Classify, Redact Sensitive Data.
+- **Compute Products:**
+    - **Compute Engine:** Virtual Machine, Disks, Network.
+    - **Cloud Functions:** Event-driven serverless functions.
+    - **Kubernetes Engine:** Managed Kubernetes/Containers.
+- **Storage Products:**
+    - **Cloud Storage:** Object Storage and Serving.
+    - **Nearline:** Archival Occasional Access Storage.
+    - **Coldline:** Archival Rare Access Storage.
+    - **Persistent Disk:** VM-attached Disks.
+    - **Cloud Filestore:** Managed NFS Server.
+- **AI and Machine Learning Products:**
+    - **Cloud TPU:** Specialized Hardware for ML.
+    - **Cloud Translation API:** Language Detection and Translation.
+    - **Cloud Video Intelligence:** Scene-level Video Annotation.
+    - **Cloud Vision API:** Image Recognition and Classification.
+    - **Cloud Natural Language:** Text Parsing and Analysis.
+    - **Cloud Speech-To-Text:** Convert Audio to Text.
+    - **Cloud Text-To-Speech:** Convert Text to Audio.
+    - **Cloud Machine Learning Engine:** Managed Platform for ML.
+    - **Cloud Deep Learning VM Image:** Preconfigured VMs for deep learning.
+    - **Cloud AutoML Natural Language:** Custom text classification models.
+    - **Cloud AutoML Translate:** Custom domain-specific translation.
+    - **Cloud AutoML Vision:** Custom image classification models.
+- **Databases Products:**
+    - **Cloud SQL:** Managed MySQL and PostgreSQL.
+    - **Cloud Spanner:** Horizontally Scalable Relational DB.
+    - **Cloud Firestore:** Strongly-consistent Serverless Document DB.
+    - **Cloud Datastore:** Horizontally Scalable Document DB.
+    - **Cloud Bigtable:** Petabyte-scale, low-latency non-relational.
+- **Data and Analytics Products:**
+    - **Cloud Dataflow:** Stream/batch data processing.
+    - **Cloud Dataproc:** Managed Spark and Hadoop.
+    - **Google Genomics:** Managed Genomics Platform.
+    - **Cloud Pub/Sub:** Global Real-time Messaging.
+    - **Google BigQuery:** Data Warehouse/Analytics.
+- **Networking Products:**
+    - **Virtual Private Cloud:** Software Defined Network.
+    - **Dedicated Interconnect:** Dedicated private network connection.
+    - **Cloud NAT:** Network Address Translation Service.
+    - **Cloud Load Balancing:** Multi-region Load Distribution.
+    - **Network Service Tiers:** Price vs Performance Tiers.
+    - **Cloud Armor:** DDos Protection and WAF (Web Application Firewall).
+    - **Cloud CDN:** Content Delivery Network.
+    - **Cloud DNS:** Programmable DNS Serving.
+- **Management Tools Products:**
+    - **Stackdriver Debugger:** Live Production Debugger.
+    - **Stackdrive Error Reporting:** App Error Reporting.
+    - **Stackdriver Logging:** Centralized Logging.
+    - **Stackdriver Monitoring:** Infrastructure and Application Monitoring.
+    - **Stackdriver Profiler:** CPU and Heap profiling.
+    - **Stackdriver Transparent SLIs:** Monitor GCP Services.
+    - **Stackdriver Trace:** App Performance Insights.
+- **Identity and Security Products:**
+    - **Cloud Identity:** Manage Users, Devices & Apps.
+    - **Cloud IAM:** Resource Access Control.
+    - **Cloud HSM:** Hardware Security Module Service.
+    - **Cloud Data Loss Prevention API:** Classify, Redact Sensitive Data.
+
+***
 
 ## GCP Account
 
@@ -246,9 +201,9 @@
 
 **Always Free**
 
-- Always Free usage does not count against your free trial credits.
+- Free usage does not count against your free trial credits.
 - Last beyond end of free trial.
-- 24/day of f1-micro runtime, in most US regions, only.
+- 24/day of **f1-micro** runtime, in most US regions, only.
 - 28h/day of App Engine runtime, in North America.
 - 2M/month of Cloud Functions invocations (with runtime/size limits).
 
@@ -292,14 +247,14 @@ necessary to complete the job.
 
 **Incognito Mode**
 
-- Called "Incognito Window" in Chrome.
-- Called "Private Browsing" in Firefox.
+- Called **Incognito Window** in Chrome.
+- Called **Private Browsing** in Firefox.
 
 **Billing Export**
 
 ```
-Tools for monitoring, analyzing and optimizing cost have become an important part of managing development. Billing
-export to BigQuery enables you to export your daily usage and cost estimates automatically throughout the day
+Tools for monitoring, analyzing and optimizing cost have become an important part of managing development. 
+Billing export to BigQuery enables you to export your daily usage and cost estimates automatically throughout the day
 to a BigQuery dataset you specify. You can then access your billing data from BigQuery.
 ```
 
@@ -308,8 +263,7 @@ to a BigQuery dataset you specify. You can then access your billing data from Bi
 - Export must be set up per billing account.
 - Resources should be placed into appropriate projects.
 - Resources should be tagged with labels.
-- Billing exports is not real-time:
-    - Delay is hours.
+- Billing exports is not real-time, Delay is hours.
 
 ### Billing Alerts
 
@@ -324,12 +278,14 @@ spending exceeds a percentage of your budget.
 
 **Billing IAM**
 
-- Role: Billing Account User.
-- Purpose: Link projects to billing accounts.
-- Level: Organization or billing account.
-- Use Case: This role has very restricted permissions, so you can grant it broadly, typically in combination with
-Project Creator. These two roles allow a user to create new projects linked to the billing account on which the
-role is granted.
+- **Role:** Billing Account User.
+- **Purpose:** Link projects to billing accounts.
+- **Level:** Organization or billing account.
+- **Use Case:** 
+    - This role has very restricted permissions, so you can grant it broadly, typically in combination with Project Creator.
+    - These two roles allow a user to create new projects linked to the billing account on which the role granted.
+
+***
 
 ## Cloud Shell and Data Flow
 
@@ -344,20 +300,20 @@ are always available, up to data and fully authenticated when you need.
 
 **Highlights**
 
-- Web browser access:
+- **Web browser access:**
     - No need for local terminal:
         - Chromebook
         - No PuTTY!
     - Automatic SSH key management.
 - 5 GB of persistent storage.
 - Easy-access to pre-installed tools.
-    - gcloud, bq, kubectl, docker, npm/node, pip/python, ruby, vim, emacs, bash, etc.
+    - **gcloud, bq, kubectl, docker, npm/node, pip/python, ruby, vim, emacs, bash, etc.**
 - Pre-authorized and always up-to-date.
 - Web preview of web app running on local port.
 
 **Cloud shell**
 
-- `gcloud config set project`: Change to different project.
+- **gcloud config set project:** Change to different project.
 
 ```console
 pwd
@@ -380,28 +336,28 @@ nodemon hello.js
 - Data Flows are Everything.
 - Learn to identify and control data flow.
 
-**Three core concepts**
+**Three core concepts (MPR)**
 
-- Moving: Network
-- Processing: Compute
-- Remembering: Storage
+- **Moving:** Network
+- **Processing:** Compute
+- **Remembering:** Storage
 
 **Mental Models**
 
 - A simplified representation of reality.
 - Used to anticipate events or draw conclusions.
-- Systems combine:
+- **Systems combine:**
     - Build larger systems out of smaller ones (abstractions).
     - Zooming in and out.
 
 **Key Takeaways**
 
 - Data flows are the foundation of every system.
-- Moving, Processing, Remembering:
+- **Moving, Processing, Remembering:**
     - Not just Network, Compute, Storage.
-- Build mental models:
+- **Build mental models:**
     - Helps you make predictions.
-- Identify and think through data flows:
+- **Identify and think through data flows:**
     - Highlight potential issues.
 - Requirements and options not always clear.
 
@@ -417,7 +373,7 @@ gsutil mv -p gs://storage-lab-console-panda/README-cloudshell.txt gs://storage-l
 gcloud config list
 ```
 
-- `gsutil`: Command line tool to connect to google cloud storage.
+- **gsutil:** Command line tool to connect to **Google Cloud Storage (GCS)**.
 
 ```console
 gsutil ls
@@ -479,14 +435,14 @@ gcloud compute instances list
 **Rundown on gcloud**
 
 - Command-line tool to interact with GCP.
-- Best friends with `gsutil` and `bq`:
-    - All share same configuration set via `gcloud config`.
-    - `gsutil` could have been `gcloud storage`.
-    - `bq` could have been `gcloud bigquery`.
+- Best friends with **gsutil** and **bq**:
+    - All share same configuration set via **gcloud config**.
+    - **gsutil** could have been **gcloud storage**.
+    - **bq** could have been **gcloud bigquery**.
 - In general, more powerful than console but less powerful than REST API.
-- Alpha and Beta versions available via `gcloud alpha` and `gcloud beta`:
-    - `gcloud beta billing accounts list`
-    - `gcloud beta billing projects link MY_PROJECT --billing-account 0X0X0X-0X0X0X-0X0X0X`
+- Alpha and Beta versions available via **gcloud alpha** and **gcloud beta**:
+    - **gcloud beta billing accounts list**
+    - **gcloud beta billing projects link MY_PROJECT --billing-account 0X0X0X-0X0X0X-0X0X0X**
 
 **Basic Syntax**
 
@@ -495,53 +451,53 @@ gcloud GLOBAL_FLAGS SERVICE/PRODUCT GROUP/AREA COMMAND FLAGS PARAMETERS
 ```
 
 - Always drill down (from left to right).
-- Examples:
-    - `gcloud --project MY_PROJECT compute instances list`
-    - `gcloud --project=MY_PROJECT compute instances list`
-    - `gcloud compute instances create MY_VM`
-    - `gcloud services list --available`
-    - `gsutil ls`
-    - `gsutil mb -l northamerica-northeast1 gs://storage-lab-cli`
-    - `gsutil label set bucketlabels.json gs://storage-lab-cli/`
+- **Examples:**
+    - **gcloud --project MY_PROJECT compute instances list**
+    - **gcloud --project=MY_PROJECT compute instances list**
+    - **gcloud compute instances create MY_VM**
+    - **gcloud services list --available**
+    - **gsutil ls**
+    - **gsutil mb -l northamerica-northeast1 gs://storage-lab-cli**
+    - **gsutil label set bucketlabels.json gs://storage-lab-cli/**
 
 **Global Flags**
 
-- `--help`
-- `-h`
-- `--project PROJECT_ID`
-- `--account ACCOUNT`
-- `--filter`:
+- **--help**
+- **-h**
+- **--project PROJECT_ID**
+- **--account ACCOUNT**
+- **--filter**:
     - Not always available, but often better than using grep.
-- `--format`:
+- **--format**:
     - Can choose JSON, YAML, CSV, etc.
-    - Can pipe **|** JSON to `jq` command for further processing.
-- `--quiet (or -q)` - no prompt to confirm actions.
+    - Can pipe **|** JSON to **jq** command for further processing.
+- **--quiet (or -q)** no prompt to confirm actions.
 
 **Config Properties**
 
 - Values entered once and used by any command that needs them.
 - Can be overridden on a specific command with corresponding flag.
 - Used very often for account, project, region and zone:
-    - Set "core/account" or "account" to replace "--account".
-    - Set "core/project" or "project" to replace "--project".
-    - Set "compute/region" to replace "--region".
-    - Set "compute/zone" to replace "--zone".
-- Set with: `gcloud config set PROPERTY VALUE`
-- Check with: `gcloud config get-value PROPERTY`
-- Clear with: `gcloud config unset PROPERTY`
+    - Set **core/account** or **account** to replace **--account**.
+    - Set **core/project** or **project** to replace **--project**.
+    - Set **compute/region** to replace **--region**.
+    - Set **compute/zone** to replace **--zone**.
+- Set with: **gcloud config set PROPERTY VALUE**
+- Check with: **gcloud config get-value PROPERTY**
+- Clear with: **gcloud config unset PROPERTY**
 
 **Configurations**
 
 - Can maintain groups of settings and switch between them.
 - Most useful when using multiple projects.
-- An interactive workflow to set common properties in a config with: `gcloud init`.
-- List all properties in a configuration with: `gcloud config list`.
-- List all configurations with: `gcloud config configurations list`:
-    - **IS_ACTIVE** columns shows which one is currently being used.
+- An interactive workflow to set common properties in a config with: **gcloud init**.
+- List all properties in a configuration with: **gcloud config list**.
+- List all configurations with: **gcloud config configurations list**:
+    - **IS_ACTIVE** columns shows which one currently used.
     - Other columns list account, project, region, zone and the name of the config.
-- Make a new config with: `gcloud config configurations create ITS_NAME`.
-- Start using config with: `gcloud config configurations activate ITS_NAME`:
-    - Or use for just one command with: `--configuration=ITS_NAME`.
+- Make a new config with: **gcloud config configurations create ITS_NAME**.
+- Start using config with: **gcloud config configurations activate ITS_NAME**:
+    - Or use for just one command with: **--configuration=ITS_NAME**.
 
 **Configurations Analogy**
 
@@ -598,8 +554,6 @@ gcloud compute instances delete myhappyvm
 gcloud compute instances list
 ```
 
-**GCE via console**
-
 ***
 
 ## Security
@@ -610,17 +564,17 @@ Ensuring proper data flow.
 
 ### Proper data flow (CIA)?
 
-- **Confidentiality**: You cannot view data you shouldn't.
-- **Integrity**: You cannot change data you shouldn't.
-- **Availability**: You can access data you should.
+- **Confidentiality:** You cannot view data you shouldn't.
+- **Integrity:** You cannot change data you shouldn't.
+- **Availability:** You can access data you should.
 
 ### CIA Data flow example
 
 **How do we control data flow? (AAA)**
 
-- Authentication: Who are you?
-- Authorization: What are you allowed to do?
-- Accounting: What did you do?
+- **Authentication:** Who are you?
+- **Authorization:** What are you allowed to do?
+- **Accounting:** What did you do?
 - **Resiliency: Keep it running**.
 
 ```
@@ -633,21 +587,22 @@ ACC
 
 - Security Products.
 - Security Features.
-- Security Mindset: Includes Availability Mindset.
+- Security Mindset: 
+    - Includes Availability Mindset.
 
 **Key Security Mindset (Principles)**
 
 - The least privilege.
 - Defense in depth.
 - Fail securely.
-- OWASPs "Security by Design" Principles.
+- OWASPs **Security by Design** Principles.
 
 **Key Security Products/Features - AuthN**
 
-- Identity:
+- **Identity:**
     - Humans in G Suite, Cloud Identity.
     - Applications & services use Service Accounts.
-- Identity hierarchy:
+- **Identity hierarchy:**
     - Google Groups.
 - Can use Google Cloud Directory Sync (GCDS) to pull from LDAP (no push).
 
@@ -655,7 +610,7 @@ ACC
 
 - Identity hierarchy (Google Groups).
 - Resource hierarchy (Organization, Folders, Projects).
-- Identity and Access Management (IAM):
+- **Identity and Access Management (IAM):**
     - Permissions
     - Roles
     - Bindings
@@ -666,7 +621,7 @@ ACC
 **Key Security Products/Features - Acct**
 
 - Audit / Activity Logs (provided by Stackdriver).
-- Billing export:
+- **Billing export:**
     - To BigQuery.
     - To file (in GCS bucket):
         - JSON or CSV.
@@ -676,41 +631,41 @@ ACC
 
 **Resource Hierarchy**
 
-- Resource: Something you create in GCP.
-- Project: Container for a set of related resources.
-- Folder: Contains any number of Projects and Subfolders.
-- Organization: Tied to G Suite or Cloud Identity domain.
+- **Resource:** Something you create in GCP.
+- **Project:** Container for a set of related resources.
+- **Folder:** Contains any number of Projects and Subfolders.
+- **Organization:** Tied to G Suite or Cloud Identity domain.
 
 ### IAM - Permissions & Roles
 
 **Permissions**
 
 - A Permission allows you to perform a certain action.
-- Each one follows the form `Service.Resource.Verb`.
+- Each one follows the form **Service.Resource.Verb**.
 - Usually correspond to REST API methods.
 - Example:
-    - `pubsub.subscription.consume`
-    - `pubsub.topics.publish`
+    - **pubsub.subscription.consume**
+    - **pubsub.topics.publish**
 
 **Roles**
 
 - A Role is a collection of Permissions to use or manage GCP resources.
-- Primitive Roles: Project-level and often too broad.
+- **Primitive Roles:** Project-level and often too broad.
     - Viewer is read-only.
     - Editor can view and change things.
     - Owner can also control access & billing.
-- Predefined Roles: Give granular access to specific GCP resources:
-    - `roles/bigquery.dataEditor`
-    - `roles/pubsub.subscriber`
-- Custom Role: Project or Org-level collection you define of granular permissions.
+- **Predefined Roles:** Give granular access to specific GCP resources:
+    - **roles/bigquery.dataEditor**
+    - **roles/pubsub.subscriber**
+- **Custom Role:** Project or Org-level collection you define of granular permissions.
 
 **Predefined Role App Engine**
 
-- `roles/appengine.appAdmin`
-- `roles/appengine.serviceAdmin`
-- `roles/appengine.deployer`
-- `roles/appengine.appViewer`
-- `roles/appengine.codeViewer`
+- **roles/appengine.appAdmin**
+- **roles/appengine.serviceAdmin**
+- **roles/appengine.deployer**
+- **roles/appengine.appViewer**
+- **roles/appengine.codeViewer**
 
 ### IAM - Members & Groups
 
@@ -719,23 +674,23 @@ ACC
 - A Member is some Google-known identity.
 - Each Member is identified by a unique email address.
 - Can be:
-    - `user`: Specific Google account:
+    - **user:** Specific Google account:
         - G Suite, Cloud Identity, Gmail, or validated email.
-    - `serviceAccount`: Service accounts for apps/services.
-    - `group`: Google group of users and service accounts.
-    - `domain`: Whole domain managed by G Suite or Cloud Identity.
-    - `allAuthenticatedUsers`: Any Google account or service account.
-    - `allUsers`: Anyone on the Internet (Public).
+    - **serviceAccount:** Service accounts for apps/services.
+    - **group:** Google group of users and service accounts.
+    - **domain:** Whole domain managed by G Suite or Cloud Identity.
+    - **allAuthenticatedUsers:** Any Google account or service account.
+    - **allUsers:** Anyone on the Internet (Public).
 
 **Groups**
 
 - A Google group is a named collection of Google accounts and service accounts.
 - Every group has a unique email address this is associated with the group.
-- You never act as the group:
-    - But membership in a group can grant capabilities to individuals.
+- **You never act as the group:**
+    - Membership in a group can grant capabilities to individuals.
 - Use them for everything!
-- Can be used for owner when within an organization.
-- Can nest groups in an organization:
+- Can be used for an owner when within an organization.
+- **Can nest groups in an organization:**
     - One group for each department, all those in group for all staff.
 
 ### IAM - Policies
@@ -747,7 +702,7 @@ ACC
 - Attached to some level in the Resource Hierarchy:
     - Organization, Folder, Project, Resource.
 - Roles and Members listed in policy, but Resources identified by attachment.
-- Always additive ("Allow") and never subtractive (no "Deny"):
+- Always additive **Allow** and never subtractive (no **Deny**):
     - Child policies cannot restrict access granted at a higher level.
 
 ```json
@@ -779,21 +734,21 @@ ACC
 
 **Managing Policy Bindings**
 
-- Can use `get-iam-policy`, edit the JSON/YAML, and `set-iam-policy` back (But don't! use commands).
-- `gcloud [GROUP] add-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-GRANT] --member user:[USER-EMAIL]`
-- `gcloud [GROUP] remove-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-REVOKE] --member user:[USER-EMAIL]`
+- Can use **get-iam-policy**, edit the JSON/YAML, and **set-iam-policy** back (But don't! use commands).
+- **gcloud [GROUP] add-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-GRANT] --member user:[USER-EMAIL]**
+- **gcloud [GROUP] remove-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-REVOKE] --member user:[USER-EMAIL]**
 - Atomic operations are better because changes:
     - Are simpler, less work, and less error-prone (then editing JSON/YAML).
     - Avoid race conditions, so can happen simultaneously.
 
-```
+```console
 gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/compute.instanceAdmin
 --member user:me@example.com
 ```
 
 **Wrap up**
 
-- A Permission allows you to perform a certain action: `Service.Resource.Verb`.
+- A Permission allows you to perform a certain action **Service.Resource.Verb**.
 - A Role is a collection of Permissions to use or manage GCP resources:
     - Primitive Roles are Owner, Editor, Viewer.
     - Predefined Roles give granular access to specific GCP resources (IAM).
@@ -801,8 +756,8 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 - A Member is some Google account identity tied to an email address.
 - A Policy binds Members to Roles for some scope of Resources:
     - Answering, who can do what to which thing(s)?
-- Prefer `add-iam-policy-binding` & `remove-iam-policy-binding`.
-- Over `get-iam-policy`, edit, then `set-iam-policy`.
+- Prefer **add-iam-policy-binding** & **remove-iam-policy-binding**.
+- Over **get-iam-policy**, edit, then **set-iam-policy**.
 
 ### Billing Access Control
 
@@ -818,11 +773,9 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 **Billing Account User**
 
-```
-* Role: Billing Account User.
-* Purpose: Link projects to billing accounts.
-* Level: Organization or billing account.
-```
+- **Role:** Billing Account User.
+- **Purpose:** Link projects to billing accounts.
+- **Level:** Organization or billing account.
 
 **Billing IAM Roles**
 
@@ -845,6 +798,8 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
     - Typical monthly spend.
     - Country.
 
+***
+
 ## Networking
 
 - Software-Defined Networking (SDN).
@@ -861,11 +816,11 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 ### Routing: To the Right Resource
 
-- Latency reduction:
+- **Latency reduction:**
     - Use servers physically close to clients.
-- Load balancing:
+- **Load balancing:**
     - Separate from auto-scaling.
-- System design:
+- **System design:**
     - Different servers may handle different parts of the system.
     - Especially when using micro-services (instead of a monolith).
 - Cross-Region Load Balancing (with Global Anycast IPs).
@@ -874,8 +829,8 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 **Unicast vs Anycast**
 
-- Unicast: There is only one unique device in the world that can handle this; send it there.
-- Anycast: There are multiple devices that could handle this; send it to any one - but ideally the closest.
+- **Unicast:** There is only one unique device in the world that can handle this; send it there.
+- **Anycast:** There are multiple devices that could handle this; send it to any one - but ideally the closest.
 
 **Layer 4 vs Layer 7**
 
@@ -890,14 +845,14 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 **DNS**
 
-- Name resolution (via the Domain Name System) can be the first step in routing:
-    - Layer 4: Cannot route L4 based on L7's URL paths.
-    - Chunky: DNS queries often cached and reused for huge client sets.
-    - Sticky: DNS lookup "locks on" and refreshing per request has high cost.
+- Name resolution (via the **Domain Name System**) can be the first step in routing:
+    - **Layer 4:** Cannot route **L4** based on **L7's** URL paths.
+    - **Chunky:** DNS queries often cached and reused for huge client sets.
+    - **Sticky:** DNS lookup **locks on** and refreshing per request has high cost.
         - Extra latency because each request includes another round-trip!
         - More money for additional DNS request processing.
-    - Not Robust: Relies on the client always doing the right thing (they don't).
-- Premium tier "cold potato" routing with global anycast IPs avoids these problems.
+    - **Not Robust:** Relies on the client always doing the right thing (they don't).
+- A **Premium Tier** **cold potato** routing with global Anycast IPs avoids these problems.
 
 ### Routing: Among Resources (VPC)
 
@@ -916,16 +871,16 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 **IPs and CIDRs**
 
-- IP address is `abc.def.ghi.jkl` (dotted quad) where each piece is 0-255.
-- CIDR block is group of IP addresses specified in `<IP>/xy` notation:
+- IP address is **abc.def.ghi.jkl** (dotted quad) where each piece is **0-255**.
+- CIDR block is group of IP addresses specified in **<IP>/xy** notation:
     - Turn IP address into 32-bit binary number:
-        - `10.10.0.254 --> 00001010 00001010 000000000 11111110`
-    - `/xy`: In CIDR notation locks highest (leftmost) bits in IP address (0-32).
-    - `abc.def.ghi.jkl/32`: Is single IP address because all 32 bits are locked.
-    - `abc.def.ghi.jkl/24`: Is 256 IP addresses because last 8 bits (jkl) can vary.
-    - `0.0.0.0/0` means "any IP address" because no bits are locked.
+        - **10.10.0.254 --> 00001010 00001010 000000000 11111110**
+    - **/xy**: In CIDR notation locks highest (leftmost) bits in IP address (0-32).
+    - **abc.def.ghi.jkl/32**: Is single IP address because all 32 bits are locked.
+    - **abc.def.ghi.jkl/24**: Is 256 IP addresses because last 8 bits (jkl) can vary.
+    - **0.0.0.0/0** means "any IP address" because no bits are locked.
 - RFC1918 defines private (i.e. non-Internet) address ranges you can use:
-    - `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`.
+    - **10.0.0.0/8**, **172.16.0.0/12**, and **192.168.0.0/16**.
 
 ***
 
@@ -933,10 +888,10 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 **Kubernetes Objects**
 
-- pod: Wrap one or more containers.
-- deploy: Scalability and application releases.
-- ds: One Pod per node.
-- sts: Stateful app components.
+- **pod:** Wrap one or more containers.
+- **deploy:** Scalability and application releases.
+- **ds:** One Pod per node.
+- **sts:** Stateful app components.
 
 ### Networking
 
@@ -946,13 +901,13 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 **Kubernetes Services**
 
-- `ClusterIP`:
+- **ClusterIP:**
     - Gets own IP.
     - Only accessible from within a cluster.
-- `NodePort`:
+- **NodePort:**
     - Gets cluster-wide port.
     - Accessible from outside of cluster.
-- `LoadBalancer`:
+- **LoadBalancer:**
     - Integrates with public cloud platform.
 
 **Service Network**
@@ -990,15 +945,15 @@ ipvsadm -ln
 - Kube-proxy in IPVS mode does create dummy interfaces on the Service Network (usually called kube-ipvs0).
 Kube-proxy in IPTABLES mode does not.
 
-## Storage in Kubernetes
+### Storage in Kubernetes
 
-- Kubernetes Volumes: All about decoupling storage from Pods.
+- **Kubernetes Volumes:** All about decoupling storage from Pods.
 
 **Volumes**
 
 - LUNs, devices, shares, mounts, spaces.
 - Storage is Vital!
-- `File & Block` First-class Citizens in Kubernetes:
+- **File & Block** First-class Citizens in Kubernetes:
     - Standard-based.
     - Pluggable backend.
     - Rich API.
@@ -1009,11 +964,11 @@ Kube-proxy in IPTABLES mode does not.
         - Resiliency
         - ...
 
-```
-PersistentVolume        (PV)        [Storage: 20GB]
-PersistentVolumeClaim   (PVC)       [Ticket to use PV]
-StorageClass            (SC)        [Makes it dynamic]
-```
+| Volume | Ticker | Details |
+|---|---|---|
+| PersistentVolume | PV | Storage: 20GB |
+| PersistentVolumeClaim | PVC | Ticket to use PV |
+| StorageClass | SC | Makes it dynamic |
 
 ### Container Storage Interface (CSI)
 
@@ -1039,14 +994,6 @@ parameters:
 reclaimPolicy: Retain
 ```
 
-### From Code to Kubernetes
-
-### Kubernetes Deployments
-
-### Auto scaling
-
-**Horizontal Pod Autoscaler**
-
 ### Kubernetes Security
 
 **RBAC and Admission Control**
@@ -1054,7 +1001,7 @@ reclaimPolicy: Retain
 ![Kubernetes Security](images/kubernates-sec.png "Kubernetes Security")
 
 - Some clusters open an insecure local port!
-- Bypasses authN and authZ!
+- Bypasses **authN** and **authZ**!
 - Disable for production!
 
 **RBAC**
@@ -1075,21 +1022,18 @@ reclaimPolicy: Retain
 
 ![Kubernetes authN](images/kubernetes-authentication.png "Kubernetes authentication")
 
-- Service Accounts:
+- **Service Accounts:**
     - For System components.
     - Managed by Kubernetes.
     - You can (should) manage them.
 
 **Authorization (authZ)**
 
-```
-* Who can perform which actions on which resources?
-* Who - Subject
-* Actions - Verb
-```
-
+- Who can perform which actions on which resources?
+- Who - **Subject**
+- Actions - **Verb**
 - Powerful default users, too powerful for production.
-- **Roles & RoleBindings**: For least privilege.
+- **Roles & RoleBindings:** For least privilege.
 
 **RBAC Role**
 
@@ -1125,9 +1069,9 @@ roleRef:
 
 **Admission Control**
 
-- Admission Control:
+- **Admission Control:**
     - Policy enforcement.
-    - Webhooks: External admission controller.
+    - **Webhooks:** External admission controller.
 
 ```console
 openssl genrsa -out mia.key 2048
@@ -1186,7 +1130,7 @@ kubectl config current-context
 kubectl get pods --namespace=acg
 ```
 
-- Request:
+- **Request:**
     - API Group: apps/v1.
     - Subject: mia.
     - Verb: create (HTTP POST method).
@@ -1216,8 +1160,8 @@ kubectl get pods --namespace=acg
 - Infrastructure as a Service (IaaS).
 - Pick set machine type - standard, highmem, highcpu - or custom CPU/RAM.
 - Pay by the second (60 second min.) for CPUs, RAM.
-- Automatically cheaper if you keep running it ("sustained use discount").
-- Even cheaper for "preemptible" or long-term use commitment in a region.
+- Automatically cheaper if you keep running it **sustained use discount**.
+- Even cheaper for **pre-emptible** or long-term use commitment in a region.
 - Can add GPUs and paid OSes for extra cost.
 - Live Migration - Google seamlessly moves instance across hosts as needed.
 
@@ -1235,7 +1179,7 @@ kubectl get pods --namespace=acg
 
 - Platform as a Service (PaaS) that takes your code and runs it (Elastic Beanstalk, Herooku).
 - Much more than just compute - Integrates storage, queues, NoSQL.
-- Flex mode ("App Engine Flex") can run any container & access VPC.
+- Flex mode **App Engine Flex** can run any container & access VPC.
 - Auto-scales based on load:
     - Standard (non-Flex) mode can turn off last instance when no traffic.
 - Effectively pay for underlying GCE instances and other services.
@@ -1243,7 +1187,7 @@ kubectl get pods --namespace=acg
 **Cloud Functions (GCF)**
 
 - Runs code in response to an event - Node.js, Python, Java, Go.
-- Functions as a Service (FaaS), "Serverless".
+- Functions as a Service (FaaS), Serverless.
 - Pay for CPU and RAM assigned to function, per 100 ms.
 - Each function automatically gets an HTTP endpoint.
 - Can be triggered by GCS objects, Pub/Sub messages.
@@ -1254,7 +1198,7 @@ kubectl get pods --namespace=acg
 
 **Local SSD**
 
-- Very fast 375GB solid state drives physically attached to the server"
+- Very fast 375GB solid state drives physically attached to the server:
     - EC2 Instance Store Vols.
     - Direct-Attached Storage (DAS).
 - Can stripe across eight of them (3TB) for even better performance.
@@ -1272,7 +1216,7 @@ kubectl get pods --namespace=acg
 - Persistent disks persist, and are replicated (zone or regional) for durability.
 - Can resize while in use (up to 64TB), but will need file system update within VM.
 - Snapshots (and machine images) add even more capability and flexibility:
-    - "Magical": Pay for incremental ($ and time), but use/delete like full backups.
+    - **Magical:** Pay for incremental ($ and time), but use/delete like full backups.
 - Not file-based NAS, but can mount to multiple instances if all are read-only.
 - Pay for GB/mo provisioned depending on perf. class; plus snapshot GB/mo used.
 
@@ -1283,12 +1227,12 @@ kubectl get pods --namespace=acg
     - Network-Attached Storage (NAS).
 - Predictably fast performance for your file-based workloads.
 - Accessible to GCE and GKE through your VPC, via NFSv3 protocol.
-- Primary use case is application migration to cloud ("lift and shift").
+- Primary use case is application migration to cloud (**lift and shift**).
 - Fully manages file serving, but not backups.
-- Pay for provisioned TBs in "Standard" (slow) or "Premium" (fast) mode.
-- Minimum provisioned capacity of 1TB (Standard) or 2.5TB (Premium).
+- Pay for provisioned TBs in **Standard** (slow) or **Premium** (fast) mode.
+- Minimum provisioned capacity of **1TB** (Standard) or **2.5TB** (Premium).
 
-**Cloud Storage**
+**Cloud Storage (GCS)**
 
 - Infinitely scalable, fully-managed, versioned and highly-durable object storage:
     - Amazon S3.
@@ -1300,9 +1244,9 @@ kubectl get pods --namespace=acg
     - Nearline
     - Coldline
     - Differences in cost & availabilities.
-- All classes have same API, so can use `gsutil` and `gcsfuse`.
+- All classes have same API, so can use **gsutil** and **gcsfuse**.
 - Pay for data operations & GB-months stored by class.
-- `Nearline/Coldline`: Also pay for GBs retrieved - plus early deletion fee if < 30/90 days.
+- **Nearline/Coldline:** Also pay for GBs retrieved - plus early deletion fee if < 30/90 days.
 
 ### Databases
 
@@ -1332,7 +1276,7 @@ kubectl get pods --namespace=acg
 
 - Serverless column-store data warehouse for analytics using SQL:
     - Amazon Redshift
-- Scales internally, so it "can scan TB in seconds and PB in minutes".
+- Scales internally, so it **can scan TB in seconds and PB in minutes**.
 - Pay for GBs actually considered (scanned) during queries:
     - Attempts to reuse cached results, which are free.
 - Pay for data stored (GB-months).
@@ -1360,8 +1304,8 @@ kubectl get pods --namespace=acg
 - NoSQL, so queries can get complicated:
     - No joins or aggregates and must line up with indexes.
     - NOT, OR and NOT EQUALS (<>,!=) operations natively supported.
-- Automatic "built-in" indexes for simple filtering and sorting (ASC, DESC).
-- Manual "composite" indexes for more complicated, but beware them "exploding".
+- Automatic **built-in** indexes for simple filtering and sorting (ASC, DESC).
+- Manual **composite** indexes for more complicated, but beware them **exploding**.
 - Pay for GB-months of storage used.
 - Pay for IO operations (deletes, reads, writes) performed (i.e. no pre-provisioning).
 
@@ -1373,8 +1317,8 @@ kubectl get pods --namespace=acg
 - Firebase DB is single JSON doc, located only in central US.
 - Cloud Firestore has collections, documents and contained data.
 - Free tier (Spark), flat tier (Flame) or usage-based pricing (Blaze):
-    - Realtime DB: Pay more for GB/month stored and GB downloaded.
-    - Firestore: Pay for operations and much less for storage and transfer.
+    - **Realtime DB:** Pay more for GB/month stored and GB downloaded.
+    - **Firestore:** Pay for operations and much less for storage and transfer.
 
 ### Data Transfer
 
@@ -1387,7 +1331,7 @@ kubectl get pods --namespace=acg
 
 **Storage Transfer Service**
 
-- Copies objects for you, so you don't need to set up a machine to do it.
+- Do copies objects for you, so you don't need to set up a machine to do it.
 - Destination is always GCS bucket.
 - Source can be S3, HTTP/HTTPS endpoint or another GCS bucket.
 - One-time or scheduled recurring transfers.
@@ -1425,7 +1369,7 @@ kubectl get pods --namespace=acg
 - Regional IPs used for GCE instances & Network Load Balancer.
 - Global IPs used for global Load Balancers:
     - HTTP(s), SSL proxy, and TCP proxy.
-    - "Anycast IP" simplifies DNS.
+    - **Anycast IP** simplifies DNS.
 - Pay for reserved IPs that are not in use, to discourage wasting them.
 
 **Load Balancing**
@@ -1449,7 +1393,7 @@ kubectl get pods --namespace=acg
     - Akamai
     - Cloudflare
 - Supports HTTP/2 and HTTPS, but no custom origins (GCP only).
-- Simple checkbox on HTTP(S) Load Balancer config turns this on.
+- A simple checkbox on HTTP(S) Load Balancer config turns this on.
 - On cache miss, pay origin -> POP "cache fill" egress charges (cheaper for in-region).
 - Always pay POP -> client egress charges, depending on location.
 - Pay for HTTP(S) request volume.
@@ -1520,59 +1464,20 @@ kubectl get pods --namespace=acg
 - Work for both pull and push cache fills:
     - Because it's for all traffic with that CDN.
 
-### Machine Learning
-
-**Cloud ML Engine**
-
-**Cloud Vision API**
-
-**Cloud Speech API**
-
-**Cloud Natural Language API**
-
-**Cloud Translation API**
-
-**Dialogflow**
-
-**Cloud Video Intelligence API**
-
-**Cloud Job Discovery**
-
-### Big Data & IoT
-
-**Cloud IoT Core**
-
-**Cloud Pub/Sub**
-
-- Apache Kafka
-- RabbitMQ
-
-**Cloud Dataprep**
-
-**Cloud Dataproc**
-
-**Cloud Dataflow**
-
-**Cloud Datalab**
-
-**Cloud Data Studio**
-
-**Cloud Genomics**
-
 ### Identity & Access (Core Security)
 
 **Roles**
 
 - Roles are collections of Permissions to use or manage GCP resources:
     - AWS IAM Policies.
-- Permissions allow you to perform certain actions: `Service.Resource.Verb`.
-- Primitive Roles: `Owner`, `Editor`, `Viewer`:
+- Permissions allow you to perform certain actions: **Service.Resource.Verb**.
+- Primitive Roles: **Owner**, **Editor**, **Viewer**:
     - Viewer is read-only.
     - Editor can change things.
     - Owner can control access & billing.
     - Pre-date IAM service, may still be useful (e.g. dev/test envs), but often too broad.
 - Predefined Roles: Give granular access to specific GCP resources (IAM):
-    - E.g.: `roles/bigquery.dataEditor`, `roles/pubsub.subscriber`.
+    - E.g.: **roles/bigquery.dataEditor**, **roles/pubsub.subscriber**.
 - Custom Roles: Project or Org-level collections you define of granular permissions.
 
 **Cloud IAM**
@@ -1692,37 +1597,3 @@ accounts, rather than user accounts or API keys,
 - Enables you to meet compliance that mandates hardware environment:
     - AWS CloudHSM.
 - Fully integrated with Cloud KMS
-
-### Operations and Management
-
-**Stackdriver**
-
-**Stackdriver Monitoring**
-
-**Stackdriver Logging**
-
-**Stackdriver Error Reporting**
-
-**Stackdriver Trace**
-
-**Stackdriver Debugger**
-
-**Stackdriver Profiler**
-
-**Cloud Deployment Manager**
-
-**Cloud Billing API**
-
-### Development & APIS
-
-**Cloud Source Repositories**
-
-**Cloud Build**
-
-**Container Registry (GCR)**
-
-**Cloud Endpoints**
-
-**Apigee**
-
-**Test Lab for Android**

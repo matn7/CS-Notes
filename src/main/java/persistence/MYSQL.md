@@ -1,7 +1,7 @@
 ## MySQL
 
 - MySQL supports the ANSI/ISO SQL standard.
-- MySQL is developed in C and C++, making it portable across many different platforms.
+- MySQL is developed in C and C++, making it portable across many platforms.
 - MySQL is very fast, stable and scalable.
 
 ### MySQL Features
@@ -11,12 +11,12 @@
 - Cursors
 - Updated Views
 - Query Catching
-- Subselects
+- Sub selects
 - ACID Compliance:
-    - Atomicity - all or nothing.
-    - Consistency - transactions are valid to rules of the DB.
-    - Isolation - Results of transactions are as if they are done end to end.
-    - Durability - Once transaction is committed, it remains so.
+    - Atomicity: All or nothing.
+    - Consistency: Transactions are valid to rules of the DB.
+    - Isolation: Results of transactions are as if they are done end to end.
+    - Durability: Once transaction committed, it remains so.
 
 ## RDBMS Deployment Architectures
 
@@ -30,11 +30,11 @@
 - RDBMS is installed.
 - User logs in and accesses database from command line.
 - Simplest configuration.
-- Often will talk over 'localhost' and a network socket on localhost.
+- Will often talk over `localhost` and a network socket on `localhost`.
 
 ### LAMP Stack
 
-- LAMP - Linux, Apache, MySQL, PHP.
+- LAMP: Linux, Apache, MySQL, PHP.
 - Most websites will run off a single server.
 - Downside is database and Apache compete for the limited server resources.
 
@@ -47,29 +47,29 @@ for the db server.
 
 ### Scaling Client Server
 
-- Scalability is achieved by doing processing on application servers.
+- Scalability achieved by processing on application servers.
 - Database Server id dedicated.
 - Often companies will increase the size of the db server to grow faster.
-- Data storage is off loaded to dedicated hardware.
+- Data storage off loaded to dedicated hardware.
 
 ### Scaling more
 
-- Multiple Servers are used for the database.
+- Multiple Servers used for the database.
 - Example: Oracle Real Application Cluster.
 - Improves Scalability over a single database server.
 - Improves Reliability since a node can be lost, and the database cluster will continue.
 - "Mainframe" like performance.
-- Cloud Scale - Amazon, Google, Facebook.
-- Distributed computing - load is spread to many many servers.
-- Often cheap commodity servers are used.
-- Large mainframe like systems are avoided.
+- Cloud Scale: Amazon, Google, Facebook.
+- Distributed computing: Load spread to many servers.
+- Often cheap commodity servers used.
+- Large mainframe like systems avoided.
 - RDBMS's are typically not used due to scalability limitations.
 
 ## MySQL Data Types
 
 - A Data Type defines the data type of column - i.e. text, number, date.
 - MySQL does support the standard ANSI SQL Data types.
-- Data Types are broken down into following categories:
+- Data Types broken down into following categories:
     - Numeric
     - Date and Time
     - String
@@ -99,7 +99,7 @@ for the db server.
 
 ### Spatial Data Types
 
-- The Open Geospatial Consortium (OGC) is an international consortium of more then 250 companies,
+- The Open Geospatial Consortium (OGC) is an international consortium of more than 250 companies,
 agencies, and universities participating in the development of publicly available conceptual solutions that
 can be useful with all kinds of applications that manage spatial data.
 - MySQL has features to support the storage and analysis of geographic features:
@@ -113,25 +113,26 @@ can be useful with all kinds of applications that manage spatial data.
     - This is a complex, structured document containing properties and values.
 - Storage for JSON data type is similar to BLOB or TEXT data types.
 - MySQL will convert the JSON to an internal format for optimized storage and searching:
-    - Some formatting may be lost and ordering of properties may change.
+    - Some formatting may lost and ordering of properties may change.
 - MySQL supports searching for JSON document properties.
-- MySQL allows to update portions of a JSON document.
+- MySQL allows update portions of a JSON document.
 
 ### Client Protocols
 
-- TCP/IP - most common.
-- SOCKET - Unix/OSX/Linux only.
-- PIPE - Windows Only.
-- MEMORY - Windows Only.
+- TCP/IP: Most common.
+- SOCKET: Unix/OSX/Linux only.
+- PIPE: Windows Only.
+- MEMORY: Windows Only.
 
 ### TCP/IP
 
-- DNS - Domain Name Service - Associates an IP address with a human readable name:
-    - google.com = IP: 216.58.218.110
-- "localhost" 127.0.0.1
+- DNS - Domain Name Service: 
+    - Associates an IP address with a human readable name:
+        - `google.com = IP: 216.58.218.110`
+- `localhost` 127.0.0.1
 - A "port" is a logical connection endpoint of an IP Address.
-- Ports ranges from 0 to 65535.
-- MySQL by default will connect on port 3306.
+- Ports range from `0` to `65535`.
+- MySQL by default will connect on port `3306`.
 
 ### Commands
 

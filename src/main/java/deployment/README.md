@@ -1,14 +1,14 @@
 ## Linux Version
 
-- The Unix operating system was released by Ken Thompson and Dennis Ritchie of AT@T Bell Lab in 1970.
-- Unix was later rewritten in C, to make it portable.
+- The Unix operating system released by Ken Thompson and Dennis Ritchie of AT@T Bell Lab in 1970.
+- Unix later rewritten in C, to make it portable.
 - In 1977 Berkley Software Distribution (BSD) was developed.
 - In 1985 Intel released the 80386, the first x86 microprocessor.
 - Commercial Unix was too expensive for private users using Intel 386 PCs.
 - In 1987, Andrew Tanebaum released MINIX, a Unix like system intended for academic use:
-    - Source code was available, but modification and redistribution was restricted.
+    - Source code was available, but modification and redistribution restricted.
     - The 16 bit design of MINIX was not well suited for the 32 bit design of the cheap and popular Intel 386 PCs.
-- In 1991 Linus Torvalds released a project called 'Freax' which later become Linux.
+- In 1991 Linus Torvalds released a project called **Freax** which later become **Linux**.
 - In 1992 Torvalds released the Linux kernel under GNU license.
 - Initially Linux only referred to the kernel, not the distribution as a whole (shell, compilers, editors).
 - The Debian project started in 1993 to create a distribution of GNU tools (shell, compilers, editors) and was called
@@ -16,16 +16,16 @@ GNU/Linux.
 
 ### Popular Linux Distributions
 
-- Debian: Non commercial, maintained by a volunteer developer community:
+- **Debian:** Non commercial, maintained by a volunteer developer community.
     - Knoppix
     - Linux Mint Debian Edition.
-    - Ubuntu: Maintained by Canonical Ltd.
-- Fedora: A community distribution sponsored by Red Hat:
-    - Red Hat Enterprise Linux (RHEL): Commercially licensed and supported by Red Hat.
-        - CentOS: same sources as RHEL.
-        - Oracle Linux: Based on RHEL.
-        - Amazon Linux: Based on RHEL.
-- openSUSE: A community edition sponsered by the company SUSE.
+    - Ubuntu maintained by Canonical Ltd.
+- **Fedora:** A community distribution sponsored by Red Hat.
+    - **Red Hat Enterprise Linux (RHEL):** Commercially licensed and supported by Red Hat.
+        - CentOS same sources as RHEL.
+        - Oracle Linux based on RHEL.
+        - Amazon Linux based on RHEL.
+- **openSUSE:** A community edition sponsered by the company SUSE.
     - SUSE Linux Enterprise: Commercially licensed and supported by SUSE.
 
 ### Which Linux Distribution to Use
@@ -35,14 +35,14 @@ GNU/Linux.
 - SUSE Enterprise Linux has 20%.
 - Oracle Linux has 12%.
 - Fedora derived Linux Distributions have 79% of the enterprise market share (RHEL / Oracle).
-- CentOS: Effectively is RHEL, with any references to "Red Hat" removed.
-    - Red Hat enforces licensing via Trademark low of the term "Red Hat".
+- CentOS effectively RHEL, with any references to **Red Hat** removed.
+    - Red Hat enforces licensing via Trademark low of the term **Red Hat**.
 
 ## Amazon Web Services
 
-- EC2: Virtual Machines via AMIs (Amazon Machine Images).
-- RDS: Relational Database Service - Managed MySQL.
-- Route 53: DNS Services.
+- **EC2:** Virtual Machines via AMIs (Amazon Machine Images).
+- **RDS:** Relational Database Service - Managed MySQL.
+- **Route 53:** DNS Services.
 
 ## Docker
 
@@ -100,12 +100,12 @@ docker run --name panda-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /{some_path}/
     - Thus, if the layer contents change, the SHA 256 hash changes also.
 - Image Ids are a SHA 256 hash derived from the layer:
     - Thus if the layers of the image changes, the SHA 256 hash changes.
-- The Image ID listed by docker commands (`docker image`) is the first 12 characters of the hash.
-- The hash values of images are referred to by 'tag' names.
-- The format of the full tag name is: `[REGISTRYHOST/][USERNAME/]NAME[:TAG]`.
-- For Registry Host 'registry.hub.docker.com' is inferred.
-- For `:TAG` - `latest` is default, an inferred.
-- Full tag example: `registry.hub.docker.com/mongo:latest`.
+- The Image ID listed by docker commands (**docker image**) is the first 12 characters of the hash.
+- The hash values of images referred to by **tag** names.
+- The format of the full tag name is: **[REGISTRYHOST/][USERNAME/]NAME[:TAG]**.
+- For Registry Host **registry.hub.docker.com** is inferred.
+- For **:TAG** - **latest** is default, an inferred.
+- Full tag example: **registry.hub.docker.com/mongo:latest**.
 
 ## Docker
 
@@ -117,73 +117,73 @@ docker run --name panda-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /{some_path}/
 ### Containers cleaning up
 
 - Kill all Running Docker Containers:
-    - `docker kill $(docker ps -q)`
+    - **docker kill $(docker ps -q)**
 - Delete all Stopped Docker Containers:
-    - `docker rm $(docker ps -a -q)`
+    - **docker rm $(docker ps -a -q)**
 
 ### Images cleaning up
 
 - Remove a Docker Image:
-    - `docker rmi IMAGE_NAME`
+    - **docker rmi IMAGE_NAME**
 - Delete Untagged (dangling) Images:
-    - `docker rmi $(docker images -q -f dangling=true)`
+    - **docker rmi $(docker images -q -f dangling=true)**
 - Delete All Images:
-    - `docker rmi $(docker images -q)`
+    - **docker rmi $(docker images -q)**
 
 ### Volumes cleaning up
 
-- Once a volume is no longer associated with a container, it is considered `dangling`.
+- Once a volume is no longer associated with a container, it is considered **dangling**.
 - Remove all dangling volumes:
-    - `docker volume rm $(docker volume ls -f dangling=true -q)`
+    - **docker volume rm $(docker volume ls -f dangling=true -q)**
 - Does not remove files from host system in shared volumes.
 
 ### Questions
 
 - Show running containers: 
-    - `docker ps`
+    - **docker ps**
 - Show all containers? Running and stopped: 
-    - `docker ps -a`
+    - **docker ps -a**
 - What s the default tag? 
-    - `latest` is selected if no other value is specified.
+    - **latest** is selected if no other value is specified.
 - Command to run docker image: 
-    - `docker run IMAGE_NAME`
+    - **docker run IMAGE_NAME**
 - How to see the console output of a docker container? 
-    - `docker logs CONTAINER_NAME`
+    - **docker logs CONTAINER_NAME**
 - Command to build a docker image? 
-    - `docker build -t TAG_NAME`
+    - **docker build -t TAG_NAME**
 - Stop a docker container: 
-    - `docker stop CONTAINER_NAME` or `docker kill CONTAINER_NAME`
+    - **docker stop CONTAINER_NAME** or **docker kill CONTAINER_NAME**
 - Parameter tells docker to run the container as a background process: 
-    - `-d`, `docker run -d IMAGE_NAME`
+    - **-d**, **docker run -d IMAGE_NAME**
 - List all docker images on your system: 
-    - `docker images`
+    - **docker images**
 - Map a host port to a container port:
-    - `-p HOST_PORT:CONTAINER_PORT`
-    - `docker run -p 8080:8080 IMAGE_NAME`
+    - **-p HOST_PORT:CONTAINER_PORT**
+    - **docker run -p 8080:8080 IMAGE_NAME**
 - Tail the console output of a running docker container? 
-    - `docker logs -f CONTAINER_NAME`
+    - **docker logs -f CONTAINER_NAME**
 - What is like a .java file to a docker image? ie, the source code?
     - The Dockerfile.
 - Command to remove a stopped docker container? 
-    - `docker rm CONTAINER_NAME`
+    - **docker rm CONTAINER_NAME**
 - Specify an environment variable for a docker container:
-    - `docker run -e MY_VAR=my_prop IMAGE_NAME`
+    - **docker run -e MY_VAR=my_prop IMAGE_NAME**
 - Remove a docker image from your system:
-    - `docker rmi IMAGE_NAME`
+    - **docker rmi IMAGE_NAME**
 - Shell into a running docker container: 
-    - `docker exec -it CONTAINER_NAME bash`
+    - **docker exec -it CONTAINER_NAME bash**
 - Share storage on the host system with a docker container:
-    - `-v HOST_PATH:CONTAINER_PATH`
-    - `docker run -v MY_HOST_PATH:THE_CONTAINER_PATH IMAGE_NAME`
+    - **-v HOST_PATH:CONTAINER_PATH**
+    - **docker run -v MY_HOST_PATH:THE_CONTAINER_PATH IMAGE_NAME**
 
 ***
 
 ## Spring Boot in CentOS
 
-- `docker run -d centos`
-- `docker ps`
-- `docker run -d centos tail -f /dev/null`
-- `docker exec -it lucid_turing(<NAMES>) bash`
+- **docker run -d centos**
+- **docker ps**
+- **docker run -d centos tail -f /dev/null**
+- **docker exec -it lucid_turing(<NAMES>) bash**
 
 ```console
 java -version
@@ -216,7 +216,6 @@ docker build -t spring-boot-docker .
 
 docker run -d -p 8080:8080 spring-boot-docker
 ```
-
 
 ### :red_circle: MySQL Service account
 
@@ -316,7 +315,7 @@ ps -ef | grep jenkins
 - Protocol for obtaining an IP address associated with text.
 - Check domain from command line.
 
-> nslookup panda.com
+**nslookup panda.com**
 
 ![DNS](images/dns.png "DNS")
 

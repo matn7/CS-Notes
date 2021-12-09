@@ -4,7 +4,6 @@ public class Singleton {
 
     // Mark member variable as volatile, so each
     // access of this variable is a fresh read from memory
-
     private volatile static Singleton singleton;
 
     private Singleton() {

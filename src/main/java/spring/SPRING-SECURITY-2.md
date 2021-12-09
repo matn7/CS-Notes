@@ -6,13 +6,13 @@
 
 ### Authentication & Authorization
 
-- Authentication: Ensuring a user who they claim to be:
+- **Authentication:** Ensuring a user who they claim to be:
     - HTTP basic
     - Form Based
     - LDAP
     - OpenID
     - X.509
-- Authorization: Determining if a user is allowed to perform an action.
+- **Authorization:** Determining if a user allowed to perform an action.
 
 ### Security capabilities
 
@@ -22,19 +22,19 @@
 
 ### Extra Features
 
-- Cross Site Request Forgery `CSRF`.
-- Session Fixation.
-- Click jacking.
-- Cross Site Scripting `XSS`.
+- Cross Site Request Forgery `CSRF`
+- Session Fixation
+- Click jacking
+- Cross Site Scripting `XSS`
 - Password encoding via hash and salt.
 
 ### Spring Security Strengths
 
-- Spring approach.
-- Annotation based.
-- Spring MVC.
-- Testing.
-- Layered security approach.
+- Spring approach
+- Annotation based
+- Spring MVC
+- Testing
+- Layered security approach
 
 ## Security Principles
 
@@ -114,18 +114,18 @@
 
 ### Authentication
 
-- UserDetailsService
-- SecurityContextHolder
-- UserDetails
-- AuthenticationProvider
-- Authentication
+- `UserDetailsService`
+- `SecurityContextHolder`
+- `UserDetails`
+- `AuthenticationProvider`
+- `Authentication`
 
 ### Security Interceptor
 
-- Decider whether access is granted to a particular sources.
-- FilterSecurityInterceptor enforces access to HTTP resources.
-- MethodSecurityInterceptor enforces access to method invocations.
-- Config using instances of ConfigAttribute.
+- Decider whether access granted to a particular sources.
+- `FilterSecurityInterceptor` enforces access to HTTP resources.
+- `MethodSecurityInterceptor` enforces access to method invocations.
+- Config using instances of `ConfigAttribute`.
 
 ```xml
 <filter>
@@ -404,7 +404,7 @@ public class PasswordEncoder {
 ### LDAP Authentication Provider
 
 - **MAVEN**:
-    - spring-security-ldap
+    - `spring-security-ldap`
 
 **security-context.xml**
 
@@ -550,13 +550,13 @@ public List<Checkout> getCheckouts(Authentication authentication) {
 
 ## Access Control
 
-- `acl_sid` - store info about principals or authorities.
-- `acl_class` - qualified class name.
-- `acl_object_identity` - protected object instances.
-- `acl_entry` - entries.
+- `acl_sid:` Store info about principals or authorities.
+- `acl_class:` Qualified class name.
+- `acl_object_identity:` Protected object instances.
+- `acl_entry:` - Entries
 - **MAVEN**:
-    - spring-security-acl
-    - ehcache
+    - `spring-security-acl`
+    - `ehcache`
 
 **dispatcher-servlet.xml**
 
@@ -678,11 +678,3 @@ public class SecurityAppInitializer extends AbstractSecurityWebApplicationInitia
     }
 }
 ```
-
-
-
-
-
-
-
-

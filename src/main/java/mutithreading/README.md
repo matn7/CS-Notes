@@ -1,8 +1,9 @@
 
 ## Concurrency - Multitasking
 
-> Responsiveness - Concurrency
-> Performance - Parallelism
+**Responsiveness: Concurrency**
+
+**Performance: Parallelism**
 
 - Responsiveness can be achieved by using multiple threads, separate thread for each task.
 - Achieved by multi-tasking between threads.
@@ -17,36 +18,40 @@
 
 ![Multi core](images/multi-core.png "Multi core")
 
-- Stack - Region in memory where local variable are stored, and passed into functions.
-- Instruction pointer - Address of the next instruction to execute.
+- Stack: Region in memory where local variable stored, and passed into functions.
+- Instruction pointer: Address of the next instruction to execute.
+
+***
 
 ## OS
 
 ### Context Switch
 
-- Stop thread 1.
-- Schedule thread 1 out.
-- Schedule thread 2 in.
-- Start thread 2.
+- Stop thread `1`
+- Schedule thread `1` out
+- Schedule thread `2` in
+- Start thread `2`
 - Context switch is not cheap, and is the price of multitasking (concurrency).
 - Each thread consumes resources in the CPU and memory.
 - Context switch involves storing data for one thread, and restoring data for another thread.
-- Too many threads - **Thrashing**, spending more time in management than real productive work.
+- Too many threads: **Thrashing**, spending more time in management than real productive work.
 - Threads consume less resources than processes.
 - Context switching between threads from the same process is cheaper.
 
 ### Thread scheduling
 
-- First Come First Serve:
-    - Problem - Long thread can cause starvation.
-- Shortest Job first.
-- **Epochs**.
-- Dynamic Priority.
+- **First Come First Serve:**
+    - Problem: Long thread can cause starvation.
+- **Shortest Job first**
+- **Epochs**
+- **Dynamic Priority.**
 
-> Dynamic Priority = Static Priority + Bonus
+```
+Dynamic Priority = Static Priority + Bonus
+```
 
-- Static Priority is set by the developer programmatically.
-- Bonus is adjusted by the OS in every epoch, for each thread.
+- Static Priority set by the developer programmatically.
+- Bonus adjusted by the OS in every epoch, for each thread.
 - Using Dynamic Priority, the OS will give preference for Interactive threads (such as UI threads).
 - OS will give preference to threads that did not complete in the last epochs, or did not get enough time
 to run - Preventing Starvation.
@@ -60,7 +65,7 @@ to run - Preventing Starvation.
 - When to prefer Multi-Process Architecture:
     - Security and stability are of high importance.
     - Tasks are unrelated to each other.
-- Thread class - Encapsulates all thread related functionality.
+- Thread class: Encapsulates all thread related functionality.
 - Two ways to run code on a new thread:
     - Implement Runnable interface, and pass to a new Thread object.
     - Extend Thread class, and create object of that class.
@@ -88,15 +93,15 @@ threadB.interrupt(); // Sends a signal from Thread A to interrupt Thread B
 
 - Background thread that do not prevent the application from exiting if the main thread terminates.
 - Background tasks, that should not block our application from terminating:
-    - Example - File saving thread in a Text Editor.
+    - File saving thread in a Text Editor.
 - Code in a worker thread is not under our control, and we do not want it to block our application
 from terminating:
-    - Example - Worker thread that uses an external library.
+    - Worker thread that uses an external library.
 - To prevent a thread from blocking our app from exiting, we set the thread to be a Daemon thread.
 
 ### Thread.join()
 
-- Thread coordination with Thread.join().
+- Thread coordination with `Thread.join()`.
 - Different thread runs independently.
 - Order of execution is out of our control.
 - What if one thread depends on each other.
@@ -110,17 +115,22 @@ void waitForThreadA() {
 }
 ```
 
-> public final void join()
-> public final void join(long millis, int nanos)
-> public final void join(long millis)
+```java
+public final void join() {}
+
+public final void join(long millis, int nanos){}
+
+public final void join(long millis) {}}
+```
 
 - More control over independent threads.
 - Safely collect and aggregate results.
-- Gracefully handle runway threads using Thread.join(timeout).
+- Gracefully handle runway threads using `Thread.join(timeout)`.
 - Do not relay on the order of execution.
 - Always use thread coordination.
 - Design code for worst case scenario.
-- Thread may take unreasonably long time. Always use Thread.join() with a time limit.
+- Thread may take unreasonably long time. 
+- Always use `Thread.join()` with a time limit.
 - Stop the thread if it's not done in time.
 
 ***
@@ -129,56 +139,58 @@ void waitForThreadA() {
 
 ### Latency
 
-- Latency - The time to completion of task. Measured in time units.
-- Throughput - The amount of tasks completed in a given period. Measured in tasks/time unit.
+- **Latency:** The time to completion of task. 
+    - Measured in time units.
+- **Throughput:** The amount of tasks completed in a given period. 
+    - Measured in tasks/time unit.
 
 **Latency**
 
 ![Latency](images/latency.png "Latency")
 
-- Theoretical reduction of latency by N = Performance improvement by a factor of N.
-- N = ?:
+- Theoretical reduction of latency by `N` = Performance improvement by a factor of `N`.
+- **N = ?:**
     - How many subtasks/threads to break the original task?
 - Does breaking original task and aggregate results come for free?
 - Can we break any task into subtasks?
 
 **N = ?**
 
-- On a general purpose computer - **N = number of cores**.
+- On a general purpose computer, `N = number of cores`
 
 ![Task Per Core](images/task-per-core.png "Task per core")
 
-- num threads - # cores is optimal only if all threads are runnable and can run without interruption
+- **Num threads:** # cores is optimal only if all threads are runnable and can run without interruption
 (no IO/blocking calls/sleep etc).
 - The assumption is nothing else is running that consumes a lot of CPU.
-- Hyperthreading - Virtual Cores vs Physical Cores.
+- Hyperthreading: Virtual Cores vs Physical Cores.
 
 **Inherent Cost of Parallelization and Aggregation**
 
-- Breaking task into multiple tasks.
+- Breaking a task into multiple tasks.
 - Thread creation, passing tasks to threads.
-- Time between thread.start() to thread getting scheduled.
+- Time between `thread.start()` to thread getting scheduled.
 - Time until the last thread finishes and signals.
 - Time until the aggregating thread runs.
 - Aggregation of the sub-results into a single artifact.
 
 **Can we break any task into subtasks?**
 
-- Type1 - Parallelizable Tasks.
-- Type2 - Unbreakable, Sequential Task.
-- Type3 - Partially Parallelizable, Partially Sequential.
+- Type1: Parallelizable Tasks
+- Type2: Unbreakable, Sequential Task
+- Type3: Partially Parallelizable, Partially Sequential
 
 ### Throughput
 
-- **Throughput** - The number of tasks completed in a given period.
-- Measured in tasks/time unit.
+- **Throughput:** The number of tasks completed in a given period.
+- Measured in `tasks/time` unit.
 - **Throughput = 1/T**
 - **Latency = T/N**
-- T - time to execute original task.
-- N - # subtasks / # threads.
-- Throughput = N/T (theoretical).
-- Throughput < N/T (in practice).
-- Running task in parallel.
+- T time to execute an original task
+- N # subtasks / # threads
+- Throughput = `N/T (theoretical)`
+- Throughput < `N/T (in practice)`
+- Running a task in parallel
 
 **Thread Pooling**
 
@@ -195,10 +207,10 @@ Runnable task = ...;
 executor.execute(task);
 ```
 
-- By serving each task on a different thread, in parallel, we can improve throughput by N.
+- By serving each task on a different thread, in parallel, we can improve throughput by `N`.
 - **N = # threads = # cores**
 - Using a FixedThreadPool, we maintain constant number of threads, and eliminate the need to recreate the threads.
-- Significant performance improvement (xN).
+- Significant performance improvement (`xN`).
 - Right number of threads (# threads = # cores).
 - Handling each request on a different thread.
 - Eliminate some of the cost of multithreading by using a thread pool.
@@ -207,30 +219,32 @@ executor.execute(task);
 
 - Java performance automation tool.
 
+***
+
 ## Data Sharing between Threads
 
 ### Stack
 
 - Memory region where:
-    - Methods are called.
-    - Arguments are passed.
-    - Local variables are stored.
+    - Methods called
+    - Arguments passed
+    - Local variables stored
 - Stack + Instruction Pointer = State of each thread's execution.
 - All variables belong to the thread executing on that stack.
-- Statically allocated when the thread is created.
-- The stack's size is fixed, and relatively small (platform specific).
+- Statically allocated when the thread created.
+- The stack's size fixed, and relatively small (platform specific).
 - If our calling hierarchy is too deep. We may get an StackOverflow Exception (Risky with recursive calls).
 
 ### Heap
 
-- Belongs to Process.
-- Objects (anything created with the new operator).
-- Members of classes.
-- Static variables.
+- Belongs to Process
+- Objects (anything created with the `new` operator)
+- Members of classes
+- Static variables
 - Governed and managed by Garbage Collector.
-- Objects - stay as long as we have a reference to them.
-- Members of classes - exist as long as their parent object exist (same life cycle as their parents).
-- Static variables - stay forever.
+- Objects: Stay as long as we have a reference to them.
+- Members of classes: Exist as long as their parent object exist (same life cycle as their parents).
+- Static variables: Stay forever.
 
 **Objects vs References**
 
@@ -243,9 +257,9 @@ Object referenceVar2 = referenceVar1;
 
 - References:
     - Can be allocated on the stack.
-    - Can be allocated on heap if they are members of a class.
+    - Can be allocated on a heap if they are members of a class.
 - Objects:
-    - Always allocated on heap.
+    - Always allocated on a heap.
 
 ![Heap vs Stack](images/heap-vs-stack.png "Heap vs Stack")
 
@@ -253,7 +267,7 @@ Object referenceVar2 = referenceVar1;
 
 - Represents data or state.
 
-**:star: What is a resource ?**
+**:star: What is a resource?**
 
 - Variables (integers, Strings).
 - Data structure.
@@ -261,24 +275,24 @@ Object referenceVar2 = referenceVar1;
 - Message or work queues.
 - Any Objects.
 
-**Why share resources ?**
+**Why share resources?**
 
 - Work Queue (Work dispatcher).
 - Database Microservice.
-- **What is the problem of sharing resources**
+- What is the problem of sharing resources.
 
 ### Atomic Operations
 
 - InventoryCounter is a shared object:
     - The items member is shared between two threads.
-- Items++ and Items--:
+- `Items++` and `Items--`:
     - Are happening in the same time.
     - Are not atomic operations.
 - An operation or a set of operations is considered atomic, if it appears to the rest of the
 system as if it occurred at once.
 - Single step - "all or nothing".
 - No intermediate states.
-- Items++ - Not an atomic operation:
+- `Items++` - Not an atomic operation:
     - Get current value of items.
     - Increment current value by 1.
     - Store the result into items.
@@ -288,7 +302,7 @@ system as if it occurred at once.
 
 ***
 
-## Critical section & synchronization
+## A critical section & synchronization
 
 - Two threads sharing the items counter.
 - Both threads are reading and modifying that counter in the same time.
@@ -350,7 +364,7 @@ public class ClassWithCriticalSections {
 }
 ```
 
-- Synchronized block is Reentrant.
+- A synchronized block is Reentrant.
 - A thread cannot prevent itself from entering a critical section.
 
 ### :star: Atomic operations
@@ -366,8 +380,7 @@ a = b; // atomic
 
 - All assignments to primitive (except long and double).
 - That means reading from, and writing to the following types:
-    - `int, short, byte, float, char, boolean`
-- Are thread safe.
+    - `int, short, byte, float, char, boolean` are thread safe.
 
 ```java
 long x = 5;
@@ -385,7 +398,7 @@ volatile double y = 9.0;
 x = y; // atomic, guarenteed to be performed by single HW operation
 ```
 
-- Classes in the java.util.concurrent.atomic.
+- Classes in the `java.util.concurrent.atomic`.
 - Those are more advanced operations.
 
 ```java
@@ -406,11 +419,11 @@ public class BusinessLogicClass {
 - Atomic operations:
     - Assignments to primitive types (excluding double and long).
     - Assignments to references.
-    - Assignments to double and long using volatile keyword.
+    - Assignments to double and long using `volatile` keyword.
 
 ### Race condition
 
-- Condition when multiple threads are accessing a shared resources.
+- Condition when multiple threads are accessing a shared resource.
 - At least one thread is modifying the resource.
 - The timing of threads scheduling may cause incorrect results.
 - The core of the problem is non atomic operations performed on shared resource.
@@ -453,19 +466,19 @@ public class SharedClass {
 
 **Data Race Problem**
 
-- Compiler and CPU may execute the instructions Out Of Order to optimize performance and utilization.
+- Compiler and CPU may execute the instructions Out-Of-Order to optimize performance and utilization.
 - They will do so while maintaining the logical correctness of the code.
-- Out Of Order execution by the compiler and CPU are important features to speed up the code.
+- Out-Of-Order execution by the compiler and CPU are important features to speed up the code.
 - The compiler re-arranges instructions fo better:
-    - Branch prediction (optimized loops, "if" statements etc.).
-    - Vectorization - parallel instruction execution (SIMD).
-    - Prefetching instructions - better cache performance.
+    - Branch prediction: (optimized loops, "if" statements etc.).
+    - Vectorization: Parallel instruction execution (SIMD).
+    - Prefetching instructions: Better cache performance.
 - CPU re-arranges instructions for better hardware units utilization.
 - May Lead to unexpected, paradoxical and incorrect results.
 
 **Data Race - Solutions**
 
-- Establish a Happens - Before semantics by one of these methods:
+- Establish a **Happens - Before** semantics by one of these methods:
     - Synchronization of methods which modify shared variables.
     - Declaration of shared variables with the volatile keyword.
 
@@ -479,14 +492,16 @@ public void method() {
 ```
 
 - Two problems with multithreaded applications:
-    - Race Conditions.
-    - Data Races.
+    - Race Conditions
+    - Data Races
 - Both involve:
-    - Multiple threads.
+    - Multiple threads
     - At least one is modifying a shared variable.
 - Both problems may result in unexpected and incorrect results.
-- `Synchronized` - Solves both Race Condition and Data Race. But has a performance penalty.
-- Volatile:
+- `synchronized:`
+    - Solves both Race Condition and Data Race. 
+    - Has a performance penalty.
+- `volatile:`
     - Solves Race Condition for read/write from/to long and double.
     - Solves all Data Races by guaranteeing order.
 - Every shared variable (modified by at least one thread) should be either:
@@ -537,27 +552,27 @@ public class SharedClass {
 
 **Conditions for Deadlock**
 
-- Mutual Exclusion - Only one thread can have exclusive access to a resource.
-- Hold and Wait - At least one thread is holding a resource and is waiting for another resource.
-- Non-preemptive allocation - A resource is released only after the thread is done using it.
-- Circular wait - A chain of at least two threads each one is holding one resource and waiting for another resource.
+- Mutual Exclusion: Only one thread can have exclusive access to a resource.
+- Hold and Wait: At least one thread is holding a resource and is waiting for another resource.
+- Non-preemptive allocation: A resource released only after the thread is done using it.
+- Circular wait: A chain of at least two threads each one is holding one resource and waiting for another resource.
 
 **Avoid deadlock**
 
-- Avoid Circular wait - Enforce a strict order in lock acquisition.
+- Avoid Circular wait: Enforce a strict order in lock acquisition.
 
 ![Deadlock Fix](images/deadlock-fix.png "Deadlock Fix")
 
 - Enforcing a strict order on lock acquisition prevents deadlocks.
-- Easy to do with a small number of locks.
+- Easy to do with a few locks.
 - Maybe hard to accomplish if there are many locks in different places.
 - Other techniques:
-    - Deadlock detection - Watchdog.
+    - Deadlock detection: Watchdog
     - Thread interruption (not possible with synchronized).
     - tryLock operations (not possible with synchronized).
 - Locking strategies:
-    - Coarse-grained locking.
-    - Fine-grained locking.
+    - Coarse-grained locking
+    - Fine-grained locking
 - Deadlock:
     - Solved by avoiding circular wait and hold.
     - Lock resources in the same order, everywhere.
@@ -644,15 +659,15 @@ public int use() throws SomeException {
     - Control over the lock.
     - More Lock operations.
 - Query methods - For Testing:
-    - `getQueuedThreads()` - Returns a list of threads waiting to acquire a lock.
-    - `getOwner()` - Returns the thread that currently owns the lock.
-    - `isHeldByCurrentThread()` - Queries if the lock is held by the current thread.
-    - `isLocked()` - Queries if the lock is held by any thread.
+    - `getQueuedThreads():` Returns a list of threads waiting to acquire a lock.
+    - `getOwner():` Returns the thread that currently owns the lock.
+    - `isHeldByCurrentThread():` Queries if the lock held by the current thread.
+    - `isLocked():` Queries if the lock held by any thread.
 - ReentrantLock control over lock's fairness.
 - By default, the ReentrantLock as well as synchronized keyword do NOT guarantee any fairness.
 - Fairness:
     - `ReentrantLock(true);`
-    - May reduce the throughput of the application.
+    - May reduces the throughput of the application.
 
 **LockInterruptibly**
 
@@ -692,12 +707,12 @@ try {                                   useResource();
                                 }
 ```
 
-- Under no circumstances does the tryLock() method block!
+- Under no circumstances does the `tryLock()` method block!
 - Regardless of the state of the lock, it always returns immediately.
 
 **TryLock() - Use Cases**
 
-- Real Time applications where suspending thread on a lock() method is unacceptable.
+- Real Time applications where suspending thread on a `lock()` method is unacceptable.
 - Examples:
     - Video/Image processing.
     - High Speed/Low latency trading systems.
@@ -728,7 +743,7 @@ try {                                   useResource();
     - Read from many variables.
     - Read from a complex data structure.
 - Mutual exclusion of reading threads negatively impacts the performance.
-- Only a single thread is allowed to lock a writeLock.
+- Only a single thread allowed to lock a writeLock.
 
 ```java
 ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
@@ -755,8 +770,8 @@ try {
 ```
 
 - Mutual Exclusion between **readers** and **writers**:
-    - If a write lock is acquired, no thread can acquire a read lock.
-    - If at least one thread holds a read lock, no thread can acquire a write lock.
+    - If write lock acquired, no thread can acquire a read lock.
+    - If at least one thread holds a read lock, no thread can acquire write lock.
 - Using regular binary locks with read intensive workloads, prevents concurrent read from shared resource.
 - ReentrantReadWriteLock:
     - ReadLock
@@ -900,14 +915,14 @@ while (true) {
 **Semaphore as Condition Var**
 
 - Calling the `acquire()` on a Semaphore is equivalent to checking the condition "Is Number of Permits > 0?".
-- If the condition is not met - Thread A goes to sleep until another thread changes the semaphore's state.
+- If the condition not met - Thread A goes to sleep until another thread changes the semaphore's state.
 - When Thread B calls the `release()` method, Thread A wakes up.
 - Thread A checks the condition "Is Number of Permits > 0?":
     - If it is, Thread A continues to the next instruction.
 
 **Condition Variable**
 
-- Condition Variable is always associated with a lock.
+- Condition Variable always associated with a lock.
 - The lock ensures atomic check and modification of the shared variables, involved in the condition.
 
 ```java
@@ -938,19 +953,19 @@ try {
 }
 ```
 
-- `void await()` - unlock lock, wait until signalled.
+- `void await():` Unlock lock, wait until signalled.
 - `long awaitNanos(long nanosTimeout)`
 - `boolean await(long time, TimeUnit unit)`
 - `boolean awaitUntil(Date deadline)`
-- `void signal()` - wakes up a single thread, waiting on the condition variable.
+- `void signal():` Wakes up a single thread, waiting on the condition variable.
 - A thread that wakes up has to reacquire the lock associated with the condition variable.
 - If currently no thread is waiting on the condition variable, the signal method doesn't do anything.
-- `void signalAll()` - Broadcast a signal to all threads currently waiting on the condition variable.
+- `void signalAll():` Broadcast a signal to all threads currently waiting on the condition variable.
 - Doesn't need to know how many (if at all) threads are waiting on the condition variable.
 - Semaphore as a particular case of condition variable.
 - Condition Variable:
-    - Condition.await() - suspend the thread, and wait for a state change.
-    - Condition.signal()/signalAll() - wake all waiting threads.
+    - `Condition.await():` Suspend the thread, and wait for a state change.
+    - `Condition.signal()/signalAll():` Wake all waiting threads.
 
 **wait(), notify() and notifyAll()**
 
@@ -959,14 +974,13 @@ try {
     - `public final void notify()`
     - `public final void notifyAll()`
 - Every Java Class inherits from the Object Class.
-- We can use any object as a condition variable and a lock (using synchronized keyword).
-- `wait()` - Causes the current thread to wait until another thread wakes it up:
+- We can use any object as a condition variable, and a lock (using synchronized keyword).
+- `wait():` Causes the current thread to wait until another thread wakes it up:
     - In the wait state, the thread is not consuming any CPU.
 - Two ways to wake up the waiting thread:
-    - `notify()` - Wakes up a single thread waiting on that object.
-    - `notifyAll()` - Wakes up all the threads waiting on that object.
-- To call wait(), notify() or notifyAll() we need to acquire the monitor of that object
-(use synchronized on that object).
+    - `notify():` Wakes up a single thread waiting on that object.
+    - `notifyAll():` Wakes up all the threads waiting on that object.
+- To call `wait()`, `notify()` or `notifyAll()` we need to acquire the monitor of that object (use synchronized on that object).
 
 ```java
 public class MySharedClass {
@@ -1002,7 +1016,7 @@ public void complete() {
 
 ## Lock Free
 
-- Majority of multi-threaded programming is still done with locks.
+- Majority of multi-threaded programming still done with locks.
 - Locks have great software and hardware support.
 - Most concurrency issues (race conditions, data races) can be addressed with locks.
 
@@ -1015,7 +1029,7 @@ public void complete() {
 **Slow Critical Section**
 
 - Multiple threads using the same lock.
-- One thread holds the lock for every long, makes all the other threads wait for a long time.
+- One thread holds the lock for very long, makes all the other threads wait for a long time.
 - All threads become as slow as the slowest thread.
 
 **Priority Inversion**
@@ -1024,7 +1038,7 @@ public void complete() {
     - Low priority thread (document saver).
     - High priority thread (UI).
 - Low priority thread acquires the lock, and is preempted (scheduled out).
-- High Priority thread cannot progress because of the low priority thread is not scheduled to release the lock.
+- High Priority thread cannot progress because of the low priority thread not scheduled to release the lock.
 
 **Thread Not Releasing a lock (Kill Tolerance)**
 
@@ -1051,13 +1065,13 @@ public void complete() {
     - Non atomic operations.
 - Non atomic operation on one shared resource:
     - Example - counter++ turns into multiple hardware instructions:
-        - Read count.
-        - Calculate new value.
-        - Store new value to count.
-- Utilize operations which are guaranteed to be one hardware operation.
+        - Read count
+        - Calculate new value
+        - Store new value to count
+- Utilize operations which guaranteed to be one hardware operation.
 - Single hardware operation is atomic by definition and thread safe.
 
-**Atomic Instruction**
+:star: **Atomic Instruction**
 
 - Read/Assignment on all primitive types (except for long and double).
 - Read/Assignment on all references.
@@ -1069,9 +1083,9 @@ public void complete() {
 
 **AtomicX Classes**
 
-- Class located in the **java.util.concurrent.atomic.package**.
+- Class located in the `java.util.concurrent.atomic.package`.
 - Internally uses the Unsafe Class which provides access to low level, native methods.
-- Utilize platform specific implementation of atomic operations.
+- Utilize a platform specific implementation of atomic operations.
 
 ### AtomicInteger
 
@@ -1096,16 +1110,16 @@ atomicInteger.getAndAdd(delta);     // return the previous value
 **AtomicInteger - Pros & Cons**
 
 - Pros:
-    - Simplicity.
+    - Simplicity
     - No need to for locks or synchronization.
     - No race conditions or data races.
 - Cons:
     - Only the operation itself is atomic.
     - There's still race condition between 2 separate atomic operations.
-- AtomicInteger is a great tool for concurrent counting without the complexity of using a locks.
-- AtomicInteger should be used only when atomic operations are needed.
-- It's on pair and sometimes more performant than a regular integer with a lock as protection.
-- If used only by a single thread, a regular integers is preferred.
+- AtomicInteger is a great tool for concurrent counting without the complexity of using locks.
+- AtomicInteger should be used only when atomic operations needed.
+- It's on a pair and sometimes more performant than a regular integer with a lock as protection.
+- If used only by a single thread, a regular integers preferred.
 - If long use the AtomicLong, which provides the same capabilities as AtomicInteger.
 - AtomicBoolean provides atomic operations on boolean values.
 
@@ -1113,20 +1127,20 @@ atomicInteger.getAndAdd(delta);     // return the previous value
 
 **`AtomicReference<T>`**
 
-- AtomicReference(V initialValue).
-- V get() - Returns the current value.
-- void set(V newValue) - Sets the value to newValue.
+- `AtomicReference(V initialValue)`
+- `V get():` Returns the current value.
+- `void set(V newValue):` Sets the value to newValue.
 - `boolean compareAndSet(V expectedValue, V newValue)`:
-    - Assigns new value if current value == expected value.
+    - Assigns new value `if current value == expected value`.
     - Ignores the new value if the current value != expected value.
 
 **CAS - CompareAndSet**
 
 - Available in all Atomic Class.
 - Compiles into an atomic hardware operation.
-- Many other atomic methods are internally implemented using CAS.
-- `AtomicReference<T>` - wraps a reference to an object, allows us to perform atomic operations on that reference,
+- Many other atomic methods internally implemented using CAS.
+- `AtomicReference<T>:` Wraps a reference to an object, allows us to perform atomic operations on that reference,
 including the `compareAndSet()`.
-- `compareAndSet()` - Atomic operation available in all atomic classes.
+- `compareAndSet():` Atomic operation available in all atomic classes.
 - Implemented a lock free data structure - stack, using the `AtomicReference<T>` and `compareAndSet()`.
-- Lock Free Stack, outperforming blocking stack implementation x3.
+- Lock Free Stack, outperforming blocking stack implementation `x3`.
