@@ -1396,3 +1396,37 @@ COPY nginx.conf /etc/nginx/
 
 CMD ["nginx", "-g", "daemon off;"]
 ```
+
+## The Observer Design Pattern
+
+![The Observer Design Pattern](images/angular-the-observer-design-pattern.png "The Observer Design Pattern")
+
+## Testing
+
+- Run test
+
+```
+ng test
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

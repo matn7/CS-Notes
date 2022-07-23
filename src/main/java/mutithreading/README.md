@@ -1144,3 +1144,16 @@ including the `compareAndSet()`.
 - `compareAndSet():` Atomic operation available in all atomic classes.
 - Implemented a lock free data structure - stack, using the `AtomicReference<T>` and `compareAndSet()`.
 - Lock Free Stack, outperforming blocking stack implementation `x3`.
+
+## Thread safety with `final` keyword
+
+- `final` can be used to make sure that when you construct an object, another thread accessing that object 
+doesn't see that object in a partially-constructed state, as could otherwise happen.
+- When the constructor exits, the values of final fields are guaranteed to be visible to other threads 
+accessing the constructed object.
+- If a field is final, it is part of the JVM specification that it must effectively ensure that, once the 
+object pointer is available to other threads, so are the correct values of that object's final fields.
+- Immutable objects (ones where all fields are final and are either primitives or references to immutable objects) 
+can be concurrently accessed without synchronization.
+- When you declare a field final, you must set the value once by the time the constructor exits. 
+- Storing a reference to an object in a final field only makes the reference immutable, not the actual object.

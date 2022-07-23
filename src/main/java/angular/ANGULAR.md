@@ -689,3 +689,30 @@ npm install --save ngx-loading@2.0.1
 
 ng build
 ```
+
+## Event binding
+
+```
+(click) - round bracket method binding
+<button (click)="onButtonClick()">Greet me</button>
+```
+
+## Selective Display
+
+```
+<div [hidden]="some-expression">
+
+<div *ngIf="some-expression">
+```
+
+**Template reference**
+
+```
+@ViewChild
+```
+
+**Read property - Template reference**
+
+**Write property - Property binding `@Input()`**
+
+

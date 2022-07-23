@@ -2449,3 +2449,113 @@ had specified.
 **How Observer and MVC related?**
 
 - The View act as publisher, controller as subscriber.
+
+***
+
+## Java's hash code conventions
+
+- All Java classes inherit a method `hashCode()`, which returns a 32-bit int. 
+- **Requirement.** If `x.equals(y)`, then (`x.hashCode() == y.hashCode()`);
+- **Highly desirable.** If `!x.equals(y)`, then (`x.hashCode() ! y.hashCode()`)
+- **Default Implementation.** Memory address of `x`.
+- **Legal (but poor) implementation.** Always return `17`.
+- **Customized implementations.** `Integer`, `Double`, `String`, `File`, `URL`, `Date`, ...
+
+**Implementing hash code: doubles**
+
+```java
+public final class Double {
+    private final double value;
+    // ...
+    public int hashCode() {
+        long bits = doubleToLongBits(value);
+        return (int) (bits ^ (bits >>> 32)); // xor most significant 32-bits with least significant 32-bits
+    }
+}
+```
+
+**Implementing hash code: strings**
+
+```java
+public final class String {
+    private final char[] s;
+    // ...
+    public int hashCode() {
+        int hash = 0;
+        for (int i = 0; i < length(); i++) {
+            hash = s[i] + (31 * hash);
+        }
+        return hash;
+    }
+}
+```
+**Performance optimization.**
+
+- Cache the hash value in an instance variable.
+- Return cached value;
+
+```java
+public final class String {
+    private int hash = 0;       // cache of hash
+    private final char[] s;
+    // ...
+    public int hashCode() {
+        int h = hash;
+        if (h != 0) {
+            return h;   // return cache value
+        }
+        for (int i = 0; i < length(); i++) {
+            hash = s[i] + (31 * hash);
+        }
+        hash = h;   // store cache of hash code
+        return h;
+    }
+}
+```
+
+**Implementing hash code: user-defined types**
+
+```java
+public final class Transaction implements Comparable<Transaction> {
+    private final String who;
+    private final Date when;
+    private final double amount;
+
+    public Transaction(String who, Date when, double amount) {}
+
+    public boolean equals(Object y) {}
+
+    public int hashCode() {
+        int hash = 17;      // nonzero constant
+        hash = 31*hash + who.hashCode();
+        hash = 31*hash + when.hashCode();   // for reference types, use hashCode()
+        hash = 31*hash + ((Double) amount).hashCode(); // for primitive types, use hashCode() of wrapper type
+        return hash;
+    }
+}
+```
+
+**HashCode design**
+
+- **"Standard" recipe for user-defined types:**
+    - Combine each significant field using the `31x + y` rule.
+    - If field is primitive type, use wrapper type `hashCode()`.
+    - If field is `null`, return `0`.
+    - If field is a reference type, use `hashCode()`.
+    - If field is an array, apply to each entry (or use `Arrays.deepHashCode()`).
+
+**BST, hash usage**
+
+- Red-black BSTs: `java.util.TreeMap`, `java.util.TreeSet`
+- Hash tables: `java.util.HashMap`, `java.util.IdentityHashMap`
+
+
+
+
+
+
+
+
+
+
+

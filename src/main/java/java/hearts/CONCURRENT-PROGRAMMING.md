@@ -1205,7 +1205,7 @@ class GetAsFarAsPossible implements Runnable {
 
 ***
 
-## Executor, ExecutorService and Thread )ools.
+## Executor, ExecutorService and Thread Pools.
 
 - The Executor interface in Java provides a way of decoupling task submission from the mechanics of how each task
 will be run, including details of thread use, scheduling etc. 
@@ -1372,7 +1372,7 @@ class ExtendedExecutor extends ThreadPoolExecutor {
 
 **Case 2: Replace execute() with submit().**
 
-- **service.submit(new Runnable() {}):** In this case, Exceptions swallowed by a framework since **run()** method did
+- `service.submit(new Runnable() {}):` In this case, Exceptions swallowed by a framework since `run()` method did
 not catch them explicitly.
 
 **Case 3: Change the newFixedThreadPool to ExtendedExecutor**
@@ -1387,11 +1387,11 @@ ExtendedExecutor service = new ExtendedExecutor();
 ### 4. Handle Rejected Execution.
 
 - If you try to submit tasks to a shutdown Executor, or the queue saturated and maximum number of Threads has been reached,
-**RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)** will be called.
-- **ThreadPoolExecutor.AbortPolicy** default, will throw REE.
-- **ThreadPoolExecutor.CallerRunsPolicy** executes a task on caller's thread - blocking it.
-- **ThreadPoolExecutor.DiscardPolicy** silently discard task.
-- **ThreadPoolExecutor.DiscardOldestPolicy** silently discard the oldest task in queue and retry execution of the new task.
+`RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)` will be called.
+- `ThreadPoolExecutor.AbortPolicy` default, will throw REE.
+- `ThreadPoolExecutor.CallerRunsPolicy` executes a task on caller's thread - blocking it.
+- `ThreadPoolExecutor.DiscardPolicy` silently discard task.
+- `ThreadPoolExecutor.DiscardOldestPolicy` silently discard the oldest task in queue and retry execution of the new task.
 - Set using ThreadPool constructors.
 
 ```java
@@ -1413,7 +1413,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
 ### 5. Runnable Tasks.
 
-- Executors accept a **java.lang.Runnable** which contains (potentially computationally or otherwise 
+- Executors accept a `java.lang.Runnable` which contains (potentially computationally or otherwise 
 long-running or heavy) code to be run in another Thread.
 
 ```java
@@ -1453,9 +1453,9 @@ to handle rejection of tasks.
 **2. CountDownLatch**
 
 - CountDownLatch will be initialized with a given count. 
-- This count decremented by calls to the **countDown()** method. 
-- Threads waiting for this count to reach zero can call one of the **await()** methods. 
-- Calling **await()** blocks the thread until the count reaches zero. 
+- This count decremented by calls to the `countDown()` method. 
+- Threads waiting for this count to reach zero can call one of the `await()` methods. 
+- Calling `await()` blocks the thread until the count reaches zero. 
 - This class enables java thread to wait until other set of threads completes their tasks.
 - **Achieving Maximum Parallelism:** Sometimes we want to start a number of threads at the same time to achieve
 maximum parallelism.
@@ -1468,13 +1468,13 @@ maximum parallelism.
 use bounded queue by setting the max capacity.
 - Once the queue reaches maximum capacity, you can define RejectionHandler.
 - Java provides four types of RejectedExecutionHandler policies:
-    - **ThreadPoolExecutor.AbortPolicy:** The handler throws a runtime RejectedExecutionException upon rejection.
-    - **ThreadPoolExecutor.CallerRunsPolicy:** The thread that invokes execute itself runs the task. 
+    - `ThreadPoolExecutor.AbortPolicy:` The handler throws a runtime RejectedExecutionException upon rejection.
+    - `ThreadPoolExecutor.CallerRunsPolicy:` The thread that invokes execute itself runs the task. 
     This provides a simple feedback control mechanism that will slow down the rate that new tasks submitted.
-    - **ThreadPoolExecutor.DiscardPolicy:** A task that cannot be executed is simply dropped.
-    - **ThreadPoolExecutor.DiscardOldestPolicy:** If the executor not shut down, the task at the head of the work queue
+    - `ThreadPoolExecutor.DiscardPolicy:` A task that cannot be executed is simply dropped.
+    - `ThreadPoolExecutor.DiscardOldestPolicy:` If the executor not shut down, the task at the head of the work queue
     dropped, and then execution retried.
-- If you want to simulate CountDownLatch behavior, you can use invokeAll() method.
+- If you want to simulate **CountDownLatch** behavior, you can use `invokeAll()` method.
 
 **4. ForkJoinPool**
 
@@ -1544,7 +1544,7 @@ public class InvokeAllDemo {
 - A synchronization aid that allows one or more threads to wait until a set of operations performed in other
 threads completes.
 - A **CountDownLatch** is initialized with a given count.
-- That await methods block until the current count reaches zero due to invocations of the **countDown()** method, 
+- That await methods block until the current count reaches zero due to invocations of the `countDown()` method, 
 after which all waiting threads released and any subsequent invocations of await return immediately. 
 - This is a one-shot phenomenon, the count cannot be reset. 
 - If you need a version that resets the count, consider using a **CyclicBarrier**.
@@ -1576,9 +1576,9 @@ void shutDownAndAwaitTermination(ExecutorService pool) {
 }
 ```
 
-- **shutdown():** Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will
+- `shutdown():` Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will
 be accepted.
-- **shutdownNow():** Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and
+- `shutdownNow():` Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and
 returns a list of the tasks that were awaiting execution.
 - In above example, if your tasks are taking more time to complete, you can change if condition to while condition.
 
@@ -1607,11 +1607,11 @@ public static ExecutorService newSingleThreadExecutor()
 ```
 
 - Creates an Executor that uses a single worker thread operating off an unbounded queue.
-- There is a difference between **newFixedThreadPool(1)** and **newSingleThreadExecutor()** as the java doc says for the latter:
-    - Unlike the otherwise equivalent **newFixedThreadPool(1)** the returned executor guaranteed not to
+- There is a difference between `newFixedThreadPool(1)` and `newSingleThreadExecutor()` as the java doc says for the latter:
+    - Unlike the otherwise equivalent `newFixedThreadPool(1)` the returned executor guaranteed not to
     be reconfigurable to use additional threads.
 - Which means that a **newFixedThreadPool** can be reconfigured later in the program by:
-    - **((ThreadPoolExecutor) fixedThreadPool).setMaximumPoolSize(10):** This is not possible for newSingleThreadExecutor.
+    - `((ThreadPoolExecutor) fixedThreadPool).setMaximumPoolSize(10):` This is not possible for newSingleThreadExecutor.
 - Use cases:
     - :one: You want to execute the submitted tasks in a sequence.
     - :two: You need only one Thread to handle all your request.
@@ -1628,7 +1628,7 @@ public static ExecutorService newFixedThreadPool(int nThreads)
 - At any point, at most nThreads threads will be active processing tasks. 
 - If additional tasks submitted when all threads are active, they will wait in the queue until a thread is available.
 - Use cases:
-    - :one: Effective use of available cores. Configure nThreads as **Runtime.getRuntime().availableProcessors()**.
+    - :one: Effective use of available cores. Configure nThreads as `Runtime.getRuntime().availableProcessors()`.
     - :two: When you decide that number of thread should not exceed a number in the thread pool.
 - Cons:
     - :one: An unbounded queue is harmful.

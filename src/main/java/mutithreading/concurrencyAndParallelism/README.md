@@ -882,7 +882,7 @@ class Consumer implements Runnable {
         try {
             for (int i = 0; i < this.maxTakes; i++) {
                 String message = dropbox.take();
-                System.out.format()"Message received: %s\n", message);
+                System.out.format("Message received: %s\n", message);
                 Thread.sleep(random.nextInt(3000));
             }
         } catch(InterruptedException e) {}
@@ -1140,7 +1140,7 @@ public final class ImmutableRGB {
     }
 
     private void check(int red, int green, int blue) {
-        if (red < 0 "" red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) {
+        if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) {
             throw new IllegalArgumentException();
         }
     }
@@ -1154,7 +1154,7 @@ public final class ImmutableRGB {
         - Two producers with one consumer to illustrate the thread safety.
         - The particular queue used in this example acts like a pipe, as there's no buffering.
 - File searcher: 
-    - The fork/join framework as s way to 'divide and conquer' recursive tasks.
+    - The fork/join framework as a way to 'divide and conquer' recursive tasks.
     - Java's fork/join framework allows less busy threads from an executor-service to 'steal' work from busier threads.
     - A basic pattern: Divide task into subtasks (etc.), and then aggregate the results.
 - Semaphores: A resource needs limited access, but not mutual exclusion.
@@ -1362,6 +1362,7 @@ tasks can be processed literally at the same time, in parallel.
     - The point of interest is how to write programs that execute as parallel computations.
     - Support from toolchains (in particular, compilers therein) is critical to encourage widespread use of
     hardware support for parallel computing.
+
 
 ### Parallelism: Flynn Taxonomy
 
