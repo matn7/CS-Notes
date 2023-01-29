@@ -391,7 +391,7 @@ its returned to the requesting object.
 
 ```
 ApplicationContextAware, 
-ApplicationEventPublisherAware, 
+ApplicationEventPublherAware, 
 BeanFactoryAware
 ...
 ```

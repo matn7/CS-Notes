@@ -715,4 +715,180 @@ ng build
 
 **Write property - Property binding `@Input()`**
 
+***
 
+## Some Interview Questions
+
+**Angular**
+
+- What is Angular and why do we use it?
+    - Angular is a JavaScript framework for building web applications. 
+    - It is used for creating dynamic and interactive user interfaces, making it a popular choice for building 
+    single-page applications.
+- What are the key features of Angular?
+    - Some key features of Angular include two-way data binding, dependency injection, a modular architecture, 
+    and a powerful template language.
+- What are the differences between AngularJS and Angular?
+    - AngularJS is the first version of Angular, while Angular is the second version and is also known as "Angular 2+". 
+    - The biggest difference between the two is that Angular is a complete rewrite of AngularJS and is not backwards-compatible.
+- What is an Angular component?
+    - An Angular component is a reusable piece of code that controls a section of the UI. 
+    - It consists of a template, a class, and metadata.
+- What is a directive in Angular?
+    - A directive in Angular is a class with a `@Directive` decorator. 
+    - It is used to add behavior to an existing element or component. 
+    - There are three types of directives in Angular: components, structural directives, and attribute directives.
+- What is a service in Angular?
+    - A service in Angular is a class with a `@Injectable` decorator. 
+    - It is used to share data and logic across different components.
+- What is dependency injection in Angular?
+    - Dependency injection in Angular is a way to provide a service or a value to a component or a directive. 
+    - It allows for loose coupling between the objects in an application and makes the code easier to test and maintain.
+- What is the difference between a component and a directive in Angular?
+    - A component is a directive with a template, while a directive is a class with a `@Directive` decorator. 
+    - A component controls a section of the UI, while a directive adds behavior to an existing element or component.
+- What is a module in Angular?
+    - A module in Angular is a class with a `@NgModule` decorator. 
+    - It is used to group together related components, directives, and services.
+- What is the difference between a module and a component in Angular?
+    - A module is used to group together related components, directives, and services, while a component controls 
+    a section of the UI.
+- What is the difference between a service and a provider in Angular?
+    - A service is a class with a `@Injectable` decorator and is used to share data and logic across different components. 
+    - A provider is a way to configure a service and can be either a class or a value.
+- What is the difference between a template and a templateUrl in Angular?
+    - A template is a string that contains the HTML for a component, while a templateUrl is a path to an HTML file that 
+    contains the template for a component.
+- What is the difference between a component and a module in Angular?
+    - A component controls a section of the UI, while a module is used to group together related components, directives, 
+    and services.
+- What is the difference between a directive and a pipe in Angular?
+    - A directive is a class with a `@Directive` decorator and is used to add behavior to an existing element 
+    or component, while a pipe is a class with a `@Pipe` decorator and is used to transform data in a template.
+- What is the difference between a directive and a service in Angular?
+    - A directive is a class with a `@Directive` decorator and is used to add behavior to an existing element 
+    or component, while a service is a class with a `@Injectable` decorator and is used to share data and logic across 
+    different components.
+- What is a route in Angular?
+    - A route in Angular is a way to navigate between different views or pages in an application. 
+    - It is defined by a path and a component.
+- What is a router outlet in Angular?
+    - A router outlet in Angular is a placeholder where the router inserts the component for the current route.
+- What is a routerLink in Angular?
+    - A routerLink in Angular is a directive that binds an element to a route. 
+    - It is used to navigate to a different route when the element is clicked.
+- How does data binding work in Angular?
+    - Data binding in Angular allows for the automatic synchronization of data between a component and its template. 
+    - It can be done in two ways, one-way data binding (from component to view) and two-way data binding 
+    (from component to view and vice versa).
+- How can you debug an Angular application?
+    - There are different ways to debug an Angular application, but some common methods include using the browser's 
+    developer tools, logging messages to the console, and using a debugging tool like Augury.
+
+**Angular REST application**
+
+- In Angular, the most commonly used library for making HTTP requests is the `HttpClient` module, which is part of the 
+`@angular/common/http` package. 
+- This module provides a powerful set of abstractions for working with HTTP requests and responses, including features 
+such as request and response interceptors, request caching, and support for typed request and response objects.
+- Here's an example of how to use the `HttpClient` module to make a GET request to a RESTful API:
+
+```ts
+import { HttpClient } from '@angular/common/http';
+
+...
+
+constructor(private http: HttpClient) { }
+
+...
+
+this.http.get('https://api.example.com/data').subscribe(data => {
+    console.log(data);
+});
+```
+
+- In this example, the `http.get()` method is used to make a GET request to the specified URL. 
+- The `subscribe()` method is used to subscribe to the response and handle the data that is returned.
+- You can also use the `http.post()`, `http.put()`, `http.patch()`, and `http.delete()` methods to make `POST`, `PUT`, 
+`PATCH`, and `DELETE` requests, respectively.
+- Additionally, you can also use third party libraries like `rxjs` to handle the async data.
+- For more advanced use cases, you can use `rxjs` operators like `map`, `catchError`, `retry` etc to handle errors, 
+retries, and data transformations.
+
+```ts
+import { map, catchError } from 'rxjs/operators';
+
+this.http.get('https://api.example.com/data')
+    .pipe(
+        map(data => data.results),
+        catchError(error => {
+            console.log(error);
+            return throwError(error);
+        })
+    )
+    .subscribe(data => {
+        console.log(data);
+    });
+```
+
+- In this example, the map operator is used to extract the results field from the data returned by the API, 
+and the catchError operator is used to handle any errors that occur during the request.
+
+**Angular Interceptor**
+
+- In Angular, you can use an HTTP interceptor to automatically add an authentication token to all requests to a 
+specific API. 
+- An interceptor is a class that implements the `HttpInterceptor` interface and has a method for handling HTTP requests. 
+- You can use this method to add the authentication token to the headers of every request before it is sent to the API.
+- Here's an example of an interceptor that adds an authentication token to the headers of every request:
+
+```ts
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Get the auth token from the service
+    const authToken = localStorage.getItem('authToken');
+
+    // Clone the request and set the new header
+    const authReq = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${authToken}`)
+    });
+
+    // Pass on the cloned request instead of the original request.
+    return next.handle(authReq);
+  }
+}
+```
+
+- In this example, the interceptor is adding the token to the headers of the request with the key `Authorization` and 
+the value `Bearer ${authToken}`. 
+- You can store the token in the local storage or a service and retrieve it when needed, like in this example.
+- To use this interceptor, you need to add it to the providers array of the `@NgModule` decorator of your application 
+and also add it to the `HttpClientModule` imports array in the `@NgModule` decorator.
+
+```ts
+import { AuthInterceptor } from './auth.interceptor';
+
+@NgModule({
+  imports: [
+    HttpClientModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ]
+})
+export class AppModule { }
+```
+
+- With this setup, the `AuthInterceptor` will be executed for each request made with the `HttpClient` module. 
+- This way, you don't need to worry about adding the token to each request individually, 
+and you can keep your code clean and maintainable.

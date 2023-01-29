@@ -2550,6 +2550,210 @@ public final class Transaction implements Comparable<Transaction> {
 - Hash tables: `java.util.HashMap`, `java.util.IdentityHashMap`
 
 
+**Java Generics**
+
+- Java Generics is a feature introduced in Java 5 that allows for the definition and use of generic classes and methods. 
+- The main idea behind generics is to provide a way to write code that can work with different types of objects, 
+without having to specify the exact type of object at compile time.
+- A generic class is a class that can work with different types of objects, and is defined using a type parameter. 
+- The type parameter is specified in angle brackets (<>) following the class name. 
+- For example, a simple generic class called "Container" that can hold a single object of any type might be defined like this:
+
+```java
+public class Container<T> {
+    private T object;
+
+    public Container(T object) {
+        this.object = object;
+    }
+
+    public T getObject() {
+        return object;
+    }
+}
+```
+
+- A generic class can be instantiated with a specific type, like this:
+
+```java
+Container<Integer> container = new Container<Integer>(5);
+```
+
+- A generic method is a method that can work with different types of objects, and is defined using a type parameter. 
+- The type parameter is specified before the return type of the method. 
+- For example, here's a simple generic method that can compare two objects of any type:
+
+```java
+public class Utils {
+    public static <T extends Comparable<T>> boolean areEqual(T x, T y) {
+        return x.compareTo(y) == 0;
+    }
+}
+```
+
+- And it can be used like this:
+
+```java
+Integer x = 5;
+Integer y = 5;
+Boolean areEqual = Utils.areEqual(x, y);
+```
+
+- Java Generics also provide compile-time type checking, this means that it can catch type errors at compile-time, 
+rather than at runtime. 
+- For example, if you try to insert a String object into a `Container<Integer>` instance, the compiler will give an error, 
+rather than allowing the code to run and fail at runtime.
+- In summary, Java Generics is a feature that allows developers to write reusable, type-safe code that can work with 
+different types of objects. 
+- It provides a way to write code that is more flexible and can be reused across different types, 
+while also providing compile-time type checking to catch errors early.
+
+**Questions**
+
+1) What is generics in Java and how does it differ from normal data types?
+    - Generics in Java is a feature that allows for the creation of classes and methods that can operate on different 
+    types of data. 
+    - It is similar to templates in C++. 
+    - Generics enable types (classes and interfaces) to be parameters when defining classes, interfaces and methods. 
+    - With the help of generics, we can provide a single method/class/interface to handle multiple data types. 
+    - For example, instead of having separate classes for handling integers, strings, and other data types, we can use 
+    a single class that can handle all types of data.
+2) What is the purpose of wildcards in generics?
+    - Wildcards in generics are used to represent an unknown type. 
+    - They are represented by the "?" character. 
+    - Wildcards can be used in method arguments and return types to indicate that the method can accept or return any type.
+    - For example, the method, can accept a list of any type, because the parameter is defined as `List<?>`:
+    ```java
+    public void printList(List<?> list) {
+        for (Object element : list) {
+            System.out.println(element);
+        }
+    }
+    ```
+3) How do you use bounded type parameters in generics?
+    - Bounded type parameters in generics are used to restrict the types that can be used as arguments. 
+    - They are defined by using the "extends" keyword, followed by the upper bound class or interface.
+    - For example, the class, only accepts arguments of type Number or its subtypes.
+    ```java
+    public class MyClass<T extends Number> {
+        // class implementation
+    }
+    ```
+4) How do you use generics with interfaces?
+    - Generics can be used with interfaces in a similar way as with classes. 
+    - A type parameter can be added after the interface name, and it can be used throughout the interface. For example:
+    ```java
+    interface MyInterface<T> {
+        T getValue();
+        void setValue(T value);
+    }
+    ```
+    - This interface can be implemented by a class, and the type parameter can be replaced with a specific data type, such as:
+    ```java
+    class MyClass implements MyInterface<Integer> {
+        // class implementation
+    }    
+   ```
+5) What is type erasure in Java generics?
+    - Type erasure is a process that occurs during compilation in Java generics. 
+    - It removes all information about the type parameters and their bounds, replacing them with their upper bound, 
+    if any. 
+    - This allows for backwards compatibility with pre-generics Java code.
+    - For example, the following class:
+    ```java
+    class MyClass<T extends Number> {
+        // class implementation
+    }
+    ```
+    - is internally represented as:
+    ```java
+    class MyClass {
+        // class implementation
+    }
+    ```
+    - This is why, for example, it is not possible to call `myClass.getClass().getTypeParameters()` and get information 
+    about `T`.
+6) How do you use generics with arrays in Java?
+    - Java generics do not work with arrays, as arrays are covariant, which means that the type of an array 
+    is not checked at runtime. 
+    - This creates a potential for a `ClassCastException` at runtime. 
+    - To work around this, it is recommended to use collections such as `ArrayList` or `LinkedList`, which do support 
+    generics.
+7) What is the difference between a raw type and a parameterized type in Java generics?
+    - A raw type is a class or interface that is not parameterized with a type argument. 
+    - It is used when the type parameter is not specified. 
+    - For example, `List` is a raw type and `List<String>` is a parameterized type.
+    - A parameterized type is a class or interface that is parameterized with a type argument. 
+    - It is used when the type parameter is specified. 
+    - For example, `List<String>` is a parameterized type and `List<T>` is a generic type.
+8) How do you use generics with methods in Java?
+    - Java generics can be used with methods by specifying a type parameter before the method return type. 
+    - The type parameter can then be used in the method signature and implementation. 
+    - For example:
+    ```java
+    public static <T> T getMiddleElement(T[] a) {
+        return a[a.length / 2];
+    }
+    ```
+    - This method takes an array of any type, and returns the middle element of the array.
+9) How do you use generics with exceptions in Java?
+    - Java generics can be used with exceptions by specifying a type parameter before the exception class. 
+    - The type parameter can then be used in the exception message and methods. 
+    - For example:
+    ```java
+    public class MyException<T> extends Exception {
+        T value;
+        public MyException(T value) {
+            this.value = value;
+        }
+        public T getValue() {
+            return value;
+        }
+    }
+    ```
+    - This exception class can be thrown and caught with a specific type:
+    ```java
+    try {
+        throw new MyException<String>("Error message");
+    } catch (MyException<String> e) {
+        System.out.println(e.getValue());
+    }
+    ```
+10) How do you use generics with inner classes in Java?
+    - Java generics can be used with inner classes by specifying a type parameter before the inner class. 
+    - The type parameter can then be used in the inner class signature and implementation. 
+    - For example:
+    ```java
+    class MyClass<T> {
+        class InnerClass {
+            T value;
+            public InnerClass(T value) {
+                this.value = value;
+            }
+        }
+    }
+    ```
+    - This inner class can be instantiated with a specific type:
+    ```java
+    MyClass<String>.InnerClass inner = new MyClass<String>().new InnerClass("Hello");
+    ```
+    - It's also possible to use the enclosing class type parameter as the inner class type parameter. 
+    - For example:
+    ```java
+    class MyClass<T> {
+        class InnerClass<S extends T> {
+            S value;
+            public InnerClass(S value) {
+                this.value = value;
+            }
+        }
+    }
+    ```
+    - This inner class can be instantiated with a specific type that is extending the enclosing class type parameter:
+    ```java
+    MyClass<Number>.InnerClass<Integer> inner = new MyClass<Number>().new InnerClass<Integer>(5);
+    ```
+
 
 
 
