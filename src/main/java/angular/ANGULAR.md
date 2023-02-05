@@ -892,3 +892,303 @@ export class AppModule { }
 - With this setup, the `AuthInterceptor` will be executed for each request made with the `HttpClient` module. 
 - This way, you don't need to worry about adding the token to each request individually, 
 and you can keep your code clean and maintainable.
+
+***
+
+- If your yourArray is of a complex type, such as a class with date and value fields, you can define the class first 
+and then use an array of that class type to store the data returned from the API.
+Here's an example:
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { YourService } from './your.service';
+
+class YourClass {
+  date: Date;
+  value: any;
+}
+
+@Component({
+  selector: 'app-your-component',
+  templateUrl: './your-component.component.html',
+  styleUrls: ['./your-component.component.css']
+})
+export class YourComponent implements OnInit {
+  yourArray: YourClass[];
+
+  constructor(private yourService: YourService) { }
+
+  ngOnInit() {
+    this.yourService.getData().subscribe(data => {
+      this.yourArray = data.map(d => {
+        return {
+          date: new Date(d.date),
+          value: d.value
+        } as YourClass;
+      });
+    });
+  }
+}
+```
+
+- Here, getData is a method in the service YourService that makes an API call to retrieve data. 
+- The subscribe block is used to subscribe to the observable returned by the getData method and populate the yourArray 
+with the data returned from the API. 
+- The map function is used to map the data from the API to instances of the YourClass type, with the date and value 
+fields populated.
+
+**Angular Arrays**
+
+- Here are some tips for working with arrays in Angular with TypeScript:
+    - Use the `map` method to transform elements in an array: The map method can be used to apply a function to each 
+    element in an array and return a new array with the transformed elements.
+    - Use the `filter` method to extract elements from an array: The filter method can be used to extract elements from 
+    an array based on a certain condition.
+    - Use the `reduce` method for aggregating data: The reduce method can be used to aggregate data from an array into a 
+    single value.
+    - Use the `sort` method to sort elements: The sort method can be used to sort elements in an array. You can pass a 
+    comparison function to the sort method to sort the elements based on custom criteria.
+    - Use the `splice` method to add/remove elements: The splice method can be used to add or remove elements from an array.
+    - Use the `slice` method to extract elements: The slice method can be used to extract a portion of an array as a new array.
+    - Use the `concat` method to merge arrays: The concat method can be used to merge two or more arrays into a single array.
+    - Use the `indexOf` method to find an element: The indexOf method can be used to find the index of an element in an array.
+    - Use the `forEach` method to loop through elements: The forEach method can be used to loop through the elements in an 
+    array and perform a certain action for each element.
+    - Use the `includes` method to check if an array contains an element: The includes method can be used to check if an 
+    array contains a certain element.
+    
+**map**
+
+- Example of using the `map` method to transform elements in an Angular component using TypeScript:
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <ul>
+      <li *ngFor="let item of transformedArray">{{item}}</li>
+    </ul>
+  `,
+  styles: [``]
+})
+export class ExampleComponent {
+  originalArray = [1, 2, 3, 4, 5];
+  transformedArray = [];
+
+  constructor() {
+    this.transformedArray = this.originalArray.map(num => num * 2);
+  }
+}
+```
+
+- In this example, an array originalArray is defined with the values `[1, 2, 3, 4, 5]`. 
+- The `map` method is used to transform each element in the originalArray by multiplying it by 2. 
+- The result is stored in a new array transformedArray. 
+- In the template, the ngFor directive is used to loop through the elements in the transformedArray and display them in 
+a list.
+
+**filter**
+
+- An example of using the filter operator in an Angular component to filter an array of items:
+
+```ts
+import { Component } from '@angular/core';
+
+interface Item {
+  name: string;
+  category: string;
+}
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <ul>
+      <li *ngFor="let item of items | async">
+        {{item.name}} - {{item.category}}
+      </li>
+    </ul>
+  `
+})
+export class AppComponent {
+  items: Observable<Item[]>;
+
+  constructor() {
+    this.items = of([
+      { name: 'item1', category: 'category1' },
+      { name: 'item2', category: 'category2' },
+      { name: 'item3', category: 'category1' },
+      { name: 'item4', category: 'category2' }
+    ]).pipe(
+      map(items => items.filter(item => item.category === 'category1'))
+    );
+  }
+}
+```
+
+- In this example, an array of Item objects is defined, and an Observable of this array is created using the of operator. 
+- The filter operator is then used in a map operation to filter the Item objects and only return those with a category of 
+"category1".
+- The filtered items are then displayed in a list in the template using the ngFor directive and the async pipe. 
+- The async pipe automatically subscribes to the Observable and updates the view whenever the filtered items change.
+    
+**reduce**
+
+- The reduce method in Angular can be used to reduce an array to a single value by applying a callback function to each 
+element.
+- Here's an example of how you can use the reduce method to find the sum of all the elements in an array:
+
+```ts
+const numbers = [1, 2, 3, 4];
+const sum = numbers.reduce((acc, cur) => acc + cur, 0);
+console.log(sum); // output: 10
+```
+
+- In this example, the reduce method is called on the numbers array and takes two arguments:
+    - `acc`: The accumulator. In this example, it starts with an initial value of 0.
+    - `cur`: The current value being processed in the array.
+- The `reduce` method iterates through each element in the array and calls the callback function with acc and cur. 
+- The returned value from the callback function is then assigned to acc and the next iteration begins. 
+- Finally, the final value of acc is returned as the result of the reduce method.
+    
+**sort**
+
+- Here's an example of sorting an array in Angular using the JavaScript `sort()` method:
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <h2>Sorted array: {{ numbers }}</h2>
+  `
+})
+export class AppComponent {
+  numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+
+  ngOnInit() {
+    this.numbers.sort((a, b) => a - b);
+  }
+}
+```
+
+- In this example, the numbers array is sorted in ascending order using the `sort()` method and a comparison 
+`function (a, b) => a - b`. 
+- The result is displayed in the template.
+    
+**splice**
+
+- In Angular, you can use the slice method of the JavaScript Array object to extract a portion of an array and return 
+a new array. 
+- Here's an example of how to use the `slice` method in an Angular component:
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <ul>
+      <li *ngFor="let item of slicedArray">{{ item }}</li>
+    </ul>
+  `
+})
+export class ExampleComponent {
+  array = [1, 2, 3, 4, 5];
+  slicedArray = this.array.slice(1, 3);
+}
+```
+
+- In this example, the original array contains five elements. 
+- The slicedArray is created by calling the slice method on the array, with the start index of 1 and the end index of 3. 
+- This will return a new array containing the elements at index 1 and 2 (2 and 3). 
+- The slicedArray is then displayed in the template using the ngFor directive.    
+    
+***
+
+**Angular include module**
+
+- To include the Highcharts library in an Angular project, you can follow these steps:
+- Install the Highcharts library: Run the following command in your terminal to install the Highcharts library as a 
+dependency in your Angular project:
+
+```
+npm install highcharts
+```
+
+- Import the Highcharts library in your component: In the component where you want to use Highcharts, import the 
+highcharts library as follows:
+
+```
+import * as Highcharts from 'highcharts';
+```
+
+- Use the Highcharts library in your component: You can now use the Highcharts library to create charts in your component. 
+- For example:
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import * as Highcharts from 'highcharts';
+
+@Component({
+  selector: 'app-your-component',
+  template: '<div id="chartContainer"></div>',
+  styles: ['']
+})
+export class YourComponent implements OnInit {
+
+  ngOnInit() {
+    Highcharts.chart('chartContainer', {
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: 'My chart'
+      },
+      xAxis: {
+        categories: ['Apples', 'Bananas', 'Oranges']
+      },
+      yAxis: {
+        title: {
+          text: 'Fruit eaten'
+        }
+      },
+      series: [{
+        name: 'Jane',
+        data: [1, 0, 4]
+      }, {
+        name: 'John',
+        data: [5, 7, 3]
+      }]
+    });
+  }
+}
+```
+
+- In this example, the Highcharts.chart method is used to create a chart with the given configuration options. 
+- The first argument to this method is the ID of the container element in which the chart should be rendered. 
+- In this case, the chart will be rendered in a div with the ID chartContainer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    

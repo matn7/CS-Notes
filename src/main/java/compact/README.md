@@ -1,658 +1,3 @@
-**Lambda expression**
-
-- In Java, a lambda expression is a concise way of defining a **functional interface**, which is an interface that has 
-exactly one abstract method. 
-- A lambda expression is similar to a method, but it can be passed around as a value, assigned to a variable, 
-or used in other ways that a method can't.
-- A lambda expression has the following syntax:
-
-```
-(parameters) -> { body }
-```
-
-- The parameters are the input of the lambda expression, and the body contains the code that will be executed when the
-lambda expression is invoked. 
-- The parameters and the body are separated by the arrow operator `(->)`.
-- An example of a lambda expression that is used to sort a list of strings:
-
-```java
-List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
-names.sort((a, b) -> a.compareTo(b));
-```
-
-- In this example, the lambda expression `(a, b) -> a.compareTo(b)` is used to define a comparator that compares two 
-strings by their lexicographic order. 
-- The sort method of the List class takes a comparator as an argument, and it uses it to sort the elements of the list.
-- Lambda expressions can be used to replace anonymous inner classes, which are classes that are defined and used in a 
-single location. 
-- For example, the following code uses an anonymous inner class to create a new thread:
-
-```java
-new Thread(new Runnable(){
-    public void run(){
-        System.out.println("Hello from the new thread");
-    }
-}).start();
-```
-
-- It can be re-written using a lambda expression:
-
-```java
-new Thread(() -> System.out.println("Hello from the new thread")).start();
-```
-
-- Lambda expressions were introduced in Java 8, and they can be used in conjunction with functional interfaces, 
-which are interfaces that has only one abstract method, to enable functional programming in Java.
-
-**Function Interface**
-
-- In Java, the Function interface is a functional interface that represents a function that takes in one argument 
-and produces a result. 
-- It is a part of the `java.util.function` package and has the following signature:
-
-```java
-@FunctionalInterface
-public interface Function<T, R> {
-    R apply(T t);
-    ...
-}
-```
-
-- The Function interface has a single abstract method apply which takes in an object of type `T` and returns an object 
-of type `R`. 
-- The Function interface can be used to represent a wide variety of functions, including mathematical functions, 
-transformation functions, and so on.
-- You can use the Function interface in combination with other functional interfaces such as `Consumer`, `Predicate`, 
-and `Supplier` to chain together multiple operations. 
-- It is also a common use case in functional programming where you can chain multiple operations together using the andThen and compose methods.
-- Here are some examples of how the Function interface can be used in practice:
-- Mathematical functions: 
-    - You can use the Function interface to represent mathematical functions such as square, cube, etc. 
-    - For example, the following code defines a square function that takes in an integer and returns its square:
-
-```java
-Function<Integer, Integer> square = x -> x * x;
-System.out.println(square.apply(3)); // Outputs: 9
-```
-
-- String manipulation: 
-    - The Function interface can also be used to manipulate strings. 
-    - For example, the following code defines a `toUpperCase` function that takes in a string and returns its uppercase 
-    version:
-
-```java
-Function<String, String> toUpperCase = s -> s.toUpperCase();
-System.out.println(toUpperCase.apply("hello world")); // Outputs: "HELLO WORLD"
-```
-
-- Data transformation: 
-    - The Function interface can be used to transform data from one form to another. 
-    - For example, the following code defines a convertToPerson function that takes in a string and returns a Person object:
-
-```java
-Function<String, Person> convertToPerson = s -> {
-    String[] parts = s.split(",");
-    return new Person(parts[0], Integer.parseInt(parts[1]));
-};
-System.out.println(convertToPerson.apply("John,25")); // Outputs: Person{name='John', age=25}
-```
-
-- Chaining multiple functions together: 
-    - The Function interface can also be used to chain multiple functions together. 
-    - For example, the following code chains together the square and toUpperCase functions defined in the above examples:
-
-```java
-Function<Integer, String> squareAndToUpperCase = square.andThen(toUpperCase);
-System.out.println(squareAndToUpperCase.apply(3)); // Outputs: "9"
-```
-
-- These are just a few examples of how the Function interface can be used in practice, but the possibilities are endless. 
-- The Function interface is a powerful tool for functional programming and can be used to represent a wide variety of 
-functions.
-
-***
-
-**Object oriented concepts**
-
-- **Classes and Objects:** 
-    - Classes are templates for creating objects, which are instances of a class. 
-    - Classes define the properties and behavior of objects, and objects are the individual instances of a class.
-- **Encapsulation:**
-    - Encapsulation is the practice of hiding the implementation details of a class from other parts of the program. 
-    - This allows the class to change its implementation without affecting the rest of the program.
-- **Abstraction:**
-    - Abstraction is the practice of focusing on the essential features of an object and ignoring non-essential details. 
-    - This allows the developer to work with objects at a higher level of abstraction.
-- **Inheritance:**
-    - Inheritance is the ability of a class to inherit properties and behavior from a parent class. 
-    - This allows for the creation of a hierarchy of classes, where a subclass can inherit properties and behavior 
-    from a superclass.
-- **Polymorphism:**
-    - Polymorphism is the ability of a single function or method to work with multiple types of objects. 
-    - This allows for the use of a single function or method with different types of objects, without the need for 
-    explicit type checking.
-- **Overriding:**
-    - Overriding is the ability of a subclass to provide a different implementation of a method that is already defined 
-    in its superclass. 
-    - This allows for the customization of the behavior of a class based on its specific needs.
-- **Overloading:**
-    - Overloading is the ability of a class to have multiple methods with the same name but different parameters. 
-    - This allows for the use of the same method name with different types of inputs, making the code more readable.
-- **Interfaces:**
-    - Interfaces are a way to define a contract for a class, specifying the methods and properties that the class 
-    must have. 
-    - This allows for the creation of classes that conform to a specific set of rules, making them more interchangeable 
-    and reusable.
-- **Access Modifiers:**
-    - Access modifiers are keywords used to control the accessibility of classes, methods, and properties. 
-    - They determine which parts of the program can access a particular class, method or property.
-
-***
-
-**Docker Container**
-
-- Docker containers are a key concept in the Docker ecosystem. 
-- They are lightweight, portable, and self-sufficient, making them a great choice for packaging and deploying applications. 
-- Here are some key concepts related to Docker containers:
-    - Image: 
-        - A Docker container is based on an image. 
-        - An image is a pre-configured and pre-packaged software that includes all the necessary dependencies 
-        and libraries to run the application. 
-        - The image is used to create a new container.
-    - Container: 
-        - A container is a running instance of an image. 
-        - It is a lightweight and portable executable package that includes everything needed to run the application, 
-        including the application code, system libraries, and runtime. 
-        - Containers are isolated from each other and from the host system.
-    - Namespace: 
-        - Each container runs in its own namespace, which is a virtualized environment that isolates the container from 
-        the host system and other containers. 
-        - This allows multiple containers to run on the same host without interfering with each other.
-    - Volume: 
-        - Containers can also have volumes, which are directories or files that are mounted from the host system or other 
-        containers. 
-        - Volumes allow data to be persisted outside of the container and can be used to share data between containers.
-    - Networking: 
-        - Docker containers can be connected to each other and to the host system using a network. 
-        - Each container has its own IP address and can communicate with other containers using the host's IP address.
-    - Container orchestration: 
-        - Docker containers can be managed and orchestrated using tools like Docker Compose or Kubernetes. 
-        - These tools allow for the management of multiple containers, scaling, and rolling updates.
-    - Docker hub: 
-        - Docker hub is a public registry where users can store and share their images. 
-        - It allows for easy distribution and deployment of applications in a containerized environment.
-- These are some of the key concepts related to Docker containers. 
-- Understanding how they work and how they interact with each other is important for working with Docker 
-and containerized applications.
-
-**Docker container interview questions**
-
-1) What is a Docker container?
-    - A Docker container is a lightweight, standalone, and executable package of software that includes everything needed 
-    to run a piece of code, including the code itself, a runtime, libraries, environment variables, and config files.
-2) What is the difference between a Docker container and a virtual machine?
-    - A virtual machine is a full-fledged, isolated operating system environment that runs on top of a host operating 
-    system, while a Docker container is a lightweight, standalone executable package that runs on top of a host 
-    operating system using the host's kernel.
-3) What is the difference between a Docker image and a container?
-    - A Docker image is a read-only template that contains a set of instructions for creating a container, 
-    while a container is a running instance of an image.
-4) How can you list all running containers on a system?
-    - You can use the command `docker ps`.
-5) How can you list all containers on a system, including stopped ones?
-    - You can use the command `docker ps -a`.
-6) How can you stop a running container?
-    - You can use the command `docker stop container-name`.
-7) How can you remove a container?
-    - You can use the command `docker rm container-name`.
-8) How can you remove all stopped containers on a system?
-    - You can use the command `docker container prune`.
-9) How can you create a new container from an image?
-    - You can use the command `docker run image-name`.
-10) How can you start a stopped container?
-    - You can use the command `docker start container-name`.
-11) How can you get the logs of a container?
-    - You can use the command `docker logs container-name`.
-12) How can you access a shell inside a running container?
-    - You can use the command `docker exec -it container-name /bin/bash`.
-13) How can you create a new image from a container?
-    - You can use the command `docker commit container-name new-image-name`.
-14) How can you see the processes running inside a container?
-    - You can use the command `docker top container-name`.
-15) How can you check the details of a container?
-    - You can use the command `docker inspect container-name`.
-16) How can you limit the resources of a container?
-    - You can use flags like `--cpus` and `--memory` while running the container to limit the resources of a container.
-17) How can you create a bridge network for a container?
-    - You can use the command `docker network create --driver bridge my-bridge-network`.
-18) How can you connect a container to a network?
-    - You can use the command `docker network connect network-name container-name`.
-19) How can you mount a host volume to a container?
-    - You can use the flag `-v host-path:container-path`.
-20) How can you save the changes made in a running container to a new image?
-    - You can use the command `docker commit container-id new-image-name`.
-21) How can you create a container with a specific name?
-    - You can use the flag `--name container-name`.
-22) How can you limit the network bandwidth for a container?
-    - You can use the flag `--network-alias` and `--network-alias-priority`.
-23) How can you access the environment variables of a container?
-    - You can use the command `docker exec -it container-name env`.
-24) How can you access the running process of a container?
-    - You can use the `command docker top container-name`.
-25) How can you restrict the access to a specific container?
-    - You can use the command `docker create` and `docker run with --cap-add` and `--cap-drop` options.
-
-**Dockerfile interview**
-
-- A Dockerfile is a script that contains instructions for building a Docker image. 
-- It is used to automate the process of creating an image and ensures that the resulting image is consistent 
-and repeatable. 
-- Here are some key concepts related to Dockerfiles:
-    - Instructions: 
-        - A Dockerfile consists of a series of instructions that are executed in order. 
-        - Each instruction creates a new layer in the image. 
-        - Common instructions include `FROM`, `RUN`, `COPY`, `ENV`, `EXPOSE`, and `CMD`.
-    - Base image: 
-        - The first instruction in a Dockerfile is typically `FROM`, which specifies the base image to use as a starting 
-        point. 
-        - This can be an official image from the Docker Hub or a custom image.
-    - Layers: 
-        - Each instruction in a Dockerfile creates a new layer in the image. 
-        - Layers are stacked on top of each other, with each layer building upon the previous one. 
-        - This allows for efficient image management and distribution.
-    - Environment variables: 
-        - The `ENV` instruction can be used to set environment variables in the image. 
-        - These variables can be used to configure the application or runtime.
-    - Exposing ports: 
-        - The `EXPOSE` instruction can be used to specify which ports the container will listen on when it is running.
-    - Entrypoint: 
-        - The `CMD` instruction specifies the command that should be run when the container is started. 
-        - This can be overridden when the container is run.
-- Building the image: To build an image from a Dockerfile, use the docker build command followed by the path to the 
-Dockerfile.
-
-```
-docker build -t <image_name> .
-```
-
-- This command builds an image named `<image_name>` from the Dockerfile located in the current directory.
-- Using the image: Once the image is built, you can use the docker run command to start a container from the image.
-
-```
-docker run -p <host_port>:<container_port> <image_name>
-```
-
-- This command starts a container from the `<image_name>` and maps the host port `<host_port>` to the container port 
-`<container_port>`.
-- These are some of the key concepts related to Dockerfiles. 
-- Understanding how to use a Dockerfile is an important step in creating and managing Docker images. 
-- The Dockerfile can be seen as a recipe or blueprint for building an image and ensures that the resulting image 
-is consistent and repeatable.
-
-**Example of Dockerfile**
-
-```
-# Use an official Java runtime as the base image
-FROM openjdk:14
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the Java program and its dependencies to the container
-COPY target/my-java-app.jar .
-
-# Expose the port on which the application will run
-EXPOSE 8080
-
-# Run the Java program
-CMD ["java", "-jar", "my-java-app.jar"]
-```
-
-- This Dockerfile uses the official OpenJDK 14 runtime as the base image, sets the working directory to `/app`, 
-copies the `my-java-app.jar` file to the container, exposes port 8080, and runs the command `java -jar my-java-app.jar`
-to start the application.
-- You can build an image from this Dockerfile using the following command:
-
-```
-docker build -t my-java-app .
-```
-
-- And then you can run the container using the following command:
-
-```
-docker run -p 8080:8080 my-java-app
-```
-
-- This will start a container from the `my-java-app` image and map the host port 8080 to the container port 8080. 
-- The Java program will be accessible on the host's IP address at port 8080.
-
-***
-
-**Kubernetes**
-
-- Kubernetes is an open-source container orchestration system that automates the deployment, scaling, and management 
-of containerized applications. 
-- Here are some key concepts related to Kubernetes:
-    - Clusters: 
-        - A Kubernetes cluster is a set of machines (physical or virtual) that are used to run containerized applications. 
-        - A cluster is made up of one or more worker nodes and a single control plane.
-    - Nodes: 
-        - A node is a worker machine in a Kubernetes cluster. 
-        - Each node runs a container runtime (such as Docker) and the Kubernetes `kubelet`, which is responsible for 
-        communicating with the control plane and ensuring that containers are running as expected.
-    - Pods: 
-        - A pod is the smallest and simplest unit in the Kubernetes object model. 
-        - It represents a single container or a small group of tightly coupled containers that are deployed together 
-        on the same host.
-    - Services: 
-        - A service is a logical abstraction for a set of pods. 
-        - It provides a stable endpoint for clients to access the pods, and can load balance traffic across multiple pods.
-    - Replication Controllers: 
-        - A replication controller ensures that a specified number of replicas of a pod are running at any given time. 
-        - It can automatically create or delete replicas to match the desired state.
-    - Deployments: 
-        - A deployment is a higher-level object that manages Replication Controllers. 
-        - It is used to declaratively manage the desired state of pods.
-    - ConfigMaps and Secrets: 
-        - ConfigMaps and Secrets are Kubernetes objects that can be used to manage configuration data and sensitive 
-        information such as passwords or keys.
-    - Volumes: 
-        - Volumes provide a way to persist data and share data among pods. 
-        - Kubernetes supports different types of volumes, such as hostPath, emptyDir, and PersistentVolumes.
-    - Namespaces: 
-        - Namespaces are a way to divide cluster resources between multiple users or projects. 
-        - Kubernetes can be used to create multiple isolated environments within a single cluster.
-    - Autoscaling: 
-        - Kubernetes can automatically scale the number of replicas of a deployment based on resource usage, 
-        allowing applications to handle varying levels of traffic.
-- These are some of the key concepts related to Kubernetes. 
-- Understanding these concepts is important for effectively using Kubernetes to manage containerized applications. 
-- Kubernetes provides a robust and flexible platform for running containerized applications, 
-and it is widely adopted by organizations of all sizes.
-
-**Kubernetes interview questions**
-
-1) What is Kubernetes?
-    - Kubernetes is an open-source container orchestration system for automating the deployment, scaling, and management 
-    of containerized applications.
-2) What are the main components of a Kubernetes cluster?
-    - The main components of a Kubernetes cluster are the **Master** and the **Nodes**. 
-    - The Master is responsible for managing the state of the cluster and the Nodes are the worker machines that run 
-    the application containers.
-3) What is a Pod in Kubernetes?
-    - A Pod is the basic building block of Kubernetes and represents a single instance of a running process in a cluster. 
-    - It can contain one or more containers.
-4) What is a Service in Kubernetes?
-    - A Service is a logical abstraction over a set of Pods and provides a stable endpoint for accessing them. 
-    - It can also load balance traffic between multiple replicas of a Pod.
-5) What is a ReplicationController in Kubernetes?
-    - A ReplicationController ensures that a specified number of replicas of a Pod are running at any given time. 
-    - It can automatically create or delete replicas based on the desired state.
-6) What is a Deployment in Kubernetes?
-    - A Deployment is a higher-level resource that provides a declarative way to manage a ReplicationController or a 
-    ReplicaSet. 
-    - It provides additional features like rolling updates and rollbacks.
-7) What is a StatefulSet in Kubernetes?
-    - A StatefulSet is a controller that provides guarantees about the ordering and uniqueness of pods. 
-    - It is useful for stateful applications like databases, which require stable hostnames and persistent storage.
-8) What is a ConfigMap in Kubernetes?
-    - A ConfigMap is a configuration object that stores key-value pairs and allows them to be easily passed to Pods 
-    at runtime. 
-    - It can be used to store environment variables, configuration files, and other types of data.
-9) What is a Secret in Kubernetes?
-    - A Secret is a resource that stores sensitive information like passwords, tokens, and keys. 
-    - It can be used to pass this information to Pods at runtime in a secure way.
-10) What is a Namespace in Kubernetes?
-    - A Namespace is a virtual cluster within a cluster, it allows for multiple virtual clusters to run within a 
-    physical cluster. 
-    - It enables resource isolation and organization, and it's useful for separating different environments like 
-    development, staging, and production.
-11) What is a ReplicaSet in Kubernetes?    
-    - ReplicaSet is a higher-level resource that provides declarative management of Pods. 
-    - It ensures that a specified number of replicas of a Pod are running at any given time. 
-    - It is similar to a ReplicationController but with additional features, like the ability to select Pods based on 
-    their labels and fields, and the ability to automatically scale the number of replicas based on CPU or memory usage.
-12) What is Ingress in Kubernetes?
-    - Ingress is a Kubernetes resource that allows you to configure external access to the services in a cluster. 
-    - It provides features like path-based routing, SSL termination, and name-based virtual hosting.
-13) What is Horizontal Pod Autoscaler in Kubernetes?
-    - Horizontal Pod Autoscaler (HPA) is a Kubernetes feature that automatically scales the number of replicas of a 
-    Deployment, ReplicaSet, or ReplicationController based on CPU or memory usage.
-14) What is Kubernetes Volume?
-    - Kubernetes Volume is a way to store data in a persistent way. 
-    - It allows you to keep data even when the pod or container is deleted, and also share data between multiple pods.
-15) What is Kubernetes Job?
-    - A Job is a higher-level resource that creates one or more Pods and ensures that a specified number of them 
-    successfully terminate. 
-    - It is useful for running batch jobs, cron jobs, and other types of short-lived workloads.
-16) What is Kubernetes DaemonSet?
-    - A DaemonSet is a higher-level resource that ensures that a copy of a Pod is running on all (or some) of the Nodes 
-    in a cluster. 
-    - It is useful for deploying system-level services like logging, monitoring, and storage.
-17) What is Kubernetes ConfigMap and Secret?
-    - ConfigMap and Secret are Kubernetes resources that allow you to store and manage configuration data and secrets 
-    separately from your Pods and Services. 
-    - They can be used to store environment variables, configuration files, and other types of data.
-18) What is Kubernetes StatefulSet?
-    - StatefulSet is a higher-level resource that provides guarantees about the ordering and uniqueness of Pods. 
-    - It is useful for stateful applications like databases, which require stable hostnames and persistent storage.
-
-***
-
-**OAuth 2 works**
-
-- OAuth 2 is an open standard for authorization that allows users to grant third-party applications access to their 
-resources without sharing their passwords. 
-- It works by allowing the user to authorize a specific application to access their resources on their behalf, without 
-sharing their credentials.
-- Here's a brief overview of how OAuth 2 works:
-    - The user requests access to their resources from a third-party application.
-    - The application redirects the user to an authorization server, which is operated by the resource owner 
-    (e.g., the user's account provider such as Google, Facebook, etc).
-    - The user authenticates with the authorization server and grants the application access to their resources.
-    - The authorization server returns an access token to the application.
-    - The application uses the access token to access the user's resources on the resource server.
-- Here are a few concepts that might be useful in regards to OAuth 2 interview questions:
-    - Access Token: A token that is issued by the authorization server and can be used by the application to access 
-    the user's resources.
-    - Authorization Grant: The process of obtaining an access token by the application, which is typically done through 
-    a redirect to the authorization server.
-    - Scope: A scope is a set of permissions that the application is requesting to access the user's resources.
-    - Client ID: A unique identifier that is issued by the authorization server and is used to identify the application.
-    - Client Secret: A secret that is issued by the authorization server and is used to authenticate the application.
-    - Refresh Token: A token that is issued along with the access token and can be used to obtain a new access token 
-    after the original one has expired.
-    - Resource Owner: The person or entity that owns the resources that the application is trying to access.
-    - Resource Server: The server that hosts the user's resources and validates the access token before allowing 
-    the application to access them.
-    - Grant Types: The different ways in which an application can obtain an access token, like authorization code grant,
-     implicit grant, client credentials grant, password grant, and refresh token grant.
-
-**Example of OAuth2 config in Java**
-
-- An example of how to configure OAuth 2.0 in a Java application:
-
-```java
-@Configuration
-@EnableOAuth2Client
-public class OAuth2Config extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private OAuth2ClientContext oauth2ClientContext;
-
-    @Value("${oauth2.clientId}")
-    private String clientId;
-
-    @Value("${oauth2.clientSecret}")
-    private String clientSecret;
-
-    @Value("${oauth2.accessTokenUri}")
-    private String accessTokenUri;
-
-    @Value("${oauth2.userAuthorizationUri}")
-    private String userAuthorizationUri;
-
-    @Value("${oauth2.redirectUri}")
-    private String redirectUri;
-
-    @Bean
-    public OAuth2ProtectedResourceDetails resource() {
-        AuthorizationCodeResourceDetails resource = new AuthorizationCodeResourceDetails();
-        resource.setClientId(clientId);
-        resource.setClientSecret(clientSecret);
-        resource.setAccessTokenUri(accessTokenUri);
-        resource.setUserAuthorizationUri(userAuthorizationUri);
-        resource.setScope(Arrays.asList("read", "write"));
-        resource.setPreEstablishedRedirectUri(redirectUri);
-        resource.setUseCurrentUri(false);
-        return resource;
-    }
-
-    @Bean
-    public OAuth2RestTemplate oauth2RestTemplate() {
-        return new OAuth2RestTemplate(resource(), oauth2ClientContext);
-    }
-
-}
-```
-
-- This is a basic example of how to configure OAuth 2.0 in a Java application using Spring Security's OAuth 2.0 client 
-support.
-- The example uses the `@EnableOAuth2Client` annotation to enable OAuth 2.0 client support in the application. 
-- It also uses the `@Value` annotation to inject values for the OAuth 2.0 client's ID, secret, and various URLs 
-from properties files.
-- The `resource()` method creates an instance of `AuthorizationCodeResourceDetails`, which is used to configure the 
-details of the OAuth 2.0 client, such as the client ID and secret, the access token URI, and the user authorization URI.
-- The `oauth2RestTemplate()` method creates an instance of `OAuth2RestTemplate`, which is a template class that can be 
-used to make OAuth 2.0-protected resource requests.
-- You can use this `OAuth2RestTemplate` instance to make OAuth 2.0-protected resource requests, like this:
-
-```java
-String url = "https://example.com/resource";
-OAuth2RestTemplate oauth2RestTemplate = oauth2Config.oauth2RestTemplate();
-String result = oauth2RestTemplate.getForObject(url, String.class);
-```
-
-- This is just a basic example of how to configure OAuth 2.0 in a Java application, you can customize it according to 
-your needs, and add the appropriate scopes, redirects, and other configurations.
-- Also, note that you should not put your `client_id`, `client_secret`, `redirect_uris`, and other sensitive data in 
-the code, you should use an environment variable, or a configuration file and read them in runtime.
-
-***
-
-**Aspect oriented programming**
-
-- Aspect-Oriented Programming (AOP) is a programming paradigm that aims to increase modularity by allowing the 
-separation of cross-cutting concerns. 
-- A cross-cutting concern is a functionality that affects multiple parts of an application, such as logging, security, 
-or transaction management.
-- In traditional Object-Oriented Programming (OOP), these concerns are often scattered across the codebase, 
-making it difficult to understand the overall structure of the program and to maintain or modify it. 
-- AOP allows for the separation of these concerns into distinct units called aspects, which can be independently reused 
-and composed with the rest of the program.
-- An aspect is defined using pointcuts, which are expressions that identify the join points 
-(i.e., specific points in the program's execution) where the aspect's behavior should be applied, and advices, 
-which are the actions that should be taken at the identified join points.
-- AOP can be implemented in several ways, but it is most commonly done using AspectJ, a Java-based AOP framework that 
-extends the Java language with new AOP-specific constructs such as pointcuts and advices.
-- AOP can be used to achieve a number of benefits, such as:
-    - Increased modularity by separating cross-cutting concerns from the main application logic.
-    - Improved maintainability by reducing code duplication and making it easier to reason about the program's structure.
-    - Improved scalability by allowing the addition or removal of cross-cutting concerns without affecting the main 
-    application logic.
-    - Improved flexibility by allowing the reuse and composition of cross-cutting concerns across multiple parts of the 
-    program.
-- It is important to note that AOP is a powerful tool, but it should be used with care. 
-- AOP can make the codebase more complex and harder to understand if not used properly. 
-- It's important to use it judiciously and in a way that it enhances the readability and maintainability of the codebase.
-
-**Example in Java**
-
-- The AspectJ framework is a powerful tool for implementing aspect-oriented programming (AOP) in Java. 
-- Here is an example of how to use AspectJ to create an aspect that logs method execution times:
-- First, add the AspectJ dependencies to your project's pom.xml file:
-
-```xml
-<dependency>
-  <groupId>org.aspectj</groupId>
-  <artifactId>aspectjrt</artifactId>
-  <version>1.9.5</version>
-</dependency>
-<dependency>
-  <groupId>org.aspectj</groupId>
-  <artifactId>aspectjweaver</artifactId>
-  <version>1.9.5</version>
-</dependency>
-```
-
-- Next, create a new class called `LoggingAspect` and annotate it with `@Aspect`:
-
-```java
-@Aspect
-public class LoggingAspect {
-    // ...
-}
-```
-
-- Define a method that will be called before and after the execution of any method that is annotated with 
-`@LogExecutionTime`:
-
-```java
-@Aspect
-public class LoggingAspect {
-
-    @Around("@annotation(LogExecutionTime)")
-    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-        long start = System.currentTimeMillis();
-        Object proceed = joinPoint.proceed();
-        long executionTime = System.currentTimeMillis() - start;
-        System.out.println(joinPoint.getSignature() + " executed in " + executionTime + "ms");
-        return proceed;
-    }
-}
-```
-
-- Create an annotation called `@LogExecutionTime` that you will use to mark methods that should be logged:
-
-```java
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface LogExecutionTime {
-}
-```
-
-- Annotate the methods that you want to log with `@LogExecutionTime`:
-
-```java
-@Service
-public class MyService {
-
-    @LogExecutionTime
-    public void doSomething() {
-        // ...
-    }
-}
-```
-
-- Finally, register the aspect with Spring:
-
-```java
-@Configuration
-@EnableAspectJAutoProxy
-public class AspectConfig {
-    @Bean
-    public LoggingAspect loggingAspect() {
-        return new LoggingAspect();
-    }
-}
-```
-
-- This is a basic example of how to use AspectJ in a Java application to log method execution times. 
-- You can use similar techniques to implement other aspects, such as logging method arguments, handling exceptions, 
-or adding security features.
-
-***
-
 **Annotations**
 
 - Java annotations are a way to provide metadata information about a program's elements, such as classes, methods, 
@@ -690,129 +35,6 @@ at runtime.
 an annotation element.
 - Annotations are an important feature of Java and are used by many frameworks and libraries. 
 - Some popular examples include Spring's `@Autowired`, JPA's `@Entity`, and JUnit's `@Test` annotations.
-
-***
-
-**Cohesion**
-
-- In Object-Oriented Programming (OOP), cohesion refers to the degree to which the elements of a module 
-(such as a class, method, or function) work together to achieve a single, well-defined purpose. 
-- High cohesion means that all the elements of the module are closely related to each other and work together to achieve 
-a specific goal. 
-- Low cohesion means that the elements of the module are loosely related and may perform unrelated or loosely related tasks.
-- Cohesion is considered a desirable characteristic in software design because it helps to make a program more 
-organized, readable, and easy to maintain. 
-- Modules with high cohesion are more likely to be reusable and less prone to bugs, because all their elements 
-are closely related to their main purpose. 
-- Also, modules with high cohesion tend to be more flexible and easier to modify, because changing one part of the 
-module will have less impact on the other parts.
-- Examples of high cohesion:
-    - A class that only contains methods related to a specific functionality, like a class that only contains methods 
-    for handling a database connection.
-    - A method that only performs one specific task, like a method that only performs a calculation
-- Examples of low cohesion:
-    - A class that contains methods for handling a database connection, and also methods for handling user input and output.
-    - A method that performs multiple unrelated tasks, like a method that performs a calculation, opens a file, 
-    and also sends an email.
-- It is important to note that cohesion is a relative concept, and there is no one-size-fits-all answer on how much 
-cohesion is enough. 
-- The level of cohesion that is appropriate for a particular module depends on the specific requirements of the system 
-and the design choices made by the developer.
-
-***
-
-**Java memory parts**
-
-- Java uses a combination of different memory areas to manage the memory of a running program. 
-- These memory areas include:
-    - Heap: 
-        - The heap is the main memory area where objects are stored. 
-        - When an object is created using the new operator, it is allocated memory on the heap. 
-        - Garbage collection is used to reclaim memory that is no longer being used by the program.
-    - Stack: 
-        - The stack is used to store method call frames. 
-        - Each time a method is called, a new frame is pushed onto the stack and when the method returns, the frame 
-        is popped off. 
-        - The stack also stores local variables, and the parameters passed to methods.
-    - Method Area: 
-        - The method area is used to store class-level information, such as the bytecode for methods and fields of classes.
-    - Native Method Stacks: 
-        - Native method stacks are used to store information about native methods, which are methods written in 
-        languages other than Java.
-    - PC Registers: 
-        - PC (program counter) registers are used to store the current instruction being executed.
-    - Non-Heap Memory: 
-        - Non-heap memory is used for storing other data, such as the runtime constant pool and memory used by the JVM 
-        itself, such as the garbage collector and JIT compiler.
-- It's worth noting that the heap is divided into two parts: the young generation and the old generation. 
-- The young generation is used to store newly created objects and the old generation is used to store long-lived objects. 
-- The JVM uses a garbage collector to periodically clean up the heap and free up memory that is no longer being used.
-
-**Java Garbage Collectors**
-
-- Java has several built-in garbage collectors, including:
-    - Serial GC: 
-        - This is the simplest and default GC used in Java. 
-        - It uses a single thread to perform garbage collection.
-    - Parallel GC: 
-        - This GC uses multiple threads to perform garbage collection, making it more efficient for larger heap sizes.
-    - Concurrent Mark Sweep (CMS) GC: 
-        - This GC performs most of its work concurrently with the application, 
-        minimizing pauses caused by garbage collection.
-    - G1 GC: 
-        - This GC is designed for large heap sizes and uses a combination of techniques, such as parallel, concurrent, 
-        and incremental collection to improve performance.
-- You can specify which GC to use by adding command line options when starting the JVM. 
-- It also depends on the heap size, number of cores and other system resources.
-- You can specify which garbage collector to use by adding the following command line options when starting the JVM:
-    - `-XX:+UseSerialGC`: This option specifies that the Serial GC should be used.
-    - `-XX:+UseParallelGC`: This option specifies that the Parallel GC should be used.
-    - `-XX:+UseConcMarkSweepGC`: This option specifies that the Concurrent Mark Sweep (CMS) GC should be used.
-    - `-XX:+UseG1GC`: This option specifies that the G1 GC should be used.
-- For example, to start a Java application using the G1 GC, you would use the following command:
-
-```
-java -XX:+UseG1GC -jar myapplication.jar
-```
-
-- You can also use `-XX:+PrintCommandLineFlags` to check which GC is currently in use.
-
-**CMS GC**
-
-- Concurrent Mark Sweep (CMS) is a garbage collector in Java that is designed to minimize pauses caused by 
-garbage collection. 
-- It works by performing most of its work concurrently with the application, while the application is running.
-- The CMS GC operates in two phases:
-    - Initial Mark Phase: 
-        - In this phase, the GC identifies all the live objects in the heap. 
-        - It starts by marking the objects that are reachable from the application's root objects 
-        (i.e., objects that are reachable from the application's static fields and local variables), 
-        and then recursively marks all the objects that are reachable from these objects. 
-        - This phase can cause some short pauses in the application, but the goal is to minimize them.
-    - Concurrent Sweep Phase: 
-        - After the initial mark phase, the GC identifies all the objects that are no longer reachable and are eligible 
-        for garbage collection. 
-        - The concurrent sweep phase runs concurrently with the application, collecting the dead objects 
-        and compacting the heap. 
-        - The goal is to minimize the amount of time the application is paused.
-- CMS GC is suitable for applications with moderate heap size and short GC pauses are acceptable. 
-- It also performs well in environments with a high number of CPU cores and large amount of memory, 
-but it can be less efficient with large heap sizes and high object allocation rates.
-- Also, CMS GC have some disadvantages, such as high CPU usage, high fragmentation and can be prone to long pauses.
-
-**G1 GC**
-
-- The G1 (Garbage First) GC is a type of garbage collector that is included in the Java HotSpot Virtual Machine (JVM). 
-- It is designed to handle large heap sizes and reduce GC pause times.
-- The G1 GC divides the heap into smaller regions and divides the regions into groups. 
-- It then collects the garbage from the groups in parallel. 
-- The G1 GC uses a combination of marking and copying to reclaim memory from dead objects. 
-- It also uses a technique called "concurrent marking" to minimize the impact of GC pauses on application performance.
-- The G1 GC also uses a technique called "mixed collections" to balance the amount of live data and the amount 
-of garbage in the heap. 
-- This allows the G1 GC to reclaim memory more efficiently and reduce GC pause times.
-- In summary, G1 GC is designed to handle large heap sizes, reduce GC pause times, using a combination of marking 
-and copying, concurrent marking, and mixed collections to reclaim memory more efficiently.
 
 ***
 
@@ -951,6 +173,25 @@ also immutable.
 - Interview question: How do you create a new thread in Java?
     - Answer: You can create a new thread in Java by either extending the Thread class and overriding the `run()` method
      or by implementing the Runnable interface and passing an instance of that class to a Thread object's constructor.
+- An example of creating a new thread in Java:
+
+```java
+public class Main {
+   public static void main(String[] args) {
+      Runnable task = () -> {
+         System.out.println("Running in new thread: " + Thread.currentThread().getName());
+      };
+      Thread thread = new Thread(task);
+      thread.start();
+      System.out.println("Running in main thread: " + Thread.currentThread().getName());
+   }
+}
+```
+
+- This example creates a Runnable task that simply prints out the name of the current thread. 
+- The task is then passed to a Thread object, which is started by calling the start method. 
+- When the program is run, it will output "Running in new thread" and "Running in main thread", indicating that the task 
+is running in a separate thread from the main thread.
      
 **Concurrency**
  
@@ -984,12 +225,41 @@ also immutable.
 
 - Thread-safe data structures are data structures that can be safely accessed by multiple threads without the need for 
 explicit synchronization. 
-- Examples of thread-safe data structures in Java include ConcurrentHashMap and CopyOnWriteArrayList.
+- Examples of thread-safe data structures in Java include `ConcurrentHashMap` and `CopyOnWriteArrayList`.
 - Interview question: How do you use thread-safe data structures in Java?
-    - Answer: In Java, you can use thread-safe data structures, such as ConcurrentHashMap and CopyOnWriteArrayList, 
+    - Answer: In Java, you can use thread-safe data structures, such as `ConcurrentHashMap` and `CopyOnWriteArrayList`, 
     to manage access to shared data. 
     - These classes provide thread-safe versions of common data structures that can be safely accessed by multiple 
     threads without the need for explicit synchronization.
+- An example of using ConcurrentHashMap in Java:
+
+```java
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Main {
+   public static void main(String[] args) {
+      ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+
+      map.put("A", 1);
+      map.put("B", 2);
+      map.put("C", 3);
+
+      System.out.println("Value of A: " + map.get("A"));
+      System.out.println("Value of B: " + map.get("B"));
+      System.out.println("Value of C: " + map.get("C"));
+
+      map.remove("A");
+      System.out.println("Value of A after removal: " + map.get("A"));
+   }
+}
+```
+
+- In this example, a `ConcurrentHashMap` is created and used to store key-value pairs. 
+- The `put` method is used to add key-value pairs to the map, and the get method is used to retrieve the value associated 
+with a key. 
+- The remove method is used to remove a key-value pair from the map.
+- Note that `ConcurrentHashMap` is thread-safe, which means that multiple threads can access the map concurrently without 
+causing any concurrency issues.    
     
 **ThreadPool** 
 
@@ -997,10 +267,40 @@ explicit synchronization.
 - The Executor framework provides a simple way to create and manage a pool of threads.
 - Interview question: How do you create a thread pool in Java?
     - Answer: In Java, you can use the Executor framework to create and manage a pool of threads. 
-    - The framework provides several implementations of Executor such as ThreadPoolExecutor, 
-    ScheduledThreadPoolExecutor, SingleThreadExecutor etc. 
+    - The framework provides several implementations of `Executor` such as `ThreadPoolExecutor`, 
+    `ScheduledThreadPoolExecutor`, `SingleThreadExecutor` etc. 
     - You can use these implementations to configure a thread pool with a specific number of threads, a queue for 
     holding tasks that are waiting to be executed, and a set of policies for controlling how tasks are executed.
+- An example of creating a thread pool in Java using the `Executor` framework:
+
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Main {
+   public static void main(String[] args) {
+      ExecutorService executor = Executors.newFixedThreadPool(5);
+
+      Runnable task = () -> {
+         System.out.println("Running task: " + Thread.currentThread().getName());
+      };
+
+      for (int i = 0; i < 10; i++) {
+         executor.execute(task);
+      }
+
+      executor.shutdown();
+   }
+}
+```
+
+- In this example, a fixed-size thread pool of 5 threads is created using the `Executors.newFixedThreadPool` factory method. 
+- The `Executor` framework provides an easy-to-use abstraction for creating and managing a pool of threads.
+- The program creates a `Runnable` task that simply prints out the name of the current thread. 
+- The task is then submitted to the executor 10 times using the execute method. 
+- The executor will run the tasks in one of its worker threads.
+- Finally, the `shutdown` method is called to signal that no more tasks will be submitted to the executor, and the executor 
+will clean up and terminate its worker threads when all tasks have completed.
 
 **Inter-thread Communication**
 
@@ -1024,17 +324,141 @@ threads acquire resources in a consistent order.
     - Additionally, one should be aware of the possibility of circular wait where thread1 holds resource1 and waiting 
     for resource2 and thread2 holds resource2 and waiting for resource1, in such case we can use a technique called 
     lock ordering.
+- An example of a deadlock in Java:
+
+```java
+public class DeadlockExample {
+   static class Friend {
+      private final String name;
+
+      public Friend(String name) {
+         this.name = name;
+      }
+
+      public String getName() {
+         return this.name;
+      }
+
+      public synchronized void bow(Friend bower) {
+         System.out.format("%s: %s has bowed to me!%n", this.name, bower.getName());
+         bower.bowBack(this);
+      }
+
+      public synchronized void bowBack(Friend bower) {
+         System.out.format("%s: %s has bowed back to me!%n", this.name, bower.getName());
+      }
+   }
+
+   public static void main(String[] args) {
+      final Friend seb = new Friend("Sebastian");
+      final Friend pusz = new Friend("Puszek");
+
+      new Thread(() -> seb.bow(pusz)).start();
+      new Thread(() -> pusz.bow(seb)).start();
+   }
+}
+```
+
+- In this example, there are two Friend objects, seb and pusz, each with a bow method that takes another Friend object 
+as an argument. 
+- When a Friend bows to another Friend, it calls the other Friend's bowBack method.
+- The problem occurs when two threads are started, each calling one of the bow methods. 
+- The first thread calls `seb.bow(pusz)`, and the second thread calls `pusz.bow(seb)`.
+- Both methods are synchronized, which means that they can only be executed by one thread at a time. 
+- However, if the first thread is executing `seb.bow(pusz)`, and the second thread is executing `pusz.bow(seb)`, 
+they will each wait for the other to finish executing its bowBack method. 
+- This creates a deadlock, as each thread is waiting for the other to finish, but neither can proceed.
+- To avoid deadlocks in your own code, you should follow some best practices, such as acquiring locks in a consistent 
+order, using timeouts when acquiring locks, and using the tryLock method instead of lock when possible.    
+- One way to fix the deadlock in the previous example is to use a lock ordering to ensure that the two threads always 
+acquire the locks in the same order:
+
+```java
+public class DeadlockExample {
+   static class Friend {
+      private final String name;
+
+      public Friend(String name) {
+         this.name = name;
+      }
+
+      public String getName() {
+         return this.name;
+      }
+
+      public void bow(Friend bower) {
+         synchronized (this) {
+            System.out.format("%s: %s has bowed to me!%n", this.name, bower.getName());
+            bower.bowBack(this);
+         }
+      }
+
+      public void bowBack(Friend bower) {
+         synchronized (bower) {
+            System.out.format("%s: %s has bowed back to me!%n", this.name, bower.getName());
+         }
+      }
+   }
+
+   public static void main(String[] args) {
+      final Friend seb = new Friend("Sebastian");
+      final Friend pusz = new Friend("Puszek");
+
+      new Thread(() -> seb.bow(pusz)).start();
+      new Thread(() -> pusz.bow(seb)).start();
+   }
+}
+```
+
+- In this example, the bow and bowBack methods synchronize on the Friend objects themselves, instead of on the methods. 
+- The two threads will always acquire the locks in the same order, so there can never be a deadlock.    
     
 **ThreadLocal** 
 
 - A ThreadLocal variable is used to store thread-specific data. 
 - It allows each thread to have its own copy of a variable, which is separate from the copies held by other threads. 
 - This can be useful in situations where you want to maintain thread-specific state without using global variables.
-- Interview question: How do you use ThreadLocal variables in Java?
-    - Answer: You can use ThreadLocal variables in Java by creating an instance of the ThreadLocal class and then using 
+- Interview question: How do you use `ThreadLocal` variables in Java?
+    - Answer: You can use `ThreadLocal` variables in Java by creating an instance of the `ThreadLocal` class and then using 
     its `set()` and `get()` methods to store and retrieve thread-specific data. 
-    - For example, you can create a ThreadLocal variable to store a user's identity and then use it to associate 
+    - For example, you can create a `ThreadLocal` variable to store a user's identity and then use it to associate 
     a user's identity with the current thread.
+- An example of how you can use ThreadLocal in Java:
+
+```java
+public class ThreadLocalExample {
+
+   private static final ThreadLocal<Integer> THREAD_LOCAL = new ThreadLocal<>();
+
+   public static void main(String[] args) {
+      THREAD_LOCAL.set(10);
+
+      Runnable task = () -> {
+         System.out.println("Thread: " + Thread.currentThread().getName() + 
+                            " Value: " + THREAD_LOCAL.get());
+         THREAD_LOCAL.set((int) (Math.random() * 100));
+         System.out.println("Thread: " + Thread.currentThread().getName() + 
+                            " Value: " + THREAD_LOCAL.get());
+      };
+
+      Thread t1 = new Thread(task, "Thread 1");
+      Thread t2 = new Thread(task, "Thread 2");
+
+      t1.start();
+      t2.start();
+   }
+}
+```
+
+- In this example, `THREAD_LOCAL` is a `ThreadLocal` object that holds an Integer value. 
+- The main method sets the initial value of the ThreadLocal to 10.
+- Two threads, t1 and t2, are created and started, each running the same task. 
+- The task retrieves the value of the `ThreadLocal` using the get method, and then sets a new random value using the set 
+method.
+- Since each `ThreadLocal` object is unique to each thread, the two threads can access and modify their own copy of the 
+`ThreadLocal` object, without affecting each other. 
+- The output of the example would show that each thread has its own separate copy of the `ThreadLocal` object, with its 
+own value.
 
 **Volatile keyword**
 
@@ -1046,6 +470,124 @@ value of the variable by reading it from main memory instead of caching it in a 
     ensures that each thread reads the variable from main memory and not from a thread-local cache. 
     - This ensures that all threads have the most up-to-date value of the variable and prevent stale value problem.
 
+**Consumer Producer**
+
+- The consumer-producer pattern is a design pattern that is used to manage the communication between multiple threads 
+in a concurrent system. 
+- The pattern is based on the idea of a shared buffer, where one or more threads (producers) produce items and store 
+them in the buffer, and one or more other threads (consumers) take items from the buffer and process them.
+- The consumer-producer pattern typically includes the following components:
+    - A shared buffer: This is a data structure that stores the items produced by the producers and consumed by the 
+    consumers.
+    - Producers: These are the threads that generate items and store them in the buffer.
+    - Consumers: These are the threads that take items from the buffer and process them.
+    - A synchronization mechanism: 
+        - This is used to coordinate the access to the shared buffer by the producers and consumers. 
+        - This can be implemented using locks, semaphores, or other synchronization primitives.
+- The consumer-producer pattern can be used to solve several problems such as:
+    - Decoupling the production and consumption of items: Producers and consumers do not need to know about each other 
+    and can work independently.
+    - Reducing contention: By using a buffer to store items, producers and consumers can work at different rates and 
+    can be decoupled from each other.
+    - Improving performance: By using multiple threads to consume items, the overall throughput of the system can be 
+    increased.
+    - The consumer-producer pattern can be used in a variety of applications, such as multimedia streaming, 
+    data processing, and event-driven systems.
+
+```java
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+class SharedQueue {
+    private Queue<Integer> queue = new LinkedList<>();
+    private int maxSize = 10;
+    private Lock lock = new ReentrantLock();
+    private Condition notFull = lock.newCondition();
+    private Condition notEmpty = lock.newCondition();
+
+    public void put(int item) throws InterruptedException {
+        lock.lock();
+        try {
+            while (queue.size() == maxSize) {
+                notFull.await();
+            }
+            queue.add(item);
+            notEmpty.signal();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public int take() throws InterruptedException {
+        lock.lock();
+        try {
+            while (queue.isEmpty()) {
+                notEmpty.await();
+            }
+            int item = queue.remove();
+            notFull.signal();
+            return item;
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+
+class Producer implements Runnable {
+    private SharedQueue queue;
+    private int item;
+
+    public Producer(SharedQueue queue, int item) {
+        this.queue = queue;
+        this.item = item;
+    }
+
+    @Override
+    public void run() {
+        try {
+            queue.put(item);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Consumer implements Runnable {
+    private SharedQueue queue;
+
+    public Consumer(SharedQueue queue) {
+        this.queue = queue;
+    }
+
+    @Override
+    public void run() {
+        try {
+            int item = queue.take();
+            System.out.println("Consumed item: " + item);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class ConsumerProducerExample {
+    public static void main(String[] args) {
+        SharedQueue queue = new SharedQueue();
+        Producer producer1 = new Producer(queue, 1);
+        Producer producer2 = new Producer(queue, 2);
+        Consumer consumer1 = new Consumer(queue);
+        Consumer consumer2 = new Consumer(queue);
+        new Thread(producer1).start();
+        new Thread(producer2).start();
+        new Thread(consumer1).start();
+        new Thread(consumer2).start();
+    }
+}
+```    
+
 ***
 
 **Enums, enums multithreading**
@@ -1055,10 +597,10 @@ value of the variable by reading it from main memory instead of caching it in a 
 in a deck of cards.
 - An enum is defined using the enum keyword, followed by a list of constants, which are called enumerators. 
 - Each enumerator is an instance of the enum type, and they can be referred to by their names. 
-- For example, an enum called DaysOfWeek might have enumerators for Monday, Tuesday, Wednesday, etc.
+- For example, an enum called `DaysOfWeek` might have enumerators for `Monday`, `Tuesday`, `Wednesday`, etc.
 - Enum constants are singleton by design, meaning that there can be only one instance of each enumerator created 
 in the JVM. 
-- Also, they are created at the time the enum type is initialized and are guaranteed to be initialized before any other 
+- :star: Also, they are created at the time the enum type is initialized and are guaranteed to be initialized before any other 
 thread accesses them.
 - In a multithreading context, enum constants are thread-safe because of their singleton nature. 
 - Because only one instance of each enumerator is created and initialized, there is no need to synchronize access to them. 
@@ -1067,6 +609,71 @@ thread accesses them.
 which eliminates the need for synchronization in most cases.
 - In summary, enum constants in Java are thread-safe by design because they are singleton and immutable. 
 - They can be safely accessed by multiple threads without the need for explicit synchronization.
+
+**enum example**
+
+- An example of an enum in Java that represents the days of the month and includes additional information about each day, 
+such as its number and whether it's a weekend day:
+
+```java
+public enum Day {
+   SUNDAY(1, true),
+   MONDAY(2, false),
+   TUESDAY(3, false),
+   WEDNESDAY(4, false),
+   THURSDAY(5, false),
+   FRIDAY(6, false),
+   SATURDAY(7, true);
+
+   private final int dayNumber;
+   private final boolean isWeekend;
+
+   Day(int dayNumber, boolean isWeekend) {
+      this.dayNumber = dayNumber;
+      this.isWeekend = isWeekend;
+   }
+
+   public int getDayNumber() {
+      return dayNumber;
+   }
+
+   public boolean isWeekend() {
+      return isWeekend;
+   }
+}
+```
+
+- In this example, the enum `Day` represents the days of the week. 
+- Each constant has a number and a Boolean value indicating whether it's a weekend day or not. 
+- These values are stored in the private dayNumber and isWeekend fields. 
+- The enum has a constructor that initializes these fields.
+- Additionally, the enum has two methods, getDayNumber and isWeekend, which return the dayNumber and isWeekend values, 
+respectively.
+- Here's an example of how you can use this enum:
+
+```java
+public class EnumExample {
+   public static void main(String[] args) {
+      Day today = Day.MONDAY;
+      System.out.println("Today is " + today + " and its number is " + today.getDayNumber());
+      if (today.isWeekend()) {
+         System.out.println("Today is a weekend day.");
+      } else {
+         System.out.println("Today is a week day.");
+      }
+   }
+}
+```
+
+- In this example, the today variable is assigned the value `Day.MONDAY`. 
+- The code then uses the methods of the enum to print the name and number of the day, as well as whether it's a weekend 
+day or not. 
+- The output of this code would be:
+
+```
+Today is MONDAY and its number is 2
+Today is a week day.
+```
 
 ***
 
@@ -1087,6 +694,15 @@ which eliminates the need for synchronization in most cases.
     - This command is used to terminate a process. 
     - It takes the process id as an argument. 
     - It can be used to stop a running Java application.
+    - `kill` command flags:
+        - `-1` or `SIGHUP`: Sends a hangup signal to the process, which is often used to restart a process.
+        - `-2` or `SIGINT`: Sends an interrupt signal to the process, which is similar to pressing CTRL-C in a terminal.
+        - `-3` or `SIGQUIT`: Sends a quit signal to the process, which terminates the process and generates a core dump 
+        for debugging purposes.
+        - `-9` or `SIGKILL`: Sends a kill signal to the process, which terminates the process immediately without giving 
+        it a chance to clean up.
+        - `-15` or `SIGTERM`: Sends a terminate signal to the process, which gives the process an opportunity to clean 
+        up and exit gracefully.
 - `jps`: 
     - This command is used to list the process ids of all Java processes running on the system. 
     - It can be useful for quickly finding the process id of a specific Java application.
@@ -1128,10 +744,10 @@ which eliminates the need for synchronization in most cases.
 - The basic syntax of `xargs` is: `command1 | xargs command2`
     - It takes the output of command1 as input and passes it as arguments to command2.
 - For example, if you want to find all the files in a directory that match a certain pattern, and then delete them, 
-you could use the find command to list the files and then pipe the output to `xargs` and the rm command:
+you could use the find command to list the files and then pipe the output to `xargs` and the `rm` command:
     - `find /path -name "*.txt" | xargs rm`
 - This will find all the `.txt` files in the directory `/path` and pass the list of file names to `xargs`, which then 
-passes them as arguments to the rm command to delete them.
+passes them as arguments to the `rm` command to delete them.
 
 ***
 
@@ -1141,59 +757,73 @@ passes them as arguments to the rm command to delete them.
 object's state and behavior. 
 - These methods are defined by the class, and they are inherited by all objects of that class. 
 - The most common methods in Java objects are:
-    - `toString()`:
-        - Returns a string representation of the object. 
-        - This method is called when an object is printed, and the default implementation returns the fully qualified 
-        class name followed by the object's hash code.
-    - `equals(Object o)`: 
-        - Compares the object to another object and returns true if they are equal. 
-        - The default implementation compares the objects based on their memory addresses, but it can be overridden to 
-        provide a custom comparison.
-    - `hashCode()`: 
-        - Returns an integer that represents the object's state. 
-        - The default implementation returns the object's memory address, but it can be overridden to provide a custom 
-        hash code based on the object's state.
-    - `clone()`: 
-        - Creates a copy of the object. 
-        - The default implementation creates a shallow copy of the object, but it can be overridden to provide a deep 
-        copy of the object.
-    - `finalize()`: 
-        - Called by the garbage collector when the object is no longer reachable. 
-        - This method can be overridden to release resources held by the object.
-    - `wait()`, `notify()`, `notifyAll()`: 
-        - These methods are used for inter-thread communication and are related to the monitor concept. 
-        - `wait()` causes the current thread to wait until another thread invokes the `notify()` or `notifyAll()` method 
-        for this object. 
-        - `notify()` wakes up a single thread that is waiting on this object's monitor. 
-        - `notifyAll()` wakes up all threads that are waiting on this object's monitor.
+
+**toString()**
+
+- Returns a string representation of the object. 
+- This method is called when an object is printed, and the default implementation returns the fully qualified 
+class name followed by the object's hash code.
+
+**equals(Object o)**
+ 
+- Compares the object to another object and returns true if they are equal. 
+- The default implementation compares the objects based on their memory addresses, but it can be overridden to 
+provide a custom comparison.
+- In Java, the equals method is used to compare the equality of two objects. 
+- Here's an example of how to override the equals method in a custom class:
+
+```java
+class Point {
+    private int x;
+    private int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Point)) return false;
+
+        Point p = (Point) o;
+        return p.x == x && p.y == y;
+    }
+}
+```
+
+- In this example, the Point class has two fields x and y, and an equals method that takes an Object as its parameter. 
+- The method first checks if the object is equal to this (the current instance of the class), and if not, it checks if 
+the object is an instance of the Point class. 
+- If both checks pass, the method compares the values of the x and y fields of the two objects to determine equality.
+
+**hashCode()**
+ 
+- Returns an integer that represents the object's state. 
+- The default implementation returns the object's memory address, but it can be overridden to provide a custom 
+hash code based on the object's state.
+
+**clone()**
+ 
+- Creates a copy of the object. 
+- The default implementation creates a shallow copy of the object, but it can be overridden to provide a deep 
+copy of the object.
+    
+**finalize()**
+ 
+- Called by the garbage collector when the object is no longer reachable. 
+- This method can be overridden to release resources held by the object.
+    
+**wait(), notify(), notifyAll()**
+ 
+- These methods are used for **inter-thread communication** and are related to the monitor concept. 
+- `wait()` causes the current thread to wait until another thread invokes the `notify()` or `notifyAll()` method 
+for this object. 
+- `notify()` wakes up a single thread that is waiting on this object's monitor. 
+- `notifyAll()` wakes up all threads that are waiting on this object's monitor.
 - These are some of the most common methods that are available in every Java object, but classes can also have 
 additional methods depending on their implementation.
-
-***
-
-**Consumer Producer**
-
-- The consumer-producer pattern is a design pattern that is used to manage the communication between multiple threads 
-in a concurrent system. 
-- The pattern is based on the idea of a shared buffer, where one or more threads (producers) produce items and store 
-them in the buffer, and one or more other threads (consumers) take items from the buffer and process them.
-- The consumer-producer pattern typically includes the following components:
-    - A shared buffer: This is a data structure that stores the items produced by the producers and consumed by the 
-    consumers.
-    - Producers: These are the threads that generate items and store them in the buffer.
-    - Consumers: These are the threads that take items from the buffer and process them.
-    - A synchronization mechanism: 
-        - This is used to coordinate the access to the shared buffer by the producers and consumers. 
-        - This can be implemented using locks, semaphores, or other synchronization primitives.
-- The consumer-producer pattern can be used to solve several problems such as:
-    - Decoupling the production and consumption of items: Producers and consumers do not need to know about each other 
-    and can work independently.
-    - Reducing contention: By using a buffer to store items, producers and consumers can work at different rates and 
-    can be decoupled from each other.
-    - Improving performance: By using multiple threads to consume items, the overall throughput of the system can be 
-    increased.
-    - The consumer-producer pattern can be used in a variety of applications, such as multimedia streaming, 
-    data processing, and event-driven systems.
 
 ***
 
@@ -1273,7 +903,7 @@ public class Singleton {
 }
 ```
 
-- By using the volatile keyword, it ensures that multiple threads handle the singleton instance correctly when it is 
+- By using the `volatile` keyword, it ensures that multiple threads handle the singleton instance correctly when it is 
 being initialized to the Singleton instance.
   
 **The Factory pattern**
@@ -1282,7 +912,7 @@ being initialized to the Singleton instance.
 specifying the exact class of object that will be created. 
 - The Factory pattern defines a method, which creates objects, but the classes that implement the method 
 are not required to know which class of object it is creating.
-- mHere is an example of the Factory pattern in Java:
+- Here is an example of the Factory pattern in Java:
 
 ```java
 interface Shape {
@@ -2005,189 +1635,6 @@ program because the Flight class does not rely on the bird being able to fly.
 - It's important to note that the LSP is not only about the type of object but also the behavior the object should have. 
 - Object of a sub-class should be able to replace a object of the super-class without breaking the functionality.
 
-***
-
-**Terraform**
-
-- Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently.
- - Here are some key concepts related to Terraform:
-    - Infrastructure as Code (IaC): 
-        - Terraform allows for the definition of infrastructure using code, rather than manual configuration. 
-        - This allows for versioning, testing, and collaboration on infrastructure.
-    - Provider: 
-        - A provider is a plugin for Terraform that interfaces with a specific service or platform, such as AWS, Azure, 
-        or Google Cloud. 
-        - Providers are responsible for creating, updating, and deleting resources on the corresponding service or platform.
-    - Resource: 
-        - A resource is a block of Terraform code that represents a specific piece of infrastructure, 
-        such as a virtual machine, a database, or a load balancer. 
-        - Each resource is created, updated, and deleted by the corresponding provider.
-    - State: 
-        - Terraform keeps track of the resources it has created, updated, and deleted in a file called the state. 
-        - The state file contains information about the current state of the infrastructure, such as the ID of 
-        a virtual machine or the IP address of a load balancer.
-    - Plan: 
-        - Terraform can create a plan of the changes that will be made to the infrastructure before they are applied. 
-        - This allows for reviewing the changes before they are made, as well as testing the changes 
-        in a staging environment.
-    - Modules: 
-        - Modules are a way to organize Terraform code and share common components between different configurations. 
-        - A module is a collection of resources, variables, and outputs that can be reused across different Terraform 
-        configurations.
-    - Variables: 
-        - Variables are a way to parameterize Terraform code, allowing for flexibility and reusability. 
-        - Variables can be used to define values such as the number of virtual machines to create, 
-        the names of resources, or the location of the resources.
-    - Workspace: 
-        - Workspaces are a way to organize and separate different environments, such as production, staging, 
-        and development environments. 
-        - Each workspace has its own state, and resources can be created, updated, and deleted independently 
-        in each workspace.
-
-**Questions**
-
-1) What is Terraform and what are its main features?
-    - Terraform is an open-source infrastructure as code software tool that allows users to define and provision 
-    infrastructure resources through a simple, human-readable configuration language. 
-    - Its main features include the ability to provision resources across multiple cloud providers, 
-    version control for infrastructure, and the ability to manage infrastructure as code.
-2) How does Terraform handle dependencies between resources?
-    - Terraform has a built-in dependency management system that automatically determines the correct order to create or 
-    update resources. 
-    - This allows Terraform to create resources in the correct order, taking into account any dependencies that exist 
-    between resources.
-3) How does Terraform handle state management?
-    - Terraform keeps track of the state of the infrastructure it manages using a state file. 
-    - This file is stored locally or remotely and is used to reconcile the current state of the infrastructure with the 
-    desired state defined in Terraform configuration files.
-4) How does Terraform handle rollbacks?
-    - Terraform has a built-in rollback feature that allows users to revert to a previous state of the infrastructure. 
-    - This can be done by using the "terraform state" command and specifying the desired state.
-5) What is a Terraform module and how is it used?
-    - A Terraform module is a collection of Terraform files that are organized into a single directory. 
-    - Modules are used to group together related resources, making it easier to manage and reuse infrastructure.
-6) Can you explain the difference between Terraform and other IAC tools like Ansible and Puppet?
-    - Terraform and other IAC tools like Ansible and Puppet are all used to automate the provisioning and management of 
-    infrastructure, but they have different focus areas. 
-    - Terraform is focused on provisioning and managing infrastructure resources, while Ansible is focused on 
-    configuration management and Puppet is focused on automated management of servers.
-7) What are some best practices for writing Terraform code?
-    - Some best practices for writing Terraform code include keeping code organized and modular, using variables 
-    and modules to make code more reusable, and testing code before deploying it.
-8) How does Terraform handle changes to the infrastructure?
-    - Terraform has a built-in system for handling changes to the infrastructure. 
-    - When changes are made to the Terraform configuration files, Terraform will compare the current state of 
-    the infrastructure with the desired state defined in the configuration files. 
-    - It will then create, update, or delete resources as needed to bring the infrastructure into the desired state.
-9) What is a provider in Terraform?
-    - A provider in Terraform is a plugin that is responsible for understanding the API of a specific service or 
-    infrastructure resource, and translating Terraform configuration into the appropriate API calls. 
-    - Terraform supports multiple providers such as AWS, Azure, GCP, etc.
-10) How does Terraform support collaboration and teamwork?
-    - Terraform supports collaboration and teamwork through its state management and remote state features. 
-    - Teams can use version control systems like Git to share Terraform configuration files, and remote state storage 
-    can be used to share the state of the infrastructure across team members. 
-    - Additionally, Terraform Cloud and Terraform Enterprise are paid offerings that provide collaboration features 
-    such as remote state management, access controls, and team workflows.
-    
-**Terraform file formats**
-
-- Terraform uses several different file formats to represent infrastructure resources and configurations. 
-- The most common file formats are:
-    - `*.tf files`: 
-        - These are the primary configuration files used in Terraform. 
-        - They contain the definitions of the infrastructure resources and their properties that Terraform 
-        will create or manage.
-    - `*.tfvars files`:
-        - These files contain variable definitions that can be used in the Terraform configuration files. 
-        - They allow users to define variable values that can be used across multiple configuration files, 
-        making it easier to manage and reuse infrastructure.
-    - `*.tfstate files`:
-        - These files contain the current state of the infrastructure that Terraform is managing. 
-        - They are used to ensure that Terraform is aware of the current state of the infrastructure, 
-        and to ensure that changes to the infrastructure are made in the correct order.
-    - `*.tfplan files`:
-        - These files contain the execution plan that Terraform generates when it is run. 
-        - The plan is a representation of the changes that will be made to the infrastructure, 
-        and allows users to review the changes before they are applied.
-    - `*.tfmodule`:
-        - These files contain reusable modules that can be used across multiple Terraform configurations, 
-        they are similar to functions in programming languages, they can be called with specific inputs and outputs.
-    - `*.tfprovider`:
-        - These files contain the provider configurations which are used to authenticate and connect to a specific cloud 
-        provider or service, providers are needed to tell Terraform how to talk to the APIs of the different services.
-- It is important to note that while Terraform files typically use the `.tf` extension, it is not required, 
-you can use any extension you like.
-
-**Terraform flow**
-
-- Initialization: 
-    - When you first run Terraform, it needs to be initialized. 
-    - This step sets up the necessary files and data structures for Terraform to begin managing your infrastructure. 
-    - This step will also download the necessary provider plugins.
-- Planning: 
-    - After initialization, Terraform will generate an execution plan. 
-    - This plan is a representation of the changes that will be made to the infrastructure, and allows users to review 
-    the changes before they are applied. 
-    - Terraform will compare the current state of the infrastructure with the desired state defined in the configuration 
-    files, and will create, update or delete resources as necessary.
-- Applying: 
-    - Once you are satisfied with the plan, you can apply it. 
-    - This step will create, update or delete resources as necessary. 
-    - Terraform will use the provider plugins to make API calls to the cloud provider and create or update resources.
-- State management: 
-    - After resources have been created or updated, Terraform will update its state file to reflect the current 
-    state of the infrastructure. 
-    - This allows Terraform to keep track of the infrastructure it manages, and ensure that future changes are made 
-    in the correct order.
-- Destruction: 
-    - If you want to remove resources, you can use the terraform destroy command, this step will remove resources 
-    and update the state file.
-- Repeat: 
-    - You can repeat the above steps as many times as needed, Terraform will always compare the current state of the 
-    infrastructure with the desired state defined in the configuration files, and will create, update or delete 
-    resources as necessary.
-- It is important to note that all steps can be done via the command line or using Terraform's API and web UI. 
-- Also, before provisioning any infrastructure, you need to set up the necessary credentials and permissions 
-for Terraform to connect to your cloud provider's API.
-
-***
-
-**Bit manipulation Java**
-
-- In Java, bit manipulation can be performed using bitwise operators such as `&` (and), `|` (or), `^` (xor), `~` (not), 
-`<<` (left shift), and `>>` (right shift). 
-- These operators can be applied to integers (int and long data types) to manipulate the individual bits within the 
-binary representation of the number.
-- For example, the `&` operator can be used to mask out certain bits in a number, the `|` operator can be used to set 
-certain bits in a number, and the `^` operator can be used to toggle certain bits in a number.
-- Here is an example of bit manipulation in Java:
-
-```java
-int x = 5;   // binary representation:  00000101
-int y = 3;   // binary representation:  00000011
-
-int z = x & y;  // bitwise AND
-// z = 1, binary representation: 00000001
-
-z = x | y;  // bitwise OR
-// z = 7, binary representation: 00000111
-
-z = x ^ y;  // bitwise XOR
-// z = 6, binary representation: 00000110
-
-z = ~x;  // bitwise NOT
-// z = -6, binary representation: 11111010
-
-z = x << 2;  // left shift
-// z = 20, binary representation: 00010100
-
-z = x >> 2;  // right shift
-// z = 1, binary representation: 00000001
-```
-
-- It is important to note that the bitwise operator works on the bit level, if you want to shift the number k positions, 
-you have to multiply or divide the number by `2^k`, depending if you are shifting to the left or to the right.
 
 ***
 
@@ -2432,625 +1879,6 @@ easier to understand and maintain, and more robust over time.
 
 ***
 
-**Microservices**
-
-- A microservice architecture is a method of developing software systems in which complex applications are broken down 
-into small, independent services that communicate with each other through APIs.
-- Each service runs a unique process and can be deployed, scaled, and managed independently. 
-- This allows for more flexibility and scalability in the development and deployment of software systems.
-- The key characteristics of a microservice architecture include:
-    - Decentralized: Each service is its own independent unit with its own codebase, data store, 
-    and set of responsibilities.
-    - Loosely coupled: Services communicate with each other through APIs and do not share a common data store 
-    or codebase, making them less dependent on each other.
-    - Independent deployment: Services can be deployed, scaled, and managed independently, which allows for more 
-    flexibility and scalability.
-    - Automated testing: Services can be tested individually, which makes it easier to identify and fix issues.
-    - Polyglot: Services can be built using different programming languages, frameworks, and technologies, 
-    depending on the specific requirements of the service.
-    - Event-driven: Services communicate with each other by sending and receiving messages, which allows them to 
-    operate asynchronously and independently.
-    - Scalability: Services can be scaled up or down independently to handle changes in load.
-    - Resilience: Services are designed to be fault-tolerant and can continue to operate even if one or more services fail.
-    - Composability: Services can be composed to create complex applications.
-    - Observability: Services are designed to be observable, meaning that it is easy to understand how they are 
-    performing and troubleshoot issues.
-- There are many technologies that can be used to implement a microservice architecture. Some popular choices include:
-    - Containerization technologies: 
-        - Docker and Kubernetes are commonly used to package and deploy services in a containerized environment. 
-        - This allows for consistent and easy deployment of services across different environments.
-    - Service discovery and registration: 
-        - Technologies like Netflix Eureka, Consul, and Zookeeper can be used to automatically discover 
-        and register services, making it easy for services to find and communicate with each other.
-    - API Gateway: 
-        - Technologies like Kong, Tyk, and Netflix Zuul can be used to handle API requests and route them to the 
-        appropriate service.
-    - Message queues: 
-        - Technologies like RabbitMQ, Apache Kafka, and AWS SQS can be used to enable asynchronous communication between 
-        services.
-    - Service Mesh: 
-        - Istio, Linkerd, and Consul Connect are examples of service mesh technologies that can be used to manage 
-        service-to-service communication, load balancing, and traffic management.
-    - Cloud-Native Platforms: 
-        - AWS, Google Cloud, and Azure offer their own microservices platform solutions.
-    - Programming languages and frameworks: 
-        - Depending on the requirements of the services, different programming languages and frameworks can be used. 
-        - For example, a service that performs image processing might be implemented in Python using the TensorFlow 
-        library, while a service that handles data storage might be implemented in Java using Spring Boot.
-    - Monitoring and logging: Technologies like Prometheus, Grafana, and ELK stack can be used to monitor and log the 
-    performance and behavior of services, making it easier to troubleshoot issues.    
-    
-***
-
-**Postgres**
-
-- PostgreSQL (often simply called "Postgres") is an open-source relational database management system. 
-- Here are some key concepts and features of Postgres:
-    - SQL support: Postgres supports a large portion of the SQL standard, making it compatible with a wide range of 
-    applications and tools.
-    - Data Types: Postgres supports a wide variety of data types, including standard SQL types such as integers, 
-    floating-point numbers, and strings, as well as more advanced types such as arrays, hstore (a key-value store), 
-    and JSON.
-    - Indexes: Postgres supports several types of indexes, including B-tree, Hash, and GiST (Generalized Search Tree), 
-    which can be used to improve the performance of queries.
-    - Concurrency: 
-        - Postgres uses a multi-version concurrency control (MVCC) system, which allows for concurrent access to the 
-        same data without the need for locks. 
-        - This improves performance, but it can make it more difficult to write certain types of queries.
-    - ACID Compliance: Postgres is fully ACID compliant, which means that it guarantees the atomicity, consistency, 
-    isolation, and durability of transactions.
-    - Extensibility: 
-        - Postgres is highly extensible, with support for user-defined functions, operators, and data types. 
-        - This allows developers to add custom functionality to the database, such as full-text search or geographic 
-        data support.
-    - Replication: Postgres supports several types of replication, including streaming replication, logical replication, 
-    file-based replication and pgpool-II.
-    - Security: Postgres provides a robust set of security features, including support for user authentication, 
-    role-based access control, and encryption.
-- In summary, Postgres is a powerful and flexible open-source relational database management system that supports a wide 
-variety of data types and has many advanced features such as replication, extensibility, and security.
-
-**Questions**
-
-1) What is a relational database and how does it differ from other types of databases?
-    - A relational database is a type of database that organizes data into tables with rows and columns. 
-    - It uses relationships between tables to link data together, which allows for more efficient querying and data 
-    integrity. 
-    - Relational databases differ from other types of databases, such as document databases or key-value stores, 
-    which do not have the same level of structure and relationships.
-2) Explain the ACID properties of a database transaction.
-    - ACID stands for Atomicity, Consistency, Isolation, and Durability. 
-    - Atomicity means that a transaction is either fully completed or fully rolled back, so the data remains in a 
-    consistent state. 
-    - Consistency means that a transaction brings the database from one valid state to another valid state. 
-    - Isolation means that a transaction is isolated from other transactions, and its changes are not visible to other 
-    transactions until it is committed. 
-    - Durability means that once a transaction is committed, its effects are permanent and will survive any subsequent 
-    failures.
-3) Describe the process of normalization and why it is important.
-    - Normalization is the process of organizing data in a relational database so that it is in the most efficient and 
-    consistent form possible. 
-    - This includes breaking down data into separate tables, and using relationships between those tables to link data 
-    together. 
-    - Normalization is important because it helps to eliminate data redundancy, improve data integrity, and make it 
-    easier to query and update the data.
-4) What is an index in a database and why is it important?
-    - An index is a data structure that allows for faster searching of data in a table. 
-    - It creates a separate, smaller table of data that is organized in a way that makes searching faster. 
-    - Indexes are important because they can greatly improve the performance of queries, especially on large tables.
-5) Explain the difference between a primary key and a foreign key.
-    - A primary key is a unique identifier for each row in a table. 
-    - It is used to enforce the integrity of the data and to create relationships between tables. 
-    - A foreign key is a field in one table that is used to reference the primary key of another table. 
-    - It is used to create a link between the data in two tables and to enforce referential integrity.
-6) Explain the process of SQL query optimization and how it can be used to improve performance.
-    - SQL query optimization is the process of improving the performance of a SQL query by analyzing and modifying the 
-    query and the database structure. 
-    - This can include things like creating indexes, rewriting the query, or modifying the database schema. 
-    - Query optimization can be used to improve performance by reducing the amount of data that needs to be processed 
-    and by making the query more efficient.
-7) Explain the concept of a view in a relational database.
-    - A view in a relational database is a virtual table that is defined by a SELECT statement. 
-    - It does not store data itself but instead references the data stored in other tables. 
-    - Views can be used to simplify queries, to limit the data exposed to users, and to implement security.
-8) How does Postgres handle concurrency and locking?
-    - Postgres uses a multi-version concurrency control (MVCC) system to handle concurrency. 
-    - This means that each transaction sees a snapshot of the data as it existed at the start of the transaction, 
-    and any changes made by other transactions are not visible until they are committed. 
-    - This allows for concurrent access to the same data without the need for locks, which improves performance. 
-    - However, this can make it more difficult to write certain types of queries.
-9) Explain the difference between a clustered index and a non-clustered index in Postgres.
-    - A clustered index is an index that physically reorders the rows of a table based on the indexed columns. 
-    - This makes it more efficient for queries that retrieve data based on the indexed columns. 
-    - A non-clustered index, on the other hand, does not physically reorder the rows of a table. 
-    - Instead, it creates a separate data structure that maps the indexed columns to the locations of the corresponding 
-    rows in the table. 
-    - This can be more efficient for queries that retrieve data based on non-indexed columns.
-10) How does Postgres handle replication and what are the different replication strategies?
-    - Postgres supports several types of replication, including streaming replication, logical replication, 
-    file-based replication and pgpool-II. 
-    - Streaming replication is a synchronous replication method that streams data changes from the master to one or more 
-    replica servers in real-time. 
-    - Logical replication, uses a publish-subscribe model to replicate data changes. 
-    - File-based replication use a file based mechanism to replicate data and pgpool-II is a connection pooler and a 
-    proxy server for PostgreSQL.
-11) Explain the concept of a Trigger in Postgres and give an example of a use case for a trigger.
-    - A trigger in Postgres is a set of actions that are automatically executed in response to specific events, 
-    such as a table update or a data insertion. 
-    - Triggers can be used to enforce business rules, perform auditing, and maintain data integrity. 
-    - For example, you could use a trigger to automatically update a timestamp field in a table whenever 
-    a row is updated, or to automatically log changes to a specific table in an audit table.
-12) How does Postgres handle indexing and how can you optimize indexing for a query?
-    - Postgres supports several types of indexes, including B-tree, Hash, and GiST (Generalized Search Tree). 
-    - Indexing can be optimized by creating indexes on the columns that are frequently used in WHERE clauses, 
-    by creating indexes on columns that are used in JOIN clauses, and by avoiding creating unnecessary indexes. 
-    - You can also use the EXPLAIN command to analyze the execution plan of a query and identify which indexes are being 
-    used and which are not.
-    
-**Joins**
-
-- In Postgres, a join operation combines rows from two or more tables based on a related column between them. 
-- There are several types of join operations, including:
-    - `INNER JOIN`: 
-        - This is the most commonly used join operation. 
-        - It returns only the rows that have matching values in both tables.
-    - `LEFT JOIN` (or `LEFT OUTER JOIN`): 
-        - This returns all rows from the left table, and the matching rows from the right table. 
-        - If there is no match, NULL values will be returned for the right table's columns.
-    - `RIGHT JOIN` (or `RIGHT OUTER JOIN`): 
-        - This returns all rows from the right table, and the matching rows from the left table. 
-        - If there is no match, NULL values will be returned for the left table's columns.
-    - `FULL JOIN` (or `FULL OUTER JOIN`): 
-        - This returns all rows from both tables, and returns NULL values for the non-matching columns.
-    - `CROSS JOIN`: 
-        - This returns the Cartesian product of two tables, which is the set of all possible combinations of rows 
-        between the two tables.
-- In order to optimize join performance, you can use the right type of join according to your requirement, 
-use indexes on the join columns and make sure that the join columns have the same data types.
-- Additionally, Postgres allows you to perform subquery in the `FROM` clause, which is also known as a subselect or 
-derived table. 
-- This allows you to join the results of a query to another table.
-
-**SELECT** 
-
-- This command is used to retrieve data from one or more tables in the database. 
-- The basic syntax of the `SELECT` command is as follows:
-
-```
-SELECT column1, column2, ...
-FROM table1
-[WHERE condition]
-[GROUP BY column1, column2, ...]
-[HAVING condition]
-[ORDER BY column1, column2, ...]
-```
-
-**INSERT**
- 
-- This command is used to add new rows of data to a table. 
-- The basic syntax of the `INSERT` command is as follows:
-
-```
-INSERT INTO table_name (column1, column2, ...)
-VALUES (value1, value2, ...)
-```
-
-**UPDATE** 
-
-- This command is used to modify existing data in a table. 
-- The basic syntax of the `UPDATE` command is as follows:
-
-```
-UPDATE table_name
-SET column1 = value1, column2 = value2, ...
-[WHERE condition]
-```
-
-**DELETE** 
-
-- This command is used to delete existing data in a table. 
-- The basic syntax of the `DELETE` command is as follows:
-```
-DELETE FROM table_name
-[WHERE condition]
-```
-
-**CREATE** 
-
-- This command is used to create a new table, index, view, or other database object. 
-- The basic syntax of the `CREATE` command is as follows:
-
-```
-CREATE TABLE table_name
-(
-column1 data_type constraint,
-column2 data_type constraint,
-...
-);
-```
-
-**ALTER** 
-
-- This command is used to alter the structure of an existing table, index, view, or other database object. 
-- The basic syntax of the `ALTER` command is as follows:
-
-```
-ALTER TABLE table_name
-ADD column_name data_type constraint;
-```
-
-**DROP** 
-
-- This command is used to delete an existing table, index, view, or other database object. 
-- The basic syntax of the `DROP` command is as follows:
-
-```
-DROP TABLE table_name;
-```
-
-**EXPLAIN** 
-
-- This command is used to analyze the execution plan of a query and understand how the query is executed. 
-- The basic syntax of the `EXPLAIN` command is as follows:
-
-```
-EXPLAIN SELECT ...
-```
-
-
-**INNER JOIN** 
-
-- This example retrieves all the rows where the values in the "id" column of the "orders" table match the values in the 
-"id" column of the "customers" table.
-
-```
-SELECT orders.id, customers.name
-FROM orders
-INNER JOIN customers
-ON orders.id = customers.id;
-```
-
-**LEFT JOIN** 
-
-- This example retrieves all the rows from the "orders" table, and the matching rows from the "customers" table. 
-- If there is no match, NULL values will be returned for the "customers" table's columns.
-
-```
-SELECT orders.id, customers.name
-FROM orders
-LEFT JOIN customers
-ON orders.id = customers.id;
-```
-
-**RIGHT JOIN** 
-
-- This example retrieves all the rows from the "customers" table, and the matching rows from the "orders" table. 
-- If there is no match, NULL values will be returned for the "orders" table's columns.
-
-```
-SELECT orders.id, customers.name
-FROM orders
-RIGHT JOIN customers
-ON orders.id = customers.id;
-```
-
-**FULL JOIN** 
-
-- This example retrieves all the rows from both the "orders" and "customers" tables, and returns NULL values for the 
-non-matching columns.
-
-```
-SELECT orders.id, customers.name
-FROM orders
-FULL OUTER JOIN customers
-ON orders.id = customers.id;
-```
-
-**CROSS JOIN** 
-
-- This example returns the Cartesian product of the "orders" and "customers" tables, which is the set of all possible c
-ombinations of rows between the two tables.
-
-```
-SELECT orders.id, customers.name
-FROM orders
-CROSS JOIN customers;
-```
-
-- Also, in postgres, in addition to these join types, you can use subquery in the FROM clause, which is also known as a
- subselect or derived table. 
- - This allows you to join the results of a query to another table.
-
-```java
-SELECT orders.id, customers.name
-FROM (SELECT * FROM orders WHERE order_date > '2022-01-01') as orders
-JOIN customers
-ON orders.id = customers.id;
-```
-
-***
-
-**MongoDB**
-
-- MongoDB is a document-oriented, NoSQL database that uses a flexible schema and stores data in a binary 
-JSON (BSON) format. 
-- Some key concepts to understand when working with MongoDB include:
-    - Collections: 
-        - MongoDB stores data in collections, which are similar to tables in a relational database. 
-        - Each collection can contain any number of documents.
-    - Documents: 
-        - MongoDB stores data in documents, which are similar to rows in a relational database. 
-        - Each document is a set of key-value pairs, where the keys are strings and the values can be any valid BSON 
-        data type (e.g. strings, numbers, arrays, etc.).
-    - Schemaless: 
-        - MongoDB is schemaless, which means that documents within a collection can have different fields, and the 
-        fields in a document can be of different types.
-    - Indexes: 
-        - MongoDB supports indexing to improve query performance. 
-        - Indexes can be created on any field in a document, and there are several types of indexes available, 
-        including single-field, compound, and text indexes.
-    - Aggregation: 
-        - MongoDB provides an Aggregation Framework that allows you to perform complex data processing and analysis on 
-        your data. 
-        - This can be used for tasks such as filtering, grouping, and summarizing data.
-    - Replication and Sharding: 
-        - MongoDB supports both replication and sharding to provide high availability and horizontal scalability. 
-        - Replication allows you to create multiple copies of your data for redundancy, while sharding allows you to 
-        distribute your data across multiple servers.
-- A document-oriented database is a type of NoSQL database that stores data in the form of documents, 
-rather than in tables with rows and columns as in traditional relational databases. 
-- Each document is a collection of key-value pairs, where the keys are strings and the values can be 
-any valid data type, such as numbers, strings, arrays, and even other documents.
-- In a document-oriented database, each document is self-contained and contains all the information that is necessary to u
-nderstand and use the data. 
-- This allows for a more flexible and dynamic data model, as each document can have its own unique structure and fields.
-- This approach allows for more natural data modeling, as it allows the data to be stored in a way that closely matches 
-the structure of the objects and the relationships between them in the application. 
-- Additionally, it allows for more efficient querying, as the database only needs to look at the specific document 
-being queried, rather than scanning entire tables as in relational databases.
-- MongoDB, Couchbase, and RavenDB are examples of document-oriented databases.
-
-**Questions**
-
-1) What is MongoDB and what are some of its key features?
-    - MongoDB is a document-oriented, NoSQL database that uses a flexible schema and stores data in a binary 
-    JSON (BSON) format. 
-    - Some of its key features include its scalability, high performance, support for rich data types, and built-in 
-    support for horizontal scaling through sharding.
-2) Explain the difference between MongoDB and a relational database.
-    - MongoDB is a document-oriented, NoSQL database while relational databases like MySQL, Oracle and SQL server 
-    are based on the relational model. 
-    - MongoDB stores data in documents, which are similar to rows in a relational database, but each document can have 
-    a different structure and fields. 
-    - MongoDB does not enforce a schema, whereas relational databases have a predefined schema. 
-    - MongoDB does not support relationships between collections, whereas relational databases support relationships 
-    between tables.
-3) How does MongoDB ensure data consistency and handle data conflicts?
-    - MongoDB uses a technique called "two-phase commit" to ensure data consistency across multiple replica sets. 
-    - It also supports write concern and read concern to control the level of data consistency that is required for a 
-    specific operation. 
-    - In the event of a data conflict, MongoDB uses a "last write wins" strategy, where the most recent write will 
-    overwrite any previous writes.
-4) How do you optimize MongoDB performance?
-    - Some ways to optimize MongoDB performance include:
-        - Creating indexes on frequently queried fields
-        - Using appropriate data types and structures
-        - Partitioning or sharding large collections
-        - Properly configuring memory and disk settings
-        - Monitoring and analyzing performance metrics using the MongoDB profiler and other tools
-        - How do you handle data migration in MongoDB?
-5) Data migration in MongoDB can be handled by using the following methods:
-    - MongoDB's built-in export and import tools, such as `mongodump` and `mongorestore`
-    - The MongoDB Connector for BI, which allows you to use SQL to query MongoDB data
-    - Using a tool like Mongoose to write custom scripts for migrating data
-    - Using a third-party tool like MongoDB's Atlas Data Migration Service
-6) How would you design a shard key for a MongoDB collection?
-    - When designing a shard key, it is important to consider the following factors:
-        - The shard key should be based on the query patterns of the application
-        - The shard key should be immutable, so that it does not change after the data is inserted
-        - The shard key should be unique, so that it guarantees a good distribution of data across the shards.
-        - It's also important to consider how the shard key value will be distributed across the cluster, 
-        and whether it will lead to an even distribution of data, or if it will lead to hot spots.
-7) How do you implement a full-text search in MongoDB?
-    - One way to implement full-text search in MongoDB is to use the `$text` operator in combination with a text index. 
-    - To create a text index, you can use the `db.collection.createIndex()` method, and specify the fields that you want 
-    to include in the index and set the "text" option to true.
-    - For example, to create a text index on the "title" and "description" fields of a "products" collection, 
-    you would use the following command:
-    ```
-    db.products.createIndex( { title: "text", description: "text" } )
-    ```
-    - Then, to perform a text search, you would use the `$text` operator in a query, along with the `$search` operator 
-    to specify the search terms. 
-    - For example, to search for products with the word "laptop" in the title or description, you would use 
-    the following query:
-    ```
-    db.products.find( { $text: { $search: "laptop" } } )
-    ```
-8) How do you implement a geospatial search in MongoDB?
-    - MongoDB supports a number of geospatial data types and operators, including 2dsphere and 2d indexes, that can be 
-    used to perform geospatial queries. 
-    - To implement a geospatial search, you need to first create a geospatial index on the field that contains the 
-    location data, using the `db.collection.createIndex()` method.
-    - For example, to create a 2dsphere index on the "location" field of a "places" collection, 
-    you would use the following command:
-    ```
-    db.places.createIndex( { location: "2dsphere" } )
-    ```
-    - Then, you can use the `$geoWithin` or `$near` operators in a query to find documents that match a specific 
-    location or are within a certain distance of a specific location. 
-    - For example, to find all the places within 2km of a specific location, you would use the following query:
-    ```
-    db.places.find( { location: { $near: { $geometry: { type: "Point", coordinates: [ -73.9667, 40.78 ] }, $maxDistance: 2000 } } } )
-    ```
-9) How would you design a MongoDB database for a social media application?
-    - When designing a MongoDB database for a social media application, it is important to consider the following factors:
-        - The data model should be flexible and easily adaptable to changing requirements.
-        - The database should be designed to handle a high volume of read and write operations.
-        - The database should be easily scalable.
-        - The database should be able to handle large amounts of unstructured data, such as text, images and videos.
-        - One possible approach for designing the database is to use a collection for user information, a collection 
-        for posts and a collection for comments. 
-        - The user collection would contain information such as the user's name, email, and profile picture. 
-        - The post collection would contain information such as the post's text, image or video, and timestamp.
-        - The comments collection would contain information such as the comment's text and timestamp.
-        - To handle the high-read and write operations we can implement sharding and indexing to improve the performance, 
-        and use replica sets to ensure high availability and data durability.
-
-**MongoDB useful commands**
-
-- Inserting a document: 
-    - To insert a document into a collection, you can use the `db.collection.insertOne()` 
-    or `db.collection.insertMany()` method.
-    - For example, to insert a new document into a "users" collection, you could use the following command:
-    
-```java
-db.users.insertOne({name: "John Doe", age: 30, email: "johndoe@example.com"})
-```
-
-- Finding documents: 
-    - To find documents in a collection, you can use the `db.collection.find()` method.
-    - For example, to find all documents in a "users" collection where the age is greater than 25, you could use the 
-    following command:
-
-```java
-db.users.find({age: {$gt: 25}})
-```
-
-- Updating documents: 
-    - To update documents in a collection, you can use the `db.collection.updateOne()` or `db.collection.updateMany()` 
-    method.
-    - For example, to update the email address of a user with the name "John Doe" in a "users" collection, 
-    you could use the following command:
-
-```java
-db.users.updateOne({name: "John Doe"}, {$set: {email: "johndoe@example.com"}})
-```
-
-- Deleting documents: 
-    - To delete documents from a collection, you can use the `db.collection.deleteOne()` or `db.collection.deleteMany()` 
-    method.
-    - For example, to delete all documents in a "users" collection where the age is less than 18, you could use the 
-    following command:
-
-```java
-db.users.deleteMany({age: {$lt: 18}})
-```
-
-- Aggregation: 
-    - To perform data aggregation in MongoDB, you can use the `db.collection.aggregate()` method along with pipeline 
-    operators like `$match`, `$group`, `$sort`, and `$project`.
-    - For example, to find the average age of users in a "users" collection, you could use the following command:
-
-```java
-db.users.aggregate([
-    {$group: {_id: null, avgAge: {$avg: "$age"}}},
-    {$project: {_id: 0, avgAge: 1}}
-])
-```
-
-**MongoDB in Java application**
-
-```java
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
-
-public class MongoExample {
-    public static void main(String[] args) {
-        // Connect to MongoDB
-        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-
-        // Get the database
-        MongoDatabase database = mongoClient.getDatabase("mydb");
-
-        // Get the collection
-        MongoCollection<Document> collection = database.getCollection("users");
-
-        // Insert a document
-        Document user = new Document("name", "John Doe")
-                .append("age", 30)
-                .append("email", "johndoe@example.com");
-        collection.insertOne(user);
-
-        // Find all documents
-        for (Document doc : collection.find()) {
-            System.out.println(doc.toJson());
-        }
-
-        // Close the connection
-        mongoClient.close();
-    }
-}
-```
-
-- This example demonstrates how to connect to a MongoDB instance running on the local machine on the default port 
-(27017), how to get a reference to a database and a collection, and how to insert and retrieve documents.
-- To run this example you need to have mongodb installed and running on your machine, and also you have to import the 
-mongodb java driver in your classpath, you can find more information about the driver on the mongodb website.
-
-**MongoDB Spring Framework**
-
-- MongoDB can be easily integrated with Spring Framework using the Spring Data MongoDB project. 
-- Spring Data MongoDB provides a high-level abstraction for working with MongoDB, making it easy to interact with the 
-database using Spring's familiar Repository and Template patterns.
-- Here are the steps to set up a Spring Boot application with MongoDB using Spring Data MongoDB:
-    - Add the Spring Data MongoDB dependency to your pom.xml file:
-```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-mongodb</artifactId>
-</dependency>
-```
-
-- Add the MongoDB connection properties to your `application.properties` file. For example:
-
-```
-spring.data.mongodb.uri=mongodb://localhost/test
-```
-
-- Create a Java POJO class representing the document you want to store in MongoDB, and annotate it with `@Document`.
-- Create a repository interface that extends `MongoRepository<T, ID>` or `PagingAndSortingRepository<T, ID>`, where `T` 
-is the type of the document class, and ID is the type of the document's ID.
-- Autowire the repository into your service or controller class and use it to interact with the database.
-- Run your Spring Boot application.
-- Here is an example of a simple Spring Boot application that uses Spring Data MongoDB to store and retrieve Person 
-documents:
-
-```java
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface PersonRepository extends MongoRepository<Person, String> { }
-```
-
-```java
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class PersonController {
-    @Autowired
-    private PersonRepository repository;
-
-    @GetMapping("/persons")
-    public Iterable<Person> getAll() {
-        return repository.findAll();
-    }
-}
-```
-
-- This is a basic example to get you started, in a real-world application you may need to add validation, 
-exception handling and other features to make it robust, but it gives you an idea of how Spring Data MongoDB can be 
-used to interact with MongoDB in a Spring application.
-
-
-***
-
 **SQL vs NoSQL dbs**
 
 - SQL (Structured Query Language) and NoSQL (Not only SQL) databases are both used for storing and managing data, 
@@ -3093,24 +1921,6 @@ application and the type of data that will be stored.
 - It's worth noting that many modern databases are now hybrid and can have features from both types of databases, 
 for example: MongoDB, Cassandra, and CosmosDB, provide SQL like query languages for querying the data but still the 
 underlying architecture is a NoSQL.
-
-***
-
-**Openshift**
-
-- OpenShift is a container orchestration platform developed by Red Hat. 
-- It is built on top of Kubernetes and provides additional features for managing and deploying containerized applications.
-- OpenShift provides a web-based user interface and command-line tools for managing and deploying containerized 
-applications. 
-- It also includes features such as automatic scaling, rolling updates, and self-healing to make it easier to deploy 
-and manage containerized applications in production environments.
-- OpenShift also includes built-in support for CI/CD (Continuous Integration and Continuous Deployment) which makes it 
-easier to automate the build, test, and deployment of applications. 
-- It also allows you to use your choice of development languages and frameworks, including Java, Ruby, and Python.
-- OpenShift also provides a built-in service catalog that allows developers to easily discover and use services, 
-such as databases and message queues, provided by the platform.
-- OpenShift is a powerful platform for managing and deploying containerized applications and it is widely used in 
-enterprise environments.
 
 ***
 
