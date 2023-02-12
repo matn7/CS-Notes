@@ -24,7 +24,17 @@ public class MyClass {
     }
 }
 ```
-
+- The `@Retention` annotation in Java is used to specify the length of time the annotated element should be retained in 
+the Java source code. 
+- In other words, it determines when the annotated information should be discarded or ignored by the Java compiler.
+- There are three values for the Retention annotation:
+    - `RetentionPolicy.SOURCE`: This value indicates that the annotated element should be retained only in the source code
+     and discarded during the compilation process.
+    - `RetentionPolicy.CLASS`: This value indicates that the annotated element should be retained in the compiled class 
+    file, but not in the runtime environment.
+    - `RetentionPolicy.RUNTIME`: This value indicates that the annotated element should be retained in the compiled class 
+    file and available in the runtime environment, so it can be accessed by reflection.
+- The MyAnnotation annotation is retained at runtime, so it can be accessed using reflection.
 - Java also provides several built-in annotations, such as:
     - `@Override`: Indicates that a method is intended to override a method that is defined in a superclass.
     - `@Deprecated`: Indicates that a program element is no longer in use and should be avoided.
@@ -35,93 +45,6 @@ at runtime.
 an annotation element.
 - Annotations are an important feature of Java and are used by many frameworks and libraries. 
 - Some popular examples include Spring's `@Autowired`, JPA's `@Entity`, and JUnit's `@Test` annotations.
-
-***
-
-**static in Java**
-
-- In Java, the "static" keyword can be used to indicate that a variable, method, or block of code belongs to the class, 
-rather than to a specific instance of the class.
-- When applied to a variable, "static" makes the variable a class variable, which means that there is only one copy of 
-the variable that is shared by all instances of the class.
-- When applied to a method, "static" makes the method a class method, which means that it can be called without creating 
-an instance of the class. 
-- These methods typically operate on class variables, or on the class itself.
-- When applied to a block of code, "static" makes the block a static block, which is executed when the class 
-is first loaded by the Java Virtual Machine.
-- A static variable or method can be accessed using the class name, like `ClassName.staticVariable` 
-or `ClassName.staticMethod()`.
-- An example of a static variable and a static method:
-
-```java
-public class MyClass {
-    public static int staticVariable;
-    public int instanceVariable;
-
-    public static void staticMethod(){
-        staticVariable++;
-        //instanceVariable++;  //this line would cause a compile error, because it cannot access instance variable from a static method
-    }
-    public void instanceMethod(){
-        staticVariable++;
-        instanceVariable++;
-    }
-}
-```
-
-- In this example, the staticVariable is a class variable and can be accessed using the class name, 
-like `MyClass.staticVariable`, and the staticMethod is a class method, which can be called using the class name, 
-like `MyClass.staticMethod()`.
-- It is important to note that static variables are shared by all instances of the class and should be used with caution. 
-- Also, static methods can only access static variables and methods.
-- In a multithreading context, the static keyword in Java refers to class level variables, rather than instance level 
-variables. 
-- This means that when a static variable is accessed by multiple threads, there is only one copy of the variable that 
-all threads access. 
-- This can lead to potential issues with concurrent access and modification of the variable, known as **race conditions**.
-- Java provides the synchronized keyword to help manage access to shared resources, such as static variables, 
-in a multithreading context. 
-- When a method is marked as synchronized, only one thread can execute it at a time. 
-- This helps prevent race conditions by ensuring that all threads access the shared resource one at a time.
-- For example, if a static variable is being accessed by multiple threads, it is important to use synchronized method 
-or block to protect it from concurrent modifications.
-
-```java
-class MyClass {
-    static int myStaticVar = 0;
-
-    public static synchronized void incrementMyStaticVar() {
-        myStaticVar++;
-    }
-}
-```
-
-- It's worth mentioning that the static field can also be declared as volatile if you're using it as a flag variable, 
-this will ensure that the variable is read from the main memory instead of local thread cache.
-- In summary, when working with multithreading in Java, it's important to be aware of the potential issues with 
-concurrent access and modification of static variables, and use the synchronized keyword or other synchronization 
-mechanisms to manage access to shared resources.
-
-***
-
-**final in Java**
-
-- In Java, the "final" keyword can be used to indicate that a variable, method, or class cannot be overridden or changed.
-- When applied to a variable, "final" makes the variable a constant that cannot be reassigned.
-- When applied to a method, "final" makes the method unable to be overridden by subclasses.
-- When applied to a class, "final" makes the class unable to be subclassed.
-- In addition to these uses, final can also be used for creating final local variable and final parameter variable.
-- In Java, "final" can also be used to help ensure thread safety.
-    - When a variable is declared as "final," its value cannot be modified after it is initialized. 
-    - This means that if a variable is declared as final, any threads that access the variable can be sure that its 
-    value will not change, which can help prevent race conditions and other concurrency issues.
-    - Similarly, when a method is declared as "final," it cannot be overridden by subclasses, which means that any threads 
-    that call the method can be sure that its behavior will not change, which can also help prevent concurrency issues.
-- In addition to this, if an object is declared as final, it can be passed around safely in a multithreaded environment, 
-because once the object is constructed, its state cannot be modified.
-- It is important to note that declaring a variable or a method as final only ensures that the variable or the method 
-cannot be reassigned or overridden, but it does not guarantee thread safety by itself. 
-- It should be used in conjunction with other thread-safe practices and patterns like synchronization or immutability.
 
 ***
 
@@ -150,7 +73,7 @@ public final class ImmutablePerson {
 }
 ```
 
-- In this example, the ImmutablePerson class has two final fields: name and age, which are set in the constructor and 
+- In this example, the ImmutablePerson class has two `final` fields: name and age, which are set in the constructor and 
 cannot be modified afterwards. 
 - It only has getter methods and no setters, so the state of an instance of this class cannot be modified after it's created.
 - Because of this, instances of this class are safe to use in a multithreaded environment. 
@@ -160,6 +83,61 @@ the risk of race conditions or other concurrency issues.
 modify the state of the class and make it not immutable anymore. 
 - Also, for more complex class, it is important to make sure that any object references stored within the class are 
 also immutable.
+- An example of an immutable Java class that contains an ArrayList:
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public final class ImmutableClass {
+    private final List<String> list;
+
+    public ImmutableClass(List<String> list) {
+        this.list = Collections.unmodifiableList(new ArrayList<>(list));
+    }
+
+    public List<String> getList() {
+        return this.list;
+    }
+}
+```
+
+- In this example, the ImmutableClass is declared as `final` to prevent subclassing. 
+- The class has a single instance variable, list, which is a final reference to an ArrayList of strings. 
+- The constructor takes a List of strings as a parameter and creates an unmodifiable ArrayList from the input list. 
+- The ArrayList is stored in the final reference variable, which cannot be changed after it has been assigned a value.
+- The `getList()` method returns the list instance variable, but since the list is unmodifiable, it cannot be changed 
+even if the caller of the method modifies the returned list. 
+- This ensures that the state of the ImmutableClass object is not changed, making it an immutable class.
+- An example of an immutable Java class that contains an ArrayList without using `Collections.unmodifiableList`:
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public final class ImmutableClass {
+    private final List<String> list;
+
+    public ImmutableClass(List<String> list) {
+        this.list = new ArrayList<>(list);
+    }
+
+    public List<String> getList() {
+        return new ArrayList<>(this.list);
+    }
+}
+```
+
+- In this example, the ImmutableClass is declared as `final` to prevent subclassing. 
+- The class has a single instance variable, list, which is a `final` reference to an ArrayList of strings. 
+- The constructor takes a List of strings as a parameter and creates a new ArrayList from the input list. 
+- The ArrayList is stored in the `final` reference variable, which cannot be changed after it has been assigned a value.
+- The `getList()` method returns a new ArrayList created from the list instance variable, rather than returning the 
+list itself. 
+- This ensures that the state of the ImmutableClass object is not changed, even if the caller of the method modifies 
+the returned list. 
+- This makes the class an immutable class, as the state of the object cannot be changed once it has been constructed.
 
 ***
 
@@ -168,11 +146,11 @@ also immutable.
 **Threads** 
 
 - A thread is a lightweight unit of execution in a program. 
-- In Java, threads can be created by extending the Thread class or implementing the Runnable interface. 
+- In Java, threads can be created by extending the `Thread` class or implementing the `Runnable` interface. 
 - In either case, the `run()` method is the entry point for the thread's execution.
 - Interview question: How do you create a new thread in Java?
-    - Answer: You can create a new thread in Java by either extending the Thread class and overriding the `run()` method
-     or by implementing the Runnable interface and passing an instance of that class to a Thread object's constructor.
+    - You can create a new thread in Java by either extending the `Thread` class and overriding the `run()` method
+     or by implementing the `Runnable` interface and passing an instance of that class to a `Thread` object's constructor.
 - An example of creating a new thread in Java:
 
 ```java
@@ -188,20 +166,62 @@ public class Main {
 }
 ```
 
-- This example creates a Runnable task that simply prints out the name of the current thread. 
-- The task is then passed to a Thread object, which is started by calling the start method. 
+- This example creates a `Runnable` task that simply prints out the name of the current thread. 
+- The task is then passed to a `Thread` object, which is started by calling the start method. 
 - When the program is run, it will output "Running in new thread" and "Running in main thread", indicating that the task 
 is running in a separate thread from the main thread.
+
+**Thread vs process differences**
+
+- A thread and a process are both units of execution in an operating system, but there are some important differences 
+between them:
+    - Resource Sharing: 
+        - Threads within the same process share the same memory space, as well as other resources like file descriptors 
+        and network connections. 
+        - On the other hand, processes have their own memory space and resources, so they cannot directly access each 
+        other's memory.
+    - Context Switching: 
+        - Context switching between threads is faster than between processes because the operating system only needs to 
+        switch the execution context within a single memory space, while switching between processes requires a more 
+        expensive context switch that involves switching memory spaces.
+    - Start-up time: 
+        - Starting a new thread is faster than starting a new process because creating a new thread only requires creating 
+        a new execution context within an existing process, while creating a new process requires creating a new memory 
+        space and loading a new copy of the program into memory.
+    - Isolation: 
+        - Processes are isolated from each other, which means that a problem in one process cannot affect the other 
+        processes. 
+        - On the other hand, a problem in one thread can affect the other threads within the same process.
+    - Scheduling: Threads are scheduled by the operating system within a single process, while processes are scheduled 
+    by the operating system across all processes.
+- In general, threads are useful for improving the performance and responsiveness of applications by allowing multiple 
+tasks to run concurrently within a single process. 
+- Processes are useful for providing isolation between different applications, as well as for executing different 
+applications or parts of an application that require different resources or execution environments.
      
 **Concurrency**
  
 - Concurrency is the ability of a program to have multiple tasks executing at the same time. 
 - In a multithreading context, this means that multiple threads can be executing simultaneously.
 - Interview question: How do you synchronize access to a shared resource in a multithreading environment?
-    - Answer: You can synchronize access to a shared resource in a multithreading environment by using locks, 
+    - You can synchronize access to a shared resource in a multithreading environment by using locks, 
     semaphores, or other synchronization mechanisms. 
     - For example, you can use the synchronized keyword to create a critical section of code that only one thread can 
-    execute at a time, or you can use a ReentrantLock to achieve the same effect.
+    execute at a time, or you can use a `ReentrantLock` to achieve the same effect.
+
+```java
+public class Counter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+```        
         
 **Thread states** 
 
@@ -211,14 +231,14 @@ is running in a separate thread from the main thread.
     - The **blocked** state indicates that a thread is waiting for a resource to be available.
     - The **terminated** state indicates that a thread has completed execution.
 - Interview question: What are the different states that a thread can be in in Java?
-    - Answer: A thread can be in one of four states in Java: new, runnable, blocked, and terminated.
+    - A thread can be in one of four states in Java: new, runnable, blocked, and terminated.
         
 **Thread scheduling** 
 
 - The Java Virtual Machine schedules threads for execution using a technique called time-slicing. 
 - Threads are assigned a priority, and the scheduler will run the highest-priority thread that is runnable.
 - Interview question: How does the Java Virtual Machine schedule threads for execution?
-    - Answer: The Java Virtual Machine schedules threads for execution using a technique called time-slicing. 
+    - The Java Virtual Machine schedules threads for execution using a technique called time-slicing. 
     - Threads are assigned a priority, and the scheduler will run the highest-priority thread that is runnable.
     
 **Thread-safe data structures** 
@@ -227,11 +247,11 @@ is running in a separate thread from the main thread.
 explicit synchronization. 
 - Examples of thread-safe data structures in Java include `ConcurrentHashMap` and `CopyOnWriteArrayList`.
 - Interview question: How do you use thread-safe data structures in Java?
-    - Answer: In Java, you can use thread-safe data structures, such as `ConcurrentHashMap` and `CopyOnWriteArrayList`, 
+    - In Java, you can use thread-safe data structures, such as `ConcurrentHashMap` and `CopyOnWriteArrayList`, 
     to manage access to shared data. 
     - These classes provide thread-safe versions of common data structures that can be safely accessed by multiple 
     threads without the need for explicit synchronization.
-- An example of using ConcurrentHashMap in Java:
+- An example of using `ConcurrentHashMap` in Java:
 
 ```java
 import java.util.concurrent.ConcurrentHashMap;
@@ -257,16 +277,48 @@ public class Main {
 - In this example, a `ConcurrentHashMap` is created and used to store key-value pairs. 
 - The `put` method is used to add key-value pairs to the map, and the get method is used to retrieve the value associated 
 with a key. 
-- The remove method is used to remove a key-value pair from the map.
+- The `remove` method is used to remove a key-value pair from the map.
 - Note that `ConcurrentHashMap` is thread-safe, which means that multiple threads can access the map concurrently without 
-causing any concurrency issues.    
+causing any concurrency issues.
+
+**Various techniques to ensure thread safety**
+
+- Here are some of the techniques used to ensure thread safety in Java:
+    - Fine-grained locking: 
+        - This technique uses locks to control access to shared resources, such as collections or data structures. 
+        - For example, a `ConcurrentHashMap` uses a lock for each bucket or segment, rather than a single lock for 
+        the entire map. 
+        - This allows multiple threads to access the map concurrently, as long as they access different buckets.
+    - Lock-free algorithms: 
+        - These algorithms allow multiple threads to access shared resources concurrently, without using locks. 
+        - Instead, they use atomic operations to update shared data structures in a way that ensures that no two threads 
+        can access the same data simultaneously. 
+        - An example of a lock-free algorithm used in Java is the compare-and-swap (CAS) operation, which updates a shared 
+        variable in an atomic way.
+    - Copy-on-write: 
+        - This technique is used in collections such as `CopyOnWriteArrayList`. 
+        - When a thread wants to modify the collection, it creates a new copy of the collection with the modifications, 
+        rather than modifying the original collection directly. 
+        - This eliminates the need for locks, as each thread is working with its own private copy of the collection.
+    - Lock splitting: 
+        - This technique involves dividing a lock into multiple sub-locks to reduce contention between threads. 
+        - For example, in a `ConcurrentHashMap`, the lock for a particular segment is split into multiple sub-locks, 
+        so that multiple threads can access different parts of the segment concurrently.
+    - Lock striping: 
+        - This technique is used in collections such as `ConcurrentHashMap` and `ConcurrentLinkedQueue`. 
+        - The collection is divided into multiple segments, and each segment is protected by a separate lock. 
+        - When a thread wants to access the collection, it acquires the lock for the appropriate segment, 
+        allowing multiple threads to access different segments concurrently.
+- These are some of the most commonly used techniques for ensuring thread safety in Java. 
+- By using concurrent collections that implement these techniques, developers can ensure that their multi-threaded 
+applications are safe and efficient, even in the presence of race conditions and other thread-related issues.
     
 **ThreadPool** 
 
 - Thread pools are a way to manage a group of worker threads. 
-- The Executor framework provides a simple way to create and manage a pool of threads.
+- The `Executor` framework provides a simple way to create and manage a pool of threads.
 - Interview question: How do you create a thread pool in Java?
-    - Answer: In Java, you can use the Executor framework to create and manage a pool of threads. 
+    - In Java, you can use the `Executor` framework to create and manage a pool of threads. 
     - The framework provides several implementations of `Executor` such as `ThreadPoolExecutor`, 
     `ScheduledThreadPoolExecutor`, `SingleThreadExecutor` etc. 
     - You can use these implementations to configure a thread pool with a specific number of threads, a queue for 
@@ -306,20 +358,134 @@ will clean up and terminate its worker threads when all tasks have completed.
 
 - To communicate between threads, Java provides methods like `wait()`, `notify()` and `notifyAll()` that can be used to 
 allow threads to wait for a certain condition to be met, and to notify other threads when that condition has been met. 
-- These methods are defined in the Object class and they are used in conjunction with the synchronized keyword.
+- These methods are defined in the `Object` class and they are used in conjunction with the `synchronized` keyword.
 - Interview question: How do threads communicate with each other in Java?
-    - Answer: In Java, threads can communicate with each other using the `wait()`, `notify()`, and `notifyAll()` methods. 
+    - In Java, threads can communicate with each other using the `wait()`, `notify()`, and `notifyAll()` methods. 
     - These methods are used in conjunction with the synchronized keyword to allow threads to wait for a certain 
     condition to be met and to notify other threads when that condition has been met.
+- Inter-thread communication in Java is the mechanism by which threads can exchange information and coordinate their 
+activities. 
+- There are several ways to achieve inter-thread communication in Java, one of which is by using 
+the `wait()` and `notify()` methods.
+- An example that demonstrates inter-thread communication using `wait()` and `notify()`:
+
+```java
+class Data {
+  private int value;
+  private boolean isSet = false;
+
+  public synchronized void setValue(int value) {
+    while (isSet) {
+      try {
+        wait();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    this.value = value;
+    isSet = true;
+    notify();
+  }
+
+  public synchronized int getValue() {
+    while (!isSet) {
+      try {
+        wait(); //
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    isSet = false;
+    notify();
+    return value;
+  }
+}
+
+class Producer implements Runnable {
+  private Data data;
+
+  public Producer(Data data) {
+    this.data = data;
+  }
+
+  @Override
+  public void run() {
+    int i = 0;
+    while (true) {
+      data.setValue(i++);
+      System.out.println("Producer: Set value to " + i);
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+}
+
+class Consumer implements Runnable {
+  private Data data;
+
+  public Consumer(Data data) {
+    this.data = data;
+  }
+
+  @Override
+  public void run() {
+    while (true) {
+      int value = data.getValue();
+      System.out.println("Consumer: Got value " + value);
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+}
+
+public class Example {
+  public static void main(String[] args) {
+    Data data = new Data();
+    Producer producer = new Producer(data);
+    Consumer consumer = new Consumer(data);
+    new Thread(producer).start();
+    new Thread(consumer).start();
+  }
+}
+```
+
+- In this example, two threads, a Producer and a Consumer, are exchanging information through a shared Data object. 
+- The Producer sets a value in the Data object and the Consumer retrieves the value. 
+- The communication between the threads is `synchronized` by the use of the `wait()` and `notify()` methods. 
+- The `wait()` method is used to block the execution of a thread until it is notified by another thread, 
+and the `notify()` method is used to wake up a waiting thread.
+
+**Why wait(), notify() and notifyAll() are defined in Object class**
+
+- The `wait`, `notify`, and `notifyAll` methods are defined in the Object class in Java because they are fundamental 
+`synchronization` mechanisms that are used to control the flow of execution between threads.
+- These methods allow one or more threads to be suspended, or blocked, until a particular condition is met. 
+- For example, a thread that is waiting for an event to occur, such as the completion of a task, can use the wait method 
+to wait until the event occurs. 
+- Another thread, responsible for triggering the event, can use the `notify` or `notifyAll` method to signal that the 
+event has occurred and awaken the waiting thread(s).
+- By defining these methods in the Object class, they are available to all objects in Java, not just those that are 
+explicitly designed for use in multi-threaded environments. 
+- This makes them a universal synchronization mechanism that can be used in a wide variety of contexts and situations, 
+including complex multi-threaded applications.
+- It is important to note that the use of `wait`, `notify`, and `notifyAll` requires a proper understanding of thread 
+synchronization and the synchronization mechanisms built into Java. 
+- Misuse of these methods can lead to serious problems, such as deadlocks, and should be avoided.
 
 **Deadlock** 
 
 - A deadlock is a situation where two or more threads are blocked indefinitely because each thread is waiting for one 
 of the other threads to release a resource. 
-- Deadlocks can be prevented by using synchronization mechanisms such as locks and semaphores, and by ensuring that 
+- Deadlocks can be prevented by using `synchronization` mechanisms such as locks and semaphores, and by ensuring that 
 threads acquire resources in a consistent order.
 - Interview question: How do you prevent deadlocks in a multithreading environment?
-    - Answer: Deadlocks can be prevented by using synchronization mechanisms such as locks and semaphores, 
+    - Deadlocks can be prevented by using synchronization mechanisms such as locks and semaphores, 
     and by ensuring that threads acquire resources in a consistent order. 
     - Additionally, one should be aware of the possibility of circular wait where thread1 holds resource1 and waiting 
     for resource2 and thread2 holds resource2 and waiting for resource1, in such case we can use a technique called 
@@ -327,103 +493,120 @@ threads acquire resources in a consistent order.
 - An example of a deadlock in Java:
 
 ```java
-public class DeadlockExample {
-   static class Friend {
-      private final String name;
+public class Deadlock {
 
-      public Friend(String name) {
-         this.name = name;
-      }
+    public static Object lock1 = new Object();
+    public static Object lock2 = new Object();
 
-      public String getName() {
-         return this.name;
-      }
+    public static void main(String[] args) {
+        new Thread1().start();
+        new Thread2().start();
+    }
 
-      public synchronized void bow(Friend bower) {
-         System.out.format("%s: %s has bowed to me!%n", this.name, bower.getName());
-         bower.bowBack(this);
-      }
+    private static class Thread1 extends Thread {
+        public void run() {
+            synchronized (lock1) {
+                System.out.println("Thread 1: Has lock1");
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
 
-      public synchronized void bowBack(Friend bower) {
-         System.out.format("%s: %s has bowed back to me!%n", this.name, bower.getName());
-      }
-   }
+                }
+                System.out.println("Thread 1: Waiting for lock2");
+                synchronized (lock2) {
+                    System.out.println("Thread 1: Has lock1 and lock2");
+                }
+                System.out.println("Thread 1: Released lock2");
+            }
+            System.out.println("Thread 1: Released lock1. Exiting...");
+        }
+    }
 
-   public static void main(String[] args) {
-      final Friend seb = new Friend("Sebastian");
-      final Friend pusz = new Friend("Puszek");
+    private static class Thread2 extends Thread {
+        public void run() {
+            synchronized (lock2) {
+                System.out.println("Thread 2: Has lock2");
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
 
-      new Thread(() -> seb.bow(pusz)).start();
-      new Thread(() -> pusz.bow(seb)).start();
-   }
+                }
+                System.out.println("Thread 2: Waiting for lock1");
+                synchronized (lock1) {
+                    System.out.println("Thread 2: Has lock2 and lock1");
+                }
+                System.out.println("Thread 2: released lock1");
+            }
+            System.out.println("Thread 2: Released lock2. Exiting...");
+        }
+    }
 }
 ```
 
-- In this example, there are two Friend objects, seb and pusz, each with a bow method that takes another Friend object 
-as an argument. 
-- When a Friend bows to another Friend, it calls the other Friend's bowBack method.
-- The problem occurs when two threads are started, each calling one of the bow methods. 
-- The first thread calls `seb.bow(pusz)`, and the second thread calls `pusz.bow(seb)`.
-- Both methods are synchronized, which means that they can only be executed by one thread at a time. 
-- However, if the first thread is executing `seb.bow(pusz)`, and the second thread is executing `pusz.bow(seb)`, 
-they will each wait for the other to finish executing its bowBack method. 
-- This creates a deadlock, as each thread is waiting for the other to finish, but neither can proceed.
-- To avoid deadlocks in your own code, you should follow some best practices, such as acquiring locks in a consistent 
-order, using timeouts when acquiring locks, and using the tryLock method instead of lock when possible.    
-- One way to fix the deadlock in the previous example is to use a lock ordering to ensure that the two threads always 
-acquire the locks in the same order:
+**Deadlock synchronized fix**
 
 ```java
-public class DeadlockExample {
-   static class Friend {
-      private final String name;
+public class Deadlock {
 
-      public Friend(String name) {
-         this.name = name;
-      }
+    public static Object lock1 = new Object();
+    public static Object lock2 = new Object();
 
-      public String getName() {
-         return this.name;
-      }
+    public static void main(String[] args) {
+        new Thread1().start();
+        new Thread2().start();
+    }
 
-      public void bow(Friend bower) {
-         synchronized (this) {
-            System.out.format("%s: %s has bowed to me!%n", this.name, bower.getName());
-            bower.bowBack(this);
-         }
-      }
+    private static class Thread1 extends Thread {
+        public void run() {
+            synchronized (lock1) {
+                System.out.println("Thread 1: Has lock1");
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
 
-      public void bowBack(Friend bower) {
-         synchronized (bower) {
-            System.out.format("%s: %s has bowed back to me!%n", this.name, bower.getName());
-         }
-      }
-   }
+                }
+                System.out.println("Thread 1: Waiting for lock2");
+                synchronized (lock2) {
+                    System.out.println("Thread 1: Has lock1 and lock2");
+                }
+                System.out.println("Thread 1: Released lock2");
+            }
+            System.out.println("Thread 1: Released lock1. Exiting...");
+        }
+    }
 
-   public static void main(String[] args) {
-      final Friend seb = new Friend("Sebastian");
-      final Friend pusz = new Friend("Puszek");
+    private static class Thread2 extends Thread {
+        public void run() {
+            synchronized (lock1) { // <-- lock 1
+                System.out.println("Thread 2: Has lock1"); // <-- thread 2
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
 
-      new Thread(() -> seb.bow(pusz)).start();
-      new Thread(() -> pusz.bow(seb)).start();
-   }
+                }
+                System.out.println("Thread 2: Waiting for lock2");
+                synchronized (lock2) {
+                    System.out.println("Thread 2: Has lock1 and lock2");
+                }
+                System.out.println("Thread 2: released lock2");
+            }
+            System.out.println("Thread 2: Released lock1. Exiting...");
+        }
+    }
 }
 ```
 
-- In this example, the bow and bowBack methods synchronize on the Friend objects themselves, instead of on the methods. 
-- The two threads will always acquire the locks in the same order, so there can never be a deadlock.    
-    
 **ThreadLocal** 
 
-- A ThreadLocal variable is used to store thread-specific data. 
+- A `ThreadLocal` variable is used to store thread-specific data. 
 - It allows each thread to have its own copy of a variable, which is separate from the copies held by other threads. 
 - This can be useful in situations where you want to maintain thread-specific state without using global variables.
 - Interview question: How do you use `ThreadLocal` variables in Java?
-    - Answer: You can use `ThreadLocal` variables in Java by creating an instance of the `ThreadLocal` class and then using 
+    - You can use `ThreadLocal` variables in Java by creating an instance of the `ThreadLocal` class and then using 
     its `set()` and `get()` methods to store and retrieve thread-specific data. 
     - For example, you can create a `ThreadLocal` variable to store a user's identity and then use it to associate 
     a user's identity with the current thread.
-- An example of how you can use ThreadLocal in Java:
+- An example of how you can use `ThreadLocal` in Java:
 
 ```java
 public class ThreadLocalExample {
@@ -460,15 +643,52 @@ method.
 - The output of the example would show that each thread has its own separate copy of the `ThreadLocal` object, with its 
 own value.
 
+**Why ThreadLocal is useful**
+
+- A `ThreadLocal` variable is a variable that is specific to a single thread, and can be accessed and modified by that 
+thread only. 
+- This is useful in situations where you need to maintain per-thread state, such as thread-specific configuration or 
+context information.
+- For example, consider a web application that uses a pool of threads to handle incoming requests. 
+- Each request is processed by a different thread, and you want to maintain a user-specific context for each request, 
+such as the user's identity, preferences, or session information. 
+- You can achieve this by using a `ThreadLocal` variable to store this information, rather than using a global or shared 
+variable, which would be accessible by all threads and would result in concurrent access issues.
+- Another example is in a multi-threaded logging system, where each thread has its own log file and you need to maintain 
+a separate log context for each thread. 
+- By using a `ThreadLocal` variable, you can associate a unique log file with each thread, and write logs to the appropriate 
+file without the need for synchronization or locking.
+- `ThreadLocal` variables are also useful for maintaining thread-local cache or buffer data structures, or for managing 
+thread-local transactions or resources. explicit
+- In general, `ThreadLocal` variables are a convenient and efficient mechanism for managing per-thread state in a 
+multi-threaded environment, without the need for explicit synchronization or locking.
+
 **Volatile keyword**
 
-- The volatile keyword is used to indicate that a variable may be modified by multiple threads. 
-- When a variable is declared as volatile, the Java Virtual Machine will ensure that all threads see the most up-to-date 
+- The `volatile` keyword is used to indicate that a variable may be modified by multiple threads. 
+- When a variable is declared as `volatile`, the Java Virtual Machine will ensure that all threads see the most up-to-date 
 value of the variable by reading it from main memory instead of caching it in a thread-local storage.
-- Interview question: How does the volatile keyword work in multithreading context?
-    - Answer: The volatile keyword tells the JVM that a variable may be modified by multiple threads, and as such it 
+- Interview question: How does the `volatile` keyword work in multithreading context?
+    - The `volatile` keyword tells the JVM that a variable may be modified by multiple threads, and as such it 
     ensures that each thread reads the variable from main memory and not from a thread-local cache. 
     - This ensures that all threads have the most up-to-date value of the variable and prevent stale value problem.
+
+**Mechanism of volatile**
+
+- In Java, a `volatile` variable is stored in main memory, which is accessible to all threads in a program. 
+- This is in contrast to a non-volatile variable, which may be stored in a CPU cache or in a thread-local storage,
+and is only visible to the thread that created it.
+- When a thread accesses a `volatile` variable, it always reads the value of the variable from main memory, 
+rather than from its cache. 
+- This ensures that all threads see the latest value of the variable, even if it was updated by another thread.
+- The mechanism that ensures that a `volatile` variable is read from main memory is the `volatile` keyword, 
+which is used to declare the variable. 
+- When a variable is declared as `volatile`, the Java Virtual Machine (JVM) guarantees that any write to the variable 
+will be visible to all threads and that any read of the variable will return the latest value written by any thread.
+- This is accomplished through a combination of memory barriers and memory visibility guarantees provided by the JVM and 
+the underlying hardware. 
+- The precise details of how this works may depend on the underlying platform, but the overall goal is to ensure that 
+the value of a `volatile` variable is always up-to-date across all threads in a program.
 
 **Consumer Producer**
 
@@ -592,27 +812,64 @@ public class ConsumerProducerExample {
 
 **Enums, enums multithreading**
 
-- In Java, an enum is a special kind of class that represents a fixed set of constants. 
+- In Java, an `enum` is a special kind of class that represents a fixed set of constants. 
 - Enums are typically used to represent a small set of predefined values, such as the days of the week or the suits 
 in a deck of cards.
-- An enum is defined using the enum keyword, followed by a list of constants, which are called enumerators. 
-- Each enumerator is an instance of the enum type, and they can be referred to by their names. 
-- For example, an enum called `DaysOfWeek` might have enumerators for `Monday`, `Tuesday`, `Wednesday`, etc.
+- An `enum` is defined using the `enum` keyword, followed by a list of constants, which are called enumerators. 
+- Each enumerator is an instance of the `enum` type, and they can be referred to by their names. 
+- For example, an `enum` called `DaysOfWeek` might have enumerators for `Monday`, `Tuesday`, `Wednesday`, etc.
 - Enum constants are singleton by design, meaning that there can be only one instance of each enumerator created 
 in the JVM. 
 - :star: Also, they are created at the time the enum type is initialized and are guaranteed to be initialized before any other 
 thread accesses them.
-- In a multithreading context, enum constants are thread-safe because of their singleton nature. 
+- In a multithreading context, `enum` constants are thread-safe because of their singleton nature. 
 - Because only one instance of each enumerator is created and initialized, there is no need to synchronize access to them. 
 - Enum constants can be safely accessed by multiple threads without the need for explicit synchronization.
-- It's worth mentioning that enum instances are also immutable, meaning they cannot be changed after they are created, 
+- It's worth mentioning that `enum` instances are also immutable, meaning they cannot be changed after they are created, 
 which eliminates the need for synchronization in most cases.
-- In summary, enum constants in Java are thread-safe by design because they are singleton and immutable. 
+- In summary, `enum` constants in Java are thread-safe by design because they are singleton and immutable. 
 - They can be safely accessed by multiple threads without the need for explicit synchronization.
+
+**Why singletons are thread safe?**
+
+- Singletons are considered thread-safe because they provide a single, shared instance of an object that can be accessed 
+by multiple threads. 
+- The idea behind this design pattern is to ensure that there is only one instance of a class created in a Java application, 
+and that this instance is accessible to all parts of the application that need to use it.
+- To achieve thread safety in a singleton, the instance of the singleton class is typically created in a thread-safe 
+manner, either by synchronizing the method that creates the instance or by using the double-checked locking pattern.
+- Here's an example of a thread-safe singleton in Java:
+
+```java
+public class Singleton {
+    private static volatile Singleton instance;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+- In this example, the instance of the Singleton class is created in a thread-safe manner using the double-checked 
+locking pattern. 
+- This ensures that only one instance of the Singleton class is created, even if multiple threads try to access the 
+`getInstance()` method at the same time.
+- Note that in this example, the instance variable is also declared as volatile, which guarantees that any write to the 
+variable will be visible to all threads and that any read of the variable will return the latest value written by any thread. 
+- This helps to ensure that the singleton instance is properly initialized before it is accessed by any other threads.
 
 **enum example**
 
-- An example of an enum in Java that represents the days of the month and includes additional information about each day, 
+- An example of an `enum` in Java that represents the days of the month and includes additional information about each day, 
 such as its number and whether it's a weekend day:
 
 ```java
@@ -643,11 +900,11 @@ public enum Day {
 }
 ```
 
-- In this example, the enum `Day` represents the days of the week. 
+- In this example, the `enum` Day represents the days of the week. 
 - Each constant has a number and a Boolean value indicating whether it's a weekend day or not. 
 - These values are stored in the private dayNumber and isWeekend fields. 
-- The enum has a constructor that initializes these fields.
-- Additionally, the enum has two methods, getDayNumber and isWeekend, which return the dayNumber and isWeekend values, 
+- The `enum` has a constructor that initializes these fields.
+- Additionally, the `enum` has two methods, getDayNumber and isWeekend, which return the dayNumber and isWeekend values, 
 respectively.
 - Here's an example of how you can use this enum:
 
@@ -666,7 +923,7 @@ public class EnumExample {
 ```
 
 - In this example, the today variable is assigned the value `Day.MONDAY`. 
-- The code then uses the methods of the enum to print the name and number of the day, as well as whether it's a weekend 
+- The code then uses the methods of the `enum` to print the name and number of the day, as well as whether it's a weekend 
 day or not. 
 - The output of this code would be:
 
@@ -674,6 +931,40 @@ day or not.
 Today is MONDAY and its number is 2
 Today is a week day.
 ```
+
+- An example of a singleton implemented using an `enum` in Java, with some concrete methods:
+
+```java
+public enum Singleton {
+    INSTANCE;
+
+    private int count;
+
+    public void incrementCount() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+```
+
+- In this example, the Singleton `enum` has a single instance named `INSTANCE`, and it has two methods: 
+`incrementCount` and `getCount`. 
+- The `incrementCount` method increments the count variable, while the `getCount` method returns its value.
+- Here's an example of how to use the Singleton instance in a Java application:
+
+```java
+Singleton singleton = Singleton.INSTANCE;
+singleton.incrementCount();
+System.out.println(singleton.getCount()); // outputs 1
+```
+
+- In this example, the Singleton instance is obtained by calling the `Singleton.INSTANCE` property, and its methods 
+are used to increment the count variable and print its value. 
+- Because there is only one instance of the Singleton `enum`, these methods can be safely used by multiple threads in a 
+Java application without any risk of data corruption.
 
 ***
 
@@ -734,6 +1025,109 @@ Today is a week day.
     including the process that created them, and the state of the socket.
     - `ss -plnt | grep <port_number>`
 
+**How can we analyze heap dump**
+
+- A heap dump is a snapshot of the memory of a Java application at a particular point in time. 
+- It can be used to analyze the memory usage of an application and identify memory leaks, as well as to diagnose other
+performance problems.
+- There are several tools available to analyze heap dumps in Java, including:
+    - `jmap`: 
+        - This is a command-line tool that comes with the Java Development Kit (JDK). 
+        - It can be used to generate a heap dump from a running Java process.
+    - `jhat`: 
+        - This is another command-line tool that comes with the JDK. 
+        - It can be used to analyze a heap dump by starting an HTTP server that provides a user interface for exploring 
+        the dump.
+    - Eclipse Memory Analyzer (MAT): 
+        - This is a graphical tool for analyzing heap dumps. 
+        - It provides a number of features for exploring the dump, such as object histograms, dominator trees, 
+        and memory leaks detectors.
+    - YourKit: 
+        - This is a commercial profiler that includes features for analyzing heap dumps, such as memory snapshots, 
+        object allocation traces, and memory leaks detectors.
+- Each of these tools has its own strengths and weaknesses, and the best tool for a particular use case may depend on 
+factors such as the size of the heap dump, the resources available on the analysis machine, and the level of detail 
+required for the analysis.
+- In general, `jmap` and `jhat` can be useful for generating and exploring basic heap dumps, while tools like 
+Eclipse MAT and YourKit provide more advanced features for more in-depth analysis.
+
+**JMX**
+
+- Java Management Extensions (JMX) is a Java technology that provides a standard way of monitoring and managing resources 
+in Java applications. 
+- It allows developers to instrument their applications with simple, easy-to-use Java objects called MBeans (Managed Beans), 
+which expose information and management operations about the application. 
+- JMX provides a way to access this information and perform management operations remotely, either through a local 
+connection or over a network.
+- To use JMX, a Java application needs to include the JMX API libraries and create MBeans that expose information about 
+the application's resources. 
+- The MBeans can be registered with the JMX platform, and the JMX client can access and control the MBeans remotely.
+- JMX is useful for several reasons:
+    - Monitoring: 
+        - JMX provides a standard way to monitor the performance, health, and availability of a Java application. 
+        - This information can be used to detect and diagnose issues, monitor the application's resource usage, 
+        and track key performance metrics.
+    - Management: 
+        - JMX provides a standard way to manage the resources of a Java application. 
+        - Management operations can be performed remotely, without the need to access the application's code or restart 
+        the application.
+    - Configuration: 
+        - JMX provides a standard way to configure a Java application. 
+        - Configuration changes can be made remotely, without the need to access the application's code or restart the 
+        application.
+    - Integration: 
+        - JMX is a Java technology, and it integrates well with other Java technologies. 
+        - It can be used with other Java management tools, such as monitoring and management frameworks, to provide a 
+        comprehensive view of the application's resources.
+- In summary, JMX is a powerful tool for monitoring and managing Java applications, and it provides a standard way 
+to access and control information about the resources of a Java application.
+
+**Examples of memory leaks, how memory leaks exposes themselves?**
+
+- A memory leak occurs in a computer program when it continually allocates memory but does not release it back to the 
+operating system, even though it is no longer needed. 
+- Over time, this can cause the program to consume an increasing amount of memory, slowing down the program and eventually 
+causing it to crash or hang.
+- Here are some examples of memory leaks in Java:
+    - Holding onto objects that are no longer needed: 
+        - This can happen when a program continues to keep references to objects that are no longer needed, preventing 
+        the garbage collector from reclaiming the memory.
+    - Caching objects without proper eviction: 
+        - When a cache is implemented without proper eviction policies, it can result in a memory leak, where old, 
+        unused objects are kept in memory, while new objects are continually added to the cache, causing the cache to 
+        grow in size.
+    - Improper use of listeners and callbacks: 
+        - If a program registers a listener or callback and does not unregister it when it is no longer needed, 
+        this can cause a memory leak, as the listener or callback will continue to hold references to objects, 
+        preventing the garbage collector from reclaiming the memory.
+- Memory leaks can expose themselves in a number of ways, including:
+    - OutOfMemoryError: If a program leaks memory, it may eventually run out of memory and throw an `OutOfMemoryError`.
+    - Slow performance: As memory leaks cause the program to consume more memory, the program will slow down and become 
+    less responsive.
+    - Increased memory usage: Over time, the program's memory usage will increase, indicating that it is leaking memory.
+    - Unresponsive program: In severe cases, the program may become unresponsive, hang, or crash.
+- In summary, memory leaks are a common problem in software development, and they can cause serious performance and 
+stability issues. 
+- It is important to identify and fix memory leaks as soon as possible to prevent them from affecting the stability and 
+performance of a program.
+
+**callback**
+
+- A callback, in the context of programming, is a function that is passed as an argument to another function, 
+with the intention of being executed later. 
+- The function that receives the callback is responsible for calling it at the appropriate time. 
+- Callbacks are used to implement asynchronous programming and event-driven programming, and they allow you to write code 
+that runs in response to specific events or conditions.
+- For example, consider a program that needs to retrieve data from a remote server. 
+- Instead of blocking the program while waiting for the data to arrive, you could pass a callback function to the function 
+that retrieves the data. 
+- The function would then execute the callback when the data has been received. 
+- This way, the program can continue to run while the data is being retrieved, and the callback is executed when the data 
+is available.
+- In general, callbacks provide a way to decouple the flow of control in a program, allowing you to write more flexible 
+and modular code. 
+- They are widely used in many programming languages, including Java, JavaScript, Python, and C++, among others.
+
 ***
 
 **xargs linux**
@@ -748,82 +1142,6 @@ you could use the find command to list the files and then pipe the output to `xa
     - `find /path -name "*.txt" | xargs rm`
 - This will find all the `.txt` files in the directory `/path` and pass the list of file names to `xargs`, which then 
 passes them as arguments to the `rm` command to delete them.
-
-***
-
-**Java object method**
-
-- In Java, an object is an instance of a class, and it has several methods that can be used to interact with the 
-object's state and behavior. 
-- These methods are defined by the class, and they are inherited by all objects of that class. 
-- The most common methods in Java objects are:
-
-**toString()**
-
-- Returns a string representation of the object. 
-- This method is called when an object is printed, and the default implementation returns the fully qualified 
-class name followed by the object's hash code.
-
-**equals(Object o)**
- 
-- Compares the object to another object and returns true if they are equal. 
-- The default implementation compares the objects based on their memory addresses, but it can be overridden to 
-provide a custom comparison.
-- In Java, the equals method is used to compare the equality of two objects. 
-- Here's an example of how to override the equals method in a custom class:
-
-```java
-class Point {
-    private int x;
-    private int y;
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof Point)) return false;
-
-        Point p = (Point) o;
-        return p.x == x && p.y == y;
-    }
-}
-```
-
-- In this example, the Point class has two fields x and y, and an equals method that takes an Object as its parameter. 
-- The method first checks if the object is equal to this (the current instance of the class), and if not, it checks if 
-the object is an instance of the Point class. 
-- If both checks pass, the method compares the values of the x and y fields of the two objects to determine equality.
-
-**hashCode()**
- 
-- Returns an integer that represents the object's state. 
-- The default implementation returns the object's memory address, but it can be overridden to provide a custom 
-hash code based on the object's state.
-
-**clone()**
- 
-- Creates a copy of the object. 
-- The default implementation creates a shallow copy of the object, but it can be overridden to provide a deep 
-copy of the object.
-    
-**finalize()**
- 
-- Called by the garbage collector when the object is no longer reachable. 
-- This method can be overridden to release resources held by the object.
-    
-**wait(), notify(), notifyAll()**
- 
-- These methods are used for **inter-thread communication** and are related to the monitor concept. 
-- `wait()` causes the current thread to wait until another thread invokes the `notify()` or `notifyAll()` method 
-for this object. 
-- `notify()` wakes up a single thread that is waiting on this object's monitor. 
-- `notifyAll()` wakes up all threads that are waiting on this object's monitor.
-- These are some of the most common methods that are available in every Java object, but classes can also have 
-additional methods depending on their implementation.
 
 ***
 
@@ -1046,69 +1364,110 @@ object, either statically or dynamically, without affecting the behavior of othe
 - Here is an example of the Decorator pattern in Java:
 
 ```java
-interface Component {
-    void operation();
+public interface Order {
+    // Decorated class must implements this interface
+    double getPrice();
+    String getLabel();
 }
 
-class ConcreteComponent implements Component {
-    public void operation() {
-        System.out.println("ConcreteComponent operation");
-    }
-}
+public class Pizza implements Order {
+    // Class that must be decorated implements interface Order
+    // Decorator means dynamically add responsibilities to object
 
-abstract class Decorator implements Component {
-    protected Component component;
+    private String label;
+    private double price;
 
-    public Decorator(Component component) {
-        this.component = component;
-    }
-
-    public void operation() {
-        component.operation();
-    }
-}
-
-class ConcreteDecoratorA extends Decorator {
-    public ConcreteDecoratorA(Component component) {
-        super(component);
+    public Pizza(String label, double price) {
+        this.label = label;
+        this.price = price;
     }
 
-    public void operation() {
-        super.operation();
-        System.out.println("ConcreteDecoratorA operation");
+    @Override
+    public double getPrice() {
+        return this.price;
+    }
+
+    @Override
+    public String getLabel() {
+        return this.label;
     }
 }
 
-class ConcreteDecoratorB extends Decorator {
-    public ConcreteDecoratorB(Component component) {
-        super(component);
+public abstract class Extra implements Order {
+
+    protected Order order;
+    protected String label;
+    protected double price;
+
+    public Extra(String label, double price, Order order) {
+        this.label = label;
+        this.price = price;
+        this.order = order;
     }
 
-    public void operation() {
-        super.operation();
-        System.out.println("ConcreteDecoratorB operation");
+    // price delegate to other implementation
+    public abstract double getPrice();
+
+    public String getLabel() {
+        return order.getLabel() + ", " + this.label;
     }
+
+}
+
+public class DoubleExtra extends Extra {
+
+    public DoubleExtra(String label, double price, Order order) {
+        super(label, price, order);
+    }
+
+    @Override
+    public double getPrice() {
+        return (this.price * 2) + order.getPrice();
+    }
+
+    @Override
+    public String getLabel() {
+        return order.getLabel() + ", double " + this.label;
+    }
+}
+
+public class NoCostExtra extends Extra {
+
+    public NoCostExtra(String label, double price, Order order) {
+        super(label, price, order);
+    }
+
+    @Override
+    public double getPrice() {
+        return order.getPrice();
+    }
+}
+
+public class RegularExtra extends Extra {
+
+    public RegularExtra(String label, double price, Order order) {
+        super(label, price, order);
+    }
+
+    @Override
+    public double getPrice() {
+        return this.price + order.getPrice();
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+        Order fourSeasonPizza = new Pizza("Four season", 10); // Reason why program to interface
+        fourSeasonPizza = new RegularExtra("Pepperoni", 4, fourSeasonPizza);
+        fourSeasonPizza = new DoubleExtra("Mozarella", 2, fourSeasonPizza);
+        // fourSeasonPizza = new NoCostExtra("becon", 2, fourSeasonPizza);
+
+        System.out.println(fourSeasonPizza.getPrice() + " : " + fourSeasonPizza.getLabel());
+    }
+
 }
 ```
-
-- Here, the Component interface defines the operation that will be decorated, ConcreteComponent is an implementation 
-of the Component interface that performs the basic operation, and Decorator is an abstract class that implements the 
-Component interface and contains a reference to a Component object. 
-- ConcreteDecoratorA and ConcreteDecoratorB are concrete decorator classes that add new behaviors to the Component 
-object they decorate.
-- In this example, a ConcreteComponent object can be decorated with one or more ConcreteDecoratorA and 
-ConcreteDecoratorB objects. 
-- The `operation()` method of each decorator is called in addition to the `operation()` method of the ConcreteComponent, 
-allowing the behavior of the ConcreteComponent to be extended.
-
-```java
-Component component = new ConcreteComponent();
-component = new ConcreteDecoratorA(component);
-component = new ConcreteDecoratorB(component);
-component.operation();
-```
-
-- This way, Decorator pattern allows adding new behavior to objects without changing their class.
      
 **The Command pattern**
  
@@ -1218,8 +1577,8 @@ class Adapter extends Adaptee implements Target {
 ```
 
 - Here, the Target interface defines the interface that the client expects, Adaptee class is an existing class that has
- the functionality that we want to reuse but its interface is not compatible with the client. 
- - Adapter class is an adapter that converts the interface of the Adaptee class into the interface expected by the client.
+the functionality that we want to reuse but its interface is not compatible with the client. 
+- Adapter class is an adapter that converts the interface of the Adaptee class into the interface expected by the client.
 - In this example, the client expects an object that implements the Target interface. 
 - By creating an Adapter object, we can pass an Adaptee object to the client which can then call the `request()` method 
 of the Adapter that will in turn call the `specificRequest()` method of the Adaptee.
@@ -1388,7 +1747,7 @@ class ConcreteClassB extends AbstractClass {
 
 - Here, the AbstractClass defines the template method `templateMethod()` that provides the skeleton of an algorithm, 
 including the order of the steps. 
-- The `operation1()` and `operation2()` methods are abstract and must be implemented by subclasses. 
+- The `operation1()` and `operation2()` methods are `abstract` and must be implemented by subclasses. 
 - ConcreteClassA and ConcreteClassB are subclasses that implement the `operation1()` and `operation2()` methods.
 - In this example, the client can create an object of ConcreteClassA or ConcreteClassB and call the `templateMethod()` 
 on the object, it will print the behavior of operation1 and operation2 that implemented in the concrete class.
@@ -1409,10 +1768,10 @@ an algorithm, while the template method defines the skeleton of the algorithm an
     
 **The Iterator pattern**
 
-- The Iterator pattern is a behavioral design pattern that allows traversing elements of an aggregate object 
+- The Iterator pattern is a **behavioral** design pattern that allows traversing elements of an aggregate object 
 (such as a list or a set) without exposing its internal structure. 
-- In Java, the Iterator pattern is implemented using the Iterator interface, which is part of the Java Collection Framework.
-- Here is an example of the Iterator pattern in Java:
+- In Java, the Iterator pattern is implemented using the `Iterator` interface, which is part of the Java Collection Framework.
+- Here is an example of the `Iterator` pattern in Java:
 
 ```java
 interface Iterator<E> {
@@ -1459,7 +1818,7 @@ class ConcreteAggregate<E> implements Aggregate<E> {
 
 - In this example, the ConcreteAggregate class is an aggregate object that implements the Aggregate interface. 
 - It has a list of items and a method `createIterator()` that creates and returns an instance of the ConcreteIterator class. 
-- The ConcreteIterator class implements the Iterator interface and has a reference to the list of items. 
+- The ConcreteIterator class implements the `Iterator` interface and has a reference to the list of items. 
 - It provides methods to check if there are more items in the list (`hasNext()`) and to return the next item (`next()`).
 - The client can use the ConcreteAggregate and ConcreteIterator classes to traverse the items in the list:
 
@@ -1487,108 +1846,6 @@ item 3
 without exposing its internal structure. 
 - The client can use the iterator to traverse the elements in the aggregate object, without knowing how the aggregate 
 object is implemented.
-
-***
-
-**Testability**
-
-- Testing code in an enterprise application can be a complex process, as enterprise applications often have many 
-dependencies and integrations with other systems. 
-- Here are a few common ways to test code in an enterprise application:
-    - Unit testing: 
-        - This involves writing individual tests for small units of code, such as a single method or class. 
-        - Unit tests are typically written by developers and are intended to test the functionality of the code they 
-        have written.
-    - Integration testing: 
-        - This involves testing how different parts of the application work together. 
-        - This type of testing is typically done after unit testing and before acceptance testing. 
-        - It can be done by developers, but also by a separate team responsible for testing.
-    - Functional testing:
-        - This type of testing is focused on testing the application's functionality from the user's perspective. 
-        - It is done to ensure that the application behaves as expected and that all requirements are met.
-    - Performance testing: 
-        - This type of testing is focused on evaluating the application's performance under different loads, such as 
-        high traffic, high data volume, etc. 
-        - This is done to ensure that the application can handle the expected workload and identify bottlenecks.
-    - Security testing: 
-        - This type of testing is focused on evaluating the application's security. 
-        - It is done to ensure that the application is secure and can protect against potential security threats.
-    - Acceptance testing: 
-        - This type of testing is focused on ensuring that the application meets the needs of the users and can be 
-        accepted for use. 
-        - It is typically done by a separate testing team or by the end-users themselves.
-- These are just a few of the ways that code can be tested in an enterprise application, and the specific testing 
-approach will depend on the application's requirements and constraints.
-- The Spring Framework provides several libraries and tools that can be used to perform various types of tests on 
-your application. 
-- Here are a few examples:
-    - JUnit: 
-        - This is a widely used testing framework for Java that can be used for unit testing.
-         - Spring provides support for JUnit through the spring-test module.
-    - Spring Test: 
-        - This is a library that provides support for testing Spring applications. 
-        - It includes a variety of test-related annotations and classes that can be used to test Spring components,
-         such as controllers, services, and repositories.
-    - Spring Boot Test: 
-        - This is a library that provides support for testing Spring Boot applications. 
-        - It includes a variety of test-related annotations and classes that can be used to test Spring Boot components, 
-        such as controllers, services, and repositories.
-    - Spring MVC Test: 
-        - This is a library that provides support for testing Spring MVC controllers. 
-        - It allows you to simulate HTTP requests and test the controller's response.
-    - Mockito: 
-        - This is a mocking framework for Java that can be used to create mock objects for testing. 
-        - It can be used in conjunction with JUnit or Spring Test to create test doubles for your application's dependencies.
-    - AssertJ: 
-        - This is an assertion library for Java that can be used to write expressive and readable test assertions. 
-        - It can be used in conjunction with JUnit or Spring Test to write test assertions.
-    - DBUnit: 
-        - This is a library that allows you to test database-related code. 
-        - It can be used to set up test data, test database queries and test stored procedures.
-    - Apache JMeter: 
-        - Is a powerful tool for load and performance testing. 
-        - It can be used to simulate  high traffic loads on your application and measure its performance under different loads.
-- These are just a few examples of the libraries and tools that can be used with the Spring Framework to perform various
- types of tests. 
- - Depending on the specific requirements of your application, you may need to use additional libraries or tools.
-- There are several code patterns that can help make your code more testable in Java. 
-- Here are a few examples:
-    - Dependency Injection: 
-        - This pattern allows you to inject dependencies into a class, rather than having the class create them itself. 
-        - This makes it easier to replace dependencies with test doubles, such as mock objects. 
-        - Spring framework provides Dependency Injection through its core, and it is widely used in Spring-based applications.
-    - Inversion of Control: 
-        - This pattern is closely related to dependency injection, and it involves a separation of concerns between 
-        a class and its dependencies. 
-        - It allows you to write code that is more decoupled and easier to test.
-    - Single Responsibility Principle: 
-        - This principle states that a class should have only one reason to change. 
-        - By following this principle, you can write code that is more modular and easier to test.
-    - Interface Segregation Principle: 
-        - This principle states that a class should not be forced to implement interfaces it doesn't use. 
-        - By following this principle, you can write code that is more focused and easier to test.
-    - Don't Repeat Yourself (DRY): 
-        - This principle states that you should avoid repeating the same code in multiple places. 
-        - By following this principle, you can write code that is more maintainable and easier to test.
-- On the other hand, there are also certain code patterns that should be avoided in order to make your code more testable:
-    - Global state: 
-        - This pattern involves using global variables or singletons to store state that is shared across multiple parts 
-        of the application. 
-        - This makes it difficult to test the application in isolation and can lead to unpredictable behavior.
-    - Tight coupling: 
-        - This pattern involves having classes that are highly dependent on each other. 
-        - This makes it difficult to test classes in isolation and can lead to brittle code.
-    - Hidden dependencies: 
-        - This pattern involves having classes that hide their dependencies, making it difficult to replace them with 
-        test doubles.
-    - Long methods: 
-        - This pattern involves having methods with a large number of lines of code. 
-        - This makes it difficult to understand the method's behavior and test it in isolation.
-    - Code duplication: 
-        - This pattern involves having multiple copies of the same code in different parts of the application. 
-        - This makes it difficult to maintain and test the application.
-- By following these code patterns and avoiding anti-patterns, you can write code that is more testable 
-and easier to maintain.
 
 ***
 
@@ -1634,248 +1891,6 @@ class Flight {
 program because the Flight class does not rely on the bird being able to fly.
 - It's important to note that the LSP is not only about the type of object but also the behavior the object should have. 
 - Object of a sub-class should be able to replace a object of the super-class without breaking the functionality.
-
-
-***
-
-**Distributed Architecture**
-
-- Distributed architecture in computer science refers to the design of a system that is distributed across multiple 
-devices or machines, connected through a network. 
-- In a distributed system, multiple devices work together to perform a single task or set of tasks, and share resources 
-and information with each other.
-- There are several types of distributed architectures, including:
-    - Client-Server architecture: 
-        - In this architecture, there are multiple clients that request services from a centralized server. 
-        - The server manages and controls the resources and information, and the clients consume the services provided 
-        by the server.
-    - Peer-to-Peer architecture: 
-        - In this architecture, there are multiple peer devices that act as both clients and servers, and can request 
-        and provide services to each other. 
-        - There is no centralized control, and each peer device is equal in terms of capabilities and responsibilities.
-    - Microservices architecture: 
-        - In this architecture, the system is broken down into a set of small, independent services that communicate 
-        with each other through well-defined APIs. 
-        - Each service is responsible for a specific task or set of tasks, and can be developed, deployed, 
-        and scaled independently of the other services.
-    - Cloud-based architecture: 
-        - In this architecture, the system is built and deployed on a cloud-based infrastructure, 
-        such as Amazon Web Services (AWS) or Microsoft Azure. 
-        - This allows for the system to be highly scalable and able to handle large amounts of data and traffic.
-- Each of these architectures has its own advantages and disadvantages, and the choice of architecture depends on the 
-specific requirements and constraints of the system.
-- Distributed architecture allows for better scalability, reliability, availability, and fault tolerance, 
-as the workload can be distributed among multiple devices and resources can be shared. 
-- It also allows for easier maintenance and upgrades, as individual components can be updated or replaced without 
-affecting the entire system. 
-- However, it also brings its own set of challenges such as network latency, network partition, data consistency and 
-security.
-
-**Availability**
-
-- High availability in a distributed architecture can be achieved by implementing redundancy and failover mechanisms. 
-- This can include:
-    - Load balancing: distributing workloads across multiple servers to ensure that if one fails, others can take over.
-    - Redundant servers: having multiple servers that can take over if the primary one fails.
-    - Data replication: copying data across multiple servers to ensure that if one fails, the data is still available.
-    - Monitoring and alerting: setting up monitoring and alerting systems to detect failures and take appropriate action.
-    - Automatic failover: configuring systems to automatically failover to a redundant server when a failure is detected.
-    - Disaster recovery: having a plan in place for recovering from a major disaster, such as a natural disaster 
-    or cyber attack.
-- Implementing these measures can help ensure that your distributed architecture is highly available and can continue 
-to operate even in the event of failures.
-
-**Reliability**
-
-- High reliability in a distributed architecture can be achieved by implementing several key strategies, such as:
-    - Error handling: designing systems to handle errors and exceptions gracefully, and to automatically recover from 
-    failures when possible.
-    - Monitoring and logging: setting up monitoring and logging systems to detect and diagnose problems, and to provide 
-    valuable data for debugging and troubleshooting.
-    - Versioning and rollbacks: keeping multiple versions of software and configurations, and the ability to easily roll 
-    back to a previous version in case of problems.
-    - Testing and validation: thoroughly testing systems and configurations before deployment, and validating that they 
-    function correctly in a production environment.
-    - Redundancy and failover: implementing redundancy and failover mechanisms, as described above, to ensure that 
-    systems continue to operate even in the event of failures.
-    - Communication protocol: using robust communication protocols that are able to detect and recover from errors, 
-    such as TCP/IP and HTTP.
-    - Service discovery: using service discovery mechanisms to ensure that all the nodes in the distributed architecture 
-    can discover each other and communicate effectively.
-- By implementing these strategies, you can help ensure that your distributed architecture is highly reliable and can 
-continue to operate effectively even in the presence of failures or other problems.
-
-**Scalability**
-
-- High scalability in a distributed architecture can be achieved by implementing several key strategies, such as:
-    - Loose coupling: designing systems so that components are loosely coupled, allowing them to be easily added, 
-    removed, or replaced without affecting other components.
-    - Horizontal scaling: adding more machines to handle increased load, rather than upgrading individual machines.
-    - Stateless design: designing systems so that they don't maintain state, as this allows them to be easily replicated 
-    and scaled out.
-    - Load balancing: distributing workloads across multiple servers to ensure that if one becomes overloaded, 
-    others can take over.
-    - Caching: caching data and computation results in memory, rather than recomputing them, can increase scalability.
-    - Data partitioning: partitioning data across multiple machines, known as sharding, can allow for increased 
-    scalability as the amount of data increases.
-    - Service discovery: using service discovery mechanisms to ensure that all the nodes in the distributed architecture 
-    can discover each other and communicate effectively.
-- By implementing these strategies, you can help ensure that your distributed architecture is highly scalable and can 
-handle increased load without a significant impact on performance or availability.
-
-**Data integrity**
-
-- High data integrity in a distributed architecture can be achieved by implementing several key strategies, such as:
-    - Data validation: validating data before it's stored or transmitted to ensure that it meets certain integrity 
-    constraints, such as data types and required fields.
-    - Data replication: replicating data across multiple servers to ensure that if one fails, 
-    the data is still available, and to prevent data loss.
-    - Data backups: regularly backing up data to ensure that it can be restored in case of failure or corruption.
-    - Data encryption: encrypting data at rest and in transit to protect it from unauthorized access or tampering.
-    - Data consistency: ensuring that data is consistent across all servers, using techniques such as two-phase commit 
-    or distributed consensus algorithms.
-    - Data Auditing: Implementing an auditing mechanism to keep track of all data changes, who made the changes, 
-    when and from where.
-    - Error detection and correction: implementing mechanisms to detect and correct errors, such as checksums or 
-    error-correcting codes, to ensure that data is transmitted and stored correctly.
-    - Access control: implementing access control mechanisms to ensure that only authorized users or systems can access 
-    or modify data.
-- By implementing these strategies, you can help ensure that your distributed architecture is able to maintain 
-high data integrity, even in the presence of failures or other problems.
-
-**Durability**
-
-- High durability in a distributed architecture can be achieved by implementing several key strategies, such as:
-    - Data replication: replicating data across multiple servers to ensure that if one fails, 
-    the data is still available.
-    - Data backups: regularly backing up data to ensure that it can be restored in case of failure or corruption.
-    - RAID storage: using RAID storage systems to ensure that data is stored on multiple disks and can survive 
-    a disk failure.
-    - Data durability guarantees: using data storage systems that provide durability guarantees, such as write-ahead 
-    logging or snapshotting.
-    - Error detection and correction: implementing mechanisms to detect and correct errors, such as checksums or 
-    error-correcting codes, to ensure that data is transmitted and stored correctly.
-    - Data consistency: ensuring that data is consistent across all servers, using techniques such as two-phase commit 
-    or distributed consensus algorithms.
-    - Durable message queues: using durable message queues to store messages, even if the application or the message 
-    broker crashes.
-    - Cloud-based solutions: using cloud-based solutions such as Amazon S3 or Google Cloud Storage, 
-    which provide built-in redundancy and durability.
-- By implementing these strategies, you can help ensure that your distributed architecture is able to maintain high data
-durability, even in the presence of failures or other problems. 
-- It is also important to test and validate your durability mechanisms by simulating failures and other scenarios.
-
-**Robustness**
-
-- High robustness in a distributed architecture can be achieved by implementing several key strategies, such as:
-    - Error handling: designing systems to handle errors and exceptions gracefully, and to automatically recover from 
-    failures when possible.
-    - Monitoring and logging: setting up monitoring and logging systems to detect and diagnose problems, 
-    and to provide valuable data for debugging and troubleshooting.
-    - Versioning and rollbacks: keeping multiple versions of software and configurations, and the ability to easily roll 
-    back to a previous version in case of problems.
-    - Testing and validation: thoroughly testing systems and configurations before deployment, and validating that they 
-    function correctly in a production environment.
-    - Redundancy and failover: implementing redundancy and failover mechanisms, as described above, to ensure that 
-    systems continue to operate even in the event of failures.
-    - Communication protocol: using robust communication protocols that are able to detect and recover from errors, 
-    such as TCP/IP and HTTP.
-    - Service discovery: using service discovery mechanisms to ensure that all the nodes in the distributed architecture 
-    can discover each other and communicate effectively.
-    - Circuit breaking: implementing a circuit breaker pattern, which provides a mechanism to detect 
-    and prevent cascading failures by temporarily stopping requests to a service that is experiencing issues.
-    - Graceful degradation: designing systems to continue operating at a reduced level of functionality even if some 
-    components fail.
-- By implementing these strategies, you can help ensure that your distributed architecture is robust, able to handle and 
-recover from failures, and continue to operate effectively even in the presence of problems.
-
-**Robustness, what does it means**
-
-- A robust distributed system is a system that is able to continue operating effectively, even in the presence of 
-failures or other problems. 
-- A robust distributed system typically has several key characteristics, including:
-    - Fault tolerance: The system is able to tolerate failures of individual components and continue operating.
-    - High availability: The system is able to respond to requests and provide service even when under heavy load or in 
-    the presence of failures.
-    - Scalability: The system is able to handle increased load and continue operating effectively.
-    - Resilience: The system is able to recover quickly and efficiently from failures or other problems.
-    - Security: The system is able to protect against unauthorized access or attacks and can ensure the data integrity.
-    - Performance: The system is able to provide high performance in terms of responsiveness, throughput and data 
-    integrity.
-    - Manageability: The system is easy to manage, and it provides monitoring, logging, and alerting capabilities.
-    - Flexibility: The system can be easily modified or extended as requirements change over time.
-- A robust distributed system is designed to be reliable, maintainable, and efficient, and is able to provide a high 
-level of service quality, even in the presence of failures or other problems.
-
-**Distributed system design tradeoffs**
-
-- When designing a distributed system, there are several trade-offs that need to be considered. 
-- Some of the main trade-offs include:
-    - Consistency vs availability: distributed systems often need to make a trade-off between consistency, 
-    which ensures that all nodes have the same view of the data, and availability, which ensures that the system is 
-    always able to respond to requests.
-    - Partition tolerance vs consistency: distributed systems need to make a trade-off between being able to tolerate 
-    network partitions, which can occur when different parts of the system can't communicate with each other, 
-    and consistency, which ensures that all nodes have the same view of the data.
-    - Scalability vs fault-tolerance: distributed systems need to make a trade-off between scalability, 
-    which allows the system to handle increased load, and fault-tolerance, 
-    which ensures that the system can continue to operate even in the presence of failures.
-    - Latency vs throughput: distributed systems need to make a trade-off between latency, which is the time it takes 
-    for a request to be processed, and throughput, which is the number of requests that can be processed in a given time 
-    period.
-    - Cost vs performance: distributed systems need to make a trade-off between cost, which includes the hardware and 
-    software expenses, and the performance, which includes the response time, throughput and data integrity.
-    - Flexibility vs simplicity: distributed systems need to make a trade-off between flexibility, which allows for easy 
-    modification and extension of the system, and simplicity, which makes it easier to understand and maintain.
-- Each trade-off depends on the specific requirements and constraints of the system and should be carefully considered 
-to find the best balance for your use case.
-
-**Limitations**
-
-- Distributed systems have a number of limitations, some of the main ones include:
-    - Complexity: 
-        - Distributed systems are more complex than traditional systems, as they involve multiple components that need 
-        to be coordinated and managed. 
-        - This complexity can make it more difficult to understand, debug, and maintain the system.
-    - Latency: communication between different components of a distributed system can introduce latency, which can 
-    impact the performance and responsiveness of the system.
-    - Consistency: maintaining consistency across all nodes in a distributed system can be challenging, particularly in 
-    the presence of network partitions or other failures.
-    - Security: distributed systems can be more vulnerable to security threats, such as network attacks or unauthorized 
-    access to data, due to the increased number of components and communication channels.
-    - Scalability: scaling a distributed system to handle increased load can be challenging, as it requires balancing 
-    the needs of different components and ensuring that they can continue to work together effectively.
-    - Testing and debugging: testing and debugging distributed systems can be more difficult than traditional systems, 
-    as it requires a more comprehensive understanding of the interactions between different components, 
-    and the potential impact of different failure scenarios.
-    - Interoperability: distributed systems can be composed of different technologies, or different versions of the same 
-    technology, and thus, interoperability can be a problem if not designed properly.
-    - Configuration and management: distributed systems require a significant amount of configuration and management 
-    to ensure that all components are properly configured, updated and maintained.
-- These limitations should be taken into account when designing and implementing a distributed system, 
-and strategies should be put in place to mitigate them as much as possible.
-
-**Simplicity**
-
-- There are several measures that can be taken to add simplicity to distributed system design, some of the main ones include:
-    - Keeping the system simple: Avoid overcomplicating the system by introducing unnecessary features or components, 
-    and strive for simplicity in the design and implementation.
-    - Using standard protocols: Utilizing standard protocols and technologies can make it easier to integrate different 
-    components of the system and to understand how they work together.
-    - Using a Microservices architecture: Microservices architecture breaks down a system into small, independent, 
-    and loosely coupled services, making it easier to understand, develop and maintain.
-    - Implementing modular design: Designing the system as a set of independent, reusable modules can make it easier to 
-    understand and maintain, as well as easier to scale and evolve over time.
-    - Automation: Automating repetitive tasks, such as deployment, testing, and monitoring, can help simplify the 
-    management of the system.
-    - Proper documentation: Proper documentation of the system, including architecture diagrams, and how-to guides, 
-    can greatly simplify the understanding and maintenance of the system.
-    - Adopting a simple data model: A simple data model can help simplify the system and make it easier to understand 
-    and maintain.
-    - Using a simple language: Using simple and easy-to-understand programming languages can help simplify the system 
-    and make it easier to understand, develop, and maintain.
-- By implementing these strategies, you can help make your distributed system design simpler, 
-easier to understand and maintain, and more robust over time.
 
 ***
 
@@ -1942,7 +1957,7 @@ underlying architecture is a NoSQL.
 
 **Avro**
 
-- Apache Avro is a data serialization system that provides a compact, fast, and binary format for data. 
+- Apache Avro is a data serialization system that provides a compact, fast, and **binary format** for data. 
 - It is often used in big data and distributed systems to efficiently serialize data for storage and transmission.
 - Avro provides a schema-based system, which means that the structure of the data is defined in a JSON-based schema. 
 - This allows for compatibility between different languages and systems, as the schema can be shared and used to read 
@@ -1952,9 +1967,9 @@ breaking compatibility with existing data.
 - Avro is widely used in various big data technologies such as Apache Kafka, Apache Hadoop, Apache Hive and Apache NiFi.
 - In Kafka, Avro is used to serialize and deserialize messages in a compact binary format, which makes it a good choice 
 for high-throughput data streams.
-- In Hadoop, Avro is used as the default data storage format in the AvroFileInputFormat and AvroFileOutputFormat classes 
-of the Hadoop MapReduce framework.
-- In Hive, Avro is used as a storage format for Hive tables and can be used in conjunction with the AvroSerDe 
+- In Hadoop, Avro is used as the default data storage format in the `AvroFileInputFormat` and `AvroFileOutputFormat` 
+classes of the Hadoop MapReduce framework.
+- In Hive, Avro is used as a storage format for Hive tables and can be used in conjunction with the `AvroSerDe` 
 (serializer/deserializer) to read and write Avro data.
 - In Apache NiFi, Avro is used as a data format for data transmission in NiFi flows, for example for data ingestions, 
 conversions, transformations and more.
@@ -1975,7 +1990,7 @@ Java Virtual Machine (JVM).
 - During this stage, the program is executed as intended, provided that there are no errors in the bytecode. 
 - The JVM also checks for errors during runtime, such as null pointer exceptions, and generates error messages if any 
 are found.
-- It's worth noting that some errors can be only detected at runtime, such as a `ClassNotFoundException that can be 
+- It's worth noting that some errors can be only detected at runtime, such as a `ClassNotFoundException` that can be 
 thrown when a class is not found at runtime.
 - In general, it's better to catch errors at compile-time, as it makes debugging and maintaining the code easier.
 
@@ -1990,7 +2005,7 @@ such as an HTML page, JSON data, or a file.
 `@Controller` and `@ResponseBody` annotations. 
 - The `@Controller` annotation is used to indicate that the class is a controller, and the `@ResponseBody` annotation 
 is used to indicate that the method's return value should be written to the response body.
-- Here is an example of a simple REST controller that handles incoming GET requests to the "/hello" endpoint and returns 
+- Here is an example of a simple REST controller that handles incoming `GET` requests to the "/hello" endpoint and returns 
 a greeting message:
 
 ```java
@@ -2013,7 +2028,7 @@ public class HelloController {
 - When a GET request is sent to the "/hello" endpoint, the `sayHello()` method is invoked and the string "Hello, World!" 
 is returned as the response.
 - Another example, here is a REST controller that receives a POST request to the "/users" endpoint, 
-it will parse the request body as a json and create the user in the database and return the created user as json
+it will parse the request body as a json and create the user in the database and return the created user as json.
 
 ```java
 import org.springframework.web.bind.annotation.PostMapping;
@@ -2033,12 +2048,51 @@ public class UserController {
 }
 ```
 
-- This is a simple example of how a REST controller in Spring Framework works. 
 - In a real-world application, you would typically need to handle more complex scenarios, such as handling different 
 HTTP methods, validating request data, handling errors, and so on.
 - You can also use other annotations such as `@PutMapping`, `@DeleteMapping`, `@PatchMapping` to handle different 
 http methods, and other annotations like `@PathVariable`, `@RequestParam` to get the variables from the path and the 
 query parameters.
+
+**What is a controller**
+
+- In Spring, the term "controller" refers to a component in the Model-View-Controller (MVC) pattern that handles incoming 
+requests and returns responses to the client. 
+- In the context of RESTful web services, a class that is defined as a controller is responsible for handling HTTP 
+requests and returning appropriate HTTP responses.
+- A controller class in Spring REST typically handles requests that are sent to a specific URL and performs actions such 
+as reading or writing data to a database, calling other services, or processing the request data. 
+- The result of these actions is then used to generate an HTTP response, which is typically in the form of a JSON or 
+XML payload.
+- For example, in a Spring REST application, you might define a controller class to handle requests to the endpoint 
+"/users". 
+- This controller would handle requests to retrieve all users, create a new user, update an existing user, 
+or delete a user. 
+- The methods in this controller class would handle the incoming request data, perform the appropriate actions, 
+and return an HTTP response to the client.
+
+**HTTP GET, POST characteristics**
+
+- The HTTP (Hypertext Transfer Protocol) GET and POST methods are used to request data from a server or 
+send data to a server. 
+- Here are some characteristics of each method:
+    - GET:
+        - Safe: A GET request is considered a safe method, which means that it should not modify any data on the server.
+        - Idempotent: A GET request is considered idempotent, which means that repeated requests should have the same 
+        effect as a single request.
+        - Limited Size: The size of a GET request is limited by the maximum length of a URL, which is typically around 
+        2048 characters.
+        - No Request Body: GET requests do not have a request body, and all data is passed as query parameters in the URL.
+    - POST:
+        - Not Safe: POST requests can modify data on the server.
+        - Not Idempotent: POST requests are not idempotent, meaning that repeated requests will have different effects.
+        - Unlimited Size: POST requests can have an unlimited size for the request body.
+        - Request Body: POST requests have a request body, which can contain data in various formats such as JSON, XML, 
+        or form data.
+- In general, GET requests are used to retrieve data from the server, while POST requests are used to send data to 
+the server. 
+- However, this is just a general guideline and there are many other HTTP methods available that can be used for 
+different purposes, such as PUT, DELETE, PATCH, etc.
 
 **CORS**
 
@@ -2152,9 +2206,6 @@ server {
 ```
 
 - This block listen to port 80 and redirect all the incoming traffic to the HTTPS server.
-- It's important to note that this is a basic example, and you will likely need to make additional configuration changes 
-to suit your specific use case. 
-- You should also test your configuration to make sure that it is working as expected.
 
 **X-Real-IP**
 
@@ -2162,7 +2213,7 @@ to suit your specific use case.
 - When a request passes through a proxy server, the IP address of the client is replaced with the IP address of the 
 proxy server. 
 - This makes it difficult to determine the original client's IP address. 
-- The X-Real-IP header is used to pass the original client's IP address along with the request so that it can be used by 
+- The `X-Real-IP` header is used to pass the original client's IP address along with the request so that it can be used by 
 the server that receives the request.
 - In the example, the `proxy_set_header X-Real-IP $remote_addr;` directive is used to set the `X-Real-IP` header to the 
 value of the `$remote_addr` variable, which contains the IP address of the client that is making the request. 
@@ -2173,4 +2224,155 @@ in web server and proxy server configurations.
 - Additionally, `X-Real-IP` header is useful in tracking the real IP of the client, in situations like rate limiting, 
 access restriction, logging, etc.
 
+**LOMBOK**
 
+- Project Lombok is a Java library that provides a set of annotations to reduce boilerplate code. 
+- Some of its most popular features include:
+    - `@Getter` and `@Setter` annotations to generate getters and setters for fields automatically.
+    - `@ToString` annotation to generate a `toString()` method for a class.
+    - `@EqualsAndHashCode` annotation to generate `equals()` and `hashCode()` methods.
+    - `@NoArgsConstructor`, `@RequiredArgsConstructor`, and `@AllArgsConstructor` annotations to generate constructors.
+    - `@Data` annotation, which includes `@ToString`, `@EqualsAndHashCode`, `@Getter`, `@Setter`, and `@RequiredArgsConstructor`.
+    - `@Builder` annotation to generate a builder pattern for creating instances of a class.
+- By using Project Lombok, developers can write more concise code that is easier to read and maintain. 
+- The annotations are processed at compile-time and do not have any runtime overhead, making it suitable for use in 
+production systems.
+
+**Spring REST**
+
+- Some key concepts in Spring REST.
+- RESTful Web Services: 
+    - Spring REST provides a framework for building RESTful web services, which are services that use the HTTP protocol 
+    and follow the constraints of the REST architectural style.
+- Request Mapping: 
+    - Request mapping is the process of mapping incoming HTTP requests to specific controller methods. 
+    - This is done using the `@RequestMapping` annotation in Spring, which maps a specific URL pattern to a controller method.
+- Model-View-Controller (MVC) pattern: 
+    - Spring REST uses the Model-View-Controller (MVC) pattern to separate the application into different components 
+    that handle specific tasks. 
+    - In the context of RESTful web services, the controller component is responsible for handling incoming requests and 
+    returning appropriate responses, while the model component represents the data that is being manipulated.
+- HttpMessageConverter: 
+    - HttpMessageConverter is an interface in Spring that defines how to convert HTTP requests and responses to and from 
+    Java objects. 
+    - Spring provides a number of built-in HttpMessageConverters, such as the MappingJackson2HttpMessageConverter, 
+    which can convert JSON data to and from Java objects.
+- Exception Handling: 
+    - In Spring REST, exception handling is the process of handling errors that occur during the processing of a request. 
+    - This can be done using the `@ExceptionHandler` annotation, which maps a specific exception to a method that will 
+    handle the exception.
+- Validation: 
+    - Spring REST provides support for validating incoming request data using the Bean Validation API. 
+    - This allows you to define constraints on the data that is being sent to the server, such as required fields or 
+    minimum and maximum lengths.
+- Security: 
+    - Spring REST provides a number of features for securing RESTful web services, such as authentication and authorization 
+    using the Spring Security framework.
+
+**ControllerAdvice**
+
+- In Spring, the `@ControllerAdvice` annotation is used to define a class as a global exception handler for controllers. 
+- It allows you to centralize the exception handling logic in your application, so that you can handle exceptions 
+in a consistent way across multiple controllers.
+- A class annotated with `@ControllerAdvice` can handle exceptions that are thrown by controllers in the same application. 
+- The methods in a `@ControllerAdvice` class can use the `@ExceptionHandler` annotation to specify which exceptions 
+they should handle. 
+- When an exception is thrown by a controller, Spring will search for a `@ControllerAdvice` class that can handle the 
+exception and invoke the appropriate `@ExceptionHandler` method.
+- For example, suppose you have a number of controllers in your application, and you want to return a custom error response 
+whenever a specific exception is thrown. 
+- You could create a `@ControllerAdvice` class with an `@ExceptionHandler` method that handles the specific exception 
+and returns the custom error response:
+
+```java
+@ControllerAdvice
+public class MyExceptionHandler {
+
+    @ExceptionHandler(MyException.class)
+    public ResponseEntity<ErrorResponse> handleMyException(MyException ex) {
+        ErrorResponse error = new ErrorResponse();
+        error.setErrorCode(ex.getErrorCode());
+        error.setErrorMessage(ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+}
+```
+
+- In this example, the MyExceptionHandler class handles instances of the MyException class and returns a custom 
+error response in the form of a `ResponseEntity` with a `HttpStatus.BAD_REQUEST` status code.
+- The `@ControllerAdvice` annotation is a powerful tool for handling exceptions in a centralized and consistent 
+way in Spring REST applications.
+
+***
+
+**SQL**
+
+- SQL (Structured Query Language) is a standard language for interacting with relational databases. 
+- It is used to create, modify, and query databases.
+- Database design is the process of creating a conceptual model of a database that defines the structure and relationships 
+between data elements. 
+- A well-designed database can improve the efficiency and accuracy of data storage and retrieval, making it easier 
+to manage and maintain.
+- Some important concepts in SQL and database design include:
+    - Relationships: In a relational database, data is organized into tables with well-defined relationships between them, 
+    such as one-to-one, one-to-many, and many-to-many.
+    - Normalization: Normalization is the process of organizing data in a relational database to reduce redundancy and 
+    improve data integrity. This is achieved by breaking down data into smaller, related tables.
+    - Indexes: Indexes are used to speed up database queries by allowing the database management system to quickly locate 
+    specific records.
+    - Queries: SQL queries are used to retrieve data from a database. They can be simple, such as a `SELECT` statement 
+    to retrieve all data from a table, or complex, using multiple tables, conditions, and aggregate functions.
+    - Transactions: Transactions are a series of database operations that are treated as a single unit of work. 
+    They ensure that either all operations are completed or none are, ensuring data consistency and avoiding partial updates.
+    - Stored procedures: Stored procedures are pre-written SQL statements that can be stored in a database and reused 
+    as needed. They can be used to simplify complex queries, improve performance, and enforce business rules.
+- These concepts are important to understand when working with SQL and database design. 
+- A solid understanding of SQL and database design is important for anyone who wants to work with relational databases, 
+whether as a database administrator, data analyst, or software developer.
+- SQL queries can be used to retrieve and manipulate data in a relational database. 
+- Here are some common types of SQL queries:
+- `SELECT`: 
+    - The `SELECT` statement is used to retrieve data from one or more tables. 
+    - For example, to retrieve all columns from a table named "employees," the following query could be used:
+```
+SELECT * FROM employees;
+```
+- `WHERE`: 
+    - The `WHERE` clause is used to filter the data returned by a `SELECT` statement based on certain conditions. 
+    - For example, to retrieve all employees whose salary is greater than $50,000, the following query could be used:
+```
+SELECT * FROM employees
+WHERE salary > 50000;
+```
+- `JOIN`: 
+    - The `JOIN` clause is used to combine rows from two or more tables based on a related column between them. 
+    - For example, to retrieve the first name and last name of employees along with the name of the department 
+    they work in, the following query could be used:
+```
+SELECT employees.first_name, employees.last_name, departments.name
+FROM employees
+JOIN departments ON employees.department_id = departments.department_id;
+```    
+- `GROUP BY`: 
+    - The `GROUP BY` clause is used to group rows with similar data together. 
+    - For example, to retrieve the total salary for each department, the following query could be used:
+```
+SELECT departments.name, SUM(employees.salary) as total_salary
+FROM employees
+JOIN departments ON employees.department_id = departments.department_id
+GROUP BY departments.name;
+```
+- `UPDATE`: 
+    - The `UPDATE` statement is used to modify existing data in a table. 
+    - For example, to increase the salary of all employees by 10%, the following query could be used:
+```
+UPDATE employees
+SET salary = salary * 1.10;
+```
+- `DELETE`: 
+    - The `DELETE` statement is used to remove data from a table. 
+    - For example, to delete all employees who have left the company, the following query could be used:
+```
+DELETE FROM employees
+WHERE status = 'Left';
+```    

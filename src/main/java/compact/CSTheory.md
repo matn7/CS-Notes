@@ -67,13 +67,13 @@ in its superclass.
 - Overloading is the ability of a class to have multiple methods with the same name but different parameters. 
 - This allows for the use of the same method name with different types of inputs, making the code more readable.
 
-**Interfaces:**
+**Interfaces**
 
 - Interfaces are a way to define a contract for a class, specifying the methods and properties that the class must have.
 - This allows for the creation of classes that conform to a specific set of rules, making them more interchangeable and 
 reusable.
 
-**Access Modifiers:**
+**Access Modifiers**
 
 - Access modifiers are keywords used to control the accessibility of classes, methods, and properties. 
 - They determine which parts of the program can access a particular class, method or property.
@@ -183,10 +183,12 @@ the code, you should use an environment variable, or a configuration file and re
 
 ## Aspect oriented programming
 
-- Aspect-Oriented Programming (AOP) is a programming paradigm that aims to increase modularity by allowing the 
+- Aspect-Oriented Programming (AOP) is a programming paradigm that aims to **increase modularity** by allowing the 
 separation of cross-cutting concerns. 
-- A cross-cutting concern is a functionality that affects multiple parts of an application, such as logging, security, 
-or transaction management.
+- A cross-cutting concern is a functionality that affects multiple parts of an application, such as:
+    - logging
+    - security 
+    - transaction management
 - In traditional Object-Oriented Programming (OOP), these concerns are often scattered across the codebase, 
 making it difficult to understand the overall structure of the program and to maintain or modify it. 
 - AOP allows for the separation of these concerns into distinct units called aspects, which can be independently reused 
@@ -344,5 +346,69 @@ platform and JVM being used.
 
 ***
 
+**Operating Systems Interview**
 
+1) What is an operating system and what are its functions?
+    - Answer: An operating system (OS) is the software that manages and controls the resources of a computer system. 
+    - Its main functions include resource management (such as CPU time, memory, and I/O devices), task management 
+    (such as scheduling and execution of processes), and communication between processes.
+2) What are the different types of operating systems?
+    - There are several types of operating systems, including:
+        - Single-user, single-tasking OS: Designed for use on a single computer with a single user. Examples include 
+        MS-DOS and early versions of Windows.
+        - Multi-user OS: Designed for use on computers with multiple users. Examples include Unix, Linux, and macOS.
+        - Multi-tasking OS: Designed to run multiple tasks (or processes) at the same time. Examples include Windows and macOS.
+        - Real-time OS: Designed to respond to events within a specified time frame. Examples include VxWorks and real-time 
+        versions of Linux.
+3) What is process management in an operating system?
+    - Process management is the function of the operating system that manages and coordinates the execution of processes. 
+    - This includes creating and deleting processes, allocating and deallocating resources, and scheduling the 
+    execution of processes.
+4) What is memory management in an operating system?
+    - Memory management is the function of the operating system that manages and controls the use of physical
+     memory (RAM) in a computer system. 
+     - This includes allocating and deallocating memory to processes, managing virtual memory, and controlling memory access.
+5) What is file system management in an operating system?
+    - File system management is the function of the operating system that manages and controls the organization 
+    and access of files on a storage device, such as a hard drive or solid-state drive. 
+    - This includes creating and deleting files, organizing files in directories, and managing file permissions and security.
+6) What is virtual memory?
+    - Virtual memory is a feature of an operating system that allows a computer to be able to compensate for 
+    shortages of physical memory by temporarily transferring pages of data from random access memory (RAM) to disk storage. 
+    - This makes it appear as if the computer has more memory than it actually does, allowing it to run larger applications 
+    or multiple applications simultaneously.
+6) What is a process?
+    - A process is a program in execution. 
+    - It is a self-contained execution environment that consists of the program code, data, and system resources 
+    (such as memory and CPU time) required to execute the program.
+7) What is a thread?
+    - A thread is a lightweight and independent unit of execution within a process. 
+    - A process can contain multiple threads, which can run concurrently and share the same memory and system resources. 
+    - Threads are often used to increase the performance and responsiveness of applications.
+8) Can a context switch occur in kernel mode?
+    - A context switch can occur in kernel mode. 
+    - However, it is not as common as context switching in user mode because kernel mode is typically reserved for 
+    critical system functions and tasks that have a higher priority than user-mode tasks. 
+    - When a context switch occurs in kernel mode, it typically involves switching from one system task to another, 
+    rather than from one user process to another. 
+    - Additionally, because kernel mode has greater privileges and access to system resources, the context switch must 
+    be carefully managed to ensure the security and stability of the operating system.
+9) How OS manages deadlocks?
+    - Deadlock Prevention: This technique tries to prevent deadlocks from occurring in the first place by defining a set 
+    of rules that must be followed when allocating resources. For example, the operating system may enforce a rule that 
+    resources must always be requested in a specific order to prevent the formation of circular wait conditions.
+    - Deadlock Detection: This technique periodically checks the system for the presence of deadlocks. When a deadlock 
+    is detected, the operating system must choose a victim process to terminate in order to release its resources and 
+    resolve the deadlock. The selection of the victim process is typically based on various criteria, such as the length 
+    of time it has been waiting for resources or its priority level.
+    - Deadlock Recovery: This technique involves releasing the resources held by one or more processes in order to resolve 
+    a deadlock. The operating system may use various techniques to release the resources, such as forcibly terminating 
+    a process, rolling back the actions of a process, or temporarily suspending a process and releasing its resources.
+    - Timeouts: The operating system may enforce a timeout on resource requests, meaning that if a process is unable to 
+    acquire a requested resource within a certain period of time, it is terminated and its resources are released. 
+    This helps to prevent deadlocks from forming or persisting.
+    - Resource Ordering: The operating system may enforce a strict ordering on the allocation of resources, meaning that 
+    resources are always assigned in a specific order. This helps to prevent circular wait conditions and reduce the 
+    likelihood of deadlocks.
+    
     

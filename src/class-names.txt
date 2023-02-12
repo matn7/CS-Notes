@@ -3,3 +3,140 @@ docks
 pilot
 team
 guard
+
+acquire - aktualizacja
+assertion - zapewnienie
+affecting - wpływ
+alter - zmieniać
+accomplished - realizowany
+
+brittle - kruchy
+
+core - rdzeń
+constraints - ograniczenia
+conjunction - połączenie
+consistent - spójny, logiczny, konsekwentny
+centralize - skoncentrowanego
+capabilities - możliwości
+challenges - wyzwania
+concise - zwięzły
+comprehensive - wyczerpujcy
+checksums - sumy kontrolne
+complexity - złożoność
+compact - zwarty
+custom - zwyczajny
+concepts - pojęcia
+clause - zdanie, człon, klauzula
+
+duplication - powielanie
+database routines - procedury baz danych
+deployed - rozmieszczony
+determine - określa
+durability - trwałość, wytrzymałość, ścisłość
+develop - rozwijać
+different stages - różne etapy
+
+encapsulate - hermetyzować
+efficient - wydajny
+expressiveness - wyrazistość
+expose - ujawnić, eksponować
+explicit - wyraźny
+endpoint - punkt końcowy
+
+following these - przestrzegania tych
+fault - wada, błąd, usterka
+fixed - ustalony
+failures - niepowodzenia
+features - cechy, funkcjonalności
+facilitate - ułatwić
+
+queries - zapytania
+
+handle - obsłużyć
+horizontal - poziomy
+
+invariant - niezmienny
+intended - przeznaczony
+involves - obejmuje
+involves having - polega na posiadaniu
+issued-by - wydany
+invoke - odwołuję się
+indicates - wskazuje
+indefinitely - w sposób
+in general - ogólnie
+is based on - oparty na
+interact - odwoływać
+ingestions - wchoniécie, połknięcie
+
+load balancer - równoważenie obciążenia
+loosely coupled - luźno powiązane
+latency - czas oczekiwania
+
+measures - środki
+maintainability - utrzymywać
+member - członek
+maintain - zachować
+malicious - złośliwych
+
+nodes - węzły
+notify - zawiadomić
+
+obtained - uzyskany
+
+perform - wykonać
+provides - zapewnia
+principle - zasada
+peer - rówieśnik
+property - właściwości
+particular - konkretny
+pattern - wzór
+primary - podstawowy
+privileged - uprzywilejowane
+
+
+reliability - niezawodny
+recovery - poprawa, odzyskanie sił
+robust - solidny, trwały
+robust security measures - solidne środki bezpieczeństwa
+rather than - zamiast
+retained - zachowane
+respectively - odpowiednio
+resilience - odporność
+responsiveness - reakcja
+reusable - wielokrotnego użytku
+relational - relacyjny, pokrewny
+rate limit - ograniczenie szybkości
+reused - ponownie wykorzystane
+
+stored procedures
+specific - konkretny
+set - zbiór
+setting up - ustawienie
+snapshot - migawka
+stale value - przestarzała wartość
+subject - temat
+simplicity - prostota
+support - wsparcie
+sensitive - wrażliwych
+specify - sprecyzowania, uściśla
+
+typically - typowo, zazwyczaj
+troubleshooting - rozwiązywanie problemów
+thoroughly - dokładnie
+terminate - kończy
+track - sledzić
+template - szablon
+to achieve - osiągnąć
+typically - typowo, najczęściej
+tampering - manipulowanie
+tradeoffs - kompromisy
+throughput - wydajność
+
+useful - użyteczny
+user indentity - tożsamość
+up-to-date - aktualny
+utilizing - wykorzystanie
+
+workload - obciażenie pracą
+
+vulnerabilities - luki w zabezpieczeniach

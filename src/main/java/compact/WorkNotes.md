@@ -4,7 +4,7 @@
 most commonly used for transferring web pages and other documents from web servers to web clients (browsers).
 - Here's a general overview of how HTTP works:
     - A client (such as a web browser) sends an HTTP request to a server (such as a web server). 
-    - The request includes a method (such as GET or POST), a path (such as "/index.html"), 
+    - The request includes a method (such as `GET` or `POST`), a path (such as "/index.html"), 
     and headers (such as "Accept-Language" and "User-Agent") that provide additional information about the request.
     - The server receives the request and processes it. 
     - Depending on the method and path specified in the request, the server may retrieve a file from disk, 
@@ -991,3 +991,144 @@ network address information in the IP header of packets while they are in transi
 - These are some of the common locations where PAT servers can be found. 
 - However, the use of PAT servers is not limited to these locations, and they can be deployed in many other places as well.
 
+***
+
+**Handle web server connections**
+
+- The number of requests a web server can handle depends on several factors, including the hardware configuration, 
+the server software, and the complexity of the web applications being served. 
+- To measure the number of requests a web server can handle, you can use a load testing tool to simulate a large number 
+of concurrent users accessing the server. 
+- The tool will send requests to the server and measure its response time, number of errors, and other performance metrics. 
+- Based on these results, you can determine the maximum number of requests the server can handle and identify potential 
+bottlenecks or limitations in your web server setup.
+- In a Spring Boot application, you can set the maximum number of requests that a web server can handle by tuning the 
+connection pool settings and the thread pool configurations.
+- Here are a few steps to do this:
+    - Configure the connection pool: 
+        - You can set the maximum number of connections allowed by your application serverby configuring the connection pool. 
+        - For example, in Tomcat, you can set the maxConnections property in the server.xml file.
+    - Configure the thread pool: 
+        - You can set the maximum number of threads that your application server can handle by configuring the thread pool. 
+        - For example, in Tomcat, you can set the maxThreads property in the server.xml file.
+    - Monitor performance: 
+        - Regularly monitor the performance of your application server and adjust the connection pool and thread pool 
+        settings as needed to ensure that it can handle the desired number of requests.
+- It is important to note that setting the maximum number of requests that a web server can handle is just one aspect of 
+performance tuning. 
+- To ensure optimal performance, you should also consider factors such as network bandwidth, disk I/O, 
+and database performance.
+- In a Spring Boot application, you can configure the connection pool and thread pool settings using properties in the 
+`application.properties` or `application.yml` file.
+- Here's an example of how to configure the connection pool in a Spring Boot application using the `application.properties` file:
+
+```
+# Connection pool configuration
+spring.datasource.tomcat.max-active=100
+spring.datasource.tomcat.max-idle=20
+spring.datasource.tomcat.min-idle=10
+```
+- And here's an example of how to configure the thread pool in a Spring Boot application using the `application.yml` file:
+
+```yaml
+# Thread pool configuration
+spring:
+  task:
+    execution:
+      pool:
+        core-size: 20
+        max-size: 50
+        queue-capacity: 100
+```
+
+- It's important to note that these are just examples and the actual properties that you need to configure may vary 
+depending on the version of Spring Boot you are using and the specific connection pool and thread pool implementations 
+that you have chosen.
+- To set connection pool and thread pool properties at the database level, you need to configure the database connection 
+parameters. 
+- The specific parameters you need to set will depend on the database management system (DBMS) you are using.
+- Here's an example of how to set the connection pool properties in a MySQL database:
+
+```
+# Connection pool configuration
+max_connections=100
+wait_timeout=60
+interactive_timeout=60
+```
+
+- And here's an example of how to set the connection pool properties in a PostgreSQL database:
+
+```
+# Connection pool configuration
+max_connections=100
+idle_in_transaction_session_timeout=60
+```
+
+- In both examples, the max_connections property sets the maximum number of connections that the database will allow. 
+- The wait_timeout and interactive_timeout properties in MySQL, and the idle_in_transaction_session_timeout property 
+in PostgreSQL, determine the amount of time a connection can remain idle before it is closed by the database.
+- It's important to note that these are just examples and the actual properties that you need to configure may vary
+depending on the version of the database management system you are using. 
+- It is also important to consult the documentation of your specific DBMS to determine the appropriate configuration
+settings for your use case.
+- In a Spring Boot application, you can configure the parameters for connecting to a database in the 
+`application.properties` or application.yml file. 
+- The specific parameters you need to set will depend on the database management system (DBMS) you are using.
+- Here's an example of how to configure a MySQL database connection in a Spring Boot application using the application.properties file:
+
+```
+# MySQL database connection configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/mydatabase
+spring.datasource.username=root
+spring.datasource.password=password
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+```
+
+- And here's an example of how to configure a PostgreSQL database connection in a Spring Boot application using the 
+`application.yml` file:
+
+```yaml
+# PostgreSQL database connection configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+```
+
+- In both examples, the url property specifies the connection URL for the database. 
+- The username and password properties specify the credentials for accessing the database. 
+- The driver-class-name property specifies the Java class name for the JDBC driver used to connect to the database.
+- To configure `max_connections`, `wait_timeout`, and `interactive_timeout` for a database from a Spring Boot application, 
+you can use the following methods for MySQL and PostgreSQL:
+- MySQL:
+
+```
+spring.datasource.maxActive=100
+spring.datasource.maxIdle=8
+spring.datasource.minIdle=8
+spring.datasource.initialSize=10
+spring.datasource.validationQuery=SELECT 1
+spring.datasource.testOnBorrow=true
+```
+
+- You can also configure these properties in your `application.yml` file:
+
+```yaml
+spring:
+  datasource:
+    maxActive: 100
+    maxIdle: 8
+    minIdle: 8
+    initialSize: 10
+    validationQuery: SELECT 1
+    testOnBorrow: true
+
+```
+
+- PostgreSQL:
+- In your `application.properties` file, add the following properties:
+- Note: max_connections, wait_timeout, and interactive_timeout are server-side configuration options and are not 
+configurable from the client side. 
+- You may need to adjust these settings directly in your MySQL or PostgreSQL server configuration files.

@@ -143,3 +143,55 @@ you can use any extension you like.
 for Terraform to connect to your cloud provider's API.
 
 ***
+
+**Cloud Computing**
+
+- Cloud computing is a computing model in which resources, such as servers, storage, and applications, are made available 
+to users over the internet. 
+- The main concepts and technologies in cloud computing include:
+    - Service models: Cloud computing offers three main service models: 
+        - Software as a Service (SaaS) 
+        - Platform as a Service (PaaS)
+        - Infrastructure as a Service (IaaS)
+    - Deployment models: Cloud computing can be deployed in different ways, including public cloud, private cloud, 
+    hybrid cloud, and community cloud.
+    - Virtualization: Virtualization is a key technology in cloud computing, as it allows multiple virtual machines 
+    to run on a single physical machine.
+    - Scalability: Cloud computing allows users to scale their resources up or down as needed, allowing them to match 
+    the needs of their applications and users.
+    - Elasticity: Cloud computing offers elasticity, which means that resources can be automatically allocated 
+    and deallocated as needed to meet changing demand.
+    - Automation: Cloud computing relies on automation for many tasks, such as provisioning, monitoring, and scaling.
+    - APIs: APIs are used in cloud computing to enable communication between different components and to allow users 
+    to interact with the cloud.
+    - Security: Cloud computing requires robust security measures to protect user data and applications, 
+    including encryption, access control, and network security.
+    - Cost savings: Cloud computing can offer significant cost savings over traditional IT infrastructure, 
+    as users only pay for what they use and do not need to invest in expensive hardware and software.
+- These are some of the key concepts and technologies in cloud computing. 
+- Understanding these concepts and technologies is crucial for developing and deploying applications in the cloud.
+
+**Building and deploying applications on Google Cloud Platform (GCP)**
+
+- Choose a deployment model: 
+    - Choose between deploying your application on GCP as a standalone application or as a managed service, 
+    such as App Engine or Kubernetes Engine.
+- Plan your infrastructure: 
+    - Decide on the components you need to build your infrastructure, including compute instances, storage, and networking.
+- Set up your environment: 
+    - Create a GCP project, set up your development environment, and install the necessary tools, 
+    such as the Google Cloud SDK.
+- Build your application: 
+    - Write and test your application locally, using the tools and libraries of your choice.
+- Deploy your application: 
+    - Choose a deployment method, such as uploading a Docker container or using a continuous integration/continuous 
+    deployment (CI/CD) pipeline.
+- Monitor and manage your application: 
+    - Use GCP's monitoring and logging tools, such as Stackdriver, to monitor the performance of your application and 
+    resolve any issues that arise.
+- Scale your application: 
+    - Use GCP's automatic scaling and load balancing features to ensure that your application can handle increasing demand.
+- These steps provide a high-level overview of how to build and deploy applications on GCP. 
+- The specific details will depend on the requirements of your application and the deployment model you choose. 
+- GCP offers many tools and services to help you build, deploy, and manage your applications, so it's important to 
+carefully consider your needs and choose the right tools for your project.
