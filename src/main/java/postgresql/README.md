@@ -654,6 +654,7 @@ EXCEPT
 );
 ```
 
+## Assembling Queries with SubQueries
 
 
 

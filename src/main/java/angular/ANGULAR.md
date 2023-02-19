@@ -14,11 +14,38 @@ npm start
 ng serve
 ```
 
+**What's all the different files?**
+
+- Every file creates or defines one thing for our app.
+
+| Name | Type | Purpose |
+|---|---|---|
+| `app.component.html` | Component Template | Contains the HTML that gets displayed to a user |
+| `app.component.ts` | Component Class | Contains code to run when important events occur (like when a user clicks a button) |
+| `translate.service.ts` | Service | Contains code that fetches/stores/updates data |
+| `app.module.ts` | Module | Defines a set of services + components that handle all the functionality for a part of our app |
+
 **Event Binding**
+
+- Event Binding Syntax:
+  - **(click)** - Name of the event we want to watch for.
+  - **onButtonClick()** - What to do when the button gets clicked. Evaluated as CODE!
+
+```html
+<button (click)="onButtonClick()">Generate</button>
+```
 
 ![Event Binding Syntax](images/event-binding-syntax.png "Event Binding Syntax")
 
 **Property Binding**
+
+- Property Binding Syntax:
+  - **[value]** - Name of the property we want to set on this element.
+  - **password** - Name of the property in our class to put here. Evaluated as CODE!
+
+```html
+<input [value]="password" />
+```
 
 ![Property Binding Syntax](images/property-binding-syntax.png "Property Binding Syntax")
 
@@ -27,6 +54,28 @@ ng serve
 ```ts
 {{ password }}
 ```
+
+**Angular vs JavaScript Design Pattern**
+
+- Traditional JS-Only Approach (Pull information out of the DOM):
+  - User enters a password length
+  - User selects 'Include Letters'
+  - User clicks 'Generate' button
+  - We read the value of 'password length' input
+  - We read the value of all three checkboxes
+  - We generate a random password
+  - We throw the password in the 'output' input
+- Angular Approach (Get information out of events):
+  - User enters a password length
+  - Event handler triggered, we store the value as a property on our component class instance:
+    - Need event handler to detect change + property on component class so the value can be used later
+  - User checks the 'Include Letters' checkbox
+  - Event handler triggered, we store the value as a property on our component class instance:
+    - Need event handler to detect change + property on component class so the value can be used later
+  - User clicks the 'Generate' button
+  - Event handler triggered, we generate a password using the properties collected earlier
+  - We update a 'password' property on the component class instance, which causes an update of the 'output' input
+  
 
 **Structural Directives**
 
@@ -41,6 +90,30 @@ npm install -g now
 
 now login
 ```
+
+**Terminology review**
+
+- Component Template:
+  - Contains the HTML that gets displayed to a user.
+  - `app.component.html`
+- Component Class:
+  - Contains code to run when important events occur (like when a user clicks a button).
+  - `app.component.ts`
+- Property Binding:
+  - Sets a property on an HTML element. Everything in the double quotes is code! Can access any property/method from
+  our component class instance.
+  - `<button [disabled]="length">Submit</button>`
+- Event Binding:
+  - Sets up an event handler on an HTML element. Everything in the double quotes is code! Can call any method on the
+  component class instance.
+  - `<button (click)="onButtonClick()">Submit</button>`
+- Interpolation:
+  - Prints out information in a template. Can access any property/method from our component class instance.
+  - `<div>Your password length is {{ length }}</div>`
+- Structural Directive:
+  - Changes the structure of HTML in our template. Some structural directives are given to us by Angular, but we can
+  also create our own.
+  - `<div *ngIf="shouldShowSubmit()"><button>Submit</button></div>`
 
 ***
 
@@ -92,6 +165,7 @@ ng generate component <name>
 - Functions that format data for use in a template.
 - Only used in a template.
 - Some pipes built into Angular.
+- We can build our own pipes very easily.
 
 ```console
 ng generate pipe convert
@@ -145,6 +219,12 @@ export class ClassDirective {
 ```
 
 ### Module System
+
+| Problems | Solutions |
+|---|---|
+| Need to show different pages of content to the user | Use Angular's Routing feature to allow the user to navigate around and see different pages |
+| There are a lot of different components we need to create! | Make separate Modules to group together each set of components |
+| We should make these components somehow reusable | Study each widget we are goind to make in detail and figure out a way to pass it some config options |
 
 ```console
 ng new comps --routing
