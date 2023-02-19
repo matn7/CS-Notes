@@ -285,3 +285,191 @@ openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days
 keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert
 keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed
 ```
+
+***
+
+**Apache Kafka**
+
+- Apache Kafka is a distributed streaming platform that is used for building real-time data pipelines and streaming 
+applications. 
+- Some key concepts in Kafka include:
+    - Topics: 
+        - A topic is a category or feed name to which messages are published. 
+        - Consumers subscribe to one or more topics to receive the messages.
+    - Producers: 
+        - Producers are the processes or applications that send data to Kafka topics.
+    - Consumers: 
+        - Consumers are the processes or applications that read data from Kafka topics.
+    - Brokers: 
+        - Brokers are the servers that make up the Kafka cluster. 
+        - They are responsible for maintaining the published messages and serving them to the consumers.
+    - Partitions: 
+        - Partitions are the method used in Kafka to scale out data over multiple servers. 
+        - Topics are divided into a set of partitions, each of which is stored on a separate broker.
+    - Replication: 
+        - Replication is the process of maintaining multiple copies of data across different brokers in the cluster 
+        for fault tolerance.
+    - Offsets: 
+        - Offsets are a marker in Kafka used to track the position of a consumer in a partition. 
+        - They are used to allow a consumer to re-start reading from where it left off in case of failure.
+    - Zookeeper: 
+        - Zookeeper is a separate service that is used to manage the coordination of the brokers in a Kafka cluster. 
+        - It is responsible for maintaining the state of the cluster and managing the configuration of the brokers.
+
+**Example of Apache Kafka Configuration**
+
+- An example of an Apache Kafka configuration file (server.properties) might look like this:
+
+```
+# General Kafka configuration
+broker.id=1
+listeners=PLAINTEXT://localhost:9092
+log.dirs=/tmp/kafka-logs
+
+# Zookeeper configuration
+zookeeper.connect=localhost:2181
+
+# Replication configuration
+num.replica.fetchers=1
+default.replication.factor=3
+
+# Performance settings
+num.io.threads=8
+num.network.threads=8
+socket.send.buffer.bytes=102400
+socket.receive.buffer.bytes=102400
+socket.request.max.bytes=104857600
+
+# Log cleanup settings
+log.retention.hours=168
+log.segment.bytes=1073741824
+log.cleanup.interval.mins=1
+```
+
+- This configuration file sets up a Kafka broker with the following properties:
+    - The broker ID is set to 1
+    - The broker will listen on the PLAINTEXT protocol on localhost on port 9092
+    - The logs for this broker will be stored in the `/tmp/kafka-logs` directory
+    - The broker will connect to a Zookeeper instance running on localhost on port 2181
+    - The broker will have a replication factor of 3 and use 1 replica fetcher thread
+    - The broker will have 8 IO threads and 8 network threads
+    - The socket buffer sizes are set to 100KB for send and receive
+    - The max request size is set to 100MB
+    - The logs will be retained for 168 hours and segmented at 1GB
+    - Log cleanup will run every 1 minute.
+- It's important to note that the above settings are examples, and some values may need to be adjusted based on the 
+specific requirements of your application and hardware.
+
+**Supported data formats**
+
+- Apache Kafka supports a variety of data formats, including:
+    - `String/Text`: Data can be sent and received in the form of plain string or text messages.
+    - `JSON`: Data can be sent and received in the form of JSON (JavaScript Object Notation) documents.
+    - `Avro`: 
+        - Data can be sent and received in the form of Avro binary encoded data. 
+        - Avro is a compact, binary data serialization format that is well-suited for data transmission over the network 
+        or for storage in a file.
+    - `Protobuf`: 
+        - Data can be sent and received in the form of Protocol Buffers (Protobuf) encoded data. 
+        - Protobuf is a high-performance, binary data serialization format developed by Google.
+    - `Parquet`: 
+        - Data can be sent and received in the form of Parquet file. 
+        - Parquet is a columnar storage format that is well-suited for storing large amounts of data in a distributed 
+        environment.
+    - `ORC`: 
+        - Data can be sent and received in the form of ORC file. 
+        - ORC is a columnar storage format that is used to store large amounts of data in a distributed environment.
+    - `Custom`: 
+        - You can also send and receive data in custom format with the help of serializer and deserializer provided by kafka.
+- It's important to note that the data format you choose will depend on your use case and the specific requirements 
+of your application.
+- Some data formats may be better suited for certain types of data or use cases, such as Avro for data with 
+a lot of schema evolution or Parquet for data that is mostly read and not updated.
+
+**Kafka interview Questions**
+
+1) What is Apache Kafka?
+    - Answer: Apache Kafka is a distributed streaming platform that is used for building real-time data pipelines and 
+    streaming applications. 
+    - It allows for publishing and subscribing to streams of records, storing them, and processing them in a 
+    fault-tolerant way.
+2) How does Kafka handle data replication?
+    - Answer: Kafka uses a concept called "replication factor" to handle data replication. 
+    - Each topic in Kafka is divided into a set of partitions, and each partition is replicated across a configurable 
+    number of brokers in the cluster. 
+    - This allows for fault tolerance in the event of a broker failure, as the data can be read from one of the replicas.
+3) How does Kafka handle data retention?
+    - Answer: Kafka uses a concept called "log retention" to handle data retention. 
+    - The log retention is configurable for each topic, and it determines how long messages will be stored before they 
+    are deleted. 
+    - There are two types of retention policies: time-based retention, where messages are retained for a certain 
+    period of time, and size-based retention, where messages are retained until a certain log size is reached.
+4) What is a Kafka partition?
+    - Answer: A partition in Kafka is a way of scaling out data over multiple servers. 
+    - Topics in Kafka are divided into a set of partitions, each of which is stored on a separate broker. 
+    - Each partition is an ordered, immutable sequence of records that is continually appended to—a structured commit log.
+5) What is a Kafka broker?
+    - Answer: A Kafka broker is a server that makes up the Kafka cluster. 
+    - It is responsible for maintaining the published messages and serving them to the consumers. 
+    - Each broker in the cluster can handle thousands of read and write operations per second and can store many 
+    terabytes of data.
+6) What is a Kafka consumer?
+    - Answer: A Kafka consumer is a process or application that reads data from Kafka topics. 
+    - Consumers subscribe to one or more topics and read the messages from the partitions of those topics. 
+    - Consumers keep track of their position in the partition and can re-start reading from where they left off in case 
+    of failure.
+7) What is a Kafka producer?
+    - Answer: A Kafka producer is a process or application that sends data to Kafka topics. 
+    - Producers publish messages to one or more topics. 
+    - The messages are written to the partitions of the topic, and the messages are distributed among the partitions 
+    according to the partitioning strategy.
+8) What is Zookeeper in Kafka?
+    - Answer: Zookeeper is a separate service that is used to manage the coordination of the brokers in a Kafka cluster. 
+    - It is responsible for maintaining the state of the cluster and managing the configuration of the brokers. 
+    - Zookeeper keeps track of the current state of the Kafka cluster, such as which brokers are up and running and 
+    which partitions they own.
+9) How does Kafka handle consumer offset management?
+    - Answer: Kafka uses a mechanism called consumer offset management to track the position of the consumer 
+    in the partition. 
+    - When a consumer is reading data from a partition, it stores the offset of the last read message in a special topic
+     called __consumer_offsets. 
+     - This allows the consumer to pick up where it left off in case of failure or when a new consumer joins the group.
+10) What are the different types of Kafka topics?
+    - Answer: There are two types of Kafka topics: regular topics and compacted topics. 
+    - Regular topics retain all messages, but compacted topics retain only the last message for each key. 
+    - This is useful for applications that need to track the latest state of a key, such as a sensor reading or the 
+    latest bid on an auction.
+11) How does Kafka handle data compression?
+    - Answer: Kafka supports several data compression codecs, including gzip, snappy, and lz4. 
+    - The compression codec is configured per topic and can be set during topic creation. 
+    - When data is produced to a topic, it is compressed using the configured codec before being written to the partition. 
+    - When data is consumed, it is decompressed using the same codec before being passed to the consumer.
+12) How does Kafka handle data serialization?
+    - Answer: Kafka allows for configuring custom serializers and deserializers for data sent to and received from 
+    the topics. 
+    - This allows for supporting a wide variety of data formats, such as JSON, Avro, and Protobuf. 
+    - By default, Kafka uses a binary serializer and deserializer, but they can be easily replaced with custom 
+    implementations.
+13) How does Kafka handle load balancing?
+    - Answer: Kafka handles load balancing by partitioning the data across multiple brokers in the cluster. 
+    - Each partition is replicated across multiple brokers for fault tolerance. 
+    - When a consumer wants to read data from a topic, it is assigned a set of partitions to read from. 
+    - The assignment of partitions to consumers is done by the consumer group coordinator, which is typically run by 
+    one of the brokers in the cluster.
+14) How does Kafka handle data partitioning?
+    - Answer: Kafka handles data partitioning by dividing the topic into a set of partitions. 
+    - Each partition is an ordered, immutable sequence of records that is continually appended to. 
+    - The partitioning strategy is configurable and can be based on the key of the message or a round-robin strategy.
+15) How does Kafka handle security?
+    - Answer: Kafka handles security by providing authentication, authorization, and encryption mechanisms. 
+    - It supports several authentication methods, including SASL/PLAIN, SASL/SCRAM, and SSL/TLS. 
+    - It also supports several authorization methods, including ACLs (Access Control Lists) 
+    and RBAC (Role-Based Access Control). 
+    - Kafka also supports encryption of data in-transit and at-rest.
+16) How does Kafka handle scalability?
+    - Answer: Kafka handles scalability by allowing for horizontal scaling of the cluster. 
+    - Each broker in the cluster can handle thousands of read and write operations per second and can store many 
+    terabytes of data. 
+    - As the load on the cluster increases, more brokers can be added to handle the increased traffic. 
+    - Additionally, topics can be partitioned to allow for more parallelism in the processing of the data.
+
