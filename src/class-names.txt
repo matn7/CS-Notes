@@ -9,8 +9,14 @@ assertion - zapewnienie
 affecting - wpływ
 alter - zmieniać
 accomplished - realizowany
+allocating - przydzielanie
+abbreviated - skrócony
+
 
 brittle - kruchy
+bitwise - bitowo
+background - tło
+bind - wiązać
 
 core - rdzeń
 constraints - ograniczenia
@@ -27,6 +33,18 @@ compact - zwarty
 custom - zwyczajny
 concepts - pojęcia
 clause - zdanie, człon, klauzula
+customization - dostosowanie
+conform - odpowiadać
+cross-cutting - przekrojowe
+cross-cutting concerns - kwestie przekrojowe
+cloud computing - chmura obliczeniowa
+commonly - powszechnie
+contention - spór
+condition - warunek
+control plane - panel kontrolny
+concurrently - jednocześnie
+coherency - zgoda
+
 
 duplication - powielanie
 database routines - procedury baz danych
@@ -35,13 +53,21 @@ determine - określa
 durability - trwałość, wytrzymałość, ścisłość
 develop - rozwijać
 different stages - różne etapy
+derived - pochodna
+distinct units - odrębne jednostki
+deallocating - zwalnianie
+directly - bezpośrednio
+discarded - odrzucone
+
 
 encapsulate - hermetyzować
 efficient - wydajny
 expressiveness - wyrazistość
 expose - ujawnić, eksponować
 explicit - wyraźny
-endpoint - punkt końcowy
+endpoint - punkt końcowie
+eviction - zwalnienie (zasobów)
+
 
 following these - przestrzegania tych
 fault - wada, błąd, usterka
@@ -49,6 +75,8 @@ fixed - ustalony
 failures - niepowodzenia
 features - cechy, funkcjonalności
 facilitate - ułatwić
+Fine-grained lockin - rozdrobniona blokada (np. nie na całej strukturze danych)
+full-fledged - pełnowartościowy
 
 queries - zapytania
 
@@ -67,21 +95,36 @@ in general - ogólnie
 is based on - oparty na
 interact - odwoływać
 ingestions - wchoniécie, połknięcie
+interchangeable - wymienny
+invoked - wywołane
+implicit - bezwzględny
+instance - instancja, przykład
+
+
+judiciously - rozsądnie
 
 load balancer - równoważenie obciążenia
 loosely coupled - luźno powiązane
 latency - czas oczekiwania
+Laziness - opieszałość
 
 measures - środki
 maintainability - utrzymywać
 member - członek
 maintain - zachować
 malicious - złośliwych
+mode - tryb
 
 nodes - węzły
 notify - zawiadomić
 
 obtained - uzyskany
+ordering - uszeregowanie
+orchestration - dyrygowanie
+outlines - wytacza
+odds - szanse
+
+
 
 perform - wykonać
 provides - zapewnia
@@ -92,6 +135,10 @@ particular - konkretny
 pattern - wzór
 primary - podstawowy
 privileged - uprzywilejowane
+properties files - plik właściwości
+privileges - przywileje
+prevent - zapobiec
+parallel - równoległy
 
 
 reliability - niezawodny
@@ -107,6 +154,12 @@ reusable - wielokrotnego użytku
 relational - relacyjny, pokrewny
 rate limit - ograniczenie szybkości
 reused - ponownie wykorzystane
+relative - względny
+resolving collisions - rozwiązanie kolizji
+reassigning - ponowne przypisanie
+retained - zachowane
+rely on - polegać na
+
 
 stored procedures
 specific - konkretny
@@ -119,6 +172,15 @@ simplicity - prostota
 support - wsparcie
 sensitive - wrażliwych
 specify - sprecyzowania, uściśla
+scattered - rozsiane
+scheduling - planowanie
+self-contained - samo wystarczalny
+Stream - przepływ, strumień
+subclassing - podklasy
+syntax - składnia
+successfully - z powodzeniem
+storage - przechowywanie danych
+
 
 typically - typowo, zazwyczaj
 troubleshooting - rozwiązywanie problemów
@@ -131,12 +193,19 @@ typically - typowo, najczęściej
 tampering - manipulowanie
 tradeoffs - kompromisy
 throughput - wydajność
+templates - szablon
+take advantage of - wykorzystać
+
+
 
 useful - użyteczny
 user indentity - tożsamość
 up-to-date - aktualny
 utilizing - wykorzystanie
+uniform manner - jednolity sposób
+utility - użyteczne
 
 workload - obciażenie pracą
 
 vulnerabilities - luki w zabezpieczeniach
+variable - zmienna

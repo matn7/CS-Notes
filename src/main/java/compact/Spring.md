@@ -1,40 +1,58 @@
 # Spring
 
 - Spring Boot is a Java-based framework used to build microservices. 
-- It provides a convenient way to quickly develop and run stand-alone, production-grade microservices. Spring Boot provides a range of features to simplify the development and deployment of microservices, including:
-
-Auto-configuration: Spring Boot automatically configures the application based on the dependencies that are added to the project. This saves time and reduces the amount of configuration required.
-
-Embedded servers: Spring Boot comes with an embedded server, such as Tomcat, Jetty, or Undertow, which eliminates the need to deploy the application to an external server.
-
-Actuator: Spring Boot provides a set of endpoints to monitor the health and status of the application.
-
-CLI: Spring Boot provides a command-line interface (CLI) to quickly create projects and run applications.
-
-Spring Data: Spring Boot integrates with the Spring Data project to provide convenient data access for microservices.
-
-Spring Cloud: Spring Boot works seamlessly with the Spring Cloud project to provide support for common patterns used in distributed systems.
-
-Overall, Spring Boot is a powerful tool for building and deploying microservices, and its large community and ecosystem make it a popular choice for microservice development.
+- It provides a convenient way to quickly develop and run stand-alone, production-grade microservices. 
+- Spring Boot provides a range of features to simplify the development and deployment of microservices, including:
+    - Auto-configuration: 
+        - Spring Boot automatically configures the application based on the dependencies that are added to the project. 
+        - This saves time and reduces the amount of configuration required.
+    - Embedded servers: 
+        - Spring Boot comes with an embedded server, such as Tomcat, Jetty, or Undertow, which eliminates the need to 
+        deploy the application to an external server.
+    - Actuator: 
+        - Spring Boot provides a set of endpoints to monitor the health and status of the application.
+    - CLI: 
+        - Spring Boot provides a command-line interface (CLI) to quickly create projects and run applications.
+    - Spring Data: 
+        - Spring Boot integrates with the Spring Data project to provide convenient data access for microservices.
+    - Spring Cloud: 
+        - Spring Boot works seamlessly with the Spring Cloud project to provide support for common patterns used in 
+        distributed systems.
+- Overall, Spring Boot is a powerful tool for building and deploying microservices, and its large community and ecosystem 
+make it a popular choice for microservice development.
 
 **Spring boot interview**
 
-Can you explain the purpose of microservices and why they are important?
-Microservices are a software architecture pattern that structures an application as a collection of loosely coupled, independently deployable services. The purpose of microservices is to break down a complex application into smaller, simpler components that can be developed, deployed, and maintained independently. This allows for faster development, improved scalability, and easier maintenance.
-
-How does Spring Boot help with developing microservices?
-Spring Boot makes it easier to develop microservices by providing a range of features and tools to simplify the development process. Some of the key benefits of using Spring Boot for microservices include automatic configuration, embedded servers, support for Actuator, a CLI, and integration with the Spring Data and Spring Cloud projects. These features help developers to quickly develop, deploy, and manage microservices with less effort.
-
-Can you explain the concept of auto-configuration in Spring Boot?
-Auto-configuration in Spring Boot refers to the automatic configuration of the application based on the dependencies that are added to the project. When a Spring Boot application starts, it automatically configures itself based on the libraries and components that are included in the project. This eliminates the need to manually configure the application and helps to speed up the development process.
-
-What is the Actuator in Spring Boot, and what does it do?
-The Actuator in Spring Boot is a set of endpoints that provide information about the health and status of the application. It provides a range of metrics and information about the application, such as memory usage, CPU utilization, and the number of requests processed. This information can be used to monitor the health of the application and diagnose any issues that may arise.
-
-How does Spring Boot integrate with the Spring Cloud project?
-Spring Boot integrates with the Spring Cloud project to provide support for common patterns used in distributed systems. Spring Cloud provides a range of tools and technologies for building and deploying microservices, such as service discovery, configuration management, and circuit breakers. By integrating with Spring Cloud, Spring Boot makes it easier to develop and deploy microservices that are robust and scalable.
-
-These are just a few of the questions that you may encounter in an interview related to Spring microservices. Be prepared to answer questions about specific features and tools provided by Spring Boot, as well as questions about microservices in general and the benefits of using this architecture pattern.
+1) Can you explain the purpose of microservices and why they are important?
+    - Microservices are a software architecture pattern that structures an application as a collection of loosely coupled, 
+    independently deployable services. 
+    - The purpose of microservices is to break down a complex application into smaller, simpler components that can be 
+    developed, deployed, and maintained independently. 
+    - This allows for faster development, improved scalability, and easier maintenance.
+2) How does Spring Boot help with developing microservices?
+    - Spring Boot makes it easier to develop microservices by providing a range of features and tools to simplify the 
+    development process. 
+    - Some of the key benefits of using Spring Boot for microservices include automatic configuration, embedded servers, 
+    support for Actuator, a CLI, and integration with the Spring Data and Spring Cloud projects. 
+    - These features help developers to quickly develop, deploy, and manage microservices with less effort.
+3) Can you explain the concept of auto-configuration in Spring Boot?
+    - Auto-configuration in Spring Boot refers to the automatic configuration of the application based on the dependencies 
+    that are added to the project. 
+    - When a Spring Boot application starts, it automatically configures itself based on the libraries and components that 
+    are included in the project. 
+    - This eliminates the need to manually configure the application and helps to speed up the development process.
+4) What is the Actuator in Spring Boot, and what does it do?
+    - The Actuator in Spring Boot is a set of endpoints that provide information about the health and status of the 
+    application. 
+    - It provides a range of metrics and information about the application, such as memory usage, CPU utilization, 
+    and the number of requests processed. 
+    - This information can be used to monitor the health of the application and diagnose any issues that may arise.
+5) How does Spring Boot integrate with the Spring Cloud project?
+    - Spring Boot integrates with the Spring Cloud project to provide support for common patterns used in distributed systems. 
+    - Spring Cloud provides a range of tools and technologies for building and deploying microservices, 
+    such as service discovery, configuration management, and circuit breakers. 
+    - By integrating with Spring Cloud, Spring Boot makes it easier to develop and deploy microservices that are robust 
+    and scalable.
 
 **Example of Spring Rest Test**
 
@@ -87,7 +105,10 @@ public class SpringRestTest {
 }
 ```
 
-This test project demonstrates how to test REST endpoints with different HTTP methods (GET, POST, PUT, DELETE) using the MockMvc class in Spring Boot. The MockMvc class provides a convenient way to test REST endpoints without starting an actual server. This allows for fast and efficient testing during the development process.
+- This test project demonstrates how to test REST endpoints with different HTTP methods (GET, POST, PUT, DELETE) using 
+the MockMvc class in Spring Boot. 
+- The MockMvc class provides a convenient way to test REST endpoints without starting an actual server. 
+- This allows for fast and efficient testing during the development process.
 
 ***
 

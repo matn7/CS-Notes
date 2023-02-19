@@ -53,7 +53,7 @@
     desired state defined in Terraform configuration files.
 4) How does Terraform handle rollbacks?
     - Terraform has a built-in rollback feature that allows users to revert to a previous state of the infrastructure. 
-    - This can be done by using the "terraform state" command and specifying the desired state.
+    - This can be done by using the `terraform state` command and specifying the desired state.
 5) What is a Terraform module and how is it used?
     - A Terraform module is a collection of Terraform files that are organized into a single directory. 
     - Modules are used to group together related resources, making it easier to manage and reuse infrastructure.
@@ -132,7 +132,7 @@ you can use any extension you like.
     - This allows Terraform to keep track of the infrastructure it manages, and ensure that future changes are made 
     in the correct order.
 - Destruction: 
-    - If you want to remove resources, you can use the terraform destroy command, this step will remove resources 
+    - If you want to remove resources, you can use the `terraform destroy` command, this step will remove resources 
     and update the state file.
 - Repeat: 
     - You can repeat the above steps as many times as needed, Terraform will always compare the current state of the 

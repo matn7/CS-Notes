@@ -22,7 +22,7 @@ names.sort((a, b) -> a.compareTo(b));
 
 - In this example, the lambda expression `(a, b) -> a.compareTo(b)` is used to define a comparator that compares two 
 strings by their lexicographic order. 
-- The sort method of the List class takes a comparator as an argument, and it uses it to sort the elements of the list.
+- The sort method of the `List` class takes a comparator as an argument, and it uses it to sort the elements of the list.
 - Lambda expressions can be used to replace anonymous inner classes, which are classes that are defined and used in a 
 single location. 
 - For example, the following code uses an anonymous inner class to create a new thread:
@@ -58,17 +58,17 @@ public interface Function<T, R> {
 }
 ```
 
-- The Function interface has a single abstract method `apply` which takes in an object of type `T` and returns an object 
+- The `Function` interface has a single abstract method `apply` which takes in an object of type `T` and returns an object 
 of type `R`. 
-- The Function interface can be used to represent a wide variety of functions, including mathematical functions, 
+- The `Function` interface can be used to represent a wide variety of functions, including mathematical functions, 
 transformation functions, and so on.
-- You can use the Function interface in combination with other functional interfaces such as `Consumer`, `Predicate`, 
+- You can use the `Function` interface in combination with other functional interfaces such as `Consumer`, `Predicate`, 
 and `Supplier` to chain together multiple operations. 
 - It is also a common use case in functional programming where you can chain multiple operations together using the 
 `andThen` and compose methods.
-- Here are some examples of how the Function interface can be used in practice:
+- Here are some examples of how the `Function` interface can be used in practice:
 - Mathematical functions: 
-    - You can use the Function interface to represent mathematical functions such as square, cube, etc. 
+    - You can use the `Function` interface to represent mathematical functions such as square, cube, etc. 
     - For example, the following code defines a square function that takes in an integer and returns its square:
 
 ```java
@@ -77,7 +77,7 @@ System.out.println(square.apply(3)); // Outputs: 9
 ```
 
 - String manipulation: 
-    - The Function interface can also be used to manipulate strings. 
+    - The `Function` interface can also be used to manipulate strings. 
     - For example, the following code defines a `toUpperCase` function that takes in a string and returns its uppercase 
     version:
 
@@ -87,7 +87,7 @@ System.out.println(toUpperCase.apply("hello world")); // Outputs: "HELLO WORLD"
 ```
 
 - Data transformation: 
-    - The Function interface can be used to transform data from one form to another. 
+    - The `Function` interface can be used to transform data from one form to another. 
     - For example, the following code defines a `convertToPerson` function that takes in a string and returns a Person object:
 
 ```java
@@ -99,8 +99,8 @@ System.out.println(convertToPerson.apply("John,25")); // Outputs: Person{name='J
 ```
 
 - Chaining multiple functions together: 
-    - The Function interface can also be used to chain multiple functions together. 
-    - For example, the following code chains together the square and `toUpperCase` functions defined in the above examples:
+    - The `Function` interface can also be used to chain multiple functions together. 
+    - For example, the following code chains together the `suare` and `toUpperCase` functions defined in the above examples:
 
 ```java
 // no sense example but for idea
@@ -128,9 +128,9 @@ and convenient way to process data stored in collections.
         - The Stream API provides a wide range of operations for filtering, mapping, reducing, and aggregating 
         data stored in collections.
 - To use the Stream API, you first need to obtain a `Stream` from a collection, such as a `List` or `Set`, 
-using the stream method. 
-- Then you can perform operations on the Stream using methods such as `filter`, `map`, `reduce`, `collect`, etc. 
-- Finally, you can use the `forEach` method to consume the elements in the Stream.
+using the `stream()` method. 
+- Then you can perform operations on the `Stream` using methods such as `filter()`, `map()`, `reduce()`, `collect()`, etc. 
+- Finally, you can use the `forEach()` method to consume the elements in the `Stream`.
 - Here's an example of using the Stream API to find the sum of all even numbers in a List:
 
 ```java
@@ -150,10 +150,10 @@ public class StreamExample {
 }
 ```
 
-- In this example, the stream method is used to obtain a Stream from the numbers List. 
+- In this example, the `stream()` method is used to obtain a `Stream` from the numbers `List`. 
 - The `filter()` method is then used to select only the even numbers in the Stream. 
-- The `mapToInt()` method is used to convert the Stream of Integer objects to a Stream of primitive int values, 
-and the `sum` method is used to find the sum of all elements in the Stream.
+- The `mapToInt()` method is used to convert the `Stream` of `Integer` objects to a `Stream` of primitive int values, 
+and the `sum()` method is used to find the sum of all elements in the `Stream`.
 
 **More complex example**
 
@@ -189,20 +189,20 @@ public class StreamExample {
 
     int totalValue = entities.stream()
                              .filter(entity -> entity.getValue() > 25)
-                             .map(entity -> entity.getValue() * 2)
-                             .reduce(0, Integer::sum);
+                             .map(entity -> entity.getValue() * 2) // [60, 80, 100]
+                             .reduce(0, Integer::sum); // [240]
 
     System.out.println("Total value of entities with value greater than 25: " + totalValue);
   }
 }
 ```
 
-- In this example, a collection of Entity objects is created and stored in the entities List. 
-- The Stream API is then used to perform a series of operations on the entities collection.
-- The first operation is a `filter` operation, which selects only those entities whose value is greater than 25.
-- The next operation is a `map` operation, which transforms each selected Entity object by multiplying its value by 2.
-- Finally, the `reduce` operation is used to find the sum of all elements in the Stream. 
-- The `reduce` operation takes two arguments: an initial value (in this case, 0), and a BinaryOperator that combines two 
+- In this example, a collection of `Entity` objects is created and stored in the entities `List`. 
+- The `Stream` API is then used to perform a series of operations on the entities collection.
+- The first operation is a `filter()` operation, which selects only those entities whose value is greater than 25.
+- The next operation is a `map()` operation, which transforms each selected `Entity` object by multiplying its value by 2.
+- Finally, the `reduce()` operation is used to find the sum of all elements in the `Stream`. 
+- The `reduce()` operation takes two arguments: an initial value (in this case, 0), and a `BinaryOperator` that combines two 
 values into a single value (in this case, `Integer::sum`).
 - The result of the pipeline is the total value of all entities with a value greater than 25.
 - You can add another map operation to the pipeline. Here's an example:
@@ -216,8 +216,8 @@ int totalValue = entities.stream()
 System.out.println("Total value of entities with value greater than 25 after adding 10: " + totalValue);
 ```
 
-- In this example, a new `map` operation is added after the `map` operation that multiplies each value by 2. 
-- The new `map` operation adds 10 to each value in the Stream.
+- In this example, a new `map()` operation is added after the `map()` operation that multiplies each value by 2. 
+- The new `map()` operation adds 10 to each value in the `Stream`.
 - The result of the pipeline is the total value of all entities with a value greater than 25, after adding 10 to each value.
 
 **Predicate**
@@ -369,6 +369,9 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 button.setOnAction(event -> System.out.println("Button clicked using lambda expression")
 ```
 
+- Function
+- BinaryOperator
+
 ***
 
 **Bit manipulation Java**
@@ -379,6 +382,9 @@ button.setOnAction(event -> System.out.println("Button clicked using lambda expr
 binary representation of the number.
 - For example, the `&` operator can be used to mask out certain bits in a number, the `|` operator can be used to set 
 certain bits in a number, and the `^` operator can be used to toggle certain bits in a number.
+    - `&`: To mask bits.
+    - `|`: Set certain bit.
+    - `^`: Toggle bit.
 - Here is an example of bit manipulation in Java:
 
 ```java
@@ -386,21 +392,30 @@ int x = 5;   // binary representation:  00000101
 int y = 3;   // binary representation:  00000011
 
 int z = x & y;  // bitwise AND
+//                               00000101
+//                               00000011
 // z = 1, binary representation: 00000001
 
 z = x | y;  // bitwise OR
+//                               00000101
+//                               00000011
 // z = 7, binary representation: 00000111
 
 z = x ^ y;  // bitwise XOR
+//                               00000101
+//                               00000011
 // z = 6, binary representation: 00000110
 
 z = ~x;  // bitwise NOT
+//                                00000101
 // z = -6, binary representation: 11111010
 
 z = x << 2;  // left shift
+//                                00000101
 // z = 20, binary representation: 00010100
 
 z = x >> 2;  // right shift
+//                               00000101
 // z = 1, binary representation: 00000001
 ```
 
@@ -409,8 +424,64 @@ you have to multiply or divide the number by `2^k`, depending if you are shiftin
 
 **Bit manipulation problem examples**
 
-- FindNonDuplicateNumber
-- ConsecutiveBitOnes
+- FindNonDuplicateNumber:
+
+```java
+// O(n) time | O(1) space
+public int singleNumber(int[] nums) {
+    int unique = 0;
+    for (int n : nums) {
+        unique ^= n;
+    }
+    return unique;
+}
+```
+
+**ConsecutiveBitOnes**
+
+```java
+// right shift means div by 2 ==> log(n)
+// O(log(n)) time | O(1) space
+public int longest_run2(int num) {
+    // 242
+    // 1 1 1 1 0 0 1 0
+    //       1 &
+    //
+    // counter = 1
+    int max = 0; // 1
+    int BIT_MASK = 1;
+
+    while (num != 0) {
+        int curr = 0;
+        int val = num & BIT_MASK;
+        while (val == 1) {
+            curr++;
+            num = num >> 1;
+            val = num & BIT_MASK;
+        }
+        max = Math.max(max, curr);
+        num = num >> 1;
+    }
+    return max;
+}
+```
+
+**Num of bits one**
+
+```java
+// O(log(n)) time | O(1) space
+public int one_bits(int n) {
+    int count = 0;
+    while (n > 0) {
+        int check = n & 1;
+        if (check == 1) {
+            count++;
+        }
+        n = n >> 1;
+    }
+    return count;
+}
+```
 
 ***
 
@@ -420,14 +491,15 @@ you have to multiply or divide the number by `2^k`, depending if you are shiftin
 such as a list or a set, and retrieve or remove elements one at a time. 
 - It is defined in the `java.util` package and is commonly used to traverse collections in a for-each loop.
 - The `Iterator` interface defines several methods to traverse a collection, including:
-    - `hasNext()`: returns true if the iteration has more elements, false otherwise.
+    - `hasNext()`: returns `true` if the iteration has more elements, `false` otherwise.
     - `next()`: returns the next element in the iteration.
     - `remove()`: removes the last element returned by the `next()` method from the underlying collection.
-- Example:
 
 ```java
 import java.util.ArrayList;
 import java.util.Iterator;
+
+// ...
 
 ArrayList<Integer> numbers = new ArrayList<>();
 numbers.add(1);
@@ -436,7 +508,7 @@ numbers.add(3);
 
 Iterator<Integer> iterator = numbers.iterator();
 while (iterator.hasNext()) {
-  System.out.println(iterator.next());
+    System.out.println(iterator.next());
 }
 // prints:
 // 1
@@ -461,6 +533,8 @@ the second element, and a value greater than 0 indicates that the first element 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+// ...
 
 ArrayList<Integer> numbers = new ArrayList<>();
 numbers.add(3);
@@ -524,6 +598,28 @@ Collections.sort(people);
 System.out.println(people); // prints [Bob(25), Alice(30), Charlie(35)]
 ```
 
+**Comparator vs Comparable**
+
+- Java has two interfaces that can be used to sort objects: `Comparable` and `Comparator`. 
+- Both of these interfaces are used to compare objects and determine their order.
+- `Comparable` is an interface that is part of the Java core libraries. 
+- It defines a single method called `compareTo()` that can be used to compare an object with another object of the same type. 
+- If a class implements `Comparable`, it is indicating that its objects have a natural ordering, which can be used 
+to sort the objects. 
+- The `compareTo()` method should return a negative integer, zero, or a positive integer if the current object is 
+less than, equal to, or greater than the object being compared.
+- `Comparator`, on the other hand, is an interface that is used to define a separate and alternative sorting order 
+for a particular class. 
+- If a class has a natural ordering that is not suitable for a particular use case, you can create a separate `Comparator` 
+implementation to sort the objects in the desired order. 
+- This can be useful if you need to sort objects in different ways at different times. 
+- The `Comparator` interface defines two methods: `compare()` and `equals()`. 
+- The `compare()` method is used to compare two objects and determine their order, similar to the `compareTo()` 
+method of the `Comparable` interface. 
+- The `equals()` method is used to determine if two comparators are equal.
+- In summary, you should use the `Comparable` interface if a class has a natural ordering that can be used for sorting, 
+and use the `Comparator` interface if you need to provide a separate and alternative sorting order for a class.
+
 ***
 
 **Hash Map in Java**
@@ -544,7 +640,7 @@ values can be stored and retrieved efficiently.
         chaining the values in the same bucket using a linked list. 
         - The linked list stores the key-value pairs that hash to the same index.
     - Load Factor: 
-        - The HashMap has a load factor, which is a measure of how full the `HashMap` is. 
+        - The `HashMap` has a load factor, which is a measure of how full the `HashMap` is. 
         - If the load factor exceeds a certain threshold, the `HashMap` will automatically rehash the keys and redistribute 
         the key-value pairs to balance the load and ensure efficient performance.
     - Get and Put Operations: 
@@ -570,7 +666,7 @@ an instance of the class.
 - These methods typically operate on class variables, or on the class itself.
 - When applied to a block of code, `static` makes the block a `static` block, which is executed when the class 
 is first loaded by the Java Virtual Machine.
-- A static variable or method can be accessed using the class name, like `ClassName.staticVariable` 
+- A `static` variable or method can be accessed using the class name, like `ClassName.staticVariable` 
 or `ClassName.staticMethod()`.
 - An example of a `static` variable and a `static` method:
 
@@ -590,10 +686,10 @@ public class MyClass {
 }
 ```
 
-- In this example, the staticVariable is a class variable and can be accessed using the class name, 
-like `MyClass.staticVariable`, and the staticMethod is a class method, which can be called using the class name, 
+- In this example, the `staticVariable` is a class variable and can be accessed using the class name, 
+like `MyClass.staticVariable`, and the `staticMethod()` is a class method, which can be called using the class name, 
 like `MyClass.staticMethod()`.
-- It is important to note that static variables are shared by all instances of the class and should be used with caution. 
+- It is important to note that `static` variables are shared by all instances of the class and should be used with caution. 
 - Also, `static` methods can only access `static` variables and methods.
 - In a multithreading context, the `static` keyword in Java refers to class level variables, rather than instance level 
 variables. 
@@ -617,7 +713,7 @@ class MyClass {
 }
 ```
 
-- It's worth mentioning that the static field can also be declared as `volatile` if you're using it as a flag variable, 
+- It's worth mentioning that the `static` field can also be declared as `volatile` if you're using it as a flag variable, 
 this will ensure that the variable is read from the main memory instead of local thread cache.
 - In summary, when working with multithreading in Java, it's important to be aware of the potential issues with 
 concurrent access and modification of `static` variables, and use the `synchronized` keyword or other synchronization 
@@ -636,8 +732,9 @@ mechanisms to manage access to shared resources.
         provides a global point of access to it.
     - Factory method: 
         - A static method can be used as a factory method to return an instance of a class, without using the new keyword.
-    - Main method: The `static` keyword is used in the declaration of the main method, which is the entry point of a 
-    Java application.
+    - Main method: 
+        - The `static` keyword is used in the declaration of the `main()` method, which is the entry point of a 
+        Java application.
     
 **Why Java main is static**
 
@@ -666,9 +763,61 @@ definitions, `static` variables, and runtime constant pool.
 - It's important to note that the method area is separate from the heap, which is where instances of classes are stored. 
 - Instances of classes are created on the heap, and each instance has its own separate memory space for instance variables.
 
+**Why static inner class**
+
+- A static inner class in Java is a nested class that is declared with the `static` keyword. 
+- It is a member of the outer class and has the following characteristics:
+    - Access to outer class members: 
+        - A `static` inner class has access to the members of the outer class, including private members.
+    - Independence: 
+        - A `static` inner class can be instantiated and used independently of an instance of the outer class. 
+        - It does not have an implicit reference to an instance of the outer class.
+    - Memory efficiency: 
+        - Because a `static` inner class does not have an implicit reference to an instance of the outer class, 
+        it is more memory efficient than a non-static inner class.
+    - Naming convention: 
+        - The name of a `static` inner class is typically qualified with the name of the outer class. 
+        - For example, if the outer class is named "Outer", the `static` inner class would be named "Outer.Inner".
+- Static inner classes are often used when you need to define a helper class within another class. 
+- For example, you might use a `static` inner class to implement a comparison method for sorting a list of objects.
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class Outer {
+    private ArrayList<Integer> numbers;
+
+    public Outer() {
+        numbers = new ArrayList<>();
+        numbers.add(5);
+        numbers.add(1);
+        numbers.add(3);
+    }
+
+    public void sortNumbers() {
+        Collections.sort(numbers, new NumberComparator());
+    }
+
+    public static class NumberComparator implements Comparator<Integer> {
+        @Override
+        public int compare(Integer num1, Integer num2) {
+            return num1 - num2;
+        }
+    }
+
+    public static void main(String[] args) {
+        Outer outer = new Outer();
+        outer.sortNumbers();
+        System.out.println(outer.numbers);
+    }
+}
+```
+
 ***
 
-**final in Java**
+**`final` in Java**
 
 - In Java, the `final` keyword can be used to indicate that a variable, method, or class cannot be overridden or changed.
 - When applied to a variable, `final` makes the variable a constant that cannot be reassigned.
@@ -684,11 +833,11 @@ because once the object is constructed, its state cannot be modified.
 cannot be reassigned or overridden, but it does not guarantee thread safety by itself. 
 - It should be used in conjunction with other thread-safe practices and patterns like `synchronization` or immutability.
 
-**Can final variable be changed**
+**Can `final` variable be changed**
 
 - You cannot change the value of a `final` variable in Java once it has been assigned a value. 
 - The `final` keyword is used to indicate that a variable's value cannot be changed after it has been initialized.
-- Here's an example of a final variable in Java:
+- Here's an example of a `final` variable in Java:
 
 ```java
 public class Main {
@@ -702,7 +851,7 @@ public class Main {
 }
 ```
 
-- In this example, the MAX_COUNT variable is declared as `final`, so its value cannot be changed. 
+- In this example, the `MAX_COUNT` variable is declared as `final`, so its value cannot be changed. 
 - If you try to change the value of a `final` variable, the Java compiler will give you an error.
 - It's worth noting that `final` variables can be assigned values during class initialization or in a constructor, 
 but once they are assigned a value, they cannot be changed. 
@@ -710,7 +859,7 @@ but once they are assigned a value, they cannot be changed.
 
 **Can entity object state be changed**
 
-- Yes, you can change the state of an entity object that is referred to by a `final` reference variable. 
+- You can change the state of an entity object that is referred to by a `final` reference variable. 
 - The `final` keyword in this case only means that the reference variable cannot be **reassigned** to refer to a different 
 object.
 - Here's an example to illustrate this:
@@ -760,12 +909,12 @@ public class Main {
 }
 ```
 
-- In this example, the User class represents an entity object that has a name and an age. 
-- The `final` reference variable user refers to an instance of the User class, and its value cannot be changed. 
+- In this example, the `User` class represents an entity object that has a name and an age. 
+- The `final` reference variable user refers to an instance of the `User` class, and its value cannot be changed. 
 - However, the state of the object referred to by user can be changed, as demonstrated by the call to 
 `user.setName("Jane Doe")`.
 
-**Why declaring reference variables as final is useful?**
+**Why declaring reference variables as `final` is useful?**
 
 - The mechanism of using `final` reference variables to prevent reassignment of an object reference can be useful 
 in several ways:
@@ -786,17 +935,17 @@ in several ways:
     - Enhanced concurrency: 
         - In a multithreaded environment, using `final` references can help prevent race conditions and other 
         synchronization issues. 
-        - If you have a final reference to an object, you can be sure that the reference will not change, 
+        - If you have a `final` reference to an object, you can be sure that the reference will not change, 
         even if multiple threads are accessing the object simultaneously.
 - In summary, the mechanism of using `final` reference variables is useful because it can make your code more readable, 
 secure, performant, and maintainable, especially in multithreaded environments.
 
-**How final is instantiated**
+**How `final` is instantiated**
 
 - A `final` variable can be instantiated in several ways in Java, depending on the type of the variable and the context 
 in which it is being used.
 - Here are some common ways to instantiate `final` variables in Java:
-- Direct assignment: A final variable can be directly assigned a value when it is declared.
+- Direct assignment: A `final` variable can be directly assigned a value when it is declared.
 
 ```java
 final int x = 10;
@@ -844,20 +993,20 @@ or initializer block in which it is used exits.
 - Once a `final` variable has been assigned a value, it cannot be changed. 
 - This is one of the key features of `final` variables in Java.
 
-**How underlying memory for final looks like**
+**How underlying memory for `final` looks like**
 
 - The underlying memory representation of a `final` variable in Java depends on the type of the variable and the context 
 in which it is being used.
-- For a `final` primitive type (such as int, double, boolean, etc.), the value is stored directly in the memory location 
+- For a `final` primitive type (such as `int`, `double`, `boolean`, etc.), the value is stored directly in the memory location 
 associated with the variable. 
-- For example, if you have a `final` int variable, the value of the int will be stored in a specific memory location, 
-and that memory location will be associated with the final variable.
+- For example, if you have a `final int` variable, the value of the `int` will be stored in a specific memory location, 
+and that memory location will be associated with the `final` variable.
 - For a `final` reference type (such as an object), the memory representation is a bit more complex. 
-- The final reference variable holds a reference to the object, but the object itself is stored in a different memory 
+- The `final` reference variable holds a reference to the object, but the object itself is stored in a different memory 
 location. 
 - The reference stored in the `final` reference variable cannot be changed, but the state of the object referred to by 
 the reference can be changed.
-- It's important to note that the actual memory representation of final variables can vary depending on the underlying 
+- It's important to note that the actual memory representation of `final` variables can vary depending on the underlying 
 hardware and operating system, as well as the Java Virtual Machine (JVM) implementation. 
 
 ***
@@ -877,11 +1026,11 @@ class name followed by the object's hash code.
 
 **equals(Object o)**
  
-- Compares the object to another object and returns true if they are equal. 
+- Compares the object to another object and returns `true` if they are equal. 
 - The default implementation compares the objects based on their memory addresses, but it can be overridden to 
 provide a custom comparison.
-- In Java, the `equals` method is used to compare the equality of two objects. 
-- Here's an example of how to override the equals method in a custom class:
+- In Java, the `equals()` method is used to compare the equality of two objects. 
+- Here's an example of how to override the `equals()` method in a custom class:
 
 ```java
 class Point {
@@ -904,17 +1053,18 @@ class Point {
 }
 ```
 
-- In this example, the Point class has two fields x and y, and an `equals` method that takes an Object as its parameter. 
-- The method first checks if the object is equal to this (the current instance of the class), and if not, it checks if 
-the object is an instance of the Point class. 
-- If both checks pass, the method compares the values of the x and y fields of the two objects to determine equality.
+- In this example, the `Point` class has two fields `x` and `y`, and an `equals()` method that takes an `Object` 
+as its parameter. 
+- The method first checks if the object is `equal()` to this (the current instance of the class), and if not, it checks if 
+the object is an instance of the `Point` class. 
+- If both checks pass, the method compares the values of the `x` and `y` fields of the two objects to determine equality.
 
 **hashCode()**
  
 - Returns an integer that represents the object's state. 
 - The default implementation returns the object's memory address, but it can be overridden to provide a custom 
 hash code based on the object's state.
-- An example of a hashCode implementation in Java:
+- An example of a `hashCode()` implementation in Java:
 
 ```java
 class Person {
@@ -935,16 +1085,14 @@ class Person {
 }
 ```
 
-- In this example, the `hashCode` method generates a hash code based on the name, age, and address fields of the Person class. 
+- In this example, the `hashCode()` method generates a hash code based on the name, age, and address fields 
+of the `Person` class. 
 - The hash code is calculated by initializing a result variable to 17, and then combining the hash codes of the fields 
 using the `31 * result + field.hashCode()` formula.
 - Note that it is important to use a prime number, such as 31, in the calculation to ensure that the hash code is spread 
 evenly across the range of integers. 
-- Also, it is important to use the `hashCode` method of each field, rather than its value, to ensure that equal objects 
+- Also, it is important to use the `hashCode()` method of each field, rather than its value, to ensure that equal objects 
 have the same hash code.
-- This is just one example of a `hashCode` implementation, and there are many other ways to implement the method depending 
-on the requirements of your program. 
-- However, this example should give you a general idea of how to implement the hashCode method in Java.
 
 **clone()**
  
@@ -995,30 +1143,28 @@ public class Counter {
 }
 ```
 
-- In this example, the `increment` and `getCount` methods are declared `synchronized`, which means that only one thread 
+- In this example, the `increment()` and `getCount()` methods are declared `synchronized`, which means that only one thread 
 at a time can access them. 
 - When multiple threads try to access the methods simultaneously, only one thread will be able to enter the critical section, 
 and the others will be blocked until the lock is released.
 
-**Why when override equals, hashCode also has to be overriden?**
+**Why when override `equals()`, `hashCode()` also has to be overriden?**
 
-- When you override the `equals` method in Java, it is generally recommended to also override the `hashCode` method. 
-- This is because the `equals` and `hashCode` methods are used together to determine object equality and provide a way 
+- When you override the `equals()` method in Java, it is generally recommended to also override the `hashCode()` method. 
+- This is because the `equals()` and `hashCode()` methods are used together to determine object equality and provide a way 
 to store objects in hash-based collections, such as `HashMap` and `HashSet`.
-- The `hashCode` method returns an integer hash code that represents the object's identity. 
+- The `hashCode()` method returns an integer hash code that represents the object's identity. 
 - The hash code is used to place objects in hash-based collections, and it is used to quickly compare objects for equality. 
-- If two objects are equal according to the equals method, then they must have the same hash code.
-- If you override the `equals` method but do not override the `hashCode` method, you can end up with unexpected behavior 
-when using hash-based collections. 
+- If two objects are equal according to the `equals()` method, then they must have the same hash code.
+- If you override the `equals()` method but do not override the `hashCode()` method, you can end up with unexpected 
+behavior when using hash-based collections. 
 - For example, if you have two objects that are equal according to the equals method, but have different hash codes, 
 they will be treated as different objects in a hash-based collection, even though they should be considered equal.
-- In summary, the `equals` and `hashCode` methods are closely related, and when you override the `equals` method, 
-it is important to also override the `hashCode` method to ensure that objects are stored and retrieved correctly in 
+- In summary, the `equals()` and `hashCode()` methods are closely related, and when you override the `equals()` method, 
+it is important to also override the `hashCode()` method to ensure that objects are stored and retrieved correctly in 
 hash-based collections.
 
 **Prime Number**
-
-- A simple algorithm to check if a given number is prime in Java:
 
 ```java
 // O(sqrt(n)) time | O(1) space
@@ -1084,3 +1230,98 @@ both the original Rectangle object and the shallow copy will reflect the changes
 so that the copy is completely independent of the original object and any changes to the copy will not affect the original object.
 
 ***
+
+## Java memory parts
+
+- Java uses a combination of different memory areas to manage the memory of a running program. 
+- These memory areas include:
+    - Heap: 
+        - The heap is the main memory area where objects are stored. 
+        - When an object is created using the new operator, it is allocated memory on the heap. 
+        - Garbage collection is used to reclaim memory that is no longer being used by the program.
+    - Stack: 
+        - The stack is used to store method call frames. 
+        - Each time a method is called, a new frame is pushed onto the stack and when the method returns, the frame 
+        is popped off. 
+        - The stack also stores local variables, and the parameters passed to methods.
+    - Method Area: 
+        - The method area is used to store class-level information, such as the bytecode for methods and fields of classes.
+    - Native Method Stacks: 
+        - Native method stacks are used to store information about native methods, which are methods written in 
+        languages other than Java.
+    - PC Registers: 
+        - PC (program counter) registers are used to store the current instruction being executed.
+    - Non-Heap Memory: 
+        - Non-heap memory is used for storing other data, such as the runtime constant pool and memory used by the JVM 
+        itself, such as the garbage collector and JIT compiler.
+- It's worth noting that the heap is divided into two parts: the young generation and the old generation. 
+- The young generation is used to store newly created objects and the old generation is used to store long-lived objects. 
+- The JVM uses a garbage collector to periodically clean up the heap and free up memory that is no longer being used.
+
+***
+
+**Java Garbage Collectors**
+
+- Java has several built-in garbage collectors, including:
+    - Serial GC: 
+        - This is the simplest and default GC used in Java. 
+        - It uses a single thread to perform garbage collection.
+    - Parallel GC: 
+        - This GC uses multiple threads to perform garbage collection, making it more efficient for larger heap sizes.
+    - Concurrent Mark Sweep (CMS) GC: 
+        - This GC performs most of its work concurrently with the application, 
+        minimizing pauses caused by garbage collection.
+    - G1 GC: 
+        - This GC is designed for large heap sizes and uses a combination of techniques, such as parallel, concurrent, 
+        and incremental collection to improve performance.
+- You can specify which GC to use by adding command line options when starting the JVM. 
+- It also depends on the heap size, number of cores and other system resources.
+- You can specify which garbage collector to use by adding the following command line options when starting the JVM:
+    - `-XX:+UseSerialGC`: This option specifies that the Serial GC should be used.
+    - `-XX:+UseParallelGC`: This option specifies that the Parallel GC should be used.
+    - `-XX:+UseConcMarkSweepGC`: This option specifies that the Concurrent Mark Sweep (CMS) GC should be used.
+    - `-XX:+UseG1GC`: This option specifies that the G1 GC should be used.
+- For example, to start a Java application using the G1 GC, you would use the following command:
+
+```
+java -XX:+UseG1GC -jar myapplication.jar
+```
+
+- You can also use `-XX:+PrintCommandLineFlags` to check which GC is currently in use.
+
+**CMS GC**
+
+- Concurrent Mark Sweep (CMS) is a garbage collector in Java that is designed to minimize pauses caused by 
+garbage collection. 
+- It works by performing most of its work concurrently with the application, while the application is running.
+- The CMS GC operates in two phases:
+    - Initial Mark Phase: 
+        - In this phase, the GC identifies all the live objects in the heap. 
+        - It starts by marking the objects that are reachable from the application's root objects 
+        (i.e., objects that are reachable from the application's static fields and local variables), 
+        and then recursively marks all the objects that are reachable from these objects. 
+        - This phase can cause some short pauses in the application, but the goal is to minimize them.
+    - Concurrent Sweep Phase: 
+        - After the initial mark phase, the GC identifies all the objects that are no longer reachable and are eligible 
+        for garbage collection. 
+        - The concurrent sweep phase runs concurrently with the application, collecting the dead objects 
+        and compacting the heap. 
+        - The goal is to minimize the amount of time the application is paused.
+- CMS GC is suitable for applications with moderate heap size and short GC pauses are acceptable. 
+- It also performs well in environments with a high number of CPU cores and large amount of memory, 
+but it can be less efficient with large heap sizes and high object allocation rates.
+- Also, CMS GC have some disadvantages, such as high CPU usage, high fragmentation and can be prone to long pauses.
+
+**G1 GC**
+
+- The G1 (Garbage First) GC is a type of garbage collector that is included in the Java HotSpot Virtual Machine (JVM). 
+- It is designed to handle large heap sizes and reduce GC pause times.
+- The G1 GC divides the heap into smaller regions and divides the regions into groups. 
+- It then collects the garbage from the groups in parallel. 
+- The G1 GC uses a combination of marking and copying to reclaim memory from dead objects. 
+- It also uses a technique called "concurrent marking" to minimize the impact of GC pauses on application performance.
+- The G1 GC also uses a technique called "mixed collections" to balance the amount of live data and the amount 
+of garbage in the heap. 
+- This allows the G1 GC to reclaim memory more efficiently and reduce GC pause times.
+- In summary, G1 GC is designed to handle large heap sizes, reduce GC pause times, using a combination of marking 
+and copying, concurrent marking, and mixed collections to reclaim memory more efficiently.

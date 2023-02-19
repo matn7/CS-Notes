@@ -8,7 +8,7 @@ that process Java code.
 of various types, such as primitives, strings, or arrays.
 - Annotations can be applied to various program elements, such as classes, interfaces, methods, constructors, fields, 
 and parameters, by using the `@` symbol followed by the annotation name.
-- Here is an example of a simple annotation called MyAnnotation that can be applied to a method:
+- Here is an example of a simple annotation called `MyAnnotation` that can be applied to a method:
 
 ```java
 @Retention(RetentionPolicy.RUNTIME)
@@ -24,6 +24,7 @@ public class MyClass {
     }
 }
 ```
+
 - The `@Retention` annotation in Java is used to specify the length of time the annotated element should be retained in 
 the Java source code. 
 - In other words, it determines when the annotated information should be discarded or ignored by the Java compiler.
@@ -83,7 +84,7 @@ the risk of race conditions or other concurrency issues.
 modify the state of the class and make it not immutable anymore. 
 - Also, for more complex class, it is important to make sure that any object references stored within the class are 
 also immutable.
-- An example of an immutable Java class that contains an ArrayList:
+- An example of an immutable Java class that contains an `ArrayList`:
 
 ```java
 import java.util.ArrayList;
@@ -103,14 +104,14 @@ public final class ImmutableClass {
 }
 ```
 
-- In this example, the ImmutableClass is declared as `final` to prevent subclassing. 
-- The class has a single instance variable, list, which is a final reference to an ArrayList of strings. 
-- The constructor takes a List of strings as a parameter and creates an unmodifiable ArrayList from the input list. 
-- The ArrayList is stored in the final reference variable, which cannot be changed after it has been assigned a value.
+- In this example, the `ImmutableClass` is declared as `final` to prevent subclassing. 
+- The class has a single instance variable, list, which is a `final` reference to an ArrayList of strings. 
+- The constructor takes a `List` of strings as a parameter and creates an unmodifiable `ArrayList` from the input list. 
+- The `ArrayList` is stored in the `final` reference variable, which cannot be changed after it has been assigned a value.
 - The `getList()` method returns the list instance variable, but since the list is unmodifiable, it cannot be changed 
 even if the caller of the method modifies the returned list. 
-- This ensures that the state of the ImmutableClass object is not changed, making it an immutable class.
-- An example of an immutable Java class that contains an ArrayList without using `Collections.unmodifiableList`:
+- This ensures that the state of the `ImmutableClass` object is not changed, making it an immutable class.
+- An example of an immutable Java class that contains an `ArrayList` without using `Collections.unmodifiableList`:
 
 ```java
 import java.util.ArrayList;
@@ -129,13 +130,13 @@ public final class ImmutableClass {
 }
 ```
 
-- In this example, the ImmutableClass is declared as `final` to prevent subclassing. 
-- The class has a single instance variable, list, which is a `final` reference to an ArrayList of strings. 
-- The constructor takes a List of strings as a parameter and creates a new ArrayList from the input list. 
-- The ArrayList is stored in the `final` reference variable, which cannot be changed after it has been assigned a value.
-- The `getList()` method returns a new ArrayList created from the list instance variable, rather than returning the 
+- In this example, the `ImmutableClass` is declared as `final` to prevent subclassing. 
+- The class has a single instance variable, list, which is a `final` reference to an `ArrayList` of strings. 
+- The constructor takes a `List` of strings as a parameter and creates a new `ArrayList` from the input list. 
+- The `ArrayList` is stored in the `final` reference variable, which cannot be changed after it has been assigned a value.
+- The `getList()` method returns a new `ArrayList` created from the list instance variable, rather than returning the 
 list itself. 
-- This ensures that the state of the ImmutableClass object is not changed, even if the caller of the method modifies 
+- This ensures that the state of the `ImmutableClass` object is not changed, even if the caller of the method modifies 
 the returned list. 
 - This makes the class an immutable class, as the state of the object cannot be changed once it has been constructed.
 
@@ -167,7 +168,7 @@ public class Main {
 ```
 
 - This example creates a `Runnable` task that simply prints out the name of the current thread. 
-- The task is then passed to a `Thread` object, which is started by calling the start method. 
+- The task is then passed to a `Thread` object, which is started by calling the `start()` method. 
 - When the program is run, it will output "Running in new thread" and "Running in main thread", indicating that the task 
 is running in a separate thread from the main thread.
 
@@ -192,8 +193,9 @@ between them:
         - Processes are isolated from each other, which means that a problem in one process cannot affect the other 
         processes. 
         - On the other hand, a problem in one thread can affect the other threads within the same process.
-    - Scheduling: Threads are scheduled by the operating system within a single process, while processes are scheduled 
-    by the operating system across all processes.
+    - Scheduling: 
+        - Threads are scheduled by the operating system within a single process, while processes are scheduled 
+        by the operating system across all processes.
 - In general, threads are useful for improving the performance and responsiveness of applications by allowing multiple 
 tasks to run concurrently within a single process. 
 - Processes are useful for providing isolation between different applications, as well as for executing different 
@@ -206,7 +208,7 @@ applications or parts of an application that require different resources or exec
 - Interview question: How do you synchronize access to a shared resource in a multithreading environment?
     - You can synchronize access to a shared resource in a multithreading environment by using locks, 
     semaphores, or other synchronization mechanisms. 
-    - For example, you can use the synchronized keyword to create a critical section of code that only one thread can 
+    - For example, you can use the `synchronized` keyword to create a critical section of code that only one thread can 
     execute at a time, or you can use a `ReentrantLock` to achieve the same effect.
 
 ```java
@@ -275,9 +277,9 @@ public class Main {
 ```
 
 - In this example, a `ConcurrentHashMap` is created and used to store key-value pairs. 
-- The `put` method is used to add key-value pairs to the map, and the get method is used to retrieve the value associated 
-with a key. 
-- The `remove` method is used to remove a key-value pair from the map.
+- The `put()` method is used to add key-value pairs to the map, and the `get()` method is used to retrieve the value 
+associated with a key. 
+- The `remove()` method is used to remove a key-value pair from the map.
 - Note that `ConcurrentHashMap` is thread-safe, which means that multiple threads can access the map concurrently without 
 causing any concurrency issues.
 
@@ -309,7 +311,6 @@ causing any concurrency issues.
         - The collection is divided into multiple segments, and each segment is protected by a separate lock. 
         - When a thread wants to access the collection, it acquires the lock for the appropriate segment, 
         allowing multiple threads to access different segments concurrently.
-- These are some of the most commonly used techniques for ensuring thread safety in Java. 
 - By using concurrent collections that implement these techniques, developers can ensure that their multi-threaded 
 applications are safe and efficient, even in the presence of race conditions and other thread-related issues.
     
@@ -346,10 +347,10 @@ public class Main {
 }
 ```
 
-- In this example, a fixed-size thread pool of 5 threads is created using the `Executors.newFixedThreadPool` factory method. 
+- In this example, a fixed-size thread pool of 5 threads is created using the `Executors.newFixedThreadPool()` factory method. 
 - The `Executor` framework provides an easy-to-use abstraction for creating and managing a pool of threads.
 - The program creates a `Runnable` task that simply prints out the name of the current thread. 
-- The task is then submitted to the executor 10 times using the execute method. 
+- The task is then submitted to the executor 10 times using the `execute()` method. 
 - The executor will run the tasks in one of its worker threads.
 - Finally, the `shutdown` method is called to signal that no more tasks will be submitted to the executor, and the executor 
 will clean up and terminate its worker threads when all tasks have completed.
@@ -361,7 +362,7 @@ allow threads to wait for a certain condition to be met, and to notify other thr
 - These methods are defined in the `Object` class and they are used in conjunction with the `synchronized` keyword.
 - Interview question: How do threads communicate with each other in Java?
     - In Java, threads can communicate with each other using the `wait()`, `notify()`, and `notifyAll()` methods. 
-    - These methods are used in conjunction with the synchronized keyword to allow threads to wait for a certain 
+    - These methods are used in conjunction with the `synchronized` keyword to allow threads to wait for a certain 
     condition to be met and to notify other threads when that condition has been met.
 - Inter-thread communication in Java is the mechanism by which threads can exchange information and coordinate their 
 activities. 
@@ -461,20 +462,20 @@ public class Example {
 - The `wait()` method is used to block the execution of a thread until it is notified by another thread, 
 and the `notify()` method is used to wake up a waiting thread.
 
-**Why wait(), notify() and notifyAll() are defined in Object class**
+**Why `wait()`, `notify()` and `notifyAll()` are defined in Object class**
 
-- The `wait`, `notify`, and `notifyAll` methods are defined in the Object class in Java because they are fundamental 
+- The `wait()`, `notify()`, and `notifyAll()` methods are defined in the `Object` class in Java because they are fundamental 
 `synchronization` mechanisms that are used to control the flow of execution between threads.
 - These methods allow one or more threads to be suspended, or blocked, until a particular condition is met. 
-- For example, a thread that is waiting for an event to occur, such as the completion of a task, can use the wait method 
-to wait until the event occurs. 
-- Another thread, responsible for triggering the event, can use the `notify` or `notifyAll` method to signal that the 
+- For example, a thread that is waiting for an event to occur, such as the completion of a task, can use the `wait()` 
+method to wait until the event occurs. 
+- Another thread, responsible for triggering the event, can use the `notify()` or `notifyAll()` method to signal that the 
 event has occurred and awaken the waiting thread(s).
 - By defining these methods in the Object class, they are available to all objects in Java, not just those that are 
 explicitly designed for use in multi-threaded environments. 
 - This makes them a universal synchronization mechanism that can be used in a wide variety of contexts and situations, 
 including complex multi-threaded applications.
-- It is important to note that the use of `wait`, `notify`, and `notifyAll` requires a proper understanding of thread 
+- It is important to note that the use of `wait()`, `notify()`, and `notifyAll()` requires a proper understanding of thread 
 synchronization and the synchronization mechanisms built into Java. 
 - Misuse of these methods can lead to serious problems, such as deadlocks, and should be avoided.
 
@@ -634,10 +635,10 @@ public class ThreadLocalExample {
 ```
 
 - In this example, `THREAD_LOCAL` is a `ThreadLocal` object that holds an Integer value. 
-- The main method sets the initial value of the ThreadLocal to 10.
+- The `main()` method sets the initial value of the `ThreadLocal` to 10.
 - Two threads, t1 and t2, are created and started, each running the same task. 
-- The task retrieves the value of the `ThreadLocal` using the get method, and then sets a new random value using the set 
-method.
+- The task retrieves the value of the `ThreadLocal` using the `get()` method, and then sets a new random value using 
+the `set()` method.
 - Since each `ThreadLocal` object is unique to each thread, the two threads can access and modify their own copy of the 
 `ThreadLocal` object, without affecting each other. 
 - The output of the example would show that each thread has its own separate copy of the `ThreadLocal` object, with its 
@@ -659,7 +660,7 @@ a separate log context for each thread.
 - By using a `ThreadLocal` variable, you can associate a unique log file with each thread, and write logs to the appropriate 
 file without the need for synchronization or locking.
 - `ThreadLocal` variables are also useful for maintaining thread-local cache or buffer data structures, or for managing 
-thread-local transactions or resources. explicit
+thread-local transactions or resources.
 - In general, `ThreadLocal` variables are a convenient and efficient mechanism for managing per-thread state in a 
 multi-threaded environment, without the need for explicit synchronization or locking.
 
@@ -690,7 +691,31 @@ the underlying hardware.
 - The precise details of how this works may depend on the underlying platform, but the overall goal is to ensure that 
 the value of a `volatile` variable is always up-to-date across all threads in a program.
 
-**Consumer Producer**
+**To which Java constructs can we use a volatile keyword**
+
+- In Java, the `volatile` keyword can be used with the following constructs:
+    - Variables: 
+        - Declaring a variable as `volatile` ensures that its value is always read directly from main memory, 
+        and any writes to the variable are immediately visible to all threads. 
+        - This helps to prevent synchronization and visibility issues when multiple threads access the same variable.
+    - Fields: 
+        - When a field is declared as `volatile`, it guarantees that all threads accessing that field will see the most 
+        up-to-date value. 
+        - This is especially useful in multi-threaded environments where data races can occur.
+    - Arrays: 
+        - When an array is declared as `volatile`, it ensures that all the elements of the array are visible to all threads, 
+        and that updates made by one thread are immediately visible to all other threads.
+    - Reference variables: 
+        - When a reference variable is declared as `volatile`, it ensures that the object it points to is always visible 
+        to all threads. 
+        - This is particularly useful in situations where one thread updates an object and other threads need to read 
+        the updated values.
+- It's important to note that while the `volatile` keyword provides guarantees around visibility and ordering of reads 
+and writes, it does not provide guarantees around atomicity. 
+- For operations that require atomicity, such as incrementing a counter or updating multiple variables together, 
+you should use other synchronization constructs like `synchronized` or `Lock`.
+
+**Consumer Producer Pattern**
 
 - The consumer-producer pattern is a design pattern that is used to manage the communication between multiple threads 
 in a concurrent system. 
@@ -820,7 +845,7 @@ in a deck of cards.
 - For example, an `enum` called `DaysOfWeek` might have enumerators for `Monday`, `Tuesday`, `Wednesday`, etc.
 - Enum constants are singleton by design, meaning that there can be only one instance of each enumerator created 
 in the JVM. 
-- :star: Also, they are created at the time the enum type is initialized and are guaranteed to be initialized before any other 
+- :star: Also, they are created at the time the `enum` type is initialized and are guaranteed to be initialized before any other 
 thread accesses them.
 - In a multithreading context, `enum` constants are thread-safe because of their singleton nature. 
 - Because only one instance of each enumerator is created and initialized, there is no need to synchronize access to them. 
@@ -859,11 +884,11 @@ public class Singleton {
 }
 ```
 
-- In this example, the instance of the Singleton class is created in a thread-safe manner using the double-checked 
+- In this example, the instance of the `Singleton` class is created in a thread-safe manner using the double-checked 
 locking pattern. 
-- This ensures that only one instance of the Singleton class is created, even if multiple threads try to access the 
+- This ensures that only one instance of the `Singleton` class is created, even if multiple threads try to access the 
 `getInstance()` method at the same time.
-- Note that in this example, the instance variable is also declared as volatile, which guarantees that any write to the 
+- Note that in this example, the instance variable is also declared as `volatile`, which guarantees that any write to the 
 variable will be visible to all threads and that any read of the variable will return the latest value written by any thread. 
 - This helps to ensure that the singleton instance is properly initialized before it is accessed by any other threads.
 
@@ -904,8 +929,8 @@ public enum Day {
 - Each constant has a number and a Boolean value indicating whether it's a weekend day or not. 
 - These values are stored in the private dayNumber and isWeekend fields. 
 - The `enum` has a constructor that initializes these fields.
-- Additionally, the `enum` has two methods, getDayNumber and isWeekend, which return the dayNumber and isWeekend values, 
-respectively.
+- Additionally, the `enum` has two methods, `getDayNumber()` and `isWeekend()`, which return the dayNumber and isWeekend 
+values, respectively.
 - Here's an example of how you can use this enum:
 
 ```java
@@ -951,8 +976,8 @@ public enum Singleton {
 ```
 
 - In this example, the Singleton `enum` has a single instance named `INSTANCE`, and it has two methods: 
-`incrementCount` and `getCount`. 
-- The `incrementCount` method increments the count variable, while the `getCount` method returns its value.
+`incrementCount()` and `getCount()`. 
+- The `incrementCount()` method increments the count variable, while the `getCount()` method returns its value.
 - Here's an example of how to use the Singleton instance in a Java application:
 
 ```java
@@ -1106,10 +1131,6 @@ causing it to crash or hang.
     less responsive.
     - Increased memory usage: Over time, the program's memory usage will increase, indicating that it is leaking memory.
     - Unresponsive program: In severe cases, the program may become unresponsive, hang, or crash.
-- In summary, memory leaks are a common problem in software development, and they can cause serious performance and 
-stability issues. 
-- It is important to identify and fix memory leaks as soon as possible to prevent them from affecting the stability and 
-performance of a program.
 
 **callback**
 
@@ -1138,7 +1159,7 @@ and modular code.
 - The basic syntax of `xargs` is: `command1 | xargs command2`
     - It takes the output of command1 as input and passes it as arguments to command2.
 - For example, if you want to find all the files in a directory that match a certain pattern, and then delete them, 
-you could use the find command to list the files and then pipe the output to `xargs` and the `rm` command:
+you could use the `find` command to list the files and then pipe the output to `xargs` and the `rm` command:
     - `find /path -name "*.txt" | xargs rm`
 - This will find all the `.txt` files in the directory `/path` and pass the list of file names to `xargs`, which then 
 passes them as arguments to the `rm` command to delete them.
@@ -1149,8 +1170,6 @@ passes them as arguments to the `rm` command to delete them.
 
 **The Singleton pattern**
  
-- Is used to ensure that a class has only one instance and to provide a global access point to that instance. 
-- This is useful when only a single instance of a class should control the action throughout the execution.
 - The Singleton pattern is a design pattern that ensures a class has only one instance, while providing a global access 
 point to this instance. 
 - This is typically achieved by making the class's constructor private and providing a static method that returns the 
@@ -1174,13 +1193,13 @@ public class Singleton {
 ```
 
 - In this example, the Singleton class has a private constructor, which ensures that no other class can instantiate it. 
-- Instead, the class provides a static method `getInstance()` that returns the singleton instance. 
+- Instead, the class provides a `static` method `getInstance()` that returns the singleton instance. 
 - The first time the method is called, it creates a new instance of the Singleton class and assigns it to 
 the instance variable. 
 - Subsequent calls to the method return the same instance.
 - It is important to note that in a multi-threaded environment, this implementation is not thread-safe, 
 so it will need to be synchronized. 
-- Here is an example of thread-safe singleton pattern implementation in Java:
+- Here is an example of thread-safe Singleton pattern implementation in Java:
 
 ```java
 public class Singleton {
@@ -1323,7 +1342,7 @@ class SubjectImpl implements Subject {
         observers.remove(o);
     }
 
-    public void notifyObservers() {
+    private void notifyObservers() {
         for (Observer o : observers) {
             o.update(value);
         }
@@ -1593,7 +1612,7 @@ one class into an interface expected by the clients.
     
 **The Facade pattern**
     
-- The Facade pattern is a structural design pattern in Java that provides a simplified interface to a complex system of 
+- The Facade pattern is a **structural** design pattern in Java that provides a simplified interface to a complex system of 
 classes, hiding their implementation details and interdependencies. 
 - It allows the client to access the functionality of a subsystem through a single, unified interface.
 - Here is an example of the Facade pattern in Java:
@@ -1834,6 +1853,7 @@ while (iterator.hasNext()) {
     System.out.println(item);
 }
 ```
+
 - This will output:
 
 ```
@@ -1916,7 +1936,7 @@ for unstructured and high volume of data.
 
 - When deciding whether to use a SQL or NoSQL database, it is important to consider the specific requirements of the 
 application and the type of data that will be stored.
-- Here are some examples of when to use a SQL database:
+- Some examples of when to use a SQL database:
     - When you have structured data with a fixed schema, and you need to enforce data consistency and integrity. 
     - SQL databases are well suited for transactional systems where data is inserted, updated, and deleted in a 
     consistent and controlled manner.
@@ -1924,7 +1944,7 @@ application and the type of data that will be stored.
     - SQL databases are optimized for this type of operation and provide a rich set of query languages like SQL to do so.
     - When you have a small to medium size of data. 
     - SQL databases work well with a small to medium amount of data and the performance of the queries will be consistent.
-- And here are some examples of when to use a NoSQL database:
+- Some examples of when to use a NoSQL database:
     - When you have unstructured or semi-structured data that does not fit into a fixed schema. 
     - NoSQL databases are designed to handle this type of data and can be easily adapted to changing data structures.
     - When you need to scale horizontally to handle high levels of traffic. 

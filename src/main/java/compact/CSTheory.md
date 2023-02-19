@@ -56,6 +56,23 @@ public class PolymorphismExample {
 }
 ```
 
+- Polymorphism is useful because it allows you to write code that is more flexible and generic, and that can handle 
+objects of different types in a uniform manner. 
+- This makes your code easier to maintain and reduces the amount of duplicated code.
+- With polymorphism, you can define a single interface that can be implemented by multiple classes, 
+each providing their own implementation of the interface. 
+- This allows you to write code that can work with objects of different types, without having to know the specific type 
+at compile time. 
+- This makes your code more robust and flexible, as it can handle changes to the implementation of a class without 
+requiring changes to the code that uses that class.
+- Additionally, polymorphism enables you to write code that can be reused and extended. 
+- For example, you can define a base class that provides common behavior, and then create derived classes that add 
+additional behavior specific to each derived class. 
+- This makes it easier to create new classes that share the same basic behavior, and reduces the amount of code that you 
+need to write.
+- In summary, polymorphism is useful because it makes your code more flexible, generic, and maintainable, 
+and it enables you to write code that can be reused and extended.
+
 **Overriding**
 
 - Overriding is the ability of a subclass to provide a different implementation of a method that is already defined 
@@ -174,8 +191,6 @@ OAuth2RestTemplate oauth2RestTemplate = oauth2Config.oauth2RestTemplate();
 String result = oauth2RestTemplate.getForObject(url, String.class);
 ```
 
-- This is just a basic example of how to configure OAuth 2.0 in a Java application, you can customize it according to 
-your needs, and add the appropriate scopes, redirects, and other configurations.
 - Also, note that you should not put your `client_id`, `client_secret`, `redirect_uris`, and other sensitive data in 
 the code, you should use an environment variable, or a configuration file and read them in runtime.
 
@@ -205,7 +220,6 @@ extends the Java language with new AOP-specific constructs such as pointcuts and
     application logic.
     - Improved flexibility by allowing the reuse and composition of cross-cutting concerns across multiple parts of the 
     program.
-- It is important to note that AOP is a powerful tool, but it should be used with care. 
 - AOP can make the codebase more complex and harder to understand if not used properly. 
 - It's important to use it judiciously and in a way that it enhances the readability and maintainability of the codebase.
 
@@ -331,7 +345,7 @@ and the design choices made by the developer.
 | Primitive Type | Size (in bytes) |
 |---|---|
 | boolean |	1 | 
-| byte |1 |
+| byte | 1 |
 | char | 2 |
 | short | 2 |
 | int |	4 |
@@ -349,7 +363,7 @@ platform and JVM being used.
 **Operating Systems Interview**
 
 1) What is an operating system and what are its functions?
-    - Answer: An operating system (OS) is the software that manages and controls the resources of a computer system. 
+    - An operating system (OS) is the software that manages and controls the resources of a computer system. 
     - Its main functions include resource management (such as CPU time, memory, and I/O devices), task management 
     (such as scheduling and execution of processes), and communication between processes.
 2) What are the different types of operating systems?

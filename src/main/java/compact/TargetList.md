@@ -130,7 +130,6 @@ docker run -p <host_port>:<container_port> <image_name>
 
 - This command starts a container from the `<image_name>` and maps the host port `<host_port>` to the container port 
 `<container_port>`.
-- These are some of the key concepts related to Dockerfiles. 
 - The Dockerfile can be seen as a recipe or blueprint for building an image and ensures that the resulting image 
 is consistent and repeatable.
 
@@ -211,7 +210,6 @@ of containerized applications.
         - Kubernetes can automatically scale the number of replicas of a deployment based on resource usage, 
         allowing applications to handle varying levels of traffic.
 - These are some of the key concepts related to Kubernetes. 
-- Understanding these concepts is important for effectively using Kubernetes to manage containerized applications. 
 - Kubernetes provides a robust and flexible platform for running containerized applications, 
 and it is widely adopted by organizations of all sizes.
 
@@ -284,99 +282,6 @@ and it is widely adopted by organizations of all sizes.
 
 ***
 
-## Java memory parts
-
-- Java uses a combination of different memory areas to manage the memory of a running program. 
-- These memory areas include:
-    - Heap: 
-        - The heap is the main memory area where objects are stored. 
-        - When an object is created using the new operator, it is allocated memory on the heap. 
-        - Garbage collection is used to reclaim memory that is no longer being used by the program.
-    - Stack: 
-        - The stack is used to store method call frames. 
-        - Each time a method is called, a new frame is pushed onto the stack and when the method returns, the frame 
-        is popped off. 
-        - The stack also stores local variables, and the parameters passed to methods.
-    - Method Area: 
-        - The method area is used to store class-level information, such as the bytecode for methods and fields of classes.
-    - Native Method Stacks: 
-        - Native method stacks are used to store information about native methods, which are methods written in 
-        languages other than Java.
-    - PC Registers: 
-        - PC (program counter) registers are used to store the current instruction being executed.
-    - Non-Heap Memory: 
-        - Non-heap memory is used for storing other data, such as the runtime constant pool and memory used by the JVM 
-        itself, such as the garbage collector and JIT compiler.
-- It's worth noting that the heap is divided into two parts: the young generation and the old generation. 
-- The young generation is used to store newly created objects and the old generation is used to store long-lived objects. 
-- The JVM uses a garbage collector to periodically clean up the heap and free up memory that is no longer being used.
-
-**Java Garbage Collectors**
-
-- Java has several built-in garbage collectors, including:
-    - Serial GC: 
-        - This is the simplest and default GC used in Java. 
-        - It uses a single thread to perform garbage collection.
-    - Parallel GC: 
-        - This GC uses multiple threads to perform garbage collection, making it more efficient for larger heap sizes.
-    - Concurrent Mark Sweep (CMS) GC: 
-        - This GC performs most of its work concurrently with the application, 
-        minimizing pauses caused by garbage collection.
-    - G1 GC: 
-        - This GC is designed for large heap sizes and uses a combination of techniques, such as parallel, concurrent, 
-        and incremental collection to improve performance.
-- You can specify which GC to use by adding command line options when starting the JVM. 
-- It also depends on the heap size, number of cores and other system resources.
-- You can specify which garbage collector to use by adding the following command line options when starting the JVM:
-    - `-XX:+UseSerialGC`: This option specifies that the Serial GC should be used.
-    - `-XX:+UseParallelGC`: This option specifies that the Parallel GC should be used.
-    - `-XX:+UseConcMarkSweepGC`: This option specifies that the Concurrent Mark Sweep (CMS) GC should be used.
-    - `-XX:+UseG1GC`: This option specifies that the G1 GC should be used.
-- For example, to start a Java application using the G1 GC, you would use the following command:
-
-```
-java -XX:+UseG1GC -jar myapplication.jar
-```
-
-- You can also use `-XX:+PrintCommandLineFlags` to check which GC is currently in use.
-
-**CMS GC**
-
-- Concurrent Mark Sweep (CMS) is a garbage collector in Java that is designed to minimize pauses caused by 
-garbage collection. 
-- It works by performing most of its work concurrently with the application, while the application is running.
-- The CMS GC operates in two phases:
-    - Initial Mark Phase: 
-        - In this phase, the GC identifies all the live objects in the heap. 
-        - It starts by marking the objects that are reachable from the application's root objects 
-        (i.e., objects that are reachable from the application's static fields and local variables), 
-        and then recursively marks all the objects that are reachable from these objects. 
-        - This phase can cause some short pauses in the application, but the goal is to minimize them.
-    - Concurrent Sweep Phase: 
-        - After the initial mark phase, the GC identifies all the objects that are no longer reachable and are eligible 
-        for garbage collection. 
-        - The concurrent sweep phase runs concurrently with the application, collecting the dead objects 
-        and compacting the heap. 
-        - The goal is to minimize the amount of time the application is paused.
-- CMS GC is suitable for applications with moderate heap size and short GC pauses are acceptable. 
-- It also performs well in environments with a high number of CPU cores and large amount of memory, 
-but it can be less efficient with large heap sizes and high object allocation rates.
-- Also, CMS GC have some disadvantages, such as high CPU usage, high fragmentation and can be prone to long pauses.
-
-**G1 GC**
-
-- The G1 (Garbage First) GC is a type of garbage collector that is included in the Java HotSpot Virtual Machine (JVM). 
-- It is designed to handle large heap sizes and reduce GC pause times.
-- The G1 GC divides the heap into smaller regions and divides the regions into groups. 
-- It then collects the garbage from the groups in parallel. 
-- The G1 GC uses a combination of marking and copying to reclaim memory from dead objects. 
-- It also uses a technique called "concurrent marking" to minimize the impact of GC pauses on application performance.
-- The G1 GC also uses a technique called "mixed collections" to balance the amount of live data and the amount 
-of garbage in the heap. 
-- This allows the G1 GC to reclaim memory more efficiently and reduce GC pause times.
-- In summary, G1 GC is designed to handle large heap sizes, reduce GC pause times, using a combination of marking 
-and copying, concurrent marking, and mixed collections to reclaim memory more efficiently.
-
 ## Postgres
 
 - PostgreSQL (often simply called "Postgres") is an open-source relational database management system. 
@@ -392,18 +297,22 @@ and copying, concurrent marking, and mixed collections to reclaim memory more ef
         - Postgres uses a multi-version concurrency control (MVCC) system, which allows for concurrent access to the 
         same data without the need for locks. 
         - This improves performance, but it can make it more difficult to write certain types of queries.
-    - ACID Compliance: Postgres is fully ACID compliant, which means that it guarantees the atomicity, consistency, 
-    isolation, and durability of transactions.
+    - ACID Compliance: 
+        - Postgres is fully ACID compliant, which means that it guarantees the atomicity, consistency, isolation, 
+        and durability of transactions.
     - Extensibility: 
         - Postgres is highly extensible, with support for user-defined functions, operators, and data types. 
         - This allows developers to add custom functionality to the database, such as full-text search or geographic 
         data support.
-    - Replication: Postgres supports several types of replication, including streaming replication, logical replication, 
-    file-based replication and pgpool-II.
-    - Security: Postgres provides a robust set of security features, including support for user authentication, 
-    role-based access control, and encryption.
+    - Replication: 
+        - Postgres supports several types of replication, including streaming replication, logical replication, 
+        file-based replication and pgpool-II.
+    - Security: 
+        - Postgres provides a robust set of security features, including support for user authentication, 
+        role-based access control, and encryption.
 - In summary, Postgres is a powerful and flexible open-source relational database management system that supports a wide 
 variety of data types and has many advanced features such as replication, extensibility, and security.
+
 
 **Questions**
 
