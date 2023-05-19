@@ -1325,3 +1325,78 @@ of garbage in the heap.
 - This allows the G1 GC to reclaim memory more efficiently and reduce GC pause times.
 - In summary, G1 GC is designed to handle large heap sizes, reduce GC pause times, using a combination of marking 
 and copying, concurrent marking, and mixed collections to reclaim memory more efficiently.
+
+**Where variables are stored**
+
+```java
+public class ExampleClass {
+    private int instanceInt;
+    private double instanceDouble;
+    private boolean instanceBoolean;
+    private char instanceChar;
+    private String instanceString;
+    private int[] instanceIntArray;
+    private Object instanceObject;
+
+    public ExampleClass(int instanceInt, double instanceDouble, boolean instanceBoolean, char instanceChar, String instanceString, int[] instanceIntArray, Object instanceObject) {
+        this.instanceInt = instanceInt;
+        this.instanceDouble = instanceDouble;
+        this.instanceBoolean = instanceBoolean;
+        this.instanceChar = instanceChar;
+        this.instanceString = instanceString;
+        this.instanceIntArray = instanceIntArray;
+        this.instanceObject = instanceObject;
+    }
+
+    public void exampleMethod(int num, double doub, boolean bool, char ch, String str, int[] intArr, Object obj) {
+        // Output the values of the instance variables
+        System.out.println("instanceInt = " + instanceInt);
+        System.out.println("instanceDouble = " + instanceDouble);
+        System.out.println("instanceBoolean = " + instanceBoolean);
+        System.out.println("instanceChar = " + instanceChar);
+        System.out.println("instanceString = " + instanceString);
+        System.out.println("instanceIntArray = " + Arrays.toString(instanceIntArray));
+        System.out.println("instanceObject = " + instanceObject.toString());
+
+        // Output the values of the method arguments
+        System.out.println("num = " + num);
+        System.out.println("doub = " + doub);
+        System.out.println("bool = " + bool);
+        System.out.println("ch = " + ch);
+        System.out.println("str = " + str);
+        System.out.println("intArr = " + Arrays.toString(intArr));
+        System.out.println("obj = " + obj.toString());
+    }
+}
+```
+
+- In Java 17, local variables and instance variables are stored in different parts of memory.
+- Local variables are stored on the stack. 
+- When a method is called, a new frame is pushed onto the stack to hold the local variables for that method. 
+- When the method returns, the frame is popped off the stack and the local variables are destroyed.
+- Instance variables, on the other hand, are stored on the heap. 
+- When an object is created, space is allocated on the heap to hold the instance variables for that object. 
+- Instance variables exist for the lifetime of the object they belong to, and are destroyed when the object 
+- is garbage collected.
+- Here's how the variables in the previous examples would be stored in memory:
+
+```java
+// Local variables in exampleMethod
+int myInt; // stored on the stack
+double myDouble; // stored on the stack
+boolean myBoolean; // stored on the stack
+char myChar; // stored on the stack
+String myString; // stored on the heap, but the reference to the object is stored on the stack
+int[] myIntArray; // stored on the heap, but the reference to the object is stored on the stack
+Object myObject; // stored on the heap, but the reference to the object is stored on the stack
+
+// Instance variables in ExampleClass
+private int instanceInt; // stored on the heap
+private double instanceDouble; // stored on the heap
+private boolean instanceBoolean; // stored on the heap
+private char instanceChar; // stored on the heap
+private String instanceString; // stored on the heap
+private int[] instanceIntArray; // stored on the heap
+private Object instanceObject; // stored on the heap
+```
+
