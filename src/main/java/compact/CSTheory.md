@@ -1,28 +1,23 @@
 ## Object oriented concepts
 
 **Classes and Objects** 
-    
 - Classes are templates for creating objects, which are instances of a class. 
 - Classes define the properties and behavior of objects, and objects are the individual instances of a class.
 
 **Encapsulation**
-
 - Encapsulation is the practice of hiding the implementation details of a class from other parts of the program. 
 - This allows the class to change its implementation without affecting the rest of the program.
 
 **Abstraction**
-
 - Abstraction is the practice of focusing on the essential features of an object and ignoring non-essential details. 
 - This allows the developer to work with objects at a higher level of abstraction.
 
 **Inheritance**
-
 - Inheritance is the ability of a class to inherit properties and behavior from a parent class. 
 - This allows for the creation of a hierarchy of classes, where a subclass can inherit properties and behavior from a 
 superclass.
 
 **Polymorphism**
-
 - Polymorphism is the ability of a single function or method to work with multiple types of objects. 
 - This allows for the use of a single function or method with different types of objects, without the need for explicit 
 type checking.
@@ -74,24 +69,20 @@ need to write.
 and it enables you to write code that can be reused and extended.
 
 **Overriding**
-
 - Overriding is the ability of a subclass to provide a different implementation of a method that is already defined 
 in its superclass. 
 - This allows for the customization of the behavior of a class based on its specific needs.
 
 **Overloading**
-
 - Overloading is the ability of a class to have multiple methods with the same name but different parameters. 
 - This allows for the use of the same method name with different types of inputs, making the code more readable.
 
 **Interfaces**
-
 - Interfaces are a way to define a contract for a class, specifying the methods and properties that the class must have.
 - This allows for the creation of classes that conform to a specific set of rules, making them more interchangeable and 
 reusable.
 
 **Access Modifiers**
-
 - Access modifiers are keywords used to control the accessibility of classes, methods, and properties. 
 - They determine which parts of the program can access a particular class, method or property.
 

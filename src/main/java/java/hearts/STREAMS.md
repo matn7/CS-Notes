@@ -1,11 +1,11 @@
-## Stream
+## Stream.
 
 - With Java 8 Collection interface has two methods to generate a Stream: `stream()` and `parallelStream()`.
 - Stream operations are either intermediate or terminal:
     - Intermediate operations return a Stream so multiple intermediate operations can be chained before the Stream closed.
     - Terminal operations are either void or return a non-stream result.
 
-### 1. Using Streams
+### 1. Using Streams.
 
 - A Stream is a sequence of elements upon which sequential and parallel aggregate operations can be performed.
 - Any given Stream can potentially have an unlimited amount of data flowing through it. 
@@ -42,7 +42,7 @@ is mapped to its uppercase String version:
 
 ![Stream](images/stream.png "Stream")
 
-### Closing Streams
+### Closing Streams.
 
 - Stream generally does not have to be closed. 
 - It is only required to close streams that operate on IO channels. 
@@ -70,11 +70,11 @@ public Stream<String> streamAndDelete(Path path) throws IOException {
 - The run handler will only execute if the `close()` method gets called, either explicitly or implicitly by a 
 try-with-resources statement.
 
-### Processing Order
+### Processing Order.
 
 - A Stream objects processing can be sequential or parallel:
     - In a sequential mode, the elements processed in the order of the source of the Stream. 
-    - If the Stream ordered (such as s SortedMap implementation, or a List) the processing guaranteed to match the ordering 
+    - If the Stream ordered (such as a SortedMap implementation, or a List) the processing guaranteed to match the ordering 
     of the source.
 
 ```java
@@ -101,7 +101,7 @@ long howManyOddNumbers = integerList.parallelStream()
 System.out.println(howManyOddNumbers);
 ```
 
-**Difference from Containers (or Collections)**
+**Difference from Containers (or Collections).**
 
 - While some actions can be performed on both Containers and Streams, they ultimately serve different purposes
 and support different operations.
@@ -110,7 +110,7 @@ and support different operations.
 to the group of objects as a collective entity and performing operations on that entity as a whole.
 - Stream and Collections are separate high-level abstractions for these differing purposes.
 
-### 2. Consuming Streams
+### 2. Consuming Streams.
 
 - A Stream will only be traversed when there is a **terminal operation**, like `count()`, `collect()` or `forEach()`.
 - Otherwise, no operation on the Stream will be performed.
@@ -182,7 +182,7 @@ orange=1
 apple=2
 ```
 
-### 4. Infinite Streams
+### 4. Infinite Streams.
 
 - It is possible to generate a Stream that does not end. 
 - Calling a terminal method on an infinite Stream causes the Stream to enter an infinite loop. 
@@ -212,7 +212,7 @@ infiniteRandomNumbers.limit(10).forEach(System.out::println);
 
 ### 5. Collect Elements of a Stream into a Collection.
 
-**Collect with toList() and toSet()**
+**Collect with toList() and toSet().**
 
 ```java
 Arrays.asList("apple", "banana", "orange")
@@ -240,7 +240,7 @@ strings.stream()
     .collect(Collectors.toCollection(() -> new LinkedHashSet<>()));
 ```
 
-**Collecting Elements using toMap**
+**Collecting Elements using toMap.**
 
 - Collector accumulates elements into a Map, where key is the Student id and value is Student name.
 
@@ -262,7 +262,7 @@ a new member in the Map from a List.
 - The mergeFunction often looks like, `(s1, s2) -> s1` to retain value corresponding to the repeated key, or
 `(s1, s2) -> s2` to put new value for the repeated key.
 
-**:star: Collecting Elements to Map of Collections**
+**:star: Collecting Elements to Map of Collections.**
 
 - Requires to make a map of list out of a primary list. 
 - Example: From a student of list, we need to make a map of list of subjects for each student.
@@ -309,7 +309,7 @@ double pi = Math.sqrt(12) *
 - With double's precision, selecting an upper bound of 29 is sufficient to get a result that's indistinguishable
 from Math.Pi.
 
-### 7. Flatten Streams with flatMap()
+### 7. Flatten Streams with flatMap().
 
 - A Stream of items that are in turn Streamable can be flattened into a single continuous Stream:
     - Array of List of items can be converted into a single List.
@@ -382,11 +382,11 @@ aParallelStream.forEach(System.out::println);
 - The order might change as all the elements are processed in parallel (Which may make it faster). 
 - **Use parallelStream when ordering does not matter**.
 
-**Performance impact**
+**Performance impact.**
 
 - In case networking involved, **parallelStreams** may degrade the overall performance of an application because all
 **parallelStreams** use a common fork-join thread pool for the network.
-- On the other hand, **parallelStreams** may significantly improve performance in many other cases, depending of the
+- On the other hand, **parallelStreams** may significantly improve performance in many other cases, depending on the
 number of available cores in the running CPU at the moment.
 
 ### 9. Creating a Stream.
@@ -439,7 +439,7 @@ IntStream intStream = Arrays.stream(values, 1, 3);
 Stream<Integer> integerStream = intStream.boxed();
 ```
 
-### :star: Reusing intermediate operations of a stream chain
+### :star: Reusing intermediate operations of a stream chain.
 
 - Stream closed when ever terminal operation called. 
 - Reusing the stream of intermediate operations, when only terminal operation is only varying, we could create a stream 
@@ -517,7 +517,7 @@ Collection<String> digits = Arrays.asList("1", "2", "3");
 Collection<String> greekAbc = Arrays.asList("alpha", "beta", "gamma");
 ```
 
-**Example 1 - Concatenate two Streams**
+**Example 1 - Concatenate two Streams.**
 
 ```java
 final Stream<String> concat1 = Stream.concat(abc.stream(), digits.stream());
@@ -600,7 +600,7 @@ LinkedList<T> bigList = listStream.reduce(new LinkedList<T>(), (LinkedList<T> li
 - Note that when an identity element provided, the return value not wrapped in an Optional - if called on an
 empty stream, `reduce()` will return the identity element.
 - The binary operator must also be associative, meaning that `(a+b)+c==a+(b+c)`. 
-- This is because the elements may reduced in any order.
+- This is because the elements may be reduced in any order.
 
 ### 15. Using Streams of `Map.Entry` to Preserve Initial Values after Mapping.
 
@@ -647,7 +647,7 @@ public String intStreamToString(IntStream intStream) {
 ### 17. Finding the First Element that Matches a Predicate.
 
 - It is possible to find the first element of a Stream that matches a condition.
-- For example find the first Integer whose square is over 50000
+- For example find the first Integer whose square is over 50000.
 
 ```java
 IntStream.iterate(1, i -> i + 1) // Generate an infinite stream 1,2,3,4,...
@@ -681,7 +681,7 @@ public <V extends Ordered> List<V> myMethod(List<Thing<V>> things) {
 ### 19. Converting a Stream of Optional to a Stream of Values.
 
 - You may need to convert a Stream emitting Optional to a Stream of values, emitting only values from existing
-Optional. (ie: without null value and not dealing with `Optional.empty()`).
+Optional. ie: without null value and not dealing with `Optional.empty()`.
 
 ```java
 Optional<String> op1 = Optional.empty();
@@ -711,7 +711,7 @@ expensive on ordered parallel pipelines.
 
 ### 21. Create a Map based on a Stream.
 
-**Simple case without duplicate keys**
+**Simple case without duplicate keys.**
 
 ```java
 Stream<String> characters = Stream.of("A", "B", "C");
@@ -743,7 +743,7 @@ Map<Integer, String> map = characters
     - Return the new value, so that the last value in the stream takes precedence.
     - Combine the old and new values.
 
-### :star: Grouping by value
+### :star: Grouping by value.
 
 - You can use `Collectors.groupingBy` when you need to perform the equivalent of a database cascaded "group by" operation. 
 - To illustrate, the following creates a map in which people's names are mapped to surnames.
@@ -857,20 +857,20 @@ Arrays.asList(1, 2 ,3).stream().map(i -> {
 - Intermediate operations are the common building blocks of a stream, chained after the source and are usually
 followed by a terminal operation triggering the stream chain.
 
-**Terminal Operations**
+**Terminal Operations.**
 
 - Terminal operations are what triggers the consumption of a stream. 
 - Some of the more common are `Stream.forEach` or `Stream.collect`. 
 - They are usually placed after a chain of intermediate operations and are almost always eager.
 
-**Stateless Operations**
+**Stateless Operations.**
 
 - Statelessness means that each item is processed without the context of other items. 
 - Stateless operations allow for memory-efficient processing of streams. 
 - Operations like `Stream.map` and `Stream.filter` that do not require information on other items of the stream 
 considered stateless.
 
-**Stateful operations**
+**Stateful operations.**
 
 - Statefulness means the operation on each item depends on (some) other items of the stream. 
 - This requires a state to be preserved. 
@@ -906,7 +906,7 @@ System.out.println(Arrays.toString(filteredFruits));
 
 - `String[]::new` is a special kind of method reference, a constructor reference.
 
-### 27. Generating random String using Streams
+### 27. Generating random String using Streams.
 
 - First we need to initialize a random number generator. 
 - To enhance security for the generated Strings, it is a good idea to use SecureRandom.
@@ -945,3 +945,724 @@ public String generateRandomString(long length) {
     return randomString;
 }
 ```
+
+### Lambdas Programs.
+
+**1. Arithmetic Binary Tree.**
+```java
+class Solution {
+    
+    @FunctionalInterface
+    interface Operator<T> {
+        T process(T a, T b);
+    }
+    
+    public int evaluate(Node node) {
+        Map<String, Operator<Integer>> op = new HashMap<>();
+        op.put("+", (a, b) -> a + b);
+        op.put("-", (a, b) -> a - b);
+        op.put("*", (a, b) -> a * b);
+        op.put("/", (a, b) -> a / b);
+        return helper(node, op);
+    }
+    
+    private int helper(Node node, Map<String, Operator<Integer>> op) {
+        if (op.containsKey(node.value)) {
+            Operator<Integer> fn = op.get(node.value);
+            return fn.process(helper(node.left, op), helper(node.right, op));
+        }
+        return Integer.parseInt(node.value);
+    }
+    
+    static class Node {
+        String value;
+        Node left;
+        Node right;
+        
+        public Node(String value) {
+            this.value = value;
+        }
+    }
+}
+```
+
+**2. Evaluate Expression.**
+```java
+class Solution {
+    public int evaluateExpression(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return helper(node);
+    }
+    
+    private int helper(Node node) {
+        if (node.value > 0) {
+            return node.value;
+        }
+        int left = helper(node.left);
+        int right = helper(node.right);
+        Operation<Integer> op = operationsMap.get(node.value);
+        return op.calc(left, right);
+    }
+    
+    static Map<Integer, Operation<Integer>> operationsMap = new HashMap<>();
+    static {
+        operationsMap.put(-1, (a, b) -> a + b);
+        operationsMap.put(-2, (a, b) -> a - b);
+        operationsMap.put(-3, (a, b) -> a / b);
+        operationsMap.put(-4, (a, b) -> a * b);
+    }
+    
+    static class Node {
+        int value;
+        Node left;
+        Node right;
+        public Node(int value) {
+            this.value = value;
+        }
+    }
+    
+    @FunctionalInterface
+    interface Operation<T> {
+        T calc(T a, T b);
+    }
+}
+```
+
+**3. Reverse Polish Notation.**
+```java
+class Solution {
+    @FunctionalInterface
+    interface Operator<T> {
+        T process(T a, T b);
+    }
+    
+    public int calc(String[] inputs) {
+        Stack<String> stack = new Stack<>();
+        Map<String, Operator<Integer>> operators = new HashMap<>();
+        operators.put("+", (a, b) -> a + b);
+        operators.put("-", (a, b) -> a - b);
+        operators.put("*", (a, b) -> a * b);
+        operators.put("/", (a, b) -> a / b);
+        
+        for (String i : inputs) {
+            if (operators.containsKey(i)) {
+                int b = Integer.parseInt(stack.pop());
+                int a = Integer.parseInt(stack.pop());
+                Operator<Integer> fn = operators.get(i);
+                Integer val = fn.process(a, b);
+                stack.push(String.valueOf(val));
+            } else {
+                stack.push(i);
+            }
+        }
+        return Integer.parseInt(stack.pop());
+    }
+}
+```
+
+**4. Do not allow blank links, do not allow links containing 's', convert link text to upper case, print to console.**
+```java
+var res = this.driver
+    .findElements(By.tagName("a")) // List<WebElement>
+    .stream() // Stream<WebElement>
+    .map(WebElement.getText()) // Stream<String>
+    .map(String::trim) // Stream<String>
+    .filter(e -> e.length() > 0) // Stream<String>
+    .filter(e -> !e.toLowerCase().contains("s")) // Stream<String>
+    .map(String::toUpperCase) // Stream<String>
+    .forEach(System.out::println);
+```
+
+**5. Stream Intermediate Operations.**
+```java
+void example() {
+    var stream =
+            Stream.iterate(0, i -> i < maxSeats, i -> i + 1)
+                    .map(i -> new Seat((char) ('A' + 1 / seatInRow), 1 & seatInRow + 1))
+                    .skip(5)
+                    .limit(10)
+                    .peek(s -> System.out.println("--->" + s))
+                    .sorted(Comparator.comparing(Seat::price).thenComparing(Seat::toString));
+  
+    stream.forEach(System.out::println);
+}
+```
+
+**6. Count students by gender.**
+```java
+void example() {
+    for (String gender : List.of("M", "F")) {
+        var myStudents = Arrays.stream(students)
+                .filter(s -> s.getGender().equals(gender));
+      System.out.println("#of " + gender + " students " + myStudents.count());
+    }   
+}
+```
+
+**7. Terminal Operations for statistical information and matching.**
+```java
+long reservationCount = Arrays.stream(seats).filter(Seat::isReserved).count();
+
+boolean hasBooking = Arrays.stream(seats).anyMatch(Seat::isReserved);
+
+boolean fullyBooked = Arrays.stream(seats).allMatch(Seat::isReserved);
+
+boolean eventWashedOut = Arrays.stream(seats).noneMatch(Stream::isReserved);
+```
+
+**8. Terminal Operations.**
+```java
+void example() {
+    List<Student> students = IntStream
+            .rangeClosed(1, 5000)
+            .mapToObj(s -> Student.getRandomStudent(jmc, pymc))
+            .toList();
+    
+    double totalPercent = students.stream() // Student
+            .mapToDouble(s -> s.getPercentComplete("JMC"))
+            .reduce(0, Double::sum);
+    
+    Comparator<Student> longTermStudent = Comparator.comparingLong(Student::getYearEnrolled);
+    List<Student> hardWorkers = students.stream()
+            .filter(s -> s.getMonthsSinceActive("JMC") == 0)
+            .filter(s -> s.getPercentComplete("JMC") >= topPercent)
+            .sorted(longTermStudent)
+            .limit(10)
+            .toList();
+    // .collect(Collectors.toList())
+    // .collect(Collectors.toSet())
+    // .collect(() -> new TreeSet<>(uniqueSorted), TreeSet::add, TreeSet::addAll))
+}
+```
+
+**9. Stream's collect & reduce terminal operations.**
+```java
+void example() {
+    List<Student> students = Stream.generate(() -> Student.getRandomStudent(jmc, pymc)).limit(1000);
+  
+    Set<Student> australianStudents = students.stream()
+            .filter(s -> s.getCountryCode().equals("AU"))
+            .collect(Collectors.toSet());
+  
+    Set<Student> underThirty = students.stream()
+            .filter(s -> s.getAgeEnrolled() < 30)
+            .collect(Collectors.toSet());
+  
+    Set<Student> young = new treeSet<>(Comparator.comparing(Student::getStudentId));
+    young.addAll(australianStudents);
+    young.retainAll(underThirty);
+    
+    Set<Student> young2 = students.stream()
+            .filter(s -> s.getCountryCode().equals("AU"))
+            .filter(s -> s.getEnrolled() < 30)
+            .collect(() -> new TreeSet<>(Comparator.comparing(Student::getStudentId)), TreeSet::add, TreeSet::addAll);
+    
+    String countryList = students.stream().map(Student::getCountryCode).distinct().sorted().reduce("", (r,v) -> r + "" + v);
+
+}
+```
+
+**10. Streams to Map.**
+```java
+void example() {
+    Map<String, List<Student>> mappedStudents = students.stream()
+            .collect(groupingBy(Student::getCountryCode));
+    int minAge = 25;
+    Map<String, List<Student>> younger = students.stream()
+            .collect(groupingBy(Student::getCountryCode, filtering(s -> s.getAge() <= minAge, toList())));
+    
+    Map<Boolean, List<Student>> experienced = students.stream()
+            .collect(partitioningBy(Student::hasExperienced));
+    
+    Map<Boolean, Long> expCount = students.stream()
+            .collect(partitioningBy(Student::hasExperienced, counting()));
+    
+    Map<Boolean, Long> expAndActive = students.stream()
+            .collect(partitioningBy(s -> s.hasExpericend() && s.getMonthsSinceActive() == 0, counting()));
+    
+    Map<String, Map<String, List<Student>>> multiLevel = students.stream()
+            .collect(groupingBy(Student::getCountryCode, groupingBy(Student::getGender)));
+}
+```
+
+**11. Invoking Method References.**
+1. Static method call - pass as parameter:
+    ```
+    (data) -> System.out.println(data);
+    System.out::println;
+    ```
+2. Static method call - pass as parameter:
+    ```
+    (o) -> Objects.isNull(o);
+    Objects::isNull;
+    ```
+3. Given Object - Instance method call:
+    ```
+    (data) -> data.toUpperCase();
+    String::toUppseCase;
+    ```
+4. Given object - instance method call with parameter:
+    ```
+    (s1,s2) -> s1.concat(s2);
+    String::concat;
+    ```
+5. Given object - instance method call with parameters:
+    ```
+    (s1, s2, s3) -> s1.replaceAll(s2, s3);
+    String::replaceAll;
+    ```
+6. Given object - pass as parameter:
+    ```
+    (data) -> list.add(data);
+    list::add;
+    ```
+7. Create new object:
+    ```
+    () -> new Cat();
+    Cat::new;
+    ```
+
+**12. Different Stream Creation Methods.**
+```java
+void example() {
+    var streamB = Stream.iterate(seed, i -> i <= 15, i -> i + 1);
+    var streamI = Stream.iterate(seed, i -> i + 1)
+            .limit(15)
+            .map(i -> "I" + i);
+    int nSeed = seed;
+    String[] oLabels = new String[15];
+    Arrays.setAll(oLabels, i -> "N" + (nSeed + i));
+    var streamN = Arrays.stream(oLabels);
+    
+    var streamG = Stream.of("G46", "G47");
+    int rSeed = seed;
+    var streamO = Stream.generate(Main::generator)
+            .limit(15)
+            .map(i -> "0" + (rSeed + i));
+}
+```
+
+**13. Creating a Frequency Map.**
+```java
+void example() {
+    Stream.of("apple", "orange", "banana", "apple")
+            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+            .entrySet()
+            .forEach(System.out::println);
+    // Map<String, Long> result;
+    // banana = 1
+    // orange = 1
+    // apple = 2
+}
+```
+
+**14. List of courses, map to Collection with all individual characters.**
+```java
+void example() {
+    courses.stream()
+            .map(course -> course.split(" "))
+            .flatMap(Arrays::stream)
+            .collect(Collectors.toList());
+    // ["Spring", "Spring Boot"]
+    // [S, p, r, i, n, g, S, p, r, i, n, g, , B, o, o, t]
+}
+```
+
+**15. Lambda squared numbers using behavioral parametrization.**
+```java
+void example() {
+    List<Integet> squared = mapAndCreateList(numbers, x -> x * x);
+}
+
+private List<Integer> mapAndCreateList(List<Integer> numbers, Function<Integer, Integer> fn) {
+    return numbers.stream()
+            .map(fn)
+            .collect(Collectors.toList());
+}
+```
+
+**16. Multiple comparators.**
+```java
+import java.util.Comparator;
+
+void example() {
+    // by number of students and scores
+    Comparator<Course> compByNumOfStudentsAndScores = Comparator
+            .comparing(Course::getNoOfStudents)
+            .thenComparing(Course::getReviewScore)
+            .reversed();
+    
+    courses.stream()
+            .sorted(compByNumOfStudentsAndScores)
+            .collect(Collectors.toList());
+}
+```
+
+**17. Sorted and Comparators.**
+```java
+void example() {
+    // sorted by num of students
+    Comparator<Course> byNumOfStudents = Comparator.comparing(Course::getNoOfStudents);
+    Comparator<Course> byNumOfStudents2 = Comparator.comparing(c -> c.getNoOfStudents());
+    courses.stream().sorted(byNumOfStudents).toList();
+    
+    // reverse order
+    Comparator<Course> byNumOfStudentsDec = Comparator.comparing(Course::getNoOfStudents).reversed();
+}
+```
+
+**18. Predicate, Function, Consumer.** 
+```java
+void example() {
+    List<Integer> numbers = List.of(12, 9, 8);
+    Perdicate<Integer> isEvenPredicate = x -> x % 2 == 0;
+    Function<Integer, Integer> squareFun = x -> x * x;
+    Consumer<Integer> sysout = System.out::println;
+    
+    numbers.stream()
+            .filter(isEvenPredicate)
+            .map(squareFun)
+            .forEach(sysout);
+    
+    //  Predicate<Integer> isEvenPredicate = 
+    //      new Predicate<Integer>() {
+    //          public boolean test(Integer x) {
+    //              return x % 2 == 0;
+    //          }
+    //      }
+    //  };        
+}
+```
+
+**19. Function, Consumer.**
+```java
+void example() {
+    Function<Integer, Integer> squareFun = x -> x * x;
+    Function<Integer, Integer> squareFun2 = 
+      new Function<Integer, Integer>() {
+          public Integer apply(Integer x) {
+              return x * x;
+          }
+      };
+    
+    Consumer<Integer> sysout = System.out::println;
+    Consumer<Integer, Integer> sysout2 =
+        new Consumer<Integer>() {
+            public void accept(Integer x) {
+                System.out.println(x);
+            }
+        };
+}
+```
+
+**20. Grouping Courses.**
+```java
+void example() {
+    // map by category
+    Map<String, List<Course>> map1 = courses.stream().collect(Collectors.groupingBy(Course::getCategory));
+    // { Cloud = [AWS:21:92, AZURE:11:95], Framework = [SP:1:25]}
+    
+    Map<String, Integer> map2 = courses.stream().collect(Collectors.groupingBy(Course::getCategory, Collectors.counting()));
+    // {Cloud = 2, Framework = 1}
+    
+    // map by category and highest score
+    Map<String, Optional<Course>> map3 = courses.stream().collect(Collectors.groupingBy(Course::getCategory,
+            Collectors.maxBy(Comparator.comparing(Course::getReview))));
+    // { Cloud = Optional[Azure:11:95], Framework = Optional[SP:1:25]}
+    
+    // map by category, list of names as value only
+    Map<String, List<String>> map4 = courses.stream().collect(Collectors.groupingBy(Course::getCategory,
+            Collectors.mapping(Course::getName, Collectors.toList())));
+    // { Cloud = [AWS, Azure], Framework = [SP] }
+    
+}
+```
+
+**21. Stream Factorial.**
+```java
+void example() {
+    IntStream.rangeClosed(1,5).redice(1, (x,y) -> x * y);
+    
+    LongStream.range(1,50)
+            .mapToObj(BigInteger::valueOf)
+            .reduce(BigInteger.ONE, BigInteger::multiply);
+}
+```
+
+**22. Group movies by genre.**
+```java
+void example() {
+    Map<String, List<Movie>> yearToMovies = movies.stream().collect(Collectors.groupingBy(Movie::getGenre));
+}
+```
+
+The `Collectors.groupingBy` method is the right way to perform that grouping. Notice that the return type is 
+`Map<K, List<T>>` and not `Map<K, T>` because there may be multiple objects for a given key.
+
+**23. Group by category, value avg products price.**
+```java
+void example() {
+    Map<String, Double> avgPriceByCategory = products.stream()
+            .collect(Collectors.groupingBy(Product::getCategory, Collectors.averagingDouble(Product::getPrice)));
+}
+```
+* Key - category.
+* Value - avg products price.
+
+**24. Selecting checkbox based on Gender.**
+```java
+@Test(dataProvider = "gender")
+public void googleTest(String gender) {
+    this.driver.get("URL")
+            .findElements(By.tagName("td"))
+            .stream()
+            .skip(1)
+            .map(tr -> tr.findElements(By.tagName("td")))
+            .filter(tdList -> tdList.get(1).getText().equalsIgnoreCase(gender))
+            .map(tdList -> tdList.get(3))
+            .map(td -> td.findElement(By.tagName("input")))
+            .forEach(WebElement::click);
+}
+
+@DataProvider(name = "gender")
+public Object[] testdata() {
+    return new Object[] {"male", "female"};
+}
+```
+
+**25. Test Predicates.**
+```java
+void example() {
+    Predicate<List<WebElement>> allMale = (l -> l.get(1).getText().equalsIgnoreCase("male"));
+    
+    Predicate<List<WebElement>> allFemale = (l -> l.get(1).getText().equalsIgnoreCase("female"));
+    
+    Predicate<List<WebElement>> allGender = allMale.or(allFemale);
+    
+    Predicate<List<WebElement>> allAu = (l -> l.get(2).getText().equalsIgnoreCase("AU"));
+    
+    Predicate<List<WebElement>> allFemaleAu = allGemale.and(allAu);
+}
+```
+
+**26. Terminal Operations.**
+1. `forEach`: Used for consuming the given object.
+2. `collect`: To collect the object into a list, map, set.
+3. `count`: To count the object.
+4. `min`: First element after comparing all.
+5. `max`: Last element after comparing all.
+6. `findAny`: Just give one from the stream.
+7. `findFirst`: Give the first one from the stream.
+8. `anyMatch`: Is there any element in the stream which satisfies the condition.
+9. `noneMatch`: Stream elements should not satisfy the given condition.
+
+**27. Optional.**
+```java
+void example() {
+    Optional<String> optional = list.stream()
+            .filter(s -> s.length() > 10)
+            .findFirst();
+    optional.ifPresent(System.out::println);
+}
+```
+
+**28. Terminal Operations - collect.**
+1. Collect to a list: `.collect(Collectors.toList())`.
+2. To a set (no duplicate): `.collect(Collectors.toSet())`.
+3. Join all: 
+   * `.collect(Collectors.joining())`.
+   * `.collect(Collectors.joining(","))`.
+4. To a map: `.collect(Collectors.groupingBy(...))`.
+
+
+**29.Sum using IntStream.**
+```java
+int sum = list.stream()
+        .mapToInt(a -> a)
+        .sum();
+```
+
+**30. Find the name which has the most number of characters.**
+```java
+int max = list.stream().max(Comparator.comparing(s -> s.length())).get();
+```
+
+**31. Find the names containing '-' in it and replace it with a space, collect them into a list.**
+```java
+List<String> names = list.stream()
+        .filter(name -> name.contains("-"))
+        .map(name -> name.replaceAll("-", ""))
+        .collect(Collectors.toList());
+```
+
+**32. Print the total of chars for all the names start with 'M'.**
+```java
+long res = list.stream()
+        .filter(name -> name.startsWith("M"))
+        .map(name -> name.trim())
+        .map(name -> name.length())
+        .mapToInt(u -> i)
+        .sum();
+
+list res2 = list.stream()
+        .filter(name -> name.startsWith("M"))
+        .map(String::trim)
+        .map(String::length)
+        .mapToInt(i -> i)
+        .sum();
+```
+
+**33. Create a list of names which start with 'C' and contains 's' in it.**
+```java
+List<String> names = list.stream()
+        .filter(name -> name.startsWith("C"))
+        .filter(name -> name.contains("s"))
+        .collect(Collectors.toList());
+```
+
+**34. Print the count of names which start with B.**
+```java
+int count = list.stream()
+        .filter(name -> name.startsWith("B"))
+        .count();
+```
+
+**35. Default Methods In Interface.**
+```java
+public interface CustomList {
+    void add(int item);
+    int size();
+    int get(int index);
+    default void forEach(Consumer<Integer> c) {
+        for (int i = 0; i < size(); i++) {
+            c.accept(get(i));
+        }
+    }
+}
+```
+
+**36. Primitive Streams.**
+1. `Stream<Integer>` - `IntStream`.
+2. `Stream<Long>` - `LongStream`.
+3. `Stream<Double>` - `DoubleStream`.
+
+**37. Are there any students that are still active, that'd been enrolled ro more than 7 years? And engage course within 
+last year?**
+```java
+void example() {
+    boolean longTerm = Arrays.steram(students).anyMatch(s -> (s.getAge() - s.getAgeEnrolled() >= 7)
+            && (s.getMonthsSinceActive() < 12));
+
+    long longTermCount = Arrays.stream(students)
+            .filter(s -> (s.getAge() - s.getAgeEnrolled() >= 7) && (s.getMonthsSinceActive() < 12)).count();
+
+    Predicate<Student> enrolled = s -> (s.getAge() - s.getEnrolledAge() <= 7) && (s.getMonthsSinceActive() < 12);
+
+    Arrays.stream(students).filter(enrolled)
+            .filter(s -> !s.hasProgrammingExperience())
+            .limit(5)
+            .forEach(System.out::println);    
+}
+```
+
+**38. What countries are students from?**
+```java
+void example() {
+    Arrays.stream(students)
+            .map(Student::getCountryCode)
+            .distinct()
+            .sorted()
+            .forEach(s -> System.out.println(s + " "));
+}
+```
+
+**39. More terminal operations.**
+```java
+void example() {
+    int minAge = 21;
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .findAny()
+            .ifPresentOrElse(s -> System.out.println("Found"), () -> System.out.println("Didn't find"));
+    
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .min(Comparator.comparing(Student::getAge))
+            .ifPresentOrElse(s -> System.out.println("Found"), () -> System.out.println("Didn't find"));
+    
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .mapToInt(Student::getAge).average()
+            .ifPresentOrElse(a -> System.out.println("Average age " + a), () -> System.out.println("Didn't find"));
+    
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .distinct()
+            .reduce((a,b) -> String.join(",", a, b))
+            .ifPresentOrElse(System.out.println, () -> System.out.println("None Found"));
+}
+```
+
+**40. Optional.**
+```java
+void example() {
+    List<Student> students = Stream.generate(() -> Student.getRand(jmc, pmc)).limit(1000).collect(Collectors.toList());
+    Optional<Student> o1 = getSudent(new ArrayLis<>(), "first");
+    o1.ifPresentOrElse(System.out::println, () -> System.out.println("---> Empty"));
+    
+    Optional<Student> o2 = getStudent(students, "first");
+    o2.idPresent(System.out::println);
+    
+    Student firstStudent = o2.orElseGet(() -> getDummyStudent(jmc));
+    
+    List<String> countries = students.stream()
+            .map(Student::getCountryCode)
+            .distinct().toList();
+    
+    Optional.ofNullable(countries)
+            .map(l -> String.join(",", l))
+            .filter(l -> l.contains("FR"))
+            .ifPresentOrElse(System.out::println, () -> System.out.println("Missing FR"));
+}
+
+private Optional<Student> getStudent(List<Student> list, String type) {
+    if (list == null || list.size() == 0) {
+        return Optional.empty();
+    } else if (type.equals("first")) {
+        return Optional.ofNullable(list.get(0));
+    } else if (type.equals("last")) {
+        return Optional.ofNullable(list.get(list.size() -1));
+    }
+    return Optional.ofNullable(list.get(new Random().nextInf(list.size())));
+}
+```
+
+**41. Streams from Map.**
+```java
+void example() {
+    Map<Integer, Integer> map = new HashMap<>();
+    IntStream.range(0,10).forEach(i -> map.put(i, i + 1));
+    
+    int sum = map.values().stream()
+            .mapToInt(entry -> entry)
+            .sum();
+}
+```
+
+**42. Stream of primitives example.**
+```java
+void example() {
+    IntStream stream = Arrays.stream(new int[] {1, 2, 3});
+    
+    IntStream stream = IntStream.range(1, 4);
+}
+```
+
+
+
+
+
+
+

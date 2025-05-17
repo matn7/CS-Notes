@@ -1,6 +1,6 @@
-# Java Stream API
+# Java Stream API.
 
-## What is a Stream
+## What is a Stream.
 
 - An abstraction.
 - Focus on the all instead of the parts.
@@ -10,20 +10,20 @@
 
 ***
 
-## How to use
+## How to use.
 
-`List<Student>` :arrow_right: STREAM :arrow_right: STREAM :arrow_right: STREAM :arrow_right: Double avgGrade
+'List<Student>' -> STREAM -> STREAM -> STREAM -> Double avgGrade
 
-- :one: Concrete implementation Arrays, Maps, Lists, Set.
-    - `MockData.getStudents()`
-- :two: Call `stream()` on concrete type.
-    - `MockData.getStudents().stream()`
-- :three: Process stream.
-    - `MockData.getStudents().filter().limit()`
-- :four: From Abstract to concrete implementation.
-    - `MockData.getStudents().filter().limit().collect()`
+- Concrete implementation Arrays, Maps, Lists, Set.
+    - 'MockData.getStudents()'.
+- Call 'stream()' on concrete type.
+    - 'MockData.getStudents().stream()'.
+- Process stream.
+    - 'MockData.getStudents().filter().limit()'.
+-  From Abstract to concrete implementation.
+    - 'MockData.getStudents().filter().limit().collect()'.
 
-### Imperative
+### Imperative.
 
 ```java
 public void imperative() {
@@ -49,7 +49,7 @@ public void imperative() {
 }
 ```
 
-### Declarative
+### Declarative.
 
 ```java
 public void declarative() {
@@ -66,9 +66,9 @@ public void declarative() {
 
 ***
 
-## Iterating with Streams
+## Iterating with Streams.
 
-### Range
+### Range.
 
 ```java
 public void range() {
@@ -89,7 +89,7 @@ public void range() {
 }
 ```
 
-### Iterating through list
+### Iterating through list.
 
 ```java
 public void rangeList() {
@@ -105,7 +105,7 @@ public void rangeList() {
 }
 ```
 
-### Iterate
+### Iterate.
 
 ```java
 public void intStreamIterate() {
@@ -127,9 +127,9 @@ public void intStreamIterate() {
 
 ***
 
-## Min, Max, Comparator
+## Min, Max, Comparator.
 
-### min
+### min.
 
 ```java
 public void min() {
@@ -147,7 +147,7 @@ public void min() {
 }
 ```
 
-### max
+### max.
 
 ```java
 public void max() {
@@ -160,9 +160,9 @@ public void max() {
 
 ***
 
-## Unique
+## Unique.
 
-### distinct
+### distinct.
 
 ```java
 public void distinct() {
@@ -173,7 +173,7 @@ public void distinct() {
 }
 ```
 
-### toSet
+### toSet.
 
 ```java
 public void distinct() {
@@ -185,9 +185,9 @@ public void distinct() {
 
 ***
 
-## Filtering
+## Filtering.
 
-- :star:`Predicate<T>`: Filter method arguments, function converting `T` to `boolean`.
+- :star: 'Predicate<T>': Filter method arguments, function converting 'T' to 'boolean'.
 
 ### filter
 
@@ -206,7 +206,7 @@ public void filterExample() {
 }
 ```
 
-### map
+### map.
 
 ```java
 public void mapExample() {
@@ -226,7 +226,7 @@ public void mapExample() {
 // }
 ```
 
-### Avg student grade
+### Avg student grade.
 
 ```java
 public void averageStudentGrade() {
@@ -242,9 +242,9 @@ public void averageStudentGrade() {
 
 ***
 
-## findAny, findFirst
+## findAny, findFirst.
 
-### findAny
+### findAny.
 
 ```java
 public void findAny() {
@@ -273,11 +273,11 @@ public void findFirst() {
 
 ***
 
-## Statistics
+## Statistics.
 
-- Operation `min`, `max` returns `Optional<T>`, wraps value or alternative value if null.
+- Operation 'min', 'max' returns 'Optional<T>', wraps value or alternative value if null.
 
-### count
+### count.
 
 ```java
 public void count() {
@@ -288,7 +288,7 @@ public void count() {
 }
 ```
 
-### min
+### min.
 
 ```java
 public void min() {
@@ -301,7 +301,7 @@ public void min() {
 }
 ```
 
-### max
+### max.
 
 ```java
 public void max() {
@@ -314,7 +314,7 @@ public void max() {
 }
 ```
 
-### average
+### average.
 
 ```java
 public void average() {
@@ -327,7 +327,7 @@ public void average() {
 }
 ```
 
-### sum
+### sum.
 
 ```java
 public void sum() {
@@ -341,7 +341,7 @@ public void sum() {
 }
 ```
 
-### summaryStatistics
+### summaryStatistics.
 
 ```java
 public void statistics() {
@@ -357,9 +357,9 @@ public void statistics() {
 
 ***
 
-## Grouping data
+## Grouping data.
 
-### Collectors groupingBy
+### Collectors groupingBy.
 
 ```java
 public void grouping() {
@@ -380,7 +380,7 @@ public void grouping() {
 }
 ```
 
-### GroupingAndCounting
+### GroupingAndCounting.
 
 ```java
 public void groupingAndCounting() {
@@ -402,11 +402,11 @@ public void groupingAndCounting() {
 
 ***
 
-## Reduce and Flatmap
+## Reduce and Flatmap.
 
 - Reduce combines all elements in the stream and produce one single result.
 
-### reduce
+### reduce.
 
 ```java
 public void reduce() {
@@ -417,7 +417,7 @@ public void reduce() {
 }
 ```
 
-### flatMap
+### flatMap.
 
 ```java
 private static final List<ArrayList<String>> arrayListOfNames = Lists.newArrayList(
@@ -448,7 +448,7 @@ public void flatMap() {
 
 ***
 
-### Joining
+### Joining.
 
 ```java
 public void joinWithoutStream() {
@@ -474,9 +474,9 @@ public void joinWithStream() {
 
 ***
 
-## More Streams
+## More Streams.
 
-### Collectors toList
+### Collectors toList.
 
 ```java
 public void collectors() {
@@ -491,15 +491,15 @@ public void collectors() {
 }
 ```
 
-### Collectors, Multithreading
+### Collectors, Multithreading.
 
 - Very big array compute in multiple threads and get results.
 
 ### Intermediate and terminal operators
 
 - **Intermediate**: Perform transformation or filtering.
-    - `filter`
-    - `map`
+    - `filter`.
+    - `map`.
 
 ```java
 .stream()
@@ -512,7 +512,7 @@ public void collectors() {
 ```
 
 - **Terminal**: From abstraction to concrete type.
-    - `collect`
+    - `collect`.
 
 ```java
 .collect(Collectors.toList())

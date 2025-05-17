@@ -1,4 +1,4 @@
-## SOLID Principles of OOP
+## SOLID Principles of OOP.
 
 **Why Use the SOLID Principles of OOP?**
 
@@ -6,7 +6,7 @@
 - The 5 principles focus on dependency management.
 - Poor dependency management leads to code that is hard to change.
 
-**SOLID**
+**SOLID.**
 
 - Single Responsible Principle:
     - Every class should have a single responsibility.
@@ -33,7 +33,7 @@
     - Important higher level and lower level objects depend on the same abstract interaction.
     - This is not the same as Dependency Injection - which is how object obtain dependent objects.
 
-### Single Responsibility Principle
+### Single Responsibility Principle.
 
 - Cohesion is a way to measure how much the code segments within one module (methods of a class, classes inside
 a package…) belong together.
@@ -44,10 +44,10 @@ related to high cohesion.
 - Robustness - which could be defined as the ability of a computer system or algorithm to handle mistakes and
 malfunctions.
 
-### Liskov Substitution Principle
+### Liskov Substitution Principle.
 
 - Any object of some class in an object-oriented program can be replaced by an object of a child class.
-- Inheritance - if you have a class Watch , you can inherit from that class to get a class PocketWatch.
+- Inheritance - if you have a class Watch, you can inherit from that class to get a class PocketWatch.
 - A pocket watch is still a watch, it just has some additional features.
 - Another example would be class called Woman with a child class called Mother.
 - A mother is still a woman, with the addition of having a child.
@@ -116,7 +116,7 @@ class DevicesWithEngines extends TransportationDevice {
 }
 ```
 
-### Interface Segregation Principle
+### Interface Segregation Principle.
 
 - Interfaces form a core part of the Java programming language, and they are extensively used in enterprise applications
 to achieve abstraction and to support multiple inheritance of type the ability of a class to implement more than
@@ -201,7 +201,7 @@ changes in interface methods.
 interface can be injected into your class.
 - In testing your classes, you may wish to inject a mock object to fulfill the needs of your unit test.
 
-## Dependency Inversion Principle
+## Dependency Inversion Principle.
 
 - Ignorance of writing “good code” is the main reason of tightly coupled code existing in applications.
 - As an example, creating an object of a class using the new operator results in a class being tightly coupled to another class.
@@ -293,28 +293,28 @@ public class LightBulb implements Switchable {
 }
 ```
 
-### Interface Naming Conventions
+### Interface Naming Conventions.
 
 - Interface should be a good object name.
     - Example Java's List interface:
-        - Implementations: `ArrayList`, `LinkedList`, `CheckedList`, `SingletonList`
+        - Implementations: `ArrayList`, `LinkedList`, `CheckedList`, `SingletonList`.
 - Don't Start with 'I'.
-    - No **IList**
+    - No **IList**.
 
-**Implementation Naming**
+**Implementation Naming.**
 
 - When just one implementation - generally accepted to use:
-    - `<Interface Name> + Impl`
+    - `[Interface Name] + Impl`
 - When more than one, name should indicate difference of Implementation.    
         
-## Spring Dependency Injection
+## Spring Dependency Injection.
 
-### Basic of Dependency Injection
+### Basic of Dependency Injection.
 
 - DI is where needed dependency injected by another object.
 - The class being injected has no responsibility in instantiating the object injected.
 
-### Types of Dependency Injection
+### Types of Dependency Injection.
 
 - By class property:
     - Can be public or private properties.
@@ -322,7 +322,7 @@ public class LightBulb implements Switchable {
 - By constructor:
     - Most Preferred.
 
-### Concrete classes vs interfaces
+### Concrete classes vs interfaces.
 
 - DI can be done with concrete classes or interfaces.
 - Generally DI with Concrete classes should be avoided.
@@ -331,12 +331,12 @@ public class LightBulb implements Switchable {
     - Follows interface segregation principle of SOLID.
     - Code more testable.
 
-### Inversion of Control IoC
+### Inversion of Control IoC.
 
 - Is a technique to allow dependencies to be injected at runtime.
 - Dependencies not predetermined.
 
-**IoC vs Dependency Injection**
+**IoC vs Dependency Injection.**
 
 - DI refers much to the composition of your classes:
     - Compose your classes with DI in mind.
@@ -344,7 +344,7 @@ public class LightBulb implements Switchable {
     - Spring Framework IoC container.    
     - Spring is in control of the injection of dependencies.
     
-**Best Practices with Dependency Injection**
+**Best Practices with Dependency Injection.**
 
 - Favor using Constructor Injection over Setter Injection.
 - Use final properties for injected components.
@@ -360,29 +360,29 @@ public class LightBulb implements Switchable {
 
 ![Terminate Bean](images/spring-bean-terminate.png "Terminate Bean")
 
-### :star: Callback Interfaces
+### :star: Callback Interfaces.
 
-- Spring has two interfaces you can implement for call back events.
-- `InitializingBean.afterPropertiesSet()` 
+- Spring has two interfaces you can implement for callback events.
+- `InitializingBean.afterPropertiesSet()`.
     - Called after properties set.
-- `DisposableBean.destroy()` 
+- `DisposableBean.destroy()`.
     - Called during bean destruction in shutdown.
 
-### Life Cycle Annotations
+### Life Cycle Annotations.
 
 - Spring has two annotations you can use to hook into the bean life cycle.
 - `@PostConstruct:` Annotated methods will be called after the bean has been constructed, but before
 its returned to the requesting object.
 - `@PreDestroy:` Is called just before the bean destroyed by the container.
 
-### Bean Post Processors
+### Bean Post Processors.
 
 - Gives you a means to tap into the Spring context life cycle and interact with beans as they are processed.
 - Implement interface `BeanPostProcessor`:
     - `postProcessBeforeInitialization:` Called before bean initialization method.
     - `postProcessAfterInitialization:` Called after bean initialization.
 
-### `Aware` Interfaces
+### `Aware` Interfaces.
 
 - Spring has over 14 aware interfaces.
 - These are used to access the Spring Framework infrastructure.
@@ -396,24 +396,24 @@ BeanFactoryAware
 ...
 ```
 
-### IoC
+### IoC.
 
 - Inversion of Control - the runtime environment (or framework) which injects dependencies.
 
-### Callback Interfaces
+### Callback Interfaces.
 
-- You can implement to tap into the bean lifecycle.:
-    - InitializingBean
-    - DisposableBean
+- You can implement to tap into the bean lifecycle:
+    - InitializingBean.
+    - DisposableBean,
 
-### Spring bean lifecycle annotations
+### Spring bean lifecycle annotations.
 
-- `@PostConstruct`
-- `@PreDestroy`
+- `@PostConstruct`.
+- `@PreDestroy`.
 
-## Spring Configuration
+## Spring Configuration.
 
-### Spring Configuration Options
+### Spring Configuration Options.
 
 - XML Based Configuration:
     - Since Spring 2.
@@ -423,10 +423,10 @@ BeanFactoryAware
     - Since Spring 3.
     - Picked up via **Component Scans**.
     - Refers to class level annotations:
-        - `@Controller`
-        - `@Service`
-        - `@Component`
-        - `@Repository`
+        - `@Controller`.
+        - `@Service`.
+        - `@Component`.
+        - `@Repository`.
 - :star: Java Based Configuration:
     - Since Spring 3.
     - Java Classes to define Spring Beans.
@@ -440,32 +440,32 @@ BeanFactoryAware
     - They will work seamlessly together to define beans in the Spring Context.
     - Industry trends is to favor Java based configuration.
 
-### Stereotypes annotations
+### Stereotypes annotations.
 
 - **Stereotype:** A fixed general image or set of characteristics which represent a particular type of person or thing.
 - Spring Stereotypes used to define Spring Beans in the Spring context:
 - **Available Stereotypes:** 
-    - `@Controller`
-    - `@RestController`
-    - `@Service`
-    - `@Component`
-    - `@Repository`
+    - `@Controller`.
+    - `@RestController`.
+    - `@Service`.
+    - `@Component`.
+    - `@Repository`.
 
 ![Stereotype Annotations](images/stereotype-annotations.png "Stereotype Annotations")
 
-- `@RestController:` Convenience annotation representing `@Controller` and `@ResponseBody`
+- `@RestController:` Convenience annotation representing `@Controller` and `@ResponseBody`.
 - `@Repository:` Indicates that an annotated class is a "Repository", originally defined by Domain-Driven Design
-as "a mechanism for encapsulating storage, retrieval and search behavior which emulates a collection of objects."
+as "a mechanism for encapsulating storage, retrieval and search behavior which emulates a collection of objects".
 - `@Service:` Indicates that and annotated class is a "Service", originally defined by Domain-Driven Design as
 "an operation offered as an interface that stands alone in the model, with no encapsulated state."
 
-### Spring ComponentScan
+### Spring ComponentScan.
 
 ```java
 @ComponentScan(basePackages = {"com.mybank.services"})
 ```
 
-### Java Configuration
+### Java Configuration.
 
 ```java
 @Service
@@ -494,44 +494,44 @@ public class TaxDiscountsConfiguration {
 }
 ```
 
-## Spring Boot Configuration
+## Spring Boot Configuration.
 
-**Dependency Management**
+**Dependency Management.**
 
 - Maven or Gradle are supported for curated dependencies.
 - Each version of Spring Boot configured to work with a specific version of Spring Framework.
 - Overriding the Spring Framework Version not recommended.
 - Other build systems such as Ant can be used.
 
-### Maven Support
+### Maven Support.
 
 - Maven projects inherit from a Spring Boot Parent POM:
     - When possible, do not specify versions in your POM. 
     - Allow the versions to inherit from the parent.
 - The Spring Boot Maven Plugin allows for packaging the executable jar.
 
-### Gradle Support
+### Gradle Support.
 
 - Gradle support depends on a Spring Boot Gradle plugin.
 - Requires Gradle 3.4 or later.
 - The Gradle plugin provides support of curated dependencies, packaging as jar or war, and allows you to run
 the application from the command line.
 
-### Ant + Ivy Support
+### Ant + Ivy Support.
 
 - Spring Boot can be built using Ant with Ivy.
 - Ivy used for dependency management.
 - Complete directions are available via the official Spring Boot documentation.
 
-### Spring Boot Starters
+### Spring Boot Starters.
 
 - Starters are top level dependencies for popular Java libraries.
 - Will bring in dependencies for the project and related Spring components:
     - Starter `spring-boot-starter-data-jpa` brings in:
-        - Hibernate
+        - Hibernate.
         - Spring Data JPA - and related Spring dependencies.
 
-### Spring Boot Annotations
+### Spring Boot Annotations.
 
 - `@SpringBootApplication` - main annotation to use includes:
     - `@Configuration:` Declares class as Spring Configuration.
@@ -544,7 +544,7 @@ the application from the command line.
 - You can specify classes to exclude with:
     - `@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})`
 
-## Spring Bean Scopes
+## Spring Bean Scopes.
 
 - Singleton (default): Only one instance of the bean created in the IoC container.
 - Prototype: A new instance created each time the bean requested.
@@ -566,17 +566,17 @@ the application from the command line.
     - Only valid in the context of a web-aware Spring ApplicationContext.
 - Custom Scope:
     - Spring Scopes are extensible, and you can define your own scope by implementing Spring's Scope interface. 
-    - You cannot override the built in Singleton and Prototype Scopes.
+    - You cannot override the built-in Singleton and Prototype Scopes.
 
-**Singleton Scope**
+**Singleton Scope.**
 
 ![Spring Singleton Scope](images/spring-singleton-scope.png "Spring Singleton Scope")
 
-**Prototype Scope**
+**Prototype Scope.**
 
 ![Spring Prototype Scope](images/spring-prototype-scope.png "Spring Prototype Scope")
 
-### Declaring Bean Scope
+### Declaring Bean Scope.
 
 - No declaration needed for singleton scope.
 - In Java configuration use `@Scope` annotation.
@@ -584,7 +584,7 @@ the application from the command line.
 
 ***
 
-## MapStruct
+## MapStruct.
 
 - MapStruct is a code generator for Java bean mapping:
     - Helps reduce coding for type conversions.
@@ -592,7 +592,7 @@ the application from the command line.
 - MapStruct is annotation based processor plugged into the Java compiler.
 - From Interfaces declared, MapStruct will generate code at build time.
 
-### MapStruct - Example
+### MapStruct - Example.
 
 ```java
 public class Car {
@@ -645,39 +645,39 @@ public void shouldMapCarToDto() {
 
 ***
 
-## Spring Social
+## Spring Social.
 
-### oAuth2
+### OAuth2.
 
 - Authorization Framework.
 - Delegates User Authentication.
 - Accessing Data in 3rd Part API.
 - Many flavors of oauth.
 
-### Spring Social - What it is
+### Spring Social - What it is.
 
 - Spring Social Core.
 - Social Integrations (API Bindings):
-    - Facebook
-    - Twitter
-    - LinkedIn
-    - Community Projects
+    - Facebook.
+    - Twitter.
+    - LinkedIn.
+    - Community Projects.
 
 ***
 
-## Spring Web Reactive
+## Spring Web Reactive.
 
 - Reactive systems:
-    - Responsive
-    - Resilient
-    - Elastic
-    - Message driven
+    - Responsive.
+    - Resilient.
+    - Elastic.
+    - Message driven.
 
-### Spring Flux
+### Spring Flux.
 
-- Non-blocking applications
-- Asynchronous
-- Event-driven
+- Non-blocking applications.
+- Asynchronous.
+- Event-driven.
 - Small num of threads to scale.
 - Backpressure uses reactive streams.
 
@@ -688,30 +688,30 @@ Mono<?>
 
 - Returns stream of resources in time interval for example each record every second.
 
-## Spring Web MVC
+## Spring Web MVC.
 
 - MVC pattern that divide application into three parts:
-    - Model
-    - View
-    - Controller
-- DispatcherServlet
-- HandlerMapping
-- Controller
-- ViewResolver
-- View
+    - Model.
+    - View.
+    - Controller.
+- DispatcherServlet.
+- HandlerMapping.
+- Controller.
+- ViewResolver.
+- View.
 
-## Login Rest Endpoint
+## Login Rest Endpoint.
 
-- `@RestController` (`@ResponseBody` + `@Controller`)
-- `@PathVariable`
-- `@RequestParam`
-- `@RequestHeader`
-- `@RequestBody`
-- `@RequestMapping`
+- `@RestController` (`@ResponseBody` + `@Controller`).
+- `@PathVariable`.
+- `@RequestParam`.
+- `@RequestHeader`.
+- `@RequestBody`.
+- `@RequestMapping`.
 
 ***
 
-## Spring Security
+## Spring Security // here
 
 ```xml
 <dependency>
@@ -730,9 +730,9 @@ Mono<?>
 </dependency>
 ```
 
-### Initial spring security config
+### Initial spring security config.
 
-**WebSecurityConfigurerAdapter**
+**WebSecurityConfigurerAdapter.**
 
 ```java
 @Configuration
@@ -750,22 +750,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 - `WebSecurityConfigurerAdapter:`
     - Default configuration.
     - Customize configuration.
-    - `HttpSecurity:`
-        - `http.cors().and().csrf().disabled()`
-        - `exceptionHandling()`
-        - `sessionManagement()`
-        - `sessionCreationPolicy()`
-        - `headers().frameOptions().sameOrigin()` - enable h2 db
-        - `authorizedRequests()`
-        - `antMatchers().permitAll()`
-        - `anyRequest().authenticated()`
+    - `HttpSecurity:`.
+        - `http.cors().and().csrf().disabled()`.
+        - `exceptionHandling()`.
+        - `sessionManagement()`.
+        - `sessionCreationPolicy()`.
+        - `headers().frameOptions().sameOrigin()` - enable h2 db.
+        - `authorizedRequests()`.
+        - `antMatchers().permitAll()`.
+        - `anyRequest().authenticated()`.
 
 ***
 
-## :star: Equality in hibernate
+## :star: Equality in hibernate.
 
-- To find a good identifier, that always is unique best way is to use **id** fields.
-- `hashCode()` and `equals()` with id.
+- To find a good identifier, that always is unique best way is to use ID fields.
+- `hashCode()` and `equals()` with ID.
 
 ```java
 @Override
@@ -782,7 +782,7 @@ public int hashCode() {
 }
 ```
 
-- Now when working with `Set<T>`.
+- Now when working with 'Set<T>'.
 
 ```java
 private Set<Author> authors = new HashSet<>();
@@ -792,7 +792,7 @@ private Set<Author> authors = new HashSet<>();
 
 ***
 
-## JPA Entity Relationship
+## JPA Entity Relationship.
 
 - `@OneToOne:` One entity related to one other entity.
 - `@OneToMany:` One entity related to many entities (`List`, `Set`, `Map`, `SortedSet`, `SortedMap`).
@@ -802,46 +802,46 @@ private Set<Author> authors = new HashSet<>();
     - Each has a List or Set reference to the other.
     - A join table used to define the relationships.
     
-### Unidirectional vs Bidirectional
+### Unidirectional vs Bidirectional.
 
 - Unidirectional is one-way:
     - Mapping only done one way. 
     - One side of the relationship will not know about the other.
-- Bidirectional is two way:
+- Bidirectional is two-way:
     - Both sides know about each other.
     - Generally recommended to use Bidirectional, since you can navigate the graph in either direction.
     
-### Fetch Type
+### Fetch Type.
 
 - Lazy Fetch Type: Data not queried until referenced.
 - Eager Fetch Type: Data queried up front.
 - Hibernate 5 Supports the JPA 2.1 Fetch Type Defaults.
 - JPA 2.1 Fetch Type Defaults:
-    - `@OneToMany` - Lazy
-    - `@ManyToOne` - Eager (other side is One = Eager)
-    - `@ManyToMany` - Lazy
-    - `@OneToOne` - Eager
+    - `@OneToMany` - Lazy.
+    - `@ManyToOne` - Eager (other side is One = Eager).
+    - `@ManyToMany` - Lazy.
+    - `@OneToOne` - Eager.
     
-### JPA Cascade Types
+### JPA Cascade Types.
 
 - JPA Cascade Types Control how state changes cascaded from parent objects to child objects.
 - JPA Cascade Types:
     - PERSIST: Save operations will cascade to related entities.
     - MERGE: Related entities merged when the owning entity merged.
-    - REFRESH: - Related entities refreshed when the owning entity refreshed.
+    - REFRESH: Related entities refreshed when the owning entity refreshed.
     - REMOVE: Removes all related entities when the owning entity deleted.
     - DETACH: Detaches all related entities if a manual detach occurs.
     - ALL: Applies all the above cascade options.
 - By default, no operations cascaded.                    
 
-### Embeddable Types
+### Embeddable Types.
 
 - JPA / Hibernate support embeddable types.
 - These are used to define a common set of properties.
 - For example, an order might have a billing address, and a shipping address.
 - An embeddable type could be used for the address properties.
 
-### Inheritance
+### Inheritance.
 
 - MappedSuperclass: 
     - Entities inherit from a super class. 
@@ -853,14 +853,14 @@ private Set<Author> authors = new HashSet<>();
     - Fetching subclass entities require a join to the parent table.
 - Table Per Class: Each subclass has its own table.
 
-### Create and Update Timestamps
+### Create and Update Timestamps.
 
 - Often a best practice to use create and update timestamps on your entities for audit purposes.
-- JPA supports `@PrePersist` and `@PreUpdate` which can be used to support audit timestamps via JPA lifecycle
+- JPA supports '@PrePersist' and '@PreUpdate' which can be used to support audit timestamps via JPA lifecycle
 callbacks.
-- Hibernate provides `@CreationTimestamp` and `@UpdateTimestamp`.
+- Hibernate provides '@CreationTimestamp' and '@UpdateTimestamp'.
 
-## Spring Data Repositories
+## Spring Data Repositories.
 
 - Provides an Implementation of the Repository Pattern.
 - A Repository has methods for retrieving domain objects should delegate to a specialized Repository object
@@ -868,7 +868,7 @@ such that alternative storage implementations may be interchanged.
 - This allows you to easily substitute the persistence layer:
     - Going from SQL to NoSQL.
 
-### Spring Data JPA
+### Spring Data JPA.
 
 - Spring Data JPA is part of a larger family of Spring Data projects.
 - Uses Hibernate for persistence to supported RDBS systems - Just about any major relational database.
@@ -878,9 +878,9 @@ such that alternative storage implementations may be interchanged.
 
 ***
 
-## Spring MVC
+## Spring MVC.
 
-### HTTP Protocol
+### HTTP Protocol/
 
 ```console
 telnet mybank.com 80
@@ -909,11 +909,11 @@ telnet mybank.com 80
     - Higher Throughput.
 - Differences from HTTP/1.1 are largely transparent for web developers.
 
-### HTTP Request Methods
+### HTTP Request Methods.
 
 - Request methods, also known as verbs, are used to indicate the desired action to be performed.
 - GET: 
-    - Is a request for a resource (html file, javascript, image, etc).
+    - Is a request for a resource (html file, javascript, image, etc.).
     - Is used when you visit a website.
 - HEAD: Is like a GET, but only asks for meta information without the body.
 - POST:
@@ -932,23 +932,23 @@ telnet mybank.com 80
 HTTP proxy.
 - PATCH: Applies partial modifications to the specified resource.
 
-### Safe Methods
+### Safe Methods.
 
 - Safe Methods considered safe to use because they only fetch information and do not cause changes on the server.
 - The Safe Methods are: GET, HEAD, OPTIONS and TRACE.
 
-### Idempotent Methods
+### Idempotent Methods.
 
 - :star: Idempotent: A quality of an action such that repetitions of the action have no further effect on the outcome.
 - PUT and DELETE are Idempotent.
 - Safe Methods (GET, HEAD, TRACE, OPTIONS) are also Idempotent.
 
-### Non-Idempotent Methods
+### Non-Idempotent Methods.
 
 - POST is NOT Idempotent.
 - Multiple Posts are likely to create multiple resources.
 
-### HTTP Status Codes
+### HTTP Status Codes.
 
 - 100 series are informational in nature.
 - 200 series indicate successful request.
@@ -958,22 +958,22 @@ HTTP proxy.
 
 **Common HTTP Status Codes**
 
-- 200 OK
-- 201 Created 
+- 200 OK.
+- 201 Created .
 - 204 Accepted.
-- 301 Moved Permanently
-- 400 Bad Request
-- 401 Not Authorized
-- 404 Not Found
-- 500 Internal Server Error
+- 301 Moved Permanently.
+- 400 Bad Request.
+- 401 Not Authorized.
+- 404 Not Found.
+- 500 Internal Server Error.
 - 503 Service Unavailable.
 
-## MVC
+## MVC.
 
 - MVC is a common design pattern for GUI and Web Applications:
-    - M = Model
-    - V = View
-    - C = Controller
+    - M = Model.
+    - V = View.
+    - C = Controller.
 
 ![MVC](images/MVC.png "MVC")
 
@@ -981,9 +981,9 @@ HTTP proxy.
 
 ***
 
-## Database Initialization with Spring
+## Database Initialization with Spring.
 
-### Hibernate DDL Auto
+### Hibernate DDL Auto.
 
 - **DDL:** Data Definition Language.
 - **DML:** Data Manipulation Language.
@@ -991,118 +991,118 @@ HTTP proxy.
 - :star: Options are: none, validate, update, create, create-drop.
 - Spring Boot will use `create-drop` for embedded databases (hsql, h2, derby) or none.
 
-### Initialize with Hibernate
+### Initialize with Hibernate.
 
 - Data can be loaded from **import.sql**:
     - Hibernate feature (not Spring specific).
     - Must be on root of class path.
     - Only executed if Hibernate's ddl-auto property set to create or `create-drop`.
 
-### Spring JDBC
+### Spring JDBC.
 
 - Spring's DataSource initializer via Spring Boot will by default load **schema.sql** and **data.sql**
 from root of the classpath.
-- Spring Boot will also load from **schema-${platform}.sql** and **data-${platform}.sql**:
+- Spring Boot will also load from 'schema-${platform}.sql' and 'data-${platform}.sql':
     - Must set `spring.datasource.platform`.
 - May conflicts with Hibernate's DDL Auto property:
     - Should use setting of 'none' or 'validate'.
     
 ### Q&A
 
-**What are the 4 types of entity relationships?**    
+**1. What are the 4 types of entity relationships?**    
 
-- `@OneToOne`, `@oneToMany`, `@ManyToOne`, `@ManyToMany`
+- `@OneToOne`, `@oneToMany`, `@ManyToOne`, `@ManyToMany`.
 
-**Which JPA Relationship will require the use of a join table?**
+**2. Which JPA Relationship will require the use of a join table?**
 
-- `@ManyToMany`
+- `@ManyToMany`.
 
-**What is the difference between a unidirectional relationship and a bidirectional relationship?**
+**3. What is the difference between a unidirectional relationship and a bidirectional relationship?**
 
 - In unidirectional, the mapping done one-way, meaning one side of the relationship will not know about the other.
 - While bidirectional both sides will know about the relationship.
 
-**Which type of relationship recommended?**
+**4, Which type of relationship recommended?**
 
 - bidirectional: Allows to navigate the object graph from either direction.
 
-**What two fetch types can be used with JPA?**
+**5. What two fetch types can be used with JPA?**
 
-- LAZY, EAGER
+- LAZY, EAGER.
 
-**What do JPA Cascade Types do?**
+**6. What do JPA Cascade Types do?**
 
 - Cascade Types control how changes are cascaded from parent objects to child objects.
 
-**What is the default Cascade Type in JPA 2.1?**
+**7. What is the default Cascade Type in JPA 2.1?**
 
-- None
+- None.
 
-**What are the 6 available Cascade Types in JPA 2.1?**
+**8. What are the 6 available Cascade Types in JPA 2.1?**
 
-- PRESIST, MERGE, REFRESH, REMOVE, DETACH, ALL
+- PRESIST, MERGE, REFRESH, REMOVE, DETACH, ALL.
 
-**Can you embed a type in JPA for reuse?**
+**9. Can you embed a type in JPA for reuse?**
 
-- Yes, Address for instance
+- Yes, Address for instance.
 
-**Does JPA supports object inheritance?**
+**10. Does JPA supports object inheritance?**
 
 - Yes, in JPA classes can inherit from a super class.
 
-**What is Hibernate's default persistence strategy for inheritance?**
+**11. What is Hibernate's default persistence strategy for inheritance?**
 
 - Single Table: One table created for the superclass and inheriting subclasses.
 
-**What is a disadvantage of the Single Table strategy for inheritance?**
+**12. What is a disadvantage of the Single Table strategy for inheritance?**
 
 - Single Table can lead to a lot of unused database columns.
 
-**What is a disadvantage of the Join Table strategy for inheritance?**
+**13. What is a disadvantage of the Join Table strategy for inheritance?**
 
 - Fetching subclass entities require a join to the table of the superclass.
 
-**Can JPA automatically update timestamp properties for audit purposes?**
+**14. Can JPA automatically update timestamp properties for audit purposes?**
 
 - Yes, using `@PrePersist` or `@PreUpdate` within JPA. 
 - Or Hibernate specific `@CreationTimestamp`, or `@UpdateTimestamp`.
 
-**What does DDL stands for?**
+**15. What does DDL stands for?**
 
-- Data Definition Language
+- Data Definition Language.
 
-**What does DML stands for?**
+**16. What does DML stands for?**
 
-- Data Manipulation Language
+- Data Manipulation Language.
 
-**What is the difference between DDL and DML?**
+**17. What is the difference between DDL and DML?**
 
 - DDL is used to define database structures such as tables and indexes. 
 - While DML used with data operations such as inserts and updates.
 
-**What does Hibernate's ddl-auto property control?**
+**18. What does Hibernate's ddl-auto property control?**
 
 - Controls what if any DDL operations Hibernate will perform on startup.
 
-**What are the 5 valid options for Hibernate's ddl-auto property?**
+**19. What are the 5 valid options for Hibernate's ddl-auto property?**
 
-- none, validate, update, create, create-drop
+- none, validate, update, create, create-drop.
 
-**When using an embedded database, which ddl-auto setting will Spring Boot set by default?**
+**20. When using an embedded database, which ddl-auto setting will Spring Boot set by default?**
 
-- create-drop
+- create-drop.
 
-**When using an NON-embedded database, which ddl-auto setting will Spring Boot set by default?**
+**21. When using an Non-embedded database, which ddl-auto setting will Spring Boot set by default?**
 
-- none
+- none.
 
-**What two file will Spring Boot use to initialize the database?**
+**22. What two file will Spring Boot use to initialize the database?**
 
-- schema.sql and data.sql
+- 'schema.sql' and 'data.sql'.
 
 ***
 
-## Spring Controllers
+## Spring Controllers.
 
 - Annotate Controller Class with `@Controller`:
     - This will register the class as a Spring Bean and as a Controller in Spring MVC.
@@ -1110,7 +1110,7 @@ from root of the classpath.
 
 ***
 
-## Project Lombok
+## Project Lombok.
 
 - Hooks in via the Annotation processor API.
 - The AST (raw source code) is passed to Lombok for code generation before java continues.
@@ -1121,11 +1121,11 @@ from root of the classpath.
 - Modern IDEs such as IntelliJ, Eclipse, Netbeans support Project Lombok:
     - Plugin Installation may be necessary.
 
-### Project Lombok Features
+### Project Lombok Features.
 
 - `@Getter:` Creates getter methods for all properties.
 - `@Setter:` Creates setter for all non-final properties.
-- `@ToString`
+- `@ToString`.
 - `@EqualsAndHashCode:`
     - Generates implementations of `equals(Object other)` and `hashCode()`.
     - By default will use all non-static, non-transient properties.
@@ -1164,7 +1164,7 @@ from root of the classpath.
 
 ***
 
-## Data Binding in Spring
+## Data Binding in Spring.
 
 - Command Objects (aka Backing Beans) - Are used to transfer data to and from web forms.
 - Spring will automatically bind data of form posts.
@@ -1172,9 +1172,9 @@ from root of the classpath.
 
 ***
 
-## Exception Handling in Spring MVC
+## Exception Handling in Spring MVC.
 
-### HTTP Status Codes
+### HTTP Status Codes.
 
 - HTTP `5XX` Server Error:
     - `HTTP 500` - Internal Server Error - Generally, any unhandled exception.
@@ -1186,15 +1186,15 @@ from root of the classpath.
     - **405 Method Not Allowed:** HTTP method not allowed.
     - **409 Conflict:** Possible with simultaneous updates.
     - **417 Expectation Failed:** Sometimes used with RESTful interfaces.
-    - **418 I'm a Teapot**
+    - **418 I'm a Teapot**.
 
-### `@ResponseStatus`
+### `@ResponseStatus`.
 
 - Allows you to annotate custom exception classes to indicate to the framework the HTTP status you want returned when
 that exception thrown.
 - Global to the application.
 
-### `@ExceptionHandler`
+### `@ExceptionHandler`.
 
 - `@ExceptionHandler` works at the controller level.
 - Allows you to define custom exception handling:
@@ -1203,32 +1203,32 @@ that exception thrown.
     - Also, can take total control and work with the Model and View:
         - `Model:` Cannot be a parameter of an ExceptionHandler method.
 
-### HandlerExceptionResolver
+### HandlerExceptionResolver.
 
 - `HandlerExceptionResolver` is an interface you can implement for custom exception handling.
-- Used internally by Spring MVC.
-- Note Model not passed.
+  - Used internally by Spring MVC.
+  - Note, Model not passed.
 
-### Internal Spring MVC Exception Handlers
+### Internal Spring MVC Exception Handlers.
 
 - Spring MVC has 3 implementations of HandlerExceptionResolver:
-- `ExceptionHandlerExceptionResolver:` Matches uncaught exceptions to `@ExceptionHandler`.
-- `ResponseStatusExceptionResolver:` Looks for uncaught exceptions matching `@ResponseStatus`.
-- `DefaultHandlerExceptionResolver:` Converts standard Spring Exceptions to HTTP status codes.
+  - `ExceptionHandlerExceptionResolver:` Matches uncaught exceptions to `@ExceptionHandler`.
+  - `ResponseStatusExceptionResolver:` Looks for uncaught exceptions matching `@ResponseStatus`.
+  - `DefaultHandlerExceptionResolver:` Converts standard Spring Exceptions to HTTP status codes.
 
-### Custom HandlerExceptionResolver
+### Custom HandlerExceptionResolver.
 
 - You can provide your own implementations of `HandlerExceptionResolver`.
 - Typically, implemented with Spring's Ordered interface to define order to handlers will run in.
 - Custom implementations are uncommon due to Spring robust exception handling.
 
-### SimpleMappingExceptionResolver
+### SimpleMappingExceptionResolver.
 
 - A Spring Bean you can define to map exceptions to specific views.
 - You only define the exception class name (no package), and the view name.
 - You can optionally define a default error page.
 
-### Which use
+### Which use.
 
 - If just the HTTP status - use `@ResponseStatus`.
 - If redirection to a view, Use `SimpleMappingExceptionResolver`.
@@ -1236,64 +1236,64 @@ that exception thrown.
 
 ***
 
-## Data Validation with Spring
+## Data Validation with Spring.
 
 - JSR 303 Supported Since Spring Framework 3.
 - JSR 303 Produced Standard Validation Annotations.
 
-### JSR 303 - Java Bean Validation
+### JSR 303 - Java Bean Validation.
 
 - Primary focus was to define annotations for data validation.
 - Standard validations found in the package `javax.validation.constraints`.
 - From the jar `javax.validation:validation-api`.
 - API Implementation is - `org.hibernate.hibernate-validator`.
 
-### JSR 380 - Bean Validation 2.0
+### JSR 380 - Bean Validation 2.0.
 
 - Primary goal is to leverage features of Java 8.
 - Bean Validation 2.0 not supported in Spring yet.
 
-### Standard Validators
+### Standard Validators.
 
-- `@AssertFalse`
-- `@AssertTrue`
-- `@DecimalMax`
-- `@DecimalMin`
-- `@Digits`
-- `@Future`
-- `@Max`
-- `@Min`
-- `@NotNull`
-- `@Null`
-- `@Past`
-- `@Pattern`
+- `@AssertFalse`.
+- `@AssertTrue`.
+- `@DecimalMax`.
+- `@DecimalMin`.
+- `@Digits`.
+- `@Future`.
+- `@Max`.
+- `@Min`.
+- `@NotNull`.
+- `@Null`.
+- `@Past`.
+- `@Pattern`.
 - `@Size` - Checks if string or collection is between a min and max.
 - `@NotEmpty` - Checks if value is null or empty (white space characters or empty collections).
 - `@NonBlank` - Checks string is not null or not whitespace characters.
 - `@Email` - Checks if string value is an email address.
 
-### Hibernate Validators
+### Hibernate Validators.
 
-- `@CreditCardNumber`
-- `@Currency`
-- `@EAN`
-- `@Email`
-- `@ISBN`
-- `@Length`
-- `@LuhnCheck`
-- `@Mod10Check`
-- `@Mod11Check`
-- `@NotBlank`
-- `@NotEmpty`
-- `@ParameterScriptAssert`
-- `@Range`
-- `@SafeHtml`
-- `@ScriptAssert`
-- `@URL`
+- `@CreditCardNumber`.
+- `@Currency`.
+- `@EAN`.
+- `@Email.`
+- `@ISBN`.
+- `@Length`.
+- `@LuhnCheck`.
+- `@Mod10Check`.
+- `@Mod11Check`.
+- `@NotBlank`.
+- `@NotEmpty`.
+- `@ParameterScriptAssert`.
+- `@Range`.
+- `@SafeHtml`.
+- `@ScriptAssert`.
+- `@URL`.
 
 ***
 
-## Internationalization
+## Internationalization.
 
 - `i18n` in a Spring MVC context generally is looking at support for languages.
 - Driven by `accept-language` request header.
@@ -1304,46 +1304,46 @@ that exception thrown.
 - Region codes governed by ISO 3166:
     - Can refer to countries, regions, territories.
 
-### Locale Detection
+### Locale Detection.
 
 - Default behavior is to use `Accept-Language` header.
 - Can be configured to use system, a cookie, or a custom parameter:
     - Custom Parameter is useful to allow user to select language.
 
-### Locale Resolver
+### Locale Resolver.
 
 - `AcceptHeaderLocaleResolver` is the Spring Boot Default.
 - Optionally, can use `FixedLocaleResolver` - Uses the locale of the JVM.
 - Available:
-    - `CookieLocaleResolver`
-    - `SessionLocaleResolver`
+    - `CookieLocaleResolver`.
+    - `SessionLocaleResolver`.
 
-### Changing Locale
+### Changing Locale.
 
-- Browsers typically tied to the Locale of the operation system.
+- Browsers typically tied to the Locale of the operating system.
 - Locale changing plugins are available.
 - Spring MVC provides as `LocaleChangeInterceptor` to allow you to configure a custom parameter
 to used to change the locale.
 
-### Resource Bundles
+### Resource Bundles.
 
-- Resource bundles (aka messages.properties) are selected on highest match order.
+- Resource bundles (aka 'messages.properties') are selected on highest match order.
 - First selected will be on language region - i.e. **en-US** would match `messages_en_US.properties`.
 - If no exact match found, just the language code is used:
     - **en-GB** would match `messages_en_GB.properties`.
-    - OR if no file found, would match `messages_en.properties`.
+    - Or if no file found, would match `messages_en.properties`.
     - Finally, would match `messages.properties`.
 
 ***
 
-## Reactive Programming
+## Reactive Programming.
 
 - Reactive Systems - Architecture and Design:
     - ie Cloud Native.
 - Reactive Programming: Generally Event Based.
 - Functional Reactive Programming (FRP): Often confused with Reactive Programming.
 
-### Reactive Manifesto
+### Reactive Manifesto.
 
 ![Reactive Manifesto](images/reactive-manifesto.png "Reactive Manifesto")
 
@@ -1374,7 +1374,7 @@ to used to change the locale.
     system overhead.
 
 ```
-Spring Cloud Natuve
+Spring Cloud NatIve
 
 Netflix OSS         Spring          Docker
 
@@ -1387,7 +1387,7 @@ Zuul Proxy      Ribbon
 - Reactive Programming focuses on non-blocking asynchronous execution - a key characteristic of Reactive Systems.
 - Reactive Programming is just one tool in building Reactive Systems.
 
-### Reactive Programming
+### Reactive Programming.
 
 - Reactive Programming is an asynchronous programming paradigm on streams of data.
 

@@ -1,4 +1,4 @@
-## MongoDB
+## MongoDB.
 
 - MongoDB is a documented oriented database.
 - Developed in C++.
@@ -6,7 +6,7 @@
 - MongoDB documents are stored in BSON:
     - Binary JSON.
 
-### Use MongoDB
+### Use MongoDB.
 
 - MongoDB is great for high insert system:
     - Such as sensor readings, social media systems, advertising systems.

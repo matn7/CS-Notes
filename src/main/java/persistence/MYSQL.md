@@ -1,30 +1,30 @@
-## MySQL
+## MySQL.
 
 - MySQL supports the ANSI/ISO SQL standard.
 - MySQL is developed in C and C++, making it portable across many platforms.
 - MySQL is very fast, stable and scalable.
 
-### MySQL Features
+### MySQL Features.
 
-- Stored Procedures
-- Triggers
-- Cursors
-- Updated Views
-- Query Catching
-- Sub selects
+- Stored Procedures.
+- Triggers.
+- Cursors.
+- Updated Views.
+- Query Catching.
+- Sub selects.
 - ACID Compliance:
     - Atomicity: All or nothing.
     - Consistency: Transactions are valid to rules of the DB.
     - Isolation: Results of transactions are as if they are done end to end.
     - Durability: Once transaction committed, it remains so.
 
-## RDBMS Deployment Architectures
+## RDBMS Deployment Architectures.
 
 - Can be done on single non-dedicated server, or many dedicated servers.
 - Communication is typically over a network socket.
 - The client will need software called a 'driver' to talk to the database over the network socket.
 
-### Simple Non-Dedicated Server
+### Simple Non-Dedicated Server.
 
 - Single Computer.
 - RDBMS is installed.
@@ -32,27 +32,27 @@
 - Simplest configuration.
 - Will often talk over `localhost` and a network socket on `localhost`.
 
-### LAMP Stack
+### LAMP Stack.
 
 - LAMP: Linux, Apache, MySQL, PHP.
 - Most websites will run off a single server.
 - Downside is database and Apache compete for the limited server resources.
 
-### Client Server
+### Client Server.
 
 - Concept of moving application code to the client and different hardware, while using dedicated hardware
 for the db server.
 - Offloads the application load from database server.
 - Still in use.
 
-### Scaling Client Server
+### Scaling Client Server.
 
 - Scalability achieved by processing on application servers.
-- Database Server id dedicated.
+- Database Server is dedicated.
 - Often companies will increase the size of the db server to grow faster.
 - Data storage off loaded to dedicated hardware.
 
-### Scaling more
+### Scaling more.
 
 - Multiple Servers used for the database.
 - Example: Oracle Real Application Cluster.
@@ -65,28 +65,28 @@ for the db server.
 - Large mainframe like systems avoided.
 - RDBMS's are typically not used due to scalability limitations.
 
-## MySQL Data Types
+## MySQL Data Types.
 
 - A Data Type defines the data type of column - i.e. text, number, date.
 - MySQL does support the standard ANSI SQL Data types.
 - Data Types broken down into following categories:
-    - Numeric
-    - Date and Time
-    - String
-    - Spatial (places)
-    - JSON
+    - Numeric.
+    - Date and Time.
+    - String.
+    - Spatial (places).
+    - JSON.
 
 ### Date and Time Data Types
 
-| Type | Bytes | Description | ANSI |
-|---|---|---|---|
-| DATE | 3 | Stores the date without a time component | Y |
-| DATETIME | 8 | Stores the date with a time component. No timezone info stored | N |
-| TIMESTAMP | 4 | Stores the date with time component. Converted to UTC from session timezone upon storage | Y |
-| TIME | 3 | Time - Can be used for time of day, or elapsed time | Y |
-| YEAR | 1 | A year value 1901 - 2155 | N |
+| Type | Bytes | Description                                                                               | ANSI |
+|---|---|-------------------------------------------------------------------------------------------|---|
+| DATE | 3 | Stores the date without a time component.                                                 | Y |
+| DATETIME | 8 | Stores the date with a time component. No timezone info stored.                           | N |
+| TIMESTAMP | 4 | Stores the date with time component. Converted to UTC from session timezone upon storage. | Y |
+| TIME | 3 | Time - Can be used for time of day, or elapsed time.                                      | Y |
+| YEAR | 1 | A year value 1901 - 2155.                                                                 | N |
 
-### Character Sets
+### Character Sets.
 
 - Computers are driven off binary information.
 - A `bit` is binary one or zero.
@@ -97,7 +97,7 @@ for the db server.
 - UTF-8 is highly popular used for email / web. 1 - 4 bytes long:
     - Up to 1,112,064 characters.
 
-### Spatial Data Types
+### Spatial Data Types.
 
 - The Open Geospatial Consortium (OGC) is an international consortium of more than 250 companies,
 agencies, and universities participating in the development of publicly available conceptual solutions that
@@ -107,17 +107,17 @@ can be useful with all kinds of applications that manage spatial data.
     - Function for manipulating spatial values.
     - Spatial indexing for improve performance.
 
-### JSON Data Type
+### JSON Data Type.
 
 - JSON - JavaScript Object Notation:
     - This is a complex, structured document containing properties and values.
 - Storage for JSON data type is similar to BLOB or TEXT data types.
 - MySQL will convert the JSON to an internal format for optimized storage and searching:
-    - Some formatting may lost and ordering of properties may change.
+    - Some formatting may lose and ordering of properties may change.
 - MySQL supports searching for JSON document properties.
 - MySQL allows update portions of a JSON document.
 
-### Client Protocols
+### Client Protocols.
 
 - TCP/IP: Most common.
 - SOCKET: Unix/OSX/Linux only.
@@ -127,7 +127,7 @@ can be useful with all kinds of applications that manage spatial data.
 ### TCP/IP
 
 - DNS - Domain Name Service: 
-    - Associates an IP address with a human readable name:
+    - Associates an IP address with a human-readable name:
         - `google.com = IP: 216.58.218.110`
 - `localhost` 127.0.0.1
 - A "port" is a logical connection endpoint of an IP Address.

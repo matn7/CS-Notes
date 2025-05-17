@@ -2123,3 +2123,176 @@ slicing.
 - Because they are unpredictable, thread interference bugs can be difficult to detect and fix.
 - :star: Constructors cannot be synchronized.
 - Synchronization is effective for keeping systems safe, but can present problems with a liveness.
+
+***
+
+**1. Which methods will bring the thread into a WAITING state?**
+- Object.wait(), LockSupport.park(), Thread.join().
+
+**2. Example using 'synchronized'.**
+```java
+class SynchronizedExample {
+    private int count = 0;
+    public synchronized void increment() {
+        count++;
+    }
+    public static void main(String[] args) {
+        SynchronizedExample example = new SynchronizedExample();
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                example.increment();
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                example.increment();
+            }
+        });
+        t1.start();
+        t2.start();
+        try {
+            t1.join();
+            t2.join();
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Count: " + example.count);
+    }
+}
+```
+
+**3. ThreadLocal example.**
+```java
+class ThreadLocalExample {
+    private static ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 0);
+
+    public static void main(String[] args) {
+        threadLocal.set(42);
+        Thread t1 = new Thread(() -> {
+            threadLocal.set(10);
+            System.out.println("T1: " + threadLocal.get()); // 10
+        });
+        Thread t2 = new Thread(() -> {
+            System.out.println("T2: " + threadLocal.get()); // 0
+        });
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+**4. What is the purpose of the 'wait' and 'notify()' methods in Java? Provide an example of how to use them for inter-thread
+communication.**
+* The 'wait()' and 'notify()' methods are used for inter-thread communication and synchronization. 'wait()' is called by
+a thread to release the lock and wait for another thread to notify it. 'notify()' is called by a thread to wake up a
+waiting thread.
+```java
+class WaitAndNotifyExample {
+    public static void main(String[] args) {
+        final Object lock = new Object();
+        Thread producer = new Thread(() -> {
+            synchronized (lock) {
+                System.out.println("Producer is producing.");
+                try {
+                    lock.wait(); // Release the lock and wait
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Producer resumed.");
+            }
+        });
+        Thread consumer = new Thread(() -> {
+            synchronized (lock) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Consumer is notifying.");
+                lock.notifyAll(); // Notify the waiting thread
+            }
+        });
+        producer.start();
+        consumer.start();
+        // Producer is producing. -> 2s wait -> Consumer is notifying. -> Producer resumed.
+    }
+}
+```
+
+**4. wait() and notifyAll() example.**
+```java
+public class ShoeWarehouse() {
+    private List<Order> shippingItems;
+    public final static String[] PRODUCT_LIST = { "Running Shoes", "Sandals", "Boots", "Slippers", "High Tops" };
+    
+    public ShoeWarehouse() {
+        this.shippingItems = new ArrayList<>();
+    }
+    
+    public synchronized void receiveOrder(Order item) {
+        while (shippingItems.size() > 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        shippingItems.add(item);
+        System.out.println("Incomming: " + item);
+        notifyAll();
+    }
+
+    public synchronized Order fulfillOrder() {
+        while (shippingItems.isEmpty()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Order item = shippingItems.remove(0);
+        System.out.println(Thread.currentThread().getName() + " fulfilled: " + item);
+        notifyAll();
+        return item;
+    }
+}
+```
+
+**5. Which code will always trigger the thread to stop executing on CPU and cause OS to perform a context switch?**
+* `Thread.sleep(2000);`.
+* `this.wait();`.
+* `LockSupport.parkNamos(1000000);`.
+
+**6. Which is blocking call, or a potentially blocked call?**
+* `Thread.sleep(2000);`.
+* `this.wait();`.
+* `synchronized(this) {}`.
+* `lockObject.lock();`.
+* `thread.join();`.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
