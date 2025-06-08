@@ -1,11 +1,11 @@
-## Complexity
+## Complexity.
 
 - Is a measure of how resource requirements change as the size of problem gets larger.
 - **Big O Notation:** allows express complexity as a resource of input size.
 
-## Sorting
+## Sorting.
 
-### 1. Selection sort O(N^2)
+### 1. Selection sort O(N^2).
 
 - At each iteration 1 element is selected and compared with every other element in the list to find the smallest.
 - Complexity **O(N^2)**.
@@ -25,7 +25,7 @@ public static void selectionSort(int[] list) {
 }
 ```
 
-### 2. Bubble sort O(N^2)
+### 2. Bubble sort O(N^2).
 
 - At each iteration, every element compared with its neighbor and swapped if they are not in order.
 - Smaller element bubbling to the beginning of the list.
@@ -52,7 +52,7 @@ public static void bubbleSort(int[] list) {
 }
 ```
 
-### 3. Insertion Sort O(N^2)
+### 3. Insertion Sort O(N^2).
 
 - Start with sorted list of size 1. 
 - Insert next element into list at right position.
@@ -75,7 +75,7 @@ public static void insertionSort(int[] list) {
 }
 ```
 
-### 4. Shell Sort between O(N) and O(N^2)
+### 4. Shell Sort between O(N) and O(N^2).
 
 - Partitions the original list into sub-list where a sub-list is made of elements separated by an increment.
 - Each sub-list is then sorted using insertion sort. 
@@ -84,14 +84,14 @@ public static void insertionSort(int[] list) {
 - Complexity depends on increment value chosen.
 - Complexity **O(N)** and **O(N^2)**.
 
-### 5. Merge Sort O(N(Log(N)))
+### 5. Merge Sort O(N(Log(N))).
 
 - Follows divide and conquer approach to create smaller sub problems.
 - Then merge together sorted lists to get fully sorted list.
 - Complexity **O(N(Log(N)))**.
 - Is not adaptive = takes advantage over input (nearly sorted list).
 
-### 6. Quick Sort O(N(Log(N)))
+### 6. Quick Sort O(N(Log(N))).
 
 - Divide and conquer algorithm which partitions the list at every step.
 - Partition based on **pivot** element from the list.
@@ -101,10 +101,10 @@ public static void insertionSort(int[] list) {
 - **O(Log(N))** extra space.
 - Is not adaptive.
 
-### :star: 7. Binary Search O(Log(N))
+### :star: 7. Binary Search O(Log(N)).
 
 - How to search **sorted list**.
-- Choose an element at mid point of sorted list.
+- Choose an element at mid-point of sorted list.
 - Check whether it is smaller or greater than element you are looking for.
 - Complexity **O(Log(N))**.
 
@@ -146,19 +146,19 @@ public static int binarySearch(int[] sortedArray, int number, int min, int max) 
 }
 ```
 
-## Recursion
+## Recursion,
 
 - Iterative solutions involves loops.
 - The recursive solutions involves functions that call themselves.
 - Better space complexity comparing iterative binary search.
 
-## Binary Tree
+## Binary Tree.
 
 - A binary tree is one where every node can have maximum of two children.
     - Left children and right children.
 - Two binary trees are the same if:
     - Every corresponding node has the same value.
-    - The structure of the tree at every corresponding node is the same
+    - The structure of the tree at every corresponding node is the same.
 - Complexity **O(N)**.
 
 ```java
@@ -190,7 +190,7 @@ public static class Node {
 }
 ```
 
-**Check whether trees are the same**
+**Check whether trees are the same.**
 
 ```java
 public static boolean sameTree(Node head1, Node head2) {
@@ -216,16 +216,16 @@ public static boolean sameTree(Node head1, Node head2) {
 
 ***
 
-## Stack and Queues
+## Stack and Queues.
 
-### Stack
+### Stack.
 
 - The stack last in first out **LIFO**.
 - **PUSH:** Adding element at the top of stack **O(1)**.
 - **POP:** Removing element from the top of stack **O(1)**.
 - **PEEK:** See what element at top of the stack is.
-- **ISEMPTY:** **O(1)**
-- **ISFULL:** **O(1)**
+- **IsEmpty:** **O(1)**.
+- **IsFull:** **O(1)**
 - **SIZE:** **O(1)**
 - **StackOverflowException:** Pushing into full stack.
 - **StackUnderflowException:** Popping or peeking empty element.
@@ -260,24 +260,24 @@ public static class Element<T> {
 }
 ```
 
-### Queue
+### Queue.
 
 - Add an element to the End of the Queue and remove elements from the beginning of the queue.
- - FIFO, LIFO.
+- FIFO, LIFO.
 - Removal at beginning, addition at the end.
 - **ENQUEUE:** Adding new element at the end of the queue **O(1)**.
 - **DEQUEUE:** Removing an element from the beginning of the queue **O(1)**.
 - **PEEK:** See first element.
 - **OFFER:** Add to a queue if space is available.
-- **ISEMPTY**
-- **ISFULL**
+- **IsEmpty**.
+- **IsFull**.
 - Linked List with a pointer to the head and tail works well, or stack (2 stacks).
 
 ***
 
-## Trees
+## Trees.
 
-### Binary Tree
+### Binary Tree.
 
 - Tree is a data structure which is made up of nodes.
 - The order of element is not important in a Tree. 
@@ -300,13 +300,13 @@ public static class Node<T> {
 }
 ```
 
-### Binary Tree Traversal
+### Binary Tree Traversal.
 
 - **Breadth-First:** Visit node at every level before moving the next level.
 - **Depth-First:** Involves going right to the leaf of the binary tree first before moving up the tree.
-    - **PRE-ORDER:** `NODE - LEFT SUBTREE - RIGHT SUBTREE`
-    - **IN-ORDER:** `LEFT SUBTREE - NODE - RIGHT SUBTREE`
-    - **POST-ORDER:** `LEFT SUBTREE - RIGHT SUBTREE - NODE`
+    - **PRE-ORDER:** `NODE - LEFT SUBTREE - RIGHT SUBTREE`.
+    - **IN-ORDER:** `LEFT SUBTREE - NODE - RIGHT SUBTREE`.
+    - **POST-ORDER:** `LEFT SUBTREE - RIGHT SUBTREE - NODE`.
 
 ```java
 public static void preOrder(Node<Character> root) {
@@ -322,7 +322,7 @@ public static void preOrder(Node<Character> root) {
 }
 ```
 
-### Binary Search Tree
+### Binary Search Tree.
 
 - Each node in the left subtree of Node has a value less than or equal to the value of the Node.
 - Each node in the right subtree of Node has a value greater than the value of the Node.
@@ -334,12 +334,12 @@ public static void preOrder(Node<Character> root) {
 
 ***
 
-## Heaps
+## Heaps.
 
-### Priority Queue
+### Priority Queue.
 
 - The highest priority element has to be processed first.
-    - **INSERT**
+    - **INSERT**.
     - **ACCESS:** The highest priority element.
     - **REMOVE:** The highest priority element.
 
@@ -349,7 +349,7 @@ public static void preOrder(Node<Character> root) {
 | ACCESS | `O(N)` | `O(1)` | `O(Log(N))` | `O(1)` |
 | REMOVE | `O(N)` | `O(1)` | `O(Log(N))` | `O(Log(N))` |
 
-### The Binary Heap
+### The Binary Heap.
 
 - A heap is a tree with special properties or constraints on the values of its nodes.
 - Two types of Heaps.
@@ -358,9 +358,9 @@ public static void preOrder(Node<Character> root) {
         - Operation travels upwards `(leaf -> root)`.
         - Travels downwards `(root -> leaf)`.
         - Heaps can be represented using tree or array.
-- **GET PARENT:** Node at an index `i` has a parent at index `(i - 1)/2`.
-- **GET LEFT CHILD:** Node at an index`(2*i + 1)`.
-- **GET RIGHT CHILD:** Node at an index `(2*i + 2)`
+- **GET PARENT:** Node at an index `i` has a parent at index `(i - 1) / 2`.
+- **GET LEFT CHILD:** Node at an index`(2 * i + 1)`.
+- **GET RIGHT CHILD:** Node at an index `(2 * i + 2)`
 
 ```
              5
@@ -375,10 +375,10 @@ public static void preOrder(Node<Character> root) {
 ```
 
 - **Heapify:** which is the right position of element.
-    - SIFT DOWN
-    - SIFT UP
+    - SIFT DOWN.
+    - SIFT UP.
 
-### Heap Sort
+### Heap Sort.
 
 - Use Heap to help sort elements in ascending or descending order.
 - Use the heap to access the maximum element and put it in right position in array.
@@ -388,11 +388,11 @@ public static void preOrder(Node<Character> root) {
 
 ***
 
-## GRAPH
+## GRAPH.
 
 - Graph used to represent relationship between entities.
-    - VERTEX
-    - EDGE
+    - VERTEX.
+    - EDGE.
 - Graphs are set of vertices and edges.
 - A and B are **Adjacent** Nodes.
 
@@ -404,22 +404,22 @@ public static void preOrder(Node<Character> root) {
 - `F` is said to have a degree of 3.
 - Series of edges called **PATH**.
 
-### UNDIRECTED ACYCLIC GRAPH
+### UNDIRECTED ACYCLIC GRAPH/
 
 - A connected graph with no cycles is a TREE.
 
 ![Undirected Acyclic Graph](images/undirected-acyclic-graph.png "Undirected Acyclic Graph")
 
-### DIRECTED ACYCLIC GRAPH (DAG)
+### DIRECTED ACYCLIC GRAPH (DAG).
 
 ![Directed Acyclic Graph](images/dag.png "Directed Acyclic Graph")
 
 - 3 ways to represent Graph:
-    - Adjacency matrix
-    - Adjacency list
-    - Adjacency set
+    - Adjacency matrix.
+    - Adjacency list.
+    - Adjacency set.
 
-### ADJACENCY MATRIX
+### ADJACENCY MATRIX.
 
 - Use a matrix with ROWS and COLUMNS a matrix is table.
 - The Row labels, and the column labels represent the Vertices.
@@ -439,17 +439,17 @@ public static void preOrder(Node<Character> root) {
         +---+     +---+
 ```
 
-### ADJACENCY LIST
+### ADJACENCY LIST.
 
 - Each vertex is a node.
 - Each vertex has a pointer to LinkedList.
 - Problem deleting node need to go through all data structure.
 
-### ADJACENCY SET
+### ADJACENCY SET.
 
 - Instead of List use Set.
 
-### Graph representation
+### Graph representation.
 
 - **E:** Number of Edges.
 - **V:** Number of Vertices.
@@ -460,7 +460,7 @@ public static void preOrder(Node<Character> root) {
 | IS EDGE PRESENT | `1` | `Degree of V` | `log(Degree of V)` |
 | ITERATE OVER EDGES ON VERTEX | `V` | `Degree of V` | `Degree of V` |
 
-### Graph Traversal
+### Graph Traversal.
 
 - Depth First.
 - Breadth First.
@@ -468,7 +468,7 @@ public static void preOrder(Node<Character> root) {
 - In graph multiple paths can lead from one node to another. 
 - Graph can have cycles.
 
-### Graph Algorithms
+### Graph Algorithms.
 
 - **Topological Sort:** Directed Acyclic Graph. 
 - If no vertices with in degree of **0**, no topological sort.
@@ -476,14 +476,14 @@ public static void preOrder(Node<Character> root) {
 
 ***
 
-## MVC
+## MVC.
 
 - Separating data from its visual representation.
 - Separating data from its manipulation.
 - Allowing different simultaneous representations of the same data.
 - The user "sees" the model through the view, and "manipulates" it via a controller.
 
-### Charts
+### Charts.
 
 - Charts and tables are views.
 - Numeric data are model.
@@ -493,7 +493,7 @@ public static void preOrder(Node<Character> root) {
 
 ***
 
-## Questions
+## Questions.
 
 ### 1. How to interrupt thread.
 
@@ -519,8 +519,8 @@ TimeUnit.SECONDS.sleep(1);
 
 ### 5. Where apply synchronization.
 
-- Methods
-- Code blocks
+- Methods.
+- Code blocks.
 
 ### 6. Remote exception.
 
@@ -547,11 +547,11 @@ for (Numbers n : Numbers.values()) {
 
 ### 9. Class to work with dates.
 
-- **java.time.Date**
-- **Duration**
-- **LocalDateTime**
-- **TemporalAdjuster**
-- **LocalTime**
+- **java.time.Date**.
+- **Duration**.
+- **LocalDateTime**.
+- **TemporalAdjuster**.
+- **LocalTime**.
 
 ### 10. Iterator and how it works.
 
@@ -613,9 +613,9 @@ public interface IntSeq {
 
 ### 17. In what format keep prices.
 
-- **BigDecimal**
+- **BigDecimal**.
 
-### 18. Factorial
+### 18. Factorial.
 
 ```java
 public class Factorial {
@@ -650,7 +650,7 @@ public class FactorialRecursive {
 }
 ```
 
-### 19. Fibonacci
+### 19. Fibonacci.
 
 ```java
 public class FibonacciIterative {
@@ -736,10 +736,10 @@ public class BigOrSmall {
 }
 ```
 
-### 23. hashCode
+### 23. hashCode.
 
 - If objects are equal by equals, they also need to have the same hashCode.
-- If hashCode has following implementation.
+- If hashCode has the following implementation.
 
 ```java
 public int hashCode() {
@@ -749,7 +749,7 @@ public int hashCode() {
 
 - Then all objects are signed to the same bucket and hash table will degrade to normal list.
 
-### 24. :star: Palindrome
+### 24. :star: Palindrome.
 
 ```java
 public class Palindrome {
@@ -823,7 +823,7 @@ public class BiggerAndSmaller {
 
 - Sequence of elements in which every element links to next element.
 - Can contain any type of data.
-- Elements Unsorted, Sorted, Duplicates, Unique
+- Elements Unsorted, Sorted, Duplicates, Unique.
 - **Disadvantages:** Slow to get **k-th** element **O(N)**.
 - **Advantages:** Insert and delete can be quick **O(1)** prepend, **O(n)** append.
 
@@ -832,22 +832,22 @@ public class BiggerAndSmaller {
 - Linear data structure.
 - Flexible sizes.
 
-### 29. Heap
+### 29. Heap.
 
 ![Heap](images/heap.png "Heap")
 
-### 30. Tree
+### 30. Tree.
 
 - The binary TREE 2 child nodes (left, right).
 - The binary tree.
     - A left node is less than root node.
     - Insert like find.
 - Balanced:
-    - Insert: **O(log(N))**
-    - Find: **O(log(N))**
+    - Insert: **O(log(N))**.
+    - Find: **O(log(N))**.
 - Unbalanced (H height of tree):
-    - Insert: **O(H)**
-    - Find: **O(H)**
+    - Insert: **O(H)**.
+    - Find: **O(H)**.
 
 ### 31. Big O Notation.
 
@@ -884,7 +884,7 @@ public class BiggerAndSmaller {
 | `O(log(N))` | Time is logarithmic to the number of elements. |
 | `O(N(log(N)))` | Time is linearithmic to the number of elements. |
 
-### 33. Collections
+### 33. Collections.
 
 - The Collections are objects that group multiple elements and store, retrieve and manipulate these objects.
 - The Collection interface is the root of the Collection hierarchy.
@@ -897,8 +897,8 @@ public class BiggerAndSmaller {
 | Queue | Yes | Yes | Holds elements, usually FIFO |
 | Set | Can be | No | Unique matters |
 
-- `Collection.stream():` Returns a sequential stream with the context collection as its source.
-- `Collection.parallelStream():` Returns a parallel stream with the context collection as its source.
+- `Collection.stream()`: Returns a sequential stream with the context collection as its source.
+- `Collection.parallelStream()`: Returns a parallel stream with the context collection as its source.
 - `Collection.addAll()`, `.max()`, `.min()`, `.remove()`, `.rotate()`.
 
 ### 34. Garbage Collector.
@@ -939,7 +939,7 @@ public class BiggerAndSmaller {
 | EndElement | | |
 | Characters | | |
 
-### :star: 37. How to build own annotation
+### :star: 37. How to build own annotation.
 
 **TrackTimer.java**
 
@@ -979,7 +979,7 @@ public class AroundAspect {
 }
 ```
 
-**Use**
+**Use.**
 
 ```java
 @Repository
@@ -995,8 +995,8 @@ public class Dao1 {
 ### 38. Thread Local.
 
 - Allow building variables that can be saved and read through the same thread. 
-- Thus, ever though two threads executed the same code, and it has a reference to thread local, as a result 
-both threads cannot see their ThreadLocal variables.
+- Thus, ever though two threads executed the same code, and it has a reference to thread local, as a result both threads
+cannot see their ThreadLocal variables.
 
 ```java
 private ThreadLocal myThreadLocal = new ThreadLocal();
@@ -1038,12 +1038,12 @@ and then to **Survivor2**.
     - Determines what is required in service.
     - How to consume and how to deliver them.
 - Definitions:
-    - types
-    - binding
-    - messages
-    - service
-    - operation
-    - prototype
+    - types.
+    - binding.
+    - messages.
+    - service.
+    - operation.
+    - prototype.
 
 ### 43. What is RMI?
 
@@ -1055,7 +1055,7 @@ and then to **Survivor2**.
 - Grammar, blueprint to xml document.
 - XSD extension.
     - Deliver contract between 2 users (to not send unnecessary information).
-    - If xml follows scheme that means it is valid document
+    - If xml follows scheme that means it is valid document.
     
 ```xml
 <xsd:schema>            <!-- root element -->
@@ -1065,28 +1065,28 @@ and then to **Survivor2**.
 
 ### 45. HTTP errors protocols qualification.
 
-- **1xx:** Information
-- **2xx:** Success 201 created, 200 OK, 204
-- **3xx:** Redirection
-- **4xx:** Client error, 404, 400, 403 forbidden, 401 unauthorized
-- **5xx:** Server error
+- **1xx**: Information.
+- **2xx**: Success 201 created, 200 OK, 204.
+- **3xx**: Redirection.
+- **4xx**: Client error, 404, 400, 403 forbidden, 401 unauthorized.
+- **5xx**: Server error.
 
 ### 46. SOLID
 
-- **Single Responsible Principle:** One class should have one and only one responsibility.
-- **Open closed principle:** Software component should be open for extension, but closed for modification.
-- **Liskov substitution principle:** Derived type must be completely substitutable for their base type.
-- **Interface segregation principle:** Client should not be forced to implement unnecessary methods which they will not use.
-- **Dependency Inversion principle:** Dependent on abstraction not on concretion.
+- **Single Responsible Principle**: One class should have one and only one responsibility.
+- **Open closed principle**: Software component should be open for extension, but closed for modification.
+- **Liskov substitution principle**: Derived type must be completely substitutable for their base type.
+- **Interface segregation principle**: Client should not be forced to implement unnecessary methods which they will not use.
+- **Dependency Inversion principle**: Dependent on abstraction not on concretion.
 
-**SOLID**
+**SOLID.**
 
 - Single Responsible Principle:
     - Every class should have a single responsibility.
     - Class should be small.
     - Avoid very big classes, split it into smaller classes.
 - Open close principle:
-    - Class should be open for extension but closed for modification
+    - Class should be open for extension but closed for modification.
     - You should be able to extend class behavior without modifying it.
     - Use private variables with getters and setters only when you need them.
     - Use abstract base class.
@@ -1105,7 +1105,7 @@ and then to **Survivor2**.
     - Details should not depend upon abstraction.
     - How object obtain dependent objects.
 
-### 47. ACID
+### 47. ACID.
 
 - Atomic: Cannot stop in between.
 - Consistency: Data must follow validation rules.
@@ -1148,12 +1148,12 @@ and then to **Survivor2**.
 
 ### 55. What is constraint?
 
-- **Not Null**
-- **Check**
-- **Default**
-- **Unique**
-- **Primary Key**
-- **Foreign Key**
+- **Not Null**.
+- **Check**.
+- **Default**.
+- **Unique**.
+- **Primary Key**.
+- **Foreign Key**.
 
 ### 56. What is Union?
 
@@ -1188,12 +1188,12 @@ public class StackOverflowException {
 ###  59. Stability of sorting algorithms.
 
 - Elements with the same hashCode stays on the same position after sorting. 
-- For example in bubble sort, panda, panda, pies. 
+- For example in bubble sort, panda, panda, dog. 
 - panda would change position with other panda in even though of a fact that they have the same hashCode.
 
 ***
 
-## Multithreading
+## Multithreading.
 
 - Access to variable marked **volatile** is synchronized on the variable itself.
 - Variable marked as **volatile** are safe to use in a different thread.
@@ -1203,29 +1203,29 @@ public class StackOverflowException {
 - The **volatile** keyword ensures a variable never cached, and only read from main memory,
 and wraps the action in the body of an object that implements an interface with just one method.
 - Threads controlled by process:
-    - PROGRAM : PROCESS, `1 : 1`
-    - PROCESS : THREADS, `1 : MANY`
-    - CALLABLE
-    - LOCK OBJECTS
-    - EXECUTORS
-    - CONCURRENT COLLECTIONS
-    - THREAD POOLS
-    - ATOMIC VARIABLES
+    - PROGRAM : PROCESS, `1 : 1`.
+    - PROCESS : THREADS, `1 : MANY`.
+    - CALLABLE.
+    - LOCK OBJECTS.
+    - EXECUTORS.
+    - CONCURRENT COLLECTIONS.
+    - THREAD POOLS.
+    - ATOMIC VARIABLES.
 
 ### Synchronization problems.
 
 - **Thread interference:** Different thread access the same data.
 - **Memory consistency error:** Inconsistent value of variable.
 - **Thread contention:** Threads get in each other way and slow down or even have to be killed by java:
-    - Starvation
-    - Livelock
-    - Deadlock
+    - Starvation.
+    - Livelock.
+    - Deadlock.
 
 ### Completion Service.
 
 - Returns the queue of feature objects in the order in which they finish.
 
-### Callable
+### Callable.
 
 - It's a generic class, explicitly returns the thread results. 
 - Correctly passes exception from one thread to another.
@@ -1255,7 +1255,7 @@ and wraps the action in the body of an object that implements an interface with 
 
 ***
 
-## Concurrency
+## Concurrency.
 
 - Threads in Java allow the use of multiple processors or multiple cores in one processor more efficiently.
 - On a single processor, threads provide for concurrent options such as overlapping I/O with processing.
@@ -1281,33 +1281,33 @@ and wraps the action in the body of an object that implements an interface with 
 
 ### Thread priorities.
 
-- MIN_PRIORITY
-- NORM_PRIORITY
-- MAX_PRIORITY
+- MIN_PRIORITY.
+- NORM_PRIORITY.
+- MAX_PRIORITY.
 - Lower priority threads yield to higher priority thread.
 
-### Common methods
+### Common methods.
 
-- `getPriority()`
-- `getState()`
-- `interrupt()`
-- `isAlive()`
-- `isInterrupted()`
+- `getPriority()`.
+- `getState()`.
+- `interrupt()`.
+- `isAlive()`.
+- `isInterrupted()`.
 - `join():` Causes the thread that invokes this method to wait for the thread that this object represents to finish.
 
 ### Common methods used for threads from the Object class.
 
-- `notify():` Tells the thread to wake up and run.
-- `notifyAll():` Threads that are waiting on a thread or resource to wake up, and then the scheduler will
+- `notify()`: Tells the thread to wake up and run.
+- `notifyAll()`: Threads that are waiting on a thread or resource to wake up, and then the scheduler will
 select one of the thread to run.
-- `wait():` Pauses a thread in a wait state until another thread calls `notify()` or `notifyAll()`.
+- `wait()`: Pauses a thread in a wait state until another thread calls `notify()` or `notifyAll()`.
 - Common static methods used for threads from Thread class.
-    - `activeCount()`
-    - `concurrentThread()`
-    - `interrupted()`
-    - `sleep()`
-- `yield():` Pauses the current thread to allow another thread to run.
-- **Synchronization:** Apply locks to blocks and methods. 
+    - `activeCount()`.
+    - `concurrentThread()`.
+    - `interrupted()`.
+    - `sleep()`.
+- `yield()`: Pauses the current thread to allow another thread to run.
+- **Synchronization**: Apply locks to blocks and methods. 
 - A lock also known as monitor or mutex (mutually exclusive lock).
 
 ### Concurrent utilities.
@@ -1316,19 +1316,19 @@ select one of the thread to run.
     - **ThreadPoolExecutor** as well as its subclass **ScheduledThreadPoolExecutor** implements the **Executor**
 interface to provide configurable, flexible thread pools.
 
-| Collections | Concurrent Collections  |
-|---|---|
-| HashMap | ConcurrentHashMap |
-| TreeMap | ConcurrentSkipListMap |
-| TreeSet | ConcurrentSkipListSet |
-| Map sub types | ConcurrentMap |
-| List sub types | CopyOnWriteArrayList |
-| Set sub types | CopyOnWriteArraySet |
-| PriorityQueue | PriorityBlockingQueue |
-| Dequeue | BlockingDequeue |
-| Queue | BlockingQueue |
+| Collections | Concurrent Collections |
+|---|------------------------|
+| HashMap | ConcurrentHashMap.     |
+| TreeMap | ConcurrentSkipListMap. |
+| TreeSet | ConcurrentSkipListSet. |
+| Map sub types | ConcurrentMap.         |
+| List sub types | CopyOnWriteArrayList.  |
+| Set sub types | CopyOnWriteArraySet.   |
+| PriorityQueue | PriorityBlockingQueue. |
+| Dequeue | BlockingDequeue.       |
+| Queue | BlockingQueue.         |
 
-### Synchronizers
+### Synchronizers.
 
 - Special purpose synchronization tools.
 
@@ -1340,15 +1340,15 @@ interface to provide configurable, flexible thread pools.
 
 ***
 
-## Memory Management
+## Memory Management.
 
-- **Garbage collector principal tasks are:**
+- **Garbage collector principal tasks are**:
     - Allocating memory.
     - Maintaining referenced objects in memory.
     - Recovering memory from objects that no longer have reference to them.
-- **Tune GC:**
+- **Tune GC**:
     - Maximum pause time goal: Time GC pauses application to recover memory.
-- **Throughput goal:**
+- **Throughput goal**:
     - Time spent outside of GC.
 
 ### Serial GC.
@@ -1396,32 +1396,32 @@ proportional to the heap or live-data size.
 
 - The heap is an area in memory that stores all objects created by executing Java program.
 - If you are having performance problems or seeing the Permanent Generation (PermGen) error message:
-    - **java.lang.OutOfMemory:** You may be running out of heap space.
-- **Metaspace:** Used for representation class metadata. 
+    - **java.lang.OutOfMemory**: You may be running out of heap space.
+- **Metaspace**: Used for representation class metadata. 
 - Metaspace is a successor to PermGen model.
 
 ***
 
-## TDD
+## TDD.
 
-### Test Parts
+### Test Parts.
 
-- Scenario
-- Execute actions
-- Validate behavior
-- Refactor
-- All jUnit test must be public void
+- Scenario.
+- Execute actions.
+- Validate behavior.
+- Refactor.
+- All jUnit test must be public void.
 - Eliminating repeated code:
     - `@Before:` Execute setup before unit test.
 
-### Mock
+### Mock.
 
 - Simulating objects, dependencies.
 - Impossible to mock static method.
 - Avoid static methods. 
 - Programming for testability.
 
-### Clean Code
+### Clean Code.
 
 - `SRP` (Single responsible principle):
     - A functional unit on a given level of abstraction should only be responsible for a single aspect of 
@@ -1430,7 +1430,7 @@ proportional to the heap or live-data size.
 - The language you wrote your code should look like it was made for the problem.
 - `DRY` (Don't repeat yourself).
 - `KISS` (Keep it simple stupid).
-- `YANGE` (You ain't gonna need it).
+- `YANGE` (You ain't going to need it).
 - Can be easy extended by other developers.
 - Should have minimal dependencies.
 - Smaller is better.

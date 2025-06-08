@@ -1,6 +1,6 @@
-# OAuth2
+# OAuth2.
 
-## Security Basics - Providers
+## Security Basics - Providers.
 
 - User Identity:
   - Where are the user credentials stored?
@@ -9,22 +9,22 @@
   - How does it happen?
 - Authorization:
   - Application does this.
-  - Uses information for IdP
+  - Uses information for IdP.
 
 ![Authentication and Authorization](images/authentication-authz.drawio.png "Authentication and Authorization")
 
-### LDAP
+### LDAP.
 
 - Identity:
   - Stored in LDAP database.
   - Microsoft Active Directory.
 - Authentication:
-  - Done by LDAP (AD)
+  - Done by LDAP (AD).
 - Authorization:
   - Done by Application.
 - LDAP and Application in the same data center.
 
-### SAML (Security Assertion Markup Language)
+### SAML (Security Assertion Markup Language).
 
 - Communicating across data centers (use HTTP Redirect).
 
@@ -32,14 +32,14 @@
 
 - Arrow 2 is an HTTP 302 Redirection response to Request marked as 1.
 
-### SSO
+### SSO.
 
 - Avoid entering the user credentials (use SSO).
 - The network user is already a part of AD.
 - Single Sign On (SSO):
   - Enterprise SSO.
 
-### SAML
+### SAML.
 
 - Identity:
   - Stored in LDAP database.
@@ -67,7 +67,7 @@
 - Single Sign On.
 - Redirect importance.
 
-### Enterprise Problem use cases
+### Enterprise Problem use cases.
 
 - Problem 1 - Microservices.
 - Problem 2 - Cloud apps:
@@ -77,15 +77,15 @@
   - Scheduled Tasks, Daemons sometimes need to call REST APIs. How are they secured?
   - No user involved.
 
-### Social Media Platform
+### Social Media Platform.
 
 - Social Media Sites:
-  - Facebook
-  - LinkedIn
-  - Google
-  - Twitter
-  - GitHub
-  - Yahoo
+  - Facebook.
+  - LinkedIn.
+  - Google.
+  - Twitter.
+  - GitHub.
+  - Yahoo.
 - A user usually has Multiple Identities:
   - Many Identity Providers.
 - What if a third party application wants to access or publish to these sites on behalf of its user?
@@ -93,43 +93,43 @@
 
 ***
 
-## OAuth 2.0 Fundamentals
+## OAuth 2.0 Fundamentals.
 
 - The OAuth 2.0 authorization framework enables a **third-party application** to obtain **limited** access to an 
 **HTTP service**, either **on behalf of a resource owner** by orchestrating an **approval interaction** between the
 resource owner and the HTTP service, or by allowing the third-party application to obtain **access on its own behalf.**
 
-**OAuth 2.0 - Roles**
+**OAuth 2.0 - Roles.**
 
 - Resource Owner, should never send the password to the Third Party (untrusted) Application:
-  - The User
-  - User Agent
+  - The User.
+  - User Agent.
 - Resource Server:
-  - REST API which protects resource
+  - REST API which protects resource.
 - Client:
-  - Application that needs access
+  - Application that needs access.
 - Authorization Server:
-  - Authorizes the client
-  - Gives out access tokens
-  - Many on the internet
-  - OAuth Endpoints
+  - Authorizes the client.
+  - Gives out access tokens.
+  - Many on the internet.
+  - OAuth Endpoints.
 
-**OAuth 2.0 - Client Registration**
+**OAuth 2.0 - Client Registration.**
 
 - Administration utility to register a Client.
 - Redirect URIs.
 - Client ID, Client Secret.
 - When Client sends request to Authorization Server, it will send Client ID, Client Secret as well.
 
-**OAuth 2.0 - Opaque Token**
+**OAuth 2.0 - Opaque Token.**
 
 - Access Token is sent in an HTTP Header.
-- **Authorization: Bearer <token>**
+- **Authorization: Bearer [token].**
 
-**OAuth 2.0 - JWT Token**
+**OAuth 2.0 - JWT Token.**
 
 - JWT Token is sent in a HTTP Header.
-- **Authorization: Bearer <jwt token>**
+- **Authorization: Bearer [jwt token].**
 
 **Grant Types**
 

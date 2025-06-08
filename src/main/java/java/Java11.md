@@ -1,11 +1,11 @@
 # Java 11
 
-## OOP
+## OOP.
 
 - **Object:** State, behavior.
 - **Class:** Template for objects.
 
-### Reference vs Object vs Instance vs Class
+### Reference vs Object vs Instance vs Class.
 
 - A class is a blueprint for a house, using the blueprint (plans) we can build as many houses as we like based on
 those plans. 
@@ -19,7 +19,7 @@ those plans.
 - In Java you always have **reference** to an **object** in memory, there is no way to access an **object** directly
 everything is done using a **reference**.
 
-### this vs super
+### this vs super.
 
 - The keyword **super** is used to access / call the parent class members (variables and methods).
 - The keyword **this** is used to call the current class members (variables and methods). 
@@ -27,7 +27,7 @@ everything is done using a **reference**.
 - We can use both of them anywhere is a class except static area (the static block or a static method).
 - Any attempt to do so will lead to compile-time error.
 
-**Keyword this**
+**Keyword this.**
 
 - The keyword **this** is commonly used with **constructors** and **setters**, and optionally in getters.
 
@@ -52,7 +52,7 @@ class House {
 }
 ```
 
-**Keyword super**
+**Keyword super.**
 
 - The keyword **super** is commonly used with **method overriding**, when we call a method with the same name from the 
 parent class. 
@@ -82,7 +82,7 @@ class MainClass {
 }
 ```
 
-**`this()` vs `super()` call**
+**`this()` vs `super()` call.**
 
 - In Java, we have the `this()` call, and the `super()` call. 
 - Notice the braces it is known as a call since it looks like  a regular method call.
@@ -128,13 +128,13 @@ class Rectangle {
 }
 ```
 
-- The 1st constructor calls the 2nd, the 2nd constructor cals the 3rd constructor, and 3rd constructor initializes 
+- The 1st constructor calls the 2nd, the 2nd constructor calls the 3rd constructor, and 3rd constructor initializes 
 the instance variables.
 - **The 3rd constructor does all the work.**
 - No matter what constructor we call, the variables will always be initialized in 3rd constructor.
 - This is known as **constructor chaining**, the last constructor has the "responsibility" to initialize the variables.
 
-**super() call example**
+**super() call example.**
 
 ```java
 class Shape {
@@ -168,9 +168,9 @@ class Rectangle extends Shape {
 - The parent constructor will initialize **x**, **y** variables while 2nd Rectangle constructor will initialize the **width** 
 and, **height** variables.
 
-## Method overriding vs overloading
+## Method overriding vs overloading.
 
-### Method Overloading
+### Method Overloading.
 
 - Method **Overloading** means providing two or more separate methods in a class with **same name** but 
 **different parameters**.
@@ -186,7 +186,7 @@ subclass of that class.
 - That is because a **subclass inherits** one version of the method from the parent class and then the subclass can have 
 another overloaded version of the method.
 
-**Method Overloading Rules**
+**Method Overloading Rules.**
 
 - Methods will be considered overloaded if both follow the following rules:
     - Methods must have the same method name.
@@ -210,7 +210,7 @@ class Dog {
 }
 ```    
 
-### Method Overriding
+### Method Overriding.
 
 - Method **Overriding** means defining a method in a child class that already exists in the parent class with same
 signature (same name, same arguments).
@@ -228,7 +228,7 @@ correctly.
     - Methods that are final cannot be overridden.
     - A subclass can use `super.methodName()` to call the superclass version of an overridden method.
 
-**Method Overriding Rules**
+**Method Overriding Rules.**
 
 - Method will be considered overridden if we follow these rules:
     - It must have same name and same arguments.
@@ -254,16 +254,16 @@ class GermanShepherd extends Dog {
 ```
 **Recap**
 
-| Method Overloading | Method Overriding |
-|---|---|
+| Method Overloading | Method Overriding                                                                |
+|---|----------------------------------------------------------------------------------|
 | Provides functionality to reuse a method name with different parameters. | Used to override a behavior which the class has inherited from the parent class. |
-| Usually in a single class but may also be used in a child class. | Always in two classes that have a child-parent or IS-A relationship. |
-| Must have different parameters. | Must have the same parameters and same name. |
-| May have different return types. | Must have the same return type of covariant return type (child class). |
-| May have different access modifiers (private, protected, public). | Must NOT have a lower modifier but may have a higher modifier. |
-| May throw different exceptions. | Must NOT throw a new or broader checked exception. |
+| Usually in a single class but may also be used in a child class. | Always in two classes that have a child-parent or IS-A relationship.             |
+| Must have different parameters. | Must have the same parameters and same name.                                     |
+| May have different return types. | Must have the same return type or covariant return type (child class).           |
+| May have different access modifiers (private, protected, public). | Must NOT have a lower modifier but may have a higher modifier.                   |
+| May throw different exceptions. | Must NOT throw a new or broader checked exception.                               |
 
-**Covariant return type**
+**Covariant return type.**
 
 ```java
 class Burger {
@@ -290,9 +290,9 @@ class HealthyBurgerFactory extends BurgerFactory {
 
 ***
 
-## Static vs Instance methods
+## Static vs Instance methods.
 
-### Static Methods
+### Static Methods.
 
 - **Static methods** are declared using a **static** modifier.
 - **Static methods can't** access instance methods and instance variables directly.
@@ -302,7 +302,7 @@ class HealthyBurgerFactory extends BurgerFactory {
 - :star: Whenever you see a method that **does not use instance variables** that method should be declared as a **static method**.
 - For example main is a static method, and it is called by the JVM when it starts an application.
 
-**Static Method Example**
+**Static Method Example.**
 
 ```java
 class Calculator {
@@ -323,14 +323,14 @@ public class Main {
 }
 ```
 
-### Instance Methods
+### Instance Methods.
 
 - **Instance methods** belong to an instance of a class.
 - To use an **instance method** we have to instantiate the class first usually by using the **new** keyword.
 - **Instance methods** can access instance methods and instance variables directly.
 - **Instance methods** can also access static methods and static variables directly.
 
-**Instance Methods Example**
+**Instance Methods Example.**
 
 ```java
 class Dog {
@@ -353,9 +353,9 @@ public class Main {
 
 ***
 
-## Static vs Instance Variables
+## Static vs Instance Variables.
 
-### Static Variables
+### Static Variables.
 
 - Declared by using the keyword **static**.
 - **Static variables** are also known as **static member variables**.
@@ -388,7 +388,7 @@ public class Main {
 }
 ```
 
-### Instance Variables
+### Instance Variables.
 
 - They **don't** sue the **static** keyword.
 - Instance variables known as fields or member variables.
@@ -422,13 +422,13 @@ public class Main {
 
 ***
 
-## Arrays
+## Arrays.
 
 - An array is a data structure that allows you to store multiple values of the same type into a single variable.
 - The default values of numeric array elements are set to zero.
-- Arrays are zero indexed: an array with n elements is indexed from 0 to n - 1, for example 10 elements index
+- Arrays are zero indexed: an array with n elements is indexed from `0` to `n - 1`, for example 10 elements index
 range is from 0 to 9.
-- If we try to access index that is out of range Java will give us an ArrayIndexOutOfBoundsException, which indicates 
+- If we try to access index that is out of range Java will give us an `ArrayIndexOutOfBoundsException`, which indicates 
 that the index is out of range in other words out of bounds.
 - To access array elements we use the square braces `[` and `]`, also known as array access operator.
 
@@ -452,29 +452,31 @@ int[] myNumbers = {12. 34, 56, 1, 234};
 - This way of initializing an array known as an anonymous array.
 - It has 5 elements and index range 0 to 4.
 
-### Reference Types vs Value Types
+### Reference Types vs Value Types.
 
 ```java
-int[] myIntArray = new int[5];
-int[] anotherArray = myIntArray;
-
-System.out.println("myIntArray = " + Arrays.toString(myIntArray));
-System.out.println("anotherArray = " + Arrays.toString(anotherArray));
-
-System.out.println("=====");
-
-anotherArray[0] = 111;
-System.out.println("myIntArray = " + Arrays.toString(myIntArray));
-System.out.println("anotherArray = " + Arrays.toString(anotherArray));
+void example() {
+    int[] myIntArray = new int[5];
+    int[] anotherArray = myIntArray;
+    
+    System.out.println("myIntArray = " + Arrays.toString(myIntArray));
+    System.out.println("anotherArray = " + Arrays.toString(anotherArray));
+    
+    System.out.println("=====");
+    
+    anotherArray[0] = 111;
+    System.out.println("myIntArray = " + Arrays.toString(myIntArray));
+    System.out.println("anotherArray = " + Arrays.toString(anotherArray));
+}
 ```
 
 ![Array in memory](images/array-in-memory.png "Array in memory")
 
 ***
 
-## Abstract class vs an Interface
+## Abstract class vs an Interface.
 
-### Abstract Class
+### Abstract Class.
 
 - Abstract classes are similar to Interfaces. 
 - You cannot instantiate them, and they may contain a mix of methods declared with or without an implementation.
@@ -489,15 +491,15 @@ in its parent class.
 
 - You want to share code among several closely related classes (Animal - with fields name, age...)
 - You expect classes that extend your abstract class to have many common methods or fields or required access 
-modifiers other than public (protected, private).
-- You want to declare non static or non final fields (for example name, age), this enables you to define methods
+modifiers other than (public, protected, private).
+- You want to declare non-static or non-final fields (for example name, age), this enables you to define methods
 that can access and modify the state of an object (getName, setName).
 - When you have a requirement for your base class to provide a default implementation of certain methods but other
 methods should be open to be overridden by child classes.
 - **Summary:** The purpose of an Abstract class is to provide a common definition of a base class that multiple derived
 classes can share.
 
-### Interface
+### Interface.
 
 - An interface is just the declaration of methods of an Class, it's not the implementation.
 - In an Interface, we define what kind of operation an object can perform. 
@@ -532,7 +534,7 @@ LinkedList.
 as "JDBC drivers". 
 - This enables you to write all the JDBC code independent of the database (DB) vendor.
 
-**Series, Factorial, Fibonacci**
+**Series, Factorial, Fibonacci.**
 
 ```java
 public class Series {
@@ -574,9 +576,9 @@ public class Series {
 
 ***
 
-## Access Modifiers
+## Access Modifiers.
 
-### Top Level
+### Top Level.
 
 - Only classes, interfaces and enums can exist at the top level, everything else must be included within on of
 these.
@@ -588,7 +590,7 @@ the same package).
 public. 
 - There is not a "package-private" keyword.
 
-### Member level
+### Member level.
 
 - **public:** At the member level, public has the same meaning as at a top level. 
 - A public class member (or field) and public method can be accessed from any other class anywhere, 
@@ -602,7 +604,7 @@ even if they are in another package.
 
 ***
 
-## Concurrency in Java
+## Concurrency in Java.
 
 - A process is a unit of execution that has its own memory space. 
 - Each instance of JVM runs as a process.
@@ -611,7 +613,7 @@ even if they are in another package.
 - The first Java application can't access the heap that belongs to the second Java application. 
 - The heap isn't shared between them. They each have their own.
 
-### Thread
+### Thread.
 
 - A **thread** is a unit of execution within a process. 
 - Each process can have multiple threads. 
@@ -627,7 +629,7 @@ that only that thread can access.
 - Every Java application runs as a single process, and each process can have multiple threads. 
 - Every process has a heap, and every thread has a thread stack.
 
-### Concurrency
+### Concurrency.
 
 - Refers to an application doing more than one thing at a time. 
 - That doesn't necessarily mean the application is doing more than one thing at the same time. 
@@ -635,7 +637,7 @@ that only that thread can access.
 - Concurrency means that one task doesn't have to complete before another can start. 
 - Java provides thread-related classes so that we can create Java concurrent applications.
 
-### Producer - Consumer
+### Producer - Consumer.
 
 ```java
 public class Messages {
@@ -728,7 +730,7 @@ class Reader implements Runnable {
 }
 ```
 
-### Deadlock
+### Deadlock,
 
 **Deadlock synchronized example**
 
@@ -783,7 +785,7 @@ public class Deadlock {
 }
 ```
 
-**Deadlock synchronized fix**
+**Deadlock synchronized fix.**
 
 ```java
 public class Deadlock {
@@ -836,9 +838,9 @@ public class Deadlock {
 }
 ```
 
-### Live Lock
+### Live Lock.
 
-**Live lock example**
+**Live lock example.**
 
 ```java
 public class Worker {
@@ -907,7 +909,7 @@ public class LiveLocks {
 }
 ```
 
-### Slipped condition
+### Slipped condition.
 
 - Slipped condition is a specific type of race condition (aka thread interference).
 - It can occur when a thread can be suspended between reading a condition and acting on it.
@@ -919,7 +921,7 @@ public class LiveLocks {
     - Thread1 check the status and gets OK. It suspends.
     - Thread2 checks the status and gets OK. It reads EOF from the buffer and sets the status to EOF, then terminates.
     - Thread1 runs again. It tries to read data from the buffer, but, there's no data. It throws an exception or crashes.
-- Because the threads cab interfere with each other when checking and setting the condition, Thread1 tried to do
+- Because the threads can interfere with each other when checking and setting the condition, Thread1 tried to do
 something based on obsolete information. When it checked the status, it was OK.
 - But by the time it acted on the condition it checked, the status had been updated by Thread2. Unfortunately, Thread1
 doesn't see the updated information, and because of that, it does something erroneous.
@@ -927,7 +929,7 @@ doesn't see the updated information, and because of that, it does something erro
 to synchronize the critical section of code.
 - When using multiple locks, the order in which the locks can be acquired can also result in a slipped condition.
 
-### Thread Issues
+### Thread Issues.
 
 - An atomic action can't be suspended in the middle of being executed. It either completes, or it doesn't happen at all.
 Once a thread starts to run an atomic action, we can be confident that it won't be suspended until it has completed
@@ -943,7 +945,7 @@ the action.
         - It can be suspended in the middle of executing **myDouble = 1.234**.
     - Reading and writing all variables declared **volatile**. 
 
-**volatile**
+**volatile.**
 
 - Since we don't have to worry about thread interference with atomic actions, that we don't need to synchronize them,
 but that isn't true.
@@ -992,7 +994,7 @@ counter++;
     - The counter has been incremented twice, so its value should now be 3.
 - A memory consistency error like this can occur when a thread can update the value of the variable in a way that 
 depends on the existing value of the variable. 
-- In the counter++ case, the result of the increment depends on the existing value of the variable.
+- In the `counter++` case, the result of the increment depends on the existing value of the variable.
 - Whether to synchronize when using a volatile variable will depend on the code and what the threads will be doing.
 - A common use of volatile is with variables of type long and double. 
 - Reading and writing longs and doubles isn't atomic.
@@ -1059,9 +1061,9 @@ reason.
 - If the current value equals the expected value, then the set goes ahead, and the method return true. 
 - We can see how this would be useful when a thread knows that it might be suspended between getting a value and updating it.
 
-## Lambdas
+## Lambdas/
 
-### java.util.function Functions
+### java.util.function Functions/
 
 | Interface | Functional Method | Num of args | Return value | Can be chained |
 |---|---|---|---|---|
@@ -1071,7 +1073,7 @@ reason.
 | Function | apply() | 1 or 2 (Bi) | Yes | Yes |
 | UnaryOperator | depends on type | 1 | Yes - same type s argument | Yes |
 
-### Best Practices
+### Best Practices/
 
 - Specified the types of parameters vs. letting the compiler infer them.
 - Used a return statement with curly braces for one-statement lambda expressions vs. not using return because

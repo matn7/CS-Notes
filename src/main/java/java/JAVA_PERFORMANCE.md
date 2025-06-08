@@ -1,23 +1,23 @@
-# Performance and Memory Management
+# Performance and Memory Management.
 
 ## What happens inside the JVM?
 
 ![JVM](javaperformance/jvm.png "JVM")
 
-**Traditional interpreted language**
+**Traditional interpreted language.**
 
 ![Interpreted Language](javaperformance/interpreted-lang.png "Interpreted Language")
 
-### JVM bytecode interpretation
+### JVM bytecode interpretation.
 
-**Just In Time (JIT) compilation**
+**Just In Time (JIT) compilation.**
 
 - Code runs faster the longer it is left to run. 
 - VM can profile your code.
 
 ![JIT](javaperformance/jit.png "JIT")
 
-### Compiler Flags
+### Compiler Flags.
 
 ```
 -XX:+PrintCompilation
@@ -25,7 +25,7 @@
 java -XX:+PrintCompilation main.Main 10
 ```
 
-### JVM JIT Compilers
+### JVM JIT Compilers.
 
 ```
 java -XX:+UnlockDiagnosticVMOptions -XX:+LogCompilation main.Main 5000
@@ -33,7 +33,7 @@ java -XX:+UnlockDiagnosticVMOptions -XX:+LogCompilation main.Main 5000
 
 ![JIT Compilers](javaperformance/jit-compilers.png "JIT Compilers")
 
-**Tuning the code cache size**
+**Tuning the code cache size.**
 
 ```
 VM warning: CodeCache is full. Compiler has been disabled.
@@ -43,25 +43,25 @@ VM warning: CodeCache is full. Compiler has been disabled.
 -XX:+PrintCodeCache
 ```
 
-- InitialCodeCacheSize
-- ReservedCodeCacheSize
-- CodeCacheExpansionSize
+- `InitialCodeCacheSize`.
+- `ReservedCodeCacheSize`.
+- `CodeCacheExpansionSize`.
 
 ```console
 java -XX:ReservedCodeCacheSize=28m -XX:+PrintCodeCache main.Main 5000
 ```
 
-**Remotely monitoring the code cache with JConsole**
+**Remotely monitoring the code cache with JConsole.**
 
 ```
 /usr/lib/jvm/java-11-amazon-corretto/bin/jconsole
 ```
 
-### The differences between 32 bit and 64 bit JVM
+### The differences between 32 bit and 64 bit JVM.
 
 ![JVM Versions](javaperformance/jvm-versions.png "JVM Versions")
 
-**Which compiler to use at runtime**
+**Which compiler to use at runtime.**
 
 - Client compilation, quicker startup time.
 
@@ -71,13 +71,13 @@ java -XX:ReservedCodeCacheSize=28m -XX:+PrintCodeCache main.Main 5000
 java -client -XX:+PrintCompilation main.Main 15000
 ```
 
-**JVM Compiler flags**
+**JVM Compiler flags.**
 
-- `-client`
-- `-server`
-- `-d64`
+- `-client`.
+- `-server`.
+- `-d64`.
 
-**Turn off Tiered Compilation**
+**Turn off Tiered Compilation.**
 
 - Run in interpreted mode only.
 
@@ -87,7 +87,7 @@ java -client -XX:+PrintCompilation main.Main 15000
 java -XX:-TieredCompilation main.Main 5000
 ```
 
-**Native Compilation Tuning**
+**Native Compilation Tuning.**
 
 ```
 -XX:CICompilerCount=n
@@ -112,7 +112,7 @@ java -XX:CICompilerCount=6 -XX:+PrintCompilation main.Main 15000
 
 ***
 
-## How Memory Works
+## How Memory Works.
 
 - Objects stored on the heap.
 - Variables are a reference to the object.
@@ -122,11 +122,11 @@ java -XX:CICompilerCount=6 -XX:+PrintCompilation main.Main 15000
 
 ![Java Memory](javaperformance/java-memory.png "Java Memory")
 
-### Passing Values
+### Passing Values.
 
 - For objects passed into methods, the REFERENCE to the object passed BY VALUE.
 
-### The final Keyword
+### The final Keyword.
 
 ```java
 final Customer c = new Customer("John");
@@ -142,7 +142,7 @@ s.setName("Susan"); // ok
 
 ![The final keyword](javaperformance/final.png "The final keyword")
 
-## Escaping References
+## Escaping References.
 
 ```java
 public class CustomerRecords {
@@ -162,7 +162,7 @@ public class CustomerRecords {
 }
 ```
 
-**1. Duplicating collections**
+**1. Duplicating collections.**
 
 - Creating new collection in memory.
 
@@ -174,7 +174,7 @@ public Map<String, Customer> getCustomers() {
 
 ![Duplicating Collections](javaperformance/duplicating-collections.png "Duplicating Collections")
 
-**2. Using Immutable Collections**
+**2. Using Immutable Collections.**
 
 ```java
 public Map<String, Customer> getCustomers() {
@@ -184,7 +184,7 @@ public Map<String, Customer> getCustomers() {
 }  
 ```
 
-**3. Duplicating Objects**
+**3. Duplicating Objects.**
 
 ```java
 public Customer find(String name) {
@@ -192,7 +192,7 @@ public Customer find(String name) {
 }
 ```
 
-**4. Using interfaces to create immutable objects**
+**4. Using interfaces to create immutable objects.**
 
 ```java
 public interface ReadonlyCustomer {
@@ -200,15 +200,15 @@ public interface ReadonlyCustomer {
 }
 ```
 
-**5. Using modules to hide implementation**
+**5. Using modules to hide implementation.**
 
 ***
 
-## The Metaspace
+## The Metaspace.
 
 ![Metaspace](javaperformance/metaspace.png "Metaspace")
 
-### Public vs Private
+### Public vs Private.
 
 ```java
 public class Customer {
@@ -225,7 +225,7 @@ c.name = "Maciek";
 
 ![Public vs Private](javaperformance/public-vs-private.png "Public vs Private")
 
-### Java 7 - the PermGen
+### Java 7 - the PermGen.
 
 ```
 java.lang.OutOfMemoryError:PermGen
@@ -240,13 +240,13 @@ java.lang.OutOfMemoryError:PermGen
 
 - Sometimes JVM created objects on the stack, based on most efficient choice.
 
-### String pool
+### String pool.
 
 ***
 
-## JVM Tuning - Flags
+## JVM Tuning - Flags.
 
-- HashMap
+- HashMap.
 
 ![String Pool](javaperformance/string-pool.png "String Pool")
 
@@ -258,7 +258,7 @@ java.lang.OutOfMemoryError:PermGen
 -XX:StringTableSize=120121
 ```
 
-### Tuning JVM Heap Size
+### Tuning JVM Heap Size.
 
 ```
 java -XX:+UnlockDiagnosticVMOptions -XX:+PrintFlagsFinal main.Main 5000
@@ -284,17 +284,14 @@ java -XX:InitialHeapSize=1g -XX:+PrintStringTableStatistics -XX:StringTableSize=
 
 ***
 
-## Garbage Collection
+## Garbage Collection.
 
-### Managed Languages
+### Managed Languages.
 
 - Java works out when objects are no longer needed.
 - Memory leaks shouldn't be possible in Java.
 - Garbage Collection is the process to free up memory.
-
-```
-Any object on the heap which cannot be reached through a reference from the stack is "eligible for garbage collection".
-```
+- Any object on the heap which cannot be reached through a reference from the stack is "eligible for garbage collection".
 
 ![Garbage Collection](javaperformance/garbage-collection.png "Garbage Collection")
 
@@ -307,9 +304,9 @@ Any object on the heap which cannot be reached through a reference from the stac
 
 ***
 
-## Monitoring the Heap
+## Monitoring the Heap.
 
-### Memory Leaks
+### Memory Leaks.
 
 - Memory leaks shouldn't be possible in Java.
 - **Soft leaks:** when an object remains referenced when no longer needed.
@@ -318,17 +315,16 @@ Any object on the heap which cannot be reached through a reference from the stac
 jvisualvm
 ```
 
-### :star: Generating a Heap Dump
+### :star: Generating a Heap Dump.
 
 - Use **jvisualvm** (Java VisualVM): click **Heap Dump** button.
 - Command line argument:
     - `-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=someFilePath`
 
-### Viewing a heap dump
+### Viewing a heap dump.
 
 - Use **Memory Analyzer (MAT)** from eclipse.
     - Also this tool can get Heap Dump.
-    
 - :star: **Heap Dump:**
     - jvisualvm
     - Command line argument `-XX:+HeapDumpOnOutOfMemoryError`
@@ -336,15 +332,15 @@ jvisualvm
 
 ***
 
-## Generational GC
+## Generational GC.
 
-### Garbage Collection
+### Garbage Collection.
 
 - The "Mark and Sweep" process:
 
 ![Garbage Collection Mark Sweep](javaperformance/gc-mark-sweep.png "Garbage Collection Mark Sweep")
 
-### Generational Garbage Collection
+### Generational Garbage Collection.
 
 - Most objects don't live for long.
 - If an object survives it is likely to live forever.
@@ -353,19 +349,19 @@ jvisualvm
 
 ![Generational GC](javaperformance/generational-gc.png "Generational GC")
 
-### Young generation - survivor spaces
+### Young generation - survivor spaces.
 
 ![Survivor spaces](javaperformance/young-gc-survivor.png "Survivor spaces")
 
 ***
 
-## GC Tuning & Selection
+## GC Tuning & Selection.
 
 ```
 -verbose:gc
 ```
 
-### Tuning off automated heap allocation sizing
+### Tuning off automated heap allocation sizing.
 
 ```
 -XX:-UseAdaptiveSizePolicy
@@ -377,7 +373,7 @@ jinfo -flag UseAdaptiveSizePolicy <PID>
 jinfo -flag UseAdaptiveSizePolicy 62794
 ```
 
-### Tuning Garbage Collection
+### Tuning Garbage Collection.
 
 - **-XX:NewRatio=n**
 
@@ -403,20 +399,20 @@ jinfo -flag MaxTenuringThreshold <PID>
 15
 ```
 
-### Choosing a Garbage Collector
+### Choosing a Garbage Collector.
 
 - Types of collectors:
-    - Serial: `-XX:+UseSerialGC`
-    - Parallel: `-XX:+UseParallelGC`
+    - Serial: `-XX:+UseSerialGC`.
+    - Parallel: `-XX:+UseParallelGC`.
     - Mostly Concurrent: 
-        - `-XX:UseConcMarkSweepGC`
-        - `-XX:+UseG1GC`
+        - `-XX:UseConcMarkSweepGC`.
+        - `-XX:+UseG1GC`.
 
-### How G1 works
+### How G1 works.
 
 ![G1 GC](javaperformance/g1-gc.png "G1 GC")
 
-### Tuning G1
+### Tuning G1.
 
 ```
 -XX:ConcGCThreads=n
@@ -424,7 +420,7 @@ jinfo -flag MaxTenuringThreshold <PID>
 -XX:InitiatingHeapOccupancyPercent=n
 ```
 
-### String De-duplication
+### String De-duplication.
 
 ```
 -XX:UseStringDeDuplication
@@ -436,11 +432,11 @@ jinfo -flag MaxTenuringThreshold <PID>
 
 ***
 
-## Using a profiler
+## Using a profiler.
 
 ![profiler](javaperformance/profiler.png "profiler")
 
-### Flight Recording
+### Flight Recording.
 
 ```
 -XX:StartFlightRecording=delay=2min,
@@ -451,26 +447,26 @@ settings=profile
 
 ***
 
-## Assessing Performance
+## Assessing Performance.
 
 - Complications:
-    - Native Compilation
-    - Garbage Collection
+    - Native Compilation.
+    - Garbage Collection.
     
-### Benchmarking
+### Benchmarking.
 
 - Microbenchmark: Measuring the performance of a small piece of code
 - More Complications:
-    - Assessing in isolation
-    - Different Hardware
+    - Assessing in isolation.
+    - Different Hardware.
     
-**Turn off native compilation**
+**Turn off native compilation.**
 
 ```
 -XX:-TiredCompilation
 ```
 
-**Check whether native compilation took place**
+**Check whether native compilation took place.**
 
 ```
 -XX:+PrintCompilation
@@ -478,30 +474,30 @@ settings=profile
 
 ***
 
-## Benchmarking with JHM
+## Benchmarking with JHM.
 
-## How Lists Works
+## How Lists Works.
 
-### Types of List
+### Types of List.
 
-- ArrayList
-- CopyOnWriteArrayList
-- LinkedList
-- AttributeList
-- RoleList
-- RoleUnresolvedList
-- Stack
-- Vector
+- ArrayList.
+- CopyOnWriteArrayList.
+- LinkedList.
+- AttributeList.
+- RoleList.
+- RoleUnresolvedList.
+- Stack.
+- Vector.
 
-**CopyOnWriteArrayList**
+**CopyOnWriteArrayList.**
 
 - Consider using it when:
-    - Multi-threaded application
-    - Multiple threads accessing the same list
-    - Lots of iterations / reads
-    - Few writes / additions / deletions
+    - Multi-threaded application.
+    - Multiple threads accessing the same list.
+    - Lots of iterations / reads.
+    - Few writes / additions / deletions.
 
-**ArrayList**
+**ArrayList.**
 
 ![ArrayList](javaperformance/array-list.png "ArrayList")
 
@@ -512,25 +508,25 @@ settings=profile
 List<Book> books = new ArrayList<Book>(500000);
 ```
 
-**Vector**
+**Vector.**
 
-- Thread safe
+- Thread safe.
 
-**Stack**
+**Stack.**
 
-- LIFO operations
+- LIFO operations.
 
-**LinkedList**
+**LinkedList.**
 
 ![LinkedList](javaperformance/linked-list.png "LinkedList")
 
 ![LinkedList Memory](javaperformance/linked-list-memory.png "LinkedList Memory")
 
-**Choosing List**
+**Choosing List.**
 
 ![ArrayList vs LinkedList](javaperformance/arraylist-vs-linkedlist.png "ArrayList vs LinkedList")
 
-**Sorting Lists**
+**Sorting Lists.**
 
 - ArrayList and LinkedList using `Arrays.sort()`. 
 - Difference is LinkedList is converted `toArray()` before sort.
@@ -538,9 +534,9 @@ List<Book> books = new ArrayList<Book>(500000);
 
 ***
 
-## How maps work
+## How maps work.
 
-### HashMap
+### HashMap.
 
 ```java
 Map<Integer, Book> books = new HashMap<>();
@@ -562,46 +558,46 @@ Map<String, Book> books = new HashMap<>(500000, 0.6f); // 0.6f factor
 
 - Larger array gives better performance, than smaller and navigate within linkedlist of the same bucket entry.
 
-**Rules for hashcodes**
+**Rules for hashcodes.**
 
 - HashCodes:
-    - Good range of numbers
-    - Equal objects must have equal hashcodes
+    - Good range of numbers.
+    - Equal objects must have equal hashcodes.
 
-**LinkedHashMap**
+**LinkedHashMap.**
 
 - HashMap:
-    - Items iterate in a "random" order
+    - Items iterate in a "random" order.
 - LinkedHashMap:
-    - Items iterate in a defined order
+    - Items iterate in a defined order.
 
 ![LinkedHashMap](javaperformance/linked-hashmap.png "LinkedHashMap")
 
-**Hashtable and TreeMap**
+**Hashtable and TreeMap.**
 
 - Hashtable thread safe HashMap.
 - TreeMap maintains insertion order insert **(a,c,b,d) -> retrieve (a,b,c,d)**.
 
 ***
 
-## Coding Choices
+## Coding Choices.
 
-- Primitives vs Objects
-- BigDecimal vs Double
-- StringBuilder vs Concatenating Strings
-    - StringBuilder better performance
+- Primitives vs Objects.
+- BigDecimal vs Double.
+- StringBuilder vs Concatenating Strings.
+    - StringBuilder better performance.
     - Strings in single line concatenation, optimized by JVM. 
     - JVM detects that and convert to StringBuilder.
-- Loops vs Streams
+- Loops vs Streams.
 
 ***
 
-## GraalVM
+## GraalVM.
 
-- Alternative JVM
-- Alternative Java Compiler
-- Native Compiler (no JVM required)
-- Using the Graal compiler with OpenJDK 11 (Linux Only)
+- Alternative JVM.
+- Alternative Java Compiler.
+- Native Compiler (no JVM required).
+- Using the Graal compiler with OpenJDK 11 (Linux Only).
 
 ```
 -XX:+UnlockExperimentalVMOptions
@@ -609,19 +605,19 @@ Map<String, Book> books = new HashMap<>(500000, 0.6f); // 0.6f factor
 -XX:+UseJVMCICompiler
 ```
 
-## Other JVM Languages
+## Other JVM Languages.
 
-- Java
-- JRuby
-- Clojure
-- Kotlin
-- Scala
-- Groovy
+- Java.
+- JRuby.
+- Clojure.
+- Kotlin.
+- Scala.
+- Groovy.
 
-**javap**
+**javap.**
 
-- Look at bytecode using **javap**
+- Look at bytecode using **javap**.
 
-**decompiler**
+**decompiler.**
 
-- CFR
+- CFR.

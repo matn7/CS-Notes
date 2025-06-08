@@ -164,7 +164,7 @@ public class Item {
 }
 ```
 
-### Constructor chaining
+### Constructor chaining.
 
 ```java
 public class Temporal {
@@ -189,7 +189,7 @@ public class Main {
     }
 ```
 
-### Some DB
+### Some DB.
 
 - An object of **entity type** has its own DB identity primary key.
 - An object of **value type** has no DB identity, it belongs to an entity.
@@ -212,7 +212,7 @@ public class Main {
 | Session | EntityManager |
 | Transaction | EntityTransaction |
 
-**HashTable vs HashMap**
+**HashTable vs HashMap.**
 
 | HashTable | HashMap |
 |---|---|
@@ -220,23 +220,23 @@ public class Main {
 | null key or values not allowed | Allows one null kay and any number of null values |
 | | Subclass is LinkedHashMap (maintain insertion order) |
 
-**Optimistic Locking**
+**Optimistic Locking.**
 
 - An official name of the **versioning**. 
 - Strategy to prevent lost updates. 
 - No database locking.
 
-**When to use pessimistic locking**
+**When to use pessimistic locking.**
 
 - When you've got multiple database queries executed on the same data within a single transaction.
 
-**ConcurrentHashMap**
+**ConcurrentHashMap.**
 
 - Provides thread safety and memory consistent atomic operations.
 - `getOrDefault`, `forEach`, `replaceAll`, `computeIfPresent`, `computeIfAbsent`, `compute`, `merge`.
 - ConcurrentMap does not allow null key or value.
 
-### Garbage collectors
+### Garbage collectors.
 
 - **Serial GC:**
     - One thread on single CPU.

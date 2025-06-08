@@ -14,7 +14,7 @@ needs of the Dev community. For example SpringBoot.
 ## Spring Core.
 
 * Spring Core is the heart of entire Spring. It contains some base framework classes, principles and mechanisms.
-* The entire Spring Framework and other projects od Spring are developed on top of the Spring Core.
+* The entire Spring Framework and other projects of Spring are developed on top of the Spring Core.
 * Spring Core contains following important components:
   * IoC (Inversion of Control).
   * DI (Dependency Injection).
@@ -43,6 +43,8 @@ container. It reduces coupling between multiple objects as it is dynamically inj
 * Replacing modules has no side effect on other modules.
 
 ### Spring Beans, Context, SpEL.
+
+![Spring Bean](images/spring-bean.png "Spring Bean")
 
 * Any normal Java classes that is instantiated, assembled, and otherwise managed by a Spring IoC container is called
 Spring Beans.
@@ -252,12 +254,12 @@ public class ProjectConfig {}
 * Spring provides special annotations called Stereotype annotations which will help to create the Spring beans automatically
 in the application context. 
 * The stereotype annotations in spring are `@Component`, `@Service`, `@Repository` and `@Controller`.
-* `@Component` is used as general on top of any Java class. It is the base for other annotations.
-* `@Service` can be used on top of the classes inside the service layer especially where we write business logic and make
-external API calls.
-* `@Repository` can be used on top of the classes which handles the code related to Database access related operations like
-Insert, Update, Delete etc.
-* `@Controller` can be used on top of the classes inside the Controller layer of MVC applications.
+  * `@Component` is used as general on top of any Java class. It is the base for other annotations.
+  * `@Service` can be used on top of the classes inside the service layer especially where we write business logic and make
+  external API calls.
+  * `@Repository` can be used on top of the classes which handles the code related to Database access related operations like
+  Insert, Update, Delete etc.
+  * `@Controller` can be used on top of the classes inside the Controller layer of MVC applications.
 
 ![Spring Stereotypes](images/spring-stereotypes.png "Spring Stereotypes")
 
@@ -360,7 +362,8 @@ public class ProjectConfig {}
 
 * Sometimes we want to create new instances of an object and add them into the Spring context based on programming condition.
 From Spring 5, a new approach is provided to create the beans programmatically by invoking the `registerBean()` method
-present inside the context object. `context.registerBean("volkswagen", Vehicle.class, volkswagenSupplier)`.
+present inside the context object. 
+* `context.registerBean("volkswagen", Vehicle.class, volkswagenSupplier)`:
   * `context`: The ApplicationContext instance object.
   * `"volkswagen"`: The name we want to give to the bean that we add to the Spring context.
   * `Vehicle.class`: Type of the Bean we are creating.
@@ -412,7 +415,7 @@ public static void main(String[] args) {
   * Sessions & caching.
   * Transactions.
   * Security.
-  * Barch processing.
+  * Batch processing.
   * Data transfer.
   * Logging.
   * DB persistence.
@@ -443,7 +446,7 @@ Uses best readily available best frameworks like Spring, Angular etc. to build a
 * Focus more on the business logic.
 * Fewer efforts and more results/revenue.
 
-**Chef JD.**
+**Dev JD.**
 Build his own code by himself to build a web app.
 * Need to build code for Security, Logging etc.
 * Scaling is not an option till tested everything.
@@ -469,6 +472,8 @@ scenarios, objects will have dependency on others.
 * In very similar lines when we create various beans using Spring, is our responsibility to understand the dependencies
 that beans have and wire them. This concept is called **Wiring / Autowiring**.
   * VehicleController object -> VehicleService object -> VehicleDAO object.
+
+![Spring wiring](images/spring-wiring-2.png "Spring wiring")
 
 ![Spring wiring](images/spring-wiring.png "Spring wiring")
 
@@ -520,7 +525,7 @@ bean has dependency on it.
 @Bean
 public Vehicle vehicle() {
     Vehicle vehicle = new Vehicle();
-    vehicle,setName("Toyota");
+    vehicle.setName("Toyota");
     return vehicle;
 }
 
@@ -897,7 +902,7 @@ It does this by adding additional behavior to existing code without modifying th
 There is so much non-business logic code along with the main business logic.
 ```java
 public String moveVehicle(boolean started) {
-    Instance start = Instance.now();
+    Instant start = Instant.now();
     logger.info("method execution start");
     String status = null;
     if (started) {
@@ -950,7 +955,7 @@ a method and apply the aspect logic. This process is called Weaving.
 
 Without AOP, method is directly called and no interception by Spring.
 With AOP, method executions will be intercepted by proxy object and aspect will be executed. Post that actual metod
-invocation will happe.
+invocation will happen.
 
 ![Weaving AOP](images/weaving-aop.png "Weaving AOP")
 
@@ -1025,7 +1030,7 @@ public void logWithAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
 }
 ```
 
-## Overview of the wab app.
+## Overview of the Web app.
 
 1. The Web clients sends a request using protocols like HTTP to Web Application protocols like HTTP to Web Application 
 asking some data like list of images, videos, text etc.
@@ -1076,73 +1081,73 @@ and cloud.
 **Approach 1:**
 * Web Apps which holds UI elements like HTML, CSS, JS and backend logic.
 * Here the App is responsible to fully prepare the view along with data in response to a client request.
-* Spring Core, Spring MVC, SpringBoot, SpringData, Spring Rest, Spring Security will be used.
+* Spring Core, `Spring MVC`, Spring Boot, SpringData, Spring Rest, Spring Security will be used.
 
 **Approach 2:**
 * Web Apps which holds only backend logic. These Apps send data like JSON to separate UI Apps built based on Angular,
 React etc.
 * Here the App is responsible to only process the request and respond with only data ignoring view.
-* Spring Core, SpringBoot, Spring Data, Spring Rest, Spring Security will be used.
+* Spring Core, Spring Boot, Spring Data, Spring Rest, Spring Security will be used.
 
 Spring MVC is the key differentiator between these two approaches.
 
-### SpringBoot.
+### Spring Boot.
 1. SpringBoot was introduced in April 2014 to reduce some of the burdens while developing a Java web application.
-2. Before SpringBoot, Developer need to configure a servlet container, establish link between Tomcat and Dispatcher servlet,
-deploy into a server, define lot of dependencies.
-3. But with SpringBoot, we can create Web Apps skeleton. It helps to eliminate all the configurations we need to do.
-4. SpringBoot is now one of the most appreciated projects in the Spring ecosystem. It helps us to create Spring apps more
+2. Before Spring Boot, Developer need to configure a servlet container, establish link between Tomcat and Dispatcher servlet,
+deploy into a server, define a lot of dependencies.
+3. But with Spring Boot, we can create Web Apps skeleton. It helps to eliminate all the configurations we need to do.
+4. Spring Boot is now one of the most appreciated projects in the Spring ecosystem. It helps us to create Spring apps more
 efficiently and focus on the business code.
-5. SpringBoot is a mandatory skills now due to the latest trends like Full Stack Development, Microservices, Serverless,
+5. Spring Boot is a mandatory skills now due to the latest trends like Full Stack Development, Microservices, Serverless,
 Containers, Docker etc.
 
-**Before SpringBoot:**
+**Before Spring Boot:**
 * Configure a Maven/Gradle project with all the dependencies needed.
 * Understand how servlets work & configure the DispatcherServlet inside web.xml.
 * Package the web application into a WAR file. Deploy it into a server.
 * Deal with complicated class loading strategies, application monitoring and management.
 
-**After SpringBoot:**
+**After Spring Boot:**
 * SpringBoot automatically configures the bare minimum components of a Spring application.
 * Spring Boot applications embed a web server so that we do not require an external application server.
 * SpringBoot provides several useful production-ready features out of the box to monitor and manage the application.
 
-### The magic of SpringBoot.
+### The magic of Spring Boot.
 
-**SpringBoot important features.**
+**Spring Boot important features.**
 
-**SpringBoot Starters.**
-SpringBoot groups related dependencies used for a specific purposes as starter projects. We don't need to figure out all 
+**Spring Boot Starters.**
+Spring Boot groups related dependencies used for a specific purposes as starter projects. We don't need to figure out all 
 the must-have dependencies you need to add to your project for one particular purpose not which versions you should use
-for compatibility. Example: spring-boot-starter-web.
+for compatibility. Example: `spring-boot-starter-web`.
 
 **Autoconfiguration.**
-Based on the dependencies present in the classpath, SpringBoot guess and autoconfigure the spring beans, property
+Based on the dependencies present in the classpath, Spring Boot guess and autoconfigure the spring beans, property
 configurations etc. However, autoconfiguration backs away from the default configuration if it detects user-configured
 beans with custom configurations.
-To achieve autoconfiguration SpringBoot follows the convention-over-configuration principle.
+To achieve autoconfiguration Spring Boot follows the convention-over-configuration principle.
 
 **Actuator & DevTools.**
-SpringBoot provides a pre-defined list of actuator endpoints. Using this production ready endpoints, we can monitor app
+Spring Boot provides a pre-defined list of actuator endpoints. Using this production ready endpoints, we can monitor app
 health, metrics etc.
 DevTools includes features such as automatic detection of application code change, LiveReload server to automatically
 refresh any HTML changes to the browser all without server restart.
 
-#### Getting started with SpringBoot.
+#### Getting started with Spring Boot.
 
 * We can identify the SpringBoot main class by looking for an annotation `@SpringBootApplication`.
 * A single `@SpringBootApplication` annotation can be used to enable these three features:
-  * `@EnableAutoConfiguration`: enable SpringBoot's autoconfiguration mechanism.
+  * `@EnableAutoConfiguration`: enable Spring Boot's autoconfiguration mechanism.
   * `@ComponentScan`: enable component scan on the package where the application is located.
   * `@SpringBootConfiguration`: enable registration of extra beans in the context or the import of additional configuration
   classes. An alternative to Spring's standard `@Configuration` annotation.
 * The `@RequestMapping` annotation provides "routing" information. It tells Spring that any HTTP request with the given
-path should be mapped to the corresponding method. It is a Spring MVC annotation and not specific to SpringBoot.
+path should be mapped to the corresponding method. It is a Spring MVC annotation and not specific to Spring Boot.
 * `server.port` and `server.servlet.context-path` properties can be mentioned inside tha `application.properties` to change
 the default port number and context path of a web application.
 * Mentioning `server.port=0` will start the web application at a random port number every time.
 * Mentioning `debug=true` will print the Autoconfiguration report on the console. We can mention the exclusion list as
-well for SpringBoot autoconfiguration by using the below config:
+well for Spring Boot autoconfiguration by using the below config:
   * `@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })`.
 
 **Tip.**
@@ -1157,18 +1162,18 @@ public class HomeController {
 }
 ```
 
-### SpringBoot DevTools.
+### Spring Boot DevTools.
 
 * The SpringBoot DevTools provides features like `Automatic restart` & `LiveReload` that make the application development
 experience a little more pleasant for developers.
 * It can be added into any of the SpringBoot project by adding the below maven dependency.
-  ```xml
-  <dependency>
-    <groupId>org.springframework.boot</groupId>  
-    <artifactId>spring-boot-devtools</artifactId>
-  </dependency>
-  ```
-* DevTools maintains2 class loaders, one with classes that doesn't change and other one with classes that change. When
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>  
+  <artifactId>spring-boot-devtools</artifactId>
+</dependency>
+```
+* DevTools maintains 2 class loaders, one with classes that doesn't change and other one with classes that change. When
 restart needed it only reload the second class loader which makes restarts faster as well.
 * DevTools includes an embedded LiveReload server that can be used to trigger a browser refresh when a resource is changed.
 LiveReload related browser extensions are freely available for Chrome, Firefox.
@@ -1217,7 +1222,7 @@ public class WebConfig implements WebMvcConfigurer {
 ### Reduce boilerplate code with Lombok.
 
 * Java expects a lot of boilerplate code inside POJO classes like getters and setters.
-* Lombok, which is a Java library provides you with several annotations aimed at avoiding writing Java code known to be
+* `Lombok`, which is a Java library provides you with several annotations aimed at avoiding writing Java code known to be
 representative and/or boilerplate.
 * It can be added into any of the Java project by adding the below maven dependency.
 ```xml
@@ -1239,7 +1244,7 @@ compiled byte code will have.
 ### @RequestParam Annotation.
 
 * In Spring `@RequestParam` annotation is used to map either query parameters or form data.
-* For example, if we want ti get parameters value from an HTTP GET requested URL then we can use `@RequestParam` annotation.
+* For example, if we want to get parameters value from an HTTP GET requested URL then we can use `@RequestParam` annotation.
 
 ```
 http://localhost:8080/holidays?festival=true&federal=true
@@ -1264,7 +1269,7 @@ then this default value will be considered.
 
 ### @PathVariable Annotation.
 
-* The `@PathVariable` annotation is used to extract the value from the URI. It is most suitable for the RESTful we service
+* The `@PathVariable` annotation is used to extract the value from the URI. It is most suitable for the RESTful web service
 where the URL contains some value. Spring MVC allows us to use multiple `@PathVariable` annotations in the same method.
 * For example, if we want to get the value from a requested URI path, then we can use `@PathVariable` annotation.
 
@@ -1384,7 +1389,7 @@ for securing Spring-based applications.
 ```
 
 * Spring Security is a framework that provides authentication, authorization, and protection against common attacks.
-* Spring Security helps developers with easier configurations to secure a web application be using standard username/
+* Spring Security helps developers with easier configurations to secure a web application by using standard username/
 password authentication mechanism.
 * Spring Security provides out of the box features to handle common security attacks like CSRF, CORS. It also has good
 integration with security standards like JWT, OAUTH2 etc.
@@ -1408,7 +1413,7 @@ integration with security standards like JWT, OAUTH2 etc.
 **Tip.**
 * As soon as we add spring security dependency to a web application, by default it protects all the pages/API inside it.
 It will redirect to the inbuilt login page to enter credentials.
-* The default credentials are `user` and password is randomly generated & printed on the console.
+* The default credentials are `user`, and password is randomly generated & printed on the console.
 * We can configure custom credentials using the below properties to get started for POCs etc. But for PROD applications, 
 Spring Security supports user credentials configuration inside DB, LDAP, OAuth2 Server etc.
   * `spring.security.username=panda`.
@@ -1454,7 +1459,7 @@ public class ProjectSecurityConfig {
 
 #### Configure denyAll() with Spring Security.
 
-* Using `denyAll()` configurations we can deny access to a specific resource/path or all the resources/paths inside a web
+* Using `denyAll()` configurations we can deny access to a specific resource/paths or all the resources/paths inside a web
 application regardless of user authentication.
 * Below is the sample configuration that we can do in order to deny any requests that is coming into a web application.
 
@@ -1478,7 +1483,7 @@ public class ProjectSecurityConfig {
 
 * We can apply custom security configurations based on our requirements for each API/URL.
 * `permitAll()` can be used to allow access without security and `authenticated()` can be used to protect a web page/API.
-* Bt default any requests with HTTP methods that can update data like POST, PUT will be stopped with 403 error due to
+* By default any requests with HTTP methods that can update data like POST, PUT will be stopped with 403 error due to
 CSRF protection.
 * Sample configuration we can do to implement custom security configs and disable CSRF.
 
@@ -1487,7 +1492,7 @@ CSRF protection.
 public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        htto.csrf((csrf) -> csrf.disable())
+        http.csrf((csrf) -> csrf.disable())
                 .requestMatchers("", "/", "/home").permitAll()
                 .requestMatchers("/holidays/**").permitAll()
                 .formLogin(Customizer.withDefaults())
@@ -1570,22 +1575,25 @@ logic will be applicable for any exceptions occurred across all the controller c
 ### Cross-site request forgery (CSRF).
 
 * A typical Cross-Site Request Forgery (CSRF or XSRF) attack aims to perform an operation in a web application on behalf 
-of a user without their explicit consent. In genera, it doesn't directly steal the user's identity, but it exploits the
+of a user without their explicit consent. In general, it doesn't directly steal the user's identity, but it exploits the
 user to carry out an action without their will.
 * Step 1: The Netflix user login to Netflix and the backend server of Netflix will provide a cookie which will store in the
 browser against the domain name Netflix.com.
   * User Submits his credentials & try to login to Netflix.com.
   * Netflix server create a cookie & saved in user browser against Netflix.com domain name.
+  ![CSRF.](images/csrf-1.png "CSRF.")
 * Step 2: The same Netflix user opens an evil website in another tab of the browser.
   * User accessed an evil site hosted on evil.com.
   * evil.com returns a web page which has embedded malicious link to change email of Netflix account. But link appears with
   text like "90% off".
+  ![CSRF.](images/csrf-2.png "CSRF.")
 * Step 3: User tempted and clicked on the malicious link which makes a request to Netflix.com. And since the login cookie
 already present in the same browser and the request to change email is being made to the same domain Netflix.com, the
 backend server of Netflix.com can't differentiate from where the request come. So here the evil.com forged the request
 as if it is coming from a Netflix.com UI page.
   * User clicks on a link on evil.com which has content something like.
   * The email of the Netflix account changed.
+  ![CSRF.](images/csrf-3.png "CSRF.")
 
 ### Solution to CSRF.
 
@@ -1593,21 +1601,24 @@ as if it is coming from a Netflix.com UI page.
 application's user interface. The best way to achieve this is through a `CSRF token`. A CSRF token is a secure random 
 token that is used to prevent CSRF attacks. The token needs to be unique per users session and should be of large random
 value to make it difficult to guess.
-* Step 1: The Netflix user login to Netflix.com and the backed server of Netflix will provide a cookie which will store in
+* Step 1: The Netflix user login to Netflix.com and the backend server of Netflix will provide a cookie which will store in
 the browser against the domain name Netflix.com along with a randomly generated unique CSRF token for this particular
 user session. CSRF token is inserted within hidden parameters of HTML forms top avoid exposure to session cookies.
   * User submit his credentials & try to login to Netflix.com.
   * Netflix server create a cookie & randomly generated CSRF token.
+  ![CSRF.](images/csrf-4.png "CSRF.")
 * Step 2: The same Netflix user opens an evil.com website in another tab of the browser.
   * User accessed an evil site hosted on evil.com.
   * evil.com returns web page which has embedded malicious link to change email of Netflix account. But link appears
   with a text like "90% off".
+  ![CSRF.](images/csrf-5.png "CSRF.")
 * Step 3: User tempted and clicked on the malicious link which makes a request to Netflix.com. And since the login cookie
 already present in the same browser and the request to change email is being made to the same domain Netflix.com. This time
 the Netflix.com backend server expects CSRF token along with the cookie. The CSRF token must be same as initial value
 generated during login operation.
   * User clicks on a link on evil.com which has content like.
   * The Netflix thrown an error 403.
+  ![CSRF.](images/csrf-6.png "CSRF.")
 
 The CSRF token will be used by the application sever to verify the legitimacy of the end-user request if it is coming from
 the same App UI or not. The application server rejects the request if the CSRF token fails to match the test.
@@ -1616,7 +1627,7 @@ the same App UI or not. The application server rejects the request if the CSRF t
 * By default, Spring Security enables CSRF fix for all the HTTP methods which results in data change like POST, DELETE etc.
 But not GET.
 * Using Spring Security configurations we can disable the CSRF protection for complete application or for only few paths
-based ion our requirements:
+based on our requirements:
   * `http.csrf((csrf) -> csrf.disable())`.
   * `http.csrf((csrf) -> csrf.ignoringRequestMatchers("/saveMsg"))`.
 
@@ -1626,7 +1637,8 @@ based ion our requirements:
 for POC applications and excellent for examples/testing.
 * Maven dependency that we can add to any SpringBoot projects in order to use internal memory H2 Database.
   * groupId: `com.h2database`.
-  * artifactId: 'h2'.
+  * artifactId: `h2`.
+  * scope: `runtime`.
 * Since it is an internal memory DB, we need to create the schema and data that is needed during startup of the App. 
 Any updates to the data will be lost after restarting the server.
 * To create schema & data for the H2 DB, we can add `schema.sql` & `data.sql` inside the maven project's resources folder.
@@ -1641,7 +1653,7 @@ Any table creation scripts and DB records scripts can be present inside `schema.
 * JDBC or Java Database Connectivity is a specification from Core Java that provides a standard abstraction for java app
 to communicate with various databases.
 * JDBC API along with the database driver is capable of accessing database.
-* JDBC is a base framework ort standard for frameworks like Hibernate, Spring Data JPA, MyBatis etc.
+* JDBC is a base framework or standard for frameworks like Hibernate, Spring Data JPA, MyBatis etc.
 
 **Steps in JDBC to access DB.**
 
@@ -1655,7 +1667,7 @@ We need to follow the below steps to access DB using JDBC:
 
 **Problem with JDBC.**
 
-* Developers are forced to follow akk the steps mentioned to perform any kind of operation with DB which results in a lot
+* Developers are forced to follow all the steps mentioned to perform any kind of operation with DB which results in a lot
 of duplicate code at any place.
 * Developers needs to handle the checked exceptions that will throw from the API.
 * JDBC is database dependent.
@@ -1673,7 +1685,7 @@ templates.
 NamedParameterJdbcTemplate.
 * JdbcTemplate is the classic and most popular Spring JDBC approach. This provides "lowest-level" approach and all others
 templates uses JdbcTemplate under the covers.
-* NamedParameterJdbcTemplate wraps a JdbcTemplate to provide named parameters instead of the traditional JDBC '?'
+* NamedParameterJdbcTemplate wraps a JdbcTemplate to provide named parameters instead of the traditional JDBC `?`
 placeholders. This approach provides better documentation and ease of use when you have multiple parameters for an
 SQL statement.
 
@@ -1816,7 +1828,7 @@ public List<Holiday> findAllHolidays() {
 ### Using NamedParameterJdbcTemplate.
 
 * The NamedParameterJdbcTemplate class adds support for programming JDBC statements by using named parameters, as opposed
-to programming JDBC statements using only classic placeholder ('?') arguments. The NamedParameterJdbcTemplate class
+to programming JDBC statements using only classic placeholder `?` arguments. The NamedParameterJdbcTemplate class
 wraps a JdbcTemplate and delegates to the wrapped JdbcTemplate to do much of its work.
 * The following example shows how to use NamedParameterJdbcTemplate.
 
@@ -1993,14 +2005,14 @@ Person findByEmailAndLastname(String email, String lastname);
 **Tip.**
 
 Derived query method names has two main components separated by the first `By` keyword.
-1. The `introducer` clause like `find`, `read`, `query`, `count`, or `get` which tells Spring Data JPS what you want to
+1. The `introducer` clause like `find`, `read`, `query`, `count`, or `get` which tells Spring Data JPA what you want to
 do with the method. This clause can contain further expressions, such as `Distinct` to set a distinct flag on the query
 to be created.
 2. The `criteria` clause that starts after the first By keyword. The first By acts as a delimiter to indicate the start of
 the actual query criteria. The criteria clause is where you define conditions on entity properties and concatenate them
 with `And` and `Or` keywords.
-Using readBy, getBy, and queryBy in place of findBy will behave the same. For example, readByEmail(String email) is the
-same ad findByEmail(String email).
+Using `readBy`, `getBy`, and `queryBy` in place of `findBy` will behave the same. For example, `readByEmail(String email)` 
+is the same as `findByEmail(String email)`.
 
 Spring Data JPA is a powerful tool that provides an extra layer of abstraction on top of an existing JPA providers like
 Hibernate. The derived query feature is one of the most loved features of Spring Data JPA.
@@ -2041,7 +2053,7 @@ to be used for all the required entities.
     ```
     `@CreatedDate`, `@CreatedBy`, `@LastModifiedDate`, `@LastModifiedBy` are the key annotations that support JPA auditing.
 2. Date related info will be fetched from the server by JPA but for CreatedBy & UpdatedBy we need to let JPA know how to
-   fetch that info by implementing AuditorAware interface like shown below.
+   fetch that info by implementing `AuditorAware` interface like shown below.
     ```java
     @Component("auditAwareImpl")
     public class AuditAwareImpl implements AuditorAware<String> {
@@ -2086,9 +2098,9 @@ a custom annotation like below. Here we need to provide the class name where the
         Class<? extends Payload>[] payload() default {};
     }
     ```
-2. We need to create a class that implements ConstraintValidator interface and overriding the isValid() method.
+2. We need to create a class that implements `ConstraintValidator` interface and overriding the isValid() method.
     ```java
-    import java.util.Arrays;public class PasswordStrengthValidator implements ConstraintValidator<PasswordValidator, String> {
+    public class PasswordStrengthValidator implements ConstraintValidator<PasswordValidator, String> {
         List<String> weakPasswords;
    
         @Override
@@ -2115,10 +2127,10 @@ a custom annotation like below. Here we need to provide the class name where the
 * What is a one-to-one relationship? It's a relationship where a record in one entity (table) is associated with exactly 
 one record in another entity (table).
 * Below are few real-life examples of one-to-one relationships.
-  * User <-> Email.
-  * User <-> Address.
-  * Spouse <-> Spouse.
-  * Country <-> Capital.
+  * User to Email.
+  * User to Address.
+  * Spouse to Spouse.
+  * Country to Capital.
 * Spring Data JPA allow developers to build one-to-one relationship between the entities with simple configurations. 
 For example if we want to build a one-to-one between Person and Address entities, then we can configure like below.
     ```java
@@ -2161,12 +2173,12 @@ By default, all ToMany relationships are LAZY, while ToOne relationships are EAG
 **Cascade Types.**
 
 * The cascade types supported by JPA are as below:
-  * CascadeType.PERSIST.
-  * CascadeType.MERGE.
-  * CascadeType.REFRESH.
-  * CascadeType.REMOVE.
-  * CascadeType.DETACH.
-  * CascadeType.ALL.
+  * `CascadeType.PERSIST`.
+  * `CascadeType.MERGE`.
+  * `CascadeType.REFRESH`.
+  * `CascadeType.REMOVE`.
+  * `CascadeType.DETACH`.
+  * `CascadeType.ALL`.
 
 **Best Practices.**
 
@@ -2174,18 +2186,18 @@ By default, all ToMany relationships are LAZY, while ToOne relationships are EAG
 to its Child entities). Cascading from Child to Parent is not very useful and recommended.
 * There is no default cascade type in JPA. By default, no operation is cascaded.
 
-1. CascadeType.PERSIST: means that `save()` or `persist()` operations cascade to related entities.
-2. CascadeType.MERGE: means that related entities are merged when the owning entity is merged.
-3. CascadeType.REFRESH: means the child entity also gets reloaded from the database whenever the parent entity is refreshed.
-4. CascadeType.REMOVE: means propagates remove operation from parent to child entity.
-5. CascadeTpe.DETACH: means detach all child entities if a "manual detach" occurs for parent.
-6. CascadeType.ALL: is shorthand for all of the above cascade operations.
+1. `CascadeType.PERSIST`: means that `save()` or `persist()` operations cascade to related entities.
+2. `CascadeType.MERGE`: means that related entities are merged when the owning entity is merged.
+3. `CascadeType.REFRESH`: means the child entity also gets reloaded from the database whenever the parent entity is refreshed.
+4. `CascadeType.REMOVE`: means propagates remove operation from parent to child entity.
+5. `CascadeType.DETACH`: means detach all child entities if a "manual detach" occurs for parent.
+6. `CascadeType.ALL`: is shorthand for all of the above cascade operations.
 
 ### Spring Security AuthenticationProvider.
 
 * As of now we are planning to log in operation using the inMemoryAuthentication. But the idle way is to perform login check
 against a DB table or any other storage system which is more secure.
-* For the same, Spring Security allow us to write our own custom logic to authenticate a user based on our requirements 
+* Spring Security allow us to write our own custom logic to authenticate a user based on our requirements 
 by implementing AuthenticationProvider interface. Below is the sample implementation.
 ```java
 @Component
@@ -2215,7 +2227,7 @@ So this is not recommended for PROD applications.
 
 ![Pwd Validation](images/pwd-validation.png "Pwd Validation")
 
-#### Different ways of Pws management.
+#### Different ways of password management.
 
 **Encoding.**
 
@@ -2242,14 +2254,14 @@ original input data without needing to see the original data.
 
 Spring Security provides various PasswordEncoders to help developers with hashing of the secured data like password.
 Different Implementations of PasswordEncoders provided by Spring Security:
-* NoOpPasswordEncoder (No hashing stored in plain text).
-* StandardPasswordEncoder.
-* Pbkdf2PasswordEncoder.
-* BCryptPasswordEncoder (Most Commonly ised).
-* SCryptPasswordEncoder.
+* `NoOpPasswordEncoder` (No hashing stored in plain text).
+* `StandardPasswordEncoder`.
+* `Pbkdf2PasswordEncoder`.
+* `BCryptPasswordEncoder` (Most Commonly used).
+* `SCryptPasswordEncoder`.
 
-Managing the passwords with Hashing is the recommended approach for PROD web application. With PasswordEncoders like
-BCryptPasswordEncoder, Spring Security makes our life easy.
+Managing the passwords with Hashing is the recommended approach for PROD web application. With `PasswordEncoders` like
+`BCryptPasswordEncoder`, Spring Security makes our life easy.
 
 ![Pwd Validation](images/pwd-validation-2.png "Pwd Validation")
 
@@ -2276,7 +2288,7 @@ public class Person extends BaseEntity {
     private SchoolClass schoolClass;
 }
 ```
-* The `@MantToOne` annotation is used to define a many-to-one relationship between two entities. The child entity, that 
+* The `@ManyToOne` annotation is used to define a many-to-one relationship between two entities. The child entity, that 
 has yje join column, is called the owner of the relationship.
 * The `@JoinColumn` annotation is used to specify the foreign key column details.
 * A one-to-many relationship between two entities is defined by the `@OneToMany` annotation. It also declares the `mappedBy`
@@ -2302,8 +2314,6 @@ A are associated with many elements/rows of B and vice versa.
 * Spring Data JPA allows developers to build many-to-many relationship between the entities with simple configurations.
 Below are the simple configurations between Courses and Persons.
 ```java
-import java.util.HashSet;
-
 @Entity
 public class Person extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -2353,7 +2363,7 @@ The columns and sort directions are defined at the development time and cannot b
 * Dynamic sorting provides more flexibility in choosing sort columns and directions with the help of `Sort` parameter to
 your query method. The Sort class is just a specification that provides sorting options for database queries.
 ```java
-*Sort sort = Sort.by("name").descreasing().and(Sort.by("age"));
+Sort sort = Sort.by("name").descreasing().and(Sort.by("age"));
 ```
 
 ### Pagination with Spring Data JPA.
@@ -2537,9 +2547,34 @@ We can create multiple named queries and named native queries using the annotati
 // ...
 ```
 
-// slide 168
+## Implementing REST Services.
 
+* REST (Representational state transfer) services are one of the most often encountered ways to implement communication
+between two web apps. REST offers access to functionality the server exposes through endpoints a client can call.
+* Below are the different use cases where REST services are being used most frequently.
+  * Mobile App - Communication using REST - Backend Server.
+  * Backend Server 1 - Communication using REST - Backend Server 2.
+  * Web App build using Angular, React JS etc. - Communication using REST - Backend Server.
 
+### Implementing REST Services.
+
+Below is the sample code implementing Rest Service using Spring MVC style but only with the addition of `@ResponseBody`
+annotation. The `@ResponseBody` annotation tells the dispatcher servlet that the controller's action will not return a
+view but the data send directly in the HTTP response.
+
+```java
+@Controller
+public class ContactRestController {
+    @Autowired
+    ContactRespsitory contactRespsitory;
+    
+    @GetMapping("/getMessagesByStatus")
+    @ResponseBody
+    public List<String> getMessagesByStatus(@RequestParam(name = "status") String status) {
+        return contactRespsitory.findByStatus(status);
+    }
+}
+```
 
 
 
