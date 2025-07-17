@@ -1001,7 +1001,7 @@ won’t wait until it needs memory in that case.
 
 ### :star: Spring Bean Lifecycle
 
-![Spring Bean Lifecycle](../../spring/images/spring-bean-lifecycle.png "Spring Bean Lifecycle")
+![Spring Bean Lifecycle](images/spring-bean-lifecycle.png "Spring Bean Lifecycle")
 
 ### Destroy a Bean
 
@@ -1155,4 +1155,1227 @@ public class SingletonImproved implements Cloneable {
         throw new CloneNotSupportedException();
     }
 }
+```
+
+***
+
+### :star: Which of following is true?
+
+- The clone method is in the Object class, which means all objects have a `.clone()` method.
+- Singletons should never implement cloneable.
+- Calling `.clone()` on an object that does not explicitly implement the method result in an exception.
+- The **volatile** keyword ensures a variable is never cached, and only read from main memory.
+- Access to variable marked **volatile** is synchronized on the variable itself.
+- Variable marked **volatile** are safe to use in different threads.
+- The `clone()` method is in object class, which means all objects have a `clone()` method.
+- The `clone()` method sits in the cloneable interface, so objects that implement this interface posses a `clone()`.
+- Calling `clone()` on an object that does not explicitly implement the method result in an exception.
+
+***
+
+### :star: Memory
+
+- In a classical computer architecture, each processor has a small set of registers, and a larger amount of memory.
+- Access to registers is much faster than access to main memory.
+- In modern architectures, there are memory caches that are slower than registers, but faster than main memory.
+- The Java Memory Model is the section of the JLS that specifies the conditions under which one thread is guaranteed
+  to see the effects of memory writes made by another thread.
+- **Happens before relationships**:
+  - Two actions can be ordered by a happens-before relationship.
+  - If one action happens-before another, then the first is visible to and ordered before the second.
+- If you adopt the following principals when writing concurrent code in Java, you can largely avoid the need to resort
+  to happens-before reasoning:
+  - Use immutable data structures where possible. A properly implemented immutable class will be thread-safe,
+    and will not introduce thread-safety issues when you use it with other classes.
+  - Understand and avoid "unsafe publication".
+  - Use primitive mutexes or Lock objects to synchronize access to state in mutable objects that need to be
+    thread-safe.
+  - Use Executor / ExecutorService or the Fork Foin Framework rather than attempting to create manage
+    threads directly.
+  - Use the **java.util.concurrent** classes that provide advanced Locks, Semaphores, Latches and Barriers, instead
+    of using `wait/notify/notifyAll` directly.
+  - Use the **java.util.concurrent** versions of Maps, Sets, Lists, Queues and Dequeues rather than external
+    synchronization of non-concurrent collections.
+
+***
+
+### :star: Java Memory Management
+
+- When a Java virtual machine starts, it needs to know how big to make the Heap, and the default size for thread stacks.
+- These can be specified using command-line options on the java command.
+- **For versions of Java prior to Java 8, you can also specify the size of the PermGen region of the Heap.**
+- Note that PermGen was removed in Java 8, and if you attempt to set the PermGen size the option will be ignored
+  (with a warning message).
+- If you don't specify Heap and Stack sizes explicitly, the JVM will use defaults that are calculated in a version and
+  platform specific way.
+- This may result in your application using too little or too much memory.
+- This is typically OK for thread stacks, but it can be problematic for a program that uses a lot of memory.
+- The following JVM options set the heap size:
+  - `-Xms<size>`: Sets the initial heap size.
+  - `-Xmx<size>`: Sets the maximum heap size.
+  - `-XX:PermSize<size>`: Sets the initial PermGen size < Java 8.
+  - `-XX:MaxPermSize<size>`: Sets the maximum PermGen size < Java 8.
+  - `-Xss<size>`: Sets the default thread stack size.
+
+```
+java -Xms512m -Xmx1024m JavaApp
+java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSize'
+```
+
+### Garbage collection
+
+- The Java runtime system takes responsibility for finding the objects to be disposed of.
+- This task is performed by a component called a garbage collector, or GC for short.
+- A reachable object is any object that can be accessed in any potential continuing computation from any live thread.
+- Unreachable objects are objects that cannot possibly be reached as above.
+- When the GC detects an unreachable object, the following events can occur.
+  - If there are any Reference objects that refer to the object, those references will be cleared before the object
+    is deleted.
+  - If the object is finalizable, then it will be finalized. This happens before the object is deleted.
+  - The object can be deleted, and the memory it occupies can be reclaimed.
+
+### Finalization
+
+- A Java object may declare a `finalize()` method.
+- This method is called just before Java releases the memory for the object.
+  - Java makes no guarantees about when a `finalize()` method will be called.
+  - Java does not even guarantee that a `finalize()` method will be called some time during the running
+    application's lifetime.
+  - The only thing that is guaranteed is that the method will be called before the object is deleted ... if the object
+    is deleted.
+
+### Manually trigger GC
+
+```java
+System.gc();
+```
+
+- However, Java does not guarantee that the Garbage Collector has run when the call returns.
+- This method simply **suggests** to the JVM that you want it to run the GC, but does not force it to do so.
+
+### Memory consumption
+
+| Primitive | Boxed | Memory size primitive / boxed |
+|---|---|---|
+| boolean | Boolean | 1 byte / 16 bytes |
+| byte | Byte | 1 byte / 16 bytes |
+| short | Short | 2 bytes / 16 bytes |
+| char | Char | 2 bytes / 16 bytes |
+| int | Integer | 4 bytes / 16 bytes |
+| long | Long | 8 bytes / 16 bytes |
+| float | Float | 4 bytes / 16 bytes |
+| double | Double | 8 bytes / 16 bytes |
+
+- Boxed objects always require **8 bytes for type and memory management**, and because the size of objects is always
+  a multiple of 8, boxed types all require 16 bytes total.
+- In addition, each usage of a boxed object entails storing a reference which accounts for another 4 or 8 bytes,
+  depending on the JVM and JVM options.
+- Memory consumption grows even more when using arrays: a `float[5]` array will require only 32 bytes (`4 bytes * 5 = 20 bytes`).
+- `Float[5]` storing 5 distinct non-null (`16 bytes * 5 = 90 bytes`) values will require 112 bytes total
+  (on 64 bit (8 bytes) without compressed pointers, this increases to 152 bytes).
+
+***
+
+### :star: String pool and heap storage
+
+- Like many Java objects, all String instances are created on the heap, even literals.
+- When the JVM finds a String literal that has no equivalent reference in the heap, the JVM creates a corresponding
+  String instance on the heap and it also stores a reference to the newly created String instance in the String pool.
+- Any other references to the same String literal are replaced with the previously created String instance in the heap.
+- When we use double quotes to create a String, it first looks for String with same value in the String pool, if found it
+  just returns the reference else it creates a new String in the pool and then returns the reference.
+- However, using **new** operator, we force String class to create a new String object in heap space.
+- We can use `intern()` method to put it into the pool or refer to other String object from string pool having same value.
+- Before Java 7, String literals were stored in the runtime constant pool in the method area of PermGen, that had a
+  fixed size.
+- In JDK 7, interned strings are no longer allocated in the permanent generation of the Java heap, but are
+  instead allocated in the main part of the Java heap (known as the young and old generations), along with
+  the other objects created by the application.
+- This change will result in more data residing in the main Java Heap, and less data in the permanent generation,
+  and thus may require heap sizes to be adjusted.
+- Most applications will see only relatively small differences in heap usage due to this change, but larger applications
+  that load many classes or make heavy use of the `String.intern()` method will see more significant differences.
+
+***
+
+### :star: Tuning the VM
+
+- `-Xmx`: Set the maximum heap size.
+- `-Xms`: Set starting heap size.
+
+```
+-Xmx512m -Xms150m -XX:MaxPermSize=256m
+// print garbage collection
+-Xmx10m -verbose:gc 
+```
+
+- Young generation = `1/3 heap size`:
+  - `-Xmn`: Set the size of young generation.
+
+### Generating heap dumps
+
+- Creates a heap dump file **hprof**:
+
+```
+-XX:HeapDumpOnOutOfMemory
+```
+
+### Choosing a GC
+
+- Types of GC:
+  - Serial: `-XX:+UseSerialGC`
+  - Parallel young generation: `-XX:+UseParallelGC`
+  - Mostly Concurrent:
+    - `-XX:+UseConcMarkSweepGC`
+    - `-XX:+UseG1GC`
+- Use `-XX:+PrintCommandLineFlag` to find out which is your default.
+- **jmeter** to generate load.
+
+***
+
+### :star: Garbage Collection GC
+
+- Java provides automatic memory management through a program called Garbage Collector. "Remove object that are not use",
+  - Live object = reachable (referenced by someone else).
+  - Dead object = unreachable (unreferenced).
+- Objects are allocated in the `heap` of Java memory.
+- Static members, class definition are stored in "method area" PermGen/Metaspace.
+- Garbage Collection is carried out by a daemon thread called **Garbage Collector**.
+- Force GC to happened `System.gc()` (no guaranteed).
+- When failed to allocated because of full heap. Error message `java.lang.OutOfMemoryError`.
+- Garbage Collector involves:
+  - Mark: Go through all program structure, mark reachable objects as live.
+  - Delete/Sweep: Delete unreachable objects.
+  - Compacting: Compact memory by moving around objects.
+- Typed of Garbage Collector:
+  - Serial Collector: Runs on a single thread, useful in basic applications.
+  - Concurrent Collector:
+    - GC execute as application runs, not wait the old generation to full stop the world execute only during mark/re-mark phase.
+  - Parallel Collector:
+    - Uses multiple CPUs to perform GC.
+    - Multiple threads doing mark/sweep.
+    - Does not start until heap is full/near-full.
+    - **Stop the world** when runs.
+- Use Concurrent collector, when there is more memory, high number of CPUs, short pauses required.
+- Use parallel collector, when there is less memory, lesser number of CPUs, high throughput required, pauses are OK.
+
+```
+java -XX:+UseSerialGC
+java -XX:+UseParallelGC
+java -XX:+UseConcMarkSweepGC
+```
+
+**Garbage Collector example**
+
+```java
+void method() {
+    Calendar calendar = new GregorianCalendar(2000,12,12);
+    System.out.println(calendar);
+}
+```
+
+- Object of class GregorianCalendar is created on the heap by the first line in method with one reference a variable calendar.
+- After method ends execution the reference variable calendar is no longer valid.
+- There are no reference to the object created in the method.
+- JVM recognizes this and removes the object from the heap.
+- This is called GC.
+- When Garbage Collection is run:
+  - Based on fancies of JVM.
+  - Possible situations:
+    - When available memory on the heap is low.
+    - When CPU is free.
+
+***
+
+### :star: Garbage Collector
+
+- Permanent generation is used to store metadata. Store String pool also.
+- Types of Garbage collectors:
+  - Throughput GC: Parallel version young generation, `-XX:+UseParallelGC`
+  - Concurrent low pause collector: `-XX:+UseConcMarkSweepGC`
+  - Most GC is executed multithreaded at the same time app is executed.
+  - Incremented low pause collector: `-XX:+UseTrainGC`
+- Full GC Concurrent GC:
+  - Executed on single GC thread, which executes with app thread to execute before tenured generation.
+  - Full GC, application is stopped and GC is executed as all application thread is stopped.
+
+***
+
+### :star: Heap Generations
+
+- Heap is separated with three parts:
+  - Young Generation
+  - Tenured or Old Generation
+  - Perm Area
+- Generation are then separated on 3 parts:
+  - Eden Space
+  - Survivor 1
+  - Survivor 2
+- New object is then created on heap in new generation in Eden space, and after few GC it goes to Survivor1 and then
+  to Survivor2.
+
+***
+
+### :star: Find the maximum depth of a binary tree
+
+- The max depth will be furthest distance of the leaf node from the root.
+
+```java
+public static class Node<T> {
+    private T data;
+    // Node can have Max 2 child
+    private Node<T> leftChild;
+    private Node<T> rightChild;
+
+    public Node(T data) {
+        this.data = data;
+    }
+
+    public Node<T> getRightChild() {
+        return rightChild;
+    }
+
+    public void setRightChild(Node<T> rightChild) {
+        this.rightChild = rightChild;
+    }
+
+    public Node<T> getLeftChild() {
+        return leftChild;
+    }
+
+    public void setLeftChild(Node<T> leftChild) {
+        this.leftChild = leftChild;
+    }
+
+    public T getData() {
+        return data;
+    }
+}
+
+public static int maxDepth(Node root) {
+    if (root == null) {
+        // Base case if the root is null then the tree has no nodes, the max depth is 0
+        return 0;
+    }
+
+    if (root.getLeftChild() == null && root.getRightChild() == null) {
+        // If both left and right child of the node is null then there is a leaf and has a depth of 0
+        return 0;
+    }
+
+    // Find the max depth on the left and right subtrees.
+    // Add 1 to account for the current depth of the tree
+    int leftMaxDepth = 1 + maxDepth(root.getLeftChild());
+    int rightMaxDepth = 1 + maxDepth(root.getRightChild());
+
+    // Find the max depth between the left and right subtrees
+    return Math.max(leftMaxDepth, rightMaxDepth);
+}
+```
+
+***
+
+### :star: Palindrome
+
+```java
+public class Palindrome {
+    public boolean checkPalindrome(String word) {
+        boolean result = true;
+        char[] wordchar = word.toCharArray();
+        for (int i = 0; i < word.length()/2; i++) {
+            if (wordchar[i] != wordchar[word.length()-1-i]) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public boolean checkRecursive(String word) {
+        if (word.length() == 0 || word.length() == 1) {
+            return true;
+        }
+        if (word.charAt(0) == word.charAt(word.length()-1)) {
+            return checkPalindrome(word.substring(1,word.length()-1));
+        }
+        return false;
+    }
+}
+// ABCDCBA ==> true
+// BCDCB   ==> true
+// CDC     ==> true
+// D       ==> true
+```
+
+***
+
+### :star: Singleton
+
+```java
+public class Singleton {
+    // mark the member variable as volatile, so each access this variable is a fresh read from memory
+    private volatile static Singleton singleton;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (singleton == null) {
+            synchronized(Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+
+// enum is thread safe
+enum Downloader {
+    INSTANCE;
+
+    private Semaphore semaphore = new Semaphore(3, true);
+
+    public void downloadData() {
+        try {
+            semaphore.acquire();
+            download();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            semaphore.release();
+        }
+    }
+
+    private void download() {
+        System.out.println("Downloading data");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class SingletonEnumImproved {
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Downloader.INSTANCE.downloadData();
+                }
+            });
+        }
+        executorService.shutdown();
+    }
+}
+```
+
+***
+
+### :star: Multiply without `*`
+
+```java
+public static double multiply(double x, double y) {
+    if (x == 0 || y == 0) {
+        return 0;
+    } else if (y > 0) {
+        return x + multiply(x, y - 1);
+    }
+    return -multiply(x, -y);
+}
+```
+
+***
+
+### :star: First non repeat character
+
+```java
+public class FirstNonRepeat {
+    public char findCharacter(String testWord) throws Exception {
+
+        if (testWord.equals("")) {
+            throw new Exception("Empty String");
+        }
+
+        // map<key, value> [ a : 3, b : 3, c : 1, u : 1 ]
+        Map<Character, Integer> charMap = new HashMap<>();
+        char[] testWordCharArr = testWord.toCharArray();
+
+        for (int i = 0; i < testWord.length(); i++) {
+            if (charMap.containsKey(testWordCharArr[i])) {
+                charMap.put(testWordCharArr[i], charMap.get(testWordCharArr[i]) + 1);
+            } else {
+                charMap.put(testWordCharArr[i], 1);
+            }
+        }
+
+        for (int i = 0; i < testWord.length(); i++) {
+            if (charMap.get(testWordCharArr[i]) == 1) {
+                return testWordCharArr[i];
+            }
+        }
+        return 'a';
+    }
+}
+```
+
+***
+
+### :star: Binary search
+
+```java
+public static int binarySearch(int[] sortedList, int number) {
+    // 1 2 3 4 5 6 7 8 9 10
+    int min = 0;
+    // max = 9
+    int max = sortedList.length - 1;
+    while (min <= max) {
+        int mid = (max + min) / 2;
+        if (sortedList[mid] == number) {
+            return mid;
+        }
+        //         V     *
+        // 1 2 3 4 5 6 7 8 9 10, look for 8 but value is 5
+        if (sortedList[mid] > number) {
+            max = mid - 1;
+        } else {
+            min = mid + 1;
+        }
+    }
+    return -1;
+}
+```
+
+***
+
+### :star: Binary search recursive
+
+```java
+public static int binarySearch(int[] sortedArray, int number, int min, int max) {
+    if (min > max) {
+        return -1;
+    }
+
+    int mid = (max + min) / 2;
+    if (sortedArray[mid] == number) {
+        return mid;
+    }
+
+    if (sortedArray[mid] > number) {
+        // first part (smaller numbers)
+        return binarySearch(sortedArray, number, min, mid - 1);
+    } else {
+        // second part (bigger numbers)
+        return binarySearch(sortedArray, number, mid + 1, max);
+    }
+}
+```
+
+***
+
+### :star: Sort 00110101001000 -> 00000000011111
+
+```java
+public class ZeroOneSort {
+
+    public static void main(String[] args) {
+        int[] unsorted = {0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
+        int numOfOnes = 0;
+
+        for (int i = 0; i < unsorted.length; i++) {
+            if (unsorted[i] == 1) {
+                numOfOnes++;
+                unsorted[i] = 0;
+            }
+        }
+
+        for (int i = unsorted.length - numOfOnes; i < unsorted.length; i++) {
+            unsorted[i] = 1;
+        }
+
+        for (int i = 0; i < unsorted.length; i++) {
+            System.out.println(unsorted[i]);
+        }
+    }
+}
+```
+
+***
+
+### :star: Reverse string recursive
+
+```java
+public static String reverseRec(String str) {
+    if ((null == str) || (str.length() <= 1)) {
+        return str;
+    }
+    return reverseRec(str.substring(1)) + str.charAt(0);
+}
+// Panda.substring(1) = anda + P
+// anda.substring(1) = nda + a + P
+// nda.substring(1) = da + n + a + P
+// da.substring(1) = a + d + n + a + P
+```
+
+***
+
+### :star: Find the minimum value in a binary search tree
+
+```java
+public static int minimumValue(Node<Integer> head) {
+    if (head == null) {
+        // Base case, if the head is null then the tree has no nodes, return the minimum integer value
+        return Integer.MIN_VALUE;
+    }
+
+    if (head.getLeftChild() == null) {
+        // Follows the left child for every node,
+        // if the left child is null then this is the minimum value node
+        return head.getData();
+    }
+
+    // Recurse till a left child is Available
+    return minimumValue(head.getLeftChild());
+}
+```
+
+***
+
+### :star: Mirror a binary tree
+
+- Every left child is now right child and vice versa.
+
+```java
+public static void mirror(Node<Integer> root) {
+    if (root == null) {
+        // Base case if the head is null then the tree has no nodes, there is nothing to mirror
+        return;
+    }
+
+    // Call mirror recursively on every node in the left and right subtrees
+    mirror(root.getLeftChild());
+    mirror(root.getRightChild());
+
+    // Swap the left and the right child of each node
+    Node<Integer> temp = root.getLeftChild();
+    root.setLeftChild(root.getRightChild());
+
+    // Swap the left and right children of this node
+    root.setRightChild(temp);
+}
+```
+
+***
+
+### :star: Match parenthesis
+
+- Match `{[(`
+- Ok example: `{[]}()`
+- Not ok: `))(({}`
+
+```java
+public class MatchParenthesis {
+    // `{[]}()`
+    // 
+    // |
+    // |
+    // | [
+    // | {
+    // +----
+    private static final Map<Character, Character> matchParenthesis = new HashMap<>();
+    private static final Set<Character> openingParenthesis = new HashSet<>();
+
+    static {
+        matchParenthesis.put(')', '(');
+        matchParenthesis.put(']', '[');
+        matchParenthesis.put('}', '{');
+        openingParenthesis.addAll(matchParenthesis.values()); // ( [ {
+    }
+
+    public static boolean hasMatchingParenthesis(String input) {
+        try {
+            Stack<Character> parenthesisStack = new Stack<>();
+            for (int i = 0; i < input.size(); i++) {
+                char ch = input.charAt(i);
+
+                if (openingParenthesis.contains(ch)) { // ( [ {
+                    parenthesisStack.push(ch); // ( [ {
+                }
+
+                if (matchParenthesis.containsKey(ch)) { // ): (, ]: [, }: {
+                    Character lastParenthesis = parenthesisStack.pop();
+
+                    if (lastParenthesis != matchParenthesis.get(ch)) { // [ [
+                        return false;
+                    }
+                }
+            }
+            return parenthesisStack.isEmpty();
+        } catch (Stack.StackOverflowException soe) {
+            e.printStackTrace();
+        } catch (Stack.StackUnderflowEception sue) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+}
+```
+
+***
+
+# Java Stream API.
+
+## What is a Stream.
+
+- An abstraction.
+- Focus on the all instead of the parts.
+- Move from imperative (how to put everything together, loops while, for) to functional programming
+  (chain operations together, sentence like code).
+- Used with collections.
+
+***
+
+## How to use.
+
+'List<Student>' -> STREAM -> STREAM -> STREAM -> Double avgGrade
+
+- Concrete implementation Arrays, Maps, Lists, Set.
+  - 'MockData.getStudents()'.
+- Call 'stream()' on concrete type.
+  - 'MockData.getStudents().stream()'.
+- Process stream.
+  - 'MockData.getStudents().filter().limit()'.
+-  From Abstract to concrete implementation.
+  - 'MockData.getStudents().filter().limit().collect()'.
+
+### Imperative.
+
+```java
+public void imperative() {
+    List<Student> students = MockData.getStudents();
+    List<Student> rookies = new ArrayList<>();
+
+    final int limit = 10;
+    int counter = 0;
+
+    for (Student student : students) {
+        if (student.getAge() < 20) {
+            rookies.add(student);
+            counter++;
+            if (counter == limit) {
+                break;
+            }
+        }
+    }
+
+    for (Person rookie: rookies) {
+        System.out.println(rookie);
+    }
+}
+```
+
+### Declarative.
+
+```java
+public void declarative() {
+    List<Student> students = MockData.getStudents();
+
+    List<Student> rookies = students.stream()
+        .filter(student -> student.getAge() <= 20)
+        .limit(10)
+        .collect(Collectors.toList());
+
+    rookies.forEach(System.out::println);
+}
+```
+
+***
+
+## Iterating with Streams.
+
+### Range.
+
+```java
+public void range() {
+    for (int i = 0; i < 10; i++) {
+        System.out.println(i);
+    }
+
+    // start inclusive, end exclusive
+    IntStream.range(0,10)
+        .forEach(index -> System.out.println(index));
+
+    // With method reference
+    IntStream.range(0,10).forEach(System.out::println);
+
+    // start inclusive, end inclusive
+    IntStream.rangeClosed(0,10)
+        .forEach(index -> System.out.println(index));
+}
+```
+
+### Iterating through list.
+
+```java
+public void rangeList() {
+    List<Student> students = MockData.getStudents();
+    IntStream.range(0, students.size())
+        .forEach(index -> {
+            Student student = students.get(index);
+            System.out.println(student);
+        });
+
+    // The same result
+    students.forEach(System.out::println);
+}
+```
+
+### Iterate.
+
+```java
+public void intStreamIterate() {
+    // Infinite loop
+    IntStream.iterate(0, operand -> operand + 1)
+        .forEach(System.out::println);
+
+    IntStream.iterate(0, operand -> operand + 1)
+        .limit(10)
+        .forEach(System.out::println);
+
+    // Only even number
+    IntStream.iterate(0, operand -> operand + 1)
+        .filter(number -> number % 2 == 0)
+        .limit(10)
+        .forEach(System.out::println);
+}
+```
+
+***
+
+## Min, Max, Comparator.
+
+### min.
+
+```java
+public void min() {
+    final List<Integer> numbers = ImmutableList.of(-90,87,76543,-109,0,234,-8301,99900);
+
+    // Bad
+    Integer min1 = numbers.stream()
+        .min((number1, number2) -> number1 > number2 ? 1 : -1)
+        .get();
+
+    // Better
+    Integer min2 = numbers.stream()
+        .min(Comparator.naturalOrder())
+        .get();
+}
+```
+
+### max.
+
+```java
+public void max() {
+    final List<Integer> numbers = ImmutableList.of(-90,87,76543,-109,0,234,-8301,99900);
+    Integer max = numbers.stream()
+        .max(Comparator.naturalOrder())
+        .get();
+}
+```
+
+***
+
+## Unique.
+
+### distinct.
+
+```java
+public void distinct() {
+    final List<Integer> numbers = ImmutableList.of(1,1,1,2,2,2,2,2,3,3,4,4,4,4,5,6,6,7,7,7,7,8,9);
+    List<Integer> distNum = numbers.stream()
+        .distinct()
+        .collect(Collectors.toList());
+}
+```
+
+### toSet.
+
+```java
+public void distinct() {
+    final List<Integer> numbers = ImmutableList.of(1,1,1,2,2,2,2,2,3,3,4,4,4,4,5,6,6,7,7,7,7,8,9);
+    List<Integer> distNum = numbers.stream()
+        .collect(Collectors.toSet());
+}
+```
+
+***
+
+## Filtering.
+
+- :star: 'Predicate<T>': Filter method arguments, function converting 'T' to 'boolean'.
+
+### filter
+
+```java
+public void filterExample() {
+    ImmutableList<Student> students = MockData.getStudents();
+    // Predicate expression that evaluates true or false
+    // Predicate what we want to keep
+    Predicate<Student> studentPredicate = student -> student.getGrades() < 3.5;
+
+    List<Student> listOfBadStudents = students.stream()
+        .filter(studentPredicate)
+        .collect(Collectors.toList());
+
+    listOfBadStudents.forEach(System.out::println);
+}
+```
+
+### map.
+
+```java
+public void mapExample() {
+    // Transform from one data type to another
+    List<Student> students = MockData.getStudents();
+
+    List<Engineer> engineerList = students.stream()
+        .map(student -> new Engineer(student.getId(), student.getGrade()))
+        .collect(Collectors.toList());
+
+    // Engineer::map    ->  method reference
+    // Function<Student, Engineer> studentEngineerFunction = new Engineer(student.getId(), student.getGrade());
+}
+
+// public static Engineer map(Student student) {
+//      return new Engineer(student.getId(), student.getGrade());
+// }
+```
+
+### Avg student grade.
+
+```java
+public void averageStudentGrade() {
+    double avg = MockData.getStudents()
+        .stream()
+        .mapToDouble(student -> student.getGrade())
+        .average()
+        .orElse(0);
+    System.out.println(avg);
+    // student -> student.getGrade() -> Student::getGrade
+}
+```
+
+***
+
+## findAny, findFirst.
+
+### findAny.
+
+```java
+public void findAny() {
+    // Returns optional
+    Predicate<Integer> numsLessThan10 = n -> n > 5 && n < 10;
+    Integer[] nums = {1,2,3,4,5,6,7,8,9};
+    int anyNum = Arrays.stream(nums)
+        .filter(numsLessThan10)
+        .findAny()
+        .get();
+}
+```
+
+### findFirst
+
+```java
+public void findFirst() {
+    // Returns optional
+    Integer[] nums = {1,2,3,4,5,6,7,8,9};
+    int firstNum = Arrays.stream(nums)
+        .filter(n -> n < 10)
+        .findFirst()
+        .get();
+}
+```
+
+***
+
+## Statistics.
+
+- Operation 'min', 'max' returns 'Optional<T>', wraps value or alternative value if null.
+
+### count.
+
+```java
+public void count() {
+    long engineers = MockData.getStudents()
+        .stream()
+        .filter(student -> student.getFieldOfStudy().equalIgnoreCase("engineering"))
+        .count();
+}
+```
+
+### min.
+
+```java
+public void min() {
+    double worstStudentGrade = MockData.getStudents()
+        .stream()
+        .filter(student -> student.getFieldOfStudy().equalIgnoreCase("engineering"))
+        .mapToDouble(student -> student.getGrades())
+        .min()
+        .getAsDouble(); // min() is optional, list can be empty, orElse(0)
+}
+```
+
+### max.
+
+```java
+public void max() {
+    double bestStudentGrade = MockData.getStudents()
+        .stream()
+        .filter(student -> student.getFieldOfStudy().equalIgnoreCase("engineering"))
+        .mapToDouble(student -> student.getGrades())
+        .max()
+        .orElse(5);
+}
+```
+
+### average.
+
+```java
+public void average() {
+    List<Student> students = MockData.getStudents();
+
+    double avgGrade = students.stream()
+        .mapToDouble(Student::getGrades)
+        .average()
+        .orElse(0); // If list empty
+}
+```
+
+### sum.
+
+```java
+public void sum() {
+    List<Student> students = MockData.getStudents();
+
+    double sumGrades = students.stream()
+        .mapToDouble(Student::getGrades)
+        .sum();
+
+    BigDecimal.valueOf(sumGrades);
+}
+```
+
+### summaryStatistics.
+
+```java
+public void statistics() {
+    List<Student> students = MockData.getStudents();
+
+    DoubleSummaryStatistics stat = students.stream()
+        .mapToDouble(Student::getGrades)
+        .summaryStatistics();
+
+    System.out.println(stat.getAverage());
+}
+```
+
+***
+
+## Grouping data.
+
+### Collectors groupingBy.
+
+```java
+public void grouping() {
+    Map<String, List<Student>> grouping = MockData.getStudents()
+        .stream()
+        .collect(Collectors.groupingBy(Student::getGrade));
+
+    grouping.forEach((grade, students) => {
+        System.out.println(grade);
+        students.forEach(System.out::println)
+    });
+    // 5
+    // Student{id=1, grade=5, name=Satish}
+    // Student{id=2, grade=5, name=Marcelo}
+    // 4
+    // Student{id=7, grade=4, name=Dim}
+    // Student{id=9, grade=4, name=Xiao}
+}
+```
+
+### GroupingAndCounting.
+
+```java
+public void groupingAndCounting() {
+    ArrayList<String> countries = Lists.newArrayList(
+        "Poland", "Poland", "India", "India", "India", "Ukraine", "Ukraine", "Brazil", "Poland", "Brazil");
+
+    // All countries are identity way to get them is using Function.identity
+    Map<String, Long> counting = countries.stream()
+        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+    counting.forEach((name, count) -> System.out.println(name + " : " + count));
+
+    // Brazil : 2
+    // India : 3
+    // Poland : 3
+    // Ukraine : 2
+}
+```
+
+***
+
+## Reduce and Flatmap.
+
+- Reduce combines all elements in the stream and produce one single result.
+
+### reduce.
+
+```java
+public void reduce() {
+    Integer[] integers = {1,2,34,567,890,9000,12659};
+    int sum = Arrays.stream(integer)
+        .reduce(0, (a,b) -> a + b); // (a,b) -> a + b || Integer::sum (method reference)
+    System.out.println(sum);    // 23163
+}
+```
+
+### flatMap.
+
+```java
+private static final List<ArrayList<String>> arrayListOfNames = Lists.newArrayList(
+            Lists.newArrayList("Brajan", "Mariusz", "Ryży"),
+            Lists.newArrayList("Puchaty", "Rufus", "Boni"),
+            Lists.newArrayList("Samara", "Rysia"));
+
+public void withoutFlatMap() {
+    List<String> names = Lists.newArrayList();
+
+    for (List<String> list : arrayListOfNames) {
+        for (String name : list) {
+            names.add(name);
+        }
+    }
+
+    System.out.println(names);
+}
+
+public void flatMap() {
+    // Brajan, Mariusz, Ryży, Puchaty, Rufus, Boni, Samara, Rysia
+    List<String> names = arrayListOfNames.stream()
+        .flatMap(List::stream)
+        .collect(Collectors.toList());
+    System.out.println(names);
+}
+```
+
+***
+
+### Joining.
+
+```java
+public void joinWithoutStream() {
+    List<String> names = ImmutableList.of("brajan", "samara", "blażej");
+
+    String join = "";
+
+    for (String name : names) {
+        join += name + ",";
+    }
+}
+
+public void joinWithStream() {
+    List<String> names = ImmutableList.of("brajan", "samara", "błażej");
+
+    String joinedNames = names.stream()
+        .map(String::toUpperCase)
+        .collect(Collectors.joining(","));
+
+    System.out.println(joinedNames); // brajan,samara,błażej
+}
+```
+
+***
+
+## More Streams.
+
+### Collectors toList.
+
+```java
+public void collectors() {
+    List<String> grades = MockData.getStudents()
+        .stream()
+        .map(Student::getGrade)
+        .collect(
+            () -> new ArrayList<String>(),          // empty array list         -> ArrayList::new
+            (list, elem) -> list.add(elem),         // add elements             -> ArrayList::add
+            (list1, list2) -> list1.addAll(list2)); // accumulate all elements  -> ArrayList::addAll
+        // .collect(Collectors.toList());
+}
+```
+
+### Collectors, Multithreading.
+
+- Very big array compute in multiple threads and get results.
+
+### Intermediate and terminal operators
+
+- **Intermediate**: Perform transformation or filtering.
+  - `filter`.
+  - `map`.
+
+```java
+.stream()
+.filter(student -> {
+    return student.getGrades() < 3;
+})
+.map(student -> {
+    return student.getGrades();
+}); // java.util.stream.ReferencePipeLine
+```
+
+- **Terminal**: From abstraction to concrete type.
+  - `collect`.
+
+```java
+.collect(Collectors.toList())
+```
+
+- Map and filter are not invoked until terminal operation (lazy valuation).
+- Streams are lazy. It does not build anything until terminal operators.
+- Streams are very optimizes and safe to use in our apps.
+
+### How streams process data
+
+```java
+void main() {
+  MockData.getApartments()
+          .stream()
+          .filter(apartment -> {
+            System.out.println("filter apartment " + student);
+            return apartment.getSize() < 60;
+          })
+          .map(apartment -> {
+            System.out.println("mapping apartment " + student);
+            return apartment.getSize();
+          })
+          .map(price -> {
+            System.out.println("mapping price " + student);
+            return price + (price * .12);
+          })
+          .collect(Collectors.toList());    
+}
+```
+
+```
+filter apartment Apartment{id=1, localization="Miodowa", city="Krakow", size=100, price=6700}
+filter apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850}
+mapping apartment Apartment{id=2, localization="Bora Komorowskiego", city="Krakow", size=58, price=1850}
+mapping price 2072
+filter apartment Apartment{id=3, localization="Wadowicka", city="Krakow", size=78, price=2850}
 ```
