@@ -1,25 +1,25 @@
-# Postgres
+# Postgres.
 
-## 1: SQL Statements
+## 1. SQL Statements.
 
-**Add data**
+**Add data.**
 
-```
+```sql
 INSERT INTO
   cities(name, lat, lng, country, iso3, population)
 VALUES
   ('San Francisco', 37.7, 122.4, 'United States', 'USA', 883305);
 ```
 
-**Read data**
+**Read data.**
 
-```
+```sql
 SELECT name FROM cities;
 ```
 
-**Update data**
+**Update data.**
 
-```
+```sql
 UPDATE 
   cities
 SET
@@ -28,52 +28,52 @@ WHERE
   name = 'New York';
 ```
 
-**Delete data**
+**Delete data.**
 
-```
+```sql
 DELETE FROM
   cities
 WHERE
   id = 300;
 ```
 
-**Challenges of Postgres**
+**Challenges of Postgres.**
 
 - Writing efficient queries to retrieve information.
 - Designing the schema, or structure, of the database.
 - Understanding when to use advanced features.
 - Managing the database in a production environment.
 
-**Database Design Process**
+**Database Design Process.**
 
 - What kind of thing are we storing?
-  - We are storing the list of **cities**
-    - We should create a **table** called **'cities'**
+  - We are storing the list of **cities**.
+    - We should create a **table** called **'cities'**.
 - What properties does this thing have?
-  - Each city has a **name**, **country**, **population**, **and area**
-    - The table should have **columns** of name, country, population, area
+  - Each city has a **name**, **country**, **population**, and **area**.
+    - The table should have **columns** of name, country, population, area.
 - What type of data does each of those properties contain?
-  - `name` -> string
-  - `country` -> string
-  - `population` -> number
-  - `area` -> number
+  - `name` -> string.
+  - `country` -> string.
+  - `population` -> number.
+  - `area` -> number.
     - Each **column** should indicate the type of data that it is going to store.
 
-**Table**
+**Table.**
 
 - Collection of records.
 
-**Columns**
+**Columns.**
 
 - Each column records one property about a thing.
 
 ![Database Design](images/database-design.png "Database Design")
 
-### Analyzing Create Table
+### Analyzing Create Table.
 
-**Creating Tables**
+**Creating Tables.**
 
-```
+```sql
 CREATE TABLE cities (
     name VARCHAR(50),
     country VARCHAR(50),
@@ -82,19 +82,19 @@ CREATE TABLE cities (
 );
 ```
 
-**Keywords**
+**Keywords.**
 
 - Tell the database that we want to do something. 
 - Always written out in capital letters.
-- `CREATE TABLE`
+- `CREATE TABLE`.
 
-**Identifiers**
+**Identifiers.**
 
 - Tell the database what thing we want to act on. 
 - Always written out in lower case letters.
-- `cities`
+- `cities`.
 
-**Column Data Types**
+**Column Data Types.**
 
 - `VARCHAR(50)`: 
   - Variable length character. 
@@ -104,14 +104,14 @@ CREATE TABLE cities (
   - -2,147,438,647 to +2,147,483,647. 
   - Anything larger or smaller = error!
 
-### Inserting data into a Table
+### Inserting data into a Table.
 
-```
+```sql
 INSERT INTO cities (name, country, population, area)
 VALUES ('Tokyo', 'Japan', 38505000, 8223);
 ```
 
-```
+```sql
 INSERT INTO cities (name, country, population, area)
 VALUES 
     ('Dehli', 'India', 28125000, 2240),
@@ -119,19 +119,19 @@ VALUES
     ('Sao Paulo', 'Brazil', 2093500, 3043);
 ```
 
-### Retrieving data with SELECT
+### Retrieving data with SELECT.
 
-```
+```sql
 SELECT * FROM cities;
 ```
 
-```
+```sql
 SELECT name, country FROM cities;
 ```
 
-**Create, Insert, and Select**
+**Create, Insert, and Select.**
 
-```
+```sql
 CREATE TABLE movies (
     title VARCHAR(60),
     box_office INTEGER
@@ -145,12 +145,12 @@ VALUES
 SELECT title, box_office FROM movies;
 ```
 
-### Calculated Columns
+### Calculated Columns.
 
 - SQL is not just about pulling raw data out of a table.
 - We can write SQL to transform or process data before we receive it.
 
-```
+```sql
 SELECT name, population / area AS population_density 
 FROM cities;
 ```
@@ -158,11 +158,11 @@ FROM cities;
 **Write a query that will select the name of each phone and calculate the total revenue for each phone (price X units_sold).
 Rename this calculated column to revenue.**
 
-```
+```sql
 SELECT name, price * units_sold AS revenue FROM phones;
 ```
 
-### String Operators and Functions
+### String Operators and Functions.
 
 - `||` - Join two strings.
 - `CONCAT()` - Join two strings.
@@ -170,23 +170,23 @@ SELECT name, price * units_sold AS revenue FROM phones;
 - `LENGTH()` - Gives number of characters in a string.
 - `UPPER()` - Gives an upper case string.
 
-```
+```sql
 SELECT name || ', ' || country AS location FROM cities;
 ```
 
-```
+```sql
 SELECT CONCAT(name, ', ', country) AS location FROM cities;
 ```
 
-```
+```sql
 SELECT CONCAT(UPPER(name), ', ', UPPER(country)) AS location FROM cities;
 ```
 
-## 2: Filtering Records
+## 2. Filtering Records.
 
 ### Filtering Rows with "WHERE"
 
-```
+```sql
 SELECT name, area FROM cities WHERE area > 4000;
 ```
 
@@ -196,35 +196,27 @@ SELECT name   FROM cities   WHERE area > 4000
    Third          First           Second
 ```
 
-```
+```sql
 SELECT name, area FROM cities WHERE area != 8223;
-```
 
-```
 SELECT name, area FROM cities WHERE area <> 8223;
-```
 
-```
 SELECT name, area FROM cities WHERE area BETWEEN 2000 AND 4000;
-```
 
-```
 SELECT name, area FROM cities WHERE name IN ('Dehli', 'Shanghai');
-```
 
-```
 SELECT name, area FROM cities WHERE area NOT IN (3043, 8223) OR name = 'Dehli' OR name = 'Tokyo';
 ```
 
 **Ex 3: Write a query that will print the name and price of all phones that sold greater than 5000 units.**
 
-```
+```sql
 SELECT name, price FROM phones WHERE units_sold > 5000;
 ```
 
 **Ex 4: Write a query that will select the name and manufacturer for all phones created by Apple or Samsung.**
 
-```
+```sql
 SELECT name, manufacturer 
 FROM phones 
 WHERE manufacturer = 'Apple' OR manufacturer = 'Samsung';
@@ -234,9 +226,9 @@ FROM phones
 WHERE manufacturer IN ('Apple', 'Samsung');
 ```
 
-### Calculations in "WHERE"
+### Calculations in "WHERE".
 
-```
+```sql
 SELECT 
   name, 
   population / area AS population_density 
@@ -248,7 +240,7 @@ WHERE
 
 **Ex 5: Write a query that will print the name and total_revenue of all phones with a total_revenue greater than 1,000,000.**
 
-```
+```sql
 SELECT 
   name, 
   price * units_sold AS total_revenue 
@@ -258,27 +250,27 @@ WHERE
   price * units_sold > 1000000;
 ```
 
-### Updating Rows
+### Updating Rows.
 
-```
+```sql
 UPDATE cities 
 SET population = 39505000 
 WHERE name = 'Tokyo';
 ```
 
-### Deleting Rows
+### Deleting Rows.
 
-```
+```sql
 DELETE FROM cities 
 WHERE name = 'Tokyo';
 ```
 
 **Ex 6: Write two separate queries.**
 
-- The first query should update the units_sold of the phone with name N8 to 8543
-- The second query should select all rows and columns of the phones table
+- The first query should update the units_sold of the phone with name N8 to 8543.
+- The second query should select all rows and columns of the phones table.
 
-```
+```sql
 -- Write query here to update the 'units_sold' of the phone with name 'N8' to 8543
 
 UPDATE phones 
@@ -292,8 +284,8 @@ SELECT * FROM phones;
 
 **Ex 7: Write two separate queries.**
 
-- The first query should delete all phones that were created by Samsung
-- The second query should select all rows and columns of the phones table
+- The first query should delete all phones that were created by Samsung.
+- The second query should select all rows and columns of the phones table.
 
 ```
 -- Write your delete SQL here
@@ -306,9 +298,9 @@ WHERE manufacturer = 'Samsung';
 SELECT * FROM phones;
 ```
 
-## 3: Working with Tables
+## 3. Working with Tables.
 
-### Database Design
+### Database Design.
 
 **What Tables Should We Make?**
 
@@ -319,7 +311,7 @@ in our table design.
 
 ![Photo Sharing App](images/database-for-photo-sharing.png "Photo Sharing App")
 
-## One-to-Many and Many-to-One Relationships
+## One-to-Many and Many-to-One Relationships.
 
 - One-to-Many Relationship:
   - A user has many photos.
@@ -330,46 +322,46 @@ in our table design.
 **One-to-Many / Many-to-One Relationships**
 
 - Boat (A boat **has many** crew members, A crew member **has one** boat):
-  - Crew member
+  - Crew member.
 - School (A school **has many** students, A student **has one** school):
-  - Student
+  - Student.
 - Company (A company **has many** employee, An employee **has one** company):
-  - Employee
+  - Employee.
 
-## One-to-One and Many-to-Many Relationships
+## One-to-One and Many-to-Many Relationships.
 
 - **One-to-One Relationships**:
-  - Boats - Captains
-  - Company - CEO
-  - Capitol - Country
-  - Student - Desk
-  - Person - Driver's License
-- **Many-to-Many Relationships**
-  - Students - Classes
-  - Tasks - Engineers
-  - Players - Football Matches
-  - Movies - Actors/Actress
-  - Conference Calls - Employees
+  - Boats - Captains.
+  - Company - CEO.
+  - Capitol - Country.
+  - Student - Desk.
+  - Person - Driver's License.
+- **Many-to-Many Relationships**:
+  - Students - Classes.
+  - Tasks - Engineers.
+  - Players - Football Matches.
+  - Movies - Actors/Actress.
+  - Conference Calls - Employees.
 
-### Primary Keys and Foreign Keys
+### Primary Keys and Foreign Keys.
 
 - **Primary Key**: Uniquely identifies record in table.
 - **Foreign Key**: Identifies a record (usually in another table) that this row is associated with.
 
 ![Primary and Foreign Keys](images/primary-foreign-keys.png "Primary and Foreign Keys")
 
-### Understanding Foreign Keys
+### Understanding Foreign Keys.
 
 - Comments have one photo.
   - Comments table should get a foreign key column pointing at the photo each comment belongs to.
 - Comments have one user.
   - Comments table should get foreign key column pointing at the user each comment belongs to.
 
-**The 'many' side of the relationship gets the foreign key column**
+**The 'many' side of the relationship gets the foreign key column.**
 
 ![Foreign Keys](images/foreign-key.png "Foreign Keys")
 
-**Primary Keys**
+**Primary Keys.**
 
 - Each row in every table has one primary key.
 - No other row in the same table can have the same value.
@@ -377,7 +369,7 @@ in our table design.
 - Either an integer or a UUID.
 - Will never change.
 
-**Foreign Key**
+**Foreign Key.**
 
 - Rows only have this if they belong to another record.
 - Many rows in the same table can have the same foreign key.
@@ -385,16 +377,16 @@ in our table design.
 - Exactly equal to the primary key of the reference row.
 - Will change if the relationship changes.
 
-### Auto Generated ID's
+### Auto Generated ID's.
 
-```
+```sql
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(50)
 );
 ```
 
-```
+```sql
 INSERT INTO users(username)
 VALUES
   ('monahan93'),
@@ -403,7 +395,7 @@ VALUES
   ('99stroman');
 ```
 
-```
+```sql
 CREATE TABLE photos (
   id SERIAL PRIMARY KEY,
   url VARCHAR(200),
@@ -411,15 +403,15 @@ CREATE TABLE photos (
 );
 ```
 
-```
+```sql
 INSERT INTO photos(url, user_id)
 VALUES
     ('http://one.jpg', 4);
 ```
 
-### Running Queries on Associated Data
+### Running Queries on Associated Data.
 
-```
+```sql
 INSERT INTO photos (url, user_id)
 VALUES
   ('http://two.jpg', 1),
@@ -432,26 +424,26 @@ VALUES
 
 **Find all the photos created by user with ID 4.**
 
-```
+```sql
 SELECT * FROM photos WHERE user_id = 4;
 ```
 
 **List all photos with details about the associated user for each.**
 
-```
+```sql
 SELECT * FROM photos 
 JOIN users ON users.id = photos.user_id;
 ```
 
 ***
 
-**Ex 8: Creating and Using Foreign Keys**
+**Ex 8: Creating and Using Foreign Keys.**
 
 - Add a column to the crew_members table definition that will relate crew_members to boats.  
-- You should call this foreign key column boat_id
+- You should call this foreign key column boat_id.
 - Write a query that will fetch all columns for all crew_members associated with the boat that has an ID of 1.
 
-```
+```sql
 -- Create table called 'boats'
 CREATE TABLE boats (
     -- Note that this environment doesn't support 'SERIAL' keyword
@@ -466,7 +458,7 @@ VALUES ('Rogue Wave'), ('Harbor Master');
 
 -- Create table called 'crew_members'
 CREATE TABLE crew_members (
-    -- Note that this environment doenst support 'SERIAL' keyword
+    -- Note that this environment doesn't support 'SERIAL' keyword
     -- so 'AUTOINCREMENT' is used instead. Postgres always uses 'SERIAL'
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name VARCHAR,
@@ -485,7 +477,7 @@ SELECT * FROM crew_members WHERE boat_id = 1;
 
 ***
 
-### Foreign Key Constraints Around Insertion
+### Foreign Key Constraints Around Insertion.
 
 - We insert a photo that is tied to a user that exists.
   - Everything OK!
@@ -494,35 +486,30 @@ SELECT * FROM crew_members WHERE boat_id = 1;
 - We insert a photo that isn't tied to any user.
   - Put in a value of 'NULL' for the user_id!
 
-### Constraints Around Deletion
+### Constraints Around Deletion.
 
-| On Delete Option       | What happen if you try to delete a user when a photo is still referencing it |
-|------------------------|---|
-| **ON DELETE RESTRICT** | Throw an error |
-| **ON DELETE NO ACTION** | Throw an error |
-| **ON DELETE CASCADE** | Delete the photo too! |
-| **ON DELETE SET NULL** | Set the 'user_id' of the photo to 'NULL' |
-| **ON DELETE SET DEFAULT** | Set the 'user_id' of the photo to a default value, if one is provided |
+| On Delete Option          | What happen if you try to delete a user when a photo is still referencing it |
+|---------------------------|------------------------------------------------------------------------------|
+| **ON DELETE RESTRICT**    | Throw an error                                                               |
+| **ON DELETE NO ACTION**   | Throw an error                                                               |
+| **ON DELETE CASCADE**     | Delete the photo too!                                                        |
+| **ON DELETE SET NULL**    | Set the 'user_id' of the photo to 'NULL'                                     |
+| **ON DELETE SET DEFAULT** | Set the 'user_id' of the photo to a default value, if one is provided        |
 
-**ON DELETE CASCADE**
+**ON DELETE CASCADE.**
 
-```
+```sql
 DROP TABLE photos;
-```
 
-```
 CREATE TABLE photos (
 	id SERIAL PRIMARY KEY,
 	url VARCHAR(200),
-	user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+	user_id INTEGER REFERENCES users(id) 
+	  ON DELETE CASCADE
 );
-```
 
-```
 DELETE FROM users WHERE id = 1;
-```
 
-```
 SELECT * FROM photos;
 ```
 
@@ -535,25 +522,19 @@ id	url	            user_id
 7	http:/256.jpg	4
 ```
 
-**ON DELETE SET NULL**
+**ON DELETE SET NULL.**
 
-```
+```sql
 DROP TABLE photos;
-```
 
-```
 CREATE TABLE photos (
 	id SERIAL PRIMARY KEY,
 	url VARCHAR(200),
 	user_id INTEGER REFERENCES users(id) ON DELETE SET NULL
 );
-```
 
-```
 DELETE FROM users WHERE id = 4;
-```
 
-```
 SELECT * FROM photos;
 ```
 
@@ -568,25 +549,25 @@ id	url	            user_id
 
 ![Comments Table Schema](images/db-with-comments.png "Comments Table Schema")
 
-## 4: Joins And Aggregation
+## 4. Joins And Aggregation.
 
-### Queries with Joins and Aggregations
+### Queries with Joins and Aggregations.
 
-**Some answers with Joins and Aggragations**
+**Some answers with Joins and Aggregations.**
 
-- Find all the comments for the photo with ID = 3, along with the username of the comment author. **JOIN**
-- Find the **average number** of comments per photo. **AGGREGATION**
-- Find the photo with the **most comments** attached to it. **AGGREGATION**
+- Find all the comments for the photo with ID = 3, along with the username of the comment author. **JOIN**.
+- Find the **average number** of comments per photo. **AGGREGATION**.
+- Find the photo with the **most comments** attached to it. **AGGREGATION**.
 - Find the photo with ID = 10 and get the number of comments attached to it.
-- Find the user with the **most activity** (most comments + most photos). **AGGREGATION**
+- Find the user with the **most activity** (most comments + most photos). **AGGREGATION**.
 - Calculate the average number of characters per comment.
 
-**Joins**
+**Joins.**
 
 - Produces values by merging together rows from different related tables.
 - Use a join most times that you're asked to find data involves multiple resources.
 
-**Aggregation**
+**Aggregation.**
 
 - Looks at many rows and calculates a single value.
 - Words like 'most', 'average', 'least' are a sign that you need to use an aggregation.
@@ -597,8 +578,10 @@ id	url	            user_id
 
 ![Join1](images/join1.png "Join1")
 
-```
-SELECT contents, username, photo_id FROM COMMENTS JOIN users ON users.id = comments.user_id;
+```sql
+SELECT contents, username, photo_id 
+FROM COMMENTS 
+JOIN users ON users.id = comments.user_id;
 ```
 
 ***
@@ -607,35 +590,37 @@ SELECT contents, username, photo_id FROM COMMENTS JOIN users ON users.id = comme
 
 ![Join2](images/join2.png "Join1")
 
-```
-SELECT contents, url FROM COMMENTS JOIN photos on photos.id = comments.photo_id;
+```sql
+SELECT contents, url 
+FROM COMMENTS 
+JOIN photos on photos.id = comments.photo_id;
 ```
 
-**Ex 9: Write a query that will join together these two tables. For each book, print the title of the book and the name 
+**Ex 9: Write a query that will join together two tables. For each book, print the title of the book and the name 
 of the author.**
 
-```
+```sql
 SELECT title, name 
 FROM books 
 JOIN authors on authors.id = books.author_id;
 ```
 
-### Alternate Joins Syntax
+### Alternate Joins Syntax.
 
-**Notes on Joins**
+**Notes on Joins.**
 
 - Table order between 'FROM' and 'JOIN' frequently makes a difference.
 - We must give context if column name collide.
 - Tables can be renamed using the 'AS' keyword.
 - There are a few kinds of joins!
 
-### Missing Data in Joins
+### Missing Data in Joins.
 
 **Show each photo url and the username of the poster**
 
 ![Join3](images/join3.png "Join3")
 
-```
+```sql
 SELECT url, username 
 FROM photos 
 JOIN users ON user.id = photos.user_id;
@@ -643,13 +628,13 @@ JOIN users ON user.id = photos.user_id;
 
 ***
 
-### Why wasn't it included
+### Why wasn't it included.
 
 ![Join4](images/join4.png "Join4")
 
 - Photos `ddd.net` wasn't included as it does not have corresponding field in users table.
 
-```
+```sql
 SELECT url, username
 FROM photos
 JOIN users ON users.id = photos.user_id;
@@ -659,37 +644,45 @@ JOIN users ON users.id = photos.user_id;
 
 ![Joins](images/joins.png "Joins")
 
+***
+
 ![Inner Join](images/inner-join.png "Inner Join")
+
+***
 
 ![Left Outer Join](images/left-outer-join.png "Left Outer Join")
 
+***
+
 ![Right Outer Join](images/right-outer-join.png "Right Outer Join")
+
+***
 
 ![Full Join](images/full-join.png "Full Join")
 
 ***
 
-### Each Join in Practice
+### Each Join in Practice.
 
-**LEFT JOIN**
+**LEFT JOIN.**
 
-```
+```sql
 SELECT url, username
 FROM photos
 LEFT JOIN users ON users.id = photos.user_id;
 ```
 
-**RIGHT JOIN**
+**RIGHT JOIN.**
 
-```
+```sql
 SELECT url, username
 FROM photos
 RIGHT JOIN users ON users.id = photos.user_id;
 ```
 
-**FULL JOIN**
+**FULL JOIN.**
 
-```
+```sql
 SELECT url, username
 FROM photos
 FULL JOIN users ON users.id = photos.user_id;
@@ -701,7 +694,7 @@ FULL JOIN users ON users.id = photos.user_id;
 
 **Does the order of tables in 'FROM' and 'JOIN' make a difference?**
 
-- YES
+- YES,
 
 ![Joins Order](images/joins-order.png "Joins Order")
 
@@ -710,7 +703,7 @@ FULL JOIN users ON users.id = photos.user_id;
 **Ex 10: Write a query that will return the title of each book, along with the name of the author.  
 All authors should be included, even if they do not have a book associated with them.**
 
-```
+```sql
 -- LEFT JOIN
 SELECT title, name
 FROM authors
@@ -722,7 +715,7 @@ FROM books
 RIGHT JOIN authors ON books.author_id = authors.id;
 ```
 
-### Where with Join
+### WHERE with JOIN.
 
 **Users can comment on photos that they posted. List the url and contents for every photo/comment where this occurred.**
 
@@ -730,18 +723,18 @@ RIGHT JOIN authors ON books.author_id = authors.id;
 
 ![Where with Joins](images/where-with-joins.png "Where with Joins")
 
-```
+```sql
 SELECT url, contents 
 FROM comments 
 JOIN photos ON photos.id = comments.photo_id
 WHERE comments.user_id = photos.user_id;
 ```
 
-### Three Way Joins
+### Three Way Joins.
 
 ![Three Way Joins](images/three-way-joins.png "Three Way Joins")
 
-```
+```sql
 SELECT url, contents, username
 FROM comments
 JOIN photos ON photos.id = comments.photo_id
@@ -762,7 +755,7 @@ JOIN authors ON authors.id = reviews.reviewer_id AND authors.id = books.author_i
 
 ***
 
-## Aggregation of Records
+## Aggregation of Records.
 
 **Grouping**
 
