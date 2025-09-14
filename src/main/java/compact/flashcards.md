@@ -914,29 +914,772 @@ void test() {
 }
 ```
 
+**68. Replace with Lambda.**
 
+```java
+public static String everySecondChar(String source) {
+    StringBuilder returnVal = new StringBuilder();
+    for (int i = 0; i < source.length; i++) {
+        returnVal.append(source.charAt(i));
+    }
+    return returnVal.toString();
+}
+```
 
+```java
+Function<String, String> everySecondChar =
+    source -> {
+        StringBuilder returnVal = new StringBuilder();
+        for (int i = 0; i < source.length(); i++) {
+            if (i % 2 == 0) {
+                returnVal.append(source.charAt(i));
+            }
+        }
+        return returnVal.toString();
+    };
+```
 
+**69. Creating Stream From Datasource: File.**
 
+```java
+void test() {
+    try {
+        Path path = Paths.get("chorus.txt");
+        Files.lines(path)
+                .forEach(line -> System.out.println(line));
+    } catch(IOException exception) {
+        System.out.println(exception);
+    }
+}
+```
 
+**70. Creating Stream from Datasource: Array.**
 
+```java
+void text() {
+    String[] greetings = {"Hello", "Hola!", "Bonjur!", "Hallo!"};
+    Arrays.stream(greetings)
+            .forEach(greeting -> System.out.println(greeting));
+}
+```
 
+**71. Lambda, list of objects, return new list with object of specific type.**
 
+```java
+void test() {
+    List<Object> inputList = Arrays.asList("apple", 1, "banana", 2, "cat", 3);
+    
+    List<String> resultList = inputList.stream()
+            .filter(String.class::isInstance)
+            .map(String.class::cast)
+            .collect(Collectors.toList());
+}
+```
 
+**72. Lambda, function input list of strings, return shortest String with al vowels.**
 
+```java
+void test() {
+    List<String> inputList = Arrays.asList("apple", "banana", "cat", "dog", "elephant");
+    String shortestString = inputList.stream()
+            .filter(s -> s.contains("a") && s -> s.contains("e") && s -> s.contains("i") && s -> s.contains("o")
+                && s -> s.contains("o"))
+            .min(Comparator.comparingInt(String::length))
+            .orElse(null);
+}
+```
 
+**73. Lambda, list of objects as input, return new list of objects group by classes.**
 
+```java
+void test() {
+    List<Object> inputList = Arrays.asList("apple", 1, "banana", 2, "cat", 3);
+    Map<Class<?>, List<Object>> resultMap = inputList.stream().collect(Collectors.groupingBy(Object::getClass));
+}
+```
 
+**74. Lambda, function input list of strings, return number of unique strings, which can be built from a string.**
 
+```java
+int countUniqueStrings(List<Stringg> list) {
+    Set<String> set = new HashSet<>();
+    list.forEach(
+            s -> {
+                for (int i = 0; i < s.length(); i++) {
+                    for (int j = i + 1; j <= s.length(); j++) {
+                        set.add(s.substring(i, j));
+                    }
+                }
+            }
+    );
+    return set.size();
+}
+```
 
+**75. Lambda, sort list of strings in decreasing order by length.**
+```java
+void test() {
+    List<String> strings = Arrays.asList("cat", "dog", "bird", "elephant", "ant");
+    strings.sort((s1, s2) -> Integer.compare(s2.length(), s1.length()));
+}
+```
 
+**76. Count number of students with certain ages.**
+```java
+void test() {
+    List<Predicate<Student>> list = List.of(
+            (s) -> s.getAge() < 30,
+            (Student s) -> s.getAge() >= 30 && s.getAge() < 60
+    );
+    long total = 0;
+    for (int i = 0; i < list.size(); i++) {
+        var myStudents = Arrays.stream(students)
+                .filter(list.get(i));
+        long cnt = myStudents.count();
+        total += cnt;
+        System.out.println("# of students (%s) = %d%n", i == 0 ? " < 30" : " >= 30 && < 60", cnt);
+    }
+    System.out.println("# of students >= 60 = " + students.length - total);
+}
+```
 
+**77. Calculate total average of students' grades throughout the year.**
+```java
+void test() {
+    double average = students.stream()
+            .flatMap(s -> s.getGrades().stream())
+            .collect(Collectors.averagingDouble(g -> g));
 
+    double abg = students.stream()
+            .flatMapToDouble(
+                    s -> s.getGrades()
+                            .stream()
+                            .mapToDouble(g -> g))
+            .average()
+            .getAsDouble();
+}
+```
 
+**78. Passing Grade is 65. Divide students into 2 groups. Students who passed the exam. Student who did not pass exam.**
+```java
+void test() {
+    Map<Boolean, List<Student>> passing = 
+            students.stream()
+                    .collect(Collectors.partitioningBy(student -> student.getGrade() >= 65));
+}
+```
 
+**79. Group the movies by genre?**
+```java
+void test() {
+    Map<String, List<Movie>> genreToMovie = 
+            movies.stream()
+                    .collect(Collectors.groupingBy(Movie::getGenre));
+}
+```
 
+**80. Stream of primitives example.**
+```java
+void test() {
+    IntStream stream = Arrays.stream(new int[] {1, 2, 3});
+    
+    IntStream stream2 = IntStream.range(1, 2);
+}
+```
 
+**81. Streams from Map.**
+```java
+void test() {
+    Map<Integer, Integer> map = new HashMap<>();
+    IntStream.range(0, 10)
+            .forEach(i -> map.put(i, i + 1));
+    int sum = map.values().stream()
+            .mapToInt(entry -> entry)
+            .sum();
+}
+```
 
+**82. Optionals.**
+```java
+void test() {
+    List<Strudent> students = Stream.generate(() -> Student.getRand(jms, pms))
+            .limit(1000).collect(Collectors.toList());
+    Optional<Student> o1 = getStudent(new ArrayList<>(), "first");
+    o1.ifPresentOrElse(System.out::println, () -> System.out.println("--> Empty"));
+    
+    Optional<Student> o2 = getStudent(students, "first");
+    o2.ifPresent(System.out::println);
+    
+    Student firstStudent = o2.orElseGGet(() -> getDummyStudent(jms));
+    
+    List<String> countries = students.stream()
+            .map(Student::getCountryCode)
+            .distinct().toList();
+    
+    Optional.ofNullable(countries)
+            .map(l -> String.join(",", l))
+            .filter(l -> l.contains("FR"))
+            .ifPresentOrElse(System.out::println, () -> System.out.println("Missing FR"));
+}
+
+private static Optional<Student> getStudent(List<String> list, String type) {
+    if (list == null || list.size() == 0) {
+        return Optional.empty();
+    } else if (type.equals("first")) {
+        return Optional.ofNullable(list.get(0));
+    } else if (type.equals("last")) {
+        return Optional.ofNullable(list.get(list.size() - 1));
+    }
+    return Optional.ofNullable(list.get(new Random().nextInt(list.size())));
+}
+```
+
+**83. Terminal Operations.**
+```java
+void test() {
+    int minAge = 21;
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .findAny()
+            .ifPresentOrElse(s -> System.out.println("Fund"), () -> System.out.println("Didn't find"));
+    
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .min(Comparator.comparing(Student::getAge))
+            .ifPresentOrElse(s -> System.out.println("found"), () -> System.out.println("Didn't find"));
+    
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .mapToInt(Student::getAge)
+            .average()
+            .ifPresentOrElse(a -> System.out.println("Avg age " + a), () -> System.out.println("Didn't find"));
+    
+    students.stream()
+            .filter(s -> s.getAge() <= minAge)
+            .distinct()
+            .reduce((a, b) -> String.join(",", a, b))
+            .ifPresentOrElse(System.out::println, () -> System.out.println("Not found"));
+}
+```
+
+**84. What countries are students from?**
+```java
+void test() {
+    Arrays.stream(students)
+            .map(Student::getCountryCode)
+            .distinct()
+            .sorted()
+            .forEach(s -> System.out.println(s + " "));
+}
+```
+
+**85. Are there any students that are still active, that have been enrolled for more than 7 years? And engage course within
+last year?**
+```java
+void test() {
+    boolean longTerm = Arrays.stream(students)
+            .anyMatch(s -> (s.getAge() - s.getAgeEnrolled()) >= 7 && s.getMonthsSinceActive() < 12);
+    
+    long longTermCount = Arrays.stream(students)
+            .filter(s -> (s.getAge() - s.getAgeEnrolled() >= 7) && (s.getMonthsSinceActive() < 12)).count();
+    
+    Predicate<Student> enrolled = s -> (s.getAge() - s.getEnrolledAge()) && (s.getMonthsSinceActive() < 12);
+    Arrays.stream(students)
+            .filter(enrolled)
+            .filter(s -> !s.hasProgrammingExperience())
+            .limit(5)
+            .forEach(System.out::println);
+}
+```
+
+**86. Default Methods in interface.**
+```java
+public interface CustomList {
+    void add(int item);
+    int size();
+    int get(int index);
+    
+    default void forEach(Consumer<Integer> c) {
+        for (int i = 0; i < size(); i++) {
+            c.accept(get(i));
+        }
+    }
+}
+```
+
+**87. Print the count of names which start with B.**
+```java
+void test() {
+    list.stream()
+            .filter(name -> name.startsWith("B"))
+            .count();
+}
+```
+
+**88. Create a list of names which start with 'c' and contains 's' in it.**
+```java
+void test() {
+    List<String> names = list.stream()
+            .filter(name -> name.startsWith("c"))
+            .filter(name -> name.contains("s"))
+            .collect(Collectors.toList());
+}
+```
+
+**89. Print the total of chars for all the names start with M.**
+```java
+void test() {
+    list.stream()
+            .filter(name -> name.startsWith("M"))
+            .map(name -> name.trim())
+            .map(name -> name.length())
+            .mapToInt(i -> i)
+            .sum();
+    
+    list.stream()
+            .filter(name -> name.startsWith("M"))
+            .map(String::trim)
+            .map(String::length)
+            .mapToInt(i -> i)
+            .sum();
+}
+```
+
+**90. Find the names containing '-' in it and replace it with a space, collect them into a list.**
+```java
+void test() {
+    list.stream()
+            .filter(name -> name.contains("-"))
+            .map(name -> name.replaceAll("-", ""))
+            .collect(Collectors.toList());
+}
+```
+
+**91. Find the name which has more numbers of chars.**
+```java
+void test() {
+    list.stream()
+            .max(Comparator.comparing(s -> s.length()))
+            .get();
+}
+```
+
+**92. Sum using IntStream.**
+```java
+void test() {
+    int sum = list.stream()
+            .mapToInt(a -> a)
+            .sum();
+}
+```
+
+**93. Which is blocking call, or a potentially blocked call?**
+* `Thread.sleep(2000);`.
+* `this.wait();`.
+* `synchronized(this) {}`.
+* `lockObject.lock();`.
+* `thread.join();`.
+
+**94. Which code will always trigger the thread to stop executing on CPU and cause OS to perform a context switch.**
+* `Thread.sleep(2000);`.
+* `this.wait();`.
+* `LockSupport.parkNanos(10000000);`.
+
+**95. Optional.**
+```java
+void test() {
+    Optional<String> optional = list.stream()
+            .filter(s -> s.length() > 10)
+            .findFirst();
+    
+    optional.ifPresent(System.out::println);
+}
+```
+
+**96. Test Predicate.**
+```java
+void test() {
+    Predicate<List<WebElement>> allMale = (l -> l.get(1).getText().equalsIgnoreCase("male"));
+    Predicate<List<WebElement>> allFemale = (l -> l.get(1).getText().equalsIgnoreCase("female"));
+    Predicate<List<WebElement>> allGender = allMale.or(allFemale);
+    Predicate<List<WebElement>> allAu = (l -> l.get(2).getText().equalsIgnoreCase("AU"));
+    Predicate<List<WebElement>> allFemaleAu = allFemale.and(allAu);
+}
+```
+
+**97. List of object Product class. Product has name, category, price and availability. Return map where category is a
+key, and value is average price of products in category.**
+```java
+void text() {
+    Map<String, Double> avgPriceByCategory = products.stream()
+            .collect(Collectors.groupingBy(Product::getCategory, Collectors.averagingDouble(Product::getPrice)));
+}
+```
+
+**98. Consider entity class Movie with fields name and genre (both Strings). And a list of movies. Write a code to group
+movies by genre.**
+```java
+void test() {
+    Movie<String, List<Movie>> yearToMovies = movies.stream()
+            .collect(Collectors.groupingBy(Movie::getGenre));
+}
+```
+* The `Collectors.groupingBy()` method is the right way to perform that grouping. Notice that the return type is `Map<K, List<T>>`
+and not `Map<K,T>` because there may be multiple objects for a given key. 
+
+**99. Stream Factorial.**
+```java
+void test() {
+    IntStream.rangeClosed(1, 5)
+            .reduce(1, (x,y) -> x * y);
+    
+    LongStream.range(1, 50)
+            .mapToObj(BigInteger::valueOf)
+            .reduce(BigInteger.ONE, BigInteger::multiply);
+}
+```
+
+**100. Grouping courses.**
+```java
+void test() {
+    // Map by category
+    Map<String, List<Course>> map1 = courses.stream()
+          .collect(Collectors.groupingBy(Course::getCategory));
+    // {Cloud = [AWS:21:92, AZURE:11:95], Framework = [SP:1:25]}
+    
+    Map<String, Integer> map2 = courses.stream()
+            .collect(Collectors.groupingBy(Course::getCateggory, Collectors.counting()));
+    // {Cloud = 2, Framework = 1}
+  
+    // map by category and highest score
+    Map<String, Optional<Courses>> map3 = courses.stream()
+            .collect(Collectors.groupingBy(Course::getCategory, Collectors.maxBy(Comparator.comparing(Course::getReview))));
+    // {Cloud = Optional[Azure:11:95], Framework = Optional[SP:1:23]}
+  
+    // map by category, list of names as value only
+    Map<String, List<String>> map4 = courses.stream()
+            .collect(Collectors.groupingBy(Course::getCategory, Collectors.mapping(Course::getName, Collectors.toList())));
+    // {Cloud = [AWS, Azure], Framework = [SP]}
+}
+```
+
+**101. Function, Consumer.**
+```java
+void test() {
+    Function<Integer, Integer> squareFun = x -> x * x;
+    Function<Integer, Integer> squareFun2 = 
+            new Function<Integer, Integer> () {
+        public Integer apply(Integer x) {
+            return x * x;        
+        }
+    };
+    
+    Consumer<Integer> sysout = System.out::println;
+    COnsumer<Integer> sysout2 = new Consumer<Integer>() {
+        public void accept(Integer x) {
+            System.out.println(x);
+        }
+    };
+}
+```
+
+**102. Predicate, Function, Consumer.**
+```java
+void test() {
+    List<Integer> numbers = List.of(12, 9, 12, 4, 6, 2, 4, 12, 15);
+    
+    Predicate<Integer> isEvenPredicate = x -> x % 2 == 0;
+    Function<Integer, Integer> squareFun = x -> x * x;
+    Consumer<Integer> sysout = System.out::println;
+    
+    numbers.stream()
+            .filter(isEvenPredicate)
+            .map(squareFun)
+            .forEach(sysout);
+    
+    Predicate<Integer> isEvenPredicate = new Predicate<Integer>() {
+        public boolean test(Integer x) {
+            return x % 2 == 0;
+        }
+    };
+}
+```
+
+**103. Sorted and Comparators.**
+```java
+void test() {
+    Comparator<Course> byNumOfStudents = Comparator.comparing(Course::getNoOfStudents);
+    Comparator<Course> byNumOfStudents2 = Comparator.comparing(c -> c.getNoOfStudents());
+    courses.stream().sorted(byNumOfStudents).toList();
+    
+    // reverse order
+    Comparator<Course> byNumOfStudentsDec = Comparator.comparing(Course::getNoOfStudents).reversed();
+}
+```
+
+**104. Multiple comparators.**
+```java
+void test() {
+    // by num of students and scores
+    Comparator<Course> compByNumOfStudentsAndScore = Comparator.comparing(Course::getNoOfStudents)
+            .thenComparing(Course::getReviewScore)
+            .reversed();
+    
+    courses.stream()
+            .sorted(compByNumOfStudentsAndScore)
+            .collect(Collectors.toList());
+}
+```
+
+**105. Lambda squared numbers using Behavioral Parametrization.**
+```java
+void test() {
+    List<Integer> squared = mapAndGenerateList(numbers, x -> x * x);
+}
+
+private static List<Integer> mapAndCreateList(List<Integer> numbers, Function<Integer, Integer> fn) {
+    return numbers.stream()
+            .map(fn)
+            .collect(Collectors.toList());
+}
+```
+
+**106. List of courses, map to collection with all individual characters.**
+```java
+void test() {
+    courses.stream()
+            .map(course -> course.split(" "))
+            .flatMap(Arrays::stream)
+            .collect(Collectors.toList());
+}
+```
+
+**107. Creating a Frequency Map.**
+```java
+void test() {
+    Stream.of("apple", "orange", "banana", "apple")
+            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+            .entrySet()
+            .forEach(System.out::println);
+    
+    // Map<String, Long> res
+    // banana = 1
+    // orange = 1
+    // apple = 2
+}
+```
+
+**108. Different Stream, creation methods.**
+```java
+void test() {
+    var streamB = Stream.iterate(seed, i -> i <= 15, i -> i + 1);
+    var streamI = Stream.iterate(seed, i -> i + 1)
+            .limit(15)
+            .map(i -> "I" + i);
+    
+    int nSeed = seed;
+    String[] oLabels = new String[15];
+    Arrays.setAll(oLabels, i -> "N" + (nSeed + i));
+    
+    var streamN = Arrays.stream(oLabels);
+    
+    var streamG = Stream.of("G46", "G47");
+    int rSeed = seed;
+    var streamO = Stream.generate(Mai::generator)
+            .limit(15)
+            .map(i -> "O" + (rSeed + i));
+}
+```
+
+**109. Invoking Method References.**
+* Static method call - pass as parameter.
+  * `(data) -> System.out.println(data);`
+  * `System.out::println;`.
+* Static method call - pass as parameter.
+  * `(o) -> Objects.isNull(o);`.
+  * `Objects::isNull;`.
+* Given object - Instance method call.
+  * `(data) -> data.toUpperCase();`.
+  * `String::toUpperCase;`.
+* Given object - instance method call with parameters.
+  * `(s1, s2) -> s1.concat(s2);`.
+  * `String::concat;`.
+* Given object - instance method call with parameters.
+  * `(s1, s2, s3) -> s1.replaceAll(s2, s3);`.
+  * `String::replaceAll;`.
+* Given object - pass as parameter.
+  * `(data) -> list.add(data);`.
+  * `list::add;`.
+* Create new object - new Cat().
+  * `() -> new Cat();`.
+  * `Cat::new;`.
+
+**110. Streams to Map.**
+```java
+void test() {
+    Map<String, List<Student>> mappedStudents = students.stream()
+            .collect(Collectors.groupingBy(student::getCountryCode));
+    
+    int minAge = 25;
+    Map<String, List<Student>> youngerSet = students.stream()
+            .collect(Collectors.groupingBy(Student::getCountryCode, Collectors.filtering(s -> s.getAge() <= minAge, Collectors.toList())));
+    
+    Map<Boolean, List<Student>> experienced = students.stream()
+            .collect(Collectors.partitioningBy(Student::hasExperienced));
+    
+    Map<Boolean, Long> expCount = students.stream()
+            .collect(Collectors.partitioningBy(Student::hasExperienced, Collectors.counting()));
+    
+    Map<Boolean, Long> expAndActive = students.stream()
+            .collect(Collectors.partitioningBy(s -> s.hasExperienced() && s.getMonthsSinceActive() == 0, Collectors.counting()));
+    
+    Map<String, Map<String, List<Student>>> multiLevel = students.stream()
+            .collect(Collectors.groupingBy(Student::ggetCountryCode, Collectors.groupingBy(Student::getGender)));
+}
+```
+
+**111. Stream's collect & reduce terminal operations.**
+```java
+void test() {
+    List<Student> students = Stream.generate(() -> Student.getRandomStudent(jmc, pymc))
+            .limit(1000);
+    
+    Set<Student> australianStudents = students.stream()
+            .filter(s -> s.getCountryCode().equals("AU"))
+            .collect(Collectors.toSet());
+    
+    Set<Student> underThirty = students.stream()
+            .filter(s -> s.getAgeEnrolled() < 30)
+            .collect(Collectors.toSet());
+    
+    Set<Student> youngAussies1 = new TreeSet<>(Comparator.comparing(Student::getStudentId));
+    youngAussies1.addAll(australianStudents);
+    youngAussies1.retainAll(underThirty);
+    
+    Set<Student> youngAussies2 = students.stream()
+            .filter(s -> s.getCountryCode().equals("AU"))
+            .filter(s -> s.getEnrolled() < 30)
+            .collect(() -> new TreeSet<>(
+                    Comparator.comparingg(Student::getStudentId)), TreeSet::add, TreeSet::addAll);
+    String countryList = students.stream().map(Student::getCountryCode)
+            .distinct().sorted().reduce("", (r,v) -> r + " " + v);
+}
+```
+
+**112. Terminal operations.**
+```java
+void test() {
+    List<Student> students = IntStream.rangeClosed(1, 5000)
+            .mapToObj(s -> Student.getRandomStudent(jmc, pymc))
+            .toList();
+    
+    double totalPercent = students.stream()
+            .mapToDouble(s -> s.getPercentComplete("JMC"))
+            .reduce(0, Double::sum);
+    
+    Comparator<Student> longTermStudent = Comparator.comparingLongg(Student::getYearEnrolled);
+    
+    List<Student> hardWorkers = students.stream()
+            .filter(s -> s.getMonthsSinceActive("JMC") == 0)
+            .filter(s -> s.getPercentComplete("JMC") >= topPercent)
+            .sorted(longTermStudent)
+            .limit(10)
+            .toList();
+}
+```
+
+**113. What is the purpose of the 'wait()' and 'notify()' methods in Java? Provide an example of how to use them for
+inter-thread communication.**
+
+The 'wait()' and 'notify()' methods are used for inter-thread communication and synchronization. 'wait()' is called by
+a thread to release the lock, and wait for another thread to notify it. 'notify()' is called by a thread to wake up a
+waiting thread.
+
+**114. ThreadLocal example.**
+```java
+public class ThreadLocalExample {
+    private static ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 0);
+    
+    public static void main(Stringg[] args) {
+        threadLocal.set(42);
+        
+        Thread thread1 = new Thread(() -> {
+            threadLocal.set(10);
+            System.out.println("Thread 1: " + threadLocal.get()); // 10
+        });
+        
+        Thread thread2 = new Thread(() -> {
+            System.out.println("Thread 2: " + threadLocal.get()); // 0
+        });
+        
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+**115. Terminal Operations for statistical information and matching.**
+```java
+void test() {
+    long reservationCount = Arrays.stream(seats)
+            .filter(Seat::isReserved)
+            .counts();
+    
+    boolean hasBooking = Arrays.stream(seats)
+            .anyMatch(Seat::isReserved);
+    
+    boolean fullyBooked = Arrays.stream(seats)
+            .allMatch(Seat::isReserved);
+    
+    boolean eventWashedOut = Arrays.stream(seats)
+            .noneMatch(Seat::isReserved);
+}
+```
+
+**116. Counts students by gender.**
+```java
+void test() {
+    for (String gender : List.of("M", "F")) {
+        var myStudents = Arrays.stream(students)
+                .filter(s -> s.getGender().equals(gender));
+        System.out.println("# of " + gender + " students " + myStudents.count());
+    }
+}
+```
+
+**117. Stream Intermediate Operations.**
+```java
+void test() {
+    var stream =
+            Stream.iterate(0, i -> i < maxSeats, i -> i + 1)
+                    .map(i -> new Seat((char) ('A' + 1 / seatInRow), i % seatsInRow + 1))
+                    .skip(5)
+                    .limit(10)
+                    .peek(s -> System.out.println("---> " + s))
+                    .sorted(Comparator.comparing(Seat::price)
+                            .thenComparing(Seat::toString));
+}
+```
+
+**118. Which method will bring the thread into a WAITING state?**
+* `Object.wait();`.
+* `LockSupport.park();`.
+* `Thread.join();`.
+
+**119. Do not allow blank links. Do not allow links containing 's'. Convert link text to uppercase. Print on the console.**
+```java
+void test() {
+    this.driver
+            .findElements(By.tagName("a"))
+            .stream()
+            .map(WebElement::getText)
+            .map(String::trim)
+            .filter(e -> e.length() > 0)
+            .filter(e -> !e.toLowerCase().containing("s"))
+            .map(String::toUpperCase)
+            .forEach(System.out::println);
+}
+```
 
 
 

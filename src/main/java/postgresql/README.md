@@ -757,27 +757,27 @@ JOIN authors ON authors.id = reviews.reviewer_id AND authors.id = books.author_i
 
 ## Aggregation of Records.
 
-**Grouping**
+**Grouping.**
 
 - Reduces many rows down to fewer rows.
 - Done by using the 'GROUP BY' keyword.
 - Visualizing the result is key to use.
 
-**Aggregates**
+**Aggregates.**
 
 - Reduces many values down to one.
 - Done by using 'aggregate functions'.
 
-### Picturing Group By
+### Picturing Group By.
 
 ![Group By](images/group-by.png "Group By")
 
-```
+```sql
 SELECT user_id 
 FROM comments GROUP BY user_id;
 ```
 
-### Aggregate Functions
+### Aggregate Functions.
 
 - `COUNT()`: Returns the number of values in a group of values.
 - `SUM()`: Finds the **sum** of a group of numbers.
@@ -787,16 +787,16 @@ FROM comments GROUP BY user_id;
 
 ![Aggregate Functions](images/aggregate-functions.png "Aggregate Functions")
 
-```
+```sql
 SELECT MAX(id) 
 FROM comments;
 ```
 
-### Combining Group By and Aggregates
+### Combining Group By and Aggregates.
 
 ![Group By and Aggregation](images/group-by-and-aggregation.png "Group By and Aggregation")
 
-```
+```sql
 SELECT user_id, MAX(id)
 FROM comments
 GROUP BY user_id;
@@ -804,13 +804,13 @@ GROUP BY user_id;
 
 ![Group By and Aggregation Count ID](images/group-by-and-aggregation-example2.png "Group By and Aggregation Count ID")
 
-```
+```sql
 SELECT user_id, COUNT(id) AS num_comments_created
 FROM comments
 GROUP BY user_id;
 ```
 
-### A Gotcha with Count
+### A Gotcha with Count.
 
 ```
 SELECT COUNT(user_id) FROM photos;
@@ -823,13 +823,13 @@ FROM comments
 GROUP BY user_id;
 ```
 
-### Visualizing More Grouping
+### Visualizing More Grouping.
 
 **Find the number of comments for each photo.**
 
 ![Group By](images/group-by-example-3.png "Group By")
 
-```
+```sql
 SELECT photo_id, COUNT(*)
 FROM comments
 GROUP BY photo_id;
@@ -837,7 +837,7 @@ GROUP BY photo_id;
 
 **Write a query that will print an author's 'id' and the number of books they have authored.**
 
-```
+```sql
 SELECT author_id, COUNT(*)
 FROM books
 GROUP BY author_id;
@@ -845,14 +845,14 @@ GROUP BY author_id;
 
 **Write a query that will print an author's 'name' and the number of books they have authored.**
 
-```
+```sql
 SELECT name, COUNT(*)
 FROM books
 JOIN authors ON authors.id = books.author_id
 GROUP BY authors.name
 ```
 
-### Filtering Groups with Having
+### Filtering Groups with Having.
 
 - `FROM`: Specifies starting set of rows to work with.
 - `JOIN`: Merges in data from additional tables.
@@ -860,13 +860,13 @@ GROUP BY authors.name
 - `GROUP BY`: Groups rows by a unique set of values.
 - `HAVING`: Filters the set of groups.
 
-### HAVING Examples
+### HAVING Examples.
 
-**Find the number of comments for each photo where the photo_id us less than 3 and the photo has more than 2 comments.**
+**Find the number of comments for each photo where the photo_id is less than 3 and the photo has more than 2 comments.**
 
 ![Filtering with Having](images/filtering-with-having.png "Filtering with Having")
 
-```
+```sql
 SELECT photo_id, COUNT(*)
 FROM comments
 WHERE photo_id < 3
@@ -883,7 +883,7 @@ HAVING COUNT(*) > 2;
 
 ![Filtering with Having example 2](images/having-example-2.png "Filtering with Having example 2")
 
-```
+```sql
 SELECT user_id, COUNT(*)
 FROM comments
 WHERE photo_id < 50
@@ -896,31 +896,31 @@ Only print the manufacturers who have revenue greater than 2,000,000 for all the
 
 ![Filtering with Having example 3](images/having-example-3.png "Filtering with Having example 3")
 
-```
+```sql
 SELECT manufacturer, SUM(price * units_sold)
 FROM phones
 GROUP BY manufacturer
 HAVING SUM(price * units_sold) > 2000000;
 ```
 
-### Working with large datasets
+### Working with large datasets.
 
 **Ex 15: Write a query to print the number of paid and unpaid orders.**
 
 ![Group by orders](images/group-by-orders.png "Group by orders")
 
-```
+```sql
 SELECT paid, COUNT(*) 
 FROM orders 
 GROUP BY paid;
 ```
 
 **Ex 16: Join together the users and orders tables. Print the first_name and last_name of each user, 
-then whether or not they have paid for their order.**
+then whether, or not they have paid for their order.**
 
 ![Users Orders Join](images/users-orders-join.png "Users Orders Join")
 
-```
+```sql
 SELECT first_name, last_name, paid
 FROM users 
 JOIN orders ON orders.user_id = users.id
@@ -928,19 +928,19 @@ JOIN orders ON orders.user_id = users.id
 
 ***
 
-## Sorting Records
+## Sorting Records.
 
 ![Sort By Price](images/sort-by-price.png "Sort By Price")
 
-```
+```sql
 SELECT * 
 FROM products
 ORDER BY price ASC;
 ```
 
-### Two Variations on Sorting
+### Two Variations on Sorting.
 
-```
+```sql
 SELECT *
 FROM products
 ORDER BY name;
@@ -951,18 +951,18 @@ FROM products
 ORDER BY price, weight;
 ```
 
-### Offset and Limit
+### Offset and Limit.
 
 ![Offset and Limit](images/offset-limit.png "Offset and Limit")
 
-```
+```sql
 -- Out of 50 users, skip first 40 and print last 10
 SELECT * 
 FROM users 
 OFFSET 40;
 ```
 
-```
+```sql
 SELECT * 
 FROM users
 LIMIT 50;
@@ -983,7 +983,7 @@ OFFSET 0;
 
 **Ex 17: Write a query that shows the names of only the second and third most expensive phones.**
 
-```
+```sql
 SELECT name
 FROM phones 
 ORDER BY price DESC
@@ -993,11 +993,11 @@ OFFSET 1;
 
 ***
 
-## Unions and Sets
+## Unions and Sets.
 
 **Find the 4 products with the highest price and the 4 products with the highest price/weight ratio**
 
-```
+```sql
 (
     SELECT *
     FROM products
@@ -1013,7 +1013,7 @@ UNION ALL
 );
 ```
 
-### Commonalities with Intersects
+### Commonalities with Intersects.
 
 - `UNION`: Join together the results of two queries and remove duplicate rows.
 - `UNION ALL`: Join together results of two queries.
@@ -1022,9 +1022,9 @@ UNION ALL
 - `EXCEPT`: Find the rows that are present in first query but not second query. Remove duplicates.
 - `EXCEPT ALL`: Find the rows that are present in first query but not second query.
 
-### Intersect
+### Intersect.
 
-```
+```sql
 (
     SELECT *
     FROM products
@@ -1040,11 +1040,11 @@ INTERSECT ALL
 );
 ```
 
-### Except
+### Except.
 
 ![Except](images/except.png "Except")
 
-```
+```sql
 (
   SELECT *
   FROM products
@@ -1064,7 +1064,7 @@ EXCEPT
 Also print all manufacturer that have created more than two phones.
 IMPORTANT: You don't need to wrap each query with parenthesis! Your solution should not have any parens in it.**
 
-```
+```sql
 SELECT manufacturer
 FROM phones
 WHERE price < 170
@@ -1077,19 +1077,19 @@ HAVING COUNT(*) > 2;
 
 ***
 
-## Assembling Queries with SubQueries
+## Assembling Queries with SubQueries.
 
 **List the name and price of all products that are more expensive than all products in the 'Toys' department.**
 
 ![Subquery](images/subquery-example-1.png "Subquery")
 
-```
-SELECT name,proce
+```sql
+SELECT name,price
 FROM products
 WHERE price > 876;
 ```
 
-```
+```sql
 SLECT name, price
 FROM products
 WHERE price > (
@@ -1097,19 +1097,19 @@ WHERE price > (
 )
 ```
 
-### Thinking About the Structure of Data
+### Thinking About the Structure of Data.
 
-**Understanding the shape of a query result**
+**Understanding the shape of a query result.**
 
 - `SELECT * FROM orders`: Many rows, many columns.
 - `SELECT id FROM orders`: Many rows, one column.
 - `SELECT COUNT(*) FROM orders`: One row, one column (single value) Scalar query.
 
-### Subqueries in SELECT
+### Subqueries in SELECT.
 
 ![Subquery 1](images/subquery1.png "Subquery 1")
 
-```
+```sql
 SELECT name, price, (
   SELECT MAX(price) FROM products 
 )
@@ -1119,7 +1119,7 @@ WHERE price > 867;
 
 ![Subquery 2](images/subquery2.png "Subquery 2")
 
-```
+```sql
 SELECT name, price, (
   SELECT price FROM products WHERE id = 3
 ) AS id_3_price
@@ -1128,25 +1128,25 @@ WHERE price > 867;
 ```
 
 **Write a query that prints the name and price for each phone.  In addition, print out the ratio of the phones price 
-against max price of all phones (so price / max price).  Rename this third column to price_ratio**
+against max price of all phones (so price / max price).  Rename this third column to price_ratio.**
 
-```
+```sql
 SELECT name, price, price / (SELECT MAX(price) FROM phones) AS price_ratio
 FROM phones;
 ```
 
-### Subqueries in FROM
+### Subqueries in FROM.
 
 ![Subquery 3](images/subquery3.png "Subquery in FROM")
 
 - Subquery must have an alias applied to is (**AS p**)
 
-```
+```sql
 SELECT name, price / weight AS price_weight_ratio
 FROM products;
 ```
 
-```
+```sql
 SELECT name, price_weight_ratio
 FROM (
   SELECT name, price / weight AS price_weight_ratio
@@ -1155,7 +1155,7 @@ FROM (
 WHERE price_weight_ration > 5;
 ```
 
-```
+```sql
 SELECT *
 FROM (SELECT MAX(price) FROM products) AS p;
 ```
@@ -1164,19 +1164,19 @@ FROM (SELECT MAX(price) FROM products) AS p;
 
 ![Subquery](images/sybquery-example-2.png "Subquery in FROM")
 
-```
+```sql
 SELECT AVG(p.order_count)
 FROM (
   SELECT user_id, COUNT(*) AS order_count
   FROM orders
   GROUP BY user_id
-) AS p
+) AS p;
 ```
 
 **Calculate the average price of phones for each manufacturer. Then print the highest average price. Rename this value 
-to max_average_price**
+to max_average_price.**
 
-```
+```sql
 SELECT MAX(p.avg_price) AS max_average_price
 FROM (
   SELECT AVG(price) AS avg_price
@@ -1185,9 +1185,9 @@ FROM (
 ) AS p;
 ```
 
-### Subqueries in a JOIN Clause
+### Subqueries in a JOIN Clause.
 
-```
+```sql
 SELECT first_name
 FROM users
 JOIN (
@@ -1198,19 +1198,19 @@ ON o.user_id = users.id;
 
 ### Subqueries with WHERE
 
-**Show the id of orders that involve a product with a price/weight ratio greater than 5**
+**Show the id of orders that involve a product with a price/weight ratio greater than 5.**
 
-```
+```sql
 SELECT id
 FROM orders
 WHERE product_id IN (
-  SELECT id FROM products WHERE price / weight > 50
+  SELECT id FROM products WHERE price / weight > 5
 );
 ```
 
-**Show the name of all products with a price grater than the average product price**
+**Show the name of all products with a price grater than the average product price.**
 
-```
+```sql
 SELECT name
 FROM products
 WHERE price > (
@@ -1220,7 +1220,7 @@ WHERE price > (
 
 **Write a query that prints out the name and price of phones that have a price greater than the Samsung S5620 Monte.**
 
-```
+```sql
 SELECT name, price 
 FROM phones
 WHERE price > (SELECT price FROM phones WHERE name = 'S5620 Monte'); 
@@ -1228,7 +1228,7 @@ WHERE price > (SELECT price FROM phones WHERE name = 'S5620 Monte');
 
 **Show the name of all products that are not in the same department as products with a price less than 100**
 
-```
+```sql
 SELECT name, department
 FROM products
 WHERE department NOT IN (
@@ -1239,7 +1239,7 @@ WHERE department NOT IN (
 **Show the name, department, and price of products that are more expensive than all products in the 'industrial' 
 department.**
 
-```
+```sql
 SELECT name, department, price
 FROM products
 WHERE price > ALL (
@@ -1249,7 +1249,7 @@ WHERE price > ALL (
 
 **Show the name of products that are more expensive that at least one product in the 'Industrial' department**
 
-```
+```sql
 SELECT name, department, price
 FROM products
 WHERE price > SOME (
@@ -1259,29 +1259,29 @@ WHERE price > SOME (
 );
 ```
 
-**Questions**
+### Questions.
 
-1) Is the following a valid use of a subquery? 
+**1. Is the following a valid use of a subquery?** 
 
-```
+```sql
 SELECT price, (SELECT manufacturer, units_sold FROM phones)
 FROM phones;
 ```
 
 - No, the subquery is returning more than one column in a `SELECT` clause.
 
-2) Is the following a valid use of a subquery?
+**2. Is the following a valid use of a subquery?**
 
-```
+```sql
 SELECT price * units_sold
 FROM (SELECT * FROM phones);
 ```
 
 - No, a subquery in a `FROM` must be given an alias.
 
-3) Is the following a valid use of a subquery?
+**3. Is the following a valid use of a subquery?**
 
-```
+```sql
 SELECT price * units_sold
 FROM phones
 WHERE price > ALL (SELECT price FROM phones WHERE manufacturer = 'Nokia');
@@ -1289,7 +1289,7 @@ WHERE price > ALL (SELECT price FROM phones WHERE manufacturer = 'Nokia');
 
 **Write a query that print the name of all phones that have a price greater than any phone made by Samsung.**
 
-```
+```sql
 SELECT name
 FROM phones
 WHERE price > ALL (
@@ -1299,7 +1299,7 @@ WHERE price > ALL (
 
 **Show the name, department, and price of the most expensive product in each department**
 
-```
+```sql
 SELECT name, department, price
 FROM products AS p1
 WHERE p1.price = (
@@ -1311,30 +1311,30 @@ WHERE p1.price = (
 
 **Without using a join or a group by, print the number of orders for each product**
 
-```
+```sql
 SELECT p1.name,
   (
     SELECT 
     FROM orders AS o1
     WHERE o1.product_id = p1.id
   ) AS num_orders
-FROM products AS p1
+FROM products AS p1;
 ```
 
-### A Select Without a From.
+### A SELECT Without a FROM.
 
-```
+```sql
 SELECT (
   SELECT MAX(price) FROM products
 ) / (
-  SELECT MIN(proce) FROM products
+  SELECT MIN(price) FROM products
 )
 ```
 
 **Using only subqueries, print the max price, min price, and average price of all phones.  Rename each column to 
-max_price, min_price, avg_price**
+max_price, min_price, avg_price.**
 
-```
+```sql
 SELECT 
   (SELECT MAX(price) FROM phones) AS max_price,
   (SELECT MIN(price) FROM phones) AS min_price,
@@ -1343,36 +1343,36 @@ SELECT
 
 ***
 
-## 10: Selecting Distinct Records
+## 10. Selecting Distinct Records.
 
 **What unique departments are there?**
 
-```
+```sql
 SELECT DISTINCT department 
 FROM products;
 ```
 
 **Count unique departments.**
 
-```
+```sql
 SELECT COUNT(DISTINCT department) 
 FROM products;
 ```
 
 **Write a query that will print the number of unique phone manufacturers.**
 
-```
+```sql
 SELECT COUNT(DISTINCT manufacturer)
 FROM phones;
 ```
 
 ***
 
-## 11: Utility Operators, Keywords, and Functions
+## 11. Utility Operators, Keywords, and Functions.
 
 **The Greatest Value in a List.**
 
-```
+```sql
 SELECT GREATEST(20, 10, 30);
 ```
 
@@ -1380,14 +1380,14 @@ SELECT GREATEST(20, 10, 30);
 
 - Shipping is the maximum of (weight * $2) or $30.
 
-```
+```sql
 SELECT name, weight, GREATEST(30, 2 * weight)
 FROM products;
 ```
 
 **The Least Value in a List!**
 
-```
+```sql
 SELECT LEAST(1, 20, 50, 100);
 ```
 
@@ -1395,18 +1395,18 @@ SELECT LEAST(1, 20, 50, 100);
 
 - Price is the least of the products price * 0.5 or $400.
 
-```
+```sql
 SELECT name, price, LEAST(price * 0.5, 400)
 FROM products;
 ```
 
-**Print each product and its price. Also print a description of the price**
+**Print each product and its price. Also print a description of the price.**
 
 - If price > 600 then 'high'.
 - If price > 300 then 'medium'.
 - else print 'cheap'.
 
-```
+```sql
 SELECT
   name,
   price,
@@ -1449,7 +1449,7 @@ FROM employees
 ORDER BY name;
 ```
 
-**4. Given customers `id | name`. And orders `id | customer_id | price`. Return the names of customers whi have made an
+**4. Given customers `id | name`. And orders `id | customer_id | price`. Return the names of customers which have made an
 order with a max price less than 100.**
 
 ```sql
@@ -1472,7 +1472,7 @@ JOIN max_price_orders mpo ON c.id = mpo.customer_id
 ORDER BY c.name;
 ```
 
-**5. Given Customers `id | name` and Orders `id | customer_id | price`. Return the names of customers who have made an
+**5. Given Customers, `id | name` and Orders, `id | customer_id | price`. Return the names of customers who have made an
 order with price less than 100.**
 
 ```sql
@@ -1494,7 +1494,7 @@ SELECT name
 ORDER BY name;
 ```
 
-**6. Given users table `id | name` and posts table `id | user_id | title | content`. Return the names of users who have 
+**6. Given Users table, `id | name` and Posts table, `id | user_id | title | content`. Return the names of users who have 
 not made any posts.**
 
 ```sql
@@ -1508,7 +1508,7 @@ SELECT name
 ORDER BY name ASC;
 ```
 
-**7. GGiven employees table `id | name | salary | department`. Return all employees who have a salary below the average 
+**7. Given Employees table, `id | name | salary | department`. Return all employees who have a salary below the average 
 salary from the marketing department.**
 
 ```sql
@@ -1523,7 +1523,7 @@ SELECT e.name, e.salary
 ORDER BY e.salary;
 ```
 
-**8. Given sports table `id | name | total_viewers`. Return sports that have less than the average number of viewers among
+**8. Given Sports table, `id | name | total_viewers`. Return sports that have less than the average number of viewers among
 all sports.**
 
 ```sql
@@ -1556,8 +1556,8 @@ CREATE TABLE orders(
 );
 ```
 
-**10. Given a table players: `id | name | team_id`. And table teams: `id | name`. And table contracts: `id | player_id, salary`.
-Return the following columns is order:The player name renamed as player_name. 
+**10. Given a table players: `id | name | team_id`. And table teams: `id | name`. And table contracts: `id | player_id | salary`.
+Return the following columns is order. The player name renamed as player_name. 
 The team name renamed as team_name.
 The salary of the player.**
 
@@ -1575,7 +1575,7 @@ If a pokemon type does not have any pokemon, the result should contain NULL for 
 
 ```sql
 SELECT t.name AS type, p.name AS pokemon, t.weakness
-  FROM pokemon AS p RIGGHT JOIN
+  FROM pokemon AS p RIGHT JOIN
     pokemon_types AS t
   ON p.type_id = t.id
 ORDER BY type;
@@ -1608,7 +1608,7 @@ ORDER BY e.company_name ASC;
 student name in ascending order.**
 
 ```sql
-SELECT students.name, course_reggistration.course_name
+SELECT students.name, course_registration.course_name
   FROM students INNER JOIN course_registrations
     ON students.id = course_registrations.student_id
 ORDER BY student.name ASC;
@@ -1637,9 +1637,9 @@ The result should only include at most 5 rows.**
 ```sql
 SELECT country, year, SUM(gold) + SUM(silver) + SUM(bronze) AS total_medals
   FROM olimpic_medals
-WHERE category != 'GGymnastics'
+WHERE category != 'Gymnastics'
 GROUP BY country, year
-HAVINGG SUM(gold) + SUM(silver) + SUM(bronze) > 20
+HAVING SUM(gold) + SUM(silver) + SUM(bronze) > 20
 ORDER BY total_medals DESC
 LIMIT 5;
 ```
@@ -1802,7 +1802,7 @@ HAVING COUNT(emp_name) > 1;
 
 ```sql
 SELECT emp_name, row_number()
-    OVER (ORDER BY emp_name DESC) row_numver 
+    OVER (ORDER BY emp_name DESC) row_number 
   FROM Employee; 
 ```
 
@@ -1844,7 +1844,7 @@ SELECT p.product_id
 WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.product_id = p.product_id);
 ```
 
-**37. Find the customers from a 'customers' table who have places at least one order in an 'orders' table.**
+**37. Find the customers from a 'customers' table who have placed at least one order in an 'orders' table.**
 
 ```sql
 SELECT c.customer_id
@@ -1890,7 +1890,7 @@ WHERE a.salary > b.salary;
 SELECT d.dep_id, d.dep_name, AVG(e.salary) AS avg_salary
   FROM departments d
     JOIN employees e ON d.dep_id = e.dep_id
-  GGROUP BY d.dep_id, d.dep_name;
+  GROUP BY d.dep_id, d.dep_name;
 ```
 
 **42. Write SQL query to find Employees who have the biggest salary in their Department?**
@@ -1901,7 +1901,7 @@ SELECT a.emp_name, a.dep_id
     (SELECT a.dept_id, MAX(salary) AS max_salary
       FROM Employee a JOIN Department d
         ON a.dept_id = b.dept_id
-        HROUP BY a.dept_id) b
+        GROUP BY a.dept_id) b
     ON a.salary = b.max_salary AND a.dept_id = b.dept_id;
 ```
 
@@ -2104,7 +2104,7 @@ WHERE
 **66. Query a list of city names starting with vowels (a, e, i, o, u) from station. Your result cannot contain duplicates.**
 
 ```sql
-SELECT DISTIONCT city
+SELECT DISTINCT city
   FROM station
 WHERE city LIKE 'a%' OR city LIKE 'e%' OR city LIKE 'i%' OR city LIKE 'o%' OR city LIKE 'u%';
 ```
@@ -2147,7 +2147,7 @@ SELECT * FROM customers
 ```sql
 SELECT A.customer_id, B.customer_id 
   FROM customers A
-    INNERT JOIN customers B ON A.city = B.city AND A.customer_id != B.customer_id;
+    INNER JOIN customers B ON A.city = B.city AND A.customer_id != B.customer_id;
 ```
 
 **72. Query that retrieves all products from a 'products' table, along with any orders for those products from an
@@ -2165,7 +2165,7 @@ table using an INNER JOIN.**
 ```sql
 SELECT *
   FROM orders
-    INNERT JOIN customers ON orders.customer_id = customers.customer_id;
+    INNER JOIN customers ON orders.customer_id = customers.customer_id;
 ```
 
 **74. Query that retrieves all pairs of customers from a 'customers' table who live in the same city.**
@@ -2232,7 +2232,7 @@ SELECT u.name, o.order_id
 **81. Compute the average price for each product category in 'products' table.**
 
 ```sql
-SELECT category, AVGG(price)
+SELECT category, AVG(price)
   FROM products
 GROUP BY category;
 ```
@@ -2242,7 +2242,7 @@ GROUP BY category;
 ```sql
 SELECT category, SUM(sales_amount)
   FROM sales
-GGROUP BY category;
+GROUP BY category;
 ```
 
 **83. Count the number of products in each category in a 'products' table.**
@@ -2446,7 +2446,7 @@ GROUP BY author;
 ```sql
 SELECT author_fname, author_lname, MIN(released_year)
   FROM books
-GROUP BY auuthor_lname, author_fname;
+GROUP BY author_lname, author_fname;
 ```
 
 **105. Find the longest page count for each author.**
@@ -2513,7 +2513,7 @@ GROUP BY author_fname, author_lname;
 | 2017 | 1      | 367.000   |
 
 ```sql
-SELECT released_year AS year, COUNT(*) AS '#books', AVG(pages) AS 'avg pagges'
+SELECT released_year AS year, COUNT(*) AS '#books', AVG(pages) AS 'avg pages'
   FROM books
 GROUP BY released_year
 ORDER BY released_year;  
@@ -2615,7 +2615,7 @@ first when ordered alphabetically.**
 ```sql
 SELECT city AS c, LENGTH(city) AS l
   FROM station
-ORDER BY l DESC, c ASC LIMIT 1
+ORDER BY l DESC, c ASC LIMIT 1;
 ```
 
 ```sql
@@ -2772,7 +2772,7 @@ CREATE TABLE new_table AS SELECT * FROM existing_table;
 38.7780. Round your answer to 4 decimal places.**
 
 ```sql
-SELECT ROUND(longg_w, 4) 
+SELECT ROUND(long_w, 4) 
   FROM station
 WHERE
   lat_n = (SELECT MIN(lat_n) FROM station WHERE lat_n > 38.7780);
@@ -2800,7 +2800,7 @@ WHERE author_lname LIKE '% %';
 | 10% Happier - 2014     |
 
 ```sql
-SELECT CONCAT(titlem, '-', released_year) AS summary
+SELECT CONCAT(title, '-', released_year) AS summary
   FROM books
 ORDER BY released_year DESC LIMIT 3;
 ```
@@ -2876,7 +2876,7 @@ SELECT DISTINCT author_fname, author_lname
   FROM books;
 ```
 
-**149. Select title that contains ;stories'.**
+**149. Select title that contains 'stories'.**
 
 | title                |
 |----------------------|
