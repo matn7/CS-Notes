@@ -1,12 +1,12 @@
-# Angular
+# Angular.
 
-**Generating a New Project**
+**Generating a New Project.**
 
 ```console
 ng new <app name>
 ```
 
-**Starting an Angular Project**
+**Starting an Angular Project.**
 
 ```console
 npm start
@@ -18,14 +18,14 @@ ng serve
 
 - Every file creates or defines one thing for our app.
 
-| Name | Type | Purpose |
-|---|---|---|
-| `app.component.html` | Component Template | Contains the HTML that gets displayed to a user |
-| `app.component.ts` | Component Class | Contains code to run when important events occur (like when a user clicks a button) |
-| `translate.service.ts` | Service | Contains code that fetches/stores/updates data |
-| `app.module.ts` | Module | Defines a set of services + components that handle all the functionality for a part of our app |
+| Name                   | Type                | Purpose                                                                                        |
+|------------------------|---------------------|------------------------------------------------------------------------------------------------|
+| `app.component.html`   | Component Template  | Contains the HTML that gets displayed to a user                                                |
+| `app.component.ts`     | Component Class     | Contains code to run when important events occur (like when a user clicks a button)            |
+| `translate.service.ts` | Service             | Contains code that fetches/stores/updates data                                                 |
+| `app.module.ts`        | Module              | Defines a set of services + components that handle all the functionality for a part of our app |
 
-**Event Binding**
+**Event Binding.**
 
 - Event Binding Syntax:
   - **(click)** - Name of the event we want to watch for.
@@ -37,7 +37,7 @@ ng serve
 
 ![Event Binding Syntax](images/event-binding-syntax.png "Event Binding Syntax")
 
-**Property Binding**
+**Property Binding.**
 
 - Property Binding Syntax:
   - **[value]** - Name of the property we want to set on this element.
@@ -49,7 +49,7 @@ ng serve
 
 ![Property Binding Syntax](images/property-binding-syntax.png "Property Binding Syntax")
 
-**Interpolation Syntax**
+**Interpolation Syntax.**
 
 ```ts
 {{ password }}
@@ -58,30 +58,30 @@ ng serve
 **Angular vs JavaScript Design Pattern**
 
 - Traditional JS-Only Approach (Pull information out of the DOM):
-  - User enters a password length
-  - User selects 'Include Letters'
-  - User clicks 'Generate' button
-  - We read the value of 'password length' input
-  - We read the value of all three checkboxes
-  - We generate a random password
-  - We throw the password in the 'output' input
+  - User enters a password length.
+  - User selects 'Include Letters'.
+  - User clicks 'Generate' button.
+  - We read the value of 'password length' input.
+  - We read the value of all three checkboxes.
+  - We generate a random password.
+  - We throw the password in the 'output' input.
 - Angular Approach (Get information out of events):
-  - User enters a password length
+  - User enters a password length.
   - Event handler triggered, we store the value as a property on our component class instance:
-    - Need event handler to detect change + property on component class so the value can be used later
-  - User checks the 'Include Letters' checkbox
+    - Need event handler to detect change + property on component class so the value can be used later.
+  - User checks the 'Include Letters' checkbox.
   - Event handler triggered, we store the value as a property on our component class instance:
-    - Need event handler to detect change + property on component class so the value can be used later
-  - User clicks the 'Generate' button
-  - Event handler triggered, we generate a password using the properties collected earlier
-  - We update a 'password' property on the component class instance, which causes an update of the 'output' input
+    - Need event handler to detect change + property on component class so the value can be used later.
+  - User clicks the 'Generate' button.
+  - Event handler triggered, we generate a password using the properties collected earlier.
+  - We update a 'password' property on the component class instance, which causes an update of the 'output' input.
   
 
-**Structural Directives**
+**Structural Directives.**
 
 ![Structural Directives](images/str-attr-directives.png "Structural Directives")
 
-**Deploying Angular Apps**
+**Deploying Angular Apps.**
 
 - **now.sh:** Free, CLI-based deployments. Automatically figures out how to build your app.
 
@@ -91,7 +91,7 @@ npm install -g now
 now login
 ```
 
-**Terminology review**
+**Terminology review.**
 
 - Component Template:
   - Contains the HTML that gets displayed to a user.
@@ -117,7 +117,7 @@ now login
 
 ***
 
-## Angular Components
+## Angular Components.
 
 **Angular Components**
 
@@ -125,21 +125,21 @@ now login
 - Each component designed to implement one **thing** in the app that is visible on the screen.
 - A component wraps up all the HTML and code to make one little widget work correctly.
 - A component can be reused multiple times in the same application.
-- Components can be nested, or shown inside of each other.
+- Components can be nested, or shown inside each other.
 - Every app has a component called the **App** component, and it is always the most parent component.
 - Each component has its own:
-    - Component Class
-    - Component Template
-    - Component CSS File
-    - Spec File
+    - Component Class.
+    - Component Template.
+    - Component CSS File.
+    - Spec File.
 
-**Generating a New Component**
+**Generating a New Component.**
 
 ```console
 ng generate component <name>
 ```
 
-**App Bootup Process**
+**App Bootup Process.**
 
 - Angular loads up each component class file, inspects the **selector** property.
 - Angular then takes a look at the HTML document that got loaded into the browser.
@@ -150,17 +150,17 @@ ng generate component <name>
 - Angular creates an instance of that component.
 - Angular turns the instance's template into real HTML, then sticks it into the **app-card** element (the **host** element).
 
-**CSS Styling**
+**CSS Styling.**
 
 ![Styling](images/styling.png "Styling")
 
-**Communicating from Parent to Child**
+**Communicating from Parent to Child.**
 
 ![Input Binding](images/communicating-from-parent-to-child.png "Input Binding")
 
 ![Input Binding - Diagram](images/component-communication.png "Input Binding Diagram")
 
-### Pipes
+### Pipes.
 
 - Functions that format data for use in a template.
 - Only used in a template.
@@ -171,7 +171,7 @@ ng generate component <name>
 ng generate pipe convert
 ```
 
-### Directives
+### Directives.
 
 - Can be used to modify the structure or properties of HTML elements.
 - Used only in a template.
@@ -180,7 +180,7 @@ ng generate pipe convert
 ng generate directive class
 ```
 
-**Communicate from parent to child component**
+**Communicate from parent to child component.**
 
 ```html
 <!-- Parent Component Template -->
@@ -218,27 +218,27 @@ export class ClassDirective {
 }
 ```
 
-### Module System
+### Module System.
 
-| Problems | Solutions |
-|---|---|
-| Need to show different pages of content to the user | Use Angular's Routing feature to allow the user to navigate around and see different pages |
-| There are a lot of different components we need to create! | Make separate Modules to group together each set of components |
-| We should make these components somehow reusable | Study each widget we are goind to make in detail and figure out a way to pass it some config options |
+| Problems                                                   | Solutions                                                                                            |
+|------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| Need to show different pages of content to the user        | Use Angular's Routing feature to allow the user to navigate around and see different pages           |
+| There are a lot of different components we need to create! | Make separate Modules to group together each set of components                                       |
+| We should make these components somehow reusable           | Study each widget we are goind to make in detail and figure out a way to pass it some config options |
 
 ```console
 ng new comps --routing
 ```
 
-**Module Types**
+**Module Types.**
 
-- **Domain:** Wraps up all the components needed to implement one single feature.
-- **Routed:** Domain module plus tied to routes.
-- **Routing:** Defines routing rules.
-- **Service:** Defines services that will be used in multiple parts of the app.
-- **Widget:** Defines some reusable components that will be used in multiple other modules.
+- **Domain**: Wraps up all the components needed to implement one single feature.
+- **Routed**: Domain module plus tied to routes.
+- **Routing**: Defines routing rules.
+- **Service**: Defines services that will be used in multiple parts of the app.
+- **Widget**: Defines some reusable components that will be used in multiple other modules.
 
-**Generating Modules**
+**Generating Modules.**
 
 ```console
 ng generate module MODULE_NAME --routing
@@ -252,9 +252,9 @@ ng generate component elements/ElementsHome
 
 - **--routing** flag tells Angular to make this module ready for navigation.
 
-**Module Property Definitions**
+**Module Property Definitions.**
 
-- **Modules:**
+- **Modules**:
     - declarations: List of components, pipes, directives that are created in this module.
     - imports: List of other modules that this module depends upon.
     - exports: List of components, pipes, directives that this module makes available to other modules.
@@ -269,9 +269,9 @@ ng generate component elements/ElementsHome
 <router-outlet></router-outlet>
 ```
 
-### Lazy Loading with Modules
+### Lazy Loading with Modules.
 
-**Implementing Lazy Loading**
+**Implementing Lazy Loading.**
 
 - Choose which module should be lazy loaded.
 - For each of these modules, remove any import statements for those modules from anywhere else in your project.
@@ -281,21 +281,21 @@ ng generate component elements/ElementsHome
 
 ![Lazy Loading](images/lazy-loading.png "Lazy Loading")
 
-**NgContent**
+**NgContent.**
 
 ![NgContent](images/ng-content.png "NgContent")
 
-### Lifecycle Hooks
+### Lifecycle Hooks.
 
-- **ngOnInit:** Called once after this component first displayed on the screen and after Angular has
+- **ngOnInit**: Called once after this component first displayed on the screen and after Angular has
 set any properties passed down from the parent component.
-- **ngOnDestroy:** Called once when Angular is about to remove this component (for example, when we navigate
+- **ngOnDestroy**: Called once when Angular is about to remove this component (for example, when we navigate
 to a different route!).
-- **ngOnChanges:** Called anytime a property of the component changed (including when a parent component passed down the data).
+- **ngOnChanges**: Called anytime a property of the component changed (including when a parent component passed down the data).
 
 ***
 
-## Typescript
+## Typescript.
 
 - Superset of Javascript (it has all the features of JS + more).
 - We write TS during development, but the browser still runs JS.
@@ -309,7 +309,7 @@ npm init -y
 npm install typescript ts-node-dev
 ```
 
-**Type Interference**
+**Type Interference.**
 
 - Typescript is smart! It can figure out things for us.
 - If we initialize and assign a variable on a single line, Typescript will try to figure out the type
@@ -325,7 +325,7 @@ of variable for us.
 npx typescript --init
 ```
 
-**Decorators**
+**Decorators.**
 
 - Plain functions.
 - Called when the file first gets executed (runtime), not when an instance of class is created.
@@ -342,9 +342,9 @@ const valueWrapper = <T>(value: T): T[] => {
 
 ***
 
-## Data and HTTP Requests
+## Data and HTTP Requests.
 
-**Services**
+**Services.**
 
 - Used to **fetch/store/update** any kind of data in our app.
 - Almost always where we are going to put network requests.
@@ -352,19 +352,19 @@ const valueWrapper = <T>(value: T): T[] => {
 - Services are implemented as classes.
 - Angular will automatically create a single instance of each service for us.
 
-**Services Behavior**
+**Services Behavior.**
 
 ```ts
 constructor(private wikipedia: WikipediaService) {}
 ```
 
-- **constructor:** Gets called automatically whenever an instance of **AppComponent** is created.
-- **private wikipedia:** wikipedia will be added as a private property automatically to the instance of the App component.
-- **WikipediaService:** wikipedia will be of type **Instance of WikipediaService**.
+- **constructor**: Gets called automatically whenever an instance of **AppComponent** is created.
+- **private wikipedia**: wikipedia will be added as a private property automatically to the instance of the App component.
+- **WikipediaService**: wikipedia will be of type **Instance of WikipediaService**.
 
 ![Service Injector](images/service-injector.png "Service Injector")
 
-**Dependency Injection**
+**Dependency Injection.**
 
 - Components, services and other things in Angular **ask** for dependencies, rather than creating them directly.
 - Components need other things to work correctly. 
@@ -376,13 +376,13 @@ constructor(private wikipedia: WikipediaService) {}
 
 ***
 
-## App Security in Angular 
+## App Security in Angular .
 
 ![Escaping HTML Characters](images/escape-html-chars.png "Escaping HTML Characters")
 
-### XSS Attacks
+### XSS Attacks.
 
-**Cross-Site Scripting (XSS) Attacks**
+**Cross-Site Scripting (XSS) Attacks.**
 
 - Allows malicious users to run JS a code on other user's browsers.
 - This bad JS code can be used to steal credentials, make requests, etc.
@@ -408,9 +408,9 @@ xss = '<img src="" onerror="alert(123)" />';
 
 ***
 
-## RxJs
+## RxJs.
 
-**Notes on Rxjs**
+**Notes on Rxjs.**
 
 - Separate library from Angular.
 - Used extensively by Angular for managing data.
@@ -423,7 +423,7 @@ xss = '<img src="" onerror="alert(123)" />';
 
 ![Event Diagram RXJS Terms](images/diagram-rxjs-terms.png "Event Diagram RXJS Terms")
 
-**Operators**
+**Operators.**
 
 - Functions that do some specific processing on the incoming value.
 - We chain together operators to build up a processing pipeline.
@@ -436,17 +436,17 @@ you need to implement your app.
 
 ![Processing](images/processing.png "Processing")
 
-**Major Operator Groups**
+**Major Operator Groups.**
 
-- **Transform:** Take in a value, do some processing, return a new value.
-- **Filtering:** Modifies the flow of events in a pipe (group them together, pause them, delete them).
-- **Creation:** Creates a new observable.
+- **Transform**: Take in a value, do some processing, return a new value.
+- **Filtering**: Modifies the flow of events in a pipe (group them together, pause them, delete them).
+- **Creation**: Creates a new observable.
 
-**Specific Operators**
+**Specific Operators.**
 
 ![Pluck Operator](images/pluck-operator.png "Pluck Operator")
 
-**Unicast Observables**
+**Unicast Observables.**
 
 - Emit a separate set of values for each observer that subscribes.
 - All the operators in a pipe will be executed for each separate observer that subscribes.
@@ -454,7 +454,7 @@ you need to implement your app.
 
 ![Unicast Observables](images/unicast-observables.png "Unicast Observables")
 
-**Multicast Observables**
+**Multicast Observables.**
 
 - Emit a single set of values for all observers that subscribe.
 - All the operators in a pipe executed just once.
@@ -463,12 +463,12 @@ you need to implement your app.
 
 ![Multicast Observables](images/multicast-observables.png "Multicast Observables")
 
-**Hot vs Cold Observables**
+**Hot vs Cold Observables.**
 
 ![Hot vs Cold Observables](images/hot-cold-observable.png "Hot vs Cold Observables")
 
-- **Hot Observable:** Single event stream shared for all subscribers old and new.
-- **Cold Observable:** Event stream recreated for each new subscriber.
+- **Hot Observable**: Single event stream shared for all subscribers old and new.
+- **Cold Observable**: Event stream recreated for each new subscriber.
 
 ![Hot Observable](images/hot-observable.png "Hot Observable")
 
@@ -479,7 +479,7 @@ you need to implement your app.
 - Describe the term Observer:
     - An Observer handles values or errors that flow out of an operator or pipe.
 
-### Typescript + RxJs
+### Typescript + RxJs.
 
 ```ts
 interface Car {
@@ -513,26 +513,26 @@ observable.subscribe(value => {
 
 ***
 
-## Forms
+## Forms.
 
 ![Reactive vs Template](images/reactive-template-form.png "Reactive vs Template")
 
-**Form Properties**
+**Form Properties.**
 
-- **valid:** Angular has validated whatever the user entered successfully.
-- **invalid:** The value in the input is invalid.
-- **pending:** Validation is currently running on this field.
-- **disabled:** Ignore user input this field and don't validate it.
-- **touched:** User clicked into then out of a field.
-- **untouched:** User hasn't clicked into then out of this field.
-- **pristine:** User hasn't clicked on this field at all.
-- **dirty:** User has changed the value of this field.
+- **valid**: Angular has validated whatever the user entered successfully.
+- **invalid**: The value in the input is invalid.
+- **pending**: Validation is currently running on this field.
+- **disabled**: Ignore user input this field and don't validate it.
+- **touched**: User clicked into then out of a field.
+- **untouched**: User hasn't clicked into then out of this field.
+- **pristine**: User hasn't clicked on this field at all.
+- **dirty**: User has changed the value of this field.
 
 ![Reactive vs Template](images/reactive-vs-template-forms.png "Reactive vs Template")
 
 ***
 
-## Authentication app
+## Authentication app.
 
 ```console
 ng g m Auth --routing
@@ -544,34 +544,34 @@ ng g c shared/Input
 
 ![Auth App routing diagram](images/auth-app-routing.png "Auth App routing diagram")
 
-**Async Error Validation**
+**Async Error Validation.**
 
 ![Async Error Validation](images/async-error-validation.png "Async Error Validation")
 
-**Signup**
+**Signup.**
 
 ![Signup process](images/signup-process.png "Signup process")
 
-**Guard**
+**Guard.**
 
-- **canActivate:** User can visit the route.
-- **canActivateChild:** User can visit this child route.
-- **canLoad:** User can load this lazily-loaded module and access the routes inside of it.
+- **canActivate**: User can visit the route.
+- **canActivateChild**: User can visit this child route.
+- **canLoad**: User can load this lazily-loaded module and access the routes inside of it.
 
 ```console
 ng generate guard auth/Auth
 ```
 
-### Route Information
+### Route Information.
 
-- **Observable:** Emits values whenever some specific part of the URL changes.
-- **Snapshot:** Simple description of what the URL is **right now**.
+- **Observable**: Emits values whenever some specific part of the URL changes.
+- **Snapshot**: Simple description of what the URL is **right now**.
 
 ***
 
-## Type Script
+## Type Script.
 
-### Type Annotations and Type Inference
+### Type Annotations and Type Inference.
 
 - Type annotations:
     - Code we add to tell Typescript what type of value a variable will refer to.
@@ -580,16 +580,16 @@ ng generate guard auth/Auth
     - Typescript tries to figure out what type of value a variable refers to.
     - Typescript guesses the type.
     
-**Typescript Types**
+**Typescript Types.**
 
-- **Primitive Types:**  number, boolean, void, undefined, string, symbol, null. 
-- **Object Types:** functions, arrays, classes, objects.
+- **Primitive Types**:  number, boolean, void, undefined, string, symbol, null. 
+- **Object Types**: functions, arrays, classes, objects.
     
-**Type inference**
+**Type inference.**
 
 - Typescript guesses the type. Use Always!
     
-**Annotations**
+**Annotations.**
 
 - Developers tell typescript a type.
 
@@ -622,13 +622,13 @@ for (let i = 0; i < numbers.length; i++) {
 }
 ```
 
-**Annotations Around Functions**
+**Annotations Around Functions.**
 
 - Type annotations for functions: Code we add to tell Typescript what type of arguments a function will
 receive and what type of values it will return.
 - Type inference for functions: Typescript tries to figure out what type of value a function will return. 
 
-**Annotations and Objects**
+**Annotations and Objects.**
 
 ```ts
 const profile = {
@@ -648,9 +648,9 @@ const { age, name }: { age: number, name: string } = profile;
 const { coords: { lat, lng } }: { coords: {lat: number, lng: number} } = profile;
 ```
 
-**Tuple**
+**Tuple.**
 
-- **Tuple:** Array-like structure where each element represents some property of a record.
+- **Tuple**: Array-like structure where each element represents some property of a record.
 
 ```ts
 const drink = {
@@ -667,23 +667,23 @@ const sprite: Drink = ['clear', true, 40];
 const tea: Drink = ['brown', false, 0];
 ```
 
-**Interfaces**
+**Interfaces.**
 
 ```
 Interfaces + Classes = How we get really strong code reuse in TS
 ```
 
-- **Interfaces:** Creates a new type, describing the property names and value types of an object.
+- **Interfaces**: Creates a new type, describing the property names and value types of an object.
 
-**Classes**
+**Classes.**
 
-- **Classes:** Blueprint to create an object with some fields (values) and methods (functions) to represent a **thing**.
+- **Classes**: Blueprint to create an object with some fields (values) and methods (functions) to represent a **thing**.
 
-**Class Method Modifiers**
+**Class Method Modifiers.**
 
-- **public:** This method can be called anywhere, any time.
-- **private:** This method can be called by other methods in this class.
-- **protected:** This method can be called by other methods in this class, or by other methods in child classes.
+- **public**: This method can be called anywhere, any time.
+- **private**: This method can be called by other methods in this class.
+- **protected**: This method can be called by other methods in this class, or by other methods in child classes.
 
 ```console
 npm install -g parcel-bundler
@@ -695,7 +695,7 @@ npm install -g parcel-bundler
 npm install @types/faker
 ```
 
-### TS compiler
+### TS compiler.
 
 - Turns TS to JS code.
 
@@ -711,7 +711,7 @@ npm init -y
 npm install nodemon concurrently
 ```
 
-**Abstract Classes**
+**Abstract Classes.**
 
 - Can't be used to create an object directly.
 - Only used as a parent class.
@@ -720,18 +720,18 @@ npm install nodemon concurrently
 (we still have to provide names and types for the un-implemented methods).
 - Can make child classes promise to implement some other methods.
 
-**Interfaces vs Abstract Classes**
+**Interfaces vs Abstract Classes.**
 
-- **Interfaces:**
+- **Interfaces**:
     - Sets up a contract between different classes.
     - Use when we have very different objects that we want to work together.
     - Promotes loose coupling.
-- **Inheritance / Abstract Classes:**
+- **Inheritance / Abstract Classes**:
     - Sets up a contract between different classes.
     - Use when we are trying to build up a definition of an object.
     - Strongly couples classes together.
     
-### Modules
+### Modules.
 
 - Organizes code in a project.
 - Contains a set of components, services, pipes and directives.
@@ -739,22 +739,22 @@ npm install nodemon concurrently
 - Forces you to organize your code.
 - Can have a huge impact on how quickly your app starts up.      
 
-### How to structure services
+### How to structure services.
 
-**How to Wire Up Services in a Module World**
+**How to Wire Up Services in a Module World.**
 
 - Add the Service to a module's **providers** array.
 - Use `@injectable` decorator.
 
-### Subject Variations
+### Subject Variations.
 
-- **Async Subject:** 
-    - Same as subject, but also doesn't emit any values unitil it is marked as **complete**. 
+- **Async Subject**: 
+    - Same as subject, but also doesn't emit any values until it is marked as **complete**. 
     - Only last value emitted.
-- **Behavior Subject:** 
+- **Behavior Subject**: 
     - Same as subject, but also takes an initial **seed** value. 
     - New subscribers instantly get the most recent values.
-- **Reply Subject:**
+- **Reply Subject**:
     - Same as subject, but also new subscribers instantly get sent all previously emitted values.
 
 ```console
@@ -770,14 +770,14 @@ npm install --save ngx-loading@2.0.1
 ng build
 ```
 
-## Event binding
+## Event binding.
 
 ```
 (click) - round bracket method binding
 <button (click)="onButtonClick()">Greet me</button>
 ```
 
-## Selective Display
+## Selective Display.
 
 ```
 <div [hidden]="some-expression">
@@ -785,87 +785,106 @@ ng build
 <div *ngIf="some-expression">
 ```
 
-**Template reference**
+**Template reference.**
 
 ```
 @ViewChild
 ```
 
-**Read property - Template reference**
+**Read property - Template reference.**
 
-**Write property - Property binding `@Input()`**
+**Write property - Property binding `@Input()`.**
 
 ***
 
-## Some Interview Questions
+## Some Interview Questions.
 
 **Angular**
 
-- What is Angular and why do we use it?
-    - Angular is a JavaScript framework for building web applications. 
-    - It is used for creating dynamic and interactive user interfaces, making it a popular choice for building 
-    single-page applications.
-- What are the key features of Angular?
-    - Some key features of Angular include two-way data binding, dependency injection, a modular architecture, 
-    and a powerful template language.
-- What are the differences between AngularJS and Angular?
-    - AngularJS is the first version of Angular, while Angular is the second version and is also known as "Angular 2+". 
-    - The biggest difference between the two is that Angular is a complete rewrite of AngularJS and is not backwards-compatible.
-- What is an Angular component?
-    - An Angular component is a reusable piece of code that controls a section of the UI. 
-    - It consists of a template, a class, and metadata.
-- What is a directive in Angular?
-    - A directive in Angular is a class with a `@Directive` decorator. 
-    - It is used to add behavior to an existing element or component. 
-    - There are three types of directives in Angular: components, structural directives, and attribute directives.
-- What is a service in Angular?
-    - A service in Angular is a class with a `@Injectable` decorator. 
-    - It is used to share data and logic across different components.
-- What is dependency injection in Angular?
-    - Dependency injection in Angular is a way to provide a service or a value to a component or a directive. 
-    - It allows for loose coupling between the objects in an application and makes the code easier to test and maintain.
-- What is the difference between a component and a directive in Angular?
-    - A component is a directive with a template, while a directive is a class with a `@Directive` decorator. 
-    - A component controls a section of the UI, while a directive adds behavior to an existing element or component.
-- What is a module in Angular?
-    - A module in Angular is a class with a `@NgModule` decorator. 
-    - It is used to group together related components, directives, and services.
-- What is the difference between a module and a component in Angular?
-    - A module is used to group together related components, directives, and services, while a component controls 
-    a section of the UI.
-- What is the difference between a service and a provider in Angular?
-    - A service is a class with a `@Injectable` decorator and is used to share data and logic across different components. 
-    - A provider is a way to configure a service and can be either a class or a value.
-- What is the difference between a template and a templateUrl in Angular?
-    - A template is a string that contains the HTML for a component, while a templateUrl is a path to an HTML file that 
-    contains the template for a component.
-- What is the difference between a component and a module in Angular?
-    - A component controls a section of the UI, while a module is used to group together related components, directives, 
-    and services.
-- What is the difference between a directive and a pipe in Angular?
-    - A directive is a class with a `@Directive` decorator and is used to add behavior to an existing element 
-    or component, while a pipe is a class with a `@Pipe` decorator and is used to transform data in a template.
-- What is the difference between a directive and a service in Angular?
-    - A directive is a class with a `@Directive` decorator and is used to add behavior to an existing element 
-    or component, while a service is a class with a `@Injectable` decorator and is used to share data and logic across 
-    different components.
-- What is a route in Angular?
-    - A route in Angular is a way to navigate between different views or pages in an application. 
-    - It is defined by a path and a component.
-- What is a router outlet in Angular?
-    - A router outlet in Angular is a placeholder where the router inserts the component for the current route.
-- What is a routerLink in Angular?
-    - A routerLink in Angular is a directive that binds an element to a route. 
-    - It is used to navigate to a different route when the element is clicked.
-- How does data binding work in Angular?
-    - Data binding in Angular allows for the automatic synchronization of data between a component and its template. 
-    - It can be done in two ways, one-way data binding (from component to view) and two-way data binding 
-    (from component to view and vice versa).
-- How can you debug an Angular application?
-    - There are different ways to debug an Angular application, but some common methods include using the browser's 
-    developer tools, logging messages to the console, and using a debugging tool like Augury.
+**What is Angular and why do we use it?**
+- Angular is a JavaScript framework for building web applications. 
+- It is used for creating dynamic and interactive user interfaces, making it a popular choice for building 
+single-page applications.
 
-**Angular REST application**
+**What are the key features of Angular?**
+- Some key features of Angular include two-way data binding, dependency injection, a modular architecture, 
+and a powerful template language.
+
+**What are the differences between AngularJS and Angular?**
+- AngularJS is the first version of Angular, while Angular is the second version and is also known as "Angular 2+". 
+- The biggest difference between the two is that Angular is a complete rewrite of AngularJS and is not backwards-compatible.
+
+**What is an Angular component?**
+- An Angular component is a reusable piece of code that controls a section of the UI. 
+- It consists of a template, a class, and metadata.
+
+**What is a directive in Angular?**
+- A directive in Angular is a class with a `@Directive` decorator. 
+- It is used to add behavior to an existing element or component. 
+- There are three types of directives in Angular: components, structural directives, and attribute directives.
+
+**What is a service in Angular?**
+- A service in Angular is a class with a `@Injectable` decorator. 
+- It is used to share data and logic across different components.
+
+**What is dependency injection in Angular?**
+- Dependency injection in Angular is a way to provide a service or a value to a component or a directive. 
+- It allows for loose coupling between the objects in an application and makes the code easier to test and maintain.
+
+**What is the difference between a component and a directive in Angular?**
+- A component is a directive with a template, while a directive is a class with a `@Directive` decorator. 
+- A component controls a section of the UI, while a directive adds behavior to an existing element or component.
+
+**What is a module in Angular?**
+- A module in Angular is a class with a `@NgModule` decorator. 
+- It is used to group together related components, directives, and services.
+
+**What is the difference between a module and a component in Angular?**
+- A module is used to group together related components, directives, and services, while a component controls 
+a section of the UI.
+
+**What is the difference between a service and a provider in Angular?**
+- A service is a class with a `@Injectable` decorator and is used to share data and logic across different components. 
+- A provider is a way to configure a service and can be either a class or a value.
+
+**What is the difference between a template and a templateUrl in Angular?**
+- A template is a string that contains the HTML for a component, while a templateUrl is a path to an HTML file that 
+contains the template for a component.
+
+**What is the difference between a component and a module in Angular?**
+- A component controls a section of the UI, while a module is used to group together related components, directives, 
+and services.
+
+**What is the difference between a directive and a pipe in Angular?**
+- A directive is a class with a `@Directive` decorator and is used to add behavior to an existing element 
+or component, while a pipe is a class with a `@Pipe` decorator and is used to transform data in a template.
+
+**What is the difference between a directive and a service in Angular?**
+- A directive is a class with a `@Directive` decorator and is used to add behavior to an existing element 
+or component, while a service is a class with a `@Injectable` decorator and is used to share data and logic across 
+different components.
+
+**What is a route in Angular?**
+- A route in Angular is a way to navigate between different views or pages in an application. 
+- It is defined by a path and a component.
+
+**What is a router outlet in Angular?**
+- A router outlet in Angular is a placeholder where the router inserts the component for the current route.
+
+**What is a routerLink in Angular?**
+- A routerLink in Angular is a directive that binds an element to a route. 
+- It is used to navigate to a different route when the element is clicked.
+
+**How does data binding work in Angular?**
+- Data binding in Angular allows for the automatic synchronization of data between a component and its template. 
+- It can be done in two ways, one-way data binding (from component to view) and two-way data binding 
+(from component to view and vice versa).
+
+**How can you debug an Angular application?**
+- There are different ways to debug an Angular application, but some common methods include using the browser's 
+developer tools, logging messages to the console, and using a debugging tool like Augury.
+
+**Angular REST application.**
 
 - In Angular, the most commonly used library for making HTTP requests is the `HttpClient` module, which is part of the 
 `@angular/common/http` package. 
@@ -914,7 +933,7 @@ this.http.get('https://api.example.com/data')
 - In this example, the map operator is used to extract the results field from the data returned by the API, 
 and the catchError operator is used to handle any errors that occur during the request.
 
-**Angular Interceptor**
+**Angular Interceptor.**
 
 - In Angular, you can use an HTTP interceptor to automatically add an authentication token to all requests to a 
 specific API. 
@@ -1017,29 +1036,29 @@ with the data returned from the API.
 - The map function is used to map the data from the API to instances of the YourClass type, with the date and value 
 fields populated.
 
-**Angular Arrays**
+**Angular Arrays.**
 
-- Here are some tips for working with arrays in Angular with TypeScript:
-    - Use the `map` method to transform elements in an array: The map method can be used to apply a function to each 
-    element in an array and return a new array with the transformed elements.
-    - Use the `filter` method to extract elements from an array: The filter method can be used to extract elements from 
-    an array based on a certain condition.
-    - Use the `reduce` method for aggregating data: The reduce method can be used to aggregate data from an array into a 
-    single value.
-    - Use the `sort` method to sort elements: The sort method can be used to sort elements in an array. You can pass a 
-    comparison function to the sort method to sort the elements based on custom criteria.
-    - Use the `splice` method to add/remove elements: The splice method can be used to add or remove elements from an array.
-    - Use the `slice` method to extract elements: The slice method can be used to extract a portion of an array as a new array.
-    - Use the `concat` method to merge arrays: The concat method can be used to merge two or more arrays into a single array.
-    - Use the `indexOf` method to find an element: The indexOf method can be used to find the index of an element in an array.
-    - Use the `forEach` method to loop through elements: The forEach method can be used to loop through the elements in an 
-    array and perform a certain action for each element.
-    - Use the `includes` method to check if an array contains an element: The includes method can be used to check if an 
-    array contains a certain element.
+Here are some tips for working with arrays in Angular with TypeScript:
+- Use the `map` method to transform elements in an array: The map method can be used to apply a function to each 
+element in an array and return a new array with the transformed elements.
+- Use the `filter` method to extract elements from an array: The filter method can be used to extract elements from 
+an array based on a certain condition.
+- Use the `reduce` method for aggregating data: The reduce method can be used to aggregate data from an array into a 
+single value.
+- Use the `sort` method to sort elements: The sort method can be used to sort elements in an array. You can pass a 
+comparison function to the sort method to sort the elements based on custom criteria.
+- Use the `splice` method to add/remove elements: The splice method can be used to add or remove elements from an array.
+- Use the `slice` method to extract elements: The slice method can be used to extract a portion of an array as a new array.
+- Use the `concat` method to merge arrays: The concat method can be used to merge two or more arrays into a single array.
+- Use the `indexOf` method to find an element: The indexOf method can be used to find the index of an element in an array.
+- Use the `forEach` method to loop through elements: The forEach method can be used to loop through the elements in an 
+array and perform a certain action for each element.
+- Use the `includes` method to check if an array contains an element: The includes method can be used to check if an 
+array contains a certain element.
     
 **map**
 
-- Example of using the `map` method to transform elements in an Angular component using TypeScript:
+- Example of using the `map` method to transform elements in an Angular component using TypeScript.
 
 ```ts
 import { Component } from '@angular/core';
@@ -1083,7 +1102,7 @@ console.log(result);
 
 **filter**
 
-- An example of using the filter operator in an Angular component to filter an array of items:
+- An example of using the filter operator in an Angular component to filter an array of items.
 
 ```ts
 import { Component } from '@angular/core';
@@ -1170,7 +1189,7 @@ export class AppComponent {
 `function (a, b) => a - b`. 
 - The result is displayed in the template.
     
-**splice**
+**slice**
 
 - In Angular, you can use the slice method of the JavaScript Array object to extract a portion of an array and return 
 a new array. 
@@ -1200,25 +1219,24 @@ export class ExampleComponent {
     
 ***
 
-**Angular include module**
+**Angular include module.**
 
-- To include the Highcharts library in an Angular project, you can follow these steps:
+- To include the Highcharts library in an Angular project, you can follow these steps.
 - Install the Highcharts library: Run the following command in your terminal to install the Highcharts library as a 
-dependency in your Angular project:
+dependency in your Angular project.
 
 ```
 npm install highcharts
 ```
 
 - Import the Highcharts library in your component: In the component where you want to use Highcharts, import the 
-highcharts library as follows:
+highcharts library as follows.
 
 ```
 import * as Highcharts from 'highcharts';
 ```
 
-- Use the Highcharts library in your component: You can now use the Highcharts library to create charts in your component. 
-- For example:
+- Use the Highcharts library in your component: You can now use the Highcharts library to create charts in your component.
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -1270,7 +1288,7 @@ export class YourComponent implements OnInit {
 - In Angular, you can handle empty elements in a `subscribe` by checking the value of the data before performing any 
 operations on it. 
 - If the data is empty, you can return immediately or perform an alternate action.
-- Here's an example of handling empty elements in a `subscribe`:
+- Here's an example of handling empty elements in a `subscribe`.
 
 ```ts
 this.dataService.getData()
@@ -1289,20 +1307,4 @@ this.dataService.getData()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     

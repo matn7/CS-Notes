@@ -287,7 +287,7 @@ SELECT * FROM phones;
 - The first query should delete all phones that were created by Samsung.
 - The second query should select all rows and columns of the phones table.
 
-```
+```sql
 -- Write your delete SQL here
 
 DELETE FROM phones 
@@ -446,9 +446,7 @@ JOIN users ON users.id = photos.user_id;
 ```sql
 -- Create table called 'boats'
 CREATE TABLE boats (
-    -- Note that this environment doesn't support 'SERIAL' keyword
-    -- so 'AUTOINCREMENT' is used instead. Postgres always uses 'SERIAL'
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY SERIAL,
     name VARCHAR
 );
 
@@ -458,11 +456,8 @@ VALUES ('Rogue Wave'), ('Harbor Master');
 
 -- Create table called 'crew_members'
 CREATE TABLE crew_members (
-    -- Note that this environment doesn't support 'SERIAL' keyword
-    -- so 'AUTOINCREMENT' is used instead. Postgres always uses 'SERIAL'
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY SERIAL,
     first_name VARCHAR,
-    -- >>>>>>>> TODO #1 HERE!!!
     boat_id INTEGER REFERENCES boats(id)
 );
 
@@ -471,7 +466,6 @@ INSERT INTO crew_members (first_name, boat_id)
 VALUES ('Alex', 1), ('Lucia', 1), ('Ari', 2);
 
 -- Write query here to fetch all columns for all crew_members associated with the boat that has an ID of 1
--- >>>>>>>> TODO #2 HERE!!!
 SELECT * FROM crew_members WHERE boat_id = 1;
 ```
 
@@ -504,8 +498,7 @@ DROP TABLE photos;
 CREATE TABLE photos (
 	id SERIAL PRIMARY KEY,
 	url VARCHAR(200),
-	user_id INTEGER REFERENCES users(id) 
-	  ON DELETE CASCADE
+	user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 
 DELETE FROM users WHERE id = 1;
@@ -555,11 +548,11 @@ id	url	            user_id
 
 **Some answers with Joins and Aggregations.**
 
-- Find all the comments for the photo with ID = 3, along with the username of the comment author. **JOIN**.
-- Find the **average number** of comments per photo. **AGGREGATION**.
-- Find the photo with the **most comments** attached to it. **AGGREGATION**.
+- Find all the comments for the photo with ID = 3, along with the username of the comment author - **JOIN**.
+- Find the **average number** of comments per photo - **AGGREGATION**.
+- Find the photo with the **most comments** attached to it - **AGGREGATION**.
 - Find the photo with ID = 10 and get the number of comments attached to it.
-- Find the user with the **most activity** (most comments + most photos). **AGGREGATION**.
+- Find the user with the **most activity** (most comments + most photos) - **AGGREGATION**.
 - Calculate the average number of characters per comment.
 
 **Joins.**
@@ -580,7 +573,7 @@ id	url	            user_id
 
 ```sql
 SELECT contents, username, photo_id 
-FROM COMMENTS 
+FROM comments 
 JOIN users ON users.id = comments.user_id;
 ```
 
@@ -592,7 +585,7 @@ JOIN users ON users.id = comments.user_id;
 
 ```sql
 SELECT contents, url 
-FROM COMMENTS 
+FROM comments 
 JOIN photos on photos.id = comments.photo_id;
 ```
 

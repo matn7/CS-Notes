@@ -44,7 +44,7 @@ new Thread(() -> System.out.println("Hello from the new thread")).start();
 - Lambda expressions were introduced in Java 8, and they can be used in conjunction with functional interfaces, 
 which are interfaces that has only one **abstract method**, to enable functional programming in Java.
 
-**Function Interface**
+**Function Interface.**
 
 - In Java, the Function interface is a functional interface that represents a function that takes in one argument 
 and produces a result. 
@@ -100,7 +100,7 @@ System.out.println(convertToPerson.apply("John,25")); // Outputs: Person{name='J
 
 - Chaining multiple functions together: 
     - The `Function` interface can also be used to chain multiple functions together. 
-    - For example, the following code chains together the `suare` and `toUpperCase` functions defined in the above examples:
+    - For example, the following code chains together the `square` and `toUpperCase` functions defined in the above examples:
 
 ```java
 // no sense example but for idea
@@ -110,7 +110,7 @@ System.out.println(squareAndToUpperCase.apply(3)); // Outputs: "9"
 
 ***
 
-**Stream API**
+**Stream API.**
 
 - The Java Stream API is a collection of classes and interfaces in the Java Standard Library that provide a functional 
 and convenient way to process data stored in collections. 
@@ -155,7 +155,7 @@ public class StreamExample {
 - The `mapToInt()` method is used to convert the `Stream` of `Integer` objects to a `Stream` of primitive int values, 
 and the `sum()` method is used to find the sum of all elements in the `Stream`.
 
-**More complex example**
+**More complex example.**
 
 ```java
 import java.util.ArrayList;
@@ -220,7 +220,7 @@ System.out.println("Total value of entities with value greater than 25 after add
 - The new `map()` operation adds 10 to each value in the `Stream`.
 - The result of the pipeline is the total value of all entities with a value greater than 25, after adding 10 to each value.
 
-**Predicate**
+**Predicate.**
 
 - In Java, a `Predicate` is a functional interface that represents a boolean-valued function of one argument. 
 - It is defined in the `java.util.function` package and is used to test the given argument to see if it meets certain 
@@ -260,7 +260,7 @@ System.out.println(concat.apply("Hello", " World")); // prints "Hello World"
 
 ***
 
-**Java lambda interview questions**
+**Java lambda interview questions.**
 
 1) What is a lambda expression in Java and what is its purpose?
     - A lambda expression is a concise way to represent a functional interface in Java 8. 
@@ -369,12 +369,12 @@ button.setOnAction(new EventHandler<ActionEvent>() {
 button.setOnAction(event -> System.out.println("Button clicked using lambda expression")
 ```
 
-- Function
-- BinaryOperator
+- Function.
+- BinaryOperator.
 
 ***
 
-**Bit manipulation Java**
+**Bit manipulation Java.**
 
 - In Java, bit manipulation can be performed using bitwise operators such as `&` (and), `|` (or), `^` (xor), `~` (not), 
 `<<` (left shift), and `>>` (right shift). 
@@ -422,7 +422,7 @@ z = x >> 2;  // right shift
 - It is important to note that the bitwise operator works on the bit level, if you want to shift the number k positions, 
 you have to multiply or divide the number by `2^k`, depending if you are shifting to the left or to the right.
 
-**Bit manipulation problem examples**
+**Bit manipulation problem examples.**
 
 - FindNonDuplicateNumber:
 
@@ -485,7 +485,7 @@ public int one_bits(int n) {
 
 ***
 
-**Java iterator**
+**Java iterator.**
 
 - In Java, an `Iterator` is an interface that represents an object that can traverse a collection of elements, 
 such as a list or a set, and retrieve or remove elements one at a time. 
@@ -598,7 +598,7 @@ Collections.sort(people);
 System.out.println(people); // prints [Bob(25), Alice(30), Charlie(35)]
 ```
 
-**Comparator vs Comparable**
+**Comparator vs Comparable.**
 
 - Java has two interfaces that can be used to sort objects: `Comparable` and `Comparator`. 
 - Both of these interfaces are used to compare objects and determine their order.
@@ -622,7 +622,7 @@ and use the `Comparator` interface if you need to provide a separate and alterna
 
 ***
 
-**Hash Map in Java**
+**Hash Map in Java.**
 
 - A `HashMap` in Java is a data structure used for storing key-value pairs. 
 - The basic idea behind a `HashMap` is to use a hash function to map keys to indices in an array, where the corresponding 
@@ -655,7 +655,7 @@ to map keys to indices in an array and resolving collisions through chaining.
 
 ***
 
-**static in Java**
+**static in Java.**
 
 - In Java, the `static` keyword can be used to indicate that a variable, method, or block of code belongs to the class, 
 rather than to a specific instance of the class.
@@ -719,7 +719,7 @@ this will ensure that the variable is read from the main memory instead of local
 concurrent access and modification of `static` variables, and use the `synchronized` keyword or other synchronization 
 mechanisms to manage access to shared resources.
 
-**Why use static**
+**Why use static.**
 
 - The `static` keyword in Java is used to define class-level members, as opposed to instance-level members. 
 - This means that a `static` member belongs to the class itself, rather than to an instance of the class.
@@ -736,7 +736,7 @@ mechanisms to manage access to shared resources.
         - The `static` keyword is used in the declaration of the `main()` method, which is the entry point of a 
         Java application.
     
-**Why Java main is static**
+**Why Java main is static.**
 
 - The `main()` method in Java is declared as `static` for several reasons:
     - Program Entry Point: 
@@ -751,7 +751,7 @@ mechanisms to manage access to shared resources.
         the class. 
         - This can be useful for cases where you want to perform operations that do not require an instance of the class.
 
-**Where static is stored in memory**
+**Where static is stored in memory.**
 
 - In Java, `static` methods and variables are stored in the method area of the Java memory. 
 - The method area is a shared, thread-safe area of memory that contains class-level information such as class and method 
@@ -763,7 +763,7 @@ definitions, `static` variables, and runtime constant pool.
 - It's important to note that the method area is separate from the heap, which is where instances of classes are stored. 
 - Instances of classes are created on the heap, and each instance has its own separate memory space for instance variables.
 
-**Why static inner class**
+**Why static inner class.**
 
 - A static inner class in Java is a nested class that is declared with the `static` keyword. 
 - It is a member of the outer class and has the following characteristics:
@@ -817,7 +817,7 @@ public class Outer {
 
 ***
 
-**`final` in Java**
+**`final` in Java.**
 
 - In Java, the `final` keyword can be used to indicate that a variable, method, or class cannot be overridden or changed.
 - When applied to a variable, `final` makes the variable a constant that cannot be reassigned.
@@ -833,7 +833,7 @@ because once the object is constructed, its state cannot be modified.
 cannot be reassigned or overridden, but it does not guarantee thread safety by itself. 
 - It should be used in conjunction with other thread-safe practices and patterns like `synchronization` or immutability.
 
-**Can `final` variable be changed**
+**Can `final` variable be changed.**
 
 - You cannot change the value of a `final` variable in Java once it has been assigned a value. 
 - The `final` keyword is used to indicate that a variable's value cannot be changed after it has been initialized.
@@ -857,7 +857,7 @@ public class Main {
 but once they are assigned a value, they cannot be changed. 
 - This restriction applies to both instance and class variables.
 
-**Can entity object state be changed**
+**Can entity object state be changed.**
 
 - You can change the state of an entity object that is referred to by a `final` reference variable. 
 - The `final` keyword in this case only means that the reference variable cannot be **reassigned** to refer to a different 
@@ -940,7 +940,7 @@ in several ways:
 - In summary, the mechanism of using `final` reference variables is useful because it can make your code more readable, 
 secure, performant, and maintainable, especially in multithreaded environments.
 
-**How `final` is instantiated**
+**How `final` is instantiated.**
 
 - A `final` variable can be instantiated in several ways in Java, depending on the type of the variable and the context 
 in which it is being used.
@@ -993,7 +993,7 @@ or initializer block in which it is used exits.
 - Once a `final` variable has been assigned a value, it cannot be changed. 
 - This is one of the key features of `final` variables in Java.
 
-**How underlying memory for `final` looks like**
+**How underlying memory for `final` looks like.**
 
 - The underlying memory representation of a `final` variable in Java depends on the type of the variable and the context 
 in which it is being used.
@@ -1011,20 +1011,20 @@ hardware and operating system, as well as the Java Virtual Machine (JVM) impleme
 
 ***
 
-**Java object method**
+**Java object method.**
 
 - In Java, an object is an instance of a class, and it has several methods that can be used to interact with the 
 object's state and behavior. 
 - These methods are defined by the class, and they are inherited by all objects of that class. 
 - The most common methods in Java objects are:
 
-**toString()**
+**1. toString().**
 
 - Returns a string representation of the object. 
 - This method is called when an object is printed, and the default implementation returns the fully qualified 
 class name followed by the object's hash code.
 
-**equals(Object o)**
+**2. equals(Object o).**
  
 - Compares the object to another object and returns `true` if they are equal. 
 - The default implementation compares the objects based on their memory addresses, but it can be overridden to 
@@ -1059,7 +1059,7 @@ as its parameter.
 the object is an instance of the `Point` class. 
 - If both checks pass, the method compares the values of the `x` and `y` fields of the two objects to determine equality.
 
-**hashCode()**
+**3. hashCode().**
  
 - Returns an integer that represents the object's state. 
 - The default implementation returns the object's memory address, but it can be overridden to provide a custom 
@@ -1094,18 +1094,18 @@ evenly across the range of integers.
 - Also, it is important to use the `hashCode()` method of each field, rather than its value, to ensure that equal objects 
 have the same hash code.
 
-**clone()**
+**4. clone().**
  
 - Creates a copy of the object. 
 - The default implementation creates a shallow copy of the object, but it can be overridden to provide a deep 
 copy of the object.
     
-**finalize()**
+**5. finalize().**
  
 - Called by the garbage collector when the object is no longer reachable. 
 - This method can be overridden to release resources held by the object.
     
-**wait(), notify(), notifyAll()**
+**6. wait(), notify(), notifyAll().**
  
 - These methods are used for **inter-thread communication** and are related to the monitor concept. 
 - `wait()` causes the current thread to wait until another thread invokes the `notify()` or `notifyAll()` method 
@@ -1113,7 +1113,7 @@ for this object.
 - `notify()` wakes up a single thread that is waiting on this object's monitor. 
 - `notifyAll()` wakes up all threads that are waiting on this object's monitor.
 
-**What is a monitor concept in Java**
+**What is a monitor concept in Java.**
 
 - A monitor is a synchronization construct in Java that provides a way to control access to shared resources 
 by multiple threads in a concurrent environment. 
@@ -1164,7 +1164,7 @@ they will be treated as different objects in a hash-based collection, even thoug
 it is important to also override the `hashCode()` method to ensure that objects are stored and retrieved correctly in 
 hash-based collections.
 
-**Prime Number**
+**Prime Number.**
 
 ```java
 // O(sqrt(n)) time | O(1) space
@@ -1191,7 +1191,7 @@ up to the square root of n.
 - However, for larger numbers, more efficient algorithms, such as the Sieve of Eratosthenes, can be used to determine 
 if a number is prime.
 
-**Shallow copy vs deep copy**
+**Shallow copy vs deep copy.**
 
 - A shallow copy of an object in Java is a copy of the object that only copies the references to the objects contained 
 within the original object, rather than creating new instances of those objects. 
@@ -1231,7 +1231,7 @@ so that the copy is completely independent of the original object and any change
 
 ***
 
-## Java memory parts
+## Java memory parts.
 
 - Java uses a combination of different memory areas to manage the memory of a running program. 
 - These memory areas include:
@@ -1260,7 +1260,7 @@ so that the copy is completely independent of the original object and any change
 
 ***
 
-**Java Garbage Collectors**
+**Java Garbage Collectors.**
 
 - Java has several built-in garbage collectors, including:
     - Serial GC: 
@@ -1289,7 +1289,7 @@ java -XX:+UseG1GC -jar myapplication.jar
 
 - You can also use `-XX:+PrintCommandLineFlags` to check which GC is currently in use.
 
-**CMS GC**
+**CMS GC.**
 
 - Concurrent Mark Sweep (CMS) is a garbage collector in Java that is designed to minimize pauses caused by 
 garbage collection. 
@@ -1312,7 +1312,7 @@ garbage collection.
 but it can be less efficient with large heap sizes and high object allocation rates.
 - Also, CMS GC have some disadvantages, such as high CPU usage, high fragmentation and can be prone to long pauses.
 
-**G1 GC**
+**G1 GC.**
 
 - The G1 (Garbage First) GC is a type of garbage collector that is included in the Java HotSpot Virtual Machine (JVM). 
 - It is designed to handle large heap sizes and reduce GC pause times.
@@ -1326,7 +1326,7 @@ of garbage in the heap.
 - In summary, G1 GC is designed to handle large heap sizes, reduce GC pause times, using a combination of marking 
 and copying, concurrent marking, and mixed collections to reclaim memory more efficiently.
 
-**Where variables are stored**
+**Where variables are stored.**
 
 ```java
 public class ExampleClass {
@@ -1376,8 +1376,7 @@ public class ExampleClass {
 - When the method returns, the frame is popped off the stack and the local variables are destroyed.
 - Instance variables, on the other hand, are stored on the heap. 
 - When an object is created, space is allocated on the heap to hold the instance variables for that object. 
-- Instance variables exist for the lifetime of the object they belong to, and are destroyed when the object 
-- is garbage collected.
+- Instance variables exist for the lifetime of the object they belong to, and are destroyed when the object is garbage collected.
 - Here's how the variables in the previous examples would be stored in memory:
 
 ```java
@@ -1400,26 +1399,26 @@ private int[] instanceIntArray; // stored on the heap
 private Object instanceObject; // stored on the heap
 ```
 
-## Object oriented concepts
+## Object oriented concepts.
 
-**Classes and Objects** 
+**1. Classes and Objects.** 
 - Classes are templates for creating objects, which are instances of a class. 
 - Classes define the properties and behavior of objects, and objects are the individual instances of a class.
 
-**Encapsulation**
+**2. Encapsulation.**
 - Encapsulation is the practice of hiding the implementation details of a class from other parts of the program. 
 - This allows the class to change its implementation without affecting the rest of the program.
 
-**Abstraction**
+**3. Abstraction.**
 - Abstraction is the practice of focusing on the essential features of an object and ignoring non-essential details. 
 - This allows the developer to work with objects at a higher level of abstraction.
 
-**Inheritance**
+**4. Inheritance.**
 - Inheritance is the ability of a class to inherit properties and behavior from a parent class. 
 - This allows for the creation of a hierarchy of classes, where a subclass can inherit properties and behavior from a 
 superclass.
 
-**Polymorphism**
+**5. Polymorphism.**
 - Polymorphism is the ability of a single function or method to work with multiple types of objects. 
 - This allows for the use of a single function or method with different types of objects, without the need for explicit 
 type checking.
@@ -1470,27 +1469,27 @@ need to write.
 - In summary, polymorphism is useful because it makes your code more flexible, generic, and maintainable, 
 and it enables you to write code that can be reused and extended.
 
-**Overriding**
+**6. Overriding.**
 - Overriding is the ability of a subclass to provide a different implementation of a method that is already defined 
 in its superclass. 
 - This allows for the customization of the behavior of a class based on its specific needs.
 
-**Overloading**
+**7. Overloading.**
 - Overloading is the ability of a class to have multiple methods with the same name but different parameters. 
 - This allows for the use of the same method name with different types of inputs, making the code more readable.
 
-**Interfaces**
+**8. Interfaces.**
 - Interfaces are a way to define a contract for a class, specifying the methods and properties that the class must have.
 - This allows for the creation of classes that conform to a specific set of rules, making them more interchangeable and 
 reusable.
 
-**Access Modifiers**
+**9. Access Modifiers.**
 - Access modifiers are keywords used to control the accessibility of classes, methods, and properties. 
 - They determine which parts of the program can access a particular class, method or property.
 
 ***
 
-## OAuth 2 works
+## OAuth 2 works.
 
 - OAuth 2 is an open standard for authorization that allows users to grant third-party applications access to their 
 resources without sharing their passwords. 
@@ -1519,7 +1518,7 @@ sharing their credentials.
     - Grant Types: The different ways in which an application can obtain an access token, like authorization code grant,
      implicit grant, client credentials grant, password grant, and refresh token grant.
 
-**Example of OAuth2 config in Java**
+**Example of OAuth2 config in Java.**
 
 - An example of how to configure OAuth 2.0 in a Java application:
 
@@ -1589,14 +1588,14 @@ the code, you should use an environment variable, or a configuration file and re
 
 ***
 
-## Aspect oriented programming
+## Aspect oriented programming.
 
 - Aspect-Oriented Programming (AOP) is a programming paradigm that aims to **increase modularity** by allowing the 
 separation of cross-cutting concerns. 
 - A cross-cutting concern is a functionality that affects multiple parts of an application, such as:
-    - logging
-    - security 
-    - transaction management
+    - Logging.
+    - Security. 
+    - Transaction management.
 - In traditional Object-Oriented Programming (OOP), these concerns are often scattered across the codebase, 
 making it difficult to understand the overall structure of the program and to maintain or modify it. 
 - AOP allows for the separation of these concerns into distinct units called aspects, which can be independently reused 
@@ -1616,11 +1615,11 @@ extends the Java language with new AOP-specific constructs such as pointcuts and
 - AOP can make the codebase more complex and harder to understand if not used properly. 
 - It's important to use it judiciously and in a way that it enhances the readability and maintainability of the codebase.
 
-**Example in Java**
+**Example in Java.**
 
 - The AspectJ framework is a powerful tool for implementing aspect-oriented programming (AOP) in Java. 
 - Here is an example of how to use AspectJ to create an aspect that logs method execution times:
-- First, add the AspectJ dependencies to your project's pom.xml file:
+- First, add the AspectJ dependencies to your project's **pom.xml** file:
 
 ```xml
 <dependency>
@@ -1703,7 +1702,7 @@ or adding security features.
 
 ***
 
-## Cohesion
+## Cohesion.
 
 - In Object-Oriented Programming (OOP), cohesion refers to the degree to which the elements of a module 
 (such as a class, method, or function) work together to achieve a single, well-defined purpose. 
@@ -1731,20 +1730,20 @@ and the design choices made by the developer.
 
 ***
 
-## Primitive type in Java space occupy
+## Primitive type in Java space occupy.
 
 - Table showing the size (in bytes) occupied by each primitive type in Java:
 
-| Primitive Type | Size (in bytes) |
-|---|---|
-| boolean |	1 | 
-| byte | 1 |
-| char | 2 |
-| short | 2 |
-| int |	4 |
-| float | 4 |
-| long | 8 |
-| double | 8 |
+| Primitive Type  | Size (in bytes) |
+|-----------------|----------------|
+| boolean         | 1              | 
+| byte            | 1              |
+| char            | 2              |
+| short           | 2              |
+| int             | 4              |
+| float           | 4              |
+| long            | 8              |
+| double          | 8              |
 
 - Please note that these sizes are not guaranteed to be constant across all platforms and JVMs, but they are guaranteed 
 to be at least as big as the sizes listed in this table. 
@@ -1753,7 +1752,7 @@ platform and JVM being used.
 
 ***
 
-**Operating Systems Interview**
+**Operating Systems Interview.**
 
 1) What is an operating system and what are its functions?
     - An operating system (OS) is the software that manages and controls the resources of a computer system. 
@@ -1784,15 +1783,15 @@ platform and JVM being used.
     shortages of physical memory by temporarily transferring pages of data from random access memory (RAM) to disk storage. 
     - This makes it appear as if the computer has more memory than it actually does, allowing it to run larger applications 
     or multiple applications simultaneously.
-6) What is a process?
+7) What is a process?
     - A process is a program in execution. 
     - It is a self-contained execution environment that consists of the program code, data, and system resources 
     (such as memory and CPU time) required to execute the program.
-7) What is a thread?
+8) What is a thread?
     - A thread is a lightweight and independent unit of execution within a process. 
     - A process can contain multiple threads, which can run concurrently and share the same memory and system resources. 
     - Threads are often used to increase the performance and responsiveness of applications.
-8) Can a context switch occur in kernel mode?
+9) Can a context switch occur in kernel mode?
     - A context switch can occur in kernel mode. 
     - However, it is not as common as context switching in user mode because kernel mode is typically reserved for 
     critical system functions and tasks that have a higher priority than user-mode tasks. 
@@ -1800,7 +1799,7 @@ platform and JVM being used.
     rather than from one user process to another. 
     - Additionally, because kernel mode has greater privileges and access to system resources, the context switch must 
     be carefully managed to ensure the security and stability of the operating system.
-9) How OS manages deadlocks?
+10) How OS manages deadlocks?
     - Deadlock Prevention: This technique tries to prevent deadlocks from occurring in the first place by defining a set 
     of rules that must be followed when allocating resources. For example, the operating system may enforce a rule that 
     resources must always be requested in a specific order to prevent the formation of circular wait conditions.
@@ -1818,7 +1817,7 @@ platform and JVM being used.
     resources are always assigned in a specific order. This helps to prevent circular wait conditions and reduce the 
     likelihood of deadlocks.
 
-## **Http protocol, HTTP java**
+## Http protocol, HTTP java.
 
 - HTTP (Hypertext Transfer Protocol) is a protocol used for transferring data over the internet, 
 most commonly used for transferring web pages and other documents from web servers to web clients (browsers).
@@ -1929,17 +1928,17 @@ of the new `HttpClient` library that comes with Java 11, it's recommended to use
     - This provides an added layer of security and protects against eavesdropping and tampering with the data in transit.
 6) What are some common headers used in an HTTP request and response?
     - Common headers in an HTTP request include:
-        - Accept: specifies the desired response content type
-        - Host: specifies the target host and port
-        - User-Agent: identifies the client software
-        - Accept-Language: specifies the desired response language
-        - Content-Type: specifies the type of data in the request body
+        - Accept: specifies the desired response content type.
+        - Host: specifies the target host and port.
+        - User-Agent: identifies the client software.
+        - Accept-Language: specifies the desired response language.
+        - Content-Type: specifies the type of data in the request body.
     - Common headers in an HTTP response include:
-        - Content-Type: specifies the type of data in the response body
-        - Content-Length: specifies the length of the response body
-        - Server: identifies the server software
-        - Date: specifies the date and time of the response
-        - Location: specifies the URI of a resource in case of redirect
+        - Content-Type: specifies the type of data in the response body.
+        - Content-Length: specifies the length of the response body.
+        - Server: identifies the server software.
+        - Date: specifies the date and time of the response.
+        - Location: specifies the URI of a resource in case of redirect.
 7) Explain the concept of statelessness in HTTP and how it is implemented.
     - HTTP is a stateless protocol, which means that the server does not retain any information about previous requests 
     made by the client. 
@@ -1970,7 +1969,7 @@ of the new `HttpClient` library that comes with Java 11, it's recommended to use
 
 ***
 
-**IBM MQ**
+**IBM MQ.**
 
 - Asynchronous messaging: 
     - IBM Message Queues allows for the sending and receiving of messages asynchronously, which means that the sender 
@@ -2070,7 +2069,7 @@ of users.
 - The specific permissions that an application can have depend on the configuration and can include things like reading 
 and writing to queues, and managing the lifecycle of queues and channels.
 
-**xmit queue, how they are configured**
+**xmit queue, how they are configured.**
 
 - In IBM's MQ (Message Queue) software, the transmission queue (also known as XMIT queue) is used for transmitting 
 messages from one queue manager to another.
@@ -2089,7 +2088,7 @@ involves setting up a transmission queue pair and coordinating parameters betwee
 
 ***
 
-**Apache camel**
+**Apache camel.**
 
 - Apache Camel is an open-source integration framework that allows for the integration of different systems and 
 applications. 
@@ -2136,7 +2135,7 @@ to help integrate different systems and applications.
     - Composed Message Processor: Camel provides a composed message processor pattern which allows you to chain multiple 
     message processors together.
     
-**Camel SOAP envelope**
+**Camel SOAP envelope.**
 
 - In Java, you can use the Apache Camel framework to generate a SOAP envelope from an XSLT document. 
 - Here's an example of how to do this using Camel:
@@ -2172,7 +2171,7 @@ template.sendBody("direct:start", "<inputXML>...</inputXML>");
 - Note that this is a basic example, and you may need to adjust it to fit your specific use case. 
 - Additionally, you may want to add validation, error handling, and other features to your route.
 
-**Handle Exceptions in Camel xml**
+**Handle Exceptions in Camel xml.**
 
 - In Apache Camel, you can handle exceptions in XML using the `<onException>` and `<handled>` elements in the Camel route.
 - The `<onException>` element is used to define a block of exception handling logic that applies to a specific exception 
@@ -2224,7 +2223,7 @@ the route and execute the exception handling logic defined in that block.
 - If it doesn't find any matching `<onException>` block, it will continue to search for a matching `<onException>` block 
 in the parent routes.
 
-**Handle Exceptions in Camel java**
+**Handle Exceptions in Camel java.**
 
 - In Apache Camel, you can handle exceptions in Java using the `onException` and handled methods in the Camel route.
 - Here is an example of how to handle exceptions in a Camel route defined in Java:
@@ -2246,7 +2245,7 @@ endpoint.
 - The `handled(true)` method specifies that when the exception is handled, a log message is written with the exception 
 message and the message is transformed to the constant "Error Occurred".
 - You can also use the `onWhen` method to specify a custom condition for handling the exception. 
-- For example, you can use the onWhen method to handle the exception only when the message header has a specific value.
+- For example, you can use the `onWhen` method to handle the exception only when the message header has a specific value.
 - You can also use the continued method to specify how the route should continue processing after the exception is handled. 
 - For example, you can specify to continue routing to a different endpoint or to stop processing the route altogether.
 - You can also handle multiple types of exceptions like.
@@ -2307,7 +2306,7 @@ robust protocol for exchanging data in a distributed system.
     - Using a SOAP library such as Apache Axis or Apache CXF: 
         - Both of these libraries provide a set of classes and methods for creating and consuming web services, 
         including support for creating SOAP messages.
-    -Using a SOAP message factory: 
+    - Using a SOAP message factory: 
         - This is a factory class that creates new SOAP message objects. 
         - The `javax.xml.soap.MessageFactory` class can be used to create a SOAP message factory, 
         and the `createMessage()` method can be used to create a new SOAP message.
@@ -2382,14 +2381,14 @@ what a web service does and how to interact with it.
 - The WSDL document is typically generated by the web service provider and is made available to clients, who can use it 
 to generate client code or manually craft requests to the web service.
 - WSDL defines a number of elements that can be used to describe a web service, including:
-    - Types: a set of data types used by the web service
-    - Messages: definitions of the messages exchanged between the web service and clients
-    - Port types: a set of operations offered by the web service
-    - Bindings: definitions of the protocols used to access the web service operations
-    - Ports: the specific endpoints where the web service can be accessed
+    - Types: a set of data types used by the web service.
+    - Messages: definitions of the messages exchanged between the web service and clients.
+    - Port types: a set of operations offered by the web service.
+    - Bindings: definitions of the protocols used to access the web service operations.
+    - Ports: the specific endpoints where the web service can be accessed.
 - WSDL is an important part of the overall web services architecture and helps to ensure that web services can be easily 
 discovered and interacted with by clients, regardless of their programming language or platform.
-= WSDL (Web Services Description Language) is an XML-based language that is used to describe the functionality offered 
+- WSDL (Web Services Description Language) is an XML-based language that is used to describe the functionality offered 
 by a web service. 
 - A WSDL document specifies the location of the web service, the operations (or methods) offered by the service, 
 and the format of the request and response messages.
@@ -2565,7 +2564,7 @@ and the internet.
 - Many different operating systems, including Windows, Linux, and MacOS, support TCP/IP as the primary means of network 
 communication.
 
-**why during establishing connection big port num is used**
+**Why during establishing connection big port num is used.**
 
 - TCP and IP use a port number to identify different applications and services that run on a computer. 
 - When a connection is established between two devices, both devices must agree on the port number that will be used for 
@@ -2581,7 +2580,7 @@ as the high port numbers are less likely to be used by other services.
 
 ***
 
-**OSI / ISO model**
+**OSI / ISO model.**
 
 - The OSI (Open Systems Interconnection) model is a conceptual framework used to understand how communication occurs 
 between different devices in a network. 
@@ -2612,7 +2611,7 @@ between different devices in a network.
 - The OSI model provides a common reference point for understanding how different network protocols and technologies 
 work together to enable communication between devices.
 
-**Devices**
+**Devices.**
 
 - Physical Layer:
     - This layer deals with the physical connection of devices on a network, such as cables and network cards. 
