@@ -2636,7 +2636,7 @@ work together to enable communication between devices.
     - This layer is responsible for providing the interface between the network and the applications that use it. 
     - Devices used at this layer include servers, workstations, and other end-user devices.
 
-**Data formats**
+**Data formats.**
 
 - Physical Layer: 
     - This layer deals with the physical connection of devices on a network, such as cables and network cards. 
@@ -2668,7 +2668,7 @@ work together to enable communication between devices.
 
 ***
 
-**TSL / SSL certificates**
+**TSL / SSL certificates.**
 
 - TLS (Transport Layer Security) and SSL (Secure Sockets Layer) are cryptographic protocols used to secure communications 
 over networks, particularly the Internet. 
@@ -2695,7 +2695,7 @@ between the client and the server.
 certificates to establish the identity of the parties involved in the communication, and the certificate is verified by 
 a trusted Certificate Authority.
 
-**Handshake steps**
+**Handshake steps.**
 
 - When a client (e.g. a web browser) connects to a server (e.g. a website) using a cryptographic protocol such as TLS or SSL, 
 the server presents its digital certificate to the client. 
@@ -2724,7 +2724,7 @@ transmit data using the established secure communication channel.
 specific version of the protocol being used, the cipher suite selected and additional features used for better security 
 like session resumption and certificate pinning.
 
-**TLS vs SSL**
+**TLS vs SSL.**
 
 - TLS (Transport Layer Security) was introduced as a replacement for SSL (Secure Sockets Layer) in order to address a 
 number of security vulnerabilities that had been discovered in the SSL protocol. 
@@ -2751,7 +2751,7 @@ number of security vulnerabilities that had been discovered in the SSL protocol.
 protect data, address issues with the integrity and authenticity of the data transmitted, provide better protection 
 against attacks, and provide better scalability for large-scale deployments.
 
-**Handle SSL certificates in Java**
+**Handle SSL certificates in Java.**
 
 - There are several ways to handle SSL certificates in a Java application:
     - Using `javax.net.ssl.HttpsURLConnection` class: 
@@ -2787,7 +2787,7 @@ can use a trust manager that trusts all the certificates.
 
 ***
 
-**NAT/PAT**
+**NAT/PAT.**
 
 - PAT stands for Port Address Translation. 
 - It is a technology used to translate one IP address to another, allowing multiple devices on a LAN (Local Area Network) 
@@ -2812,7 +2812,7 @@ network address information in the IP header of packets while they are in transi
 
 ***
 
-**Handle web server connections**
+**Handle web server connections.**
 
 - The number of requests a web server can handle depends on several factors, including the hardware configuration, 
 the server software, and the complexity of the web applications being served. 
@@ -2825,11 +2825,11 @@ bottlenecks or limitations in your web server setup.
 connection pool settings and the thread pool configurations.
 - Here are a few steps to do this:
     - Configure the connection pool: 
-        - You can set the maximum number of connections allowed by your application serverby configuring the connection pool. 
-        - For example, in Tomcat, you can set the maxConnections property in the server.xml file.
+        - You can set the maximum number of connections allowed by your application server by configuring the connection pool. 
+        - For example, in Tomcat, you can set the `maxConnections` property in the `server.xml` file.
     - Configure the thread pool: 
         - You can set the maximum number of threads that your application server can handle by configuring the thread pool. 
-        - For example, in Tomcat, you can set the maxThreads property in the server.xml file.
+        - For example, in Tomcat, you can set the `maxThreads` property in the `server.xml` file.
     - Monitor performance: 
         - Regularly monitor the performance of your application server and adjust the connection pool and thread pool 
         settings as needed to ensure that it can handle the desired number of requests.
@@ -2891,9 +2891,10 @@ depending on the version of the database management system you are using.
 - It is also important to consult the documentation of your specific DBMS to determine the appropriate configuration
 settings for your use case.
 - In a Spring Boot application, you can configure the parameters for connecting to a database in the 
-`application.properties` or application.yml file. 
+`application.properties` or `application.yml` file. 
 - The specific parameters you need to set will depend on the database management system (DBMS) you are using.
-- Here's an example of how to configure a MySQL database connection in a Spring Boot application using the application.properties file:
+- Here's an example of how to configure a MySQL database connection in a Spring Boot application using the 
+`application.properties` file:
 
 ```
 # MySQL database connection configuration
@@ -2921,38 +2922,30 @@ spring:
 - The driver-class-name property specifies the Java class name for the JDBC driver used to connect to the database.
 - To configure `max_connections`, `wait_timeout`, and `interactive_timeout` for a database from a Spring Boot application, 
 you can use the following methods for MySQL and PostgreSQL:
-- MySQL:
-
-```
-spring.datasource.maxActive=100
-spring.datasource.maxIdle=8
-spring.datasource.minIdle=8
-spring.datasource.initialSize=10
-spring.datasource.validationQuery=SELECT 1
-spring.datasource.testOnBorrow=true
-```
-
-- You can also configure these properties in your `application.yml` file:
-
-```yaml
-spring:
-  datasource:
-    maxActive: 100
-    maxIdle: 8
-    minIdle: 8
-    initialSize: 10
-    validationQuery: SELECT 1
-    testOnBorrow: true
-
-```
-
-- PostgreSQL:
-- In your `application.properties` file, add the following properties:
-- Note: max_connections, wait_timeout, and interactive_timeout are server-side configuration options and are not 
-configurable from the client side. 
+- MySQL: 
+    ```
+    spring.datasource.maxActive=100
+    spring.datasource.maxIdle=8
+    spring.datasource.minIdle=8
+    spring.datasource.initialSize=10
+    spring.datasource.validationQuery=SELECT 1
+    spring.datasource.testOnBorrow=true
+    ```
+    - You can also configure these properties in your `application.yml` file:
+    ```yaml
+    spring:
+      datasource:
+        maxActive: 100
+        maxIdle: 8
+        minIdle: 8
+        initialSize: 10
+        validationQuery: SELECT 1
+        testOnBorrow: true
+    
+    ```
 - You may need to adjust these settings directly in your MySQL or PostgreSQL server configuration files.
 
-## **Annotations**
+## Annotations
 
 - Java annotations are a way to provide metadata information about a program's elements, such as classes, methods, 
 and fields. 
@@ -3003,7 +2996,7 @@ an annotation element.
 
 ***
 
-**Immutable in Java**
+**Immutable in Java.**
 
 - An immutable class in Java is a class whose state cannot be modified after it is created.
 - An example of an immutable class in Java:
@@ -3098,7 +3091,7 @@ the returned list.
 
 ## Java multithreading
 
-**Threads** 
+**Threads.** 
 
 - A thread is a lightweight unit of execution in a program. 
 - In Java, threads can be created by extending the `Thread` class or implementing the `Runnable` interface. 
@@ -3126,7 +3119,7 @@ public class Main {
 - When the program is run, it will output "Running in new thread" and "Running in main thread", indicating that the task 
 is running in a separate thread from the main thread.
 
-**Thread vs process differences**
+**Thread vs process differences.**
 
 - A thread and a process are both units of execution in an operating system, but there are some important differences 
 between them:
@@ -3155,7 +3148,7 @@ tasks to run concurrently within a single process.
 - Processes are useful for providing isolation between different applications, as well as for executing different 
 applications or parts of an application that require different resources or execution environments.
      
-**Concurrency**
+**Concurrency.**
  
 - Concurrency is the ability of a program to have multiple tasks executing at the same time. 
 - In a multithreading context, this means that multiple threads can be executing simultaneously.
@@ -3179,7 +3172,7 @@ public class Counter {
 }
 ```        
         
-**Thread states** 
+**Thread states.** 
 
 - A thread can be in one of several states, including new, runnable, blocked, and terminated. 
     - The **new** state indicates that a thread has been created but has not yet started.
@@ -3189,7 +3182,7 @@ public class Counter {
 - Interview question: What are the different states that a thread can be in in Java?
     - A thread can be in one of four states in Java: new, runnable, blocked, and terminated.
         
-**Thread scheduling** 
+**Thread scheduling.** 
 
 - The Java Virtual Machine schedules threads for execution using a technique called time-slicing. 
 - Threads are assigned a priority, and the scheduler will run the highest-priority thread that is runnable.
@@ -3197,7 +3190,7 @@ public class Counter {
     - The Java Virtual Machine schedules threads for execution using a technique called time-slicing. 
     - Threads are assigned a priority, and the scheduler will run the highest-priority thread that is runnable.
     
-**Thread-safe data structures** 
+**Thread-safe data structures.** 
 
 - Thread-safe data structures are data structures that can be safely accessed by multiple threads without the need for 
 explicit synchronization. 
@@ -3237,7 +3230,7 @@ associated with a key.
 - Note that `ConcurrentHashMap` is thread-safe, which means that multiple threads can access the map concurrently without 
 causing any concurrency issues.
 
-**Various techniques to ensure thread safety**
+**Various techniques to ensure thread safety.**
 
 - Here are some of the techniques used to ensure thread safety in Java:
     - Fine-grained locking: 
@@ -3268,7 +3261,7 @@ causing any concurrency issues.
 - By using concurrent collections that implement these techniques, developers can ensure that their multi-threaded 
 applications are safe and efficient, even in the presence of race conditions and other thread-related issues.
     
-**ThreadPool** 
+**ThreadPool.** 
 
 - Thread pools are a way to manage a group of worker threads. 
 - The `Executor` framework provides a simple way to create and manage a pool of threads.
@@ -3309,7 +3302,7 @@ public class Main {
 - Finally, the `shutdown` method is called to signal that no more tasks will be submitted to the executor, and the executor 
 will clean up and terminate its worker threads when all tasks have completed.
 
-**Inter-thread Communication**
+**Inter-thread Communication.**
 
 - To communicate between threads, Java provides methods like `wait()`, `notify()` and `notifyAll()` that can be used to 
 allow threads to wait for a certain condition to be met, and to notify other threads when that condition has been met. 
@@ -3416,7 +3409,7 @@ public class Example {
 - The `wait()` method is used to block the execution of a thread until it is notified by another thread, 
 and the `notify()` method is used to wake up a waiting thread.
 
-**Why `wait()`, `notify()` and `notifyAll()` are defined in Object class**
+**Why `wait()`, `notify()` and `notifyAll()` are defined in Object class.**
 
 - The `wait()`, `notify()`, and `notifyAll()` methods are defined in the `Object` class in Java because they are fundamental 
 `synchronization` mechanisms that are used to control the flow of execution between threads.
@@ -3433,7 +3426,7 @@ including complex multi-threaded applications.
 synchronization and the synchronization mechanisms built into Java. 
 - Misuse of these methods can lead to serious problems, such as deadlocks, and should be avoided.
 
-**Deadlock** 
+**Deadlock.** 
 
 - A deadlock is a situation where two or more threads are blocked indefinitely because each thread is waiting for one 
 of the other threads to release a resource. 
@@ -3498,7 +3491,7 @@ public class Deadlock {
 }
 ```
 
-**Deadlock synchronized fix**
+**Deadlock synchronized fix.**
 
 ```java
 public class Deadlock {
@@ -3551,7 +3544,7 @@ public class Deadlock {
 }
 ```
 
-**ThreadLocal** 
+**ThreadLocal.** 
 
 - A `ThreadLocal` variable is used to store thread-specific data. 
 - It allows each thread to have its own copy of a variable, which is separate from the copies held by other threads. 
@@ -3598,7 +3591,7 @@ the `set()` method.
 - The output of the example would show that each thread has its own separate copy of the `ThreadLocal` object, with its 
 own value.
 
-**Why ThreadLocal is useful**
+**Why ThreadLocal is useful.**
 
 - A `ThreadLocal` variable is a variable that is specific to a single thread, and can be accessed and modified by that 
 thread only. 
@@ -3618,7 +3611,7 @@ thread-local transactions or resources.
 - In general, `ThreadLocal` variables are a convenient and efficient mechanism for managing per-thread state in a 
 multi-threaded environment, without the need for explicit synchronization or locking.
 
-**Volatile keyword**
+**Volatile keyword.**
 
 - The `volatile` keyword is used to indicate that a variable may be modified by multiple threads. 
 - When a variable is declared as `volatile`, the Java Virtual Machine will ensure that all threads see the most up-to-date 
@@ -3628,7 +3621,7 @@ value of the variable by reading it from main memory instead of caching it in a 
     ensures that each thread reads the variable from main memory and not from a thread-local cache. 
     - This ensures that all threads have the most up-to-date value of the variable and prevent stale value problem.
 
-**Mechanism of volatile**
+**Mechanism of volatile.**
 
 - In Java, a `volatile` variable is stored in main memory, which is accessible to all threads in a program. 
 - This is in contrast to a non-volatile variable, which may be stored in a CPU cache or in a thread-local storage,
@@ -3645,7 +3638,7 @@ the underlying hardware.
 - The precise details of how this works may depend on the underlying platform, but the overall goal is to ensure that 
 the value of a `volatile` variable is always up-to-date across all threads in a program.
 
-**To which Java constructs can we use a volatile keyword**
+**To which Java constructs can we use a volatile keyword.**
 
 - In Java, the `volatile` keyword can be used with the following constructs:
     - Variables: 
@@ -3669,7 +3662,7 @@ and writes, it does not provide guarantees around atomicity.
 - For operations that require atomicity, such as incrementing a counter or updating multiple variables together, 
 you should use other synchronization constructs like `synchronized` or `Lock`.
 
-**Consumer Producer Pattern**
+**Consumer Producer Pattern.**
 
 - The consumer-producer pattern is a design pattern that is used to manage the communication between multiple threads 
 in a concurrent system. 
@@ -3789,7 +3782,7 @@ public class ConsumerProducerExample {
 
 ***
 
-**Enums, enums multithreading**
+**Enums, enums multithreading.**
 
 - In Java, an `enum` is a special kind of class that represents a fixed set of constants. 
 - Enums are typically used to represent a small set of predefined values, such as the days of the week or the suits 
@@ -3846,7 +3839,7 @@ locking pattern.
 variable will be visible to all threads and that any read of the variable will return the latest value written by any thread. 
 - This helps to ensure that the singleton instance is properly initialized before it is accessed by any other threads.
 
-**enum example**
+**Enum example.**
 
 - An example of an `enum` in Java that represents the days of the month and includes additional information about each day, 
 such as its number and whether it's a weekend day:
@@ -3947,7 +3940,7 @@ Java application without any risk of data corruption.
 
 ***
 
-**Linux commands to working with Java applications**
+**Linux commands to working with Java applications.**
 
 - `java -version`: 
     - This command will display the version of Java that is currently installed on your system.
@@ -4004,7 +3997,7 @@ Java application without any risk of data corruption.
     including the process that created them, and the state of the socket.
     - `ss -plnt | grep <port_number>`
 
-**How can we analyze heap dump**
+**How can we analyze heap dump.**
 
 - A heap dump is a snapshot of the memory of a Java application at a particular point in time. 
 - It can be used to analyze the memory usage of an application and identify memory leaks, as well as to diagnose other
@@ -4105,12 +4098,12 @@ and modular code.
 
 ***
 
-**xargs linux**
+**xargs linux.**
 
 - `xargs` is a command in Linux that is used to build and execute command lines from standard input. 
 - It takes input from a command and passes it as arguments to another command. 
 - The input is often a list of items such as file names or other data that is generated by another command.
-- The basic syntax of `xargs` is: `command1 | xargs command2`
+- The basic syntax of `xargs` is: `command1 | xargs command2`.
     - It takes the output of command1 as input and passes it as arguments to command2.
 - For example, if you want to find all the files in a directory that match a certain pattern, and then delete them, 
 you could use the `find` command to list the files and then pipe the output to `xargs` and the `rm` command:
@@ -4120,9 +4113,9 @@ passes them as arguments to the `rm` command to delete them.
 
 ***
 
-**Design Patterns**
+## Design Patterns.
 
-**The Singleton pattern**
+**The Singleton pattern.**
  
 - The Singleton pattern is a design pattern that ensures a class has only one instance, while providing a global access 
 point to this instance. 
@@ -4197,7 +4190,7 @@ public class Singleton {
 - By using the `volatile` keyword, it ensures that multiple threads handle the singleton instance correctly when it is 
 being initialized to the Singleton instance.
   
-**The Factory pattern**
+**The Factory pattern.**
 
 - The Factory design pattern is a **creational** design pattern in Java that provides a way to create objects without 
 specifying the exact class of object that will be created. 
@@ -4253,7 +4246,7 @@ shape2.draw();
 - This way, factory pattern introduces an interface for creating an object but leaves the choice of class to implement 
 the interface to the subclasses. 
 
-**The Observer pattern** 
+**The Observer pattern.** 
 
 - The Observer pattern is a **behavioral** design pattern in Java that allows one or more objects (observers) 
 to be notified of changes to the state of another object (the subject). 
@@ -4329,7 +4322,7 @@ subject.setValue(5);
 
 - This way, subject notifies the observer whenever there is a change in the state.
     
-**The Decorator pattern**
+**The Decorator pattern.**
  
 - The Decorator pattern is a **structural** design pattern in Java that allows behavior to be added to an individual 
 object, either statically or dynamically, without affecting the behavior of other objects from the same class. 
@@ -4442,7 +4435,7 @@ public class Main {
 }
 ```
      
-**The Command pattern**
+**The Command pattern.**
  
 - The Command pattern is a **behavioral** design pattern in Java that encapsulates a request as an object, allowing for 
 deferred execution or the ability to queue or log requests. 
@@ -4524,7 +4517,7 @@ invoker.executeCommand();
 - This way, Command pattern encapsulates requests as objects, allowing for deferred execution and the ability to queue 
 or log requests.
 
-**The Adapter pattern**
+**The Adapter pattern.**
 
 - The Adapter pattern is a **structural** design pattern in Java that allows incompatible classes to work together by 
 converting the interface of one class into an interface expected by the clients. 
@@ -4564,7 +4557,7 @@ target.request();
 - This way, Adapter pattern allows classes with incompatible interfaces to work together by converting the interface of 
 one class into an interface expected by the clients.
     
-**The Facade pattern**
+**The Facade pattern.**
     
 - The Facade pattern is a **structural** design pattern in Java that provides a simplified interface to a complex system of 
 classes, hiding their implementation details and interdependencies. 
@@ -4617,7 +4610,7 @@ facade.operation();
 - This way, Facade pattern allows the client to access the functionality of a subsystem through a single, 
 unified interface, making the system easier to use and understand.
     
-**The State pattern**
+**The State pattern.**
 
 - The State pattern is a **behavioral** design pattern in Java that allows an object to alter its behavior when its 
 internal state changes. 
@@ -4678,7 +4671,7 @@ context.handle();  // Prints "Handling in Concrete State B"
 - This way, the State pattern allows an object to alter its behavior when its internal state changes, by encapsulating 
 the behavior associated with a particular state of an object within a separate class.
     
-**The Template method pattern**
+**The Template method pattern.**
 
 - The Template Method pattern is a **behavioral** design pattern in Java that defines the skeleton of an algorithm in 
 a method, called the template method, and allows subclasses to provide the implementation for some of the steps. 
@@ -4739,7 +4732,7 @@ abstractClassB.templateMethod();
 an algorithm, while the template method defines the skeleton of the algorithm and the order of the steps.
 - It is a way to define an algorithm in a superclass, but let subclasses change or override some parts of the algorithm.
     
-**The Iterator pattern**
+**The Iterator pattern.**
 
 - The Iterator pattern is a **behavioral** design pattern that allows traversing elements of an aggregate object 
 (such as a list or a set) without exposing its internal structure. 
@@ -4823,7 +4816,7 @@ object is implemented.
 
 ***
 
-**Liskov Substitution Principle Examples**
+**Liskov Substitution Principle Examples.**
 
 - The Liskov Substitution Principle (LSP) is a principle in object-oriented programming that states that objects of a 
 superclass should be able to be replaced with objects of a subclass without affecting the correctness of the program.
@@ -4868,7 +4861,7 @@ program because the Flight class does not rely on the bird being able to fly.
 
 ***
 
-**SQL vs NoSQL dbs**
+**SQL vs NoSQL dbs.**
 
 - SQL (Structured Query Language) and NoSQL (Not only SQL) databases are both used for storing and managing data, 
 but they have some key differences.
@@ -4886,7 +4879,7 @@ important than data consistency and integrity.
 for unstructured and high volume of data. 
 - It is important to use the right type of database for the specific use case and requirements.
 
-**When use SQL and NoSQL databases**
+**When use SQL and NoSQL databases.**
 
 - When deciding whether to use a SQL or NoSQL database, it is important to consider the specific requirements of the 
 application and the type of data that will be stored.
@@ -4913,7 +4906,7 @@ underlying architecture is a NoSQL.
 
 ***
 
-**Process Structure**
+**Process Structure.**
 
 - In a multithreaded context, a process typically includes several key data structures:
     - Process Table: This table contains information about each process currently running on the system, 
@@ -4929,7 +4922,7 @@ underlying architecture is a NoSQL.
 
 ***
 
-**Avro**
+**Avro.**
 
 - Apache Avro is a data serialization system that provides a compact, fast, and **binary format** for data. 
 - It is often used in big data and distributed systems to efficiently serialize data for storage and transmission.
@@ -4952,7 +4945,7 @@ and distributed systems where efficient storage and transmission of data is crit
 
 ***
 
-**Java compile time vs runtime**
+**Java compile time vs runtime.**
 
 - In Java, the terms "compile-time" and "runtime" refer to different stages of the execution of a program.
 - Compile-time refers to the stage of program execution where the source code is translated into machine-readable code 
@@ -4970,7 +4963,7 @@ thrown when a class is not found at runtime.
 
 ***
 
-**Spring Framework**
+**Spring Framework.**
 
 - In Spring Framework, a REST controller is a class that handles HTTP requests and returns HTTP responses. 
 - It is typically used to handle incoming requests to a web application and return an appropriate response, 
@@ -5028,7 +5021,7 @@ HTTP methods, validating request data, handling errors, and so on.
 http methods, and other annotations like `@PathVariable`, `@RequestParam` to get the variables from the path and the 
 query parameters.
 
-**What is a controller**
+**What is a controller.**
 
 - In Spring, the term "controller" refers to a component in the Model-View-Controller (MVC) pattern that handles incoming 
 requests and returns responses to the client. 
@@ -5045,7 +5038,7 @@ or delete a user.
 - The methods in this controller class would handle the incoming request data, perform the appropriate actions, 
 and return an HTTP response to the client.
 
-**HTTP GET, POST characteristics**
+**HTTP GET, POST characteristics.**
 
 - The HTTP (Hypertext Transfer Protocol) GET and POST methods are used to request data from a server or 
 send data to a server. 
@@ -5068,7 +5061,7 @@ the server.
 - However, this is just a general guideline and there are many other HTTP methods available that can be used for 
 different purposes, such as PUT, DELETE, PATCH, etc.
 
-**CORS**
+**CORS.**
 
 - CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers that blocks web pages from 
 making requests to a different domain than the one that served the web page. 
@@ -5112,7 +5105,7 @@ public class MyController {
 the browser will still block the requests, the headers are just a way for the server to tell the browser that it is 
 allowed to make the request.
 
-**Nginx**
+**Nginx.**
 
 - When developing a web application, it is typically run on a local development server on a specific port such as 8080. 
 - However, when deploying the application to a production environment, you will want it to be accessible to the outside 
@@ -5142,7 +5135,7 @@ your web application.
 - Please keep in mind that, depending on your infrastructure, there may be other factors that impact your ability to make 
 your web application visible to the outside world on a standard port, such as firewall rules or network configurations.
 
-**Nginx config**
+**Nginx config.**
 
 ```
 # HTTPS server
@@ -5181,7 +5174,7 @@ server {
 
 - This block listen to port 80 and redirect all the incoming traffic to the HTTPS server.
 
-**X-Real-IP**
+**X-Real-IP.**
 
 - `X-Real-IP` is an HTTP header field that is used to indicate the IP address of the client that is making the request. 
 - When a request passes through a proxy server, the IP address of the client is replaced with the IP address of the 
@@ -5198,7 +5191,7 @@ in web server and proxy server configurations.
 - Additionally, `X-Real-IP` header is useful in tracking the real IP of the client, in situations like rate limiting, 
 access restriction, logging, etc.
 
-**LOMBOK**
+**LOMBOK.**
 
 - Project Lombok is a Java library that provides a set of annotations to reduce boilerplate code. 
 - Some of its most popular features include:
@@ -5212,7 +5205,7 @@ access restriction, logging, etc.
 - The annotations are processed at compile-time and do not have any runtime overhead, making it suitable for use in 
 production systems.
 
-**Spring REST**
+**Spring REST.**
 
 - Some key concepts in Spring REST.
 - RESTful Web Services: 
@@ -5243,7 +5236,7 @@ production systems.
     - Spring REST provides a number of features for securing RESTful web services, such as authentication and authorization 
     using the Spring Security framework.
 
-**ControllerAdvice**
+**ControllerAdvice.**
 
 - In Spring, the `@ControllerAdvice` annotation is used to define a class as a global exception handler for controllers. 
 - It allows you to centralize the exception handling logic in your application, so that you can handle exceptions 
@@ -5279,7 +5272,7 @@ way in Spring REST applications.
 
 ***
 
-**SQL**
+**SQL.**
 
 - SQL (Structured Query Language) is a standard language for interacting with relational databases. 
 - It is used to create, modify, and query databases.
@@ -5351,7 +5344,7 @@ DELETE FROM employees
 WHERE status = 'Left';
 ```
 
-## Terraform
+## Terraform.
 
 - Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently.
 - Here are some key concepts related to Terraform:
@@ -5388,7 +5381,7 @@ WHERE status = 'Left';
         - Each workspace has its own state, and resources can be created, updated, and deleted independently 
         in each workspace.
 
-**Questions**
+**Questions.**
 
 1) What is Terraform and what are its main features?
     - Terraform is an open-source infrastructure as code software tool that allows users to define and provision 
@@ -5434,7 +5427,7 @@ WHERE status = 'Left';
     - Additionally, Terraform Cloud and Terraform Enterprise are paid offerings that provide collaboration features 
     such as remote state management, access controls, and team workflows.
     
-**Terraform file formats**
+**Terraform file formats.**
 
 - Terraform uses several different file formats to represent infrastructure resources and configurations. 
 - The most common file formats are:
@@ -5463,7 +5456,7 @@ WHERE status = 'Left';
 - It is important to note that while Terraform files typically use the `.tf` extension, it is not required, 
 you can use any extension you like.
 
-**Terraform flow**
+**Terraform flow.**
 
 - Initialization: 
     - When you first run Terraform, it needs to be initialized. 
@@ -5497,15 +5490,15 @@ for Terraform to connect to your cloud provider's API.
 
 ***
 
-**Cloud Computing**
+**Cloud Computing.**
 
 - Cloud computing is a computing model in which resources, such as servers, storage, and applications, are made available 
 to users over the internet. 
 - The main concepts and technologies in cloud computing include:
     - Service models: Cloud computing offers three main service models: 
-        - Software as a Service (SaaS) 
-        - Platform as a Service (PaaS)
-        - Infrastructure as a Service (IaaS)
+        - Software as a Service (SaaS).
+        - Platform as a Service (PaaS).
+        - Infrastructure as a Service (IaaS).
     - Deployment models: Cloud computing can be deployed in different ways, including public cloud, private cloud, 
     hybrid cloud, and community cloud.
     - Virtualization: Virtualization is a key technology in cloud computing, as it allows multiple virtual machines 
@@ -5524,7 +5517,7 @@ to users over the internet.
 - These are some of the key concepts and technologies in cloud computing. 
 - Understanding these concepts and technologies is crucial for developing and deploying applications in the cloud.
 
-**Building and deploying applications on Google Cloud Platform (GCP)**
+**Building and deploying applications on Google Cloud Platform (GCP).**
 
 - Choose a deployment model: 
     - Choose between deploying your application on GCP as a standalone application or as a managed service, 
@@ -5549,7 +5542,7 @@ to users over the internet.
 - GCP offers many tools and services to help you build, deploy, and manage your applications, so it's important to 
 carefully consider your needs and choose the right tools for your project.
 
-## # Spring
+## Spring.
 
 - Spring Boot is a Java-based framework used to build microservices. 
 - It provides a convenient way to quickly develop and run stand-alone, production-grade microservices. 
@@ -5572,7 +5565,7 @@ carefully consider your needs and choose the right tools for your project.
 - Overall, Spring Boot is a powerful tool for building and deploying microservices, and its large community and ecosystem 
 make it a popular choice for microservice development.
 
-**Spring boot interview**
+**Spring boot interview.**
 
 1) Can you explain the purpose of microservices and why they are important?
     - Microservices are a software architecture pattern that structures an application as a collection of loosely coupled, 
@@ -5605,7 +5598,7 @@ make it a popular choice for microservice development.
     - By integrating with Spring Cloud, Spring Boot makes it easier to develop and deploy microservices that are robust 
     and scalable.
 
-**Example of Spring Rest Test**
+**Example of Spring Rest Test.**
 
 - Here is an example of a Spring REST test.
 
@@ -5663,7 +5656,7 @@ the MockMvc class in Spring Boot.
 
 ***
 
-## Microservices
+## Microservices.
 
 - A microservice architecture is a method of developing software systems in which complex applications are broken down 
 into small, independent services that communicate with each other through APIs.
@@ -5711,7 +5704,7 @@ into small, independent services that communicate with each other through APIs.
     - Monitoring and logging: Technologies like Prometheus, Grafana, and ELK stack can be used to monitor and log the 
     performance and behavior of services, making it easier to troubleshoot issues.    
 
-**How to develop, deploy, and manage microservices**    
+**How to develop, deploy, and manage microservices.**    
 
 - Developing, deploying, and managing microservices using the Spring framework can be done using the following steps:
 1) Developing microservices:
@@ -5737,7 +5730,7 @@ into small, independent services that communicate with each other through APIs.
     
 ***
 
-## Docker Container
+## Docker Container.
 
 - Docker containers are a key concept in the Docker ecosystem. 
 - They are lightweight, portable, and self-sufficient, making them a great choice for packaging and deploying applications. 
@@ -5770,7 +5763,7 @@ into small, independent services that communicate with each other through APIs.
         - Docker hub is a public registry where users can store and share their images. 
         - It allows for easy distribution and deployment of applications in a containerized environment.
 
-**Docker container interview questions**
+**Docker container interview questions.**
 
 1) What is a Docker container?
     - A Docker container is a lightweight, standalone, and executable package of software that includes everything needed 
@@ -5827,7 +5820,7 @@ into small, independent services that communicate with each other through APIs.
 25) How can you restrict the access to a specific container?
     - You can use the command `docker create` and `docker run with --cap-add` and `--cap-drop` options.
 
-**Dockerfile interview**
+**Dockerfile interview.**
 
 - A Dockerfile is a script that contains instructions for building a Docker image. 
 - It is used to automate the process of creating an image and ensures that the resulting image is consistent 
@@ -5872,7 +5865,7 @@ docker run -p <host_port>:<container_port> <image_name>
 - The Dockerfile can be seen as a recipe or blueprint for building an image and ensures that the resulting image 
 is consistent and repeatable.
 
-**Example of Dockerfile**
+**Example of Dockerfile.**
 
 ```
 # Use an official Java runtime as the base image
@@ -5911,7 +5904,7 @@ docker run -p 8080:8080 my-java-app
 
 ***
 
-## Kubernetes
+## Kubernetes.
 
 - Kubernetes is an open-source container orchestration system that automates the deployment, scaling, and management 
 of containerized applications. 
@@ -5952,7 +5945,7 @@ of containerized applications.
 - Kubernetes provides a robust and flexible platform for running containerized applications, 
 and it is widely adopted by organizations of all sizes.
 
-**Kubernetes interview questions**
+**Kubernetes interview questions.**
 
 1) What is Kubernetes?
     - Kubernetes is an open-source container orchestration system for automating the deployment, scaling, and management 
@@ -6021,7 +6014,7 @@ and it is widely adopted by organizations of all sizes.
 
 ***
 
-## Postgres
+## Postgres.
 
 - PostgreSQL (often simply called "Postgres") is an open-source relational database management system. 
 - Here are some key concepts and features of Postgres:
@@ -6053,7 +6046,7 @@ and it is widely adopted by organizations of all sizes.
 variety of data types and has many advanced features such as replication, extensibility, and security.
 
 
-**Questions**
+**Questions.**
 
 1) What is a relational database and how does it differ from other types of databases?
     - A relational database is a type of database that organizes data into tables with rows and columns. 
@@ -6130,7 +6123,7 @@ variety of data types and has many advanced features such as replication, extens
     - You can also use the `EXPLAIN` command to analyze the execution plan of a query and identify which indexes are being 
     used and which are not.
     
-**Joins**
+**Joins.**
 
 - In Postgres, a join operation combines rows from two or more tables based on a related column between them. 
 - There are several types of join operations, including:
@@ -6154,7 +6147,7 @@ use indexes on the join columns and make sure that the join columns have the sam
 derived table. 
 - This allows you to join the results of a query to another table.
 
-**SELECT** 
+**SELECT.** 
 
 - This command is used to retrieve data from one or more tables in the database. 
 - The basic syntax of the `SELECT` command is as follows:
@@ -6168,7 +6161,7 @@ FROM table1
 [ORDER BY column1, column2, ...]
 ```
 
-**INSERT**
+**INSERT.**
  
 - This command is used to add new rows of data to a table. 
 - The basic syntax of the `INSERT` command is as follows:
@@ -6178,7 +6171,7 @@ INSERT INTO table_name (column1, column2, ...)
 VALUES (value1, value2, ...)
 ```
 
-**UPDATE** 
+**UPDATE.** 
 
 - This command is used to modify existing data in a table. 
 - The basic syntax of the `UPDATE` command is as follows:
@@ -6189,7 +6182,7 @@ SET column1 = value1, column2 = value2, ...
 [WHERE condition]
 ```
 
-**DELETE** 
+**DELETE.** 
 
 - This command is used to delete existing data in a table. 
 - The basic syntax of the `DELETE` command is as follows:
@@ -6199,7 +6192,7 @@ DELETE FROM table_name
 [WHERE condition]
 ```
 
-**CREATE** 
+**CREATE.** 
 
 - This command is used to create a new table, index, view, or other database object. 
 - The basic syntax of the `CREATE` command is as follows:
@@ -6213,7 +6206,7 @@ column2 data_type constraint,
 );
 ```
 
-**ALTER** 
+**ALTER.** 
 
 - This command is used to alter the structure of an existing table, index, view, or other database object. 
 - The basic syntax of the `ALTER` command is as follows:
@@ -6223,7 +6216,7 @@ ALTER TABLE table_name
 ADD column_name data_type constraint;
 ```
 
-**DROP** 
+**DROP.** 
 
 - This command is used to delete an existing table, index, view, or other database object. 
 - The basic syntax of the `DROP` command is as follows:
@@ -6232,7 +6225,7 @@ ADD column_name data_type constraint;
 DROP TABLE table_name;
 ```
 
-**EXPLAIN** 
+**EXPLAIN.** 
 
 - This command is used to analyze the execution plan of a query and understand how the query is executed. 
 - The basic syntax of the `EXPLAIN` command is as follows:
@@ -6241,7 +6234,7 @@ DROP TABLE table_name;
 EXPLAIN SELECT ...
 ```
 
-**INNER JOIN** 
+**INNER JOIN.** 
 
 - This example retrieves all the rows where the values in the "id" column of the "orders" table match the values in the 
 "id" column of the "customers" table.
@@ -6253,7 +6246,7 @@ INNER JOIN customers
 ON orders.id = customers.id;
 ```
 
-**LEFT JOIN** 
+**LEFT JOIN.** 
 
 - This example retrieves all the rows from the "orders" table, and the matching rows from the "customers" table. 
 - If there is no match, NULL values will be returned for the "customers" table's columns.
@@ -6265,7 +6258,7 @@ LEFT JOIN customers
 ON orders.id = customers.id;
 ```
 
-**RIGHT JOIN** 
+**RIGHT JOIN.** 
 
 - This example retrieves all the rows from the "customers" table, and the matching rows from the "orders" table. 
 - If there is no match, NULL values will be returned for the "orders" table's columns.
@@ -6277,7 +6270,7 @@ RIGHT JOIN customers
 ON orders.id = customers.id;
 ```
 
-**FULL JOIN** 
+**FULL JOIN.** 
 
 - This example retrieves all the rows from both the "orders" and "customers" tables, and returns NULL values for the 
 non-matching columns.
@@ -6289,7 +6282,7 @@ FULL OUTER JOIN customers
 ON orders.id = customers.id;
 ```
 
-**CROSS JOIN** 
+**CROSS JOIN.** 
 
 - This example returns the Cartesian product of the "orders" and "customers" tables, which is the set of all possible
 combinations of rows between the two tables.
@@ -6313,7 +6306,7 @@ ON orders.id = customers.id;
 
 ***
 
-## MongoDB
+## MongoDB.
 
 - MongoDB is a document-oriented, NoSQL database that uses a flexible schema and stores data in a binary 
 JSON (BSON) format. 
@@ -6353,7 +6346,7 @@ the structure of the objects and the relationships between them in the applicati
 being queried, rather than scanning entire tables as in relational databases.
 - MongoDB, Couchbase, and RavenDB are examples of document-oriented databases.
 
-**Questions**
+**Questions.**
 
 1) What is MongoDB and what are some of its key features?
     - MongoDB is a document-oriented, NoSQL database that uses a flexible schema and stores data in a binary 
@@ -6440,7 +6433,7 @@ being queried, rather than scanning entire tables as in relational databases.
         - To handle the high-read and write operations we can implement sharding and indexing to improve the performance, 
         and use replica sets to ensure high availability and data durability.
 
-**MongoDB useful commands**
+**MongoDB useful commands.**
 
 - Inserting a document: 
     - To insert a document into a collection, you can use the `db.collection.insertOne()` 
@@ -6590,7 +6583,7 @@ public class PersonController {
 
 ***
 
-## Openshift
+## Openshift.
 
 - OpenShift is a container orchestration platform developed by Red Hat. 
 - It is built on top of Kubernetes and provides additional features for managing and deploying containerized applications.
@@ -6608,7 +6601,7 @@ enterprise environments.
 
 ***
 
-**Testability**
+**Testability.**
 
 - Testing code in an enterprise application can be a complex process, as enterprise applications often have many 
 dependencies and integrations with other systems. 
@@ -6743,7 +6736,7 @@ SELECT @res AS result;
 - Note that the syntax for creating and executing stored procedures may vary depending on the specific database management 
 system you are using.
 
-**How to use stored procedure in DBUnit**
+**How to use stored procedure in DBUnit.**
 
 - DBUnit is a JUnit extension that provides support for database testing by allowing you to load data into a database 
 before running tests and clean up data after the tests have completed. 
@@ -6798,7 +6791,7 @@ and the JDBC driver you have installed.
 
 ***
 
-**Distributed Architecture**
+**Distributed Architecture.**
 
 - Distributed architecture in computer science refers to the design of a system that is distributed across multiple 
 devices or machines, connected through a network. 
@@ -6831,7 +6824,7 @@ affecting the entire system.
 - However, it also brings its own set of challenges such as network latency, network partition, data consistency and 
 security.
 
-**Availability**
+**Availability.**
 
 - High availability in a distributed architecture can be achieved by implementing redundancy and failover mechanisms. 
 - This can include:
@@ -6845,7 +6838,7 @@ security.
 - Implementing these measures can help ensure that your distributed architecture is highly available and can continue 
 to operate even in the event of failures.
 
-**Reliability**
+**Reliability.**
 
 - High reliability in a distributed architecture can be achieved by implementing several key strategies, such as:
     - Error handling: designing systems to handle errors and exceptions gracefully, and to automatically recover from 
@@ -6865,7 +6858,7 @@ to operate even in the event of failures.
 - By implementing these strategies, you can help ensure that your distributed architecture is highly reliable and can 
 continue to operate effectively even in the presence of failures or other problems.
 
-**Scalability**
+**Scalability.**
 
 - High scalability in a distributed architecture can be achieved by implementing several key strategies, such as:
     - Loose coupling: designing systems so that components are loosely coupled, allowing them to be easily added, 
@@ -6883,7 +6876,7 @@ continue to operate effectively even in the presence of failures or other proble
 - By implementing these strategies, you can help ensure that your distributed architecture is highly scalable and can 
 handle increased load without a significant impact on performance or availability.
 
-**Data integrity**
+**Data integrity.**
 
 - High data integrity in a distributed architecture can be achieved by implementing several key strategies, such as:
     - Data validation: validating data before it's stored or transmitted to ensure that it meets certain integrity 
@@ -6901,7 +6894,7 @@ handle increased load without a significant impact on performance or availabilit
     - Access control: implementing access control mechanisms to ensure that only authorized users or systems can access 
     or modify data.
 
-**Durability**
+**Durability.**
 
 - High durability in a distributed architecture can be achieved by implementing several key strategies, such as:
     - Data replication: replicating data across multiple servers to ensure that if one fails, 
@@ -6922,7 +6915,7 @@ handle increased load without a significant impact on performance or availabilit
 - By implementing these strategies, you can help ensure that your distributed architecture is able to maintain high data
 durability, even in the presence of failures or other problems. 
 
-**Robustness**
+**Robustness.**
 
 - High robustness in a distributed architecture can be achieved by implementing several key strategies, such as:
     - Error handling: designing systems to handle errors and exceptions gracefully, and to automatically recover from 
@@ -6946,7 +6939,7 @@ durability, even in the presence of failures or other problems.
 - By implementing these strategies, you can help ensure that your distributed architecture is robust, able to handle and 
 recover from failures, and continue to operate effectively even in the presence of problems.
 
-**Robustness, what does it means**
+**Robustness, what does it means.**
 
 - A robust distributed system is a system that is able to continue operating effectively, even in the presence of 
 failures or other problems. Like plane with only one engine can still fly.
@@ -6964,7 +6957,7 @@ failures or other problems. Like plane with only one engine can still fly.
 - A robust distributed system is designed to be reliable, maintainable, and efficient, and is able to provide a high 
 level of service quality, even in the presence of failures or other problems.
 
-**Distributed system design tradeoffs**
+**Distributed system design tradeoffs.**
 
 - Some of the main trade-offs include:
     - Consistency vs availability: distributed systems often need to make a trade-off between consistency, 
@@ -6984,7 +6977,7 @@ level of service quality, even in the presence of failures or other problems.
     - Flexibility vs simplicity: distributed systems need to make a trade-off between flexibility, which allows for easy 
     modification and extension of the system, and simplicity, which makes it easier to understand and maintain.
 
-**Limitations**
+**Limitations.**
 
 - Distributed systems have a number of limitations, some of the main ones include:
     - Complexity: 
@@ -7007,7 +7000,7 @@ level of service quality, even in the presence of failures or other problems.
     - Configuration and management: distributed systems require a significant amount of configuration and management 
     to ensure that all components are properly configured, updated and maintained.
 
-**Simplicity**
+**Simplicity.**
 
 - There are several measures that can be taken to add simplicity to distributed system design, some of the main ones include:
     - Keeping the system simple: Avoid overcomplicating the system by introducing unnecessary features or components, 
@@ -7030,3 +7023,148 @@ level of service quality, even in the presence of failures or other problems.
 easier to understand and maintain, and more robust over time.
 
 ***
+
+## Envoy.
+**1. What is Envoy Proxy and why is it used in microservices architectures?**
+Answer:Envoy Proxy is a high-performance, open-source edge and service proxy developed by Lyft. It is designed to handle 
+both inbound and outbound traffic in microservices architectures, providing features like load balancing, service discovery, 
+observability, and traffic routing.
+In microservices architectures, Envoy acts as a sidecar proxy that can be deployed alongside each service instance, 
+managing traffic between services. It also provides key features like:
+Load balancing: Distributes traffic across service instances.
+Service discovery: Automatically discovers new services and routes traffic to them.
+Observability: Collects metrics, logs, and traces for monitoring service interactions.
+Traffic management: Supports advanced routing and filtering capabilities.
+Envoy simplifies the complexity of service-to-service communication and ensures high availability, reliability, 
+and scalability in distributed systems.
+
+**2. What are the core features of Envoy Proxy?**
+Answer: Some of the core features of Envoy Proxy include:
+Dynamic Service Discovery: Automatically discovers services and their endpoints without manual configuration.
+Advanced Load Balancing: Provides several load balancing strategies such as round-robin, least request, and random, 
+as well as features like circuit breaking and retries.
+Observability: Offers detailed metrics, distributed tracing, and logging to provide deep visibility into service communication.
+Traffic Routing: Supports traffic splitting, blue/green deployments, and weighted routing for better traffic management 
+and can route based on headers, URIs, or other request parameters.
+TLS Termination: Manages TLS connections, including mutual TLS (mTLS) for secure communication between services.
+Rate Limiting: Enforces rate limits for APIs and services to protect them from overuse or abuse.
+Fault Injection: Allows for testing the resiliency of your services by introducing faults (latency, errors) to simulate failure conditions.
+
+**3. Explain the concept of "sidecar pattern" in relation to Envoy Proxy.**
+Answer: The "sidecar pattern" refers to a design pattern commonly used in microservices architectures, where a proxy or 
+helper service is deployed alongside the main application service in a container or pod. Envoy Proxy is often deployed
+as a sidecar proxy to manage network communication between microservices.
+The sidecar runs in the same environment (e.g., pod in Kubernetes) as the service it proxies, ensuring that all traffic 
+to and from the service is routed through the proxy. This architecture allows Envoy to manage:
+Service-to-service communication: Handles routing, load balancing, retries, and timeouts.
+Traffic observability: Collects metrics and traces from communication between services without changing the application code.
+Security: Provides TLS termination and mutual TLS (mTLS) between services.
+This approach abstracts away networking concerns from the application, allowing developers to focus on business logic 
+instead of handling networking intricacies.
+
+**4. How does Envoy handle traffic routing and load balancing?**
+Answer: Envoy offers sophisticated traffic routing and load balancing mechanisms. Here's how it handles them:
+* Traffic Routing:
+  * Routing rules: Envoy can route traffic based on various factors like URL paths, request headers, query parameters, 
+  and more. For example, you could route traffic to different versions of a service (e.g., blue/green deployments).
+  * Weighted Routing: Envoy supports weighted routing, which is useful in scenarios like canary deployments where a 
+  percentage of traffic is directed to a new version of the service.
+  * Fault Injection: Allows you to inject faults like delays and errors into traffic to test service resilience.
+* Load Balancing:
+  * Load balancing algorithms: Envoy supports several load balancing algorithms, including:
+    * Round-robin: Distributes traffic evenly across all available service instances.
+    * Least request: Routes traffic to the instance with the fewest active requests.
+    * Random: Selects a random service instance to handle the request.
+    * Ring hash: Routes based on a consistent hashing mechanism for specific types of traffic.
+* Circuit Breakers: Helps prevent cascading failures by limiting traffic to unhealthy instances or services.
+* Retries: Automatically retries failed requests based on configurable policies, like retrying on specific HTTP status codes or network errors.
+
+**5. What is the role of Envoy in service mesh architectures?**
+Answer: Envoy is a key component in a service mesh architecture. A service mesh is an abstraction layer that manages the 
+communication between microservices, providing features like traffic routing, load balancing, security, and observability 
+without modifying the application code.
+In a service mesh, Envoy is typically deployed as a sidecar proxy within each microservice pod or container. 
+Envoy handles all network communication between services, ensuring that:
+* Traffic management: Envoy manages the traffic between services, applying routing rules, retries, and load balancing policies.
+* Security: Envoy ensures encrypted communication between services, typically through mutual TLS (mTLS).
+* Observability: Envoy collects telemetry data, such as logs, metrics, and traces, which can be used for monitoring and 
+debugging service interactions.
+* Fault tolerance: With features like circuit breaking and rate limiting, Envoy helps improve the resilience and stability of the service mesh.
+In a typical service mesh deployment (e.g., using Istio), Envoy acts as the data plane, while the control plane (e.g., Istio) 
+manages configuration, policies, and service discovery.
+
+**6. How does Envoy differ from traditional reverse proxies like Nginx or HAProxy?**
+Answer: While traditional reverse proxies like Nginx focus mainly on static routing and load balancing, Envoy is designed 
+for dynamic, service-mesh environments. Key differences include:
+* Dynamic configuration: Envoy uses xDS APIs to receive configurations from a control plane (e.g., Istio Pilot).
+* Observability: It provides built-in support for tracing, metrics, and logging.
+* HTTP/2 and gRPC support: Fully supports modern protocols.
+* Service discovery: Envoy can automatically discover upstream services rather than relying on static configuration.
+
+**7. What is the xDS API in Envoy, and why is it important?**
+Answer: The xDS API is a set of discovery service APIs that allow Envoy to dynamically fetch configuration data from 
+a control plane.
+The “x” in “xDS” stands for different types of discovery:
+* LDS: Listener Discovery Service.
+* CDS: Cluster Discovery Service.
+* EDS: Endpoint Discovery Service.
+* RDS: Route Discovery Service.
+This dynamic configuration mechanism makes Envoy ideal for service mesh architectures, allowing real-time updates 
+without restarting the proxy.
+
+**8. What are some observability features provided by Envoy Proxy?**
+Answer: Envoy provides rich observability features out of the box:
+* Access logs: Detailed request/response logs.
+* Metrics: Exposes Prometheus-compatible metrics for traffic, latency, errors, etc.
+* Distributed tracing: Supports integrations with tracing systems like Jaeger, Zipkin, and OpenTelemetry.
+* Health checks: Actively checks the health of upstream services and routes traffic only to healthy instances.
+These features make Envoy an excellent choice for monitoring and debugging service-to-service communication.
+
+**9. What are Envoy Filters, and how do they work?**
+Answer: Envoy uses a filter chain architecture to process requests and responses. Filters are modular components that 
+can modify, inspect, or route traffic at different stages of the request lifecycle.
+There are three main types:
+* Listener filters — operate at the connection level (e.g., TLS inspection).
+* Network filters — work at the L4 level (e.g., TCP proxy).
+* HTTP filters — operate at the L7 level (e.g., authentication, rate limiting, logging).
+Filters can be chained together, and developers can also write custom filters using WebAssembly (WASM) for more 
+flexibility and extensibility.
+
+**10. How does Envoy integrate into a service mesh like Istio?**
+Answer: In a service mesh, Envoy acts as a sidecar proxy deployed alongside each microservice. It intercepts all inbound 
+and outbound traffic for that service, providing:
+* Service discovery.
+* Load balancing.
+* mTLS encryption.
+* Traffic routing and policies.
+* Telemetry collection.
+The control plane (e.g., Istio’s Pilot, Citadel, and Mixer) uses the xDS APIs to configure and manage all Envoy instances dynamically.
+This architecture offloads communication and security logic from the application code, providing consistent traffic 
+management and observability across the entire mesh.
+
+**11. How would you debug high latency or performance issues in Envoy Proxy?**
+Answer: Debugging latency in Envoy involves checking several layers:
+* Metrics inspection:
+  * Use Envoy’s built-in /stats endpoint or Prometheus metrics to check for upstream request time, retries, and connection pool stats.
+  * Look for high values in upstream_rq_time or upstream_cx_connect_ms.
+* Access logs and tracing:
+  * Enable detailed access logs to trace request paths.
+  * Use distributed tracing (e.g., Jaeger or Zipkin) to identify slow segments.
+* Configuration review:
+  * Ensure filters and routing rules are minimal and efficient.
+  * Check timeouts, retries, and circuit breaker settings.
+* System-level checks:
+  * Monitor CPU, memory, and network I/O of the Envoy container.
+* Compare direct vs. proxied traffic:
+  * Send traffic bypassing Envoy to isolate whether latency originates in Envoy or the upstream service.
+
+**12. What are circuit breakers in Envoy, and how do they improve reliability?**
+Answer: Circuit breakers in Envoy are runtime limits that protect both clients and upstream services from overload. 
+They prevent one unhealthy or overloaded service from affecting the entire system.
+Key circuit breaker settings include:
+* `max_connections` — limits the number of simultaneous connections to an upstream cluster.
+* `max_pending_requests` — caps the number of queued requests awaiting an available connection.
+* `max_requests` — limits concurrent requests per cluster.
+* `max_retries` — restricts retry attempts to prevent retry storms.
+When a limit is hit, Envoy immediately fails excess requests, allowing the rest of the system to remain stable. 
+Combined with outlier detection and retries, circuit breakers significantly improve fault tolerance in distributed systems.

@@ -1,11 +1,11 @@
-# Docker
+# Docker.
 
 - Docker is a standard for Linux containers.
 - A **Container** is an isolated runtime inside of Linux.
 - A **Container** provides a private machine like space under Linux.
 - Containers will run under any modern Linux Kernel.
 
-## Containers
+## Containers.
 
 - Have their own process space.
 - Their own network interface.
@@ -13,7 +13,7 @@
 - Have their own disk space:
     - Can share with a host.
 
-## Docker Terminology
+## Docker Terminology.
 
 - **Docker Image:**
     - The representation of a Docker Container.
@@ -26,7 +26,7 @@
     - The code which manages Docker stuff.
     - Creates and runs Docker Containers.
 
-## Docker Engine Runtime
+## Docker Engine Runtime.
 
 ```
 Client Docker CLI ---> REST API ---> Server Docker Daemon
@@ -34,9 +34,9 @@ Client Docker CLI ---> REST API ---> Server Docker Daemon
 
 ***
 
-## Docker Editions
+## Docker Editions.
 
-### Docker Enterprise Edition
+### Docker Enterprise Edition.
 
 - Announced Match 2nd, 2017.
 - CaaS (Container as a Service) platform subscription.
@@ -46,13 +46,13 @@ Client Docker CLI ---> REST API ---> Server Docker Daemon
 - Certified infrastructure.
 - Important for regulatory compliance (PCI, SOX, SAS-70).
 
-### Docker Community Edition
+### Docker Community Edition.
 
 - Free Docker edition for developers and operations.
 - Monthly edge release with the latest features for developers.
 - Quarterly releases for operations.
 
-### Which use
+### Which use.
 
 - Functionally, the two editions are the same:
     - Like CentOS vs Red Hat Enterprise Linux.
@@ -61,11 +61,11 @@ Client Docker CLI ---> REST API ---> Server Docker Daemon
 
 ***
 
-## Why Docker
+## Why Docker.
 
 - Before containers and docker the apps deployed and run on Application server created on top of physical server.
 
-### What is container
+### What is container.
 
 - Container consists of:
     - Runtime Environment.
@@ -73,12 +73,12 @@ Client Docker CLI ---> REST API ---> Server Docker Daemon
     - Dependencies and Libraries.
     - Configuration files.
 
-**Advantages**
+**Advantages.**
 
 - Lightweight and faster.
 - Consumes very less system resources.
 
-### Docker
+### Docker.
 
 - Open source platform, and it consists:
     - **Docker Engine:** A runtime and software packaging tool.
@@ -87,13 +87,13 @@ Client Docker CLI ---> REST API ---> Server Docker Daemon
 - To run Docker, we need to have docker running in our machine.
 - When the Docker image runs it creates a container.
 
-**Advantages**
+**Advantages.**
 
 - Rapid application deployment.
 - Easy sharing of artifacts.
 - Faster and lightweight.
 
-**Dockerfile**
+**Dockerfile.**
 
 - **FROM:** It pulls the image from the docker hub.
     - Here it pulls the java image **alpine-oraclejdk8:slim**.
@@ -112,7 +112,7 @@ sudo docker run hello-world
 docker rmi $(docker images -q)
 ```
 
-### Running MongoDB Docker Container
+### Running MongoDB Docker Container.
 
 ```
 docker ps
@@ -143,7 +143,7 @@ docker run -p 27017:27017 -v /home/matikomp/udemy_courses/DOCKER/dockerdata/mong
 docker ps
 ```
 
-### Docker Images
+### Docker Images.
 
 - Images like **Class** file in Java.
 - Instance of class is docker container.
@@ -153,7 +153,7 @@ docker ps
 - Images are immutable:
     - Once built, the files making up an image do not change.
 
-**Layers**
+**Layers.**
 
 - Images are built layers.
 - Each layer is an immutable file, but is a collection of files and directories.
@@ -164,7 +164,7 @@ docker ps
 docker image inspect mongo
 ```
 
-**Image Ids**
+**Image Ids.**
 
 - Image Ids are a SHA 256 hash derived from the layers:
     - Thus, if the layers of the image changes, the SHA 256 hash changes.
@@ -175,7 +175,7 @@ docker images -q --no-trunc
 docker images
 ```
 
-**Image Tag Names**
+**Image Tag Names.**
 
 - The hash value of images referred to by **tag** names.
 - The format of the full tag name is:
@@ -187,33 +187,33 @@ docker images
 
 ![Docker Layers](docker_img/docker-layers.png "Docker Layers")
 
-### Running Rabbit MQ Docker Container
+### Running Rabbit MQ Docker Container.
 
 ```console
 docker run -d --hostname panda-rabbit --name some-rabbit -p 8080:15672 -p 5671:5671 -p 5672:5672 rabbitmq:3-management
 docker ps
 ```
 
-### Running MySQL Docker Container
+### Running MySQL Docker Container.
 
 ```console
 docker logs c4174507511b
 docker run --name panda-mysql-4 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v /[PATH]/DOCKER/mysqldata:/var/lib/mysql  -p 3306:3306 -d mysql
 ```
 
-## Docker House Keeping
+## Docker Housekeeping.
 
-- There are 3 key areas of house keeping:
-    - **Containers**
-    - **Images**
-    - **Volumes**
+- There are 3 key areas of housekeeping:
+    - **Containers**.
+    - **Images**.
+    - **Volumes**.
 - Shell to running docker image.
 
 ```
 docker exec -it CONTAINER_NAME bash
 ```
 
-### Containers
+### Containers.
 
 - Kill all Running Docker Containers.
 
@@ -227,7 +227,7 @@ docker kill $(docker ps -q)
 docker rm $(docker ps -a -q)
 ```
 
-### Images
+### Images.
 
 - Remove a Docker Image.
 
@@ -247,7 +247,7 @@ docker rmi $(docker images -q -f dangling=true)
 docker rmi $(docker images -q)
 ```
 
-### Volumes
+### Volumes.
 
 - Once a volume is no longer associated with a container, it is considered **dangling**.
 - Remove all dangling volumes.
@@ -260,7 +260,7 @@ docker volume rm $(docker volume ls -f dangling=true -q)
 
 ***
 
-## Spring Boot in CentOS
+## Spring Boot in CentOS.
 
 ```console
 docker run -d centos tail -f /dev/null
@@ -274,7 +274,7 @@ yum install java
 java -version
 ```
 
-**Dockerfile**
+**Dockerfile.**
 
 ```Dockerfile
 FROM centos
@@ -287,7 +287,7 @@ RUN sh -c 'touch /myapp.jar'
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/myapp.jar"]
 ```
 
-**Run Dockerfile**
+**Run Dockerfile.**
 
 ```console
 docker build -t spring-boot-docker .
@@ -302,13 +302,13 @@ docker logs -f bcf1b6fbb61a
 
 ***
 
-## Automatic Building of Docker Images
+## Automatic Building of Docker Images.
 
-### Creating Docker Image in Fabric 8
+### Creating Docker Image in Fabric 8.
 
 - Add **fabric8** dependency to **pom.xml**.
 
-**Dockerfile**
+**Dockerfile.**
 
 ```console
 FROM openjdk
@@ -324,13 +324,13 @@ mvn clean package
 mvn clean package docker:build
 ```
 
-### Publishing to Docker Hub
+### Publishing to Docker Hub.
 
 ```console
 mvn clean package docker:build docker:push
 ```
 
-### Docker template
+### Docker template.
 
 ```console
 mvn docker:stop
@@ -342,7 +342,7 @@ docker rm CONTAINER_NAME
 mvn docker:start
 ```
 
-### Running Docker from maven
+### Running Docker from maven.
 
 ```console
 mvn docker:run
@@ -404,7 +404,7 @@ springframeworkguru/pageviewservice
 
 ***
 
-# Docker
+# Docker.
 
 **Why use Docker?**
 
@@ -442,31 +442,31 @@ docker run hello-world
 
 ![Docker Problem](docker_img/docker-problem.png "Docker Problem")
 
-**Namespacing**
+**Namespacing.**
 
 ![Namespacing](docker_img/docker-problem-namespacing.png "Namespacing")
 
-**Container**
+**Container.**
 
 ![Container](docker_img/container.png "Container")
 
 - **Namespacing:** Isolating resources per process (or group of processes), say - this area of hard drive is for this process:
-    - Processes
-    - Hard drive
-    - Network
-    - Users
-    - Hostnames
-    - IPC
+    - Processes.
+    - Hard drive.
+    - Network.
+    - Users.
+    - Hostnames.
+    - IPC.
 - **Control Groups (cgroups):** Limit amount of resources used per process, say - amount of bandwidth process can use:
-    - Memory
-    - CPU Usage
-    - HD I/O
-    - Network Bandwidth
+    - Memory.
+    - CPU Usage.
+    - HD I/O.
+    - Network Bandwidth.
 - **Container:** group of processes assignee to it.
 
 ![Container](docker_img/container-details.png "Container")
 
-**Containers vs Images**
+**Containers vs Images.**
 
 ![Container Images](docker_img/containers-images.png "Container Images")
 
@@ -477,7 +477,7 @@ docker run hello-world
 
 ***
 
-## Docker Client CLI
+## Docker Client CLI.
 
 ```
 docker run <image_name> <command>
@@ -494,7 +494,7 @@ docker run busybox echo hi there
 docker run busybox ls
 ```
 
-**Listing running containers**
+**Listing running containers.**
 
 ```console
 docker ps
@@ -508,7 +508,7 @@ docker ps -a
 docker ps | wc -l
 ```
 
-**Container lifecycle**
+**Container lifecycle.**
 
 ```
 docker run = docker create + docker start
@@ -523,21 +523,21 @@ docker create hello-world
 docker start -a CONTAINER_ID
 ```
 
-**Restarting stopped container**
+**Restarting stopped container.**
 
 ```console
 docker ps -all
 docker start CONTAINER_ID
 ```
 
-**Removing stopped container**
+**Removing stopped container.**
 
 ```console
 docker ps --all
 docker system prune
 ```
 
-**Retrieving log output**
+**Retrieving log output.**
 
 ```console
 docker create busybox echo hi there
@@ -547,7 +547,7 @@ docker start CONTAINER_ID
 docker logs CONTAINER_ID
 ```
 
-**Stopping Containers**
+**Stopping Containers.**
 
 ```
 docker stop CONTAINER_ID
@@ -570,14 +570,14 @@ docker start CONTAINER_ID
 docker kill CONTAINER_ID
 ```
 
-### Multi command container
+### Multi command container.
 
 ```console
 redis-server
 redis-cli
 ```
 
-**With Docker**
+**With Docker.**
 
 - Execute an additional command in a container.
 
@@ -611,7 +611,7 @@ docker exec -it CONTEINER_ID redis-cli
 docker exec -i CONTAINER_ID redis-cli
 ```
 
-**Shell access (exec) to running container**
+**Shell access (exec) to running container.**
 
 ```console
 docker exec -it CONTAINER_ID sh
@@ -620,12 +620,12 @@ docker exec -it CONTAINER_ID sh
 ```
 
 - Command Preprocessor:
-    - bash
-    - powershell
-    - zsh
-    - sh
+    - bash.
+    - powershell.
+    - zsh.
+    - sh.
 
-**Starting with a shell**
+**Starting with a shell.**
 
 - Execute an additional command in a container.
 
@@ -633,7 +633,7 @@ docker exec -it CONTAINER_ID sh
 docker run -it busybox sh
 ```
 
-**Container isolation**
+**Container isolation.**
 
 ```console
 docker run -it busybox sh
@@ -643,19 +643,19 @@ docker run -it busybox sh
 
 ***
 
-## Creating Docker Images
+## Creating Docker Images.
 
 ![Creating Docker Images](docker_img/creating-docker-image.png "Creating Docker Images")
 
-**Creating a Dockerfile**
+**Creating a Dockerfile.**
 
 - Specify a base image.
 - Run some commands to install additional programs.
 - Specify a command to run on container startup.
 
-### Building Dockerfile
+### Building Dockerfile.
 
-**Create an image that runs redis-server**
+**Create an image that runs redis-server.**
 
 ```Dockerfile
 # Use an existing docker image as a base
@@ -675,13 +675,13 @@ docker run CONTAINER_ID
 
 ![Dockerfile Teardown](docker_img/dockerfile-teardown.png "Dockerfile Teardown")
 
-**Writing a Dockerfile == Being given a computer with no OS and being told to install Chrome**
+**Writing a Dockerfile == Being given a computer with no OS and being told to install Chrome.**
 
 ![Create images steps](docker_img/create-images-steps.png "Create images steps")
 
-### Rebuilds with cache
+### Rebuilds with cache.
 
-**Tagging an Image**
+**Tagging an Image.**
 
 - **-t:** Tag argument.
     - **<docker_id>/<repo_project_name>:<version>**
@@ -693,7 +693,7 @@ docker build -t majka/redis:latest .
 docker run majka/redis
 ```
 
-**Manual image generation**
+**Manual image generation.**
 
 - **Alpine base image:** They come with a pre-installed set of programs that are useful.
 - Docker commit.
@@ -714,20 +714,20 @@ docker run CONTAINER_ID
 
 ***
 
-## Project with Docker
+## Project with Docker.
 
 ![NodeJS app steps](docker_img/nodejs-app-steps.png "NodeJS app steps")
 
-**Below steps are not quite correct**
+**Below steps are not quite correct.**
 
 ![NodeJS app flow](docker_img/nodejs-app-flow.png "NodeJS app flow")
 
-### Base Images issues
+### Base Images issues.
 
 - **alpine:** In Docker world image as small and compact as possible (no npm).
 - **node:alpine:** Alpine version of node.
 
-**Missing files**
+**Missing files.**
 
 - Make sure that created **index.js** and **package.json** are copied to container image.
 - Container has its own filesystem.
@@ -740,19 +740,19 @@ docker build -t majka/simpleweb .
 docker run majka/simpleweb
 ```
 
-### Container port mapping
+### Container port mapping.
 
 - Any time someone makes request on a local network, take that request and port it to port in a container.
     - **LOCALHOST_PORT:INSIDE_CONTAINER_PORT**
 
 ```console
-docker run -p LOCALHOST_PORT:INSIDE_CONTAINER_PORT IMAGE_ID`
+docker run -p LOCALHOST_PORT:INSIDE_CONTAINER_PORT IMAGE_ID
 docker run -p 8080:8080 majka/simpleweb`
 ```
 
-- On windows **http://192.168.99.100:8080/**
+- On windows **http://192.168.99.100:8080/**.
 
-**Shell into container**
+**Shell into container.**
 
 ```console
 docker run -it majka/simpleweb sh
@@ -764,13 +764,13 @@ docker run -it majka/simpleweb sh
 WORKDIR /usr/app
 ```
 
-**Another way to shell into a container**
+**Another way to shell into a container.**
 
 ```console
 docker exec -it CONTAINER_ID sh
 ```
 
-**Dockerfile**
+**Dockerfile.**
 
 ```Dockerfile
 # Specify a base image
@@ -794,7 +794,7 @@ CMD ["npm", "start"]
 
 ***
 
-## Docker Compose
+## Docker Compose.
 
 ![Node App - Redis](docker_img/node-app2.png "Node App - Redis")
 
@@ -829,7 +829,7 @@ docker run redis
 
 ![Connecting Containers](docker_img/connecting-containers.png "Connecting Containers")
 
-**Docker Compose**
+**Docker Compose.**
 
 - Separate CLI that gets installed along with Docker.
 - Used to start up **multiple Docker containers** at the same time.
@@ -852,12 +852,12 @@ services:
       - "4001:8081"
 ```
 
-**Docker Compose commands**
+**Docker Compose commands.**
 
-| docker | docker-compose |
-|---|---|
-| docker run myimage | docker-compose up |
-| docker build . | docker-compose up --build |
+| docker             | docker-compose            |
+|--------------------|---------------------------|
+| docker run myimage | docker-compose up         |
+| docker build .     | docker-compose up --build |
 | docker run myimage | docker-compose up --build |
 
 ```console
@@ -871,33 +871,33 @@ docker ps
 docker stop CONTAINER_ID
 ```
 
-**Lunch in background**
+**Launch in background.**
 
 ```console
 docker-compose up -d
 ```
 
-**Stop Containers**
+**Stop Containers.**
 
 ```console
 docker-compose down
 ```
 
-**Container restarts**
+**Container restarts.**
 
-| Status Code | Description |
-|---|---|
-| 0 | We exited and everything is OK |
-| 1,2,3, etc | We exited because something went wrong! |
+| Status Code  | Description                             |
+|--------------|-----------------------------------------|
+| 0            | We exited and everything is OK          |
+| 1,2,3, etc   | We exited because something went wrong! |
 
-| Case | Description |
-|---|---|
-| no | Never attempt to restart this container if it  stops or crashes |
-| always | If this container stops always attempt to restart it |
-| on-failure | Only restart if the container stops with an error code |
-| unless-stopped | Always restart unless forcibly stopped |
+| Case           | Description                                                     |
+|----------------|-----------------------------------------------------------------|
+| no             | Never attempt to restart this container if it  stops or crashes |
+| always         | If this container stops always attempt to restart it            |
+| on-failure     | Only restart if the container stops with an error code          |
+| unless-stopped | Always restart unless forcibly stopped                          |
 
-**Docker Container status**
+**Docker Container status.**
 
 ```console
 docker-compose ps
@@ -905,7 +905,7 @@ docker-compose ps
 
 ***
 
-## Production Grade Workflow
+## Production Grade Workflow.
 
 ![Production workflow](docker_img/production-grade-workflow.png "Production workflow")
 
@@ -916,11 +916,11 @@ npm install -g create-react-app
 create-react-app frontend
 ```
 
-| Command | Description |
-|---|---|
+| Command       | Description                                              |
+|---------------|----------------------------------------------------------|
 | npm run start | Starts up a development server. For development use only |
-| npm run test | Runs tests associated with the project |
-| npm run build | Builds a production version of the application |
+| npm run test  | Runs tests associated with the project                   |
+| npm run build | Builds a production version of the application           |
 
 
 ![Env Docker files](docker_img/dev-prod-docker-files.png "Env Docker files")
@@ -947,7 +947,7 @@ docker build -f Dockerfile.dev .
 docker run -p 3000:3000 IMAGE_ID
 ```
 
-### Docker Volumes
+### Docker Volumes.
 
 ```console
 docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app IMAGE_ID
@@ -959,7 +959,7 @@ docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app CONTAINER_ID
 docker run -it -p 3000:3000 -v /app/node_modules -v ${PWD}:/app -e CHOKIDAR_USEPOLLING=true CONTAINER_ID
 ```
 
-### Docker Compose
+### Docker Compose.
 
 - Makes execute **docker run** easier.
 
@@ -981,7 +981,7 @@ services:
 docker-compose up
 ```
 
-**Executing tests**
+**Executing tests.**
 
 ```console
 npm run test
@@ -994,7 +994,7 @@ docker-compose up
 docker exec -it CONTAINER_ID npm run test
 ```
 
-**Docker compose for running tests**
+**Docker compose for running tests.**
 
 ```Dockerfile
 tests:
@@ -1022,9 +1022,9 @@ docker exec -it CONTAINER_ID sh
 docker exec -it CONTAINER_ID npm run test
 ```
 
-### NGINX
+### NGINX.
 
-**Dev Environment**
+**Dev Environment.**
 
 ![Dev Environment](docker_img/dev-env.png "Dev Environment")
 
@@ -1062,7 +1062,7 @@ FROM nginx
 COPY --from=builder /app/build /usr/share/nginx/html
 ```
 
-**Running nginx**
+**Running nginx.**
 
 ```console
 docker build .
@@ -1072,13 +1072,13 @@ docker run -p 8080:80 CONTAINER_ID
 
 ***
 
-## CI Deployment with AWS
+## CI Deployment with AWS.
 
-### Github Setup
+### Github Setup.
 
 ![Github setup](docker_img/github-flow.png "Github setup")
 
-### Travis CI
+### Travis CI.
 
 ![Travis CI Flow](docker_img/travis-ci-flow.png "Travis CI Flow")
 
@@ -1094,13 +1094,13 @@ script:
   - docker run -e CI=true matn7/docker-react npm run test
 ```
 
-### AWS Elastic Beanstalk
+### AWS Elastic Beanstalk.
 
 ![Elastic beanstalk](docker_img/elastic-beanstalk.png "Elastic beanstalk")
 
 - Automatically scale up.
 
-### Travis config for deployment
+### Travis config for deployment.
 
 **.travis.yml**
 
@@ -1125,7 +1125,7 @@ deploy:
   secret_access_key: $AWS_SECRET_KEY
 ```
 
-**Exposing port in Dockerfile - final version**
+**Exposing port in Dockerfile - final version.**
 
 ```Dockerfile
 FROM node:alpine
@@ -1142,21 +1142,21 @@ COPY --from=0 /app/build /usr/share/nginx/html
 
 ***
 
-## Multi Container Deployment
+## Multi Container Deployment.
 
 - Single Container Deployment Issues:
     - The app was simple, no outside dependencies.
     - Our image built multiple times.
     - How do we connect to a database from a container?
 
-**Multi container**
+**Multi container.**
 
-- **Redis:** In memory data store
-- **Postgres:** Database
+- **Redis:** In memory data store.
+- **Postgres:** Database.
 
 ![Deployment](docker_img/deployment.png "Deployment")
 
-**Application Architecture**
+**Application Architecture.**
 
 ![Application Architecture](docker_img/multi-container-app-arch.png "Application Architecture")
 
@@ -1179,7 +1179,7 @@ CMD ["npm", "run", "start"]
 docker build -f Dockerfile.dev .
 ```
 
-**server - Dockerfile**
+**server - Dockerfile.**
 
 ```Dockerfile
 FROM node:alpine
@@ -1190,7 +1190,7 @@ COPY . .
 CMD ["npm", "run", "dev"]
 ```
 
-**worker - Dockerfile**
+**worker - Dockerfile.**
 
 ```Dockerfile
 FROM node:alpine
@@ -1201,11 +1201,11 @@ COPY . .
 CMD ["npm", "run", "dev"]
 ```
 
-**Multi Service docker compose**
+**Multi Service docker compose.**
 
 ![Multi Service docker-compose](docker_img/multi-container-docker-compose.png "Multi Service docker-compose")
 
-### NGINX Path Routing
+### NGINX Path Routing.
 
 - NGINX will look for all of these requests (**index.html**, **main.js**, **/api/values/all**, **/api/values/current**)
   and decide which server route request to.
@@ -1292,13 +1292,13 @@ http://localhost:3050/
 
 ***
 
-## CI Flow for Multiple Images
+## CI Flow for Multiple Images.
 
-### Multi Container Deployments
+### Multi Container Deployments.
 
 ![Multi Container Setup](docker_img/production-multi-container-deployment.png "Multi Container Setup")
 
-**worker, server - Dockerfile**
+**worker, server - Dockerfile.**
 
 ```Dockerfile
 FROM node:alpine
@@ -1309,18 +1309,18 @@ COPY . .
 CMD ["npm", "run", "start"]
 ```
 
-**nginx - Dockerfile**
+**nginx - Dockerfile.**
 
 ```Dockerfile
 FROM nginx
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 ```
 
-### Multiple Nginx instances
+### Multiple Nginx instances.
 
 ![Multiple NGINX](docker_img/prod-multiple-nginx.png "Multiple NGINX")
 
-### Travis configuration
+### Travis configuration.
 
 ![Multi Container Travis](docker_img/multi-container-travis.png "Multi Container Travis")
 
@@ -1350,15 +1350,15 @@ after_success:
 
 ***
 
-## Multi Container Deployments to AWS
+## Multi Container Deployments to AWS.
 
-### Multi Container Definition Files
+### Multi Container Definition Files.
 
 ![Multiple Container Problem](docker_img/multi-container-def.png "Multiple container problem")
 
-**Amazon ECS tasks definitions**
+**Amazon ECS tasks definitions.**
 
-**ECS**
+**ECS.**
 
 - Tell Elastic Beanstalk how to run containers.
 
@@ -1370,11 +1370,11 @@ after_success:
 
 **aws.amazon.com**
 
-### Managed Data Service Provider
+### Managed Data Service Provider.
 
 ![Production Architecture](docker_img/prod-arch.png "Production Architecture")
 
-**AWS Elastic Cache**
+**AWS Elastic Cache.**
 
 - Automatically creates and maintains **Redis** instances for you.
 - Easy to scale.
@@ -1382,7 +1382,7 @@ after_success:
 - Good security.
 - Easier to migrate off of EB with.
 
-**AWS Relational Database Service**
+**AWS Relational Database Service.**
 
 - Automatically creates and maintains Postgres instances for you.
 - Easy to scale.
@@ -1391,7 +1391,7 @@ after_success:
 - Automated backups and rollbacks.
 - Easier to migrate off of EB with.
 
-### AWS VPC's and Security Groups
+### AWS VPC's and Security Groups.
 
 ![Virtual public cloud](docker_img/vpc-overview.png "Virtual public cloud")
 
@@ -1400,7 +1400,7 @@ after_success:
 - RDS (Postgres).
 - Setup links between EB and EC and RDS.
 
-**VPC**
+**VPC.**
 
 - Private little network.
 - Isolated to just your account.
@@ -1408,7 +1408,7 @@ after_success:
 
 ![Virtual public cloud](docker_img/vpc.png "Virtual public cloud")
 
-**Security Group (Firewall Rules)**
+**Security Group (Firewall Rules).**
 
 ![VPC - security groups](docker_img/vpc-security-groups.png "VPC - security groups")
 
@@ -1419,9 +1419,9 @@ after_success:
 - Allow any traffic from any other AWS service has this security group (new group):
     - If any instance EB, RDS, EC belong to this group let the traffic go between them.
 
-## RDS Database Creation
+## RDS Database Creation.
 
-### ElasticCache (EC) Redis
+### ElasticCache (EC) Redis.
 
 **Dockerrun.aws.json**
 
@@ -1506,17 +1506,17 @@ deploy:
 
 ***
 
-## Kubernetes
+## Kubernetes.
 
-**Scaling Strategy for Elastic Beanstalk**
+**Scaling Strategy for Elastic Beanstalk.**
 
 ![Scaling Strategy](docker_img/elasticbeanstalkscalingstrategy.png "Scaling Strategy")
 
-**Preferred Solution**
+**Preferred Solution.**
 
 ![Preferred Solution](docker_img/scaling_preffered.png "Scaling prefered solution")
 
-**Kubernetes Cluster**
+**Kubernetes Cluster.**
 
 ![Kubernetes Cluster](docker_img/kubernates-cluster.png "Kubernates Cluster")
 
@@ -1528,7 +1528,7 @@ deploy:
 
 - When you need to run many containers with different images.
 
-### Kubernetes DEV and PROD
+### Kubernetes DEV and PROD.
 
 ![Working with Kubernetes](docker_img/working-with-kube-dev-prod.png "Working wiih Kubernetes")
 
@@ -1546,7 +1546,7 @@ kubectl cluster-info
 
 ![Docker compose vs kubertates](docker_img/mapping-knowledge.png "Docker compose vs Kubernetes")
 
-### Object Types and API Versions
+### Object Types and API Versions.
 
 ![Object types and API version](docker_img/object-types-and-api.png "Object types and API version")
 
@@ -1584,16 +1584,16 @@ spec:
     component: web
 ```
 
-**Config File**
+**Config File.**
 
 - **Pod:** Run a container.
 - **Service:** Setup networking inside Kubernetes cluster.
-- **StatefulSet**
-- **ReplicaController**
+- **StatefulSet.**
+- **ReplicaController.**
 
 ![Object types](docker_img/objectTypes.png "Object types")
 
-### Pod
+### Pod.
 
 - Node used by Kubernetes to run some number of different objects.
 - The smallest thing that we can deploy.
@@ -1601,30 +1601,30 @@ spec:
 
 ![Alt text](docker_img/pod.png "pod")
 
-**Containers related to each other**
+**Containers related to each other.**
 
 ![Postgres Pod](docker_img/postgres-pod.png "Postgres Pod")
 
-**Object Types**
+**Object Types.**
 
 - **Pods:** Runs one or more closely related containers.
 - **Services:** Sets up **networking** in a Kubernetes Cluster.
-    - **ClusterIP**
+    - **ClusterIP.**
     - **NodePort:** Exposes a container to the outside world (for DEV only).
-    - **LoadBalancer**
-    - **Ingress**
+    - **LoadBalancer.**
+    - **Ingress.**
 
 ![Service Config](docker_img/ServiceConfig.png "Service Config")
 
 ![Serivce Config in depth](docker_img/service-config-in-depth.png "Service Config in depth")
 
-**NodePort Service**
+**NodePort Service.**
 
 ![NodePort Service](docker_img/node-port-service.png "NodePort Service")
 
-### Connecting to Running containers
+### Connecting to Running containers.
 
-**Feed a config file to kubectl**
+**Feed a config file to kubectl.**
 
 ```
 kubectl apply -f FILENAME
@@ -1651,11 +1651,11 @@ minikube ip
 # 192.168.99.100:31515
 ```
 
-### Deployment Process
+### Deployment Process.
 
 ![Deployment Flow](docker_img/deployment-flow.png "Deployment Flow")
 
-### Imperative vs Declarative Deployments
+### Imperative vs Declarative Deployments.
 
 - Kubernetes is a system to deploy containerized apps.
 - **Nodes** are individual machines (or vm's) that run containers.
@@ -1671,19 +1671,19 @@ minikube ip
 
 ***
 
-## Maintaining Containers
+## Maintaining Containers.
 
-**Imperative**
+**Imperative.**
 
 - Run a command to list out current running pods.
 - Run a command to update the current pod to use a new image.
 
-**Declarative**
+**Declarative.**
 
 - Update our config file that originally created the pod.
 - Throw the updated config file into **kubectl**.
 
-**Update existing object**
+**Update existing object.**
 
 ```console
 kubectl apply -f client-pod.yaml
@@ -1695,7 +1695,7 @@ kubectl describe pod client-pod
 kubectl apply -f client-pod.yaml
 ```
 
-**Limitations in config updates**
+**Limitations in config updates.**
 
 - **Pod Config:**
     - **containers:** Can't be updated.
@@ -1705,7 +1705,7 @@ kubectl apply -f client-pod.yaml
 
 ![Pod config update](docker_img/pod-config-update.png "Pod config update")
 
-**Object Types**
+**Object Types.**
 
 - **Pods:** Runs one or more closely related containers.
 - **Services:** Sets up networking in a Kubernetes cluster.
@@ -1721,7 +1721,7 @@ kubectl apply -f client-pod.yaml
 
 ![Deployment Object](docker_img/deployment-obj.png "Deployment Object")
 
-**Deployment configuration file**
+**Deployment configuration file.**
 
 ```yaml
 apiVersion: apps/v1
@@ -1745,7 +1745,7 @@ spec:
             - containerPort: 3000
 ```
 
-**Applying a Deployment**
+**Applying a Deployment.**
 
 ```console
 kubectl get pods
@@ -1775,7 +1775,7 @@ kubectl describe pods
 - How to connect directly to Pod?
 - Service looks at Pod that matches it selector and **automatically route traffic over to**.
 
-**Scaling and Changing Deployments**
+**Scaling and Changing Deployments.**
 
 - Change replicas in **yaml** file to 5.
 
@@ -1802,13 +1802,13 @@ kubectl get pods
 # client-deployment-79cb4cc8f5-wdv2k   1/1     Running   0          33s
 ```
 
-### Update Image Version
+### Update Image Version.
 
 - Change deployment to use **multi-client** again.
 - Update the **multi-client** image, push to Docker Hub.
 - Get the deployment to recreate our Pods with the latest version of **multi-client**.
 
-**Triggering Deployment updates**
+**Triggering Deployment updates.**
 
 ```console
 kubectl apply -f client-deployment.yaml
@@ -1817,7 +1817,7 @@ kubectl apply -f client-deployment.yaml
 
 ![Kubernetes](docker_img/triggering-deployment-updates.png "Kubernetes")
 
-**Imperative command to update image**
+**Imperative command to update image.**
 
 - Tag the image with a version number, push to docker hub.
 
@@ -1839,23 +1839,23 @@ kubectl get pods
 # http://192.168.99.100:31515
 ```
 
-### Reconfiguring docker CLI
+### Reconfiguring docker CLI.
 
 ![Multi Docker Installations](docker_img/multi-docker-installations.png "Multi Docker Installations")
 
-**Configure the VM to use your docker server**
+**Configure the VM to use your docker server.**
 
 ```console
 eval $(minikube docker-env)
 ```
 
-**This only configures current terminal window**
+**This only configures current terminal window.**
 
 ```console
 minikube docker-env
 ```
 
-**Why use docker in Node**
+**Why use docker in Node.**
 
 - Use debugging techniques from Docker CLI - many commands available through **kubectl**.
 - Manually kill containers to test Kubernetes ability to **self-heal**.
@@ -1877,7 +1877,7 @@ docker exec -it CONTAINER_ID sh
 
 ***
 
-## Production
+## Production.
 
 ![Kubernetes Production](docker_img/kuernates-prod.png "Kubernetes PROD")
 
@@ -1887,13 +1887,13 @@ docker exec -it CONTAINER_ID sh
 
 ![Object Types](docker_img/kube-object-types.png "Object Types")
 
-**NodePort Service (outside world)**
+**NodePort Service (outside world).**
 
 - **port:** Other Pod that needs multi-client Pod.
 - **targetPort:** multi-client Pod.
 - **nodePort:** Random 30000-32767.
 
-**Applying files with kubectl**
+**Applying files with kubectl.**
 
 ```console
 # delete old deployments
@@ -1914,7 +1914,7 @@ kubectl get pods
 kubectl get services
 ```
 
-**Express API Deployment Config**
+**Express API Deployment Config.**
 
 ![ClusterIP](docker_img/cluster-ip.png "ClusterIP")
 
@@ -1928,7 +1928,7 @@ kubectl get pods
 kubectl logs SERVER-DEPLOYMENT-ID
 ```
 
-### Postgres PVC (Persistent Volume Claim)
+### Postgres PVC (Persistent Volume Claim).
 
 ![Postgres deployment](docker_img/postgres-deployment.png "Postgres deployment")
 
@@ -1938,7 +1938,7 @@ kubectl logs SERVER-DEPLOYMENT-ID
 
 - Volume on host machine exists outside of host machine.
 
-**Kubernetes Volumes**
+**Kubernetes Volumes.**
 
 - Volume in generic container terminology.
 
@@ -1954,7 +1954,7 @@ An object that allows a container to store data at the Pod level.
 
 ![Volumes](docker_img/volumes-pv-pvc.png "Volumes")
 
-**Kubernetes Volume**
+**Kubernetes Volume.**
 
 ![Kubernetes Volume](docker_img/kubernates-volume.png "Kubernetes Volume")
 
@@ -1962,7 +1962,7 @@ An object that allows a container to store data at the Pod level.
 - If Pod crashes volumes crash as well.
 - Not appropriate for storing data.
 
-**Persistent Volume**
+**Persistent Volume.**
 
 ![Persistent Volume](docker_img/persistent-volume.png "Persistent Volume")
 
@@ -1971,7 +1971,7 @@ An object that allows a container to store data at the Pod level.
 - **Dynamically provisioned Persistent Volume:** Persistent Volumes created on fly.
 - **Persistent Volume Claim:** Advertisement for storage options.
 
-**Persistence Volume Claim**
+**Persistence Volume Claim.**
 
 - **Access Modes:**
     - **ReadWriteOnce:** Can be used by a single node.
@@ -1987,7 +1987,7 @@ kubectl get storageclass
 kubectl describe storageclass
 ```
 
-**On Cloud Provider**
+**On Cloud Provider.**
 
 ![Kubernetes Allocate Volume](docker_img/kube-allocate-volume.png "Kubernetes Allocate Volume")
 
@@ -1999,7 +1999,7 @@ kubectl get pods
 kubectl get pv
 ```
 
-### Setup Environment Variables
+### Setup Environment Variables.
 
 ```yaml
 spec:
@@ -2013,13 +2013,13 @@ spec:
           value: 6379
 ```
 
-**[Deployment:multi-worker pod] -- http://redis-cluster-ip-service --> ClusterIP Service [Deployment:Redis pod]**
+**(Deployment:multi-worker pod) -- http://redis-cluster-ip-service --> ClusterIP Service (Deployment:Redis pod)**
 
-### Secret
+### Secret.
 
 ![Kubernetes Secrets Object"](docker_img/kube-secrets.png "Kubernetes Secrets Object")
 
-**Create Secret**
+**Create Secret.**
 
 ```
 kubectl create secret generic SECRET_NAME --from-literal key=value
@@ -2028,8 +2028,8 @@ kubectl create secret generic SECRET_NAME --from-literal key=value
 - **create:** Imperative command to create a new object.
 - **secret:** Type of object we are going to create.
 - **generic:** Type of secret.
-    - tls
-    - docker-registry
+    - tls.
+    - docker-registry.
 - **SECRET_NAME:** Name of secret, for later reference in a Pod config.
 - **--from-literal:** We are going to add the secret info into this command, as opposed to from **.** file.
 - **key=value:** Key-value pair of the secret information.
@@ -2052,13 +2052,13 @@ env:
           key: PGPASSWORD
 ```
 
-### Load Balancer Services
+### Load Balancer Services.
 
 ![Load Balanser - Ingress](docker_img/lb-ingress.png "Load Balancer - Ingress")
 
 - Load Balancer give access to one set of Pods.
 
-**Ingress**
+**Ingress.**
 
 - NGINX Ingress.
 - **ingress-nginx:** A community project.
@@ -2078,14 +2078,14 @@ env:
 
 ![Node using NGINX Ingress](docker_img/nginx-ingress.png "Node using Nginx Ingress")
 
-**Ingress on Google Cloud**
+**Ingress on Google Cloud.**
 
 ![GC Load Balancer Ingress](docker_img/gclb-nginx.png "GC Load Balancer Ingress")
 
 - New service **default-backend** pod.
 - Health checks make sure cluster is working.
 
-### Setting up Ingress locally
+### Setting up Ingress locally.
 
 ```console
 # for mac
@@ -2115,7 +2115,7 @@ minikube ip
 kubectl apply -f k8s
 ```
 
-**minikube Dashboard**
+**minikube Dashboard.**
 
 **http://192.168.99.100**
 
@@ -2125,11 +2125,11 @@ minikube dashboard
 
 ***
 
-## Kubernetes Prod Deployment
+## Kubernetes Prod Deployment.
 
 ![Prod Deployment](docker_img/kube-prod-deployment.png "Prod Deployment")
 
-### Google Cloud vs AWS for Kubernetes
+### Google Cloud vs AWS for Kubernetes.
 
 **Why Google Cloud?**
 
@@ -2138,21 +2138,21 @@ minikube dashboard
 - Easier to use Kubernetes on Google Cloud.
 - A good documentation.
 
-**Travis Deployment**
+**Travis Deployment.**
 
 ![GCP Travis](docker_img/kube-travis-cs.png "GCP Travis")
 
-### Generating a Service Account
+### Generating a Service Account.
 
 ![Generating a Service Account](docker_img/kube-generating-service-account.png "Generating a Service Account")
 
-**Install Ruby in a container**
+**Install Ruby in a container.**
 
 ```console
 docker run -it -v $(pwd):/app ruby:2.4 sh
 ```
 
-**Install Travis CLI inside container**
+**Install Travis CLI inside container.**
 
 ```console
 docker run -it -v $(pwd):/app ruby:2.4 sh
@@ -2164,7 +2164,7 @@ travis login
 travis encrypt-file service-account.json -r [:secure:]/multi-k8s
 ```
 
-### GCP setup
+### GCP setup.
 
 **.travis.yml**
 
@@ -2183,18 +2183,18 @@ before_install:
   - gcloud container clusters get-credentials KUBERNETES_CLUSTER_NAME
 ```
 
-**Run tests**
+**Run tests.**
 
 **.travis.yml**
 
 ```yaml
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t [:secire:]/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t [:secure:]/react-test -f ./client/Dockerfile.dev ./client
 script:
   - docker run -e CI=true [:secure:]/docker-react npm run test
 ```
 
-**Travis deployment**
+**Travis deployment.**
 
 **.travis.yml**
 
@@ -2206,11 +2206,11 @@ deploy:
     branch: master
 ```
 
-**Update image version**
+**Update image version.**
 
 ![Update image version](docker_img/kube-update-image-version.png "Update image version")
 
-**GIT_SHA**
+**GIT_SHA.**
 
 ```console
 git rev-parse HEAD
@@ -2240,7 +2240,7 @@ kubectl set image deployments/client-deployment client=[:secure:]/multi-client:$
 kubectl set image deployments/worker-deployment worker=[:secure:]/multi-worker:$SHA
 ```
 
-### GCloud CLI on Cloud Console
+### GCloud CLI on Cloud Console.
 
 ```console
 gcloud config set project PROJECT_ID
@@ -2248,7 +2248,7 @@ gcloud config set compute/zone PROJECT_ZONE
 gcloud container clusters get-credentials KUBERNETES_CLUSTER_NAME
 ```
 
-**Creating a Secret on Google Cloud**
+**Creating a Secret on Google Cloud.**
 
 ```console
 kubectl get pods
@@ -2257,20 +2257,20 @@ kubectl get pods
 kubectl create secret generic pgpassword --from-literal PGPASSWORD=mypgpassword123
 ```
 
-**Helm setup**
+**Helm setup.**
 
 - Helm program to administrate third party software inside Kubernetes cluster.
 - Tiller Pod inside Kubernetes to make configurations.
 
-### Kubernetes Security with RBAC
+### Kubernetes Security with RBAC.
 
-**Role Based Access Control (RBAC)**
+**Role Based Access Control (RBAC).**
 
 - Limits who can access and modify objects in our cluster.
 - Enabled on Google Cloud by default.
 - Tiller wants to make changes to our cluster, so it needs to get some permissions set.
 
-**Terminology**
+**Terminology.**
 
 - **User Accounts:** Identifies a person administering our cluster.
 - **Service Accounts:** Identifies a **Pod** administering a cluster.
@@ -2286,7 +2286,7 @@ kubectl get namespaces
 # kube-system       Active   165m
 ```
 
-**Assigning Tiller a Service Account**
+**Assigning Tiller a Service Account.**
 
 ```console
 # Create a new service account called tiller in the kube-system namespace
@@ -2299,13 +2299,13 @@ kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admi
 helm init --service-account tiller --upgrade
 ```
 
-### Ingress-NGINX with Helm
+### Ingress-NGINX with Helm.
 
 ```console
 helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
 ```
 
-**A workflow for changing in Prod**
+**A workflow for changing in Prod.**
 
 ![A workflow for changing Prod](docker_img/kube-workflow-for-prod-change.png "A workflow for changing Prod")
 
@@ -2313,9 +2313,9 @@ helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
 git checkout -b dev
 ```
 
-## HTTPS setup with Kubernetes
+## HTTPS setup with Kubernetes.
 
-### Cert manager
+### Cert manager.
 
 ![Cert Manager](docker_img/cert-manager.png "Cert Manager")
 
@@ -2365,7 +2365,7 @@ kubectl get certificates
 kubectl describe certificates 
 ```
 
-### Ingress Config for HTTPS
+### Ingress Config for HTTPS.
 
 **ingress-service.yaml**
 
@@ -2382,7 +2382,7 @@ spec:
     - host: MY_DOMAIN_NAME
 ```
 
-## Development with Skaffold
+## Development with Skaffold.
 
 ![Skaffold](docker_img/skaffold.png "Skaffold")
 
@@ -2433,13 +2433,13 @@ skaffold dev
 
 # GCP
 
-## GCP Intro
+## GCP Intro.
 
-### GCP Context
+### GCP Context.
 
 - Amazon Web Services (AWS) is the far-and-away market leader.
 
-**Innovation**
+**Innovation.**
 
 - Google is all about Big Data; huge scales.
 - Lots of internal innovation.
@@ -2450,13 +2450,13 @@ skaffold dev
 - Commercialized some things in GCP:
     - BigTable, Spanner, GCS (build on Colossus), BigQuery (from Dremel).
 
-**Google Organization**
+**Google Organization.**
 
 - Google hires Site Reliability Engineers (SREs), not Operations people.
 - GCP was built from dev towards ops/infra.
 - AWS was built from infra/ops towards dev.
 
-**History of GCP**
+**History of GCP.**
 
 - Grew some services internally:
     - Built by Googlers for Google.
@@ -2467,16 +2467,16 @@ skaffold dev
     - Some functionality missing.
     - Avoided some mistakes.
 
-### GCP Structure & Design
+### GCP Structure & Design.
 
-**Design Principles**
+**Design Principles.**
 
-- Global
-- Secure
-- Huge scale
-- For developers
+- Global.
+- Secure.
+- Huge scale.
+- For developers.
 
-**Global System**
+**Global System.**
 
 - GCP is intrinsically global.
 - AWS is intrinsically region-scoped.
@@ -2487,20 +2487,20 @@ skaffold dev
     - Could be more sensitive to **multi-region/global** failure modes.
         - Due to service failures, not underlying hardware issues.
 
-**Physical Infrastructure**
+**Physical Infrastructure.**
 
-- vCPU
-- Physical server
-- Rack
-- Data center (building)
-- Zone
-- Region
-- Multi-Region
+- vCPU.
+- Physical server.
+- Rack.
+- Data center (building).
+- Zone.
+- Region.
+- Multi-Region.
 - Private global network, (connect google global centers).
 - **Points to Presence (POPs):** Network edges and CDN locations.
 - Global system.
 
-**Network Ingress & Egress**
+**Network Ingress & Egress.**
 
 - **Normal Network:** Routes via Internet to edge location closest to destination.
 - **Google:**
@@ -2510,7 +2510,7 @@ skaffold dev
     - Sidesteps many DNS issues.
 - Can now opt for **normal** network routing to reduce price (and functionality).
 
-**Pricing**
+**Pricing.**
 
 - **Provisioned:** Make sure you're ready to handle X.
 - **Usage:** Handle whatever I use, and charge me for that.
@@ -2521,7 +2521,7 @@ skaffold dev
         - Depends on the destination service.
         - Depends on the location of that service.
 
-**Security**
+**Security.**
 
 - Separation of duties and physical security.
 - Absolutely everything always encrypted at rest.
@@ -2532,32 +2532,32 @@ skaffold dev
     - Moving towards encrypting all local traffic within data centers.
 - Distrust the network, anyway - BeyondCorp.
 
-**Scale and Automation**
+**Scale and Automation.**
 
 - Scalability must be unbounded.
 - Developers don't want to answer pages.
 
-**Resource Quotas (Soft Limits)**
+**Resource Quotas (Soft Limits).**
 
 - **Scope:**
-    - Regional
-    - Global
+    - Regional.
+    - Global.
 - **Changes:**
-    - Automatic
+    - Automatic.
     - By request:
         - Response in 24-48h.
         - May be refused.
 - **Queryable:**
-    - **gcloud compute project-info describe --project MY_PROJECT_ID**
+    - `gcloud compute project-info describe --project MY_PROJECT_ID`.
 
-**Organization**
+**Organization.**
 
 - Projects are similar to AWS accounts.
 - Projects own resources.
 - Resources can be shared with other projects.
 - Projects can be grouped and controlled in a hierarchy.
 
-**Key Building Blocks**
+**Key Building Blocks.**
 
 - **Compute Products:**
     - **Compute Engine:** Virtual Machine, Disks, Network.
@@ -2619,9 +2619,9 @@ skaffold dev
 
 ***
 
-## GCP Account
+## GCP Account.
 
-**Free Trial Restrictions**
+**Free Trial Restrictions.**
 
 - No more than 8 vCPU (total simultaneous).
 - No GPUs (video card chips).
@@ -2632,7 +2632,7 @@ skaffold dev
 - No premium OS licenses (e.g. Windows).
 - No Cloud Launcher products with extra usage fees.
 
-**Always Free**
+**Always Free.**
 
 - Free usage does not count against your free trial credits.
 - Last beyond end of free trial.
@@ -2640,7 +2640,7 @@ skaffold dev
 - 28h/day of App Engine runtime, in North America.
 - 2M/month of Cloud Functions invocations (with runtime/size limits).
 
-**Always Free - Storage Highlights**
+**Always Free - Storage Highlights.**
 
 - Storage averaged over month.
 - 5 GB of Regional Cloud Storage, including some operations.
@@ -2650,7 +2650,7 @@ skaffold dev
 - 5 GB snapshot storage on GCE and AE.
 - 5 GB of StackDriver logs with 7 day retention.
 
-**Always Free - Networking Highlights**
+**Always Free - Networking Highlights.**
 
 - Egress to China and Australia not free!
 - 1 GB/month of App Engine data egress.
@@ -2659,7 +2659,7 @@ skaffold dev
 - 5 GB/month of egress from Cloud Storage based in North America.
 - 10 GB/month of Cloud PubSub messages.
 
-**Always Free - Other**
+**Always Free - Other.**
 
 - 120 build-minutes/day of Google Cloud Container Builder.
 - 60 minutes/month of Google Cloud Speech API recognition from audio/video.
@@ -2668,7 +2668,7 @@ skaffold dev
 - Google Cloud Shell with 5 GB of persistent disk storage quota.
 - 1 GB of Google Cloud Source Repositories private hosting.
 
-**Least Privilege**
+**Least Privilege.**
 
 ```
 Every program and every privileged user of the system should operate using the least amount of privilege
@@ -2678,12 +2678,12 @@ necessary to complete the job.
 - Very Bad Habit to run with admin for normal activities.
 - Admin account with billing access very rarely needed.
 
-**Incognito Mode**
+**Incognito Mode.**
 
 - Called **Incognito Window** in Chrome.
 - Called **Private Browsing** in Firefox.
 
-**Billing Export**
+**Billing Export.**
 
 ```
 Tools for monitoring, analyzing and optimizing cost have become an important part of managing development. 
@@ -2691,14 +2691,14 @@ Billing export to BigQuery enables you to export your daily usage and cost estim
 to a BigQuery dataset you specify. You can then access your billing data from BigQuery.
 ```
 
-**Recap**
+**Recap.**
 
 - Export must be set up per billing account.
 - Resources should be placed into appropriate projects.
 - Resources should be tagged with labels.
 - Billing exports is not real-time, Delay is hours.
 
-### Billing Alerts
+### Billing Alerts.
 
 ```
 To help you with project planning and controlling costs, you can set a budget. Setting a budget lets you track
@@ -2709,7 +2709,7 @@ or match it to the previous month's spend. You can also create alerts to notify 
 spending exceeds a percentage of your budget.
 ```
 
-**Billing IAM**
+**Billing IAM.**
 
 - **Role:** Billing Account User.
 - **Purpose:** Link projects to billing accounts.
@@ -2720,9 +2720,9 @@ spending exceeds a percentage of your budget.
 
 ***
 
-## Cloud Shell and Data Flow
+## Cloud Shell and Data Flow.
 
-### Cloud Shell and Editor
+### Cloud Shell and Editor.
 
 ```
 Google Cloud Shell provides you with command-line access to your cloud resources directly from your browser.
@@ -2731,11 +2731,11 @@ tools on your system. With Cloud Shell, the Cloud SDK gcloud command-line tool a
 are always available, up to data and fully authenticated when you need.
 ```
 
-**Highlights**
+**Highlights.**
 
 - **Web browser access:**
     - No need for local terminal:
-        - Chromebook
+        - Chromebook.
         - No PuTTY!
     - Automatic SSH key management.
 - 5 GB of persistent storage.
@@ -2744,9 +2744,9 @@ are always available, up to data and fully authenticated when you need.
 - Pre-authorized and always up-to-date.
 - Web preview of web app running on local port.
 
-**Cloud shell**
+**Cloud shell.**
 
-- **gcloud config set project:** Change to different project.
+- `gcloud config set project`: Change to different project.
 
 ```console
 pwd
@@ -2764,18 +2764,18 @@ node hello.js
 nodemon hello.js
 ```
 
-### Data Flow
+### Data Flow.
 
 - Data Flows are Everything.
 - Learn to identify and control data flow.
 
-**Three core concepts (MPR)**
+**Three core concepts (MPR).**
 
-- **Moving:** Network
-- **Processing:** Compute
-- **Remembering:** Storage
+- **Moving:** Network.
+- **Processing:** Compute.
+- **Remembering:** Storage.
 
-**Mental Models**
+**Mental Models.**
 
 - A simplified representation of reality.
 - Used to anticipate events or draw conclusions.
@@ -2783,7 +2783,7 @@ nodemon hello.js
     - Build larger systems out of smaller ones (abstractions).
     - Zooming in and out.
 
-**Key Takeaways**
+**Key Takeaways.**
 
 - Data flows are the foundation of every system.
 - **Moving, Processing, Remembering:**
@@ -2794,19 +2794,19 @@ nodemon hello.js
     - Highlight potential issues.
 - Requirements and options not always clear.
 
-### Google Cloud Storage
+### Google Cloud Storage.
 
 ```console
 gsutil mv -p gs://storage-lab-console-panda/README-cloudshell.txt gs://storage-lab-console-panda/README-cloudshell.txt
 ```
 
-**Google Cloud storage via command line**
+**Google Cloud storage via command line.**
 
 ```console
 gcloud config list
 ```
 
-- **gsutil:** Command line tool to connect to **Google Cloud Storage (GCS)**.
+- `gsutil`: Command line tool to connect to **Google Cloud Storage (GCS)**.
 
 ```console
 gsutil ls
@@ -2842,7 +2842,7 @@ gsutil ls gs://storage-lab-cli/
 gsutil acl ch -u AllUsers:R gs://storage-lab-cli/Selfie.jpg
 ```
 
-**Google Compute Engine Setup**
+**Google Compute Engine Setup.**
 
 ```console
 # check project
@@ -2865,19 +2865,19 @@ gcloud compute instances delete MY_VM
 gcloud compute instances list
 ```
 
-**Rundown on gcloud**
+**Rundown on gcloud.**
 
 - Command-line tool to interact with GCP.
-- Best friends with **gsutil** and **bq**:
-    - All share same configuration set via **gcloud config**.
-    - **gsutil** could have been **gcloud storage**.
-    - **bq** could have been **gcloud bigquery**.
+- Best friends with `gsutil` and `bq`:
+    - All share same configuration set via `gcloud config`.
+    - `gsutil`could have been `gcloud storage`.
+    - `bq` could have been `gcloud bigquery`.
 - In general, more powerful than console but less powerful than REST API.
-- Alpha and Beta versions available via **gcloud alpha** and **gcloud beta**:
-    - **gcloud beta billing accounts list**
-    - **gcloud beta billing projects link MY_PROJECT --billing-account 0X0X0X-0X0X0X-0X0X0X**
+- Alpha and Beta versions available via `gcloud alpha` and `gcloud beta`:
+    - `gcloud beta billing accounts list`.
+    - `gcloud beta billing projects link MY_PROJECT --billing-account 0X0X0X-0X0X0X-0X0X0X`.
 
-**Basic Syntax**
+**Basic Syntax`**
 
 ```
 gcloud GLOBAL_FLAGS SERVICE/PRODUCT GROUP/AREA COMMAND FLAGS PARAMETERS
@@ -2885,28 +2885,28 @@ gcloud GLOBAL_FLAGS SERVICE/PRODUCT GROUP/AREA COMMAND FLAGS PARAMETERS
 
 - Always drill down (from left to right).
 - **Examples:**
-    - **gcloud --project MY_PROJECT compute instances list**
-    - **gcloud --project=MY_PROJECT compute instances list**
-    - **gcloud compute instances create MY_VM**
-    - **gcloud services list --available**
-    - **gsutil ls**
-    - **gsutil mb -l northamerica-northeast1 gs://storage-lab-cli**
-    - **gsutil label set bucketlabels.json gs://storage-lab-cli/**
+    - `gcloud --project MY_PROJECT compute instances list`.
+    - `gcloud --project=MY_PROJECT compute instances list`.
+    - `gcloud compute instances create MY_VM`.
+    - `gcloud services list --available`.
+    - `gsutil ls`.
+    - `gsutil mb -l northamerica-northeast1 gs://storage-lab-cli`.
+    - `gsutil label set bucketlabels.json gs://storage-lab-cli/`.
 
-**Global Flags**
+**Global Flags.**
 
-- **--help**
-- **-h**
-- **--project PROJECT_ID**
-- **--account ACCOUNT**
-- **--filter**:
+- `--help`.
+- `-h`.
+- `--project PROJECT_ID`.
+- `--account ACCOUNT`.
+- `--filter`:
     - Not always available, but often better than using grep.
-- **--format**:
+- `--format`:
     - Can choose JSON, YAML, CSV, etc.
-    - Can pipe **|** JSON to **jq** command for further processing.
-- **--quiet (or -q)** no prompt to confirm actions.
+    - Can pipe `|` JSON to `jq` command for further processing.
+- `--quiet (or -q)` no prompt to confirm actions.
 
-**Config Properties**
+**Config Properties.**
 
 - Values entered once and used by any command that needs them.
 - Can be overridden on a specific command with corresponding flag.
@@ -2915,35 +2915,35 @@ gcloud GLOBAL_FLAGS SERVICE/PRODUCT GROUP/AREA COMMAND FLAGS PARAMETERS
     - Set **core/project** or **project** to replace **--project**.
     - Set **compute/region** to replace **--region**.
     - Set **compute/zone** to replace **--zone**.
-- Set with: **gcloud config set PROPERTY VALUE**
-- Check with: **gcloud config get-value PROPERTY**
-- Clear with: **gcloud config unset PROPERTY**
+- Set with: `gcloud config set PROPERTY VALUE`.
+- Check with: `gcloud config get-value PROPERTY`.
+- Clear with: `gcloud config unset PROPERTY`.
 
-**Configurations**
+**Configurations.**
 
 - Can maintain groups of settings and switch between them.
 - Most useful when using multiple projects.
-- An interactive workflow to set common properties in a config with: **gcloud init**.
-- List all properties in a configuration with: **gcloud config list**.
-- List all configurations with: **gcloud config configurations list**:
+- An interactive workflow to set common properties in a config with: `gcloud init`.
+- List all properties in a configuration with: `gcloud config list`.
+- List all configurations with: `gcloud config configurations list`:
     - **IS_ACTIVE** columns shows which one currently used.
     - Other columns list account, project, region, zone and the name of the config.
-- Make a new config with: **gcloud config configurations create ITS_NAME**.
-- Start using config with: **gcloud config configurations activate ITS_NAME**:
-    - Or use for just one command with: **--configuration=ITS_NAME**.
+- Make a new config with: `gcloud config configurations create ITS_NAME`.
+- Start using config with: `gcloud config configurations activate ITS_NAME`:
+    - Or use for just one command with: `--configuration=ITS_NAME`.
 
-**Configurations Analogy**
+**Configurations Analogy.**
 
-| Action | Directory | Configuration |
-|---|---|---|
-| Make New | mkdir newdir | gcloud config configurations create newconfig |
-| Switch To | cd newdir | gcloud config configurations activate newconfig |
-| List Contents | ls | gcloud config list |
-| List Non-Active | ls ~/newdir | gcloud --configuration=newconfig config list |
-| | | gcloud config configurations describe newconfig |
+| Action          | Directory    | Configuration                                   |
+|-----------------|--------------|-------------------------------------------------|
+| Make New        | mkdir newdir | gcloud config configurations create newconfig   |
+| Switch To       | cd newdir    | gcloud config configurations activate newconfig |
+| List Contents   | ls           | gcloud config list                              |
+| List Non-Active | ls ~/newdir  | gcloud --configuration=newconfig config list    |
+|                 |              | gcloud config configurations describe newconfig |
 
 
-**In out**
+**In out.**
 
 ```console
 # ip address sees us connecting from
@@ -2989,7 +2989,7 @@ gcloud compute instances list
 
 ***
 
-## Security
+## Security.
 
 ```
 Ensuring proper data flow.
@@ -3001,7 +3001,7 @@ Ensuring proper data flow.
 - **Integrity:** You cannot change data you shouldn't.
 - **Availability:** You can access data you should.
 
-### CIA Data flow example
+### CIA Data flow example.
 
 **How do we control data flow? (AAA)**
 
@@ -3023,14 +3023,14 @@ ACC
 - Security Mindset:
     - Includes Availability Mindset.
 
-**Key Security Mindset (Principles)**
+**Key Security Mindset (Principles).**
 
 - The least privilege.
 - Defense in depth.
 - Fail securely.
 - OWASPs **Security by Design** Principles.
 
-**Key Security Products/Features - AuthN**
+**Key Security Products/Features - AuthN.**
 
 - **Identity:**
     - Humans in G Suite, Cloud Identity.
@@ -3039,19 +3039,19 @@ ACC
     - Google Groups.
 - Can use Google Cloud Directory Sync (GCDS) to pull from LDAP (no push).
 
-**Key Security Products/Features - AuthZ**
+**Key Security Products/Features - AuthZ.**
 
 - Identity hierarchy (Google Groups).
 - Resource hierarchy (Organization, Folders, Projects).
 - **Identity and Access Management (IAM):**
-    - Permissions
-    - Roles
-    - Bindings
+    - Permissions.
+    - Roles.
+    - Bindings.
 - GCS ACLs (Access Control Lists).
 - Billing management.
 - Networking structure & restrictions.
 
-**Key Security Products/Features - Acct**
+**Key Security Products/Features - Acct.**
 
 - Audit / Activity Logs (provided by Stackdriver).
 - **Billing export:**
@@ -3062,25 +3062,25 @@ ACC
 
 ### Identity and Access Management (IAM).
 
-**Resource Hierarchy**
+**Resource Hierarchy.**
 
 - **Resource:** Something you create in GCP.
 - **Project:** Container for a set of related resources.
 - **Folder:** Contains any number of Projects and Subfolders.
 - **Organization:** Tied to G Suite or Cloud Identity domain.
 
-### IAM - Permissions & Roles
+### IAM - Permissions & .
 
-**Permissions**
+**Permissions.**
 
 - A Permission allows you to perform a certain action.
 - Each one follows the form **Service.Resource.Verb**.
 - Usually correspond to REST API methods.
 - Example:
-    - **pubsub.subscription.consume**
-    - **pubsub.topics.publish**
+    - **pubsub.subscription.consume**.
+    - **pubsub.topics.publish**.
 
-**Roles**
+**Roles.**
 
 - A Role is a collection of Permissions to use or manage GCP resources.
 - **Primitive Roles:** Project-level and often too broad.
@@ -3088,21 +3088,21 @@ ACC
     - Editor can view and change things.
     - Owner can also control access & billing.
 - **Predefined Roles:** Give granular access to specific GCP resources:
-    - **roles/bigquery.dataEditor**
-    - **roles/pubsub.subscriber**
+    - **roles/bigquery.dataEditor**.
+    - **roles/pubsub.subscriber**.
 - **Custom Role:** Project or Org-level collection you define of granular permissions.
 
-**Predefined Role App Engine**
+**Predefined Role App Engine.**
 
-- **roles/appengine.appAdmin**
-- **roles/appengine.serviceAdmin**
-- **roles/appengine.deployer**
-- **roles/appengine.appViewer**
-- **roles/appengine.codeViewer**
+- **roles/appengine.appAdmin**.
+- **roles/appengine.serviceAdmin**.
+- **roles/appengine.deployer**.
+- **roles/appengine.appViewer**.
+- **roles/appengine.codeViewer**.
 
-### IAM - Members & Groups
+### IAM - Members & Groups.
 
-**Members**
+**Members.**
 
 - A Member is some Google-known identity.
 - Each Member is identified by a unique email address.
@@ -3115,7 +3115,7 @@ ACC
     - **allAuthenticatedUsers:** Any Google account or service account.
     - **allUsers:** Anyone on the Internet (Public).
 
-**Groups**
+**Groups.**
 
 - A Google group is a named collection of Google accounts and service accounts.
 - Every group has a unique email address this is associated with the group.
@@ -3126,9 +3126,9 @@ ACC
 - **Can nest groups in an organization:**
     - One group for each department, all those in group for all staff.
 
-### IAM - Policies
+### IAM - Policies.
 
-**Policies**
+**Policies.**
 
 - A Policy binds Members to Roles for some scope of Resources.
 - Answers, who can do what to which thing(s)?
@@ -3165,11 +3165,11 @@ ACC
 - Usually takes less than 60s to apply changes (both granting and revoking).
 - May take up to 7 minutes for ... changes to fully propagate across the system.
 
-**Managing Policy Bindings**
+**Managing Policy Bindings.**
 
 - Can use **get-iam-policy**, edit the JSON/YAML, and **set-iam-policy** back (But don't! use commands).
-- **gcloud [GROUP] add-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-GRANT] --member user:[USER-EMAIL]**
-- **gcloud [GROUP] remove-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-REVOKE] --member user:[USER-EMAIL]**
+- `gcloud [GROUP] add-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-GRANT] --member user:[USER-EMAIL]`.
+- `gcloud [GROUP] remove-iam-policy-binding [RESOURCE-NAME] --role [ROLE-ID-TO-REVOKE] --member user:[USER-EMAIL]`.
 - Atomic operations are better because changes:
     - Are simpler, less work, and less error-prone (then editing JSON/YAML).
     - Avoid race conditions, so can happen simultaneously.
@@ -3179,7 +3179,7 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 --member user:me@example.com
 ```
 
-**Wrap up**
+**Wrap up.**
 
 - A Permission allows you to perform a certain action **Service.Resource.Verb**.
 - A Role is a collection of Permissions to use or manage GCP resources:
@@ -3189,12 +3189,11 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 - A Member is some Google account identity tied to an email address.
 - A Policy binds Members to Roles for some scope of Resources:
     - Answering, who can do what to which thing(s)?
-- Prefer **add-iam-policy-binding** & **remove-iam-policy-binding**.
-- Over **get-iam-policy**, edit, then **set-iam-policy**.
+- Prefer **add-iam-policy-binding** & **remove-iam-policy-binding**, over **get-iam-policy**, edit, then **set-iam-policy**.
 
-### Billing Access Control
+### Billing Access Control.
 
-**Billing Accounts**
+**Billing Accounts.**
 
 - A Billing Account represents some way to pay for GCP service usage.
 - Type of Resource that lives outside of Projects.
@@ -3204,21 +3203,21 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
     - Does not own them.
     - No impact on project IAM.
 
-**Billing Account User**
+**Billing Account User.**
 
 - **Role:** Billing Account User.
 - **Purpose:** Link projects to billing accounts.
 - **Level:** Organization or billing account.
 
-**Billing IAM Roles**
+**Billing IAM Roles.**
 
-- Billing Account Creator
-- Billing Account Administrator
-- Billing Account User
-- Billing Account Viewer
-- Project Billing Manager
+- Billing Account Creator.
+- Billing Account Administrator.
+- Billing Account User.
+- Billing Account Viewer.
+- Project Billing Manager.
 
-**Monthly Invoiced Billing**
+**Monthly Invoiced Billing.**
 
 - Get billed monthly and pay by an invoice due date.
 - Can pay via check or write transfer.
@@ -3233,7 +3232,7 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 ***
 
-## Networking
+## Networking.
 
 - Software-Defined Networking (SDN).
 - More general than the OSI 7-layer model of networking.
@@ -3245,9 +3244,9 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
     - On the way from one resource to another.
     - There and Back Again.
 
-### Routing: to Google's Network
+### Routing: to Google's Network.
 
-### Routing: To the Right Resource
+### Routing: To the Right Resource.
 
 - **Latency reduction:**
     - Use servers physically close to clients.
@@ -3260,12 +3259,12 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 - Cloud Load Balancer (internal and external).
 - HTTP(S) Load Balancer (with URL Map).
 
-**Unicast vs Anycast**
+**Unicast vs Anycast.**
 
 - **Unicast:** There is only one unique device in the world that can handle this; send it there.
 - **Anycast:** There are multiple devices that could handle this; send it to any one - but ideally the closest.
 
-**Layer 4 vs Layer 7**
+**Layer 4 vs Layer 7.**
 
 - TCP (of TCP/IP) is usually called Layer 4 (L4):
     - It works solely with IP addresses.
@@ -3276,7 +3275,7 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
     - To route based on URL paths, routing needs to understand L7.
     - L4 cannot route based on the URL paths defined in L7.
 
-**DNS**
+**DNS.**
 
 - Name resolution (via the **Domain Name System**) can be the first step in routing:
     - **Layer 4:** Cannot route **L4** based on **L7's** URL paths.
@@ -3287,9 +3286,9 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
     - **Not Robust:** Relies on the client always doing the right thing (they don't).
 - A **Premium Tier** **cold potato** routing with global Anycast IPs avoids these problems.
 
-### Routing: Among Resources (VPC)
+### Routing: Among Resources (VPC).
 
-**Getting data from one resource to another**
+**Getting data from one resource to another.**
 
 - VPC (global) is Virtual Private Cloud, your private SDN space in GCP:
     - Not just resource-to-resource - Also manages the doors to outside & peers.
@@ -3302,12 +3301,12 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
     - All Firewall Rules are global and apply by Instance-level Tags or Service Acct.
     - Default Firewall Rules are restrictive inbound and permissive outbound.
 
-**IPs and CIDRs**
+**IPs and CIDRs.**
 
 - IP address is **abc.def.ghi.jkl** (dotted quad) where each piece is **0-255**.
-- CIDR block is group of IP addresses specified in **<IP>/xy** notation:
+- CIDR block is group of IP addresses specified in `IP/xy` notation:
     - Turn IP address into 32-bit binary number:
-        - **10.10.0.254 --> 00001010 00001010 000000000 11111110**
+        - **10.10.0.254 --> 00001010 00001010 000000000 11111110**.
     - **/xy**: In CIDR notation locks highest (leftmost) bits in IP address (0-32).
     - **abc.def.ghi.jkl/32**: Is single IP address because all 32 bits are locked.
     - **abc.def.ghi.jkl/24**: Is 256 IP addresses because last 8 bits (jkl) can vary.
@@ -3317,22 +3316,22 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 
 ***
 
-## Kubernetes
+## Kubernetes.
 
-**Kubernetes Objects**
+**Kubernetes Objects.**
 
 - **pod:** Wrap one or more containers.
 - **deploy:** Scalability and application releases.
 - **ds:** One Pod per node.
 - **sts:** Stateful app components.
 
-### Networking
+### Networking.
 
 - All Nodes can talk.
 - All Pods can talk (No NAT).
 - Every Pod gets its own IP.
 
-**Kubernetes Services**
+**Kubernetes Services.**
 
 - **ClusterIP:**
     - Gets own IP.
@@ -3343,7 +3342,7 @@ gcloud beta compute instances add-iam-policy-binding myhappyvm --role roles/comp
 - **LoadBalancer:**
     - Integrates with public cloud platform.
 
-**Service Network**
+**Service Network.**
 
 ```console
 kubectl get nodes
@@ -3352,21 +3351,21 @@ kubectl get deploy
 kubectl get pods -o wide
 ```
 
-**Node Network**
+**Node Network.**
 
 - All nodes need to be able to talk:
     - Kubelet <--> API Server.
     - Pod network ports.
 - Not implemented by Kubernetes.
 
-**Pod Network**
+**Pod Network.**
 
 - Implemented via CNI plugins.
 - Big & Flat.
 - IP-per-Pod.
 - All Pods can communicate.
 
-**The Service Network**
+**The Service Network.**
 
 - It's not really a network.
 
@@ -3378,11 +3377,11 @@ ipvsadm -ln
 - Kube-proxy in IPVS mode does create dummy interfaces on the Service Network (usually called kube-ipvs0).
   Kube-proxy in IPTABLES mode does not.
 
-### Storage in Kubernetes
+### Storage in Kubernetes.
 
 - **Kubernetes Volumes:** All about decoupling storage from Pods.
 
-**Volumes**
+**Volumes.**
 
 - LUNs, devices, shares, mounts, spaces.
 - Storage is Vital!
@@ -3392,20 +3391,20 @@ ipvsadm -ln
     - Rich API.
 - Fundamental storage requirements:
     - Storage Backend:
-        - Speed
-        - Replicated
-        - Resiliency
+        - Speed.
+        - Replicated.
+        - Resiliency.
         - ...
 
-| Volume | Ticker | Details |
-|---|---|---|
-| PersistentVolume | PV | Storage: 20GB |
-| PersistentVolumeClaim | PVC | Ticket to use PV |
-| StorageClass | SC | Makes it dynamic |
+| Volume                | Ticker  | Details          |
+|-----------------------|---------|------------------|
+| PersistentVolume      | PV      | Storage: 20GB    |
+| PersistentVolumeClaim | PVC     | Ticket to use PV |
+| StorageClass          | SC      | Makes it dynamic |
 
-### Container Storage Interface (CSI)
+### Container Storage Interface (CSI).
 
-**The K8s PersistentVolume Subsystem**
+**The K8s PersistentVolume Subsystem.**
 
 ```
 PV  <----- Claim -----> PVC
@@ -3414,7 +3413,7 @@ Size: 30GB
 IOPS: 60
 ```
 
-**Dynamic Provisioning with StorageClasses**
+**Dynamic Provisioning with StorageClasses.**
 
 ```yml
 kind: StorageClass
@@ -3427,9 +3426,9 @@ parameters:
 reclaimPolicy: Retain
 ```
 
-### Kubernetes Security
+### Kubernetes Security.
 
-**RBAC and Admission Control**
+**RBAC and Admission Control.**
 
 ![Kubernetes Security](images/kubernates-sec.png "Kubernetes Security")
 
@@ -3437,20 +3436,20 @@ reclaimPolicy: Retain
 - Bypasses **authN** and **authZ**!
 - Disable for production!
 
-**RBAC**
+**RBAC.**
 
 - Enabled since 1.6.
 - GA since 1.8.
 - Deny-by-default.
 
-**Authentication (authN)**
+**Authentication (authN).**
 
 ![Kubernetes authN](images/kubernetes-authN.png "Kubernetes authN")
 
 - Kubernetes does NOT do Users!!
 - Manage Users externally:
-    - Active Directory
-    - IAM
+    - Active Directory.
+    - IAM.
     - Other...
 
 ![Kubernetes authN](images/kubernetes-authentication.png "Kubernetes authentication")
@@ -3460,15 +3459,15 @@ reclaimPolicy: Retain
     - Managed by Kubernetes.
     - You can (should) manage them.
 
-**Authorization (authZ)**
+**Authorization (authZ).**
 
 - Who can perform which actions on which resources?
-- Who - **Subject**
-- Actions - **Verb**
+- Who - **Subject**.
+- Actions - **Verb**.
 - Powerful default users, too powerful for production.
 - **Roles & RoleBindings:** For least privilege.
 
-**RBAC Role**
+**RBAC Role.**
 
 ```yml
 kind: Role | ClusterRole
@@ -3482,7 +3481,7 @@ rules:
   verbs: ["get", "list", "watch"]
 ```
 
-**RBAC RoleBinding**
+**RBAC RoleBinding.**
 
 ```yml
 kind: RoleBinding | ClusterRoleBinding
@@ -3500,7 +3499,7 @@ roleRef:
   apiGroup: ""
 ```
 
-**Admission Control**
+**Admission Control.**
 
 - **Admission Control:**
     - Policy enforcement.
@@ -3570,24 +3569,24 @@ kubectl get pods --namespace=acg
     - Resource: Deployments.
     - Namespace: acg.
 
-### Other Kubernetes
+### Other Kubernetes.
 
-- DaemonSet
-- StatefulSet
-- Job
-- CronJob
-- PodSecurityPolicy
-- Pod resource requests and limits
-- ResourceQuota
-- CustomResourceDefinition
+- DaemonSet.
+- StatefulSet.
+- Job.
+- CronJob.
+- PodSecurityPolicy.
+- Pod resource requests and limits.
+- ResourceQuota.
+- CustomResourceDefinition.
 
-### AppEngine
+### AppEngine.
 
 - The OG: The Original Google cloud service.
 
-### Service Breadth
+### Service Breadth.
 
-**Google Compute Engine (GCE)**
+**Google Compute Engine (GCE).**
 
 - Fast-booting Virtual Machines (VMs) you can rent, on demand.
 - Infrastructure as a Service (IaaS).
@@ -3598,7 +3597,7 @@ kubectl get pods --namespace=acg
 - Can add GPUs and paid OSes for extra cost.
 - Live Migration - Google seamlessly moves instance across hosts as needed.
 
-**Google Kubernetes Engine (GKE)**
+**Google Kubernetes Engine (GKE).**
 
 - Managed Kubernetes cluster for running Docker containers (with auto-scaling).
 - Kubernetes DNS on by default for service discovery.
@@ -3608,7 +3607,7 @@ kubectl get pods --namespace=acg
     - Production cluster should have 3+ nodes.
 - No GKE management fee, no matter how many nodes is cluster.
 
-**App Engine (GAE)**
+**App Engine (GAE).**
 
 - Platform as a Service (PaaS) that takes your code and runs it (Elastic Beanstalk, Herooku).
 - Much more than just compute - Integrates storage, queues, NoSQL.
@@ -3617,7 +3616,7 @@ kubectl get pods --namespace=acg
     - Standard (non-Flex) mode can turn off last instance when no traffic.
 - Effectively pay for underlying GCE instances and other services.
 
-**Cloud Functions (GCF)**
+**Cloud Functions (GCF).**
 
 - Runs code in response to an event - Node.js, Python, Java, Go.
 - Functions as a Service (FaaS), Serverless.
@@ -3627,9 +3626,9 @@ kubectl get pods --namespace=acg
 - Massively scalable (horizontally) - Runs many copies when needed.
 - Often used for chatbots, message processor, IoT, automation.
 
-### Storage
+### Storage.
 
-**Local SSD**
+**Local SSD.**
 
 - Very fast 375GB solid state drives physically attached to the server:
     - EC2 Instance Store Vols.
@@ -3640,7 +3639,7 @@ kubectl get pods --namespace=acg
 - Like all data at rest, always encrypted.
 - Pay by GB-month provisioned.
 
-**Persistent Disk (PD)**
+**Persistent Disk (PD).**
 
 - Flexible, block-based network-attached storage; boot disk for every GCE instance:
     - Elastic Block Storage (EBS).
@@ -3653,7 +3652,7 @@ kubectl get pods --namespace=acg
 - Not file-based NAS, but can mount to multiple instances if all are read-only.
 - Pay for GB/mo provisioned depending on perf. class; plus snapshot GB/mo used.
 
-**Cloud Filestore**
+**Cloud Filestore.**
 
 - Fully-managed file-based storage:
     - Elastic File System (EFS).
@@ -3665,25 +3664,25 @@ kubectl get pods --namespace=acg
 - Pay for provisioned TBs in **Standard** (slow) or **Premium** (fast) mode.
 - Minimum provisioned capacity of **1TB** (Standard) or **2.5TB** (Premium).
 
-**Cloud Storage (GCS)**
+**Cloud Storage (GCS).**
 
 - Infinitely scalable, fully-managed, versioned and highly-durable object storage:
     - Amazon S3.
 - Strongly consistent (even for PUTs and DELETEs).
 - Integrated site hosting and CDN functionality.
 - Lifecycle transitions across classes:
-    - Multi-Regional
-    - Regional
-    - Nearline
-    - Coldline
+    - Multi-Regional.
+    - Regional.
+    - Nearline.
+    - Coldline.
     - Differences in cost & availabilities.
-- All classes have same API, so can use **gsutil** and **gcsfuse**.
+- All classes have same API, so can use `gsutil` and `gcsfuse`.
 - Pay for data operations & GB-months stored by class.
 - **Nearline/Coldline:** Also pay for GBs retrieved - plus early deletion fee if < 30/90 days.
 
-### Databases
+### Databases.
 
-**Cloud SQL**
+**Cloud SQL.**
 
 - Fully managed and reliable MySQL and PostgreSQL databases:
     - Amazon RDS.
@@ -3693,11 +3692,11 @@ kubectl get pods --namespace=acg
 - Effectively pay for underlying GCE instances and PDs:
     - Plus some backed-in service fees.
 
-**Cloud Spanner**
+**Cloud Spanner.**
 
 - The first horizontally scalable, strongly consistent, relational database service:
-    - Shared MySQL
-    - CockroachDB
+    - Shared MySQL.
+    - CockroachDB.
     - From 1 to hundreds or thousands of nodes.
     - Minimum of 3 nodes is recommended for production environments.
 - Chooses Consistency and Partition-Tolerance (CP of CAP theorem).
@@ -3705,22 +3704,22 @@ kubectl get pods --namespace=acg
     - Not based on fail-over.
 - Pay for provisioned node time plus used storage-time.
 
-**BigQuery**
+**BigQuery.**
 
 - Serverless column-store data warehouse for analytics using SQL:
-    - Amazon Redshift
+    - Amazon Redshift.
 - Scales internally, so it **can scan TB in seconds and PB in minutes**.
 - Pay for GBs actually considered (scanned) during queries:
     - Attempts to reuse cached results, which are free.
 - Pay for data stored (GB-months).
 - Pay for GBs added via streaming inserts.
 
-**Cloud BigTable**
+**Cloud BigTable.**
 
 - Low latency & high throughput NoSQL DB for large operational & analytical apps:
-    - DynamoDB
-    - Cassandra
-    - Apache HBASE
+    - DynamoDB.
+    - Cassandra.
+    - Apache HBASE.
 - Supports open-source HBase API.
 - Integrates with Hadoop, Dataflow, Dataproc.
 - Scales seamlessly and unlimitedly:
@@ -3729,11 +3728,11 @@ kubectl get pods --namespace=acg
 - Pay for processing node hours.
 - Pay for GB-hours used for storage (cheap HDD or fast SSD).
 
-**Cloud Datastore**
+**Cloud Datastore.**
 
-- Managed & auto scale NoSQL DB with indexes, queries and ACID trans. support:
-    - DynamoDB
-    - MongoDB
+- Managed & auto-scale NoSQL DB with indexes, queries and ACID trans. support:
+    - DynamoDB.
+    - MongoDB.
 - NoSQL, so queries can get complicated:
     - No joins or aggregates and must line up with indexes.
     - NOT, OR and NOT EQUALS (<>,!=) operations natively supported.
@@ -3742,27 +3741,27 @@ kubectl get pods --namespace=acg
 - Pay for GB-months of storage used.
 - Pay for IO operations (deletes, reads, writes) performed (i.e. no pre-provisioning).
 
-**Firebase Realtime DB, Cloud Firebase**
+**Firebase Realtime DB, Cloud Firebase.**
 
 - NoSQL document stores with real-time client updates via managed sockets:
-    - DynamoDB
-    - MongoDB
+    - DynamoDB.
+    - MongoDB.
 - Firebase DB is single JSON doc, located only in central US.
 - Cloud Firestore has collections, documents and contained data.
 - Free tier (Spark), flat tier (Flame) or usage-based pricing (Blaze):
     - **Realtime DB:** Pay more for GB/month stored and GB downloaded.
     - **Firestore:** Pay for operations and much less for storage and transfer.
 
-### Data Transfer
+### Data Transfer.
 
-**Data Transfer Appliance**
+**Data Transfer Appliance.**
 
 - Rackable, high-capacity storage server to physically ship data to GCS.
 - Ingest only; not a way to avoid egress charges.
 - 100TB or 480TB versions.
 - 480TB/week is faster than saturated 6Gbps link.
 
-**Storage Transfer Service**
+**Storage Transfer Service.**
 
 - Do copies objects for you, so you don't need to set up a machine to do it.
 - Destination is always GCS bucket.
@@ -3770,23 +3769,23 @@ kubectl get pods --namespace=acg
 - One-time or scheduled recurring transfers.
 - Free to use, but you pay for its actions.
 
-### External Networking
+### External Networking.
 
 **Google Domains**
 
 - Google's registrar for domain names:
     - Amazon Route 53.
-    - GoDaddy
+    - GoDaddy.
 - Private Whois records.
 - Built-in DNS or custom nameservers.
 - Supports DNSSEC.
 - Email forwarding with an automatic setup of SPF and DKIM (for built-in DNS).
 
-**Cloud DNS**
+**Cloud DNS.**
 
 - Scalable, reliable & managed authoritative Domain Name System (DNS) service:
-    - Amazon Route 53
-    - Dyn
+    - Amazon Route 53.
+    - Dyn.
 - 100% uptime guarantee.
 - Public and private managed zones.
 - Low latency globally.
@@ -3795,7 +3794,7 @@ kubectl get pods --namespace=acg
 - Pay fixed fee per managed zone to store and distribute DNS records.
 - Pay for DNS lookups (i.e. usage).
 
-**Static IP**
+**Static IP.**
 
 - Reserve static IP address in projects and assign them to resources:
     - Amazon Elastic IP Address.
