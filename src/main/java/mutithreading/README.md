@@ -1157,3 +1157,207 @@ object pointer is available to other threads, so are the correct values of that 
 can be concurrently accessed without synchronization.
 - When you declare a field final, you must set the value once by the time the constructor exits. 
 - Storing a reference to an object in a final field only makes the reference immutable, not the actual object.
+
+***
+
+### Basics of Multithreading.
+**1. What is multithreading in Java?**
+* A: Multithreading allows a program to execute multiple threads concurrently to improve performance and responsiveness.
+
+**2. Difference between a process and a thread?**
+* Process: Independent, heavy-weight, separate memory.
+* Thread: Lightweight, shares memory within the same process.
+
+**3. Why is multithreading useful?**
+* Better CPU utilization, responsiveness, parallelism, and resource sharing.
+
+**4. How can you create a thread in Java?**
+* Extend Thread class.
+* Implement Runnable interface (Preferred: Runnable because it supports multiple inheritance).
+
+**5. Thread vs Runnable – which is better?**
+* Runnable is better because it separates task from thread and allows extending other classes.
+
+**6. Difference between start() and run()?**
+* `start()` -> creates a new thread and calls `run()`.
+* `run()` -> runs like a normal method (no new thread).
+
+**7. What are the thread states in Java?**
+* New.
+* Runnable.
+* Blocked.
+* Waiting.
+* Timed Waiting.
+* Terminated.
+
+**8. Is “Running” a thread state?**
+* No. Java combines Ready + Running into Runnable.
+
+**9. What is synchronization?**
+* A mechanism to control access to shared resources and prevent race conditions.
+
+**10. What does synchronized do?**
+* Ensures only one thread accesses a block or method at a time.
+
+**11. What lock does synchronized use?**
+* Intrinsic lock (monitor lock) of the object or class.
+
+**12. What happens with static synchronized methods?**
+* Lock is on the Class object, not the instance.
+
+**13. Purpose of `wait()` and `notify()`?**
+* Used for inter-thread communication, must be called inside a synchronized block.
+
+**14. Difference between wait() and sleep()?**
+* `wait()` releases lock.
+* `sleep()` does NOT release lock.
+
+**15. What is a deadlock?**
+* When two or more threads wait forever for each other’s locks.
+
+**16. How can deadlock be avoided?**
+* Avoid nested locks.
+* Lock ordering.
+* Use `tryLock()`.
+* Minimize synchronization.
+
+**17. What is a race condition?**
+* When multiple threads access shared data and the result depends on execution order.
+
+**18. What is the Executor framework?**
+* A framework for managing thread pools instead of creating threads manually.
+
+**19. What is a thread pool?**
+A: A collection of reusable threads that execute tasks efficiently.
+
+**20. Callable vs Runnable?**
+* Runnable -> no return value.
+* Callable -> returns result & can throw checked exception.
+
+**21. What is Future?**
+* Represents the result of an asynchronous computation.
+
+**22. What does volatile do?**
+* Ensures visibility of changes across threads (not atomicity).
+
+**23. Why use AtomicInteger?**
+* Provides thread-safe operations without synchronization.
+
+**24. Can a thread be started twice?**
+* No. Calling `start()` twice throws `IllegalThreadStateException`.
+
+**25. What is a daemon thread?**
+* A background thread that stops when all user threads finish (e.g., Garbage Collector).
+
+**26. Is multithreading always parallel?**
+* Only on multi-core CPUs; otherwise, it’s time-sliced concurrency.
+
+**27. What is the Java Memory Model (JMM)?**
+* A specification that defines how threads interact through memory, including visibility, ordering, and atomicity guarantees.
+
+**28. What is the happens-before relationship?**
+* A guarantee that memory writes by one thread are visible to another. 
+* Without it, visibility is not guaranteed.
+
+**29. Give examples of happens-before rules.**
+* Unlock -> subsequent lock on same monitor.
+* Write to volatile -> subsequent read.
+* Thread start -> actions in started thread.
+* Thread completion -> `join()` return.
+
+**30. Difference between visibility and atomicity?**
+* Visibility: Changes are seen by other threads.
+* Atomicity: Operation completes indivisibly (volatile gives visibility, not atomicity)
+
+**31. Difference between synchronized and ReentrantLock?**
+* ReentrantLock supports fairness, tryLock, interruptible locking.
+* synchronized is simpler and JVM-optimized.
+
+**32. What does reentrant mean?**
+* A thread can acquire the same lock multiple times without deadlock.
+
+**33. What is a fair lock?**
+* Threads acquire locks in FIFO order; reduces starvation but lowers throughput.
+
+**34. Explain lock optimizations in JVM.**
+* Biased: Single-thread optimization.
+* Lightweight: CAS-based.
+* Heavyweight: OS mutex (contention).
+
+**35. Why prefer Executors over manual thread creation?**
+* Better resource management, lifecycle control, scalability, and error handling.
+
+**36. Explain corePoolSize, maxPoolSize, queue.**
+* Core threads stay alive.
+* Max threads handle bursts.
+* Queue buffers tasks before expanding pool.
+
+**37. Why avoid unbounded queues?**
+* Can cause OutOfMemoryError and hide backpressure issues.
+
+**38. What happens when a thread pool is saturated?**
+* Rejection policies:
+  * Abort.
+  * CallerRuns.
+  * Discard.
+  * DiscardOldest.
+
+**39. What is ForkJoinPool used for?**
+* Divide-and-conquer tasks using work stealing (used by parallel streams).
+
+**40. What is CAS?**
+* An atomic CPU instruction used for lock-free algorithms.
+
+**41. What is the ABA problem?**
+* Value changes A -> B -> A; CAS thinks nothing changed.
+* Solution: Use AtomicStampedReference.
+
+**42. Why use LongAdder?**
+* Better performance under high contention via striped counters.
+
+**43. How is ConcurrentHashMap thread-safe?**
+* Segment locking (Java 7).
+* CAS + synchronized bins (Java 8+).
+
+**44. Difference between fail-fast and fail-safe iterators?**
+* Fail-fast -> throws exception.
+* Fail-safe -> works on snapshot (Concurrent collections).
+
+**45. CountDownLatch vs CyclicBarrier Difference?**
+* Latch: one-time use.
+* Barrier: reusable synchronization point.
+
+**46. When to use Semaphore?**
+* To limit concurrent access to a resource (connection pools).
+
+**47. Why Phaser?**
+* Dynamic thread registration for complex workflows.
+
+**48. What is false sharing?**
+* Multiple threads modify variables on the same cache line, causing contention.
+
+**49. How do you detect deadlocks in production?**
+* Thread dumps.
+* JVisualVM / JConsole.
+* jstack.
+
+**50. Why too many threads hurt performance?**
+* CPU overhead from excessive context switching.
+
+**51. When should multithreading be avoided?**
+* IO already async
+* Low contention workloads.
+* Complex shared state.
+
+**52. Why prefer immutable objects?**
+* They are inherently thread-safe and simplify reasoning.
+
+**53. When are parallel streams dangerous?**
+* Blocking IO.
+* Shared mutable state.
+* Limited CPU cores.
+
+**54. Key principles?**
+* Minimize shared state.
+* Prefer immutability.
+* Document thread-safety guarantees.

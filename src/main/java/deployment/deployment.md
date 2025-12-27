@@ -3804,26 +3804,26 @@ kubectl get pods --namespace=acg
     - **Anycast IP** simplifies DNS.
 - Pay for reserved IPs that are not in use, to discourage wasting them.
 
-**Load Balancing**
+**Load Balancing.**
 
 - High perf, scalable traffic distribution integrated with autoscaling & Cloud CDN:
     - Amazon Elastic Load Balancing.
-    - HA PROXY
-    - NGINX
+    - HA PROXY.
+    - NGINX.
 - SDN naturally handles spikes without any pre-warning; no instances or devices.
-- Regional Network Load Balancer: Health checks, round robin, session affinity:
+- Regional Network Load Balancer: Health checks, round-robin, session affinity:
     - Forwarding rules based on IP, protocol (e.g. TCP, UDP) and (optionally) port.
 - Global load balancers multi-region failover for HTTP(S), SSL proxy & TCP proxy:
     - Prioritize low-latency connection to region near use, then gently fail over in bits.
     - Reacts quickly (unlike DNS) to changes in users, traffic, network, health etc.
 - Pay by making ingress traffic billable (cheaper than egress) plus hourly per rule.
 
-**Cloud CDN**
+**Cloud CDN.**
 
 - Low-latency content delivery based on HTTP(S) CLB & integrated GCE & GCS:
-    - Amazon CloudFront
-    - Akamai
-    - Cloudflare
+    - Amazon CloudFront.
+    - Akamai.
+    - Cloudflare.
 - Supports HTTP/2 and HTTPS, but no custom origins (GCP only).
 - A simple checkbox on HTTP(S) Load Balancer config turns this on.
 - On cache miss, pay origin -> POP "cache fill" egress charges (cheaper for in-region).
@@ -3832,13 +3832,13 @@ kubectl get pods --namespace=acg
 - Pay per cache invalidation request (not per resource invalidated).
 - Origin costs (e.g. CLB, GCS) can be much lower because cache hits reduce load.
 
-### Internal Networking
+### Internal Networking.
 
-**VPC**
+**VPC.**
 
 - Global IPv4 unicast Software-Defined Network (SDN) for GCP resources:
-    - Amazon VPC
-    - OpenFlow
+    - Amazon VPC.
+    - OpenFlow.
 - Automatic mode; custom mode.
 - Configure subnets (each with a private IP range), routes, firewalls, VPNs, BGP.
 - VPC is global and subnets are regional.
@@ -3847,7 +3847,7 @@ kubectl get pods --namespace=acg
 - Free to configure VPC (container).
 - Pay to use certain services (e.g. VPN) and for network egress.
 
-**Cloud Interconnect**
+**Cloud Interconnect.**
 
 - Options for connecting external networks to Google's network.
 - Private connections to VPC via Cloud VPN or Dedicated / Partner Interconnect.
@@ -3857,11 +3857,11 @@ kubectl get pods --namespace=acg
 - Significantly lower egress fees:
     - Except Cloud VPN, which remains unchanged.
 
-**Cloud VPN**
+**Cloud VPN.**
 
 - IPsec VPN to connect to VPC via a public internet for low-volume data connections:
-    - AWS VPN
-    - OpenVPN
+    - AWS VPN.
+    - OpenVPN.
 - For persistent, static connections between gateways:
     - Peer VPN gateway must have static IP.
 - Encrypted link to VPC into one subnet.
@@ -3869,36 +3869,36 @@ kubectl get pods --namespace=acg
 - Pay for tunnel-hour.
 - Normal traffic charges apply.
 
-**Dedicated Interconnect**
+**Dedicated Interconnect.**
 
 - Direct physical link between VPC and on-prem for high-volume data connections:
     - AWS Direct Connect.
 - VLAN attachment is private connection to VPC in one region no public GCP APIs:
     - Region chosen from those supported by particular Interconnect Location.
-- Links are private but not encrypted; can layer your won encryption.
+- Links are private but not encrypted; can layer your own encryption.
 - Redundant connections in different locations recommended for critical apps.
 - Pay fee per 10 Gbps link plus fee per VLAN attachment.
 
-**Cloud Router**
+**Cloud Router.**
 
 - Dynamic routing (BGP) for hybrid networks GCP VPCs to external networks.
 - Works with Cloud VPN and Dedicated Interconnect.
 - Automatically learns subnets in VPC and announces them to on-prem network.
 - Without Cloud Router you must manage static routes for VPN.
-- Free to setup.
+- Free to set up.
 - Pay for usual VPC egress.
 
-**CDN Interconnect**
+**CDN Interconnect.**
 
 - Direct, low-latency connectivity to certain CDN providers, with cheaper egress.
 - For external CDNs, not Google's Cloud CDN service:
-    - Supports Akamai, Cloudflare , Fastly.
+    - Supports Akamai, Cloudflare, Fastly.
 - Work for both pull and push cache fills:
     - Because it's for all traffic with that CDN.
 
-### Identity & Access (Core Security)
+### Identity & Access (Core Security).
 
-**Roles**
+**Roles.**
 
 - Roles are collections of Permissions to use or manage GCP resources:
     - AWS IAM Policies.
@@ -3912,7 +3912,7 @@ kubectl get pods --namespace=acg
     - E.g.: **roles/bigquery.dataEditor**, **roles/pubsub.subscriber**.
 - Custom Roles: Project or Org-level collections you define of granular permissions.
 
-**Cloud IAM**
+**Cloud IAM.**
 
 - Controls access to GCP resources: Authorization, not really authentication/identity:
     - AWS IAM.
@@ -3924,18 +3924,18 @@ kubectl get pods --namespace=acg
     - Answer: Who can do what to which thing(s)?.
 - IAM is free; pay for authorized GCP service usage.
 
-**Service Accounts**
+**Service Accounts.**
 
 - Special type of Google account that represents an application, not an end user:
     - AWS IAM Roles.
 - Can be assumed by applications or individual users (when so authorized).
 - For almost all cases, whether you are developing locally or in a production application, you should use service
   accounts, rather than user accounts or API keys,
-- Consider resources and permissions required by application; use least privilege.
+- Consider resources and permissions required by application; use the least privilege.
 - Cloud Platform managed keys for GCP:
     - No direct downloading: Google manages private keys & rotates them once a day.
 
-**Cloud Identity**
+**Cloud Identity.**
 
 - Identity as a Service (IDaaS, not DaaS) to provision and manage users and groups:
     - AWS IAM.
@@ -3948,14 +3948,14 @@ kubectl get pods --namespace=acg
 - Identity work with other Google services (e.g. Chrome).
 - Identities can be used to SSO with other apps via OIDC, SAML, OAUTH2.
 
-**Security Key Enforcement**
+**Security Key Enforcement.**
 
 - USB or Bluetooth 2-step verification device that prevents phishing.
 - Not like just getting a code via email or text message.
 - Device also verifies the target service.
 - Eliminates man-in-the-middle (MITM) attacks against GCP credentials.
 
-**Resource Manager**
+**Resource Manager.**
 
 - Centrally manage & secure organization's projects with custom folder hierarchy:
     - AWS Organizations.
@@ -3966,7 +3966,7 @@ kubectl get pods --namespace=acg
 - Define custom IAM roles at org level.
 - Apply IAM policies at organization, folder, or project levels.
 
-**Cloud Identity - Aware Proxy (IAP)**
+**Cloud Identity - Aware Proxy (IAP).**
 
 - Guards apps running on GCP via identity verification, not VPN access.
 - Based on CLB & IAM, and only passes authed requests through:
@@ -3974,7 +3974,7 @@ kubectl get pods --namespace=acg
 - Grant access to any IAM identities, including groups & service accounts.
 - Pay for load balancing / protocol forwarding rules and traffic.
 
-**Cloud Audit Logging**
+**Cloud Audit Logging.**
 
 - Answers the questions "Who did what, where and when?" within GCP project:
     - AWS Cloud Trail Service.
@@ -3983,9 +3983,9 @@ kubectl get pods --namespace=acg
     - Access Transparency (400 day retention).
     - Data Access (30 day retention).
 
-### Security Management - Monitoring & Response
+### Security Management - Monitoring & Response.
 
-**Cloud Armor**
+**Cloud Armor.**
 
 - Edge-level protection from DDoS & other attacks on global HTTP(S) LB:
     - AWS Shield.
@@ -3994,25 +3994,25 @@ kubectl get pods --namespace=acg
 - Manage IPs with CIDR-based allow/block lists (aka whitelist/blacklist).
 - More intelligent rules forthcoming (e.g. XSS, SQLi, geo-based, custom).
 
-**Security Scanner**
+**Security Scanner.**
 
 - Free but limited GAE app vulnerability scanner:
     - AWS Inspector.
 - Can identify:
-    - XSS
-    - Flash injection
-    - Mixed content (HTTP in HTTPS)
-    - Outdated/insecure libraries
+    - XSS.
+    - Flash injection.
+    - Mixed content (HTTP in HTTPS).
+    - Outdated/insecure libraries.
 
-**Cloud DLP API**
+**Cloud DLP API.**
 
-**Event Threat Detection (ETD)**
+**Event Threat Detection (ETD).**
 
-**Cloud Security Command Center (SCC)**
+**Cloud Security Command Center (SCC).**
 
-### Encryption Keys
+### Encryption Keys.
 
-**Cloud Key Management Service (KMS)**
+**Cloud Key Management Service (KMS).**
 
 - Low-latency service to manage and use cryptographic keys.
 - Supports symmetric (e.g. AES) and asymmetric (e.g. RSA, EC) algorithms:
@@ -4022,54 +4022,54 @@ kubectl get pods --namespace=acg
 - Rotate keys used for new encryption either automatically or on demand:
     - Still keeps old active key versions, to allow decrypting.
 
-**Cloud Hardware Security Module (HSM)**
+**Cloud Hardware Security Module (HSM).**
 
 - Cloud KMS keys management by FIPS 140-2 Level 3 certified HSMs.
 - Device hosts encryption keys and performs cryptographic operations.
 - Enables you to meet compliance that mandates hardware environment:
     - AWS CloudHSM.
-- Fully integrated with Cloud KMS
+- Fully integrated with Cloud KMS.
 
 ***
 
-## Linux
+## Linux.
 
-**Linux Distributions**
+**Linux Distributions.**
 
-- Linux OS = Linux Distribution
-    - Curated software
-- Distro/Flavor = Distribution
+- Linux OS = Linux Distribution.
+    - Curated software.
+- Distro/Flavor = Distribution.
 
-**Linux Kernel**
+**Linux Kernel.**
 
 - The kernel is the core.
-- Linux Kernel + Apps = Distro
-- RedHat
-    - Banks
-    - Airlines
-    - Telecoms
-    - Health care
-- Ubuntu
-    - Startups
-    - SaaS
-    - Social Networks
-    - Cloud Based
-- Linux Mint
-- Debian
-- Mageia
-- Fedora
-- openSUSE
-- Arch Linux
-- Slackware
+- Linux Kernel + Apps = Distro.
+- RedHat.
+    - Banks.
+    - Airlines.
+    - Telecoms.
+    - Health care.
+- Ubuntu:
+    - Startups.
+    - SaaS.
+    - Social Networks.
+    - Cloud Based.
+- Linux Mint.
+- Debian.
+- Mageia.
+- Fedora.
+- openSUSE.
+- Arch Linux.
+- Slackware.
 - Linux concepts are universal.
 - Each distro is slightly different.
 - You can accomplish the same goals on most Linux distros.
 
 ***
 
-## Linux Fundamentals
+## Linux Fundamentals.
 
-### Common Directory
+### Common Directory.
 
 - **/:** Root the top of the file system hierarchy.
 - **/bin:** Binaries and other executable programs.
@@ -4087,7 +4087,7 @@ kubectl get pods --namespace=acg
 - **/srv/ftp:** FTP files.
 - **/sys:** Used to display and sometimes configure the devices known to the Linux kernel.
 
-**App Directory Structure**
+**App Directory Structure.**
 
 ```
 /usr/local/crashplan/bin
@@ -4101,21 +4101,21 @@ kubectl get pods --namespace=acg
 /var/opt/myapp
 ```
 
-**The Shell**
+**The Shell.**
 
 - The default interface to Linux.
 - A program that accepts your commands and executes those commands.
 - Called a command line interpreter.
 - Server distributions do not include GUIs.
 
-**The Prompt**
+**The Prompt.**
 
 ```console
 [majka@linuxsvr ~]$
 [root@linuxsvr:~]#
 ```
 
-**Root, the Superuser**
+**Root, the Superuser.**
 
 - Root is all powerful.
 - Normal accounts can only do a subset of the things root can do.
@@ -4123,7 +4123,7 @@ kubectl get pods --namespace=acg
 - Root access may require **install**, **start**, **stop** an application.
 - Day to day activities will be performed using normal account.
 
-**Tilde Expansion**
+**Tilde Expansion.**
 
 ```
 ~majka = /home/majka
@@ -4132,7 +4132,7 @@ kubectl get pods --namespace=acg
 ~ftp   = /srv/ftp
 ```
 
-**Basic Linux Commands**
+**Basic Linux Commands.**
 
 - **ls:** Lists directory contents.
 - **cd:** Changes the current directory.
@@ -4143,7 +4143,7 @@ kubectl get pods --namespace=acg
 - **exit:** Exits the shell or your current session.
 - **clear:** Clears the screen.
 
-### Environment Variables
+### Environment Variables.
 
 - Storage location that has a name and a value.
 - Typically, uppercase.
@@ -4153,7 +4153,7 @@ kubectl get pods --namespace=acg
 echo $VAR_NAME
 ```
 
-**PATH**
+**PATH.**
 
 - An environment variable.
 - Controls the command search path.
@@ -4169,7 +4169,7 @@ echo $PATH
 which tac
 ```
 
-**Listing Files**
+**Listing Files.**
 
 - Use **ls -F** to reveal file types.
 
@@ -4179,7 +4179,7 @@ which tac
 *   Executable
 ```
 
-**Symbolic Links**
+**Symbolic Links.**
 
 - A link is a point to the actual file or directory.
 - Use the link as if it were the file.
@@ -4194,7 +4194,7 @@ ls -d
 ls --color
 ```
 
-**The tree Command**
+**The tree Command.**
 
 - Similar to **ls -R**, but creates virtual output.
 
@@ -4203,7 +4203,7 @@ tree -d     List directories only.
 tree -C     Colorized output.
 ```
 
-### Permissions
+### Permissions.
 
 ```console
 ls -l
@@ -4211,34 +4211,34 @@ ls -l
 -rw-rw-r--
 ```
 
-| Symbol | Type |
-|---|---|
-| - | Regular file |
-| d | Directory |
-| l | Symbolic link |
+| Symbol  | Type          |
+|---------|---------------|
+| -       | Regular file  |
+| d       | Directory     |
+| l       | Symbolic link |
 
-| Symbol | Permission |
-|---|---|
-| r | Read |
-| w | Write |
-| x | Execute |
+| Symbol | Permission  |
+|--------|-------------|
+| r      | Read        |
+| w      | Write       |
+| x      | Execute     |
 
-| Permission | File | Directory |
-|---|---|---|
-| Read (r) | Allows a file to be read | Allows file names in the directory to be read |
-| Write (w) | Allows a file to modified | Allows entries to be modified within the directory |
+| Permission  | File                           | Directory                                          |
+|-------------|--------------------------------|----------------------------------------------------|
+| Read (r)    | Allows a file to be read       | Allows file names in the directory to be read      |
+| Write (w)   | Allows a file to modified      | Allows entries to be modified within the directory |
 | Execute (x) | Allows the execution of a file | Allows access to contents and metadata for entries |
 
-**Permission Categories**
+**Permission Categories.**
 
-| Symbol | Category |
-|---|---|
-| u | User |
-| g | Group |
-| o | Other |
-| a | All |
+| Symbol  | Category  |
+|---------|-----------|
+| u       | User      |
+| g       | Group     |
+| o       | Other     |
+| a       | All       |
 
-**Groups**
+**Groups.**
 
 - Every user is in at least one group.
 - Users can belong to many groups.
@@ -4251,14 +4251,14 @@ id -Gn
 groups pat
 ```
 
-**Changing Permissions**
+**Changing Permissions.**
 
-| Item | Meaning |
-|---|---|
-| chmod | Change mode command |
-| ugoa | User category user, group, other, all. |
-| +-= | Add, subtract, or set permissions. |
-| rwx | Read, Write, Execute. |
+| Item  | Meaning                                |
+|-------|----------------------------------------|
+| chmod | Change mode command                    |
+| ugoa  | User category user, group, other, all. |
+| +-=   | Add, subtract, or set permissions.     |
+| rwx   | Read, Write, Execute.                  |
 
 ```console
 chmod g+r sales.data
@@ -4270,13 +4270,13 @@ chmod g+wx sales.data
 chmod u+rwx,g-x sales.data
 ```
 
-**Order has meaning**
+**Order has meaning **
 
-| | u | g | o |
-|---|---|---|---|
-| Symbolic | rwx | r-x | r-- |
-| Binary | 111 | 101 | 100 |
-| Decimal | 7 | 5 | 4 |
+|           | u   | g   | o   |
+|-----------|-----|-----|-----|
+| Symbolic  | rwx | r-x | r-- |
+| Binary    | 111 | 101 | 100 |
+| Decimal   | 7   | 5   | 4   |
 
 ```
 -rwx------  700
@@ -4286,7 +4286,7 @@ chmod u+rwx,g-x sales.data
 -rw-r--r--  644
 ```
 
-**Working with Groups**
+**Working with Groups.**
 
 - New files belong to your primary group.
 - The **chgrp** command changes the group.
@@ -4297,7 +4297,7 @@ chgrp sales sales.data
 chmod g+w sales.data
 ```
 
-**Directory Permissions**
+**Directory Permissions.**
 
 - Permissions on a directory can effect the files in the directory.
 - If the file permissions look correct, start checking directory permissions.
@@ -4309,14 +4309,14 @@ chmod 500 my-cat
 my-cat/cat
 ```
 
-**File Creation Mask**
+**File Creation Mask.**
 
 - File creation mask determines default permissions.
 - If no mask were used permissions would be:
     - **777:** for directories.
     - **666:** for files.
 
-**The Umask Command**
+**The Umask Command.**
 
 ```
 umask [-S] [mode]
@@ -4325,14 +4325,14 @@ umask [-S] [mode]
 - Sets the file creation mask to mode, if given.
 - Use **-S** to for symbolic notation.
 
-**Special Modes**
+**Special Modes.**
 
 - umask **0022** is the same as umask **022**.
 - chmod **0644** is the same as chmod **644**.
 - The special modes are:
-    - **setuid**
-    - **setgid**
-    - **sticky**
+    - **setuid**.
+    - **setgid**.
+    - **sticky**.
 
 ```console
 mkdir testumask
@@ -4360,7 +4360,7 @@ ls -l
 > -rw-rw---- a-file
 ```
 
-### Finding Files and Directories
+### Finding Files and Directories.
 
 ```console
 find
@@ -4376,7 +4376,7 @@ find . -exec file {} \;
 file .bash_profile
 ```
 
-**A Fast Find - `locate`**
+**A Fast Find - `locate`.**
 
 ```
 locate pattern
@@ -4393,7 +4393,7 @@ locate sales
 locate tpsre
 ```
 
-### Viewing files
+### Viewing files.
 
 - **cat file:** Display the contents of file.
 - **more file:** Browse through a text file.
@@ -4401,14 +4401,14 @@ locate tpsre
 - **head file:** Output the beginning (or top) portion of file.
 - **tail file:** Output the ending (or bottom) portion of file.
 
-**Head and Tail**
+**Head and Tail.**
 
 - Displays only 10 lines by default.
 - Change this behavior with **-n**:
     - **n:** Number of lines.
-    - **tail -15 file.txt**
+    - `tail -15 file.txt`.
 
-**Viewing Files in Real Time**
+**Viewing Files in Real Time.**
 
 ```
 tail -f file        Follow the file.
@@ -4416,13 +4416,13 @@ tail -f file        Follow the file.
 
 - Displays data as it is being written to the file.
 
-**Sort Options**
+**Sort Options.**
 
 - **-k F:** Sort by key. **F** is the field number.
 - **-r:** Sort in reverse order.
 - **-u:** Sort unique.
 
-**Creating a Collection of Files**
+**Creating a Collection of Files.**
 
 ```
 tar [-] c|x|t f tarfile [pattern]
@@ -4430,27 +4430,25 @@ tar [-] c|x|t f tarfile [pattern]
 
 - Create, extract or list contents of a tar archive using pattern, if supplied.
 
-**Compressing Files To Save Space**
+**Compressing Files To Save Space.**
 
 - **gzip:** Compress files.
 - **gunzip:** Uncompress files.
 - **gzcat:** Concatenates compressed files.
 - **zcat:** Concatenates compressed files.
 
-**Disk Usage**
+**Disk Usage.**
 
 - **du:** Estimates file usage.
 - **du -k:** Display sizes in Kilobytes.
-- **du -h:** Display sizes in human readable format.
+- **du -h:** Display sizes in human-readable format.
 
-**Wildcards**
+**Wildcards.**
 
 - A character or string used for a pattern matching.
 - Globbing expands the wildcard pattern into a list of files and/or directories.
 - Wildcards can be used with most commands:
-    - **ls**
-    - **rm**
-    - **cp**
+    - `ls`, `rm`, `cp`.
 - **`*`:** Matches zero or more characters:
     - `*.txt`
     - `a*`
@@ -4472,7 +4470,7 @@ tar [-] c|x|t f tarfile [pattern]
 - **`[a-g]*`:** Matches all files that start with `a, b, c, d, e, f or g`.
 - **`[3-6]*`:** Matches all files that start with `3,4,5 or 6`.
 
-**Named Character Classes**
+**Named Character Classes.**
 
 ```
 [[:alpha:]]
@@ -4483,21 +4481,21 @@ tar [-] c|x|t f tarfile [pattern]
 [[:upper:]]
 ```
 
-**Matching Wildcard patterns**
+**Matching Wildcard patterns.**
 
 - **`\`:** Escape character. Use if you want to match a wildcard character.
 - Match all files that end with a question mark:
     - **`*\?`:** Example done?
 
-### Input, Output and Redirection
+### Input, Output and Redirection.
 
-| I/O Name | Abbreviation | File Descriptor |
-|---|---|---|
-| Standard Input | stdin | 0 |
-| Standard Output | stdout | 1 |
-| Standard Error | stderr | 2 |
+| I/O Name        | Abbreviation  | File Descriptor  |
+|-----------------|---------------|------------------|
+| Standard Input  | stdin         | 0                |
+| Standard Output | stdout        | 1                |
+| Standard Error  | stderr        | 2                |
 
-**Redirection**
+**Redirection.**
 
 - **>:** Redirects standard output to a file. Overwrites (truncating) existing contents.
 - **>>:** Redirects standard output to a file. Appends to any existing content.
@@ -4518,13 +4516,13 @@ ls here not-here > /dev/null 2>&1
 sort files.txt === sort < files.txt
 ```
 
-**Comparing the Contents of Files**
+**Comparing the Contents of Files.**
 
-- **diff file1 file2:** Compare two files.
-- **sdiff file1 file2:** Side-by-side comparision.
-- **vimdiff file1 file2:** Highlight differences in vim.
+- `diff file1 file2`: Compare two files.
+- `sdiff file1 file2`: Side-by-side comparision.
+- `vimdiff file1 file2`: Highlight differences in vim.
 
-**diff Output**
+**diff Output.**
 
 ```console
 diff file1 file2
@@ -4538,7 +4536,7 @@ diff file1 file2
 
 ***
 
-## Searching in files
+## Searching in files.
 
 - **grep:** Display lines matching a pattern.
 
@@ -4551,7 +4549,7 @@ grep pattern file
 -v  Invert Match. Print lines that don't match.
 ```
 
-**The file Command**
+**The file Command/**
 
 ```
 file file_name Display the file type.
@@ -4566,13 +4564,13 @@ bin directory
 json.tar: POSIX tar archive
 ```
 
-**Searching for Text in Binary Files**
+**Searching for Text in Binary Files.**
 
 - **strings:** Display printable strings.
 
 **Pipes**
 
-- **|:** Pipe symbol
+- **|:** Pipe symbol.
 
 ```
 command-output | command-input
@@ -4584,7 +4582,7 @@ grep pattern file
 cat file | grep pattern
 ```
 
-**The cut Command**
+**The cut Command.**
 
 - **cut [file]:** Cut out selected portions of file. If file omitted, use standard input.
 - **-d delimiter:** Use delimiter as the field separator.
@@ -4610,7 +4608,7 @@ bobb    Bob     Barker
 bob     Bob     Smith
 ```
 
-**Piping Output to a Pager**
+**Piping Output to a Pager.**
 
 - **more**
 - **less**
@@ -4621,24 +4619,24 @@ less /etc/passwd
 grep bin /etc/passwd | less
 ```
 
-**Transferring files over the network**
+**Transferring files over the network.**
 
 - **scp:** Secure copy.
 - **sftp:** SSH file transfer protocol.
 
-| Command | Description |
-|---|---|
-| scp SOURCE DESTINATION | Copy source to destination |
-| sftp HOST | Start a secure file transfer session with host |
-| ftp HOST | Start file transfer session with host |
+| Command                | Description                                    |
+|------------------------|------------------------------------------------|
+| scp SOURCE DESTINATION | Copy source to destination                     |
+| sftp HOST              | Start a secure file transfer session with host |
+| ftp HOST               | Start file transfer session with host          |
 
-**Customizing the Shell Prompt**
+**Customizing the Shell Prompt.**
 
 ```console
 echo 'export PS1="[\u@\h \w]\$ "' >> ~/.bash_profile
 ```
 
-### Aliases
+### Aliases.
 
 - Shortcuts.
 - Use for long commands.

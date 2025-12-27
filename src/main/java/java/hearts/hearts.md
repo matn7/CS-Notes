@@ -1,5 +1,4 @@
 # Concurrent Programming
-# Concurrent Programming.
 
 ## :star: Concurrent Programming (Threads).
 

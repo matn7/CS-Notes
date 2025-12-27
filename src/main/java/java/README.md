@@ -81,7 +81,7 @@ pre-packed with Java.
 - JVM uses class loader to find the classes:
     - **Bootstrap Class Loader**: Loads all the Java core files.
     - **Extension Class Loader**: Loads all classes from extension directory.
-    - **System Class Loader*:* Loads all classes from CLASSPATH.
+    - **System Class Loader:** Loads all classes from CLASSPATH.
 - When JVM needs to find a class, it starts with **System Class Loader**.
 - If it is not found, it checks with **Extension Class Loader**.
 - If it not found, it goes to the **Bootstrap Class Loader**.
@@ -231,7 +231,7 @@ public enum Size { SMALL, MEDIUM, LARGE; }
 ```java
 enum Season {
   WINTER, SPRING, SUMMER, FALL
-};
+}
 ```
 
 - Value of enums can be compared using `==` or `equals` function.
@@ -283,7 +283,7 @@ System.out.println(concat); // string1string2
 String str1 = "Value";
 ```
 
-- However if `new` operator is used to create String object, the new object is created on **heap**.
+- However, if `new` operator is used to create String object, the new object is created on **heap**.
 - Following piece of code created 2 objects.
 
 ```java
