@@ -759,7 +759,7 @@ public int hashCode() {
 - HashCode must be compatible.
     - If `x.equals(y)` return true, **x.hashCode() == y.hashCode()**
 - If you change equals method you have to change hashCode also. 
-- Failure to do so results in objects put in hash based data structures HasSet, HashMap could be lost.
+- Failure to do so results in objects put in hash based data structures HashSet, HashMap could be lost.
 
 ```java
 Object.hash(some, some2);
