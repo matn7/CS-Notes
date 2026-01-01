@@ -240,1016 +240,599 @@ synchronized (this) {
 }
 ```
 
-6. Difference between synchronized method and block
-
-Concept: Block provides finer-grained locking.
-
+**71. Difference between synchronized method and block.**
+* Block provides finer-grained locking.
+```java
 synchronized void method() {
-// entire method locked
+    // entire method locked
 }
 
 void method() {
-synchronized (this) {
-// only this block locked
+    synchronized (this) {
+        // only this block locked
+    }
 }
-}
+```
 
-7. What is the Java Memory Model (JMM)?
-
-Concept: Defines visibility & ordering guarantees.
-
+**72. What is the Java Memory Model (JMM)?**
+* Defines visibility & ordering guarantees.
+```java
 volatile boolean running = true;
+```
 
-8. What is volatile?
-
-Concept: Guarantees visibility, not atomicity.
-
+**73. What is volatile?**
+* Guarantees visibility, not atomicity.
+```java
 volatile boolean flag = false;
 
 void stop() {
-flag = true;
+    flag = true;
 }
+```
 
-9. volatile vs synchronized
-
-Concept: Atomicity vs visibility.
-
+**74. volatile vs synchronized?**
+* Atomicity vs visibility.
+```java
 volatile int x;       // visibility only
 synchronized void inc() { x++; } // atomic
+```
 
-10. What is a deadlock?
-
-Concept: Circular waiting for locks.
-
+**75. What is a deadlock?**
+* Circular waiting for locks.
+```java
 synchronized (lockA) {
-synchronized (lockB) {
-// potential deadlock
+    synchronized (lockB) {
+        // potential deadlock
+    }
 }
-}
+```
 
-11. Common causes of deadlock
+**76. Common causes of deadlock.**
+* Inconsistent lock order.
+```java
+// Thread 1: A -> B
+// Thread 2: B -> A
+```
 
-Concept: Inconsistent lock order.
-
-// Thread 1: A → B
-// Thread 2: B → A
-
-12. How to prevent deadlock
-
-Concept: Consistent lock ordering.
-
+**77. How to prevent deadlock?**
+* Consistent lock ordering.
+```java
 synchronized (lockA) {
-synchronized (lockB) {
-// safe if order is consistent
+    synchronized (lockB) {
+        // safe if order is consistent
+    }
 }
-}
+```
 
-13. What is thread starvation?
+**78. What is thread starvation?**
+* Threads never get CPU time.
+```java
+ExecutorService exec = Executors.newFixedThreadPool(1);
+```
 
-Concept: Threads never get CPU time.
-
-ExecutorService exec =
-Executors.newFixedThreadPool(1);
-
-14. What is livelock?
-
-Concept: Threads active but not progressing.
-
+**79. What is livelock?**
+* Threads active but not progressing.
+```java
 while (otherThreadActive()) {
-Thread.yield();
+    Thread.yield();
 }
+```
 
-15. wait() vs sleep()
-
-Concept: wait() releases lock.
-
+**80. wait() vs sleep()?**
+* `wait()` releases lock.
+```java
 synchronized (obj) {
-obj.wait();
+    obj.wait();
 }
 
 Thread.sleep(1000);
+```
 
-16. notify() vs notifyAll()
-
-Concept: notifyAll() avoids missed signals.
-
+**81. notify() vs notifyAll()?**
+* `notifyAll()` avoids missed signals.
+```java
 synchronized (obj) {
-obj.notifyAll();
+    obj.notifyAll();
 }
+```
 
-17. What is a daemon thread?
-
-Concept: JVM exits even if daemon threads run.
-
+**82. What is a daemon thread?**
+* JVM exits even if daemon threads run.
+```java
 Thread t = new Thread(task);
 t.setDaemon(true);
 t.start();
+```
 
-18. What is a thread pool?
+**83. What is a thread pool?**
+* Reuses threads efficiently.
+```java
+ExecutorService pool = Executors.newFixedThreadPool(5);
+```
 
-Concept: Reuses threads efficiently.
-
-ExecutorService pool =
-Executors.newFixedThreadPool(5);
-
-19. Executor vs ExecutorService
-
-Concept: Lifecycle management.
-
-ExecutorService es =
-Executors.newSingleThreadExecutor();
+**84. Executor vs ExecutorService?**
+* Lifecycle management.
+```java
+ExecutorService es = Executors.newSingleThreadExecutor();
 es.shutdown();
+```
 
-20. Callable vs Runnable
-
-Concept: Callable returns a value.
-
+**85. Callable vs Runnable?**
+* Callable returns a value.
+```java
 Callable<Integer> task = () -> 42;
+```
 
-21. What is Future?
-
-Concept: Represents async result.
-
+**86. What is Future?**
+* Represents async result.
+```java
 Future<Integer> f = es.submit(task);
 Integer result = f.get();
+```
 
-22. ReentrantLock advantages
-
-Concept: More control than synchronized.
-
+**87. ReentrantLock advantages?**
+* More control than synchronized.
+```java
 Lock lock = new ReentrantLock();
 lock.lock();
 try {
-// critical section
+    // critical section
 } finally {
-lock.unlock();
+    lock.unlock();
 }
+```
 
-23. What is lock contention?
-
-Concept: Too many threads, same lock.
-
+**88. What is lock contention?**
+* Too many threads, same lock.
+```java
 synchronized (sharedLock) {
-// performance bottleneck
+    // performance bottleneck
 }
+```
 
-24. What is false sharing?
-
-Concept: Cache-line contention.
-
+**89. What is false sharing?**
+* Cache-line contention.
+```java
 // Avoid by padding or @Contended
 @Contended
 volatile long value;
+```
 
-25. High-level concurrency utilities
-
-Concept: Safer abstractions.
-
+**90. High-level concurrency utilities?**
+* Safer abstractions.
+```java
 CountDownLatch latch = new CountDownLatch(3);
 latch.await();
+```
 
-
-
-
-
-
-1. Is volatile enough to make a counter thread-safe?
-
-Answer: ❌ No
-volatile guarantees visibility, not atomicity.
-
+**91. Is volatile enough to make a counter thread-safe?**
+* No.
+* volatile guarantees visibility, not atomicity.
+```java
 volatile int count;
 count++; // NOT atomic
+```
+* Understanding atomic vs visibility.
 
+**92. Does synchronized guarantee fairness?**
+* No.
+* Thread scheduling is JVM/OS dependent.
+* Testing: Lock semantics vs scheduling.
 
-Testing: Understanding atomic vs visibility.
+**93. Can a thread see stale data even without data races?**
+* Yes.
+* Without a happens-before relationship, visibility isn’t guaranteed.
+*( Testing: Java Memory Model knowledge.
 
-2. Does synchronized guarantee fairness?
-
-Answer: ❌ No
-Thread scheduling is JVM/OS dependent.
-
-Testing: Lock semantics vs scheduling.
-
-3. Can a thread see stale data even without data races?
-
-Answer: ✅ Yes
-Without a happens-before relationship, visibility isn’t guaranteed.
-
-Testing: Java Memory Model knowledge.
-
-4. Why is double-checked locking broken without volatile?
-
-Answer: Instruction reordering can expose a partially constructed object.
-
+**94. Why is double-checked locking broken without volatile?**
+* Instruction reordering can expose a partially constructed object.
+```java
 if (instance == null) {
-synchronized (this) {
-if (instance == null) {
-instance = new Singleton(); // unsafe without volatile
+    synchronized (this) {
+        if (instance == null) {
+            instance = new Singleton(); // unsafe without volatile
+        }
+    }
 }
-}
-}
+```
+* Testing: Reordering + object publication.
 
+**95. Can final fields be safely read without synchronization?**
+* Yes (after constructor completes).
+* Final fields have special JMM guarantees.
+* Testing: Safe publication rules.
 
-Testing: Reordering + object publication.
+**96. Does Thread.sleep() release locks?**
+* No.
+* Only `wait()` releases the monitor.
+* Testing: Monitor behavior.
 
-5. Can final fields be safely read without synchronization?
+**97. Can `notify()` wake the “wrong” thread?**
+* Yes.
+* There is no guarantee which waiting thread is chosen.
+* Testing: Correct use of `notifyAll()`.
 
-Answer: ✅ Yes (after constructor completes)
-Final fields have special JMM guarantees.
+**98. Is ConcurrentHashMap completely lock-free?**
+* No.
+* It uses fine-grained locking and CAS operations.
+* Testing: Internal implementation knowledge.
 
-Testing: Safe publication rules.
-
-6. Does Thread.sleep() release locks?
-
-Answer: ❌ No
-Only wait() releases the monitor.
-
-Testing: Monitor behavior.
-
-7. Can notify() wake the “wrong” thread?
-
-Answer: ✅ Yes
-There is no guarantee which waiting thread is chosen.
-
-Testing: Correct use of notifyAll().
-
-8. Is ConcurrentHashMap completely lock-free?
-
-Answer: ❌ No
-It uses fine-grained locking and CAS operations.
-
-Testing: Internal implementation knowledge.
-
-9. Can a deadlock occur with a single thread?
-
-Answer: ✅ Yes
-A thread can deadlock itself by acquiring locks in a bad order.
-
+**99. Can a deadlock occur with a single thread?**
+* Yes.
+* A thread can deadlock itself by acquiring locks in a bad order.
+```java
 synchronized (lockA) {
-synchronized (lockA) {
-// self-deadlock
+    synchronized (lockA) {
+        // self-deadlock
+    }
 }
-}
+```
+* Testing: Lock reentrancy understanding.
 
+**100. Is volatile faster than synchronized?**
+* Not always.
+* Performance depends on contention and memory barriers.
+* Testing: Performance myths.
 
-Testing: Lock reentrancy understanding.
+**101. Can ReentrantLock cause deadlock?**
+* Yes.
+* It’s still a lock; misuse can deadlock.
+* Testing: Tool != solution.
 
-10. Is volatile faster than synchronized?
+**102. Does AtomicInteger.incrementAndGet() use locks?**
+* No.
+* Uses CAS (Compare-And-Swap).
+* Testing: Lock-free programming basics.
 
-Answer: ❌ Not always
-Performance depends on contention and memory barriers.
+**103. Is thread safety the same as immutability?**
+* No.
+* Immutability is one way to achieve thread safety.
+* Testing: Design principles.
 
-Testing: Performance myths.
-
-11. Can ReentrantLock cause deadlock?
-
-Answer: ✅ Yes
-It’s still a lock; misuse can deadlock.
-
-Testing: Tool ≠ solution.
-
-12. Does AtomicInteger.incrementAndGet() use locks?
-
-Answer: ❌ No
-Uses CAS (Compare-And-Swap).
-
-Testing: Lock-free programming basics.
-
-13. Is thread safety the same as immutability?
-
-Answer: ❌ No
-Immutability is one way to achieve thread safety.
-
-Testing: Design principles.
-
-14. Can two threads call wait() without notify() and still wake up?
-
-Answer: ✅ Yes
-Spurious wakeups are allowed.
-
+**104. Can two threads call wait() without notify() and still wake up?**
+* Yes.
+* Spurious wakeups are allowed.
+```java
 while (!condition) {
-obj.wait();
+    obj.wait();
 }
-
-
-Testing: Correct wait-notify patterns.
-
-15. Does ExecutorService.shutdown() stop running tasks?
-
-Answer: ❌ No
-It prevents new tasks only.
-
-Testing: Lifecycle management.
-
-16. Can Future.get() block forever?
-
-Answer: ✅ Yes
-If the task never completes.
-
-Testing: Blocking risks.
-
-17. Is ThreadLocal memory-safe?
-
-Answer: ❌ Not automatically
-Can cause memory leaks in thread pools.
-
-Testing: ThreadLocal internals.
-
-18. Can a program be thread-safe but still incorrect?
-
-Answer: ✅ Yes
-Thread safety doesn’t guarantee business correctness.
-
-Testing: Separation of concerns.
-
-19. Does synchronized guarantee visibility?
-
-Answer: ✅ Yes
-Lock acquire/release establishes happens-before.
-
-Testing: Memory semantics.
-
-20. Can volatile variables be reordered?
-
-Answer: ❌ No (around volatile access)
-Volatile creates memory barriers.
-
-Testing: Instruction reordering rules.
-
-21. Can thread pools cause starvation?
-
-Answer: ✅ Yes
-Long-running tasks can block short ones.
-
-Testing: Thread pool sizing strategy.
-
-
-
-1. “Is volatile a replacement for synchronized?”
-
-⚠️ Trap:
-“Yes, it makes variables thread-safe.”
-
-✅ Correct answer:
-No. volatile guarantees visibility, not atomicity.
-
-🧠 Tests:
-Understanding Java Memory Model (JMM).
-
-2. “Does volatile make increment operations thread-safe?”
-
-⚠️ Trap:
-“Yes, changes are visible.”
-
-✅ Correct answer:
-No. x++ is not atomic.
-
-🧠 Tests:
-Atomic vs visible operations.
-
-3. “Is HashMap thread-safe for read-only access?”
-
-⚠️ Trap:
-Yes, if no writes occur.
-
-✅ Correct answer:
-Not guaranteed. Without safe publication, even reads can be unsafe.
-
-🧠 Tests:
-Safe publication & memory visibility.
-
-4. “Why is String thread-safe?”
-
-⚠️ Trap:
-Because it’s synchronized.
-
-✅ Correct answer:
-Because it’s immutable.
-
-🧠 Tests:
-Immutability vs synchronization.
-
-5. “Can two threads call a synchronized method simultaneously?”
-
-⚠️ Trap:
-No, synchronized blocks everything.
-
-✅ Correct answer:
-Yes, if they lock on different objects.
-
-🧠 Tests:
-Object-level locking.
-
-6. “Does synchronized guarantee fairness?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. Thread scheduling is JVM/OS dependent.
-
-🧠 Tests:
-Lock behavior awareness.
-
-7. “What happens if a thread throws an exception inside a synchronized block?”
-
-⚠️ Trap:
-Lock is retained.
-
-✅ Correct answer:
-Lock is released.
-
-🧠 Tests:
-Lock lifecycle understanding.
-
-8. “Is Thread.sleep() a locking mechanism?”
-
-⚠️ Trap:
-Yes, it pauses the thread.
-
-✅ Correct answer:
-No. It does not release locks.
-
-🧠 Tests:
-Thread states.
-
-9. “Does wait() release the lock?”
-
-⚠️ Trap:
-No.
-
-✅ Correct answer:
-Yes. wait() releases the monitor lock.
-
-🧠 Tests:
-Monitor mechanics.
-
-10. “Can notify() wake up all waiting threads?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. Only one waiting thread is notified.
-
-🧠 Tests:
-Monitor signaling.
-
-11. “Is notify() always better than notifyAll()?”
-
-⚠️ Trap:
-Yes, it’s more efficient.
-
-✅ Correct answer:
-No. notify() can cause missed signals and deadlocks.
-
-🧠 Tests:
-Condition synchronization.
-
-12. “Does Thread.sleep() guarantee exact timing?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. It only guarantees minimum sleep time.
-
-🧠 Tests:
-Thread scheduling realism.
-
-13. “Is Thread.stop() safe?”
-
-⚠️ Trap:
-Yes, it stops threads immediately.
-
-✅ Correct answer:
-No. It’s deprecated and unsafe.
-
-🧠 Tests:
-Thread lifecycle safety.
-
-14. “What happens if a thread never releases a lock?”
-
-⚠️ Trap:
-Other threads wait indefinitely.
-
-✅ Correct answer:
-Yes — this causes deadlock or starvation.
-
-🧠 Tests:
-Failure modes.
-
-15. “Does ExecutorService.shutdown() stop running tasks?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. It stops accepting new tasks.
-
-🧠 Tests:
-Executor lifecycle.
-
-16. “Does shutdownNow() always stop threads?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. It sends interrupts; tasks may ignore them.
-
-🧠 Tests:
-Interruption semantics.
-
-17. “Is ConcurrentHashMap fully lock-free?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. It uses fine-grained locking and CAS.
-
-🧠 Tests:
-Concurrent collections internals.
-
-18. “Is Collections.synchronizedList() scalable?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. It uses a single lock.
-
-🧠 Tests:
-Scalability awareness.
-
-19. “What problem does CopyOnWriteArrayList solve?”
-
-⚠️ Trap:
-Fast writes.
-
-✅ Correct answer:
-Optimized for many reads, few writes.
-
-🧠 Tests:
-Data structure trade-offs.
-
-20. “Is double-checked locking broken?”
-
-⚠️ Trap:
-Yes, always.
-
-✅ Correct answer:
-No. It’s safe with volatile (Java 5+).
-
-🧠 Tests:
-JMM evolution.
-
-21. “Can final fields improve thread safety?”
-
-⚠️ Trap:
-No.
-
-✅ Correct answer:
-Yes. Final fields have special publication guarantees.
-
-🧠 Tests:
-Safe publication.
-
-22. “Is deadlock possible with only one lock?”
-
-⚠️ Trap:
-No.
-
-✅ Correct answer:
-Yes, via reentrancy misuse or blocking calls.
-
-🧠 Tests:
-Deadlock theory.
-
-23. “Does ReentrantLock replace synchronized?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. It offers additional features, not replacement.
-
-🧠 Tests:
-API trade-offs.
-
-24. “Why use ReentrantLock over synchronized?”
-
-⚠️ Trap:
-Because it’s faster.
-
-✅ Correct answer:
-Timeouts, fairness, multiple condition variables.
-
-🧠 Tests:
-Advanced locking features.
-
-25. “Is fairness in locks always desirable?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. Fair locks reduce throughput.
-
-🧠 Tests:
-Performance trade-offs.
-
-26. “Does Future.get() block?”
-
-⚠️ Trap:
-No, it returns when ready.
-
-✅ Correct answer:
-Yes. It blocks until result is available.
-
-🧠 Tests:
-Async execution.
-
-27. “Is CompletableFuture non-blocking by default?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. Blocking depends on how it’s used.
-
-🧠 Tests:
-Async misuse awareness.
-
-28. “Can thread interruption be ignored?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-It can, but it’s a bug.
-
-🧠 Tests:
-Cooperative cancellation.
-
-29. “What is a happens-before relationship?”
-
-⚠️ Trap:
-Execution order.
-
-✅ Correct answer:
-Visibility and ordering guarantee.
-
-🧠 Tests:
-JMM fundamentals.
-
-30. “What is the most common concurrency bug?”
-
-⚠️ Trap:
-Deadlock.
-
-✅ Correct answer:
-Race conditions due to shared mutable state.
-
-🧠 Tests:
-Real-world experience.
-
-
-
-
-
-
-1. “Are Java streams data structures?”
-
-⚠️ Trap:
-Yes, like collections.
-
-✅ Correct answer:
-No. Streams are pipelines of operations, not data holders.
-
-🧠 Tests:
-Conceptual understanding.
-
-2. “Can a stream be reused?”
-
-⚠️ Trap:
-Yes, you can call .stream() again.
-
-✅ Correct answer:
-No. Streams are single-use; reuse throws IllegalStateException.
-
-🧠 Tests:
-Lifecycle awareness.
-
-3. “Does filter() immediately execute?”
-
-⚠️ Trap:
-Yes, it filters elements.
-
-✅ Correct answer:
-No. Intermediate operations are lazy.
-
-🧠 Tests:
-Lazy evaluation.
-
-4. “When does a stream actually execute?”
-
-⚠️ Trap:
-When the pipeline is built.
-
-✅ Correct answer:
-When a terminal operation is invoked.
-
-🧠 Tests:
-Execution model.
-
-5. “Is forEach() always safe?”
-
-⚠️ Trap:
-Yes, it’s just iteration.
-
-✅ Correct answer:
-No. Side effects can break parallel streams and readability.
-
-🧠 Tests:
-Functional programming discipline.
-
-6. “Is forEach() the same as forEachOrdered()?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. forEachOrdered() preserves encounter order.
-
-🧠 Tests:
-Ordering guarantees.
-
-7. “Does stream order matter?”
-
-⚠️ Trap:
-No.
-
-✅ Correct answer:
-Yes. Order affects performance and correctness.
-
-🧠 Tests:
-Performance trade-offs.
-
-8. “Are streams always faster than loops?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. Streams add overhead and may be slower for simple tasks.
-
-🧠 Tests:
-Performance realism.
-
-9. “Are parallel streams always faster?”
-
-⚠️ Trap:
-Yes, they use multiple cores.
-
-✅ Correct answer:
-No. Overhead and contention may outweigh benefits.
-
-🧠 Tests:
-Parallelism costs.
-
-10. “Can parallel streams cause race conditions?”
-
-⚠️ Trap:
-No, they’re thread-safe.
-
-✅ Correct answer:
-Yes, if shared mutable state is used.
-
-🧠 Tests:
-Concurrency awareness.
-
-11. “Why should lambdas avoid side effects?”
-
-⚠️ Trap:
-Just style preference.
-
-✅ Correct answer:
-Side effects break parallelism and predictability.
-
-🧠 Tests:
-Functional principles.
-
-12. “Is map() allowed to modify objects?”
-
-⚠️ Trap:
-Yes, it transforms them.
-
-✅ Correct answer:
-Technically yes, but conceptually wrong.
-
-🧠 Tests:
-Immutability mindset.
-
-13. “What happens if an exception occurs in a stream?”
-
-⚠️ Trap:
-It’s skipped.
-
-✅ Correct answer:
-The stream terminates immediately.
-
-🧠 Tests:
-Error handling.
-
-14. “Can checked exceptions be thrown in streams?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-Not directly. They must be wrapped or handled.
-
-🧠 Tests:
-Lambda constraints.
-
-15. “Is peek() safe for logging?”
-
-⚠️ Trap:
-Yes, it’s for debugging.
-
-✅ Correct answer:
-Only for debugging; behavior may change.
-
-🧠 Tests:
-API misuse awareness.
-
-16. “Does findFirst() always return the same element?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-Only for ordered streams.
-
-🧠 Tests:
-Ordering semantics.
-
-17. “Difference between findFirst() and findAny()?”
-
-⚠️ Trap:
-None.
-
-✅ Correct answer:
-findAny() may return any element, enabling better parallelism.
-
-🧠 Tests:
-Parallel stream optimization.
-
-18. “Is limit() deterministic in parallel streams?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-Only for ordered streams.
-
-🧠 Tests:
-Encounter order.
-
-19. “Does sorted() always sort everything?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-Short-circuiting may reduce work in some cases.
-
-🧠 Tests:
-Optimization awareness.
-
-20. “Is distinct() cheap?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. It requires tracking seen elements (stateful).
-
-🧠 Tests:
-Stateful operations.
-
-21. “Are intermediate operations stateless?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-Some are stateful (distinct, sorted).
-
-🧠 Tests:
-Pipeline internals.
-
-22. “Does Collectors.toList() guarantee mutability?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. Mutability is not guaranteed.
-
-🧠 Tests:
-API contracts.
-
-23. “Difference between Stream.of() and Arrays.stream()?”
-
-⚠️ Trap:
-None.
-
-✅ Correct answer:
-Stream.of(array) creates a single-element stream if array is object.
-
-🧠 Tests:
-Varargs pitfall.
-
-24. “Can streams work on infinite data?”
-
-⚠️ Trap:
-No.
-
-✅ Correct answer:
-Yes, with short-circuiting operations.
-
-🧠 Tests:
-Lazy execution.
-
-25. “What happens if a stream pipeline has no terminal operation?”
-
-⚠️ Trap:
-It runs anyway.
-
-✅ Correct answer:
-Nothing happens.
-
-🧠 Tests:
-Execution trigger.
-
-26. “Is reduce() always better than collect()?”
-
-⚠️ Trap:
-Yes, it’s more functional.
-
-✅ Correct answer:
-No. collect() is often clearer and optimized.
-
-🧠 Tests:
-Appropriate API usage.
-
-27. “Can reduce() be non-associative?”
-
-⚠️ Trap:
-Yes, if logic is correct.
-
-✅ Correct answer:
-No. Non-associative operations break parallel streams.
-
-🧠 Tests:
-Parallel correctness.
-
-28. “Why must the identity in reduce() be neutral?”
-
-⚠️ Trap:
-For convenience.
-
-✅ Correct answer:
-Incorrect identity breaks correctness in parallel execution.
-
-🧠 Tests:
-Reduction semantics.
-
-29. “Are stream operations always executed in order?”
-
-⚠️ Trap:
-Yes.
-
-✅ Correct answer:
-No. Parallel streams may reorder execution.
-
-🧠 Tests:
-Execution model.
-
-30. “What is the biggest misuse of streams in production?”
-
-⚠️ Trap:
-Performance.
-
-✅ Correct answer:
-Hidden side effects and unreadable pipelines.
-
-🧠 Tests:
-Code quality judgment.
+```
+* Testing: Correct wait-notify patterns.
+
+**105. Does ExecutorService.shutdown() stop running tasks?**
+* No.
+* It prevents new tasks only.
+* Testing: Lifecycle management.
+
+**106. Can Future.get() block forever?**
+* Yes.
+* If the task never completes.
+* Testing: Blocking risks.
+
+**107. Is ThreadLocal memory-safe?**
+* Not automatically.
+* Can cause memory leaks in thread pools.
+* Testing: ThreadLocal internals.
+
+**108. Can a program be thread-safe but still incorrect?**
+* Yes.
+* Thread safety doesn’t guarantee business correctness.
+* Testing: Separation of concerns.
+
+**109. Does synchronized guarantee visibility?**
+* Yes.
+* Lock acquire/release establishes happens-before.
+* Testing: Memory semantics.
+
+**110. Can volatile variables be reordered?**
+* No (around volatile access).
+* Volatile creates memory barriers.
+* Testing: Instruction reordering rules.
+
+**111. Can thread pools cause starvation?**
+* Yes.
+* Long-running tasks can block short ones.
+* Testing: Thread pool sizing strategy.
+
+**112. Is volatile a replacement for synchronized?**
+* Trap: Yes, it makes variables thread-safe.
+* Correct answer: No. volatile guarantees visibility, not atomicity.
+* Tests: Understanding Java Memory Model (JMM).
+
+**113. Does volatile make increment operations thread-safe?**
+* Trap: Yes, changes are visible.
+* Correct answer: No. x++ is not atomic.
+* Tests: Atomic vs visible operations.
+
+**114. Is HashMap thread-safe for read-only access?**
+* Trap: Yes, if no writes occur.
+* Correct answer: Not guaranteed. Without safe publication, even reads can be unsafe.
+* Tests: Safe publication & memory visibility.
+
+**115. Why is String thread-safe?**
+* Trap: Because it’s synchronized.
+* Correct answer: Because it’s immutable.
+* Tests: Immutability vs synchronization.
+
+**116. Can two threads call a synchronized method simultaneously?**
+* Trap: No, synchronized blocks everything.
+* Correct answer: Yes, if they lock on different objects.
+* Tests: Object-level locking.
+
+**117. Does synchronized guarantee fairness?**
+* Trap: Yes.
+* Correct answer: No. Thread scheduling is JVM/OS dependent.
+* Tests: Lock behavior awareness.
+
+**118. What happens if a thread throws an exception inside a synchronized block?**
+* Trap: Lock is retained.
+* Correct answer: Lock is released.
+* Tests: Lock lifecycle understanding.
+
+**119. Is Thread.sleep() a locking mechanism?**
+* Trap: Yes, it pauses the thread.
+* Correct answer: No. It does not release locks.
+* Tests: Thread states.
+
+**120. Does wait() release the lock?**
+* Trap: No.
+* Correct answer: Yes. wait() releases the monitor lock.
+* Tests: Monitor mechanics.
+
+**121. Can notify() wake up all waiting threads?**
+* Trap: Yes.
+* Correct answer: No. Only one waiting thread is notified.
+* Tests: Monitor signaling.
+
+**122. Is notify() always better than notifyAll()?**
+* Trap: Yes, it’s more efficient.
+* Correct answer: No. notify() can cause missed signals and deadlocks.
+* Tests: Condition synchronization.
+
+**123. Does Thread.sleep() guarantee exact timing?**
+* Trap: Yes.
+* Correct answer: No. It only guarantees minimum sleep time.
+* Tests: Thread scheduling realism.
+
+**124. Is Thread.stop() safe?**
+* Trap: Yes, it stops threads immediately.
+* Correct answer: No. It’s deprecated and unsafe.
+* Tests: Thread lifecycle safety.
+
+**125. What happens if a thread never releases a lock?**
+* Trap: Other threads wait indefinitely.
+* Correct answer: Yes — this causes deadlock or starvation.
+* Tests: Failure modes.
+
+**126. Does ExecutorService.shutdown() stop running tasks?**
+* Trap: Yes.
+* Correct answer: No. It stops accepting new tasks.
+* Tests: Executor lifecycle.
+
+**127. Does shutdownNow() always stop threads?**
+* Trap: Yes.
+* Correct answer: No. It sends interrupts; tasks may ignore them.
+* Tests: Interruption semantics.
+
+**128. Is ConcurrentHashMap fully lock-free?**
+* Trap: Yes.
+* Correct answer: No. It uses fine-grained locking and CAS.
+* Tests: Concurrent collections internals.
+
+**129. Is Collections.synchronizedList() scalable?**
+* Trap: Yes.
+* Correct answer: No. It uses a single lock.
+* Tests: Scalability awareness.
+
+**130. What problem does CopyOnWriteArrayList solve?**
+* Trap: Fast writes.
+* Correct answer: Optimized for many reads, few writes.
+* Tests: Data structure trade-offs.
+
+**131. Is double-checked locking broken?**
+* Trap: Yes, always.
+* Correct answer: No. It’s safe with volatile (Java 5+).
+* Tests: JMM evolution.
+
+**132. Can final fields improve thread safety?**
+* Trap: No.
+* Correct answer: Yes. Final fields have special publication guarantees.
+* Tests: Safe publication.
+
+**133. Is deadlock possible with only one lock?**
+* Trap: No.
+* Correct answer: Yes, via reentrancy misuse or blocking calls.
+* Tests: Deadlock theory.
+
+**134. Does ReentrantLock replace synchronized?**
+* Trap: Yes.
+* Correct answer: No. It offers additional features, not replacement.
+* Tests: API trade-offs.
+
+**135. Why use ReentrantLock over synchronized?**
+* Trap: Because it’s faster.
+* Correct answer: Timeouts, fairness, multiple condition variables.
+* Tests: Advanced locking features.
+
+**136. Is fairness in locks always desirable?**
+* Trap: Yes.
+* Correct answer: No. Fair locks reduce throughput.
+* Tests: Performance trade-offs.
+
+**137. Does Future.get() block?**
+* Trap: No, it returns when ready.
+* Correct answer: Yes. It blocks until result is available.
+* Tests: Async execution.
+
+**138. Is CompletableFuture non-blocking by default?**
+* Trap: Yes.
+* Correct answer: No. Blocking depends on how it’s used.
+* Tests: Async misuse awareness.
+
+**139. Can thread interruption be ignored?**
+* Trap: Yes.
+* Correct answer: It can, but it’s a bug.
+* Tests: Cooperative cancellation.
+
+**140. What is a happens-before relationship?**
+* Trap: Execution order.
+* Correct answer: Visibility and ordering guarantee.
+* Tests: JMM fundamentals.
+
+**141. What is the most common concurrency bug?**
+* Trap: Deadlock.
+* Correct answer: Race conditions due to shared mutable state.
+* Tests: Real-world experience.
+
+**142. Are Java streams data structures?**
+* Trap: Yes, like collections.
+* Correct answer: No. Streams are pipelines of operations, not data holders.
+* Tests: Conceptual understanding.
+
+**143. Can a stream be reused?**
+* Trap: Yes, you can call `.stream()` again.
+* Correct answer: No. Streams are single-use; reuse throws `IllegalStateException`.
+* Tests: Lifecycle awareness.
+
+**144. Does filter() immediately execute?**
+* Trap: Yes, it filters elements.
+* Correct answer: No. Intermediate operations are lazy.
+* Tests: Lazy evaluation.
+
+**145. When does a stream actually execute?**
+* Trap: When the pipeline is built.
+* Correct answer: When a terminal operation is invoked.
+* Tests: Execution model.
+
+**146. Is forEach() always safe?**
+* Trap: Yes, it’s just iteration.
+* Correct answer: No. Side effects can break parallel streams and readability.
+* Tests: Functional programming discipline.
+
+**147. Is forEach() the same as forEachOrdered()?**
+* Trap: Yes.
+* Correct answer: No. forEachOrdered() preserves encounter order.
+* Tests: Ordering guarantees.
+
+**148. Does stream order matter?**
+* Trap: No.
+* Correct answer: Yes. Order affects performance and correctness.
+* Tests: Performance trade-offs.
+
+**149. Are streams always faster than loops?**
+* Trap: Yes.
+* Correct answer: No. Streams add overhead and may be slower for simple tasks.
+* Tests: Performance realism.
+
+**150. Are parallel streams always faster?**
+* Trap: Yes, they use multiple cores.
+* Correct answer: No. Overhead and contention may outweigh benefits.
+* Tests: Parallelism costs.
+
+**151. Can parallel streams cause race conditions?**
+* Trap: No, they’re thread-safe.
+* Correct answer: Yes, if shared mutable state is used.
+* Tests: Concurrency awareness.
+
+**152. Why should lambdas avoid side effects?**
+* Trap: Just style preference.
+* Correct answer: Side effects break parallelism and predictability.
+* Tests: Functional principles.
+
+**153. Is map() allowed to modify objects?**
+* Trap: Yes, it transforms them.
+* Correct answer: Technically yes, but conceptually wrong.
+* Tests: Immutability mindset.
+
+**154. What happens if an exception occurs in a stream?**
+* Trap: It’s skipped.
+* Correct answer: The stream terminates immediately.
+* Tests: Error handling.
+
+**155. Can checked exceptions be thrown in streams?**
+* Trap: Yes.
+* Correct answer: Not directly. They must be wrapped or handled.
+* Tests: Lambda constraints.
+
+**156. Is peek() safe for logging?**
+* Trap: Yes, it’s for debugging.
+* Correct answer: Only for debugging; behavior may change.
+* Tests: API misuse awareness.
+
+**157. Does findFirst() always return the same element?**
+* Trap: Yes.
+* Correct answer: Only for ordered streams.
+* Tests: Ordering semantics.
+
+**158. Difference between findFirst() and findAny()?**
+* Trap: None.
+* Correct answer: `findAny()` may return any element, enabling better parallelism.
+* Tests: Parallel stream optimization.
+
+**159. Is limit() deterministic in parallel streams?**
+* Trap: Yes.
+* Correct answer: Only for ordered streams.
+* Tests: Encounter order.
+
+**160. Does sorted() always sort everything?**
+* Trap: Yes.
+* Correct answer: Short-circuiting may reduce work in some cases.
+* Tests: Optimization awareness.
+
+**161. Is distinct() cheap?**
+* Trap: Yes.
+* Correct answer: No. It requires tracking seen elements (stateful).
+* Tests: Stateful operations.
+
+**162. Are intermediate operations stateless?**
+* Trap: Yes.
+* Correct answer: Some are stateful (distinct, sorted).
+* Tests: Pipeline internals.
+
+**163. Does Collectors.toList() guarantee mutability?**
+* Trap: Yes.
+* Correct answer: No. Mutability is not guaranteed.
+* Tests: API contracts.
+
+**164. Difference between Stream.of() and Arrays.stream()?**
+* Trap: None.
+* Correct answer: `Stream.of(array)` creates a single-element stream if array is object.
+* Tests: Varargs pitfall.
+
+**165. Can streams work on infinite data?**
+* Trap: No.
+* Correct answer: Yes, with short-circuiting operations.
+* Tests: Lazy execution.
+
+**166. What happens if a stream pipeline has no terminal operation?**
+* Trap: It runs anyway.
+* Correct answer: Nothing happens.
+* Tests: Execution trigger.
+
+**167. Is reduce() always better than collect()?**
+* Trap: Yes, it’s more functional.
+* Correct answer: No. `collect()` is often clearer and optimized.
+* Tests: Appropriate API usage.
+
+**168. Can reduce() be non-associative?**
+* Trap: Yes, if logic is correct.
+* Correct answer: No. Non-associative operations break parallel streams.
+* Tests: Parallel correctness.
+
+**169. Why must the identity in reduce() be neutral?**
+* Trap: For convenience.
+* Correct answer: Incorrect identity breaks correctness in parallel execution.
+* Tests: Reduction semantics.
+
+**170. Are stream operations always executed in order?**
+* Trap: Yes.
+* Correct answer: No. Parallel streams may reorder execution.
+* Tests: Execution model.
+
+**171. What is the biggest misuse of streams in production?**
+* Trap: Performance.
+* Correct answer: Hidden side effects and unreadable pipelines.
+* Tests: Code quality judgment.
 
 
 

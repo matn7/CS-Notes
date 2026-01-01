@@ -247,7 +247,7 @@ Collector.of(
 * You can build streams from:
   * IO.
   * Custom iterators.
-  * Spliterators
+  * Spliterators.
 * Useful for large or lazy data sources.
 
 **37. Exception Handling in Lambdas.**
@@ -298,7 +298,7 @@ s.findFirst(); // IllegalStateException
 **44. How Do You Stream Large DB Result Sets Safely?**
 * Use pagination.
 * Use Hibernate ScrollableResults.
-* Use JDBC streaming (setFetchSize)
+* Use JDBC streaming (setFetchSize).
 * Avoid `findAll().stream()` on big tables.
 
 **45. N+1 Problem with Streams.**
@@ -338,7 +338,7 @@ repo.findActiveUsers();
 * Best for:
   * CPU-bound tasks.
   * Large collections.
-  * Stateless, independent operations
+  * Stateless, independent operations.
 * Avoid for:
   * I/O.
   * DB calls.
@@ -737,7 +737,7 @@ Mono.fromCallable(this::blockingCall)
 **122. When should Atomic classes be used?**
 * For lock-free, thread-safe operations on single variables.
 * Use cases: counters, flags, CAS-based updates.
-** Avoid when multiple variables must be updated consistently.
+* Avoid when multiple variables must be updated consistently.
 
 **123. What is CAS and why is it important?**
 * Hardware-level atomic instruction.

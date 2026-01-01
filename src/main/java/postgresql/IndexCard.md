@@ -236,3 +236,47 @@ FROM station
 ORDER BY len ASC, city ASC
 LIMIT 1;
 ```
+
+**31. Customers with no Orders for EmployeeID 4 (I).**
+```sql
+SELECT Customers.CustomerID, Orders.CustomerID
+FROM Customers
+LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID AND Orders.EmployeeID = 4
+WHERE Orders.CustomerID IS NULL
+ORDER By Customers.CustomerID;
+```
+
+**32. Customers with no Orders for EmployeeID 4 (II).**
+```sql
+SELECT CustomerID
+FROM Customers
+WHERE CustomerID NO IN (SELECT
+    CustomerID FROM Orders
+    WHERE EmployeeID = 4
+);
+```
+
+**33. Customers with no Orders for EmployeeID 4 (III).**
+```sql
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

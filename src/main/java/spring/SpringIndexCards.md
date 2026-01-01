@@ -423,7 +423,7 @@ and modular architecture.
 * Resolves views.
 
 **138. @RestController?** 
-* JSON response
+* JSON response.
 
 **139. @RequestParam?** 
 * Query/form params.
@@ -785,7 +785,7 @@ and modular architecture.
 * Trap: They’re the same.
 * Correct answer: 
   * ApplicationContext -> Spring container.
-    * ServletContext -> Web container (Tomcat).
+  * ServletContext -> Web container (Tomcat).
 * Why it matters: Web application architecture clarity.
 
 **244. Can Spring Boot run without a web server?**
@@ -850,7 +850,7 @@ and modular architecture.
 
 **256. When are Spring beans created?**
 * Trap: When they are first used.
-* Correct answer: Singleton beans are created at application startup, unless marked `@Lazy.
+* Correct answer: Singleton beans are created at application startup, unless marked `@Lazy`.
 * Tests: Lifecycle understanding.
 
 **257. Can we autowire a prototype bean into a singleton?**
