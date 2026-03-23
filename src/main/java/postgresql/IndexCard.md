@@ -258,13 +258,77 @@ WHERE CustomerID NO IN (SELECT
 
 **33. Customers with no Orders for EmployeeID 4 (III).**
 ```sql
-
+SELECT CustomerID
+FROM Customers
+WHERE NOT EXISTS (
+    SELECT CustomerID
+    FROM Orders
+    WHERE Orders.CustomerID = Customers.CustomerID
+    AND EmployeeID = 4
+);
 ```
 
+**34. Customers with no orders (I).**
+```sql
+SELECT Customers_CustomerID = Customers.CustomerID, Orders_CustomerID = Orders.CustomerID
+FROM Customers
+    LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID
+WHERE
+    Orders.CustomerID IS NULL;
+```
 
+```sql
+SELECT CustomerID
+FROM Customers
+WHERE
+    CustomerID NOT IN (SELECT CustomerID FROM Orders);
+```
 
+**35. Customers with no Orders (II).**
+```sql
+SELECT CustomerID
+FROM Customers
+WHERE NOT EXISTS
+    (SELECT CustomerID
+     FROM Orders
+     WHERE Orders.CustomerID = Customers.CustomerID);
+```
 
+**36. Employee/Order detail report.**
+```sql
+SELECT Employees.EmployeeID, Employees.LastName, Orders.OrderID, Products.ProductName, OrderDetails.Quantity
+FROM Employees
+    JOIN Orders ON Orders.EmployeeID = Employees.EmployeeID
+    JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID
+    JOIN Products ON Products.ProductID = OrderDetails.ProductID
+ORDER BY Orders.OrderID, Products.ProductID;
+```
 
+**37. Categories, and the total products in each category.**
+```sql
+SELECT CategoryName, TotalProducts = count(*)
+FROM Products
+    JOIN Categories ON Products.CateggoryID = Categories.CategoryID
+GROUP BY CategoryName
+ORDER BY count(*) DESC;
+```
+
+**38. Orders and the Shipper that was used.**
+```sql
+SELECT OrderID, OrderDate = convert(date, orderDate), Shipper = CompanyName
+FROM Orders
+    JOIN Shippers ON Shippers.ShipperID = Orders.ShipVia
+WHERE
+    OrderID < 10271
+ORDER BY OrderID;
+```
+
+**39. Products with associated supplier names.**
+```sql
+SELECT ProductID, ProductName, Supplier = CompanyName
+FROM Products
+    JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID;
+```
 
 
 

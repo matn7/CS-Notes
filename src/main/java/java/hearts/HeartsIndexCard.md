@@ -422,7 +422,7 @@ count++; // NOT atomic
 **93. Can a thread see stale data even without data races?**
 * Yes.
 * Without a happens-before relationship, visibility isn’t guaranteed.
-*( Testing: Java Memory Model knowledge.
+* Testing: Java Memory Model knowledge.
 
 **94. Why is double-checked locking broken without volatile?**
 * Instruction reordering can expose a partially constructed object.
