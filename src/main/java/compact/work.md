@@ -1161,3 +1161,526 @@ service discovery, observability, and traffic management.
 * Enable observability.
 * Secure with mTLS.
 * Test failover and resilience.
+
+# Web Dev.
+
+## HTTP & Networking
+
+**1. Which HTTP methods are cacheable?**
+* GET is cacheable by default. HEAD is also cacheable. POST can be cached if explicitly allowed by cache headers, but this is uncommon.
+
+**2. What is the content sent in a POST request called?**
+* It is called the request body or payload.
+
+**3. What is the difference between GET and POST?**
+* GET retrieves data and sends parameters in the URL.
+* POST sends data in the request body and is used for creating/submitting data.
+
+**4. What status code means “Not Found”?**
+* 404 Not Found.
+
+**What status code means “Unauthorized”?**
+* 401 Unauthorized.
+
+**What status code means “Forbidden”?**
+* 403 Forbidden.
+
+**What is the difference between 401 and 403?**
+* 401: Authentication required or invalid credentials.
+* 403: User is authenticated but lacks permission.
+
+**What does HTTPS provide?**
+* Encryption, integrity, and authentication using SSL/TLS.
+
+**What is CORS?**
+* Cross-Origin Resource Sharing allows or restricts requests between different domains.
+
+**What is preflight request in CORS?**
+* A browser sends an OPTIONS request before certain cross-origin requests to check permissions.
+
+**What header controls caching?**
+* Cache-Control
+
+**What does Cache-Control: no-cache mean?**
+* The response can be stored, but must be revalidated before reuse.
+
+**What does Cache-Control: no-store mean?**
+* The response must never be cached.
+
+**What is idempotency in HTTP?**
+* Multiple identical requests produce the same result.
+
+**Which HTTP methods are idempotent?**
+* GET, PUT, DELETE, HEAD, OPTIONS.
+
+**What is the purpose of the OPTIONS method?**
+* It describes allowed communication options for a resource.
+
+**What is the difference between PUT and PATCH?**
+* PUT replaces the entire resource.
+* PATCH partially updates a resource.
+
+**What does REST stand for?**
+* Representational State Transfer.
+
+**What is statelessness in REST?**
+* Each request contains all information needed to process it.
+
+**What is an API?**
+* An Application Programming Interface that allows software communication.
+
+## Browser & Performance.
+
+**What is lazy loading?**
+* Loading resources only when needed.
+
+**What is CDN?**
+* Content Delivery Network — servers distributing content geographically.
+
+**Why minimize HTTP requests?**
+* Improves performance and load times.
+
+**What is tree shaking?**
+* Removing unused JavaScript during bundling.
+
+**What is code splitting?**
+* Splitting code into smaller bundles loaded on demand.
+
+**What causes render blocking?**
+* CSS and synchronous JavaScript delaying page rendering.
+
+**What is hydration in frontend frameworks?**
+* Attaching JavaScript behavior to server-rendered HTML.
+
+**What is debounce?**
+* Delays function execution until activity stops.
+
+**What is throttling?**
+* Limits function execution frequency.
+
+**What is SEO?**
+* Search Engine Optimization.
+
+## Security Questions.
+
+**What is XSS?**
+* Cross-Site Scripting — injecting malicious scripts into webpages.
+
+**How can XSS be prevented?**
+* Escaping output, sanitizing input, CSP headers.
+
+**What is CSRF?**
+* Cross-Site Request Forgery — tricking users into unwanted actions.
+
+**How can CSRF be prevented?**
+* CSRF tokens, SameSite cookies.
+
+**What is SQL Injection?**
+* Injecting malicious SQL queries via user input.
+
+**How prevent SQL Injection?**
+* Prepared statements and parameterized queries.
+
+**What is JWT?**
+* JSON Web Token used for authentication and authorization.
+
+**Where should JWTs be stored?**
+* Preferably secure HttpOnly cookies.
+
+**What is Same-Origin Policy?**
+* Browser security restricting interactions between different origins.
+
+**What is Content Security Policy (CSP)?**
+* Security layer preventing unauthorized resource execution.
+
+## Backend & Databases.
+
+**What is CRUD?**
+* Create, Read, Update, Delete.
+
+**What is normalization in databases?**
+* Organizing data to reduce redundancy.
+
+**What is indexing?**
+* Data structure improving query speed.
+
+**What is the difference between SQL and NoSQL?**
+* SQL uses relational tables; NoSQL uses flexible schemas.
+
+**What is ORM?**
+* Object-Relational Mapping.
+
+**What is middleware?**
+* Code executed between request and response.
+
+**What is authentication?**
+* Verifying identity.
+
+**What is authorization?**
+* Determining permissions.
+
+**What is rate limiting?**
+* Restricting request frequency.
+
+**What is pagination?**
+* Splitting large datasets into smaller pages.
+
+## Advanced Questions.
+
+**What is SSR?**
+* Server-Side Rendering.
+
+**What is CSR?**
+* Client-Side Rendering.
+
+**What is SSG?**
+* Static Site Generation.
+
+**What is WebSocket?**
+* Persistent full-duplex communication protocol.
+
+**What is GraphQL?**
+* Query language for APIs allowing clients to request specific data.
+
+**What is microfrontend architecture?**
+* Splitting frontend apps into smaller independent modules.
+
+**What is Docker commonly used for in web development?**
+* Containerizing applications.
+
+**What is CI/CD?**
+* Continuous Integration / Continuous Deployment.
+
+**What is a memory leak in JavaScript?**
+* Unused memory not released properly.
+
+**What is garbage collection?**
+* Automatic memory cleanup.
+
+## HTTP, Networking & Protocols.
+
+**Why are GET requests considered safe and idempotent?**
+* Safe: they should not modify server state.
+* Idempotent: multiple identical requests produce the same result.
+
+**Can POST requests be idempotent?**
+* Yes. Idempotency depends on implementation, not method itself. Example: payment APIs using idempotency keys.
+
+**What is chunked transfer encoding?**
+* HTTP mechanism where data is sent in chunks without knowing total size beforehand.
+
+**What problem does HTTP/2 solve?**
+* Head-of-line blocking and inefficient multiple TCP connections through multiplexing.
+
+**What is head-of-line blocking?**
+* One slow request blocks others in the same connection or queue.
+
+**Why does HTTP/3 use QUIC instead of TCP?**
+* QUIC runs over UDP and reduces connection latency while avoiding TCP-level head-of-line blocking.
+
+**What happens during a TLS handshake?**
+* Client/server negotiate encryption algorithms, authenticate certificates, and exchange session keys.
+
+**What is connection pooling?**
+* Reusing existing connections instead of opening new ones repeatedly.
+
+**What is backpressure in distributed systems?**
+* Mechanism preventing producers from overwhelming consumers.
+
+**What is the difference between latency and throughput?**
+* Latency: time for one request.
+* Throughput: number of requests processed per unit time.
+
+## Caching & Performance.
+
+**What is cache invalidation? Why is it hard?**
+* Keeping cache synchronized with source data. Difficult because stale data can persist.
+
+**What is the difference between write-through and write-back cache?**
+* Write-through: update cache and DB together.
+* Write-back: update cache first, DB later asynchronously.
+
+**What is cache stampede?**
+* Many requests simultaneously regenerate expired cache data.
+
+**How prevent cache stampede?**
+* Request coalescing, mutex locks, stale-while-revalidate.
+
+**What is consistent hashing?**
+* Hashing strategy minimizing redistribution when nodes change.
+
+**Why is Redis single-threaded?**
+* Simplicity and avoiding lock contention while relying on fast in-memory operations.
+
+**What is the CAP theorem?**
+* Distributed systems can guarantee only two of: Consistency, Availability, Partition tolerance.
+
+**What is eventual consistency?**
+* System becomes consistent over time after updates propagate.
+
+**What is split-brain in distributed systems?**
+* Cluster partitions where multiple nodes think they are primary.
+
+**What is a thundering herd problem?**
+* Many processes wake simultaneously competing for the same resource.
+
+## Databases.
+
+**What is MVCC?**
+* Multi-Version Concurrency Control allows concurrent reads/writes without locking readers.
+
+**Difference between optimistic and pessimistic locking?**
+* Optimistic: assumes low conflicts; checks before commit.
+* Pessimistic: locks resources immediately.
+
+**What are database isolation levels?**
+* Read Uncommitted, Read Committed, Repeatable Read, Serializable.
+
+**What is a phantom read?**
+* New rows appear between repeated queries in the same transaction.
+
+**What is a deadlock?**
+* Two or more transactions wait indefinitely for each other’s locks.
+
+**How detect and resolve deadlocks?**
+* DB detects cycles in wait graph and aborts one transaction.
+
+**What is a covering index?**
+* Index containing all columns needed for a query.
+
+**Why are indexes expensive?**
+* Faster reads but slower writes and more storage usage.
+
+**What is sharding?**
+* Splitting database across multiple machines.
+
+**What are common sharding strategies?**
+* Range-based, hash-based, geographic, directory-based.
+
+**What is replication lag?**
+* Delay between primary DB write and replica synchronization.
+
+**What causes N+1 query problems?**
+* Querying related records individually instead of batching.
+
+**What is a distributed transaction?**
+* Transaction spanning multiple services/databases.
+
+**What is two-phase commit (2PC)?**
+* Protocol coordinating distributed transaction commits.
+
+**What are drawbacks of 2PC?**
+* Blocking, coordinator bottleneck, poor scalability.
+
+**What is CQRS?**
+* Command Query Responsibility Segregation — separating reads and writes.
+
+**What is event sourcing?**
+* Persisting state changes as immutable events.
+
+**Why are UUIDs problematic as clustered indexes?**
+* Random insertion causes fragmentation and poor locality.
+
+**Difference between OLTP and OLAP?**
+* OLTP: transactional systems.
+* OLAP: analytical workloads.
+
+**What is read skew?**
+* Reading inconsistent snapshots during concurrent updates.
+
+## Concurrency & Multithreading.
+
+**What is a race condition?**
+* Outcome depends on timing of concurrent operations.
+
+**What is thread starvation?**
+* Threads cannot access resources because others monopolize them.
+
+**What is livelock?**
+* Processes continuously react to each other without progress.
+
+**Difference between concurrency and parallelism?**
+* Concurrency: managing multiple tasks.
+* Parallelism: executing simultaneously.
+
+**What is a mutex?**
+* Mutual exclusion lock allowing one thread at a time.
+
+**What is a semaphore?**
+* Synchronization primitive controlling access count.
+
+**What is lock contention?**
+* Multiple threads competing for the same lock.
+
+**Why are immutable objects useful in concurrency?**
+* They eliminate shared mutable state issues.
+
+**What is compare-and-swap (CAS)?**
+* Atomic CPU instruction used in lock-free algorithms.
+
+**What are lock-free data structures?**
+* Structures using atomic operations instead of locks.
+
+## APIs & System Design.
+
+**Why use API gateways?**
+* Centralized routing, auth, throttling, monitoring.
+
+**What is rate limiting?**
+* Restricting request frequency to protect systems.
+
+**Common rate limiting algorithms?**
+* Token bucket, leaky bucket, fixed window, sliding window.
+
+**What is circuit breaker pattern?**
+* Prevents repeated failures by stopping calls temporarily.
+
+**What is bulkhead pattern?**
+* Isolates failures to prevent cascading outages.
+
+**What is service discovery?**
+* Mechanism allowing services to dynamically locate each other.
+
+**Difference between horizontal and vertical scaling?**
+* Horizontal: add machines.
+* Vertical: add resources to one machine.
+
+**What is sticky session?**
+* Routing a user to the same server repeatedly.
+
+**Why avoid sticky sessions?**
+* Poor scalability and uneven load distribution.
+
+**What is eventual consistency tradeoff?**
+* Higher availability at cost of temporary stale data.
+
+## Messaging & Queues.
+
+**Why use message queues?**
+* Decoupling, buffering, async processing.
+
+**Difference between RabbitMQ and Kafka?**
+* RabbitMQ focuses on message delivery; Kafka on distributed event streaming.
+
+**What is at-most-once delivery?**
+* Message may be lost but never duplicated.
+
+**What is at-least-once delivery?**
+* Message guaranteed delivered but duplicates possible.
+
+**What is exactly-once delivery?**
+* Message processed only once; difficult in distributed systems.
+
+**What is idempotent consumer design?**
+* Consumers safely handle duplicate messages.
+
+**What is consumer lag in Kafka?**
+* Difference between produced and consumed offsets.
+
+**What is a dead-letter queue?**
+* Queue storing failed/unprocessable messages.
+
+**What is event-driven architecture?**
+* Systems communicate through emitted events.
+
+**What is replayability in Kafka?**
+* Ability to reread retained event logs.
+
+## Security.
+
+**What is SSRF?**
+* Server-Side Request Forgery — attacker tricks server into internal requests.
+
+**What is replay attack?**
+* Reusing intercepted valid requests maliciously.
+
+**How prevent replay attacks?**
+* Nonces, timestamps, short-lived tokens.
+
+**What is timing attack?**
+* Exploiting execution time differences.
+
+**What is bcrypt designed for?**
+* Slow password hashing resistant to brute force.
+
+**Why is SHA-256 alone bad for passwords?**
+* Too fast and vulnerable to brute-force attacks.
+
+**What is mTLS?**
+* Mutual TLS where both client and server authenticate.
+
+**What is zero trust architecture?**
+* Never trust by default; always verify identities.
+
+**What is HMAC?**
+* Hash-based Message Authentication Code ensuring integrity/authenticity.
+
+**What is JWT “alg:none” vulnerability?**
+* Accepting unsigned JWTs due to insecure verification.
+
+## Architecture & Reliability.
+
+**What is blue-green deployment?**
+* Switching traffic between old and new environments.
+
+**What is canary deployment?**
+* Releasing to small subset before full rollout.
+
+**What is chaos engineering?**
+* Intentionally injecting failures to test resilience.
+
+**What is graceful degradation?**
+* Maintaining partial functionality during failures.
+
+**What is a single point of failure?**
+* Component whose failure breaks the entire system.
+
+**What are SLO, SLA, and SLI?**
+* SLI: measured metric.
+* SLO: target objective.
+* SLA: contractual guarantee.
+
+**What is distributed tracing?**
+* Tracking requests across microservices.
+
+**What is correlation ID?**
+* Unique request identifier propagated across services.
+
+**What is observability?**
+* Understanding internal system state via metrics/logs/traces.
+
+**Difference between monitoring and observability?**
+* Monitoring tracks known issues; observability helps investigate unknowns.
+
+## Hard “Senior-Level” Questions.
+
+**Why is distributed consensus difficult?**
+* Nodes can fail, network partitions occur, clocks differ.
+
+**What problem does Raft solve?**
+* Distributed consensus with understandable leader election/log replication.
+
+**Why are clocks unreliable in distributed systems?**
+* Clock drift and synchronization delays.
+
+**What is Lamport timestamp?**
+* Logical clock ordering events in distributed systems.
+
+**What is the Byzantine Generals Problem?**
+* Achieving consensus despite malicious/faulty nodes.
+
+**Why are exactly-once guarantees hard?**
+* Network retries and failures make duplicates unavoidable.
+
+**What is tail latency?**
+* Slowest percentile requests affecting user experience.
+
+**What is load shedding?**
+* Dropping excess traffic to preserve system stability.
+
+**Why are retries dangerous?**
+* They can amplify overload during outages.
+
+**What is the fallacy of distributed computing?**
+* Incorrect assumptions like “network is reliable” or “latency is zero.”
+

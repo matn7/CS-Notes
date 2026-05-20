@@ -26,7 +26,7 @@ for object creation and dependency management is delegated to a container.
 
 Instead of:
 
-```
+```java
 UserService service = new UserService();
 ```
 
@@ -50,7 +50,7 @@ to a class from the outside instead of being created inside the class.
 
 Bad practice:
 
-```
+```java
 public class UserController {
 
     private UserService service = new UserService();
@@ -60,7 +60,7 @@ public class UserController {
 
 Good practice:
 
-```
+```java
 public class UserController {
 
     private final UserService service;
@@ -84,7 +84,7 @@ Spring supports:
 
 **Constructor Injection (recommended)**
 
-```
+```java
 public UserController(UserService service) {
     this.service = service;
 }
@@ -92,7 +92,7 @@ public UserController(UserService service) {
 
 **Setter Injection**
 
-```
+```java
 @Autowired
 public void setService(UserService service) {
     this.service = service;
@@ -101,7 +101,7 @@ public void setService(UserService service) {
 
 **Field Injection (not recommended)**
 
-```
+```java
 @Autowired
 private UserService service;
 ```
@@ -141,7 +141,7 @@ by the Spring container.
 
 Example bean:
 
-```
+```java
 @Service
 public class UserService {
 
@@ -167,7 +167,7 @@ Lifecycle steps:
 
 Example:
 
-```
+```java
 @PostConstruct
 public void init() {
     System.out.println("Bean initialized");
@@ -189,7 +189,7 @@ Bean scope defines the lifecycle and visibility of a bean.
 
 One instance per Spring container.
 
-```
+```java
 @Component
 public class UserService {}
 ```
@@ -202,7 +202,7 @@ All requests share the same instance.
 
 A new instance is created each time the bean is requested.
 
-```
+```java
 @Scope("prototype")
 @Component
 public class Task {}
@@ -214,14 +214,14 @@ public class Task {}
 
 Available in web applications.
 
-request
-session
-application
-websocket
+* request
+* session
+* application
+* websocket
 
 Example:
 
-```
+```java
 @Scope("request")
 @Component
 public class RequestData {}
@@ -237,7 +237,7 @@ Spring provides stereotype annotations to register beans automatically.
 
 Generic Spring bean.
 
-```
+```java
 @Component
 public class LoggerService {}
 ```
@@ -250,7 +250,7 @@ Used in the **service layer**.
 
 Represents business logic.
 
-```
+```java
 @Service
 public class UserService {}
 ```
@@ -263,7 +263,7 @@ Used in the **data access layer**.
 
 Adds automatic exception translation for persistence exceptions.
 
-```
+```java
 @Repository
 public class UserRepository {}
 ```
@@ -276,7 +276,7 @@ Used in **Spring MVC** applications returning views.
 
 Example:
 
-```
+```java
 @Controller
 public class HomeController {}
 ```
@@ -289,7 +289,7 @@ Used in **REST APIs**.
 
 Equivalent to:
 
-```
+```java
 @Controller
 @ResponseBody
 ```
@@ -298,7 +298,7 @@ All methods return serialized objects (usually JSON).
 
 Example:
 
-```
+```java
 @RestController
 @RequestMapping("/users")
 public class UserController {}
