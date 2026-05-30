@@ -3129,3 +3129,550 @@ jcmd <pid> JFR.start
   * ThreadLocal misuse.
   * Classloader leaks.
   * Scheduled task retention.
+
+## Jars.
+
+**1. How does one JAR use classes from another JAR?**
+* A JAR doesn't directly "connect" to another JAR. Instead:
+  * Both JARs are placed on the classpath (or module path).
+  * The JVM's ClassLoader loads classes as needed.
+  * When a class references another class, the JVM resolves the dependency.
+* Example:
+```java
+// app.jar
+UserService service = new UserService();
+```
+* If UserService is inside library.jar, the JVM loads it from that JAR.
+
+**Follow-up: What happens if the dependency JAR is missing?**
+* Possible outcomes:
+```
+ClassNotFoundException
+NoClassDefFoundError
+```
+depending on when the class is needed.
+
+**Follow-up: Does Java load all classes at startup?**
+* No.
+* Java loads classes lazily (on demand).
+* Only classes actually needed are loaded.
+
+**2. Explain the Java Class Loading Process.**
+* Three major phases:
+  * Loading: Class bytes are read into memory.
+  * Linking, includes:
+    * Verification: Checks bytecode validity.
+    * Preparation: Allocates static variables.
+    * Resolution: Converts symbolic references into direct references.
+  * Initialization:
+    * Executes:
+  ```json
+  static {
+    System.out.println("Initialized");
+  }
+  ```
+  and static variable assignments.
+
+**Follow-up: When does initialization happen?**
+* When class is first actively used.
+* Examples:
+```json
+new User()
+User.staticMethod()
+Class.forName("User")
+```
+
+**3. What are the JVM ClassLoaders?**
+* Bootstrap ClassLoader
+  * Loads:
+  ```java
+  java.lang.*
+  java.util.*
+  ```
+  from JDK runtime.
+* Platform ClassLoader: Loads platform modules.
+* Application ClassLoader, Loads classes from:
+  * Classpath.
+  * Module path.
+
+**Follow-up: How can you determine who loaded a class?**
+```java
+System.out.println(
+        User.class.getClassLoader()
+);
+```
+* Example: `jdk.internal.loader.ClassLoaders$AppClassLoader`.
+
+**Follow-up: What ClassLoader loads String?**
+* Bootstrap.
+* Returns:
+```java
+String.class.getClassLoader()
+```
+* Output: null, because Bootstrap is implemented natively.
+
+**4. Explain Parent Delegation**
+* When a ClassLoader receives a request:
+  * Ask parent.
+  * Parent asks its parent.
+  * Eventually Bootstrap.
+  * If not found, child tries.
+* Diagram:
+```
+Application
+↑
+Platform
+↑
+Bootstrap
+```
+
+**Follow-up: Why is this important?**
+* Prevents replacing core Java classes.
+* Imagine someone creates: `java.lang.String`, inside their JAR.
+* Parent delegation ensures JVM loads the official version.
+
+**Follow-up: Can parent delegation be broken?**
+* Yes.
+* Many frameworks use child-first loading.
+* Examples:
+  * Tomcat.
+  * OSGi.
+  * Plugin architectures.
+
+**5. Can the Same Class Be Loaded Twice?**
+* Yes.
+* If loaded by different ClassLoaders.
+* Example: `com.company.User`, loaded by: Loader A, Loader B.
+* JVM treats them as different classes.
+
+**Follow-up: Why does this cause ClassCastException?**
+* Even though names match: `com.company.User`.
+* JVM sees: `User@LoaderA` and `User@LoaderB` as different types.
+
+**Follow-up: Where does this happen?**
+* Commonly in:
+  * Tomcat.
+  * WebLogic.
+  * OSGi.
+  * Plugin systems.
+
+**6. Difference Between ClassNotFoundException and NoClassDefFoundError**
+* ClassNotFoundException: Thrown when explicitly loading: `Class.forName(...)`, and class isn't found.
+* NoClassDefFoundError: Class existed during compilation but is unavailable during runtime.
+  * Example: `UserService` references: `DatabaseDriver`, Driver JAR missing.
+
+**Follow-up: Which one is checked?**
+* `ClassNotFoundException` checked exception.
+
+**Follow-up: Which one indicates deployment issue?**
+* Usually: `NoClassDefFoundError`.
+
+**7. What Happens If Two JARs Contain the Same Class?**
+* Example: **lib-v1.jar** contains: `com.example.Util` and  **lib-v2.jar** contains same class.
+* Usually first classpath match wins.
+
+**Follow-up: Why is this dangerous?**
+* Application may use unexpected version.
+* Possible: `NoSuchMethodError` or `NoSuchFieldError`.
+
+**Follow-up: How do you detect it?**
+* Maven: `mvn dependency:tree`.
+* Gradle: `gradle dependencies`.
+
+**8. What is a Fat JAR?**
+* Single executable JAR containing:
+  * Application code.
+  * Dependency JARs.
+* Example: **app.jar** contains: **spring.jar**, **hibernate.jar**, **logback.jar**.
+
+**Follow-up: Advantages?**
+* Easy deployment.
+* Single artifact.
+
+**Follow-up: Problems?**
+* Larger size.
+* Duplicate resources.
+* Dependency conflicts.
+* Startup complexity.
+
+**9. What is MANIFEST.MF?**
+* Metadata file inside: **META-INF/MANIFEST.MF**
+* Example: `Main-Class: com.company.Main`.
+
+**Follow-up: How does Java know what to execute?**
+```bash
+java -jar app.jar
+```
+* Reads: `Main-Class` from manifest.
+
+**Follow-up: Can manifest specify dependencies?**
+* Yes. `Class-Path:` attribute.
+* Although Maven/Gradle usually handle dependencies.
+
+**10. What is Reflection?**
+* Ability to inspect classes at runtime.
+* Example: `Class<?> clazz = User.class;`, or `Class.forName("User");`.
+
+**Follow-up: Why do frameworks use reflection?**
+* Spring: `@Component`discovery.
+* Hibernate:
+  * Entity inspection.
+  * Proxy creation.
+* Jackson:
+  * Serialization.
+
+**Follow-up: Downsides?**
+* Slower than direct calls.
+* Harder debugging.
+* Reduced compile-time safety.
+
+**11. What is a Custom ClassLoader?**
+* A developer-created ClassLoader.
+* Example:
+```java
+public class PluginLoader extends ClassLoader {
+}
+```
+* Use Cases:
+  * Plugin systems.
+  * Dynamic deployment.
+  * Sandboxing.
+  * Scripting engines.
+
+**Follow-up: Which method is usually overridden?**
+```java
+findClass()
+```
+
+**Follow-up: Why not override loadClass() directly?**
+* Can break parent delegation.
+* Usually override: `findClass()` instead.
+
+**12. Explain JVM Parameters**
+* Three common categories:
+* Heap: `-Xms2g -Xmx4g`.
+* System Properties: `-Denv=prod`.
+* JVM Flags: `-XX:+UseG1GC`.
+
+**Follow-up: Difference between -D and environment variables?**
+* **-D**: `System.getProperty()`.
+* Environment variable: `System.getenv()`.
+
+**Follow-up: Which is easier to change per JVM instance?**
+* **-D**.
+
+**13. What Causes NoSuchMethodError?**
+* Most common cause:
+  * Version mismatch.
+  * Compile against: Library 2.0.
+* Run with: Library 1.0.
+* Method missing.
+
+**Follow-up: Is it compile-time or runtime?**
+* Runtime.
+
+**Follow-up: How do you troubleshoot?**
+* Check: `mvn dependency:tree` and inspect actual JAR deployed.
+
+**14. How Does Spring Boot Load Nested JARs?**
+* Normal JVM cannot load: `jar inside jar` directly.
+* Spring Boot provides: `LaunchedURLClassLoader` to load nested JARs.
+
+**Follow-up: Why is this necessary?**
+* Because Spring Boot executable JAR structure is: `BOOT-INF/classes`, `BOOT-INF/lib` not a standard classpath layout.
+
+**15. What is Shading?**
+* Merges dependencies into a single JAR.
+* Example: `guava`, `commons-lang` embedded inside application.
+
+**Follow-up: What is relocation?**
+* Renaming package paths.
+* Example: `com.google.common` becomes: `my.shadow.com.google.common` to avoid conflicts.
+
+**16. What Are Split Packages?**
+* Java modules dislike: `module A: com.company.util` and `module B: com.company.util`/
+* Same package in multiple modules.
+
+**Follow-up: Why problematic?**
+* Ambiguous ownership.
+* JPMS rejects it.
+
+**17. How Does Tomcat Use ClassLoaders?**
+* Each deployed application gets its own ClassLoader.
+  * App1 ClassLoader A.
+  * App2 ClassLoader B.
+
+**Follow-up: Why?**
+* Isolation.
+* One application cannot accidentally use another application's libraries.
+
+**Follow-up: Side effect?**
+* Classes from different applications may be incompatible even with same package/class name.
+
+**18. How Would You Troubleshoot a Class Loading Issue?**
+* Typical checklist:
+  * Verify deployed JAR. `jar tf app.jar`.
+  * Verify dependency tree. `mvn dependency:tree`.
+  * Check startup logs.
+  * Check actual classloader. `clazz.getClassLoader()`.
+  * Enable JVM loading logs. Java 9+: `-Xlog:class+load=info`.
+
+**Follow-up: What do class loading logs show?**
+* Every loaded class.
+* Example: `Loaded java.lang.String`, and from which JAR.
+
+**19. Explain Maven Dependency Resolution.**
+* Maven resolves transitive dependencies automatically.
+* Example:
+```
+A
+└── B
+└── C
+```
+* Adding A brings B and C.
+
+**Follow-up: What if multiple versions appear?**
+* Nearest dependency wins.
+* Example:
+```
+A -> C(1.0)
+B -> C(2.0)
+```
+* Maven chooses nearest path.
+
+**Follow-up: How do you force a version?**
+```xml
+<dependencyManagement>
+```
+
+**20. Describe a Real Production Dependency Problem**
+* We upgraded a library. Application compiled successfully, but production failed with NoSuchMethodError. 
+Investigation showed an older transitive dependency was being pulled by another module. We used `mvn dependency:tree`
+, excluded the older dependency, rebuilt, and verified the deployed JAR. The issue disappeared.
+* This answer demonstrates:
+  * Dependency analysis.
+  * Runtime troubleshooting.
+  * Understanding of class loading.
+  * Knowledge of Maven resolution.
+
+## Java command line.
+
+**1. Explain the difference between java, javac, jar, and javadoc.**
+* javac: Compiles `.java` files into `.class` files.
+* java:	Runs Java applications.
+* jar: Creates or extracts JAR files.
+* javadoc: Generates documentation.
+* Example: `javac Main.java`, `java Main`.
+
+**Follow-up: Can Java run a .java file directly?**
+* Since Java 11: `java Main.java`, Java compiles and runs it automatically.
+
+**2. What is the difference between -cp and -jar?**
+* Classpath: `java -cp app.jar:lib/* com.company.Main`.
+* Explicitly specifies classpath and main class.
+* Jar mode: `java -jar app.jar`.
+* Uses: `Main-Class` from `MANIFEST.MF`.
+
+**Follow-up: Can you combine -cp and -jar?**
+* No.
+* When using: `java -jar app.jar` the JVM ignores the provided classpath.
+
+**3. What is the purpose of -D?**
+* Defines system properties.
+```bash
+java -Denv=prod App
+```
+* Read in code:
+```java
+System.getProperty("env");
+```
+
+**Follow-up: Difference between: `System.getenv()` and `System.getProperty()`.**
+* Environment variables come from OS.
+* System properties come from JVM startup.
+
+**4. Explain -Xms and -Xmx.**
+* `-Xms2g`: Initial heap size.
+* `-Xmx4g`: Maximum heap size.
+
+**Follow-up: Why set them equal?**
+* `-Xms4g -Xmx4g`.
+* Avoids heap resizing during runtime.
+* Often used in low-latency systems.
+
+**5. How do you inspect the contents of a JAR?**
+* `jar tf app.jar` or `unzip -l app.jar`.
+
+**Follow-up: How do you extract it?**
+* `jar xf app.jar`.
+
+**6. How do you determine the Main class inside a JAR?**
+* Inspect manifest: `jar xf app.jar META-INF/MANIFEST.MF`.
+* Look for: `Main-Class: com.company.Main`.
+
+**Follow-up: Can a JAR have multiple Main classes?**
+* Yes.
+* Only one can be specified in the manifest.
+
+**7. What does java -verbose:class do?**
+* Logs class loading activity.
+* Example: `java -verbose:class App`.
+* Output: `Loaded java.lang.String`.
+
+**Follow-up: Java 9+ preferred version?**
+* `-Xlog:class+load=info`.
+
+**8. What is jps?**
+* Lists running JVM processes: `jps -l`.
+* Example: `12345 com.company.App`.
+
+**Follow-up: Why use it?**
+* Quickly find PID for:
+```
+jstack
+jmap
+jcmd
+```
+
+**9. What is jstack?**
+* Captures thread dump: `jstack PID`.
+
+**Follow-up: When do you use it?**
+* Investigating:
+  * Deadlocks.
+  * Hung applications.
+  * High CPU threads.
+
+**10. How do you identify a deadlock?**
+* Using: `jstack PID`.
+* Look for: `Found one Java-level deadlock`.
+
+**Follow-up: Can JVM recover automatically?**
+* No.
+* Application logic must be fixed.
+
+**11. What is jmap?**
+* Heap inspection tool.
+* Example: `jmap -heap PID`.
+
+**Follow-up: Heap dump?**
+* `jmap -dump:live,format=b,file=heap.hprof PID`.
+
+**12. What is a heap dump?**
+* Snapshot of heap memory.
+* Contains:
+  * Objects.
+  * References.
+  * Memory usage.
+
+**Follow-up: How do you analyze it?**
+* Tools:
+  * Eclipse MAT.
+  * VisualVM.
+  * YourKit.
+
+**13. What is jcmd?**
+* Modern JVM diagnostic tool: `jcmd PID help`.
+
+**Follow-up: Why preferred over jmap/jstack?**
+* Many JVM diagnostics consolidated into one tool.
+
+**14. How do you trigger GC manually from command line?**
+* `jcmd PID GC.run`.
+
+**Follow-up: Should applications rely on manual GC?**
+* No.
+* Generally indicates a design issue.
+
+**15. How do you check JVM flags currently in use?**
+* `jcmd PID VM.flags`.
+
+**Follow-up: See all settings?**
+* `jcmd PID VM.system_properties` or `java -XX:+PrintFlagsFinal`.
+
+**16. Explain -XX:+UseG1GC.**
+* Enables G1 Garbage Collector.
+* Designed for:
+  * Large heaps.
+  * Predictable pauses.
+
+**Follow-up: Default collector today?**
+* Modern JDKs typically use G1 by default.
+
+**17. What is jdeps?**
+* Dependency analysis tool: `jdeps app.jar`.
+* Shows:
+  * Package dependencies.
+  * Module dependencies.
+
+**Follow-up: Why useful?**
+* Finding:
+  * Unused dependencies.
+  * Migration issues to modules.
+
+**18. What happens when you run: java App.**
+* JVM:
+  * Starts.
+  * Creates Application ClassLoader.
+  * Loads Main class.
+  * Executes: `public static void main(...)`.
+
+**Follow-up: Which thread runs main?**
+* The main thread.
+
+**19. How do you troubleshoot: OutOfMemoryError.**
+* Investigate:
+  * Heap sizing.
+  * Memory leaks.
+  * Large caches.
+  * Heap dump.
+* Commands: `jcmd PID GC.heap_info`, or `jmap`.
+
+**Follow-up: Difference between: Java heap space and Metaspace.**
+* Heap → objects.
+* Metaspace → class metadata.
+
+**20. Describe your production troubleshooting workflow.**
+* Check process: `jps`
+* Inspect JVM flags: `jcmd PID VM.flags`.
+* Capture threads: `jstack PID`.
+* Check memory: `jcmd PID GC.heap_info`.
+* Generate heap dump if necessary: `jmap -dump:live,format=b,file=heap.hprof PID`.
+* Analyze logs and dependency versions.
+
+**21. What does this do?**
+* `java -cp lib/*:app.jar com.company.Main`.
+* Runs Main with all JARs in lib.
+
+**22.What does this do?**
+* `java -XshowSettings:all -version`.
+* Displays JVM configuration and exits.
+
+**23. What does this do?**
+* `java @args.txt`.
+* Reads JVM arguments from a file (argument file).
+
+**24. What does this do?**
+* `java --list-modules`.
+* Lists available JPMS modules.
+
+**25. What does this do?**
+* `java --show-version`.
+* Prints version and continues execution.
+
+**26. Explain this command.**
+```bash
+java -XX:+HeapDumpOnOutOfMemoryError \
+-XX:HeapDumpPath=/tmp \
+-Xms4g \
+-Xmx4g \
+-Dspring.profiles.active=prod \
+-jar app.jar
+```
+* Generate heap dump on OOM.
+* Store dump in /tmp.
+* Start heap = 4 GB.
+* Max heap = 4 GB.
+* Spring profile = prod.
+* Run executable JAR.
+
