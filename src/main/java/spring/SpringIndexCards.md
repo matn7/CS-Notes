@@ -87,12 +87,12 @@ and modular architecture.
 * Manages beans and their dependencies.
 
 **28. Main Spring container interfaces?**
-* BeanFactory, ApplicationContext.
+* `BeanFactory`, `ApplicationContext`.
 
-**29. Difference between BeanFactory and ApplicationContext?**
-* ApplicationContext adds enterprise features.
+**29. Difference between `BeanFactory` and `ApplicationContext`?**
+* `ApplicationContext` adds enterprise features.
 
-**30. Is ApplicationContext eager or lazy by default?**
+**30. Is `ApplicationContext` eager or lazy by default?**
 * Eager for singleton beans.
 
 **31. How are beans defined?**
@@ -110,22 +110,22 @@ and modular architecture.
 **35. What is annotation-based configuration?**
 * Using `@Component`, `@Service`, etc.
 
-**36. What is @Configuration?**
+**36. What is `@Configuration`?**
 * Indicates a class contains bean definitions.
 
-**37. What is @Bean?**
+**37. What is `@Bean`?**
 * Declares a bean via method.
 
-**38. Can @Bean create third-party beans?**
+**38. Can `@Bean` create third-party beans?**
 * Yes.
 
-**39. Default bean name for @Bean?**
+**39. Default bean name for `@Bean`?**
 * Method name.
 
-**40. What is @Component?**
+**40. What is `@Component`?**
 * Marks a class as a bean.
 
-**41. Default bean name for @Component?**
+**41. Default bean name for `@Component`?**
 * Class name with lowercase first letter.
 
 **42. What is component scanning?**
@@ -137,16 +137,16 @@ and modular architecture.
 **44. Can beans be registered dynamically?**
 * Yes, using `registerBean()`.
 
-**45. What is NoUniqueBeanDefinitionException?**
+**45. What is `NoUniqueBeanDefinitionException`?**
 * Multiple beans of same type found.
 
-**46. How to resolve NoUniqueBeanDefinitionException?**
+**46. How to resolve `NoUniqueBeanDefinitionException`?**
 * Use name, `@Primary`, or `@Qualifier`.
 
-**47. What is @Primary?**
+**47. What is `@Primary`?**
 * Marks default bean.
 
-**48. What is @Qualifier?**
+**48. What is `@Qualifier`?**
 * Specifies exact bean to inject.
 
 **49. Can multiple beans of same class exist?**
@@ -181,7 +181,7 @@ and modular architecture.
 **58. Why constructor injection is preferred?**
 * Immutability and mandatory dependencies.
 
-**59. Is @Autowired required on constructors?**
+**59. Is `@Autowired` required on constructors?**
 * No (if only one constructor).
 
 **60. What is setter injection used for?**
@@ -193,11 +193,11 @@ and modular architecture.
 **62. How does Spring perform field injection?**
 * Using reflection.
 
-**63. Can @Autowired be optional?**
+**63. Can `@Autowired` be optional?**
 * Yes (required = false).
 
 **64. What happens if autowiring fails?**
-* UnsatisfiedDependencyException.
+* `UnsatisfiedDependencyException`.
 
 **65. Can Spring autowire by interface?**
 * Yes.
@@ -241,7 +241,7 @@ and modular architecture.
 **78. Does Spring support lazy DI?**
 * Yes (`@Lazy`).
 
-**79. What is @Value used for?**
+**79. What is `@Value` used for?**
 * Injecting literal/property values.
 
 **80. Where are properties stored?**
@@ -250,7 +250,7 @@ and modular architecture.
 **81. What is property placeholder?**
 * `${...}` syntax.
 
-**82. Can SpEL be used with @Value?**
+**82. Can SpEL be used with `@Value`?**
 * Yes.
 
 **83. Is DI compile-time or runtime?**
@@ -295,10 +295,10 @@ and modular architecture.
 * One instance per HTTP session.
 
 **96. What is application scope?**
-* One instance per ServletContext.
+* One instance per `ServletContext`.
 
 **97. Difference between singleton and application scope?**
-* Application scope tied to ServletContext.
+* Application scope tied to `ServletContext`.
 
 **98. When to use prototype scope?**
 * Mutable, stateful beans.
@@ -327,16 +327,16 @@ and modular architecture.
 **106. What is bean lifecycle?**
 * Instantiate -> Populate -> Initialize -> Destroy.
 
-**107. What is @PostConstruct?**
+**107. What is `@PostConstruct`?**
 * Initialization callback.
 
-**108. What is @PreDestroy?**
+**108. What is `@PreDestroy`?**
 * Destruction callback.
 
 **109. Are lifecycle callbacks allowed arguments?**
 * No.
 
-**110. Is @PreDestroy called for prototype beans?**
+**110. Is `@PreDestroy` called for prototype beans?**
 * No.
 
 **111. What is init-method?**
@@ -360,7 +360,7 @@ and modular architecture.
 **117. Are lifecycle annotations from Spring?**
 * No (Jakarta EE).
 
-**118.Does Spring manage full lifecycle for all scopes?**
+**118. Does Spring manage full lifecycle for all scopes?**
 * No.
 
 **119. Can multiple lifecycle methods exist?**
@@ -369,7 +369,7 @@ and modular architecture.
 **120. When are lifecycle methods called?**
 * During container startup/shutdown.
 
-**121. What happens on context.close()?**
+**121. What happens on `context.close()`?**
 * Destroy callbacks invoked.
 
 **122. Does Spring Boot auto-close context?**
@@ -407,7 +407,7 @@ and modular architecture.
 **132. Self-invocation issue?** 
 * AOP bypass.
 
-**133. @Around advice?** 
+**133. `@Around` advice?** 
 * Full control.
 
 **134. Spring AOP limitation?** 
@@ -422,16 +422,16 @@ and modular architecture.
 **137. ViewResolver?** 
 * Resolves views.
 
-**138. @RestController?** 
+**138. `@RestController`?** 
 * JSON response.
 
-**139. @RequestParam?** 
+**139. `@RequestParam`?** 
 * Query/form params.
 
-**140. @PathVariable?**
+**140. `@PathVariable`?**
 * URI params.
 
-**141. @ModelAttribute?** 
+**141. `@ModelAttribute`?** 
 * Form binding.
 
 **142. Spring Boot purpose?** 
@@ -458,10 +458,10 @@ and modular architecture.
 **149. Bean Validation?** 
 * Standard validation.
 
-**150. @Valid?** 
+**150. `@Valid`?** 
 * Trigger validation.
 
-**151. @NotNull?** 
+**151. `@NotNull`?** 
 * Constraint.
 
 **152. Validation failure?** 
@@ -470,7 +470,7 @@ and modular architecture.
 **153. Lombok purpose?** 
 * Reduce boilerplate.
 
-**154. @Data?** 
+**154. `@Data`?** 
 * Multiple annotations.
 
 **155. Lombok runtime dependency?**
@@ -485,16 +485,16 @@ and modular architecture.
 **158. Default Spring Security behavior?**
 * All endpoints secured.
 
-**159. SecurityFilterChain?**
+**159. `SecurityFilterChain`?**
 * Security config.
 
 **160. CSRF?** 
 * Request forgery protection.
 
-**161. permitAll?** 
+**161. `permitAll()`?** 
 * Public access.
 
-**162. denyAll?** 
+**162. `denyAll()`?** 
 * Block access.
 
 **163. In-memory auth?** 
@@ -506,10 +506,10 @@ and modular architecture.
 **165. HTTP Basic?** 
 * Header-based.
 
-**166. @ControllerAdvice?** 
+**166. `@ControllerAdvice`?** 
 * Global exception handling.
 
-**167. @ExceptionHandler?** 
+**167. `@ExceptionHandler`?** 
 * Handle exceptions.
 
 **168. MVC separation?** 
@@ -554,16 +554,16 @@ and modular architecture.
 **181. Spring encourages clean architecture?**
 * Yes.
 
-**182. Testing with @SpringBootTest?**
+**182. Testing with `@SpringBootTest`?**
 * Integration testing.
 
-**183. @MockBean?**
+**183. `@MockBean`?**
 * Test isolation.
 
 **184. Profiles?**
 * Env-specific config.
 
-**185. @Profile?**
+**185. `@Profile`?**
 * Conditional beans.
 
 **186. YAML vs properties?**
@@ -605,7 +605,7 @@ and modular architecture.
 **198. MVC vs REST?**
 * View vs data.
 
-**199. DispatcherServlet role?** 
+**199. `DispatcherServlet` role?** 
 * Central router.
 
 **200. Spring hides servlet complexity?**
@@ -691,19 +691,18 @@ and modular architecture.
 
 **227. Are Spring singleton beans thread-safe?**
 * Trap: Many candidates say yes because “singleton = one instance”.
-* Correct answer: 
-* No. 
+* Correct answer: No. 
   * Spring singleton means one instance per container, not thread-safe. 
   * Thread safety depends on immutability or synchronization.
 * Why it matters:
   * Mutable singleton services cause race conditions in web apps.
 
-**228. Why does @Autowired work without a setter or constructor?**
+**228. Why does `@Autowired` work without a setter or constructor?**
 * Trap: People think Spring uses magic.
 * Correct answer: Spring uses reflection to inject fields after object creation.
 * Why it matters: Explains why field injection is hard to test and why final fields fail without constructor injection.
 
-**229. Why does @Transactional not work when I call the method from the same class?**
+**229. Why does `@Transactional` not work when I call the method from the same class?**
 * Trap: Candidates blame configuration.
 * Correct answer: Spring uses proxies. Self-invocation bypasses the proxy, so the transaction advice is never applied.
 * Why it matters: This causes silent production bugs.
@@ -713,7 +712,7 @@ and modular architecture.
 * Correct answer: Singleton beans are created eagerly at context startup, unless marked `@Lazy`.
 * Why it matters: Explains startup failures and performance issues.
 
-**231. Can @PreDestroy run for prototype beans?**
+**231. Can `@PreDestroy` run for prototype beans?**
 * Trap: Yes, lifecycle is managed.
 * Correct answer: No. Spring does not manage destruction of prototype beans.
 * Why it matters: Resource leaks in real systems.
@@ -727,9 +726,9 @@ and modular architecture.
   * Prevents partially initialized objects.
 * Why it matters: Design correctness and testability.
 
-**233. What happens if two beans of the same type exist and no @Qualifier is provided?**
+**233. What happens if two beans of the same type exist and no `@Qualifier` is provided?**
 * Trap: Spring chooses one randomly.
-* Correct answer: Spring throws NoUniqueBeanDefinitionException.
+* Correct answer: Spring throws `NoUniqueBeanDefinitionException`.
 * Why it matters: Avoids unpredictable behavior.
 
 **234. Is Spring Boot just Spring with annotations?**
@@ -746,14 +745,14 @@ and modular architecture.
 * Correct answer: No. Spring Boot builds on top of Spring and backs off when user configuration exists.
 * Why it matters: Understanding override mechanisms.
 
-**236. Why is @Component not always enough?**
+**236. Why is `@Component` not always enough?**
 * Trap: Because it’s generic.
 * Correct answer: Stereotypes (`@Service`, `@Repository`) provide semantic meaning and enable features like exception translation.
 * Why it matters: Cleaner architecture and better tooling.
 
-**237. Is @Repository just documentation?**
+**237. Is `@Repository` just documentation?**
 * Trap: Yes.
-* Correct answer: No. It enables exception translation (SQLException -> DataAccessException).
+* Correct answer: No. It enables exception translation (`SQLException` -> `DataAccessException`).
 * Why it matters: Consistent error handling.
 
 **238. Why can Spring inject interfaces but not static fields?**
@@ -761,9 +760,9 @@ and modular architecture.
 * Correct answer: Spring manages instances, not classes. Static fields belong to the classloader.
 * Why it matters: Explains Spring’s object model.
 
-**239. What happens if a bean fails during @PostConstruct?**
+**239. What happens if a bean fails during `@PostConstruct`?**
 * Trap: Bean is partially usable.
-* Correct answer: ApplicationContext startup fails and the application does not start.
+* Correct answer: `ApplicationContext` startup fails and the application does not start.
 * Why it matters: Startup safety guarantees.
 
 **240. Why does Spring allow circular dependencies sometimes?**
@@ -771,24 +770,24 @@ and modular architecture.
 * Correct answer: Spring can resolve setter-based circular dependencies using early references, but not constructor-based ones.
 * Why it matters: Reveals internal container mechanics.
 
-**241. Is @Lazy a performance optimization?**
+**241. Is `@Lazy` a performance optimization?**
 * Trap: Yes, always faster.
 * Correct answer: Not necessarily. Lazy loading can defer failures and complicate debugging.
 * Why it matters: Shows mature performance thinking.
 
 **242. Why does Spring AOP not work on private methods?**
 * Trap: Because annotations are ignored.
-* Correct answer: Spring AOP uses proxies which intercept public/protected methods only.
+* Correct answer: Spring AOP uses proxies which intercept `public` / `protected` methods only.
 * Why it matters: Avoids invisible AOP bugs.
 
-**243. What is the difference between ApplicationContext and ServletContext?**
+**243. What is the difference between `ApplicationContext` and `ServletContext`?**
 * Trap: They’re the same.
 * Correct answer: 
-  * ApplicationContext -> Spring container.
-  * ServletContext -> Web container (Tomcat).
+  * `ApplicationContext` -> Spring container.
+  * `ServletContext` -> Web container (Tomcat).
 * Why it matters: Web application architecture clarity.
 
-**244. Can Spring Boot run without a web server?**
+**244. Can Spring Boot run without a web server?** // here
 * Trap: No.
 * Correct answer: Yes. Spring Boot supports CLI, batch, messaging, and standalone apps.
 * Why it matters: Non-web use cases.
@@ -808,7 +807,7 @@ and modular architecture.
 * Correct answer: Runtime using proxies.
 * Why it matters: Explains behavior and limitations.
 
-**248. Why is @Transactional on private methods ignored?**
+**248. Why is `@Transactional` on private methods ignored?**
 * Trap: Annotation is wrong.
 * Correct answer: Private methods cannot be proxied.
 * Why it matters: Avoids false assumptions.
@@ -843,7 +842,7 @@ and modular architecture.
 * Correct answer: It ensures required dependencies, immutability, and easier testing.
 * Tests: Design reasoning, not syntax.
 
-**255. Will @Autowired work on private fields?**
+**255. Will `@Autowired` work on private fields?**
 * Trap: No, because it’s private.
 * Correct answer: Yes. Spring uses reflection.
 * Tests: Knowledge of how injection works.
@@ -863,28 +862,28 @@ and modular architecture.
 * Correct answer: Spring throws `NoUniqueBeanDefinitionException`.
 * Tests: Dependency resolution.
 
-**259. Is @Component mandatory for every bean?**
+**259. Is `@Component` mandatory for every bean?**
 * Trap: Yes.
 * Correct answer: No. Beans can be defined using `@Bean`, XML, or programmatically.
 * Tests: Configuration flexibility.
 
-**260. Does @Service behave differently from @Component?**
+**260. Does `@Service` behave differently from `@Component`?**
 * Trap: No, it’s just naming.
 * Correct answer: Functionally similar, but `@Service` expresses intent and improves readability.
 * Tests: Clean architecture awareness.
 
-**261. Why use @Repository instead of @Component?**
+**261. Why use `@Repository` instead of `@Component`?**
 * Trap: It looks better.
 * Correct answer: It enables exception translation for persistence exceptions.
 * Tests: Understanding Spring Data behavior.
 
-**262. Does @Value only work with properties files?**
+**262. Does `@Value` only work with properties files?**
 * Trap: Yes.
 * Correct answer: No. It also supports SpEL expressions and environment variables.
 * Tests: Configuration depth.
 
 **263. Can Spring inject dependencies into static fields?**
-* Trap: Yes, with @Autowired.
+* Trap: Yes, with `@Autowired`.
 * Correct answer: No. Spring manages instances, not static context.
 * Tests: Object model clarity.
 
@@ -913,12 +912,12 @@ and modular architecture.
 * Correct answer: No. Auto-configuration applies only when conditions match.
 * Tests: Conditional configuration understanding.
 
-**269. What happens if I define my own DataSource bean?**
+**269. What happens if I define my own `DataSource` bean?**
 * Trap: Spring Boot still configures another one.
 * Correct answer: Auto-configuration backs off.
 * Tests: Override rules.
 
-**270. Is @Lazy always a good performance optimization?**
+**270. Is `@Lazy` always a good performance optimization?**
 * Trap: Yes.
 * Correct answer: Not always. It may hide startup problems.
 * Tests: Performance trade-offs.
@@ -933,9 +932,9 @@ and modular architecture.
 * Correct answer: Because singleton beans are shared across threads.
 * Tests: Concurrency basics.
 
-**273. Can @Autowired be optional?**
+**273. Can `@Autowired` be optional?**
 * Trap: No.
-* Correct answer: Yes, using required = false or `Optional<T>`.
+* Correct answer: Yes, using `required = false` or `Optional<T>`.
 * Tests: Dependency handling.
 
 **274. Does Spring AOP work on internal method calls?**
@@ -943,12 +942,12 @@ and modular architecture.
 * Correct answer: No. Self-invocation bypasses proxies.
 * Tests: AOP basics.
 
-**275. What is the difference between @Controller and @RestController?**
+**275. What is the difference between `@Controller` and `@RestController`?**
 * Trap: None.
 * Correct answer: `@RestController` returns data directly; `@Controller` returns views.
 * Tests: Web fundamentals.
 
-**276. Is @Valid enough to trigger validation?**
+**276. Is `@Valid` enough to trigger validation?**
 * Trap: Yes, always.
 * Correct answer: Yes, but only when a validation provider is present.
 * Tests: Starter dependency awareness.
@@ -958,7 +957,7 @@ and modular architecture.
 * Correct answer: To detect configuration errors early.
 * Tests: Reliability thinking.
 
-**278. Can we use multiple ApplicationContexts?**
+**278. Can we use multiple `ApplicationContexts`?**
 * Trap: No.
 * Correct answer: Yes (parent-child contexts).
 * Tests: Advanced configuration.
@@ -970,7 +969,7 @@ and modular architecture.
 
 **280. What happens if a bean throws an exception in constructor?**
 * Trap: Spring ignores it.
-* Correct answer: ApplicationContext startup fails.
+* Correct answer: `ApplicationContext` startup fails.
 * Tests: Lifecycle failure handling.
 
 **281. Why does Spring prefer interfaces?**

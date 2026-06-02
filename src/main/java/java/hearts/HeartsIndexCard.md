@@ -1,7 +1,8 @@
 ## Hearts - Index Card.
 
 **1. What is Concurrent Programming?**
-* Concurrent programming means multiple computations executing at the same time instead of sequentially. Java supports this through threads.
+* Concurrent programming means multiple computations executing at the same time instead of sequentially. 
+* Java supports this through threads.
 
 **2. Threads and Shared Resources.**
 * Multiple threads can access shared objects - must use synchronization to avoid race conditions.
@@ -131,7 +132,8 @@
 * `shutdown()` + `awaitTermination()` pattern ensures tasks finish properly.
 
 **44. ThreadLocal.**
-* Gives each thread its own variable instance. Good for per-thread state like SimpleDateFormat.
+* Gives each thread its own variable instance. 
+* Good for per-thread state like SimpleDateFormat.
 
 **45. ThreadLocal.withInitial().**
 * Java 8 factory-style initialization of ThreadLocal values.
@@ -176,7 +178,7 @@
 **58. CallerRunsPolicy Use Case.**
 * When queue is full, the calling thread executes the task - acts as automatic throttling.
 
-**59. Difference Between pool.execute() and pool.submit().**
+**59. Difference Between `pool.execute()` and `pool.submit()`.**
 * `execute()` directly throws unchecked exceptions; `submit()` hides them inside Future unless retrieved.
 
 **60. LockInterruptibly.**
@@ -185,7 +187,7 @@
 **61. Optimistic Locking with StampedLock.**
 * StampedLock has an optimistic read mode which avoids blocking readers unless contention occurs.
 
-**62. wait(), notify(), notifyAll().**
+**62. `wait()`, `notify()`, `notifyAll()`.**
 * Used for low-level thread coordination; must be called within synchronized blocks.
 
 **63. Thread Pools vs Creating Threads Manually.**
@@ -479,7 +481,7 @@ synchronized (lockA) {
 * It’s still a lock; misuse can deadlock.
 * Testing: Tool != solution.
 
-**102. Does AtomicInteger.incrementAndGet() use locks?**
+**102. Does `AtomicInteger.incrementAndGet()` use locks?**
 * No.
 * Uses CAS (Compare-And-Swap).
 * Testing: Lock-free programming basics.
@@ -491,7 +493,7 @@ synchronized (lockA) {
 
 **104. Can two threads call wait() without notify() and still wake up?**
 * Yes.
-* Spurious wakeups are allowed.
+* Spurious (Fałszywy) wakeups are allowed.
 ```java
 while (!condition) {
     obj.wait();
@@ -499,12 +501,12 @@ while (!condition) {
 ```
 * Testing: Correct wait-notify patterns.
 
-**105. Does ExecutorService.shutdown() stop running tasks?**
+**105. Does `ExecutorService.shutdown()` stop running tasks?**
 * No.
 * It prevents new tasks only.
 * Testing: Lifecycle management.
 
-**106. Can Future.get() block forever?**
+**106. Can `Future.get()` block forever?**
 * Yes.
 * If the task never completes.
 * Testing: Blocking risks.
@@ -541,7 +543,7 @@ while (!condition) {
 
 **113. Does volatile make increment operations thread-safe?**
 * Trap: Yes, changes are visible.
-* Correct answer: No. x++ is not atomic.
+* Correct answer: No. `x++` is not atomic.
 * Tests: Atomic vs visible operations.
 
 **114. Is HashMap thread-safe for read-only access?**
@@ -569,32 +571,32 @@ while (!condition) {
 * Correct answer: Lock is released.
 * Tests: Lock lifecycle understanding.
 
-**119. Is Thread.sleep() a locking mechanism?**
+**119. Is `Thread.sleep()` a locking mechanism?**
 * Trap: Yes, it pauses the thread.
 * Correct answer: No. It does not release locks.
 * Tests: Thread states.
 
-**120. Does wait() release the lock?**
+**120. Does `wait()` release the lock?**
 * Trap: No.
-* Correct answer: Yes. wait() releases the monitor lock.
+* Correct answer: Yes. `wait()` releases the monitor lock.
 * Tests: Monitor mechanics.
 
-**121. Can notify() wake up all waiting threads?**
+**121. Can `notify()` wake up all waiting threads?**
 * Trap: Yes.
 * Correct answer: No. Only one waiting thread is notified.
 * Tests: Monitor signaling.
 
-**122. Is notify() always better than notifyAll()?**
+**122. Is `notify()` always better than `notifyAll()`?**
 * Trap: Yes, it’s more efficient.
-* Correct answer: No. notify() can cause missed signals and deadlocks.
+* Correct answer: No. `notify()` can cause missed signals and deadlocks.
 * Tests: Condition synchronization.
 
-**123. Does Thread.sleep() guarantee exact timing?**
+**123. Does `Thread.sleep()` guarantee exact timing?**
 * Trap: Yes.
 * Correct answer: No. It only guarantees minimum sleep time.
 * Tests: Thread scheduling realism.
 
-**124. Is Thread.stop() safe?**
+**124. Is `Thread.stop()` safe?**
 * Trap: Yes, it stops threads immediately.
 * Correct answer: No. It’s deprecated and unsafe.
 * Tests: Thread lifecycle safety.
@@ -604,12 +606,12 @@ while (!condition) {
 * Correct answer: Yes — this causes deadlock or starvation.
 * Tests: Failure modes.
 
-**126. Does ExecutorService.shutdown() stop running tasks?**
+**126. Does `ExecutorService.shutdown()` stop running tasks?**
 * Trap: Yes.
 * Correct answer: No. It stops accepting new tasks.
 * Tests: Executor lifecycle.
 
-**127. Does shutdownNow() always stop threads?**
+**127. Does `shutdownNow()` always stop threads?**
 * Trap: Yes.
 * Correct answer: No. It sends interrupts; tasks may ignore them.
 * Tests: Interruption semantics.
@@ -619,12 +621,12 @@ while (!condition) {
 * Correct answer: No. It uses fine-grained locking and CAS.
 * Tests: Concurrent collections internals.
 
-**129. Is Collections.synchronizedList() scalable?**
+**129. Is `Collections.synchronizedList()` scalable?**
 * Trap: Yes.
 * Correct answer: No. It uses a single lock.
 * Tests: Scalability awareness.
 
-**130. What problem does CopyOnWriteArrayList solve?**
+**130. What problem does `CopyOnWriteArrayList` solve?**
 * Trap: Fast writes.
 * Correct answer: Optimized for many reads, few writes.
 * Tests: Data structure trade-offs.
@@ -659,12 +661,12 @@ while (!condition) {
 * Correct answer: No. Fair locks reduce throughput.
 * Tests: Performance trade-offs.
 
-**137. Does Future.get() block?**
+**137. Does `Future.get()` block?**
 * Trap: No, it returns when ready.
 * Correct answer: Yes. It blocks until result is available.
 * Tests: Async execution.
 
-**138. Is CompletableFuture non-blocking by default?**
+**138. Is `CompletableFuture` non-blocking by default?**
 * Trap: Yes.
 * Correct answer: No. Blocking depends on how it’s used.
 * Tests: Async misuse awareness.
@@ -694,7 +696,7 @@ while (!condition) {
 * Correct answer: No. Streams are single-use; reuse throws `IllegalStateException`.
 * Tests: Lifecycle awareness.
 
-**144. Does filter() immediately execute?**
+**144. Does `filter()` immediately execute?**
 * Trap: Yes, it filters elements.
 * Correct answer: No. Intermediate operations are lazy.
 * Tests: Lazy evaluation.
@@ -704,14 +706,14 @@ while (!condition) {
 * Correct answer: When a terminal operation is invoked.
 * Tests: Execution model.
 
-**146. Is forEach() always safe?**
+**146. Is `forEach()` always safe?**
 * Trap: Yes, it’s just iteration.
 * Correct answer: No. Side effects can break parallel streams and readability.
 * Tests: Functional programming discipline.
 
-**147. Is forEach() the same as forEachOrdered()?**
+**147. Is `forEach()` the same as `forEachOrdered()`?**
 * Trap: Yes.
-* Correct answer: No. forEachOrdered() preserves encounter order.
+* Correct answer: No. `forEachOrdered()` preserves encounter order.
 * Tests: Ordering guarantees.
 
 **148. Does stream order matter?**
@@ -739,7 +741,7 @@ while (!condition) {
 * Correct answer: Side effects break parallelism and predictability.
 * Tests: Functional principles.
 
-**153. Is map() allowed to modify objects?**
+**153. Is `map()` allowed to modify objects?**
 * Trap: Yes, it transforms them.
 * Correct answer: Technically yes, but conceptually wrong.
 * Tests: Immutability mindset.
@@ -754,32 +756,32 @@ while (!condition) {
 * Correct answer: Not directly. They must be wrapped or handled.
 * Tests: Lambda constraints.
 
-**156. Is peek() safe for logging?**
+**156. Is `peek()` safe for logging?**
 * Trap: Yes, it’s for debugging.
 * Correct answer: Only for debugging; behavior may change.
 * Tests: API misuse awareness.
 
-**157. Does findFirst() always return the same element?**
+**157. Does `findFirst()` always return the same element?**
 * Trap: Yes.
 * Correct answer: Only for ordered streams.
 * Tests: Ordering semantics.
 
-**158. Difference between findFirst() and findAny()?**
+**158. Difference between `findFirst()` and `findAny()`?**
 * Trap: None.
 * Correct answer: `findAny()` may return any element, enabling better parallelism.
 * Tests: Parallel stream optimization.
 
-**159. Is limit() deterministic in parallel streams?**
+**159. Is `limit()` deterministic in parallel streams?**
 * Trap: Yes.
 * Correct answer: Only for ordered streams.
 * Tests: Encounter order.
 
-**160. Does sorted() always sort everything?**
+**160. Does `sorted()` always sort everything?**
 * Trap: Yes.
 * Correct answer: Short-circuiting may reduce work in some cases.
 * Tests: Optimization awareness.
 
-**161. Is distinct() cheap?**
+**161. Is `distinct()` cheap?**
 * Trap: Yes.
 * Correct answer: No. It requires tracking seen elements (stateful).
 * Tests: Stateful operations.
@@ -789,12 +791,12 @@ while (!condition) {
 * Correct answer: Some are stateful (distinct, sorted).
 * Tests: Pipeline internals.
 
-**163. Does Collectors.toList() guarantee mutability?**
+**163. Does `Collectors.toList()` guarantee mutability?**
 * Trap: Yes.
 * Correct answer: No. Mutability is not guaranteed.
 * Tests: API contracts.
 
-**164. Difference between Stream.of() and Arrays.stream()?**
+**164. Difference between `Stream.of()` and `Arrays.stream()`?**
 * Trap: None.
 * Correct answer: `Stream.of(array)` creates a single-element stream if array is object.
 * Tests: Varargs pitfall.
@@ -809,17 +811,17 @@ while (!condition) {
 * Correct answer: Nothing happens.
 * Tests: Execution trigger.
 
-**167. Is reduce() always better than collect()?**
+**167. Is `reduce()` always better than collect()?**
 * Trap: Yes, it’s more functional.
 * Correct answer: No. `collect()` is often clearer and optimized.
 * Tests: Appropriate API usage.
 
-**168. Can reduce() be non-associative?**
+**168. Can `reduce()` be non-associative?**
 * Trap: Yes, if logic is correct.
 * Correct answer: No. Non-associative operations break parallel streams.
 * Tests: Parallel correctness.
 
-**169. Why must the identity in reduce() be neutral?**
+**169. Why must the identity in `reduce()` be neutral?**
 * Trap: For convenience.
 * Correct answer: Incorrect identity breaks correctness in parallel execution.
 * Tests: Reduction semantics.

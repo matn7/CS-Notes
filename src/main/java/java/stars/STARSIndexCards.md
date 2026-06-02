@@ -34,28 +34,28 @@ Arrays.stream(arr);
   * `Consumer<T>` -> void.
   * `Supplier<T>` -> provide value.
 
-**6. filter().**
+**6. `filter()`.**
 * Filters elements based on a condition.
 ```java
 list.stream()
     .filter(x -> x > 10) 
 ```
 
-**7. map().**
+**7. `map()`.**
 * Transforms each element.
 ```java
 list.stream()
     .map(String::toUpperCase) 
 ```
 
-**8. flatMap().**
+**8. `flatMap()`.**
 * Flattens nested structures.
 ```java
 listOfLists.stream()
     .flatMap(List::stream)
 ```
 
-**9. forEach().**
+**9. `forEach()`.**
 * Performs an action for each element.
 ```java
 stream.forEach(System.out::println);
@@ -67,7 +67,7 @@ stream.forEach(System.out::println);
 * Terminal: forEach, collect, reduce
 * Stream executes only after terminal operation.
 
-**11. collect().**
+**11. `collect()`.**
 * Converts stream into a collection or result.
 ```java
 list.stream()
@@ -81,21 +81,21 @@ list.stream()
 * `groupingBy()`.
 * `counting()`.
 
-**13. reduce().**
+**13. `reduce()`.**
 * Combines elements into one value.
 ```java
 list.stream()
     .reduce(0, Integer::sum);
 ```
 
-**14. sorted().**
+**14. `sorted()`.**
 * Sorts stream elements.
 ```java
 stream.sorted();
 stream.sorted(Comparator.reverseOrder());
 ```
 
-**15. anyMatch / allMatch / noneMatch.**
+**15. `anyMatch()` / `allMatch()` / `noneMatch()`.**
 * Return boolean.
 ```java
 anyMatch(x -> x > 5);
@@ -103,7 +103,7 @@ allMatch(x -> x > 0);
 noneMatch(x -> x < 0);
 ```
 
-**16. findFirst() / findAny().**
+**16. `findFirst()` / `findAny()`.**
 * Return `Optional<T>`.
 ```java
 stream.findFirst();
@@ -136,7 +136,7 @@ list.parallelStream();
 
 **21. Internal Iteration vs External Iteration.**
 * External iteration: for, while (you control iteration).
-* Internal iteration: Streams (library controls iteration). Benefits: composability, parallelism, cleaner code
+* Internal iteration: Streams (library controls iteration). Benefits: composability, parallelism, cleaner code.
 
 **22. Stream Pipeline Execution Model.**
 * Stream operations form a pipeline.
@@ -145,11 +145,11 @@ list.parallelStream();
 
 **23. Short-Circuiting Operations.**
 * Operations that may stop processing early:
-    * findFirst.
-    * findAny.
-    * anyMatch.
-    * allMatch.
-    * noneMatch.
+    * `findFirst()`.
+    * `findAny()`.
+    * `anyMatch()`.
+    * `allMatch()`.
+    * `noneMatch()`.
 * Improves performance on large streams.
 
 **24. Stateless vs Stateful Lambdas.**
@@ -217,15 +217,15 @@ Collector.of(
 ```
 * Must be thread-safe for parallel streams.
 
-**32. groupingBy() vs groupingByConcurrent().**
-* `groupingBy`: uses `HashMap`.
-* `groupingByConcurrent`: `ConcurrentMap`.
+**32. `groupingBy()` vs `groupingByConcurrent()`.**
+* `groupingBy()`: uses `HashMap`.
+* `groupingByConcurrent()`: `ConcurrentMap`.
 * Use concurrent version with parallel streams.
 
 **33. Order Sensitivity.**
 * Some operations preserve encounter order:
-    * `forEachOrdered`.
-    * `findFirst`.
+    * `forEachOrdered()`.
+    * `findFirst()`.
 * Parallel streams may lose order unless enforced.
 
 **34. Parallel Stream Costs.**
@@ -270,7 +270,7 @@ s.findFirst(); // IllegalStateException
   * But lambdas can capture references.
 * Be careful with large object retention.
 
-**40. When to Prefer Collectors Over reduce().**
+**40. When to Prefer Collectors Over `reduce()`.**
 * Use `collect()` when:
     * Mutable result needed.
     * Grouping, partitioning.
@@ -284,7 +284,7 @@ s.findFirst(); // IllegalStateException
   * Prefer database-level filtering (JPQL, Criteria, SQL)
 
 **42. Streams vs Database Query Optimization.**
-* Rule of thumb: `Filter, sort, aggregate in DB first — stream later`.
+* Rule of thumb: **Filter, sort, aggregate in DB first — stream later**.
 * DB is optimized for:
   * Index usage.
   * Joins.
@@ -311,7 +311,7 @@ orders.stream()
   * JOIN FETCH.
   * Entity graphs.
 
-**46. Why parallelStream() Is Dangerous with JPA?**
+**46. Why `parallelStream()` Is Dangerous with JPA?**
 * EntityManager is not thread-safe.
 * Lazy loading in parallel threads breaks.
 * Can cause inconsistent state or exceptions.
@@ -334,7 +334,7 @@ repo.findAll().stream()
 repo.findActiveUsers();
 ```
 
-**49. When Is parallelStream() Actually Useful?**
+**49. When Is `parallelStream()` Actually Useful?**
 * Best for:
   * CPU-bound tasks.
   * Large collections.
@@ -344,15 +344,15 @@ repo.findActiveUsers();
   * DB calls.
   * Shared mutable state.
 
-**50. parallelStream() vs ExecutorService.**
-* parallelStream: ForkJoinPool.commonPool.
+**50. `parallelStream()` vs ExecutorService.**
+* `parallelStream()`: ForkJoinPool.commonPool.
 * ExecutorService: explicit control
 * Prefer ExecutorService for:
   * I/O.
   * Tuning threads.
   * Isolation.
 
-**51. How Does ForkJoinPool Affect parallelStream()?**
+**51. How Does ForkJoinPool Affect `parallelStream()`?**
 * Uses common pool by default.
 * Shared across JVM.
 * Blocking operations can starve threads.
@@ -411,7 +411,6 @@ Collectors.toMap(
 * Leading to unexpected object retention.
 
 **59. Example: Refactoring Loop -> Stream.**
-
 ```java
 int sum = 0;
 for (Order o : orders) {
@@ -441,7 +440,7 @@ orders.stream()
 * Instead:
   * Request is registered.
   * Thread is released.
-  * Callback/event handles response later
+  * Callback/event handles response later.
   * Improves scalability.
 
 **62. Blocking vs Non-Blocking in One Sentence.**
@@ -570,7 +569,7 @@ Mono.fromCallable(this::blockingCall)
 
 **83. Why does QuickSort require extra space?**
 * Due to recursive calls. 
-* Stack depth is proportional to recursion depth, which is O(log n) on average but can degrade to O(n) in worst cases.
+* Stack depth is proportional to recursion depth, which is `O(log n)` on average but can degrade to `O(n)` in worst cases.
 
 **84. Difference between synchronized method and synchronized block?**
 * Synchronized method locks on this (or class object if static).
@@ -604,54 +603,55 @@ Mono.fromCallable(this::blockingCall)
 
 **91. Recommended approaches for concurrency?**
 * Immutable objects.
-* ExecutorService instead of raw threads.
-* java.util.concurrent collections.
+* `ExecutorService` instead of raw threads.
+* `java.util.concurrent` collections.
 * Locks over wait/notify.
 
 **92. Difference between synchronized and concurrent collections?**
 * Synchronized collections: thread-safe mutation, unsafe iteration.
 * Concurrent collections: safe iteration + higher concurrency.
 
-**93. How does CopyOnWriteArrayList work?**
+**93. How does `CopyOnWriteArrayList` work?**
 * Writes create a new copy.
 * Iterators work on a snapshot.
 * Ideal for read-heavy workloads.
 
-**94. Key features of ConcurrentHashMap?**
+**94. Key features of `ConcurrentHashMap`?**
 * No null keys/values.
 * Lock striping (pre-Java 8), CAS (Java 8+).
-* Atomic methods like putIfAbsent, compute.
+* Atomic methods like `putIfAbsent()`, `compute()`.
 
-**95. When should you use WeakHashMap?**
+**95. When should you use `WeakHashMap`?**
 * Cache-like structures.
 * Entries removed automatically when keys are no longer strongly referenced.
 
-**96. Why must equals and hashCode be overridden together?**
+**96. Why must `equals()` and `hashCode()` be overridden together?**
 * Hash-based collections rely on both. 
 * Violating the contract causes lost entries or incorrect lookups.
 
-**97. What are the five rules of equals?**
+**97. What are the five rules of `equals()`?**
 * Reflexive, symmetric, transitive, consistent, non-null.
 
-**98. What makes a good hashCode?**
+**98. What makes a good `hashCode()`?**
 * Consistent.
 * Equal objects -> equal hashCodes.
 * Even distribution to reduce collisions.
 
-**99. Why is finalize() discouraged?**
+**99. Why is `finalize()` discouraged?**
 * No execution guarantee.
 * Performance overhead.
 * Resource leaks.
-* Replaced by AutoCloseable and Cleaner.
+* Replaced by `AutoCloseable` and Cleaner.
 
 **100. Difference between GoF Singleton and Spring Singleton?**
 * GoF: One instance per JVM.
-* Spring: One instance per ApplicationContext.
+* Spring: One instance per `ApplicationContext`.
 
 **101. Should a Singleton be subclassed?**
-* No. Subclassing breaks the single-instance guarantee.
+* No. 
+* Subclassing breaks the single-instance guarantee.
 
-**102. Why is enum the best Singleton implementation?**
+**102. Why is `enum` the best Singleton implementation?**
 * Thread-safe by default.
 * Serialization safe.
 * Prevents reflection & cloning attacks.
@@ -681,8 +681,9 @@ Mono.fromCallable(this::blockingCall)
 **108. When is an object eligible for GC?**
 * When it becomes unreachable from any live thread.
 
-**109. Does System.gc() force GC?**
-* No. It’s only a hint to the JVM.
+**109. Does `System.gc()` force GC?**
+* No. 
+* It’s only a hint to the JVM.
 
 **110. How do you choose a GC?**
 * Low latency -> G1 / CMS.
@@ -710,10 +711,10 @@ Mono.fromCallable(this::blockingCall)
 * Terminal: trigger execution and produce result.
 
 **116. Difference in parallel streams?**
-* findFirst preserves encounter order.
-* findAny allows faster, non-deterministic result.
+* `findFirst()` preserves encounter order.
+* `findAny()` allows faster, non-deterministic result.
 
-**117. Why return Optional?**
+**117. Why return `Optional`?**
 * Avoids null checks and makes absence explicit.
 
 **118. What are JPA entity states?**
@@ -742,12 +743,12 @@ Mono.fromCallable(this::blockingCall)
 **123. What is CAS and why is it important?**
 * Hardware-level atomic instruction.
 * Enables lock-free algorithms.
-* Used internally by AtomicInteger, ConcurrentHashMap, ForkJoin.
+* Used internally by `AtomicInteger`, `ConcurrentHashMap`, `ForkJoin`.
 
 **124. What is false sharing?**
 * Occurs when unrelated variables share the same CPU cache line, causing performance degradation due to cache invalidation.
 
-**125. What problem does ThreadLocal solve?**
+**125. What problem does `ThreadLocal` solve?**
 * Provides thread-confined variables.
 * Eliminates synchronization.
 * Common in request context, transactions, formatters.
@@ -766,9 +767,9 @@ Mono.fromCallable(this::blockingCall)
 
 **128. What is escape analysis?**
 * JVM optimization determining if an object escapes a method or thread, enabling:
-* Stack allocation.
-* Lock elimination.
-* Scalar replacement.
+  * Stack allocation.
+  * Lock elimination.
+  * Scalar replacement.
 
 **129. What are safepoints?**
 * Locations where JVM can safely pause threads (e.g., for GC, deoptimization).
@@ -792,7 +793,7 @@ Mono.fromCallable(this::blockingCall)
 
 **133. How can Java still have memory leaks?**
 * Unreleased references.
-* ThreadLocal misuse.
+* `ThreadLocal` misuse.
 * Caches without eviction.
 * Static collections.
 
@@ -844,8 +845,8 @@ Mono.fromCallable(this::blockingCall)
 * Application.
 
 **144. How can you hook into Spring bean lifecycle?**
-* InitializingBean / DisposableBean.
-* @PostConstruct, @PreDestroy.
+* `InitializingBean` / `DisposableBean`.
+* `@PostConstruct`, `@PreDestroy`.
 * Custom init/destroy methods.
 
 **145. Typical AOP use cases?**
@@ -855,16 +856,16 @@ Mono.fromCallable(this::blockingCall)
 * Security.
 * Retry logic.
 
-**146. How does HashMap handle collisions (Java 8+)?**
+**146. How does `HashMap` handle collisions (Java 8+)?**
 * Linked list initially.
 * Converts to red-black tree after threshold.
 * Improves worst-case performance.
 
-**147. Why only one null key in HashMap?**
+**147. Why only one null key in `HashMap`?**
 * Because null hashes to a single bucket, and keys must be unique.
 
 **148. Difference between fail-fast and fail-safe iterators?**
-* Fail-fast: throws ConcurrentModificationException.
+* Fail-fast: throws `ConcurrentModificationException`.
 * Fail-safe: works on snapshot or weak consistency.
 
 **149. Key differences between Streams and Collections?**
@@ -891,7 +892,7 @@ Mono.fromCallable(this::blockingCall)
 * Serializable.
 
 **154. Trade-offs of lazy vs eager loading?**
-* Lazy: performance-friendly, risk of LazyInitializationException.
+* Lazy: performance-friendly, risk of `LazyInitializationException`.
 * Eager: simpler but can cause over-fetching.
 
 **155. Why is Java suitable for large-scale systems?**
@@ -900,17 +901,17 @@ Mono.fromCallable(this::blockingCall)
 * GC optimizations.
 * Backward compatibility.
 
-**156. Difference between == and equals().**
-* == compares references (memory location).
-* equals() compares logical equality.
-* Override equals() when object identity != business equality.
+**156. Difference between `==` and `equals()`.**
+* `==` compares references (memory location).
+* `equals()` compares logical equality.
+* Override `equals()` when object identity != business equality.
 
-**157. equals() / hashCode() contract.**
+**157. `equals()` / `hashCode()` contract.**
 * Equal objects must have equal hashCodes.
 * Hash-based collections rely on this for correct lookup.
 * Breaking it causes lost or duplicated entries.
 
-**158. Why HashMap keys should be immutable?**
+**158. Why `HashMap` keys should be immutable?**
 * If key changes after insertion:
   * Hash bucket changes.
   * Object becomes unreachable.
@@ -923,11 +924,11 @@ Mono.fromCallable(this::blockingCall)
 * Defensive copies.
 * Thread-safe by design.
 
-**160. Why finalize() is broken?**
+**160. Why `finalize()` is broken?**
 * No execution guarantee.
 * Unpredictable timing.
 * Performance issues.
-* Replaced by AutoCloseable, try-with-resources, Cleaner.
+* Replaced by `AutoCloseable`, try-with-resources, Cleaner.
 
 **161. Defensive copying.**
 * Protects internal state.
@@ -939,11 +940,11 @@ Mono.fromCallable(this::blockingCall)
 * Deep: copies entire object graph.
 * Deep copy prevents shared mutable state.
 
-**163. HashMap vs ConcurrentHashMap nulls.**
-* HashMap allows one null key.
-* ConcurrentHashMap forbids nulls to avoid ambiguity in concurrent lookups.
+**163. `HashMap` vs `ConcurrentHashMap` nulls.**
+* `HashMap` allows one null key.
+* `ConcurrentHashMap` forbids nulls to avoid ambiguity in concurrent lookups.
 
-**164. Why clone() is discouraged.**
+**164. Why `clone()` is discouraged.**
 * Broken design.
 * Bypasses constructors.
 * Shallow copy by default.
@@ -1001,14 +1002,14 @@ Mono.fromCallable(this::blockingCall)
 * Concurrent compaction.
 * Preferred for large heaps.
 
-**175. Why not System.gc()?**
+**175. Why not `System.gc()`?**
 * Only a hint.
 * Can cause full GC.
 * Breaks latency guarantees.
 
-**176. volatile vs synchronized.**
-* volatile: visibility only.
-* synchronized: visibility + atomicity + mutual exclusion.
+**176. `volatile` vs `synchronized`.**
+* `volatile`: visibility only.
+* `synchronized`: visibility + atomicity + mutual exclusion.
 
 **177. What volatile guarantees?**
 * Visibility.
@@ -1045,13 +1046,13 @@ Mono.fromCallable(this::blockingCall)
 * Causes cache invalidation.
 * Performance degradation.
 
-**184. ThreadLocal?**
+**184. `ThreadLocal`?**
 * Thread-confined state.
 * Avoids synchronization.
 * Risk of memory leaks in pools.
 
-**185. Double-checked locking & volatile?**
-* Without volatile: instruction reordering.
+**185. Double-checked locking & `volatile`?**
+* Without `volatile`: instruction reordering.
 * Object may be partially constructed.
 * Volatile fixes visibility + ordering.
 
@@ -1060,7 +1061,7 @@ Mono.fromCallable(this::blockingCall)
 * No synchronization required.
 * Safe publication.
 
-**187. Why avoid wait/notify?**
+**187. Why avoid `wait()` / `notify()`?**
 * Error-prone.
 * Hard to reason.
 * Replaced by higher-level concurrency APIs.
@@ -1078,12 +1079,12 @@ Mono.fromCallable(this::blockingCall)
 * Fail-fast: throws exception.
 * Fail-safe: snapshot or weakly consistent.
 
-**191. CopyOnWriteArrayList use?**
+**191. `CopyOnWriteArrayList` use?**
 * Read-heavy, write-light.
 * Snapshot iteration.
 * Expensive writes.
 
-**192. WeakHashMap.**
+**192. `WeakHashMap`.**
 * Entries removed when key GC’d.
 * Useful for caches.
 * Depends on GC behavior.
@@ -1108,9 +1109,9 @@ Mono.fromCallable(this::blockingCall)
 * Short-circuiting.
 * Reduced computation.
 
-**197. map() vs flatMap()?**
-* map: one-to-one.
-* flatMap: one-to-many flattening.
+**197. `map()` vs `flatMap()`?**
+* `map()`: one-to-one.
+* `flatMap()`: one-to-many flattening.
 
 **198. Reduce vs collect?**
 * Reduce: immutable result.
@@ -1119,7 +1120,7 @@ Mono.fromCallable(this::blockingCall)
 
 **199. Parallel stream dangers?**
 * Shared mutable state.
-* Common ForkJoinPool contention.
+* Common `ForkJoinPool` contention.
 * Hard to debug.
 
 **200. Enum singleton?**
@@ -1154,7 +1155,11 @@ Mono.fromCallable(this::blockingCall)
 * Template (JdbcTemplate).
 * Strategy (transaction managers).
 
-
+**206. Conditions for Deadlock.**
+* Mutual Exclusion: Only one thread can have exclusive access to a resource.
+* Hold and Wait: At least one thread is holding a resource and is waiting for another resource.
+* Non-preemptive allocation: A resource released only after the thread is done using it.
+* Circular wait: A chain of at least two threads each one is holding one resource and waiting for another resource.
 
 
 

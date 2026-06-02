@@ -7,45 +7,47 @@ embedded servers, and production-ready features. It reduces boilerplate and acce
 **2. How does auto-configuration work internally?**
 * Spring Boot uses `@EnableAutoConfiguration`, which triggers loading of configuration classes listed in 
 **META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports**. 
-These classes use conditional annotations like **@ConditionalOnClass**, **@ConditionalOnMissingBean**, etc., 
+* These classes use conditional annotations like `@ConditionalOnClass`, `@ConditionalOnMissingBean`, etc., 
 to configure beans dynamically based on the classpath and environment.
 
 **3. What are the key differences between Spring and Spring Boot?**
 * Spring requires manual configuration (XML or Java), while Spring Boot provides auto-configuration, embedded servers, 
-and starter dependencies. Boot is designed for rapid development and microservices, while Spring is more flexible but verbose.
+and starter dependencies. 
+* Boot is designed for rapid development and microservices, while Spring is more flexible but verbose.
 
 **4. What is a Spring Boot starter?**
-* Starters are curated dependency bundles (e.g., spring-boot-starter-web) that include all necessary libraries for a feature, 
+* Starters are curated dependency bundles (e.g., `spring-boot-starter-web`) that include all necessary libraries for a feature, 
 reducing dependency conflicts and setup time.
 
 **5. How do you externalize configuration?**
 * Using **application.properties** or **application.yml**, environment variables, command-line arguments, and profiles. 
-Spring Boot follows a priority order for configuration sources.
+* Spring Boot follows a priority order for configuration sources.
 
 **6. What is Spring Boot Actuator?**
 * Actuator provides production-ready features like health checks, metrics, environment info, and monitoring endpoints. 
-It integrates with tools like Prometheus and Grafana.
+* It integrates with tools like Prometheus and Grafana.
 
 **7. How do profiles work?**
-* Profiles allow environment-specific configurations using **spring.profiles.active**. Separate config files like 
-**application-dev.yml** can be used to isolate settings.
+* Profiles allow environment-specific configurations using **spring.profiles.active**. 
+* Separate config files like **application-dev.yml** can be used to isolate settings.
 
-**8. What is the difference between @Component, @Service, and @Repository?**
-* All are stereotypes of **@Component**.
-  * **@Service** → business logic.
-  * **@Repository** → persistence layer (adds exception translation).
-  * **@Component** → generic bean.
+**8. What is the difference between `@Component`, `@Service`, and `@Repository`?**
+* All are stereotypes of `@Component`.
+  * `@Service` → business logic.
+  * `@Repository` → persistence layer (adds exception translation).
+  * `@Component` → generic bean.
 
 **9. How does dependency injection work in Spring Boot?**
-* Through IoC container using constructor, setter, or field injection. Constructor injection is preferred for 
-immutability and testability.
+* Through IoC container using constructor, setter, or field injection. 
+* Constructor injection is preferred for immutability and testability.
 
-**10. What is the difference between @RestController and @Controller?**
-* **@RestController** combines **@Controller** and **@ResponseBody**, returning JSON/XML directly. 
-**@Controller** is used for MVC views.
+**10. What is the difference between `@RestController` and `@Controller`?**
+* `@RestController` combines `@Controller` and `@ResponseBody`, returning JSON/XML directly. 
+* `@Controller` is used for MVC views.
 
 **11. How do you handle exceptions globally?**
-* Using **@ControllerAdvice** with **@ExceptionHandler**. It centralizes error handling and allows consistent API responses.
+* Using `@ControllerAdvice` with `@ExceptionHandler`. 
+* It centralizes error handling and allows consistent API responses.
 
 **12. What is Spring Boot’s embedded server?**
 * Spring Boot includes embedded servers like Tomcat, Jetty, or Undertow, allowing applications to run as standalone JARs.
@@ -53,26 +55,28 @@ immutability and testability.
 **13. How do you secure a Spring Boot application?**
 * Using Spring Security with authentication (JWT, OAuth2), authorization, CSRF protection, and secure password storage (BCrypt).
 
-**14. What is the difference between @Bean and @Component?**
-* **@Component** → auto-detected via component scanning.
-* **@Bean** → explicitly declared in configuration class.
+**14. What is the difference between `@Bean` and `@Component`?**
+* `@Component` → auto-detected via component scanning.
+* `@Bean` → explicitly declared in configuration class.
 
 **15. How do you implement caching?**
-* Using **@EnableCaching** and annotations like **@Cacheable**, **@CacheEvict**, with providers like Redis, Ehcache, or Caffeine.
+* Using `@EnableCaching` and annotations like `@Cacheable`, `@CacheEvict`, with providers like Redis, Ehcache, or Caffeine.
 
 **16. What is Spring Boot DevTools?**
 * Provides hot reload, automatic restart, and development-time enhancements to improve productivity.
 
 **17. How do you connect to a database?**
-* Using Spring Data JPA or JDBC with configuration in **application.yml**. Boot auto-configures DataSource if dependencies are present.
+* Using Spring Data JPA or JDBC with configuration in **application.yml**. 
+* Boot auto-configures DataSource if dependencies are present.
 
 **18. What is Spring Data JPA?**
 * A layer over JPA that simplifies database access by generating repository implementations automatically.
 
 **19. What are transactions in Spring Boot?**
-* Managed using **@Transactional**. Spring uses AOP proxies to handle commit/rollback behavior.
+* Managed using `@Transactional`. 
+* Spring uses AOP proxies to handle commit/rollback behavior.
 
-**20. What is the difference between @Transactional propagation types?**
+**20. What is the difference between `@Transactional` propagation types?**
 * Defines how transactions behave:
   * REQUIRED (default).
   * REQUIRES_NEW.
@@ -81,13 +85,14 @@ immutability and testability.
 * Important for complex service-layer logic.
 
 **21. How do you build REST APIs in Spring Boot?**
-* Using **@RestController**, mapping endpoints with **@RequestMapping**, **@GetMapping**, etc., and returning DTOs.
+* Using `@RestController`, mapping endpoints with `@RequestMapping`, `@GetMapping`, etc., and returning DTOs.
 
 **22. How do you validate input?**
-* Using **@Valid** and Bean Validation (Jakarta Validation), with annotations like **@NotNull**, **@Size**, etc.
+* Using `@Valid` and Bean Validation (Jakarta Validation), with annotations like `@NotNull`, `@Size`, etc.
 
 **23. How do you implement microservices with Spring Boot?**
-* Using Spring Cloud tools like Config Server, Eureka, Gateway, and Feign clients. Emphasis on service discovery, resilience, and scalability.
+* Using Spring Cloud tools like Config Server, Eureka, Gateway, and Feign clients. 
+* Emphasis on service discovery, resilience, and scalability.
 
 **24. What is Spring Boot’s startup lifecycle?**
 * Key phases:
@@ -105,6 +110,8 @@ immutability and testability.
 * Use reactive programming (WebFlux) where applicable.
 * Monitor with Actuator.
 
+***
+
 # Microservices.
 
 **1. What are the key principles of microservices architecture?**
@@ -117,7 +124,8 @@ immutability and testability.
 
 **2. How do you design service boundaries?**
 * Using Domain-Driven Design (DDD): identify bounded contexts, align services with business capabilities, and avoid 
-splitting by technical layers. Poor boundaries lead to chatty communication and tight coupling.
+splitting by technical layers. 
+* Poor boundaries lead to chatty communication and tight coupling.
 
 **3. How do microservices communicate?**
 * Synchronous: REST (Spring MVC/WebClient), gRPC.
@@ -125,10 +133,12 @@ splitting by technical layers. Poor boundaries lead to chatty communication and 
 * Best practice: prefer async for scalability and resilience.
 
 **4. How do you implement service discovery?**
-* Using Spring Cloud Netflix Eureka or Kubernetes DNS. Services register themselves and clients discover them dynamically.
+* Using Spring Cloud Netflix Eureka or Kubernetes DNS. 
+* Services register themselves and clients discover them dynamically.
 
 **5. What is an API Gateway and why is it needed?**
-* Acts as a single entry point (e.g., Spring Cloud Gateway). Handles routing, authentication, rate limiting, logging, and aggregation.
+* Acts as a single entry point (e.g., Spring Cloud Gateway). 
+* Handles routing, authentication, rate limiting, logging, and aggregation.
 
 **6. How do you handle distributed transactions?**
 * Avoid 2PC. Use:
@@ -137,8 +147,8 @@ splitting by technical layers. Poor boundaries lead to chatty communication and 
   * Compensation transactions.
 
 **7. What is the Saga pattern?**
-* A sequence of local transactions coordinated via events or a central orchestrator. If one step fails, 
-compensating actions undo previous steps.
+* A sequence of local transactions coordinated via events or a central orchestrator. 
+* If one step fails, compensating actions undo previous steps.
 
 **8. How do you ensure fault tolerance?**
 * Using:
@@ -148,16 +158,19 @@ compensating actions undo previous steps.
   * Bulkheads.
 
 **9. What is a circuit breaker?**
-* Stops calling a failing service after a threshold. Prevents cascading failures and allows fallback mechanisms.
+* Stops calling a failing service after a threshold. 
+* Prevents cascading failures and allows fallback mechanisms.
 
 **10. How do you handle configuration in microservices?**
-* Centralized config using Spring Cloud Config Server or environment-based configuration. Supports dynamic refresh.
+* Centralized config using Spring Cloud Config Server or environment-based configuration. 
+* Supports dynamic refresh.
 
 **11. How do you manage logging across services?**
 * Centralized logging (ELK stack: Elasticsearch, Logstash, Kibana) with correlation IDs to trace requests across services.
 
 **12. What is distributed tracing?**
-* Tracking a request across multiple services using tools like Zipkin or Jaeger. Uses trace IDs and spans.
+* Tracking a request across multiple services using tools like Zipkin or Jaeger. 
+* Uses trace IDs and spans.
 
 **13. How do you secure microservices?**
 * OAuth2 / JWT tokens.
@@ -166,7 +179,7 @@ compensating actions undo previous steps.
 * Role-based access control.
 
 **14. How do you handle versioning of APIs?**
-* URI versioning (/v1/...).
+* URI versioning (`/v1/...`).
 * Header versioning.
 * Backward compatibility is critical.
 
@@ -180,13 +193,16 @@ compensating actions undo previous steps.
 * Ensures service interfaces match expectations between consumer and provider without full integration testing.
 
 **17. How do you deploy microservices?**
-* Using containers (Docker) and orchestration (Kubernetes). CI/CD pipelines automate builds and deployments.
+* Using containers (Docker) and orchestration (Kubernetes). 
+* CI/CD pipelines automate builds and deployments.
 
 **18. What is the role of Kubernetes in microservices?**
 * Handles scaling, service discovery, load balancing, self-healing, and deployment strategies (rolling updates, blue-green).
 
 **19. How do you handle database per service?**
-* Each microservice owns its database. No shared DB. Communication happens via APIs or events.
+* Each microservice owns its database. 
+* No shared DB. 
+* Communication happens via APIs or events.
 
 **20. How do you manage data consistency?**
 * Using eventual consistency, event-driven architecture, and Saga pattern.
@@ -205,7 +221,8 @@ compensating actions undo previous steps.
 * Caching.
 
 **23. What is event-driven architecture?**
-* Services communicate via events (Kafka, RabbitMQ). Enables loose coupling and scalability.
+* Services communicate via events (Kafka, RabbitMQ). 
+* Enables loose coupling and scalability.
 
 **24. How do you handle backward compatibility?**
 * Avoid breaking changes.
@@ -218,11 +235,14 @@ compensating actions undo previous steps.
 * Tracing (Zipkin/Jaeger).
 * Alerts and dashboards.
 
+***
+
 # Kubernetes.
 
 **1. What is Kubernetes and why is it used?**
 * Kubernetes is a container orchestration platform that automates deployment, scaling, networking, and management of 
-containerized applications. It enables high availability, self-healing, and infrastructure abstraction.
+containerized applications. 
+* It enables high availability, self-healing, and infrastructure abstraction.
 
 **2. What are the main components of Kubernetes architecture?**
 * Control Plane: API Server, Scheduler, Controller Manager, etcd.
@@ -230,7 +250,8 @@ containerized applications. It enables high availability, self-healing, and infr
 * Control plane manages state; nodes execute workloads.
 
 **3. What is a Pod?**
-* The smallest deployable unit in Kubernetes. It can contain one or more containers that share networking and storage.
+* The smallest deployable unit in Kubernetes. 
+* It can contain one or more containers that share networking and storage.
 
 **4. What is the difference between a Pod and a Deployment?**
 * Pod → single instance.
@@ -242,16 +263,21 @@ containerized applications. It enables high availability, self-healing, and infr
 * Cluster Autoscaler for nodes.
 
 **6. What is a ReplicaSet?**
-* Ensures a specified number of pod replicas are running. Typically managed by a Deployment.
+* Ensures a specified number of pod replicas are running. 
+* Typically managed by a Deployment.
 
 **7. What is a Service in Kubernetes?**
-* An abstraction exposing Pods via a stable IP/DNS. Types include ClusterIP, NodePort, LoadBalancer.
+* An abstraction exposing Pods via a stable IP/DNS. 
+* Types include ClusterIP, NodePort, LoadBalancer.
 
 **8. What is an Ingress?**
 * Manages external HTTP/HTTPS access to services, providing routing, SSL termination, and load balancing.
 
 **9. How does Kubernetes networking work?**
-* Each Pod gets a unique IP. Containers communicate via flat networking. Services provide stable access. CNI plugins handle networking.
+* Each Pod gets a unique IP. 
+* Containers communicate via flat networking. 
+* Services provide stable access. 
+* CNI plugins handle networking.
 
 **10. What is etcd?**
 * A distributed key-value store used as Kubernetes’ source of truth for cluster state.
@@ -266,7 +292,8 @@ containerized applications. It enables high availability, self-healing, and infr
 * Avoid storing secrets in Git.
 
 **13. What is a StatefulSet?**
-* Used for stateful applications (e.g., databases). Provides stable identities, ordered deployment, and persistent storage.
+* Used for stateful applications (e.g., databases). 
+* Provides stable identities, ordered deployment, and persistent storage.
 
 **14. What are liveness and readiness probes?**
 * Liveness → checks if container should be restarted.
@@ -276,7 +303,8 @@ containerized applications. It enables high availability, self-healing, and infr
 * Ensures a Pod runs on every node (e.g., logging agents, monitoring tools).
 
 **16. How does rolling update work?**
-* Gradually replaces old Pods with new ones while maintaining availability. Controlled via Deployment strategy.
+* Gradually replaces old Pods with new ones while maintaining availability. 
+* Controlled via Deployment strategy.
 
 **17. What is a Helm chart?**
 * A package manager for Kubernetes that defines, installs, and manages applications using templated YAML.
@@ -290,14 +318,16 @@ containerized applications. It enables high availability, self-healing, and infr
 * Using CPU/memory requests and limits to control scheduling and prevent resource contention.
 
 **20. What happens if a node fails?**
-* Pods are rescheduled on other nodes by the scheduler. ReplicaSets ensure desired state is maintained.
+* Pods are rescheduled on other nodes by the scheduler. 
+* ReplicaSets ensure desired state is maintained.
 
 **21. What is a Persistent Volume (PV) and Persistent Volume Claim (PVC)?**
 * PV → actual storage resource.
 * PVC → request for storage by a Pod.
 
 **22. What are taints and tolerations?**
-* They control Pod placement. Taints repel Pods; tolerations allow Pods to be scheduled on specific nodes.
+* They control Pod placement. 
+* Taints repel Pods; tolerations allow Pods to be scheduled on specific nodes.
 
 **23. What are affinity and anti-affinity rules?**
 * Control Pod scheduling based on node or other Pods (e.g., spread across nodes for high availability).
@@ -316,18 +346,21 @@ containerized applications. It enables high availability, self-healing, and infr
 * Misconfigured probes.
 * Ignoring security.
 
+***
+
 # Docker.
 
 **1. What is Docker and why is it used?**
 * Docker is a containerization platform that packages applications with their dependencies into lightweight, portable containers. 
-It ensures consistency across environments and simplifies deployment.
+* It ensures consistency across environments and simplifies deployment.
 
 **2. What is the difference between a container and a virtual machine?**
-* Containers share the host OS kernel and are lightweight, while VMs include a full OS and are heavier. Containers start 
-faster and use fewer resources.
+* Containers share the host OS kernel and are lightweight, while VMs include a full OS and are heavier. 
+* Containers start faster and use fewer resources.
 
 **3. What are Docker images?**
-* Immutable, layered templates used to create containers. Built from a Dockerfile and stored in registries.
+* Immutable, layered templates used to create containers. 
+* Built from a Dockerfile and stored in registries.
 
 **4. What is a Dockerfile?**
 * A script containing instructions to build a Docker image (e.g., FROM, RUN, COPY, CMD).
@@ -337,7 +370,8 @@ faster and use fewer resources.
 * ENTRYPOINT → fixed command, arguments passed to it.
 
 **6. What are Docker layers?**
-* Each instruction in a Dockerfile creates a layer. Layers are cached and reused to optimize builds.
+* Each instruction in a Dockerfile creates a layer. 
+* Layers are cached and reused to optimize builds.
 
 **7. How do you optimize Docker image size?**
 * Use minimal base images (e.g., Alpine).
@@ -349,10 +383,11 @@ faster and use fewer resources.
 * A technique where you use multiple FROM statements to separate build and runtime environments, reducing final image size.
 
 **9. What is Docker Compose?**
-* A tool to define and run multi-container applications using a docker-compose.yml file.
+* A tool to define and run multi-container applications using a **docker-compose.yml** file.
 
 **10. How does Docker networking work?**
-* Docker provides bridge, host, and overlay networks. Containers communicate via virtual networks and DNS-based service discovery.
+* Docker provides bridge, host, and overlay networks. 
+* Containers communicate via virtual networks and DNS-based service discovery.
 
 **11. What is the difference between bridge and host networking?**
 * Bridge → isolated network (default).
@@ -380,7 +415,8 @@ faster and use fewer resources.
 * Use read-only filesystems.
 
 **17. What is container orchestration?**
-* Managing containers at scale (deployment, scaling, networking). Tools include Kubernetes and Docker Swarm.
+* Managing containers at scale (deployment, scaling, networking). 
+* Tools include Kubernetes and Docker Swarm.
 
 **18. What is the difference between Docker and Kubernetes?**
 * Docker → container runtime.
@@ -392,7 +428,7 @@ faster and use fewer resources.
 * Inspect container metadata.
 * Check resource usage.
 
-**20. What is the purpose of .dockerignore?**
+**20. What is the purpose of `.dockerignore`?**
 * Excludes files from the build context to reduce image size and improve build performance.
 
 **21. What are common performance issues in Docker?**
@@ -402,7 +438,7 @@ faster and use fewer resources.
 * Lack of resource limits.
 
 **22. How do you manage container resource limits?**
-* Using CPU and memory constraints (--memory, --cpus) to prevent resource exhaustion.
+* Using CPU and memory constraints (**--memory**, **--cpus**) to prevent resource exhaustion.
 
 **23. What is Docker Swarm?**
 * Docker’s native orchestration tool for managing clusters of Docker nodes.
@@ -420,11 +456,13 @@ faster and use fewer resources.
 * Not using multi-stage builds.
 * Ignoring security scans.
 
+***
+
 # Docker Compose.
 
 1. What is Docker Compose and when would you use it?
 * Docker Compose is a tool for defining and running multi-container Docker applications using a YAML file. 
-It’s ideal for local development, integration testing, and simple multi-service environments.
+* It’s ideal for local development, integration testing, and simple multi-service environments.
 
 **2. How does Docker Compose differ from Docker CLI?**
 * Docker CLI runs individual containers, while Compose manages multiple containers as a single application stack with 
@@ -450,7 +488,8 @@ defined relationships.
   * Wait-for scripts.
 
 **7. What is a healthcheck in Docker Compose?**
-* Defines a command to verify container health. Helps orchestrate dependencies and restart policies.
+* Defines a command to verify container health. 
+* Helps orchestrate dependencies and restart policies.
 
 **8. How do you manage environment variables?**
 * **.env** files.
@@ -487,7 +526,7 @@ defined relationships.
   * **docker-compose.prod.yml**.
 
 **17. How do you run one-off commands?**
-* Using **docker-compose run service** command for tasks like migrations or scripts.
+* Using `docker-compose run service`, command for tasks like migrations or scripts.
 
 **18. How do you manage secrets in Docker Compose?**
 * Use environment variables carefully.
@@ -498,8 +537,8 @@ defined relationships.
 * Define container restart behavior (no, always, on-failure, unless-stopped).
 
 **20. How do you debug issues in Docker Compose?**
-* **docker-compose logs**.
-* **docker-compose ps**.
+* `docker-compose logs`.
+* `**docker-compose ps`.
 * docker exec into containers.
 * Inspect networks and volumes.
 
@@ -509,7 +548,8 @@ defined relationships.
 * Inefficient networking.
 
 **22. Can Docker Compose be used in production?**
-* It can, but it's not ideal for large-scale production. Kubernetes or other orchestrators are preferred for scalability and resilience.
+* It can, but it's not ideal for large-scale production. 
+* Kubernetes or other orchestrators are preferred for scalability and resilience.
 
 **23. How does Docker Compose handle networking isolation?**
 * By creating project-specific networks, isolating services from other Compose projects.
@@ -521,40 +561,43 @@ defined relationships.
 * Poor volume management.
 
 **25. How does Docker Compose fit into a microservices architecture?**
-* Primarily for local development and testing. It simulates multi-service environments before deploying to orchestration
-platforms like Kubernetes.
+* Primarily for local development and testing. 
+* It simulates multi-service environments before deploying to orchestration platforms like Kubernetes.
+
+***
 
 # Reactive Spring.
 
 **1. What is Reactive Programming?**
 * Reactive programming is an asynchronous, non-blocking programming paradigm that deals with streams of data and propagates 
-changes automatically. It’s ideal for high-throughput, low-latency applications.
+changes automatically. 
+* It’s ideal for high-throughput, low-latency applications.
 
 **2. What is Spring WebFlux?**
 * Spring WebFlux is a reactive web framework in Spring that supports non-blocking I/O using Reactor (Mono and Flux). 
-It can run on Netty, Undertow, or Servlet 3.1+ containers.
+* It can run on Netty, Undertow, or Servlet 3.1+ containers.
 
 **3. What are the key differences between Spring MVC and WebFlux?**
 
-| Aspect      | Spring MVC       | Spring WebFlux                   |
-|-------------|------------------|----------------------------------|
-| I/O         | Blocking         | Non-blocking                     |
-| Threads     | 1 request/thread | Event-loop / small thread pool   |
-| Data types  | Object	          | Mono / Flux                      |
-| Scalability | Limited	         | High for concurrent requests     |
+| Aspect      | Spring MVC       | Spring WebFlux                 |
+|-------------|------------------|--------------------------------|
+| I/O         | Blocking         | Non-blocking                   |
+| Threads     | 1 request/thread | Event-loop / small thread pool |
+| Data types  | Object	          | Mono / Flux                    |
+| Scalability | Limited	         | High for concurrent requests   |
 
 **4. What are Mono and Flux?**
-* **Mono<T>** → 0 or 1 element.
-* **Flux<T>** → 0..N elements.
+* `Mono<T>` → 0 or 1 element.
+* `Flux<T>` → 0..N elements.
 * Both are Publisher implementations from Project Reactor.
 
 **5. What is backpressure in reactive programming?**
 * Backpressure is a mechanism that controls data flow between producer and consumer to prevent overwhelming the consumer. 
-Reactor supports it via request(n) and operators like onBackpressureBuffer.
+* Reactor supports it via request(n) and operators like `onBackpressureBuffer`.
 
 **6. How do you convert a blocking repository to reactive?**
-* Use reactive repositories (**ReactiveCrudRepository** in Spring Data).
-* Wrap blocking calls with **Schedulers.boundedElastic()** to offload to a separate thread.
+* Use reactive repositories (`ReactiveCrudRepository` in Spring Data).
+* Wrap blocking calls with `Schedulers.boundedElastic()` to offload to a separate thread.
 
 **7. How do you create a reactive REST endpoint?**
 
@@ -565,47 +608,49 @@ public Mono<User> getUser(@PathVariable String id) {
 }
 ```
 
-**8. What is the difference between subscribeOn and publishOn?**
-* **subscribeOn** → determines which thread executes upstream.
-* **publishOn** → changes thread downstream from that point.
+**8. What is the difference between `subscribeOn` and `publishOn`?**
+* `subscribeOn` → determines which thread executes upstream.
+* `publishOn` → changes thread downstream from that point.
 
 **9. How do you handle errors in a reactive stream?**
 * Use Reactor operators:
-  * onErrorReturn
-  * onErrorResume
-  * doOnError
-  * retry / retryWhen
+  * `onErrorReturn`.
+  * `onErrorResume`.
+  * `doOnError`.
+  * `retry / retryWhen`.
   
 **10. How do you test reactive streams?**
-* Use **StepVerifier** from Project Reactor for unit testing Mono / Flux.
+* Use `StepVerifier` from Project Reactor for unit testing Mono / Flux.
 * Verify emitted items, completion, or errors.
 
 **11. What is the difference between flatMap and map in Flux/Mono?**
-* **map** → synchronous transformation.
-* **flatMap** → async transformation, returns Publisher.
+* `map` → synchronous transformation.
+* `flatMap` → async transformation, returns Publisher.
 
 **12. How do you handle multiple reactive streams together?**
-* **zip** → combine streams element-wise.
-* **merge** → combine streams concurrently.
-* **concat** → sequential combination.
+* `zip` → combine streams element-wise.
+* `merge` → combine streams concurrently.
+* `concat` → sequential combination.
 
 **13. How do you integrate Reactive Spring with a database?**
 * Use Spring Data R2DBC for SQL databases.
-* Use **ReactiveMongoRepository** for MongoDB.
-* Avoid blocking JDBC calls; wrap with **Schedulers.boundedElastic()** if needed.
+* Use `ReactiveMongoRepository` for MongoDB.
+* Avoid blocking JDBC calls; wrap with `Schedulers.boundedElastic()` if needed.
 
 **14. Can you use reactive programming with RESTTemplate?**
-* No — RestTemplate is blocking. Use WebClient, which is non-blocking and reactive.
+* No — RestTemplate is blocking. 
+* Use WebClient, which is non-blocking and reactive.
 
 **15. What is WebClient?**
-* WebClient is a reactive HTTP client in Spring WebFlux. It supports asynchronous, non-blocking calls and streaming responses.
+* WebClient is a reactive HTTP client in Spring WebFlux. 
+* It supports asynchronous, non-blocking calls and streaming responses.
 ```java
 WebClient client = WebClient.create("http://example.com");
 Mono<User> user = client.get().uri("/users/1").retrieve().bodyToMono(User.class);
 ```
 
 **16. How do you stream data from the server to clients?**
-* Use Flux and return **MediaType.TEXT_EVENT_STREAM_VALUE** for Server-Sent Events (SSE).
+* Use Flux and return `MediaType.TEXT_EVENT_STREAM_VALUE` for Server-Sent Events (SSE).
 ```java
 @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 public Flux<Event> streamEvents() { 
@@ -620,26 +665,26 @@ public Flux<Event> streamEvents() {
 **18. What is a Scheduler in Reactor?**
 * Schedulers manage which thread executes a reactive stream.
 * Types:
-  * parallel() → CPU-intensive tasks.
-  * boundedElastic() → blocking I/O.
-  * single() → single-threaded.
+  * `parallel()` → CPU-intensive tasks.
+  * `boundedElastic()` → blocking I/O.
+  * `single()` → single-threaded.
 
 **19. How do you implement backpressure in WebFlux endpoints?**
 * Reactive types (Flux) support backpressure natively.
-* Control request rate using **limitRate()**, **onBackpressureBuffer()**, or **onBackpressureDrop()**.
+* Control request rate using `limitRate()`, `onBackpressureBuffer()`, or `onBackpressureDrop()`.
 
 **20. What are hot and cold publishers?**
-* Cold Publisher: starts emitting items when subscribed (e.g., Flux.range).
-* Hot Publisher: emits items independently of subscribers (e.g., Sinks.many().multicast()).
+* Cold Publisher: starts emitting items when subscribed (e.g., `Flux.range`).
+* Hot Publisher: emits items independently of subscribers (e.g., `Sinks.many().multicast()`).
 
 **21. How do you implement retry strategies in Reactor?**
-* **retry(n)** → simple retry,
-* **retryWhen(Retry.backoff(maxRetries, Duration.ofSeconds(1)))** → exponential backoff.
-* Can handle errors selectively
+* `retry(n)` → simple retry.
+* `retryWhen(Retry.backoff(maxRetries, Duration.ofSeconds(1)))` → exponential backoff.
+* Can handle errors selectively.
 
 **22. How do you handle streaming JSON responses?**
-* Return a **Flux<T>**.
-* Ensure **MediaType.APPLICATION_NDJSON_VALUE** for streaming JSON array elements.
+* Return a `Flux<T>`.
+* Ensure `MediaType.APPLICATION_NDJSON_VALUE` for streaming JSON array elements.
 
 **23. How do you integrate Reactive Spring with messaging systems?**
 * Use reactive clients for Kafka (reactor-kafka) or RabbitMQ (reactor-rabbitmq).
@@ -657,6 +702,8 @@ public Flux<Event> streamEvents() {
 * Misunderstanding subscribeOn vs publishOn.
 * Overcomplicating simple endpoints that don’t need reactive.
 
+***
+
 # Java 21.
 
 **1. What are the major features introduced in Java 21?**
@@ -670,7 +717,7 @@ public Flux<Event> streamEvents() {
 **2. What are virtual threads in Java 21?**
 * Lightweight threads managed by the JVM (not OS threads).
 * Allow millions of concurrent tasks with low memory overhead.
-* Integrated with standard **ExecutorService** via **Executors.newVirtualThreadPerTaskExecutor()**.
+* Integrated with standard `ExecutorService` via `Executors.newVirtualThreadPerTaskExecutor()`.
 
 **3. How do virtual threads differ from platform threads?**
 
@@ -681,11 +728,12 @@ public Flux<Event> streamEvents() {
 | Blocking I/O      | 	Blocks thread	    | Doesn’t block other virtual threads |
 
 **4. What are scoped values in Java 21?**
-* Scoped values are a safe alternative to **ThreadLocal**, designed to pass immutable values to multiple threads, 
+* Scoped values are a safe alternative to `ThreadLocal`, designed to pass immutable values to multiple threads, 
 including virtual threads, without leaks.
 
 **5. What are record patterns?**
-* Record patterns allow deconstructing records in pattern matching. For example:
+* Record patterns allow deconstructing records in pattern matching. 
+* For example:
 ```java
 record Point(int x, int y) {}
 Point p = new Point(1,2);
@@ -693,6 +741,7 @@ if (p instanceof Point(int a, int b)) {
         System.out.println(a + b);
 }
 ```
+
 **6. What are pattern matching enhancements?**
 * Switch expressions can now match records and sealed types.
 * instanceof supports pattern binding inline.
@@ -706,8 +755,8 @@ String s = STR."Value: \{a}";
 ```
 
 **8. What are sequenced collections?**
-* New collection types where iteration order is guaranteed, e.g., **SequencedSet** and **SequencedMap**. 
-Useful for LRU caches or ordered APIs.
+* New collection types where iteration order is guaranteed, e.g., `SequencedSet` and `SequencedMap. 
+* Useful for LRU caches or ordered APIs.
 
 **9. How does Project Loom improve concurrency?**
 * Reduces thread management complexity.
@@ -727,15 +776,16 @@ ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
 * Some frameworks may need updates for full integration.
 
 **12. How do you handle exception handling in virtual threads?**
-* Same as platform threads, using try-catch blocks. Futures (**CompletableFuture**) also propagate exceptions normally.
+* Same as platform threads, using try-catch blocks. 
+* Futures (`CompletableFuture`) also propagate exceptions normally.
 
 **13. How do scoped values compare to ThreadLocal?**
 * Scoped values are immutable, designed for structured concurrency.
-* **ThreadLocal** can leak memory and is mutable.
+* `ThreadLocal` can leak memory and is mutable.
 
 **14. What is structured concurrency?**
-* A concept where related tasks are grouped in a scope, and their lifetimes are tied together. Java 21 supports this 
-via StructuredTaskScope.
+* A concept where related tasks are grouped in a scope, and their lifetimes are tied together. 
+* Java 21 supports this via `StructuredTaskScope`.
 
 **15. How do you create a virtual thread and start it?**
 ```java
@@ -766,8 +816,8 @@ java --enable-preview MyClass
 * Reduced memory footprint for many threads.
 
 **21. How does Java 21 handle async I/O with virtual threads?**
-* Blocking I/O calls (e.g., InputStream.read()) are automatically non-blocking for other virtual threads.
-* Reduces need for CompletableFuture chains.
+* Blocking I/O calls (e.g., `InputStream.read()`) are automatically non-blocking for other virtual threads.
+* Reduces need for `CompletableFuture` chains.
 
 **22. How can virtual threads improve reactive applications?**
 * Simplifies reactive-like concurrency without full reactive frameworks.
@@ -785,10 +835,12 @@ java --enable-preview MyClass
 
 **25. What are the key pitfalls of Java 21 features for senior devs?**
 * Using virtual threads for CPU-bound tasks.
-* Forgetting --enable-preview for preview features.
+* Forgetting `--enable-preview` for preview features.
 * Mixing legacy blocking frameworks without testing.
 * Overusing scoped values instead of structured concurrency.
 * Assuming sequencing guarantees without checking API docs.
+
+***
 
 # Java 21 - Streams.
 
@@ -796,12 +848,12 @@ java --enable-preview MyClass
 * Improved Stream API performance.
 * Pattern matching in lambdas.
 * Scoped values with functional operations.
-* **toList()** and **toMap()** collector improvements.
+* `toList()` and `toMap()` collector improvements.
 * Enhanced flatMap and combinators.
 * Better integration with virtual threads and structured concurrency.
 
 **2. How has Stream.toList() changed in Java 21?**
-* Now returns an unmodifiable List
+* Now returns an unmodifiable List.
 * Performs better due to optimized internal implementations.
 * Can be combined with pattern matching to extract data.
 
@@ -847,7 +899,7 @@ points.stream()
 
 **8. How do scoped values integrate with functional streams?**
 * Scoped values provide immutable context propagation.
-* Useful in parallel streams to pass values safely without ThreadLocal.
+* Useful in parallel streams to pass values safely without `ThreadLocal`.
 
 **9. How do you handle exceptions in lambda expressions in streams?**
 * Wrap in try-catch inside lambda.
@@ -860,8 +912,8 @@ stream.map(s -> {
 ```
 
 **10. What is the difference between map and flatMap in Java 21 streams?**
-* map → transforms each element to a single object.
-* flatMap → transforms each element into a stream and flattens it.
+* `map` → transforms each element to a single object.
+* `flatMap` → transforms each element into a stream and flattens it.
 
 **11. How do you combine multiple streams efficiently?**
 * `Stream.concat(stream1, stream2)`.
@@ -878,21 +930,21 @@ Map<String, List<User>> grouped = users.stream()
         .collect(Collectors.groupingBy(User::getRole));
 ```
 * Java 21 has optimized hash-based collectors.
-* Supports **Collectors.groupingByConcurrent** with better scaling.
+* Supports `Collectors.groupingByConcurrent` with better scaling.
 
 **14. How do you handle infinite streams safely in Java 21?**
-* Use **limit()** to avoid unbounded processing.
-* Combine with takeWhile / dropWhile for controlled consumption.
+* Use `limit()` to avoid unbounded processing.
+* Combine with `takeWhile` / `dropWhile` for controlled consumption.
 
 **15. What are enhancements in Optional functional operations?**
-* **stream()** support for Optional.
+* `stream()` support for `Optional`.
 * Can integrate directly in pipelines:
 ```java
 Optional<String> opt = Optional.of("abc");
 opt.stream().map(String::toUpperCase).toList();
 ```
 
-**16. How has forEach changed in Java 21 streams?**
+**16. How has `forEach` changed in Java 21 streams?**
 * Minor performance improvements for large parallel streams.
 * Can accept method references or lambdas seamlessly with virtual threads.
 
@@ -915,10 +967,10 @@ List<Integer> dropped = list.stream().dropWhile(i -> i < 4).toList();
 
 **19. How do you handle parallel streams safely with mutable objects?**
 * Avoid shared mutable state.
-* Use collectors like **toList()** or **toConcurrentMap()**.
+* Use collectors like `toList()` or `toConcurrentMap()`.
 * Prefer immutable data structures.
 
-**20. What is Stream.iterate() enhancement in Java 21?**
+**20. What is `Stream.iterate()` enhancement in Java 21?**
 * Supports predicate-based termination.
 * `Stream.iterate(0, i -> i < 10, i -> i + 1).toList();`.
 * Cleaner and safer than previous infinite iterate.
@@ -928,12 +980,11 @@ List<Integer> dropped = list.stream().dropWhile(i -> i < 4).toList();
 * Java 21 improves internal string concatenation and memory usage.
 
 **22. How do you integrate streams with reactive programming in Java 21?**
-* Streams can be converted to reactive Flux:
-* `Flux.fromStream(list.stream());`.
+* Streams can be converted to reactive Flux: `Flux.fromStream(list.stream());`.
 * Useful for batch processing in virtual threads.
 
 **23. How do you optimize stream performance in Java 21?**
-* Use primitive streams (IntStream, LongStream).
+* Use primitive streams (`IntStream`, `LongStream`).
 * Minimize boxing/unboxing.
 * Use parallel streams for CPU-bound tasks.
 * Avoid unnecessary intermediate collections.
@@ -949,6 +1000,8 @@ List<Integer> dropped = list.stream().dropWhile(i -> i < 4).toList();
 * Misusing mutable shared objects.
 * Forgetting to handle exceptions in lambdas.
 * Assuming performance improvements automatically apply.
+
+***
 
 # Helm.
 
@@ -968,8 +1021,8 @@ List<Integer> dropped = list.stream().dropWhile(i -> i < 4).toList();
 * It defines default configuration values that can be overridden at install/upgrade time.
 
 **5. How do you override values in Helm?**
-* CLI: **--set key=value**.
-* Custom file: **-f custom-values.yaml**.
+* CLI: `--set key=value`.
+* Custom file: `-f custom-values.yaml`.
 * Environment-specific values files.
 
 **6. What is Helm templating?**
@@ -1016,7 +1069,7 @@ List<Integer> dropped = list.stream().dropWhile(i -> i < 4).toList();
 * A command to validate chart structure and detect common issues before deployment.
 
 **18. How do you manage environments (dev/staging/prod)?**
-* Separate values files (values-dev.yaml, etc.).
+* Separate values files (**values-dev.yaml**, etc.).
 * CI/CD pipelines.
 * Possibly separate clusters.
 
@@ -1057,11 +1110,13 @@ List<Integer> dropped = list.stream().dropWhile(i -> i < 4).toList();
 * Readable and maintainable templates.
 * Proper resource limits and probes.
 
+***
+
 # Envoy Proxy.
 
 **1. What is Envoy Proxy?**
-* Envoy is a high-performance, open-source L7 proxy designed for microservices. It provides features like load balancing, 
-service discovery, observability, and traffic management.
+* Envoy is a high-performance, open-source L7 proxy designed for microservices. 
+* It provides features like load balancing, service discovery, observability, and traffic management.
 
 **2. Where is Envoy typically used?**
 * API Gateway.
@@ -1162,12 +1217,16 @@ service discovery, observability, and traffic management.
 * Secure with mTLS.
 * Test failover and resilience.
 
+***
+
 # Web Dev.
 
 ## HTTP & Networking
 
 **1. Which HTTP methods are cacheable?**
-* GET is cacheable by default. HEAD is also cacheable. POST can be cached if explicitly allowed by cache headers, but this is uncommon.
+* GET is cacheable by default. 
+* HEAD is also cacheable. 
+* POST can be cached if explicitly allowed by cache headers, but this is uncommon.
 
 **2. What is the content sent in a POST request called?**
 * It is called the request body or payload.
@@ -1179,512 +1238,527 @@ service discovery, observability, and traffic management.
 **4. What status code means “Not Found”?**
 * 404 Not Found.
 
-**What status code means “Unauthorized”?**
+**5. What status code means “Unauthorized”?**
 * 401 Unauthorized.
 
-**What status code means “Forbidden”?**
+**6. What status code means “Forbidden”?**
 * 403 Forbidden.
 
-**What is the difference between 401 and 403?**
+**7. What is the difference between 401 and 403?**
 * 401: Authentication required or invalid credentials.
 * 403: User is authenticated but lacks permission.
 
-**What does HTTPS provide?**
+**8. What does HTTPS provide?**
 * Encryption, integrity, and authentication using SSL/TLS.
 
-**What is CORS?**
+**9. What is CORS?**
 * Cross-Origin Resource Sharing allows or restricts requests between different domains.
 
-**What is preflight request in CORS?**
+**10. What is preflight request in CORS?**
 * A browser sends an OPTIONS request before certain cross-origin requests to check permissions.
 
-**What header controls caching?**
-* Cache-Control
+**11. What header controls caching?**
+* Cache-Control.
 
-**What does Cache-Control: no-cache mean?**
+**12. What does Cache-Control: no-cache mean?**
 * The response can be stored, but must be revalidated before reuse.
 
-**What does Cache-Control: no-store mean?**
+**13. What does Cache-Control: no-store mean?**
 * The response must never be cached.
 
-**What is idempotency in HTTP?**
+**14. What is idempotency in HTTP?**
 * Multiple identical requests produce the same result.
 
-**Which HTTP methods are idempotent?**
+**15. Which HTTP methods are idempotent?**
 * GET, PUT, DELETE, HEAD, OPTIONS.
 
-**What is the purpose of the OPTIONS method?**
+**16. What is the purpose of the OPTIONS method?**
 * It describes allowed communication options for a resource.
 
-**What is the difference between PUT and PATCH?**
+**17. What is the difference between PUT and PATCH?**
 * PUT replaces the entire resource.
 * PATCH partially updates a resource.
 
-**What does REST stand for?**
+**18. What does REST stand for?**
 * Representational State Transfer.
 
-**What is statelessness in REST?**
+**19. What is statelessness in REST?**
 * Each request contains all information needed to process it.
 
-**What is an API?**
+**20. What is an API?**
 * An Application Programming Interface that allows software communication.
 
 ## Browser & Performance.
 
-**What is lazy loading?**
+**1. What is lazy loading?**
 * Loading resources only when needed.
 
-**What is CDN?**
+**2. What is CDN?**
 * Content Delivery Network — servers distributing content geographically.
 
-**Why minimize HTTP requests?**
+**3. Why minimize HTTP requests?**
 * Improves performance and load times.
 
-**What is tree shaking?**
+**4. What is tree shaking?**
 * Removing unused JavaScript during bundling.
 
-**What is code splitting?**
+**5. What is code splitting?**
 * Splitting code into smaller bundles loaded on demand.
 
-**What causes render blocking?**
+**6. What causes render blocking?**
 * CSS and synchronous JavaScript delaying page rendering.
 
-**What is hydration in frontend frameworks?**
+**7. What is hydration in frontend frameworks?**
 * Attaching JavaScript behavior to server-rendered HTML.
 
-**What is debounce?**
+**8. What is debounce?**
 * Delays function execution until activity stops.
 
-**What is throttling?**
+**9. What is throttling?**
 * Limits function execution frequency.
 
-**What is SEO?**
+**10. What is SEO?**
 * Search Engine Optimization.
 
 ## Security Questions.
 
-**What is XSS?**
+**1. What is XSS?**
 * Cross-Site Scripting — injecting malicious scripts into webpages.
 
-**How can XSS be prevented?**
+**2. How can XSS be prevented?**
 * Escaping output, sanitizing input, CSP headers.
 
-**What is CSRF?**
+**3. What is CSRF?**
 * Cross-Site Request Forgery — tricking users into unwanted actions.
 
-**How can CSRF be prevented?**
+**4. How can CSRF be prevented?**
 * CSRF tokens, SameSite cookies.
 
-**What is SQL Injection?**
+**5. What is SQL Injection?**
 * Injecting malicious SQL queries via user input.
 
-**How prevent SQL Injection?**
+**6. How prevent SQL Injection?**
 * Prepared statements and parameterized queries.
 
-**What is JWT?**
+**7. What is JWT?**
 * JSON Web Token used for authentication and authorization.
 
-**Where should JWTs be stored?**
+**8. Where should JWTs be stored?**
 * Preferably secure HttpOnly cookies.
 
-**What is Same-Origin Policy?**
+**9. What is Same-Origin Policy?**
 * Browser security restricting interactions between different origins.
 
-**What is Content Security Policy (CSP)?**
+**10. What is Content Security Policy (CSP)?**
 * Security layer preventing unauthorized resource execution.
 
 ## Backend & Databases.
 
-**What is CRUD?**
+**1. What is CRUD?**
 * Create, Read, Update, Delete.
 
-**What is normalization in databases?**
+**2. What is normalization in databases?**
 * Organizing data to reduce redundancy.
 
-**What is indexing?**
+**3. What is indexing?**
 * Data structure improving query speed.
 
-**What is the difference between SQL and NoSQL?**
+**4. What is the difference between SQL and NoSQL?**
 * SQL uses relational tables; NoSQL uses flexible schemas.
 
-**What is ORM?**
+**5. What is ORM?**
 * Object-Relational Mapping.
 
-**What is middleware?**
+**6. What is middleware?**
 * Code executed between request and response.
 
-**What is authentication?**
+**7. What is authentication?**
 * Verifying identity.
 
-**What is authorization?**
+**8. What is authorization?**
 * Determining permissions.
 
-**What is rate limiting?**
+**9. What is rate limiting?**
 * Restricting request frequency.
 
-**What is pagination?**
+**10. What is pagination?**
 * Splitting large datasets into smaller pages.
 
 ## Advanced Questions.
 
-**What is SSR?**
+**1. What is SSR?**
 * Server-Side Rendering.
 
-**What is CSR?**
+**2. What is CSR?**
 * Client-Side Rendering.
 
-**What is SSG?**
+**3. What is SSG?**
 * Static Site Generation.
 
-**What is WebSocket?**
+**4. What is WebSocket?**
 * Persistent full-duplex communication protocol.
 
-**What is GraphQL?**
+**5. What is GraphQL?**
 * Query language for APIs allowing clients to request specific data.
 
-**What is microfrontend architecture?**
+**6. What is microfrontend architecture?**
 * Splitting frontend apps into smaller independent modules.
 
-**What is Docker commonly used for in web development?**
+**7. What is Docker commonly used for in web development?**
 * Containerizing applications.
 
-**What is CI/CD?**
+**8. What is CI/CD?**
 * Continuous Integration / Continuous Deployment.
 
-**What is a memory leak in JavaScript?**
+**9. What is a memory leak in JavaScript?**
 * Unused memory not released properly.
 
-**What is garbage collection?**
+**10.What is garbage collection?**
 * Automatic memory cleanup.
 
 ## HTTP, Networking & Protocols.
 
-**Why are GET requests considered safe and idempotent?**
+**1. Why are GET requests considered safe and idempotent?**
 * Safe: they should not modify server state.
 * Idempotent: multiple identical requests produce the same result.
 
-**Can POST requests be idempotent?**
-* Yes. Idempotency depends on implementation, not method itself. Example: payment APIs using idempotency keys.
+**2. Can POST requests be idempotent?**
+* Yes. 
+* Idempotency depends on implementation, not method itself. 
+* Example: payment APIs using idempotency keys.
 
-**What is chunked transfer encoding?**
+**3. What is chunked transfer encoding?**
 * HTTP mechanism where data is sent in chunks without knowing total size beforehand.
 
-**What problem does HTTP/2 solve?**
+**4. What problem does HTTP/2 solve?**
 * Head-of-line blocking and inefficient multiple TCP connections through multiplexing.
 
-**What is head-of-line blocking?**
+**5. What is head-of-line blocking?**
 * One slow request blocks others in the same connection or queue.
 
-**Why does HTTP/3 use QUIC instead of TCP?**
+**6. Why does HTTP/3 use QUIC instead of TCP?**
 * QUIC runs over UDP and reduces connection latency while avoiding TCP-level head-of-line blocking.
 
-**What happens during a TLS handshake?**
+**7. What happens during a TLS handshake?**
 * Client/server negotiate encryption algorithms, authenticate certificates, and exchange session keys.
 
-**What is connection pooling?**
+**8. What is connection pooling?**
 * Reusing existing connections instead of opening new ones repeatedly.
 
-**What is backpressure in distributed systems?**
+**9. What is backpressure in distributed systems?**
 * Mechanism preventing producers from overwhelming consumers.
 
-**What is the difference between latency and throughput?**
+**10. What is the difference between latency and throughput?**
 * Latency: time for one request.
 * Throughput: number of requests processed per unit time.
 
 ## Caching & Performance.
 
-**What is cache invalidation? Why is it hard?**
-* Keeping cache synchronized with source data. Difficult because stale data can persist.
+**1. What is cache invalidation? Why is it hard?**
+* Keeping cache synchronized with source data. 
+* Difficult because stale data can persist.
 
-**What is the difference between write-through and write-back cache?**
+**2. What is the difference between write-through and write-back cache?**
 * Write-through: update cache and DB together.
 * Write-back: update cache first, DB later asynchronously.
 
-**What is cache stampede?**
+**3. What is cache stampede?**
 * Many requests simultaneously regenerate expired cache data.
 
-**How prevent cache stampede?**
+**4. How prevent cache stampede?**
 * Request coalescing, mutex locks, stale-while-revalidate.
 
-**What is consistent hashing?**
+**5. What is consistent hashing?**
 * Hashing strategy minimizing redistribution when nodes change.
 
-**Why is Redis single-threaded?**
+**6. Why is Redis single-threaded?**
 * Simplicity and avoiding lock contention while relying on fast in-memory operations.
 
-**What is the CAP theorem?**
+**7. What is the CAP theorem?**
 * Distributed systems can guarantee only two of: Consistency, Availability, Partition tolerance.
 
-**What is eventual consistency?**
+**8. What is eventual consistency?**
 * System becomes consistent over time after updates propagate.
 
-**What is split-brain in distributed systems?**
+**9. What is split-brain in distributed systems?**
 * Cluster partitions where multiple nodes think they are primary.
 
-**What is a thundering herd problem?**
+**10. What is a thundering herd problem?**
 * Many processes wake simultaneously competing for the same resource.
 
 ## Databases.
 
-**What is MVCC?**
+**1. What is MVCC?**
 * Multi-Version Concurrency Control allows concurrent reads/writes without locking readers.
 
-**Difference between optimistic and pessimistic locking?**
+**2. Difference between optimistic and pessimistic locking?**
 * Optimistic: assumes low conflicts; checks before commit.
 * Pessimistic: locks resources immediately.
 
-**What are database isolation levels?**
+**3. What are database isolation levels?**
 * Read Uncommitted, Read Committed, Repeatable Read, Serializable.
 
-**What is a phantom read?**
+**4. What is a phantom read?**
 * New rows appear between repeated queries in the same transaction.
 
-**What is a deadlock?**
+**5. What is a deadlock?**
 * Two or more transactions wait indefinitely for each other’s locks.
 
-**How detect and resolve deadlocks?**
+**6. How detect and resolve deadlocks?**
 * DB detects cycles in wait graph and aborts one transaction.
 
-**What is a covering index?**
+**7. What is a covering index?**
 * Index containing all columns needed for a query.
 
-**Why are indexes expensive?**
+**8. Why are indexes expensive?**
 * Faster reads but slower writes and more storage usage.
 
-**What is sharding?**
+**9. What is sharding?**
 * Splitting database across multiple machines.
 
-**What are common sharding strategies?**
+**10. What are common sharding strategies?**
 * Range-based, hash-based, geographic, directory-based.
 
-**What is replication lag?**
+**11. What is replication lag?**
 * Delay between primary DB write and replica synchronization.
 
-**What causes N+1 query problems?**
+**12. What causes N+1 query problems?**
 * Querying related records individually instead of batching.
 
-**What is a distributed transaction?**
+**13. What is a distributed transaction?**
 * Transaction spanning multiple services/databases.
 
-**What is two-phase commit (2PC)?**
+**14. What is two-phase commit (2PC)?**
 * Protocol coordinating distributed transaction commits.
 
-**What are drawbacks of 2PC?**
+**15. What are drawbacks of 2PC?**
 * Blocking, coordinator bottleneck, poor scalability.
 
-**What is CQRS?**
+**16. What is CQRS?**
 * Command Query Responsibility Segregation — separating reads and writes.
 
-**What is event sourcing?**
+**17. What is event sourcing?**
 * Persisting state changes as immutable events.
 
-**Why are UUIDs problematic as clustered indexes?**
+**18. Why are UUIDs problematic as clustered indexes?**
 * Random insertion causes fragmentation and poor locality.
 
-**Difference between OLTP and OLAP?**
+**19. Difference between OLTP and OLAP?**
 * OLTP: transactional systems.
 * OLAP: analytical workloads.
 
-**What is read skew?**
+**20. What is read skew?**
 * Reading inconsistent snapshots during concurrent updates.
 
-## Concurrency & Multithreading.
+***
 
-**What is a race condition?**
+# Concurrency & Multithreading.
+
+**1. What is a race condition?**
 * Outcome depends on timing of concurrent operations.
 
-**What is thread starvation?**
+**2. What is thread starvation?**
 * Threads cannot access resources because others monopolize them.
 
-**What is livelock?**
+**3. What is livelock?**
 * Processes continuously react to each other without progress.
 
-**Difference between concurrency and parallelism?**
+**4. Difference between concurrency and parallelism?**
 * Concurrency: managing multiple tasks.
 * Parallelism: executing simultaneously.
 
-**What is a mutex?**
+**5. What is a mutex?**
 * Mutual exclusion lock allowing one thread at a time.
 
-**What is a semaphore?**
+**6. What is a semaphore?**
 * Synchronization primitive controlling access count.
 
-**What is lock contention?**
+**7. What is lock contention?**
 * Multiple threads competing for the same lock.
 
-**Why are immutable objects useful in concurrency?**
+**8. Why are immutable objects useful in concurrency?**
 * They eliminate shared mutable state issues.
 
-**What is compare-and-swap (CAS)?**
+**9. What is compare-and-swap (CAS)?**
 * Atomic CPU instruction used in lock-free algorithms.
 
-**What are lock-free data structures?**
+**10. What are lock-free data structures?**
 * Structures using atomic operations instead of locks.
 
-## APIs & System Design.
+***
 
-**Why use API gateways?**
+# APIs & System Design.
+
+**1. Why use API gateways?**
 * Centralized routing, auth, throttling, monitoring.
 
-**What is rate limiting?**
+**2. What is rate limiting?**
 * Restricting request frequency to protect systems.
 
-**Common rate limiting algorithms?**
+**3. Common rate limiting algorithms?**
 * Token bucket, leaky bucket, fixed window, sliding window.
 
-**What is circuit breaker pattern?**
+**4. What is circuit breaker pattern?**
 * Prevents repeated failures by stopping calls temporarily.
 
-**What is bulkhead pattern?**
+**5. What is bulkhead pattern?**
 * Isolates failures to prevent cascading outages.
 
-**What is service discovery?**
+**6. What is service discovery?**
 * Mechanism allowing services to dynamically locate each other.
 
-**Difference between horizontal and vertical scaling?**
+**7. Difference between horizontal and vertical scaling?**
 * Horizontal: add machines.
 * Vertical: add resources to one machine.
 
-**What is sticky session?**
+**8. What is sticky session?**
 * Routing a user to the same server repeatedly.
 
-**Why avoid sticky sessions?**
+**9. Why avoid sticky sessions?**
 * Poor scalability and uneven load distribution.
 
-**What is eventual consistency tradeoff?**
+**10. What is eventual consistency tradeoff?**
 * Higher availability at cost of temporary stale data.
 
-## Messaging & Queues.
+***
 
-**Why use message queues?**
+# Messaging & Queues.
+
+**1. Why use message queues?**
 * Decoupling, buffering, async processing.
 
-**Difference between RabbitMQ and Kafka?**
+**2. Difference between RabbitMQ and Kafka?**
 * RabbitMQ focuses on message delivery; Kafka on distributed event streaming.
 
-**What is at-most-once delivery?**
+**3. What is at-most-once delivery?**
 * Message may be lost but never duplicated.
 
-**What is at-least-once delivery?**
+**4. What is at-least-once delivery?**
 * Message guaranteed delivered but duplicates possible.
 
-**What is exactly-once delivery?**
+**5. What is exactly-once delivery?**
 * Message processed only once; difficult in distributed systems.
 
-**What is idempotent consumer design?**
+**6. What is idempotent consumer design?**
 * Consumers safely handle duplicate messages.
 
-**What is consumer lag in Kafka?**
+**7. What is consumer lag in Kafka?**
 * Difference between produced and consumed offsets.
 
-**What is a dead-letter queue?**
+**8. What is a dead-letter queue?**
 * Queue storing failed/unprocessable messages.
 
-**What is event-driven architecture?**
+**9. What is event-driven architecture?**
 * Systems communicate through emitted events.
 
-**What is replayability in Kafka?**
+**10. What is replayability in Kafka?**
 * Ability to reread retained event logs.
 
-## Security.
+***
 
-**What is SSRF?**
+# Security.
+
+**1. What is SSRF?**
 * Server-Side Request Forgery — attacker tricks server into internal requests.
 
-**What is replay attack?**
+**2. What is replay attack?**
 * Reusing intercepted valid requests maliciously.
 
-**How prevent replay attacks?**
+**3. How prevent replay attacks?**
 * Nonces, timestamps, short-lived tokens.
 
-**What is timing attack?**
+**4. What is timing attack?**
 * Exploiting execution time differences.
 
-**What is bcrypt designed for?**
+**5. What is bcrypt designed for?**
 * Slow password hashing resistant to brute force.
 
-**Why is SHA-256 alone bad for passwords?**
+**6. Why is SHA-256 alone bad for passwords?**
 * Too fast and vulnerable to brute-force attacks.
 
-**What is mTLS?**
+**7. What is mTLS?**
 * Mutual TLS where both client and server authenticate.
 
-**What is zero trust architecture?**
+**8. What is zero trust architecture?**
 * Never trust by default; always verify identities.
 
-**What is HMAC?**
+**9. What is HMAC?**
 * Hash-based Message Authentication Code ensuring integrity/authenticity.
 
-**What is JWT “alg:none” vulnerability?**
+**10. What is JWT “alg:none” vulnerability?**
 * Accepting unsigned JWTs due to insecure verification.
 
-## Architecture & Reliability.
+***
 
-**What is blue-green deployment?**
+# Architecture & Reliability.
+
+**1. What is blue-green deployment?**
 * Switching traffic between old and new environments.
 
-**What is canary deployment?**
+**2. What is canary deployment?**
 * Releasing to small subset before full rollout.
 
-**What is chaos engineering?**
+**3. What is chaos engineering?**
 * Intentionally injecting failures to test resilience.
 
-**What is graceful degradation?**
+**4. What is graceful degradation?**
 * Maintaining partial functionality during failures.
 
-**What is a single point of failure?**
+**5. What is a single point of failure?**
 * Component whose failure breaks the entire system.
 
-**What are SLO, SLA, and SLI?**
+**6. What are SLO, SLA, and SLI?**
 * SLI: measured metric.
 * SLO: target objective.
 * SLA: contractual guarantee.
 
-**What is distributed tracing?**
+**7. What is distributed tracing?**
 * Tracking requests across microservices.
 
-**What is correlation ID?**
+**8. What is correlation ID?**
 * Unique request identifier propagated across services.
 
-**What is observability?**
+**9. What is observability?**
 * Understanding internal system state via metrics/logs/traces.
 
-**Difference between monitoring and observability?**
+**10. Difference between monitoring and observability?**
 * Monitoring tracks known issues; observability helps investigate unknowns.
 
 ## Hard “Senior-Level” Questions.
 
-**Why is distributed consensus difficult?**
+**1. Why is distributed consensus difficult?**
 * Nodes can fail, network partitions occur, clocks differ.
 
-**What problem does Raft solve?**
+**2. What problem does Raft solve?**
 * Distributed consensus with understandable leader election/log replication.
 
-**Why are clocks unreliable in distributed systems?**
+**3. Why are clocks unreliable in distributed systems?**
 * Clock drift and synchronization delays.
 
-**What is Lamport timestamp?**
+**4. What is Lamport timestamp?**
 * Logical clock ordering events in distributed systems.
 
-**What is the Byzantine Generals Problem?**
+**5. What is the Byzantine Generals Problem?**
 * Achieving consensus despite malicious/faulty nodes.
 
-**Why are exactly-once guarantees hard?**
+**6. Why are exactly-once guarantees hard?**
 * Network retries and failures make duplicates unavoidable.
 
-**What is tail latency?**
+**7. What is tail latency?**
 * Slowest percentile requests affecting user experience.
 
-**What is load shedding?**
+**8. What is load shedding?**
 * Dropping excess traffic to preserve system stability.
 
-**Why are retries dangerous?**
+**9. Why are retries dangerous?**
 * They can amplify overload during outages.
 
-**What is the fallacy of distributed computing?**
+**10. What is the fallacy of distributed computing?**
 * Incorrect assumptions like “network is reliable” or “latency is zero.”
 
-## Envoy Proxy Interview Questions And Answers.
+***
+
+# Envoy Proxy Interview Questions And Answers.
 
 **1. What is Envoy Proxy?**
 * Envoy Proxy is a high-performance, open-source edge and service proxy originally developed at Lyft. It is designed for 
@@ -1754,8 +1828,7 @@ traffic management, observability, security, and resiliency features.
   * Port.
   * Protocol handling behavior.
 * Listeners accept incoming connections and forward traffic to filter chains.
-* Example:
-  * Listening on port 8080 for HTTP traffic.
+* Example: Listening on port 8080 for HTTP traffic.
 
 **8. What is a Cluster in Envoy?**
 * A Cluster represents a group of upstream hosts.
@@ -1958,7 +2031,7 @@ traffic management, observability, security, and resiliency features.
 
 **27. What are static and dynamic resources in Envoy?**
 * Static resources:
-  * Defined directly in envoy.yaml.
+  * Defined directly in **envoy.yaml**.
   * Require restart for changes.
 * Dynamic resources:
   * Retrieved from control plane.
@@ -2125,10 +2198,10 @@ traffic management, observability, security, and resiliency features.
 **42. What is a filter chain in Envoy?**
 * A filter chain is an ordered set of filters applied to traffic.
 * Processing flow:
-  * Listener accepts connection
-  * Matching filter chain selected
-  * Filters process traffic sequentially
-  * Traffic forwarded to upstream
+  * Listener accepts connection.
+  * Matching filter chain selected.
+  * Filters process traffic sequentially.
+  * Traffic forwarded to upstream.
 * Examples of filters:
   * TLS inspector.
   * HTTP connection manager.
@@ -2161,8 +2234,7 @@ traffic management, observability, security, and resiliency features.
 * ADS is commonly used in service mesh environments.
 
 **45. What are virtual hosts in Envoy?**
-* Virtual hosts group routing rules by domain names.
-Example:
+* Virtual hosts group routing rules by domain names:
   * `api.company.com`.
   * `admin.company.com`.
 * Each virtual host can contain:
@@ -2257,7 +2329,7 @@ Example:
 * RBAC stands for Role-Based Access Control.
 * Envoy RBAC policies can allow or deny traffic based on:
   * Client identity.
-  * Headers
+  * Headers.
   * Paths.
   * IP ranges.
   * Authentication metadata.
@@ -2307,17 +2379,19 @@ Example:
   * Use first successful response.
 * Hedging can reduce tail latency but increases traffic load.
 
-## Java / Spring Application Startup & Warmup.
+***
+
+# Java / Spring Application Startup & Warmup.
 
 **1. What happens when a Spring Boot application starts?**
 * The JVM starts and initializes the main application class.
 * Classloaders load required classes.
-* Spring Boot executes **SpringApplication.run()**.
+* Spring Boot executes `SpringApplication.run()`.
 * Spring creates and prepares the ApplicationContext.
 * Component scanning discovers beans.
 * Auto-configuration evaluates conditions and creates additional beans.
 * Dependencies are resolved and singleton beans are instantiated.
-* Bean lifecycle callbacks execute (@PostConstruct, BeanPostProcessors, etc.).
+* Bean lifecycle callbacks execute (`@PostConstruct`, `BeanPostProcessors`, etc.).
 * Infrastructure components start:
   * Embedded Tomcat/Jetty/Netty.
   * Database connection pools.
@@ -2328,7 +2402,6 @@ Example:
   * "Started" and "Ready" are different:
     * Started = context initialized.
     * Ready = application can safely serve requests.
-
 
 **2. What is the Spring ApplicationContext?**
 * ApplicationContext is Spring's IoC container.
@@ -2357,18 +2430,18 @@ Example:
   * Dependencies injected.
   * Aware interfaces invoked (BeanNameAware, etc.).
   * BeanPostProcessors before initialization.
-  * @PostConstruct / afterPropertiesSet().
+  * `@PostConstruct` / `afterPropertiesSet()`.
   * BeanPostProcessors after initialization.
   * Bean becomes available in the context.
-  * On shutdown: @PreDestroy / destroy callbacks.
+  * On shutdown: `@PreDestroy` / destroy callbacks.
 * Spring may also wrap beans with proxies during this lifecycle.
 
 **4. What is component scanning and why can it affect startup time?**
 * Component scanning searches the classpath for Spring annotations like:
-  * @Component
-  * @Service
-  * @Repository
-  * @Controller
+  * `@Component`.
+  * `@Service`.
+  * `@Repository`.
+  * `@Controller`.
 * Spring uses reflection and metadata parsing to inspect classes.
 * Large scans slow startup because:
   * Many classes are inspected.
@@ -2401,9 +2474,9 @@ Example:
 **6. What is lazy initialization?**
 * Lazy initialization means a bean is created only when first needed instead of during startup.
 * Example:
-  * @Lazy
-  * @Service
-  * class HeavyService {}
+  * `@Lazy`.
+  * `@Service`.
+  * `class HeavyService {}`.
 * Benefits:
   * Faster startup.
   * Lower initial memory usage.
@@ -2460,7 +2533,7 @@ Example:
   * Too many beans.
   * Unnecessary auto-configurations.
   * Slow database/network calls.
-  * Heavy @PostConstruct logic.
+  * Heavy `@PostConstruct` logic.
   * Reflection-heavy libraries.
   * Large classpath.
   * Blocking external service calls.
@@ -2476,7 +2549,6 @@ Example:
 * Eager beans created at startup.
 * Lazy beans created on first use.
 * Startup time vs runtime latency tradeoff.
-
 
 **12. What are CommandLineRunner and ApplicationRunner used for?**
 * Execute logic after context startup.
@@ -2539,7 +2611,6 @@ Example:
 * Optimization:
   * Exclude unused auto-configurations.
   * Remove unnecessary dependencies/starters.
-
 
 **16. How does classloading affect startup performance?**
 * Classloading involves:
@@ -2923,7 +2994,7 @@ jcmd <pid> GC.heap_dump heap.hprof
     * Eclipse MAT.
     * VisualVM.
     * JProfiler.
-      * YourKit.
+    * YourKit.
   * Look for:
     * Largest objects.
     * Retained heap.
@@ -3130,7 +3201,9 @@ jcmd <pid> JFR.start
   * Classloader leaks.
   * Scheduled task retention.
 
-## Jars.
+***
+
+# Jars.
 
 **1. How does one JAR use classes from another JAR?**
 * A JAR doesn't directly "connect" to another JAR. Instead:
@@ -3142,7 +3215,7 @@ jcmd <pid> JFR.start
 // app.jar
 UserService service = new UserService();
 ```
-* If UserService is inside library.jar, the JVM loads it from that JAR.
+* If UserService is inside **library.jar**, the JVM loads it from that JAR.
 
 **Follow-up: What happens if the dependency JAR is missing?**
 * Possible outcomes:
@@ -3166,17 +3239,17 @@ depending on when the class is needed.
     * Resolution: Converts symbolic references into direct references.
   * Initialization:
     * Executes:
-  ```json
-  static {
-    System.out.println("Initialized");
-  }
-  ```
-  and static variable assignments.
+    ```java
+    static {
+      System.out.println("Initialized");
+    }
+    ```
+    and static variable assignments.
 
 **Follow-up: When does initialization happen?**
 * When class is first actively used.
 * Examples:
-```json
+```java
 new User()
 User.staticMethod()
 Class.forName("User")
@@ -3256,7 +3329,7 @@ Bootstrap
   * OSGi.
   * Plugin systems.
 
-**6. Difference Between ClassNotFoundException and NoClassDefFoundError**
+**6. Difference Between ClassNotFoundException and NoClassDefFoundError.**
 * ClassNotFoundException: Thrown when explicitly loading: `Class.forName(...)`, and class isn't found.
 * NoClassDefFoundError: Class existed during compilation but is unavailable during runtime.
   * Example: `UserService` references: `DatabaseDriver`, Driver JAR missing.
@@ -3344,7 +3417,7 @@ public class PluginLoader extends ClassLoader {
 findClass()
 ```
 
-**Follow-up: Why not override loadClass() directly?**
+**Follow-up: Why not override `loadClass()` directly?**
 * Can break parent delegation.
 * Usually override: `findClass()` instead.
 
@@ -3411,10 +3484,10 @@ findClass()
 
 **18. How Would You Troubleshoot a Class Loading Issue?**
 * Typical checklist:
-  * Verify deployed JAR. `jar tf app.jar`.
-  * Verify dependency tree. `mvn dependency:tree`.
+  * Verify deployed JAR: `jar tf app.jar`.
+  * Verify dependency tree: `mvn dependency:tree`.
   * Check startup logs.
-  * Check actual classloader. `clazz.getClassLoader()`.
+  * Check actual classloader: `clazz.getClassLoader()`.
   * Enable JVM loading logs. Java 9+: `-Xlog:class+load=info`.
 
 **Follow-up: What do class loading logs show?**
@@ -3445,7 +3518,7 @@ B -> C(2.0)
 <dependencyManagement>
 ```
 
-**20. Describe a Real Production Dependency Problem**
+**20. Describe a Real Production Dependency Problem?**
 * We upgraded a library. Application compiled successfully, but production failed with NoSuchMethodError. 
 Investigation showed an older transitive dependency was being pulled by another module. We used `mvn dependency:tree`
 , excluded the older dependency, rebuilt, and verified the deployed JAR. The issue disappeared.
@@ -3455,7 +3528,9 @@ Investigation showed an older transitive dependency was being pulled by another 
   * Understanding of class loading.
   * Knowledge of Maven resolution.
 
-## Java command line.
+***
+
+# Java command line.
 
 **1. Explain the difference between java, javac, jar, and javadoc.**
 * javac: Compiles `.java` files into `.class` files.
@@ -3590,7 +3665,7 @@ jcmd
 **Follow-up: See all settings?**
 * `jcmd PID VM.system_properties` or `java -XX:+PrintFlagsFinal`.
 
-**16. Explain -XX:+UseG1GC.**
+**16. Explain `-XX:+UseG1GC`.**
 * Enables G1 Garbage Collector.
 * Designed for:
   * Large heaps.
@@ -3633,7 +3708,7 @@ jcmd
 * Metaspace → class metadata.
 
 **20. Describe your production troubleshooting workflow.**
-* Check process: `jps`
+* Check process: `jps`.
 * Inspect JVM flags: `jcmd PID VM.flags`.
 * Capture threads: `jstack PID`.
 * Check memory: `jcmd PID GC.heap_info`.
