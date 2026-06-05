@@ -6,18 +6,18 @@
 **2. Concurrency APIs in Java.**
 * Future:
   * Released in Java 5.
-  * Write Asynchronous cade.
+  * Write Asynchronous code.
   * Disadvantages: 
     * No easy way to combine the result from multiple features.
-  * Future.get() - this is a blocking call!
-* ComparableFuture:
+  * `Future.get()` - this is a blocking call!
+* `ComparableFuture:
   * Released in Java 8.
   * Write Asynchronous code in functional style.
   * Easy to compose / combine Multiple Futures.
   * Disadvantages:
     * Future that returns many elements.
-    * Eg. ComparableFuture<List<Result>> will need to wait for the whole collection to build and readily available.
-    * ComparableFuture does not hava a handle for infinite values.
+    * Eg. `ComparableFuture<List<Result>>` will need to wait for the whole collection to build and readily available.
+    * `ComparableFuture` does not hava a handle for infinite values.
 
 **3. What is Reactive Programming?**
 * Reactive Programming is a new programming paradigm.
@@ -35,13 +35,13 @@
   * Remote Service.
 * Subscriber.
 * Subscription - It is the one with connects the app and datasource.
-* Processor - extends Subscriber and Publisher:
+* Processor - extends `Subscriber` and `Publisher`:
   * Can behave as a Subscriber and Publisher.
   * Not really used this on a day-to-day basis.
 
 **6. Reactive Streams Error/Exception Scenario.**
-*Exceptions are treated like the data.
-The Reactive Stream is dead when an exception is thrown.
+* Exceptions are treated like the data.
+* The Reactive Stream is dead when an exception is thrown.
 
 **7. Flow API.**
 * Release as part of Java 9.
@@ -59,71 +59,71 @@ client and service.
 * Project Reactor is a Reactive Library.
 * Spring WebFlux uses Project Reactor by default.
 
-**10. Flux & Mono.**
-* Flux and Mono is a reactive type that implements the Reactive Streams Specification.
-* Flux and Mono is part of the reactor-core module.
-* Flux is a reactive type to represent 0 to N elements.
-* Mono is a reactive type to represent 0 to 1 element.
+**10. `Flux` & `Mono`.**
+* `Flux` and `Mono` is a reactive type that implements the Reactive Streams Specification.
+* `Flux` and `Mono` is part of the reactor-core module.
+* `Flux` is a reactive type to represent 0 to N elements.
+* `Mono` is a reactive type to represent 0 to 1 element.
 
-**11. Project Reactor map() operator.**
+**11. Project Reactor `map()` operator.**
 * Used to transfer the element from one form to another in a Reactive Stream.
-* Similar to map() operator in Streams API.
+* Similar to `map()` operator in Streams API.
 
-**12. Project Reactor filter() operator.**
+**12. Project Reactor `filter()` operator.**
 * Used to filter elements in a Reactive Stream.
-* Similar to the filter() operator in Streams API.
+* Similar to the `filter()` operator in Streams API.
 
-**13. Project Reactor flatMap() operator.**
-* Transform one source element to a Flux of 1 to N elements.
-* Use it when the transformation returns a Reactive Type (Flux or Mono).
-* Returns a Flux<Type>.
+**13. Project Reactor `flatMap()` operator.**
+* Transform one source element to a `Flux` of 1 to N elements.
+* Use it when the transformation returns a Reactive Type (`Flux` or `Mono`).
+* Returns a `Flux<Type>`.
 
-**14. map() vs flatmap() project reactor.**
-* map():
+**14. `map()` vs `flatmap()` project reactor.**
+* `map()`:
   * One to one transformation.
   * Does the simple transformation from T to V.
   * Used for simple synchronous transformations.
   * Does not support transformations that returns Publisher.
-* flatMap():
+* `flatMap()`:
   * One to N transformation.
-  * Does more than just transformation. Subscribes to Flux or Mono that's part of the transformation and then flattens it
+  * Does more than just transformation. Subscribes to `Flux` or `Mono` that's part of the transformation and then flattens it
   and send it downstream.
   * Used to asynchronous transformations.
   * Use it with transformations that returns Publisher.
 
-**15. concatMap() project reactor.**
-* Works similar to flatMap().
-* Only difference is that concatMap() preserves the ordering sequence of the reactive Streams.
-* Use concatMap() if ordering matters.
+**15. `concatMap()` project reactor.**
+* Works similar to `flatMap()`.
+* Only difference is that `concatMap()` preserves the ordering sequence of the reactive Streams.
+* Use `concatMap()` if ordering matters.
 
 **16. Intermediate Operations.**
-* filter - used for filtering data - Predicate<T>.
-  * filter(i -> i % 2 == 0).
-  * filter(o -> Objects.nonNull(o)).
-* map - transforms the received data from one form to another - Function<T>.
-  * map(i -> i * i).
-  * map(s -> s.toUpperCase()).
-  * map(b -> DriverFactory.get(b)).
-* limit - to limit the number of items which can flow through the pipeline - long.
-  * limit(3).
-* skip - skips the first few items - long.
-  * skip(3).
-* peek - just for debugging - Consumer<T>.
-  * peek(i -> System.out.print(i)).
-* distinct - allows only distinct values in the pipeline - N/A.
-  * distinct().
-* sorted - sorts the data (asc/desc) - Comparator.
-  * sorted(Comparator.naturalOrder()).
-  * sorted(Comparator.reverseOrder()).
-* flatMap - flattens the data - Function<T,R>.
+* `filter()` - used for filtering data - `Predicate<T>`.
+  * `filter(i -> i % 2 == 0)`.
+  * `filter(o -> Objects.nonNull(o))`.
+* `map()` - transforms the received data from one form to another - `Function<T>`.
+  * `map(i -> i * i)`.
+  * `map(s -> s.toUpperCase())`.
+  * `map(b -> DriverFactory.get(b))`.
+* `limit()` - to limit the number of items which can flow through the pipeline - `long`.
+  * `limit(3)`.
+* `skip()` - skips the first few items - `long`.
+  * `skip(3)`.
+* `peek()` - just for debugging - `Consumer<T>`.
+  * `peek(i -> System.out.print(i))`.
+* `distinct()` - allows only distinct values in the pipeline - N/A.
+  * `distinct()`.
+* `sorted()` - sorts the data (asc/desc) - `Comparator`.
+  * `sorted(Comparator.naturalOrder())`.
+  * `sorted(Comparator.reverseOrder())`.
+* `flatMap()` - flattens the data - `Function<T,R>`.
 
 **17. Stream Operations.**
 * Intermediate:
   * Behavior: Returns new streams, lazy.
-  * Methods: filter, map, limit, skip, distinct, sorted, flatMap, peek.
+  * Methods: `filter()`, `map()`, `limit()`, `skip()`, `distinct()`, `sorted()`, `flatMap()`, `peek()`.
 * Terminal:
   * Behavior: stream is consumed, cannot be reused.
-  * Methods: forEach, collect, count, min, max, findAny, anyMatch, noneMatch.
+  * Methods: `forEach()`, `collect()`, `count()`, `min()`, `max()`, `findAny()`, `anyMatch()`, `noneMatch()`.
 
 **18. Finding squares of even number using stream.**
 ```java
@@ -174,8 +174,8 @@ public interface MathOperation {
 }
 ```
 
-**20. Synchronized program with wait and notify?**
-* When main calls thread.wait() it will wait until notify() or notifyAll() is called in thread!
+**20. Synchronized program with `wait()` and `notify()`?**
+* When main calls `thread.wait()` it will wait until `notify()` or `notifyAll()` is called in thread!
 ```java
 class Calculator extends Thread {
     long sum;
@@ -206,7 +206,7 @@ public class ThreadAndNotify {
 }
 ```
 
-**21. Person class has name, surname, gender, age, Java stream code which calculate average age of women older than 30 years.**
+**21. Person class has name, surname, gender, age. Java stream code which calculate average age of women older than 30 years.**
 ```java
 void test() {
     double avgAgeOfWomanAbove30 = people.stream()
@@ -234,7 +234,7 @@ void test() {
 }
 ```
 
-**24. Program using stream which returns a list of employees sorted in decreasing order, for employees with at least 2 skills.**
+**24. Program using stream which returns a list of employees sorted by salary in decreasing order, for employees with at least 2 skills.**
 ```java
 void test() {
     List<Employee> sortedEmployees = employees.stream()
@@ -394,13 +394,13 @@ void test() {
             .sorted()
             .forEach(System.out::println);
     
-    Files.list(Paths.gget("."))
+    Files.list(Paths.get("."))
             .filter(Files::isDirectory)
             .forEach(System.out::println);
 }
 ```
 
-**31. Modifying lists with replaceAll and removeIf.**
+**31. Modifying lists with `replaceAll()` and `removeIf()`.**
 ```java
 void test() {
     modifableCourses.replaceAll(str -> str.toUpperCase());
@@ -454,7 +454,7 @@ void test() {
 }
 ```
 
-**36. Lambda min, max.**
+**36. Lambda `min()`, `max()`.**
 ```java
 void test() {
     Optional<Course> max = courses.stream()
@@ -480,7 +480,7 @@ void test() {
 void test() {
     Comparator<Course> compNumOfStudentsAndScore = Comparator.comparingInt(Course::getNumOfStudents)
             .thenComparingInt(Course::ggetReviewScore)
-            / reversed();
+            .reversed();
 }
 ```
 
@@ -512,11 +512,10 @@ void test() {
     // UnaryOperator
     UnaryOperator<Integer> unaryOperator = x -> 3 * x;
     System.out.println(unaryOperator.apply(10));
-    
 }
 ```
 
-**41. BiPredicate, BiFunction, BiConsumer.**
+**41. `BiPredicate`, `BiFunction`, `BiConsumer`.**
 ```java
 void test() {
     // BiPredicate - 2 inputs - boolean back
@@ -557,7 +556,7 @@ void test() {
 }
 ```
 
-**43. BinaryOperator.**
+**43. `BinaryOperator`.**
 ```java
 void test() {
     BinaryOperator<Integer> binSum = Integer::sum;
@@ -567,9 +566,7 @@ void test() {
             return a + b;
         }
     };
-    
-    Integer sum = numbers.stream()
-            .reduce(0, Integer::sum);
+    Integer sum = numbers.stream().reduce(0, Integer::sum);
 }
 ```
 
@@ -586,7 +583,7 @@ void test() {
 }
 ```
 
-**45. Sum, average, count.**
+**45. `sum()`, `average()`, `count()`.**
 ```java
 void test() {
     courses.stream()
@@ -645,8 +642,7 @@ public class Accounting {
 }
 ```
 
-**49. Lambda, given lists of strings, return new list with all strings containing letter "a", sorted in decreasing order
-by length.**
+**49. Lambda, given lists of strings, return new list with all strings containing letter "a", sorted in decreasing order by length.**
 ```java
 void test() {
     List<String> inputList = Arrays.adList("apple", "banana", "cat", "dog", "elephant");
@@ -711,7 +707,7 @@ void test() {
     
     // by length
     courses.stream()
-            .sorted*Comparator.comparing(s -> s.length())
+            .sorted(Comparator.comparing(s -> s.length())
             .forEach(System.out::println);
 }
 ```
@@ -791,8 +787,7 @@ void test() {
 ```java
 void test() {
     List<String> list = Arrays.asList("FOO", "BAR");
-    Iterable<String> iterable = () -> list.stream()
-            .map(String::toLowerCase).iterator();
+    Iterable<String> iterable = () -> list.stream().map(String::toLowerCase).iterator();
     
     for (String str : iterable) {
         System.out.println(str);
@@ -915,7 +910,6 @@ void test() {
 ```
 
 **68. Replace with Lambda.**
-
 ```java
 public static String everySecondChar(String source) {
     StringBuilder returnVal = new StringBuilder();
@@ -940,7 +934,6 @@ Function<String, String> everySecondChar =
 ```
 
 **69. Creating Stream From Datasource: File.**
-
 ```java
 void test() {
     try {
@@ -954,7 +947,6 @@ void test() {
 ```
 
 **70. Creating Stream from Datasource: Array.**
-
 ```java
 void text() {
     String[] greetings = {"Hello", "Hola!", "Bonjur!", "Hallo!"};
@@ -964,7 +956,6 @@ void text() {
 ```
 
 **71. Lambda, list of objects, return new list with object of specific type.**
-
 ```java
 void test() {
     List<Object> inputList = Arrays.asList("apple", 1, "banana", 2, "cat", 3);
@@ -976,8 +967,7 @@ void test() {
 }
 ```
 
-**72. Lambda, function input list of strings, return shortest String with al vowels.**
-
+**72. Lambda, function input list of strings, return shortest String with all vowels.**
 ```java
 void test() {
     List<String> inputList = Arrays.asList("apple", "banana", "cat", "dog", "elephant");
@@ -990,7 +980,6 @@ void test() {
 ```
 
 **73. Lambda, list of objects as input, return new list of objects group by classes.**
-
 ```java
 void test() {
     List<Object> inputList = Arrays.asList("apple", 1, "banana", 2, "cat", 3);
@@ -999,7 +988,6 @@ void test() {
 ```
 
 **74. Lambda, function input list of strings, return number of unique strings, which can be built from a string.**
-
 ```java
 int countUniqueStrings(List<Stringg> list) {
     Set<String> set = new HashSet<>();
@@ -1050,7 +1038,7 @@ void test() {
             .flatMap(s -> s.getGrades().stream())
             .collect(Collectors.averagingDouble(g -> g));
 
-    double abg = students.stream()
+    double avg = students.stream()
             .flatMapToDouble(
                     s -> s.getGrades()
                             .stream()
@@ -1110,7 +1098,7 @@ void test() {
     Optional<Student> o2 = getStudent(students, "first");
     o2.ifPresent(System.out::println);
     
-    Student firstStudent = o2.orElseGGet(() -> getDummyStudent(jms));
+    Student firstStudent = o2.orElseGet(() -> getDummyStudent(jms));
     
     List<String> countries = students.stream()
             .map(Student::getCountryCode)
@@ -1324,8 +1312,8 @@ void test() {
             .collect(Collectors.groupingBy(Movie::getGenre));
 }
 ```
-* The `Collectors.groupingBy()` method is the right way to perform that grouping. Notice that the return type is `Map<K, List<T>>`
-and not `Map<K,T>` because there may be multiple objects for a given key. 
+* The `Collectors.groupingBy()` method is the right way to perform that grouping. 
+* Notice that the return type is `Map<K, List<T>>` and not `Map<K,T>` because there may be multiple objects for a given key. 
 
 **99. Stream Factorial.**
 ```java
@@ -1348,7 +1336,7 @@ void test() {
     // {Cloud = [AWS:21:92, AZURE:11:95], Framework = [SP:1:25]}
     
     Map<String, Integer> map2 = courses.stream()
-            .collect(Collectors.groupingBy(Course::getCateggory, Collectors.counting()));
+            .collect(Collectors.groupingBy(Course::getCategory, Collectors.counting()));
     // {Cloud = 2, Framework = 1}
   
     // map by category and highest score
@@ -1466,6 +1454,12 @@ void test() {
     // banana = 1
     // orange = 1
     // apple = 2
+    Map<String, Long> freq = new HashMap<>();
+  
+    Stream.of("apple", "orange", "banana", "apple")
+            .forEach(word -> freq.merge(word, 1L, Long::sum));
+  
+    System.out.println(freq);
 }
 ```
 
@@ -1522,7 +1516,8 @@ void test() {
     
     int minAge = 25;
     Map<String, List<Student>> youngerSet = students.stream()
-            .collect(Collectors.groupingBy(Student::getCountryCode, Collectors.filtering(s -> s.getAge() <= minAge, Collectors.toList())));
+            .collect(Collectors.groupingBy(Student::getCountryCode, 
+                    Collectors.filtering(s -> s.getAge() <= minAge, Collectors.toList())));
     
     Map<Boolean, List<Student>> experienced = students.stream()
             .collect(Collectors.partitioningBy(Student::hasExperienced));
@@ -1534,7 +1529,7 @@ void test() {
             .collect(Collectors.partitioningBy(s -> s.hasExperienced() && s.getMonthsSinceActive() == 0, Collectors.counting()));
     
     Map<String, Map<String, List<Student>>> multiLevel = students.stream()
-            .collect(Collectors.groupingBy(Student::ggetCountryCode, Collectors.groupingBy(Student::getGender)));
+            .collect(Collectors.groupingBy(Student::getCountryCode, Collectors.groupingBy(Student::getGender)));
 }
 ```
 
@@ -1588,14 +1583,13 @@ void test() {
 }
 ```
 
-**113. What is the purpose of the 'wait()' and 'notify()' methods in Java? Provide an example of how to use them for
+**113. What is the purpose of the `wait()` and `notify()` methods in Java? Provide an example of how to use them for
 inter-thread communication.**
+* The `wait()` and `notify() methods are used for inter-thread communication and synchronization. 
+* `wait()` is called by a thread to release the lock, and wait for another thread to notify it. 
+* `notify()` is called by a thread to wake up a waiting thread.
 
-The 'wait()' and 'notify()' methods are used for inter-thread communication and synchronization. 'wait()' is called by
-a thread to release the lock, and wait for another thread to notify it. 'notify()' is called by a thread to wake up a
-waiting thread.
-
-**114. ThreadLocal example.**
+**114. `ThreadLocal` example.**
 ```java
 public class ThreadLocalExample {
     private static ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 0);
@@ -1682,6 +1676,266 @@ void test() {
 ```
 
 
+
+Top 5 Java Stream Interview Questions on Creating Frequency Maps
+
+These are extremely common in Java backend interviews because they test:
+
+Stream API knowledge
+Collectors mastery
+Functional programming style
+Performance awareness
+Clean coding
+1. Count frequency of characters in a String
+   Question
+
+Given a string, create a frequency map of each character using Java Streams.
+
+Example
+
+Input:
+
+"banana"
+
+Output:
+
+{b=1, a=3, n=2}
+Expected Solution
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Main {
+public static void main(String[] args) {
+String str = "banana";
+
+        Map<Character, Long> freqMap =
+                str.chars()
+                   .mapToObj(c -> (char) c)
+                   .collect(Collectors.groupingBy(
+                           Function.identity(),
+                           Collectors.counting()
+                   ));
+
+        System.out.println(freqMap);
+    }
+}
+Interview Follow-ups
+Why Function.identity()?
+Why Long instead of Integer?
+Difference between chars() and codePoints()?
+2. Count frequency of words in a sentence
+   Question
+
+Create a frequency map of words from a sentence.
+
+Example
+
+Input:
+
+"java is good java is fast"
+
+Output:
+
+{java=2, is=2, good=1, fast=1}
+Expected Solution
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.Arrays;
+
+public class Main {
+public static void main(String[] args) {
+
+        String sentence = "java is good java is fast";
+
+        Map<String, Long> wordFreq =
+                Arrays.stream(sentence.split(" "))
+                      .collect(Collectors.groupingBy(
+                              Function.identity(),
+                              Collectors.counting()
+                      ));
+
+        System.out.println(wordFreq);
+    }
+}
+Interview Follow-ups
+How to ignore case?
+How to remove punctuation?
+How to sort by frequency?
+3. Find the first non-repeating character using frequency map
+   Question
+
+Find the first character whose frequency is 1.
+
+Example
+
+Input:
+
+"swiss"
+
+Output:
+
+w
+Expected Solution
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        String input = "swiss";
+
+        Map<Character, Long> freqMap =
+                input.chars()
+                     .mapToObj(c -> (char) c)
+                     .collect(Collectors.groupingBy(
+                             Function.identity(),
+                             LinkedHashMap::new,
+                             Collectors.counting()
+                     ));
+
+        Character result =
+                freqMap.entrySet()
+                       .stream()
+                       .filter(entry -> entry.getValue() == 1)
+                       .map(Map.Entry::getKey)
+                       .findFirst()
+                       .orElse(null);
+
+        System.out.println(result);
+    }
+}
+Interview Follow-ups
+Why use LinkedHashMap?
+Time complexity?
+Can this be done in one pass?
+4. Sort elements by frequency using Streams
+   Question
+
+Sort elements based on frequency in descending order.
+
+Example
+
+Input:
+
+["apple", "banana", "apple", "orange", "banana", "apple"]
+
+Output:
+
+apple=3
+banana=2
+orange=1
+Expected Solution
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        List<String> fruits = Arrays.asList(
+                "apple", "banana", "apple",
+                "orange", "banana", "apple"
+        );
+
+        Map<String, Long> sortedFreq =
+                fruits.stream()
+                      .collect(Collectors.groupingBy(
+                              Function.identity(),
+                              Collectors.counting()
+                      ))
+                      .entrySet()
+                      .stream()
+                      .sorted(Map.Entry.<String, Long>comparingByValue()
+                              .reversed())
+                      .collect(Collectors.toMap(
+                              Map.Entry::getKey,
+                              Map.Entry::getValue,
+                              (a, b) -> a,
+                              LinkedHashMap::new
+                      ));
+
+        System.out.println(sortedFreq);
+    }
+}
+Interview Follow-ups
+Why use LinkedHashMap after sorting?
+Complexity of sorting?
+How to return top K frequent elements?
+5. Create frequency map with parallel streams
+   Question
+
+How do you safely create a frequency map using parallel streams?
+
+Expected Solution
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        List<String> items = Arrays.asList(
+                "a", "b", "a", "c", "b", "a"
+        );
+
+        Map<String, Long> freqMap =
+                items.parallelStream()
+                     .collect(Collectors.groupingByConcurrent(
+                             Function.identity(),
+                             Collectors.counting()
+                     ));
+
+        System.out.println(freqMap);
+    }
+}
+Interview Follow-ups
+Difference between groupingBy() and groupingByConcurrent()?
+When should parallel streams be avoided?
+Is ordering guaranteed?
+Most Important Concepts Interviewers Expect
+Concept	Why It Matters
+groupingBy()	Core frequency-map collector
+counting()	Aggregation collector
+Function.identity()	Cleaner key mapping
+LinkedHashMap	Preserve insertion order
+groupingByConcurrent()	Parallel stream support
+Stream pipeline	Functional programming maturity
+Collector composition	Advanced Stream expertise
+Most Common Trap Questions
+Why does counting() return Long?
+
+Because counts can exceed Integer.MAX_VALUE.
+
+Why use Function.identity()?
+
+It returns the element itself:
+
+x -> x
+
+Cleaner and reusable.
+
+What is the complexity?
+Frequency creation → O(n)
+Sorting → O(n log n)
+Senior-Level Tip
+
+Interviewers love candidates who mention:
+
+immutability
+collector efficiency
+parallel stream caveats
+ordering guarantees
+memory overhead
+
+Example:
+
+“For large datasets with no ordering requirement, groupingByConcurrent() with parallel streams can improve throughput, but contention on shared buckets may reduce gains.”
 
 
 
