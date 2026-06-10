@@ -1,7 +1,7 @@
 # Stream API.
 
 **1. What is a Stream?**
-* A Stream is a sequence of elements that supports functional-style operations (map, filter, reduce).
+* A Stream is a sequence of elements that supports functional-style operations (`map`, `filter`, `reduce`).
   * Not a data structure.
   * Does not store elements.
   * Processes data lazily.
@@ -29,9 +29,9 @@ Arrays.stream(arr);
 **5. Functional Interfaces.**
 * Interfaces with one abstract method.
 * Examples:
-  * `Predicate<T>` -> boolean.
+  * `Predicate<T>` -> `boolean`.
   * `Function<T, R>` -> transform.
-  * `Consumer<T>` -> void.
+  * `Consumer<T>` -> `void`.
   * `Supplier<T>` -> provide value.
 
 **6. `filter()`.**
@@ -63,8 +63,8 @@ stream.forEach(System.out::println);
 * Terminal operation.
 
 **10. Terminal vs Intermediate Operations.**
-* Intermediate: map, filter, sorted.
-* Terminal: forEach, collect, reduce
+* Intermediate: `map`, `filter`, `sorted`.
+* Terminal: `forEach`, `collect`, `reduce`.
 * Stream executes only after terminal operation.
 
 **11. `collect()`.**
@@ -110,8 +110,8 @@ stream.findFirst();
 ```
 * Useful for safe null handling.
 
-**17. Optional.**
-* Container to avoid NullPointerException.
+**17. `Optional`.**
+* Container to avoid `NullPointerException`.
 ```java
 Optional.of(value);
 Optional.empty();
@@ -198,13 +198,13 @@ IntStream.range(0, 10).sum();
 ```
 * Avoid boxing/unboxing overhead.
 
-**30. map vs peek.**
+**30. `map` vs `peek`.**
 * `map`: transform data.
 * `peek`: debugging / side effects only.
 ```java
 stream.peek(System.out::println);
 ```
-* Do not use peek for logic.
+* Do not use `peek` for logic.
 
 **31. Custom Collectors.**
 * Use `Collector.of()` for advanced cases.
@@ -297,8 +297,8 @@ s.findFirst(); // IllegalStateException
 
 **44. How Do You Stream Large DB Result Sets Safely?**
 * Use pagination.
-* Use Hibernate ScrollableResults.
-* Use JDBC streaming (setFetchSize).
+* Use Hibernate `ScrollableResults`.
+* Use JDBC streaming (`setFetchSize`).
 * Avoid `findAll().stream()` on big tables.
 
 **45. N+1 Problem with Streams.**
@@ -308,11 +308,11 @@ orders.stream()
   .map(o -> o.getCustomer().getName())
 ```
 * Fix with:
-  * JOIN FETCH.
+  * `JOIN FETCH`.
   * Entity graphs.
 
 **46. Why `parallelStream()` Is Dangerous with JPA?**
-* EntityManager is not thread-safe.
+* `EntityManager` is not thread-safe.
 * Lazy loading in parallel threads breaks.
 * Can cause inconsistent state or exceptions.
 
@@ -344,15 +344,15 @@ repo.findActiveUsers();
   * DB calls.
   * Shared mutable state.
 
-**50. `parallelStream()` vs ExecutorService.**
-* `parallelStream()`: ForkJoinPool.commonPool.
-* ExecutorService: explicit control
-* Prefer ExecutorService for:
+**50. `parallelStream()` vs `ExecutorService`.**
+* `parallelStream()`: `ForkJoinPool.commonPool`.
+* `ExecutorService`: explicit control
+* Prefer `ExecutorService` for:
   * I/O.
   * Tuning threads.
   * Isolation.
 
-**51. How Does ForkJoinPool Affect `parallelStream()`?**
+**51. How Does `ForkJoinPool` Affect `parallelStream()`?**
 * Uses common pool by default.
 * Shared across JVM.
 * Blocking operations can starve threads.
@@ -392,7 +392,7 @@ stream
 * Lazy-loaded entities require:
   * Active transaction.
 * Streaming outside transaction can cause:
-  * LazyInitializationException.
+  * `LazyInitializationException`.
 
 **57. Collecting to Map — Common Pitfall.**
 * Duplicate keys cause exception:
@@ -482,10 +482,10 @@ orders.stream()
 * `Flux<T>` -> 0 to N values.
 * Lazy, cold by default.
 
-**69. Mono vs Optional.**
-* Optional: synchronous.
-* Mono: async + non-blocking.
-* Mono can represent future computation.
+**69. `Mono` vs `Optional`.**
+* `Optional`: synchronous.
+* `Mono`: async + non-blocking.
+* `Mono` can represent future computation.
 
 **70. Cold vs Hot Publishers.**
 * Cold: new execution per subscriber.
@@ -498,7 +498,7 @@ orders.stream()
   * Synchronous.
 * Reactive Streams:
   * Push-based.
-    * Async + backpressure-aware.
+  * Async + backpressure-aware.
 
 **72. Blocking Call Inside Reactive Pipeline (Why Bad?)**
 * Blocking breaks:
@@ -546,7 +546,7 @@ Mono.fromCallable(this::blockingCall)
 * Errors are signals:
   * `onErrorResume()`.
   * `onErrorReturn()`.
-* No try/catch inside pipeline.
+* No `try`/`catch` inside pipeline.
 
 **80. Senior Rule of Thumb: Reactive.**
 * Use reactive when:
@@ -585,14 +585,14 @@ Mono.fromCallable(this::blockingCall)
 * Livelock: Threads keep reacting but make no progress.
 * Starvation: A thread never gets CPU or locks due to others dominating.
 
-**87. What does volatile guarantee?**
+**87. What does `volatile` guarantee?**
 * Visibility: reads/writes go directly to main memory.
 * Prevents instruction reordering.
 * Does NOT guarantee atomicity.
 
-**88. When should you use volatile instead of synchronized?**
-* Use volatile for simple state flags.
-* Use synchronized for compound actions (read-modify-write).
+**88. When should you use `volatile` instead of `synchronized`?**
+* Use `volatile` for simple state flags.
+* Use `synchronized` for compound actions (read-modify-write).
 
 **89. What does “happens-before” mean?**
 * If action A happens-before B, then effects of A are visible to B. 
@@ -605,7 +605,7 @@ Mono.fromCallable(this::blockingCall)
 * Immutable objects.
 * `ExecutorService` instead of raw threads.
 * `java.util.concurrent` collections.
-* Locks over wait/notify.
+* Locks over `wait`/`notify`.
 
 **92. Difference between synchronized and concurrent collections?**
 * Synchronized collections: thread-safe mutation, unsafe iteration.
@@ -617,7 +617,7 @@ Mono.fromCallable(this::blockingCall)
 * Ideal for read-heavy workloads.
 
 **94. Key features of `ConcurrentHashMap`?**
-* No null keys/values.
+* No `null` keys/values.
 * Lock striping (pre-Java 8), CAS (Java 8+).
 * Atomic methods like `putIfAbsent()`, `compute()`.
 
@@ -732,8 +732,8 @@ Mono.fromCallable(this::blockingCall)
 **121. What is the difference between atomicity and visibility?**
 * Atomicity: An operation completes as a single, indivisible step.
 * Visibility: Changes made by one thread are visible to others.
-* volatile -> visibility only.
-* synchronized / Atomic -> both (depending on usage).
+* `volatile` -> visibility only.
+* `synchronized` / Atomic -> both (depending on usage).
 
 **122. When should Atomic classes be used?**
 * For lock-free, thread-safe operations on single variables.
@@ -757,7 +757,7 @@ Mono.fromCallable(this::blockingCall)
 **126. Key differences between stack and heap memory?**
 * Stack: thread-local, method frames, fast, limited.
 * Heap: shared, objects, GC-managed.
-* Stack overflow != OutOfMemoryError (heap).
+* Stack overflow != `OutOfMemoryError` (heap).
 
 **127. What is Metaspace?**
 * Replaced PermGen in Java 8.
@@ -847,7 +847,7 @@ Mono.fromCallable(this::blockingCall)
 **144. How can you hook into Spring bean lifecycle?**
 * `InitializingBean` / `DisposableBean`.
 * `@PostConstruct`, `@PreDestroy`.
-* Custom init/destroy methods.
+* Custom `init` / `destroy` methods.
 
 **145. Typical AOP use cases?**
 * Logging.
@@ -876,7 +876,7 @@ Mono.fromCallable(this::blockingCall)
 **150. Why are parallel streams dangerous?**
 * Shared mutable state.
 * Non-deterministic order.
-* Thread pool contention (ForkJoin common pool).
+* Thread pool contention (`ForkJoin` common pool).
 
 **151. When to use reduce vs collect?**
 * Reduce: immutable accumulation.
@@ -981,13 +981,13 @@ Mono.fromCallable(this::blockingCall)
 * GC timing is non-deterministic.
 
 **171. Minor vs Major vs Full GC?**
-* Minor: young gen.
-* Major: old gen.
+* Minor: young generation.
+* Major: old generation.
 * Full: entire heap + metaspace, stop-the-world.
 
 **172. Java memory leaks.**
 * Static references.
-* ThreadLocal misuse.
+* `ThreadLocal` misuse.
 * Caches without eviction.
 * Listener not deregistered.
 
@@ -1011,7 +1011,7 @@ Mono.fromCallable(this::blockingCall)
 * `volatile`: visibility only.
 * `synchronized`: visibility + atomicity + mutual exclusion.
 
-**177. What volatile guarantees?**
+**177. What `volatile` guarantees?**
 * Visibility.
 * Ordering.
 * Not atomicity.
@@ -1071,7 +1071,7 @@ Mono.fromCallable(this::blockingCall)
 * Concurrent: fine-grained or lock-free.
 * Concurrent scales better.
 
-**189. HashMap collisions (Java 8+)?**
+**189. `HashMap` collisions (Java 8+)?**
 * Linked list -> red-black tree.
 * Improves worst-case performance.
 
@@ -1099,10 +1099,10 @@ Mono.fromCallable(this::blockingCall)
 * Streams process data.
 * Streams are lazy and single-use.
 
-**195. Intermediate vs terminal ops?**
+**195. Intermediate vs terminal operations?**
 * Intermediate: transform.
 * Terminal: execute.
-* No execution without terminal op.
+* No execution without terminal operation.
 
 **196. Why streams are lazy?**
 * Optimize processing.
@@ -1160,14 +1160,4 @@ Mono.fromCallable(this::blockingCall)
 * Hold and Wait: At least one thread is holding a resource and is waiting for another resource.
 * Non-preemptive allocation: A resource released only after the thread is done using it.
 * Circular wait: A chain of at least two threads each one is holding one resource and waiting for another resource.
-
-
-
-
-
-
-
-
-
-
 

@@ -1,8 +1,9 @@
 # Spring Boot.
 
 **1. What is Spring Boot and why is it used?**
-* Spring Boot is an opinionated framework built on top of Spring that simplifies application setup by providing auto-configuration, 
-embedded servers, and production-ready features. It reduces boilerplate and accelerates development while still allowing deep customization.
+* Spring Boot is an opinionated framework built on top of Spring that simplifies application setup by providing 
+auto-configuration, embedded servers, and production-ready features. 
+* It reduces boilerplate and accelerates development while still allowing deep customization.
 
 **2. How does auto-configuration work internally?**
 * Spring Boot uses `@EnableAutoConfiguration`, which triggers loading of configuration classes listed in 
@@ -5190,25 +5191,22 @@ supports validation, namespaces, and extensibility.
 **Strong Interview Answer.**
 * Namespaces uniquely identify XML elements and avoid naming conflicts when combining multiple XML schemas or standards.
 
-# 4. What is XSLT and where is it used?
+***
 
-## What interviewers are testing
-- XML transformation understanding
-- enterprise integration knowledge
+**4. What is XSLT and where is it used?**
 
----
+**What interviewers are testing.**
+- XML transformation understanding.
+- Enterprise integration knowledge.
 
-# What is XSLT?
+**What is XSLT?**
+* XSLT (eXtensible Stylesheet Language Transformations) transforms XML into:
+  * another XML.
+  * HTML.
+  * Text.
+  * Different structure.
 
-XSLT (eXtensible Stylesheet Language Transformations) transforms XML into:
-- another XML
-- HTML
-- text
-- different structure
-
----
-
-## Example XSLT
+**Example XSLT.**
 ```xml
 <xsl:template match="/users">
     <html>
@@ -5219,184 +5217,187 @@ XSLT (eXtensible Stylesheet Language Transformations) transforms XML into:
 </xsl:template>
 ```
 
----
+**Common XSLT Use Cases.**
 
-# Common XSLT Use Cases
+| Use Case            | Example              |
+|---------------------|----------------------|
+| XML → HTML          | Web rendering        |
+| XML mapping         | Integration systems  |
+| Data transformation | Enterprise messaging |
+| Report generation   | XML reports          |
 
-| Use Case | Example |
-|---|---|
-| XML → HTML | web rendering |
-| XML mapping | integration systems |
-| Data transformation | enterprise messaging |
-| Report generation | XML reports |
+**Strong Interview Answer.**
+* XSLT is a transformation language used to convert XML documents into different formats or structures, 
+commonly used in enterprise integrations and reporting systems.
 
----
+***
 
-## Strong Interview Answer
+**5. How do you parse XML in Java? DOM vs SAX vs StAX**
 
-> “XSLT is a transformation language used to convert XML documents into different formats or structures, commonly used in enterprise integrations and reporting systems.”
+**What interviewers are testing.**
+- Java XML processing experience.
+- Performance awareness.
+- Memory optimization.
 
----
-
-## Follow-up traps
-- Difference between XPath and XSLT?
-- Why is XSLT considered declarative?
-- Is XSLT still used today?
-
----
-
-# 5. How do you parse XML in Java? DOM vs SAX vs StAX
-
-## What interviewers are testing
-- Java XML processing experience
-- performance awareness
-- memory optimization
-
----
-
-# DOM Parser
-
-Loads entire XML into memory.
-
+**DOM Parser.**
+* Loads entire XML into memory.
 ```java
 DocumentBuilderFactory factory =
     DocumentBuilderFactory.newInstance();
 ```
 
----
+**Advantages.**
+- Easy navigation.
+- Modifiable structure.
 
-## Advantages
-- easy navigation
-- modifiable structure
+**Disadvantages.**
+- Memory heavy.
+- Bad for huge XML files.
 
-## Disadvantages
-- memory heavy
-- bad for huge XML files
-
----
-
-# SAX Parser
-
-Event-driven parsing.
-
+**SAX Parser.**
+* Event-driven parsing.
 ```java
 startElement(...)
 characters(...)
 endElement(...)
 ```
 
----
+**Advantages.**
+- Low memory usage.
+- Fast.
 
-## Advantages
-- low memory usage
-- fast
+**Disadvantages.**
+- Difficult navigation.
+- Forward-only.
 
-## Disadvantages
-- difficult navigation
-- forward-only
+**StAX Parser.**
+* Pull-based parser.
+* Application controls reading.
 
----
+**Comparison.**
 
-# StAX Parser
+| Parser  | Memory  | Performance  | Navigation  |
+|---------|---------|--------------|-------------|
+| DOM     | High    | Medium       | Easy        |
+| SAX     | Low     | High         | Hard        |
+| StAX    | Low     | High         | Flexible    |
 
-Pull-based parser.
+**Strong Interview Answer.**
+* DOM is suitable for small XML documents requiring random access, while SAX and StAX are preferred for large XML 
+processing because they stream data without loading the entire document into memory.
 
-Application controls reading.
+**Most Important XML Concepts Interviewers Expect.**
 
----
+| Concept        | Why It Matters       |
+|----------------|----------------------|
+| XML Structure  | Data exchange        |
+| XSD            | Validation           |
+| Namespaces     | Collision prevention |
+| XSLT           | Transformation       |
+| XPath          | Querying XML         |
+| SOAP           | Enterprise APIs      |
+| DOM/SAX/StAX   | Parsing performance  |
+| JAXB           | Java object mapping  |
+| UTF-8 Encoding | Interoperability     |
 
-# Comparison
+**Common XML Technologies in Java.**
 
-| Parser | Memory | Performance | Navigation |
-|---|---|---|---|
-| DOM | High | Medium | Easy |
-| SAX | Low | High | Hard |
-| StAX | Low | High | Flexible |
+| Technology  | Purpose             |
+|-------------|---------------------|
+| JAXB        | XML ↔ Java objects  |
+| JAXP        | XML processing APIs |
+| DOM         | Tree-based parser   |
+| SAX         | Event-based parser  |
+| StAX        | Streaming parser    |
+| XPath       | XML querying        |
+| XSLT        | XML transformation  |
 
----
+**Mention these phrases.**
+- Namespaces prevent XML naming collisions.
+- XSD defines XML contracts.
+- SAX/StAX are better for large XML files.
+- XSLT enables declarative XML transformations.
+- DOM parsing can cause high memory usage.
 
-## Strong Interview Answer
+***
 
-> “DOM is suitable for small XML documents requiring random access, while SAX and StAX are preferred for large XML processing because they stream data without loading the entire document into memory.”
+Other Q&A.
 
----
 
-## Follow-up traps
+- Why is reactive harder to debug?
+- Difference between async and reactive?
+- What is backpressure?
+
+- What causes N+1 queries?
+- Difference between LAZY and EAGER?
+- Why can pagination still be slow?
+
+- OFFSET pagination problem?
+- Cursor vs offset pagination?
+- How to avoid killing production DB?
+
+
+- Difference between OSI and TCP/IP model?
+- Which layers does HTTPS use?
+- At which layer does DNS operate?
+
+- What is the TCP 3-way handshake?
+- Why is UDP faster?
+- Why does video streaming prefer UDP?
+
+- What is DNS caching?
+- Difference between HTTP and HTTPS?
+- What is TLS?
+- What happens if DNS fails?
+
+- What is a certificate authority?
+- How does TLS work?
+- Why is HTTPS important for APIs?
+
+- What is TTL?
+- What is DNS propagation?
+- Why can DNS changes take time?
+- Difference between recursive and authoritative DNS?\
+
+
+- Why is inheritance sometimes dangerous?
+- Difference between abstraction and encapsulation?
+- Prefer composition or inheritance?
+
+
+- Can abstraction exist without encapsulation?
+- Why are interfaces abstraction?
+- Why should fields usually be private?
+
+
+- How does JVM decide overridden method?
+- Why is runtime polymorphism powerful?
+- Difference between overload and override?
+
+- When is inheritance acceptable?
+- What problems does deep inheritance cause?
+- What is tight coupling?
+
+- Which SOLID principle is most violated?
+- How does Spring use Dependency Injection?
+- Difference between abstraction and interface segregation?
+
+- Difference between DTD and XSD?
+- Why is XSD preferred over DTD?
+- What are simpleType and complexType?
+
+- Is namespace URI an actual webpage?
+- Difference between default and prefixed namespace?
+- Why are namespaces heavily used in SOAP?
+
+
+- Difference between XPath and XSLT?
+- Why is XSLT considered declarative?
+- Is XSLT still used today?
+
+
 - Why is SAX memory efficient?
 - Difference between SAX and StAX?
 - Which parser is best for huge XML files?
-
----
-
-# Most Important XML Concepts Interviewers Expect
-
-| Concept | Why It Matters |
-|---|---|
-| XML Structure | data exchange |
-| XSD | validation |
-| Namespaces | collision prevention |
-| XSLT | transformation |
-| XPath | querying XML |
-| SOAP | enterprise APIs |
-| DOM/SAX/StAX | parsing performance |
-| JAXB | Java object mapping |
-| UTF-8 Encoding | interoperability |
-
----
-
-# Common XML Technologies in Java
-
-| Technology | Purpose |
-|---|---|
-| JAXB | XML ↔ Java objects |
-| JAXP | XML processing APIs |
-| DOM | tree-based parser |
-| SAX | event-based parser |
-| StAX | streaming parser |
-| XPath | XML querying |
-| XSLT | XML transformation |
-
----
-
-# Elite-Level Interview Tips
-
-## Mention these phrases
-
-These instantly sound senior-level:
-
-- “Namespaces prevent XML naming collisions.”
-- “XSD defines XML contracts.”
-- “SAX/StAX are better for large XML files.”
-- “XSLT enables declarative XML transformations.”
-- “DOM parsing can cause high memory usage.”
-
----
-
-# Common Interview Mistakes
-
-## Saying:
-> “Namespaces are optional and not important.”
-
-Namespaces are critical in enterprise XML/SOAP systems.
-
----
-
-## Saying:
-> “XSD and XML are the same.”
-
-XML is data; XSD defines rules for that data.
-
----
-
-## Saying:
-> “DOM is always the best parser.”
-
-DOM can cause memory problems for large documents.
-
----
-
-# One Perfect Senior-Level Summary Answer
-
-> “XML remains heavily used in enterprise integrations because it supports strong validation, namespaces, and structured contracts through XSD. Technologies like XSLT enable transformation workflows, while Java parsers such as SAX and StAX allow efficient processing of large XML documents.”
 
 

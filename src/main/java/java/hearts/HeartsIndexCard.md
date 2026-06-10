@@ -1,4 +1,4 @@
-## Hearts - Index Card.
+`## Hearts - Index Card.
 
 **1. What is Concurrent Programming?**
 * Concurrent programming means multiple computations executing at the same time instead of sequentially. 
@@ -7,44 +7,44 @@
 **2. Threads and Shared Resources.**
 * Multiple threads can access shared objects - must use synchronization to avoid race conditions.
 
-**3. Runnable Interface.**
-* Runnable wraps code for execution in another thread but cannot return a value.
+**3. `Runnable` Interface.**
+* `Runnable` wraps code for execution in another thread but cannot return a value.
 
-**4. Callable Interface.**
-* Callable is like Runnable but returns a value and allows throwing checked exceptions.
+**4. `Callable` Interface.**
+* `Callable` is like `Runnable` but returns a value and allows throwing checked exceptions.
 
-**5. Future Interface.**
-* Future represents a result of asynchronous computation; `get()` blocks until result available.
+**5. `Future` Interface.**
+* `Future` represents a result of asynchronous computation; `get()` blocks until result available.
 
 **6. Future Operations.**
 * `get(timeout)`, `cancel()`, `isDone()`, `isCancelled()` allow control of async tasks.
 
-**7. ExecutorService.**
+**7. `ExecutorService`.**
 * Provides thread-management abstraction decoupling task submission from execution mechanics.
 
-**8. CountDownLatch.**
+**8. `CountDownLatch`.**
 * Synchronizer that lets threads wait until a set of operations completes; one-shot, cannot reset.
 
-**9. CyclicBarrier vs CountDownLatch.**
-* CyclicBarrier supports reset; CountDownLatch does not. 
-* Use CyclicBarrier for multiple cycles.
+**9. `CyclicBarrier` vs `CountDownLatch`.**
+* `CyclicBarrier` supports reset; `CountDownLatch` does not. 
+* Use `CyclicBarrier` for multiple cycles.
 
 **10. Basic Multithreading.**
 * Independent tasks can be run in parallel for speed-up if independent of each other's results.
 
-**11. Intrinsic Locks (synchronized).**
+**11. Intrinsic Locks (`synchronized`).**
 * Every object has a lock; synchronized blocks/methods ensure mutual exclusion.
 
-**12. ReentrantLock.**
+**12. `ReentrantLock`.**
 * Explicit lock with features not available in synchronized, like interruptible locking.
 
-**13. tryLock().**
+**13. `tryLock()`.**
 * Attempts to acquire lock without blocking; useful for avoiding deadlocks.
 
-**14. Semaphore.**
+**14. `Semaphore`.**
 * Control access using a set number of permits; blocking until a permit available.
 
-**15. Fair vs Unfair Semaphore.**
+**15. Fair vs Unfair `Semaphore`.**
 * Fair semaphores grant permits in FIFO order; unfair may be faster but risk starvation.
 
 **16. Synchronization & Memory Visibility.**
@@ -57,95 +57,96 @@
 * Occurs when threads hold locks each other needs; avoid by consistent lock ordering.
 
 **19. Thread Creation Methods.**
-* Two ways: extend Thread, or pass a Runnable/Callable to Thread or ExecutorService.
+* Two ways: extend `Thread`, or pass a `Runnable`/`Callable` to `Thread` or `ExecutorService`.
 
-**20. ThreadGroup.**
+**20. `ThreadGroup`.**
 * Allows grouping threads for management, but mostly outdated API.
 
-**21. ThreadFactory.**
-* Custom thread creation: naming, daemon flag, priority. Useful in ThreadPoolExecutor.
+**21. `ThreadFactory`.**
+* Custom thread creation: naming, daemon flag, priority. Useful in `ThreadPoolExecutor`.
 
-**22. AtomicInteger.**
+**22. `AtomicInteger`.**
 * Provides atomic operations like `incrementAndGet()` to avoid race conditions.
 
-**23. ReadWriteLock.**
+**23. `ReadWriteLock`.**
 * Allows multiple readers or one writer; good for read-heavy shared data.
 
-**24. StampedLock.**
+**24. `StampedLock`.**
 * Read/write lock with optimistic reads; higher performance but more complex.
 
-**25. Producer-Consumer with BlockingQueue.**
-* BlockingQueue provides built-in thread-safe producer-consumer behavior.
+**25. Producer-Consumer with `BlockingQueue`.**
+* `BlockingQueue` provides built-in thread-safe producer-consumer behavior.
 
-**26. BlockingQueue Types.**
-* ArrayBlockingQueue, LinkedBlockingQueue, PriorityBlockingQueue etc. differ in capacity/ordering.
+**26. `BlockingQueue` Types.**
+* `ArrayBlockingQueue`, `LinkedBlockingQueue`, `PriorityBlockingQueue` etc. differ in capacity/ordering.
 
 **27. Thread States.**
 * WAITING via `Object.wait()`, `Thread.join()`, `LockSupport.park()`.
 
-**28. Thread.sleep().**
-* Puts thread into TIMED_WAITING; interruption throws InterruptedException.
+**28. `Thread.sleep()`.**
+* Puts thread into TIMED_WAITING; interruption throws `InterruptedException`.
 
 **29. Thread Interruption.**
-* Interruption sets an interrupt flag; blocking calls throw InterruptedException.
+* Interruption sets an interrupt flag; blocking calls throw `InterruptedException`.
 
 **30. Interruption Best Practice.**
 * Always restore interrupt status using `Thread.currentThread().interrupt()` inside catch.
 
 **31. Fire-and-Forget Tasks.**
-* Use Runnable + execute() when no result is needed.
+* Use `Runnable` + `execute()` when no result is needed.
 
-**32. submit() vs execute().**
-* `submit()` wraps exceptions in Future; `execute()` propagates exceptions to thread's UncaughtExceptionHandler.
+**32. `submit()` vs `execute()`.**
+* `submit()` wraps exceptions in `Future`; `execute()` propagates exceptions to thread's `UncaughtExceptionHandler`.
 
-**33. RejectedExecutionHandler.**
-* Defines what happens when queue full or executor shutdown. Options: Abort, Discard, CallerRuns.
+**33. `RejectedExecutionHandler`.**
+* Defines what happens when queue full or executor shutdown. 
+* Options: Abort, Discard, CallerRuns.
 
-**34. ThreadPoolExecutor Core Concepts.**
-* core size, max size, keep-alive time, work queue, thread factory, rejection handler.
+**34. `ThreadPoolExecutor` Core Concepts.**
+* Core size, max size, keep-alive time, work queue, thread factory, rejection handler.
 
-**35. FixedThreadPool.**
+**35. `FixedThreadPool`.**
 * Fixed number of threads; uses unbounded queue (not always ideal).
 
-**36. CachedThreadPool.**
+**36. `CachedThreadPool`.**
 * Creates threads as needed; good for many short-lived async tasks.
 
-**37. SingleThreadExecutor.**
+**37. `SingleThreadExecutor`.**
 * Always a single thread; guarantees ordered execution.
 
-**38. ScheduledThreadPool.**
+**38. `ScheduledThreadPool`.**
 * Run tasks after a delay or repeatedly at fixed rate or fixed delay.
 
-**39. scheduleAtFixedRate.**
+**39. `sscheduleAtFixedRate`.**
 * Runs periodically regardless of task duration (may delay but won't overlap).
 
-**40. scheduleWithFixedDelay.**
+**40. `scheduleWithFixedDelay`.**
 * Runs after previous execution fully completes + delay.
 
-**41. ForkJoinPool.**
+**41. `ForkJoinPool`.**
 * Supports divide-and-conquer with work-stealing between worker threads.
 
-**42. invokeAll().**
+**42. `invokeAll()`.**
 * Executes a list of Callables and waits for all to finish. Useful for batch processing.
 
-**43. Graceful ExecutorService Shutdown.**
+**43. Graceful `ExecutorService` Shutdown.**
 * `shutdown()` + `awaitTermination()` pattern ensures tasks finish properly.
 
-**44. ThreadLocal.**
+**44. `ThreadLocal`.**
 * Gives each thread its own variable instance. 
-* Good for per-thread state like SimpleDateFormat.
+* Good for per-thread state like `SimpleDateFormat`.
 
-**45. ThreadLocal.withInitial().**
-* Java 8 factory-style initialization of ThreadLocal values.
+**45. `ThreadLocal.withInitial()`.**
+* Java 8 factory-style initialization of `ThreadLocal` values.
 
 **46. Memory Model: Read/Write Barriers.**
-* Synchronized/volatile create memory barriers ensuring visibility between threads.
+* `synchronized`/`volatile` create memory barriers ensuring visibility between threads.
 
 **47. Thread Stack & CPU Caches.**
 * Each thread may keep local cached copies of variables; synchronization flushes them.
 
 **48. Identifying Application Threads.**
-* Filter thread list using ThreadGroup to exclude system threads.
+* Filter thread list using `ThreadGroup` to exclude system threads.
 
 **49. Deadlock Example Pattern.**
 * Thread A holds Lock1, needs Lock2; Thread B holds Lock2, needs Lock1 - deadlock.
@@ -155,7 +156,7 @@
 * Thread: lightweight, shares memory within process. Primary unit of concurrency in Java.
 
 **51. Synchronized vs. Synchronized Method.**
-* A synchronized method is equivalent to synchronizing on this (or class object for static methods).
+* A synchronized method is equivalent to synchronizing on `this` (or class object for static methods).
 
 **52. Reentrant Locks in synchronized.**
 * Java intrinsic locks are reentrant: a thread already holding a lock can reacquire it.
@@ -172,20 +173,20 @@
 **56. Visibility Without Synchronization Risk.**
 * Without a lock or volatile, updates from one thread may never become visible to another due to CPU caching.
 
-**57. ExecutorService Task Piling Problem.**
-* Unbounded queues (e.g., in FixedThreadPool) can cause memory issues due to unlimited pending tasks.
+**57. `ExecutorService` Task Piling Problem.**
+* Unbounded queues (e.g., in `FixedThreadPool`) can cause memory issues due to unlimited pending tasks.
 
 **58. CallerRunsPolicy Use Case.**
 * When queue is full, the calling thread executes the task - acts as automatic throttling.
 
 **59. Difference Between `pool.execute()` and `pool.submit()`.**
-* `execute()` directly throws unchecked exceptions; `submit()` hides them inside Future unless retrieved.
+* `execute()` directly throws unchecked exceptions; `submit()` hides them inside `Future` unless retrieved.
 
-**60. LockInterruptibly.**
+**60. `LockInterruptibly`.**
 * Allows a thread waiting to acquire a lock to respond promptly to interrupts.
 
-**61. Optimistic Locking with StampedLock.**
-* StampedLock has an optimistic read mode which avoids blocking readers unless contention occurs.
+**61. Optimistic Locking with `StampedLock`.**
+* `StampedLock` has an optimistic read mode which avoids blocking readers unless contention occurs.
 
 **62. `wait()`, `notify()`, `notifyAll()`.**
 * Used for low-level thread coordination; must be called within synchronized blocks.
@@ -193,7 +194,7 @@
 **63. Thread Pools vs Creating Threads Manually.**
 * Thread pools reduce overhead of thread creation and enable controlled concurrency.
 
-**64. Work-Stealing Pool (ForkJoinPool.commonPool).**
+**64. Work-Stealing Pool (`ForkJoinPool.commonPool()`).**
 * Java 8 added work-stealing pool for parallel computations (e.g., parallel streams).
 
 **65. Correct Shutdown Pattern for Executors.**
@@ -208,8 +209,8 @@ Thread t = new Thread(() -> {
 t.start(); 
 ```
 
-**67. Difference between Thread and Runnable?**
-* Prefer Runnable for flexibility.
+**67. Difference between `Thread` and `Runnable`?**
+* Prefer `Runnable` for flexibility.
 ```java
 Runnable task = () -> System.out.println("Runnable task");
 Thread t = new Thread(task);
@@ -262,7 +263,7 @@ void method() {
 volatile boolean running = true;
 ```
 
-**73. What is volatile?**
+**73. What is `volatile`?**
 * Guarantees visibility, not atomicity.
 ```java
 volatile boolean flag = false;
@@ -272,7 +273,7 @@ void stop() {
 }
 ```
 
-**74. volatile vs synchronized?**
+**74. `volatile` vs `synchronized`?**
 * Atomicity vs visibility.
 ```java
 volatile int x;       // visibility only
@@ -320,7 +321,7 @@ while (otherThreadActive()) {
 }
 ```
 
-**80. wait() vs sleep()?**
+**80. `wait()` vs `sleep()`?**
 * `wait()` releases lock.
 ```java
 synchronized (obj) {
@@ -330,7 +331,7 @@ synchronized (obj) {
 Thread.sleep(1000);
 ```
 
-**81. notify() vs notifyAll()?**
+**81. `notify()` vs `notifyAll()`?**
 * `notifyAll()` avoids missed signals.
 ```java
 synchronized (obj) {
@@ -352,28 +353,28 @@ t.start();
 ExecutorService pool = Executors.newFixedThreadPool(5);
 ```
 
-**84. Executor vs ExecutorService?**
+**84. `Executor` vs `ExecutorService`?**
 * Lifecycle management.
 ```java
 ExecutorService es = Executors.newSingleThreadExecutor();
 es.shutdown();
 ```
 
-**85. Callable vs Runnable?**
+**85. `Callable` vs `Runnable`?**
 * Callable returns a value.
 ```java
 Callable<Integer> task = () -> 42;
 ```
 
-**86. What is Future?**
+**86. What is `Future`?**
 * Represents async result.
 ```java
 Future<Integer> f = es.submit(task);
 Integer result = f.get();
 ```
 
-**87. ReentrantLock advantages?**
-* More control than synchronized.
+**87. `ReentrantLock` advantages?**
+* More control than `synchronized`.
 ```java
 Lock lock = new ReentrantLock();
 lock.lock();
@@ -416,7 +417,7 @@ count++; // NOT atomic
 ```
 * Understanding atomic vs visibility.
 
-**92. Does synchronized guarantee fairness?**
+**92. Does `synchronized` guarantee fairness?**
 * No.
 * Thread scheduling is JVM/OS dependent.
 * Testing: Lock semantics vs scheduling.
@@ -426,7 +427,7 @@ count++; // NOT atomic
 * Without a happens-before relationship, visibility isn’t guaranteed.
 * Testing: Java Memory Model knowledge.
 
-**94. Why is double-checked locking broken without volatile?**
+**94. Why is double-checked locking broken without `volatile`?**
 * Instruction reordering can expose a partially constructed object.
 ```java
 if (instance == null) {
@@ -444,7 +445,7 @@ if (instance == null) {
 * Final fields have special JMM guarantees.
 * Testing: Safe publication rules.
 
-**96. Does Thread.sleep() release locks?**
+**96. Does `Thread.sleep()` release locks?**
 * No.
 * Only `wait()` releases the monitor.
 * Testing: Monitor behavior.
@@ -454,7 +455,7 @@ if (instance == null) {
 * There is no guarantee which waiting thread is chosen.
 * Testing: Correct use of `notifyAll()`.
 
-**98. Is ConcurrentHashMap completely lock-free?**
+**98. Is `ConcurrentHashMap` completely lock-free?**
 * No.
 * It uses fine-grained locking and CAS operations.
 * Testing: Internal implementation knowledge.
@@ -471,12 +472,12 @@ synchronized (lockA) {
 ```
 * Testing: Lock reentrancy understanding.
 
-**100. Is volatile faster than synchronized?**
+**100. Is `volatile` faster than `synchronized`?**
 * Not always.
 * Performance depends on contention and memory barriers.
 * Testing: Performance myths.
 
-**101. Can ReentrantLock cause deadlock?**
+**101. Can `ReentrantLock` cause deadlock?**
 * Yes.
 * It’s still a lock; misuse can deadlock.
 * Testing: Tool != solution.
@@ -491,7 +492,7 @@ synchronized (lockA) {
 * Immutability is one way to achieve thread safety.
 * Testing: Design principles.
 
-**104. Can two threads call wait() without notify() and still wake up?**
+**104. Can two threads call `wait()` without `notify()` and still wake up?**
 * Yes.
 * Spurious (Fałszywy) wakeups are allowed.
 ```java
@@ -511,22 +512,22 @@ while (!condition) {
 * If the task never completes.
 * Testing: Blocking risks.
 
-**107. Is ThreadLocal memory-safe?**
+**107. Is `ThreadLocal` memory-safe?**
 * Not automatically.
 * Can cause memory leaks in thread pools.
-* Testing: ThreadLocal internals.
+* Testing: `ThreadLocal` internals.
 
 **108. Can a program be thread-safe but still incorrect?**
 * Yes.
 * Thread safety doesn’t guarantee business correctness.
 * Testing: Separation of concerns.
 
-**109. Does synchronized guarantee visibility?**
+**109. Does `synchronized` guarantee visibility?**
 * Yes.
 * Lock acquire/release establishes happens-before.
 * Testing: Memory semantics.
 
-**110. Can volatile variables be reordered?**
+**110. Can `volatile` variables be reordered?**
 * No (around volatile access).
 * Volatile creates memory barriers.
 * Testing: Instruction reordering rules.
@@ -536,37 +537,37 @@ while (!condition) {
 * Long-running tasks can block short ones.
 * Testing: Thread pool sizing strategy.
 
-**112. Is volatile a replacement for synchronized?**
+**112. Is `volatile` a replacement for synchronized?**
 * Trap: Yes, it makes variables thread-safe.
-* Correct answer: No. volatile guarantees visibility, not atomicity.
+* Correct answer: No. `volatile` guarantees visibility, not atomicity.
 * Tests: Understanding Java Memory Model (JMM).
 
-**113. Does volatile make increment operations thread-safe?**
+**113. Does `volatile` make increment operations thread-safe?**
 * Trap: Yes, changes are visible.
 * Correct answer: No. `x++` is not atomic.
 * Tests: Atomic vs visible operations.
 
-**114. Is HashMap thread-safe for read-only access?**
+**114. Is `HashMap` thread-safe for read-only access?**
 * Trap: Yes, if no writes occur.
 * Correct answer: Not guaranteed. Without safe publication, even reads can be unsafe.
 * Tests: Safe publication & memory visibility.
 
-**115. Why is String thread-safe?**
+**115. Why is `String` thread-safe?**
 * Trap: Because it’s synchronized.
 * Correct answer: Because it’s immutable.
 * Tests: Immutability vs synchronization.
 
-**116. Can two threads call a synchronized method simultaneously?**
-* Trap: No, synchronized blocks everything.
+**116. Can two threads call a `synchronized` method simultaneously?**
+* Trap: No, `synchronized` blocks everything.
 * Correct answer: Yes, if they lock on different objects.
 * Tests: Object-level locking.
 
-**117. Does synchronized guarantee fairness?**
+**117. Does `synchronized` guarantee fairness?**
 * Trap: Yes.
 * Correct answer: No. Thread scheduling is JVM/OS dependent.
 * Tests: Lock behavior awareness.
 
-**118. What happens if a thread throws an exception inside a synchronized block?**
+**118. What happens if a thread throws an exception inside a `synchronized` block?**
 * Trap: Lock is retained.
 * Correct answer: Lock is released.
 * Tests: Lock lifecycle understanding.
@@ -616,7 +617,7 @@ while (!condition) {
 * Correct answer: No. It sends interrupts; tasks may ignore them.
 * Tests: Interruption semantics.
 
-**128. Is ConcurrentHashMap fully lock-free?**
+**128. Is `ConcurrentHashMap` fully lock-free?**
 * Trap: Yes.
 * Correct answer: No. It uses fine-grained locking and CAS.
 * Tests: Concurrent collections internals.
@@ -633,10 +634,10 @@ while (!condition) {
 
 **131. Is double-checked locking broken?**
 * Trap: Yes, always.
-* Correct answer: No. It’s safe with volatile (Java 5+).
+* Correct answer: No. It’s safe with `volatile` (Java 5+).
 * Tests: JMM evolution.
 
-**132. Can final fields improve thread safety?**
+**132. Can `final` fields improve thread safety?**
 * Trap: No.
 * Correct answer: Yes. Final fields have special publication guarantees.
 * Tests: Safe publication.
@@ -646,12 +647,12 @@ while (!condition) {
 * Correct answer: Yes, via reentrancy misuse or blocking calls.
 * Tests: Deadlock theory.
 
-**134. Does ReentrantLock replace synchronized?**
+**134. Does `ReentrantLock` replace synchronized?**
 * Trap: Yes.
 * Correct answer: No. It offers additional features, not replacement.
 * Tests: API trade-offs.
 
-**135. Why use ReentrantLock over synchronized?**
+**135. Why use `ReentrantLock` over synchronized?**
 * Trap: Because it’s faster.
 * Correct answer: Timeouts, fairness, multiple condition variables.
 * Tests: Advanced locking features.
@@ -788,7 +789,7 @@ while (!condition) {
 
 **162. Are intermediate operations stateless?**
 * Trap: Yes.
-* Correct answer: Some are stateful (distinct, sorted).
+* Correct answer: Some are stateful (`distinct`, `sorted`).
 * Tests: Pipeline internals.
 
 **163. Does `Collectors.toList()` guarantee mutability?**
@@ -811,7 +812,7 @@ while (!condition) {
 * Correct answer: Nothing happens.
 * Tests: Execution trigger.
 
-**167. Is `reduce()` always better than collect()?**
+**167. Is `reduce()` always better than `collect()`?**
 * Trap: Yes, it’s more functional.
 * Correct answer: No. `collect()` is often clearer and optimized.
 * Tests: Appropriate API usage.
@@ -835,6 +836,5 @@ while (!condition) {
 * Trap: Performance.
 * Correct answer: Hidden side effects and unreadable pipelines.
 * Tests: Code quality judgment.
-
 
 

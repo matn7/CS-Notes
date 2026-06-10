@@ -1,7 +1,5 @@
 **Join.**
 
-I have a sql query, i wounder can you give some short notes describing how query works? Suggest something. This is a question + query.
-
 **1. List each comment’s text and the username of the user who wrote it.**
 ```sql
 SELECT comments.contents, users.username
@@ -84,13 +82,15 @@ LEFT JOIN users ON users.id = photos.user_id;
 ```
 
 **Purpose:**
-* Displays every photo URL along with the username of the user who posted it, including photos that are not associated with any user.
+* Displays every photo URL along with the username of the user who posted it, including photos that are not associated 
+with any user.
 
 **How it works:**
 * `SELECT photos.url, users.username` retrieves the photo URL and the username.
 * `FROM photos` starts with the photos table.
 * `LEFT JOIN users ON users.id = photos.user_id` matches each photo to its owner using `user_id`.
-* The `LEFT JOIN` ensures that all photos are included, even if there is no matching user. In those cases, the username will be `NULL`.
+* The `LEFT JOIN` ensures that all photos are included, even if there is no matching user. In those cases, 
+the username will be `NULL`.
 
 **Example result:**
 
@@ -127,7 +127,8 @@ LEFT JOIN books ON books.author_id = authors.id;
 * `SELECT books.title, authors.name` retrieves the book title and author name.
 * `FROM authors` starts with the authors table.
 * `LEFT JOIN books ON books.author_id = authors.id` matches books to their authors using the author's ID.
-* The `LEFT JOIN` ensures that all authors are included in the result, even if they have no books. In those cases, the title will be `NULL`.
+* The `LEFT JOIN` ensures that all authors are included in the result, even if they have no books. In those cases, 
+the title will be `NULL`.
 
 **Example result:**
 
@@ -202,7 +203,8 @@ Lists each student along with the courses they are registered for.
 **How it works:**
 * `SELECT students.name, course_registrations.course_name` retrieves the student’s name and the course name.
 * `FROM students` starts from the students table.
-* `JOIN course_registrations ON students.id = course_registrations.student_id` links each student to their registrations using the student ID.
+* `JOIN course_registrations ON students.id = course_registrations.student_id` links each student to their registrations 
+using the student ID.
 * The `INNER JOIN` ensures only students who have registered for at least one course are included.
 
 **Example result:**
@@ -237,10 +239,11 @@ LEFT JOIN pets ON pets.owner_id = humans.id;
 * Lists all humans and their pets, including humans who do not own any pets.
 
 **How it works:**
-* `SELECT humans.name AS human_name, pets.name AS pet_name` selects the human’s name and their pet’s name (renaming columns for clarity).
+* `SELECT humans.name AS human_name, pets.name AS pet_name` selects the human’s name and their pet’s name 
+(renaming columns for clarity).
 * `FROM humans` starts from the humans table.
 * `LEFT JOIN pets ON pets.owner_id = humans.id` links pets to their owners using the `owner_id` field.
-* The `LEFT JOIN` ensures all humans are included, even if they have no pets. In those cases, pet_name will be `NULL`.
+* The `LEFT JOIN` ensures all humans are included, even if they have no pets. In those cases, `pet_name` will be `NULL`.
 
 **Example result:**
 
@@ -303,7 +306,7 @@ JOIN contracts c ON c.player_id = p.id;
 
 ***
 
-**9. List all customers and any orders they made using FULL JOIN.**
+**9. List all customers and any orders they made using `FULL JOIN`.**
 ```sql
 SELECT *
 FROM customers
@@ -317,10 +320,10 @@ FULL JOIN orders ON orders.customer_id = customers.id;
 * `SELECT *` retrieves all columns from both tables.
 * `FROM customers` starts with the customers table.
 * `FULL JOIN orders ON orders.customer_id = customers.id` combines both tables using the customer ID relationship.
-* A FULL JOIN includes:
+* A `FULL JOIN` includes:
     * Matching customer–order pairs.
-    * Customers without orders (order fields will be NULL).
-    * Orders without matching customers (customer fields will be NULL).
+    * Customers without orders (order fields will be `NULL`).
+    * Orders without matching customers (customer fields will be `NULL`).
 
 **Example result:**
 
@@ -331,7 +334,7 @@ FULL JOIN orders ON orders.customer_id = customers.id;
 | NULL | 	NULL   | 	201  | 	99           |          |
 
 **Short note version:**
-*U ses a `FULL JOIN` to combine customers and orders, showing all records from both tables even when there is no match.
+* Uses a `FULL JOIN` to combine customers and orders, showing all records from both tables even when there is no match.
 
 **Key point:**
 * FULL JOIN is useful for identifying unmatched data on both sides (customers without orders and orphan orders).
@@ -401,13 +404,15 @@ AND authors.id = books.author_id;
 ```
 
 **Purpose:**
-* Returns book titles, author names, and review ratings, but only for cases where the book’s author is the same person as the reviewer.
+* Returns book titles, author names, and review ratings, but only for cases where the book’s author is the same person 
+as the reviewer.
 
 **How it works:**
 * `FROM reviews` starts with the reviews table.
 * `JOIN books ON books.id = reviews.book_id` links each review to its corresponding book.
 * `JOIN authors ON authors.id = reviews.reviewer_id` connects each review to the author who wrote the review.
-* `AND authors.id = books.author_id` adds an extra condition ensuring the book’s author and the review’s author are the same person.
+* `AND authors.id = books.author_id` adds an extra condition ensuring the book’s author and the review’s author are the 
+same person.
 * `SELECT books.title, authors.name, reviews.rating` retrieves the book title, author name, and rating.
 
 **Example result:**
@@ -450,7 +455,8 @@ LEFT JOIN orders ON orders.product_id = products.id;
 * `SELECT products.*, orders.*` retrieves all columns from both the products and orders tables.
 * `FROM products` starts with the products table.
 * `LEFT JOIN orders ON orders.product_id = products.id` links each product to any matching orders using `product_id`.
-* The `LEFT JOIN` ensures every product appears in the result, even if it has no matching order. In such cases, the orders columns will be `NULL`.
+* The `LEFT JOIN` ensures every product appears in the result, even if it has no matching order. In such cases, the 
+orders columns will be `NULL`.
 
 **Example result:**
 
@@ -475,7 +481,7 @@ LEFT JOIN orders o ON o.product_id = p.id;
 
 ***
 
-**13. Return all orders and customer details using a RIGHT JOIN.**
+**13. Return all orders and customer details using a `RIGHT JOIN`.**
 ```sql
 SELECT orders.*, customers.*
 FROM orders
@@ -578,8 +584,8 @@ WHERE e1.dept_id = e2.dept_id;
 
 **How it works:**
 * The employees table is joined with itself using aliases:
-  * `e1` represents employees
-  * `e2` represents their managers
+  * `e1` represents employees.
+  * `e2` represents their managers.
 * `JOIN employees e2 ON e1.mngr_id = e2.emp_id` links each employee to their manager using `mngr_id`.
 * `WHERE e1.dept_id = e2.dept_id` filters only cases where the employee and their manager belong to the same department.
 * `SELECT e1.emp_name` returns only the employee names that satisfy this condition.
@@ -592,7 +598,8 @@ WHERE e1.dept_id = e2.dept_id;
 | Alice     |
 
 **Short note version:**
-* Uses a self-join to match employees with their managers and returns employees who work in the same department as their manager.
+* Uses a self-join to match employees with their managers and returns employees who work in the same department as 
+their manager.
 
 **Key point:**
 * This is a self-join pattern used to compare rows within the same table.
@@ -623,7 +630,8 @@ WHERE price > (SELECT MAX(price) FROM products WHERE department = 'Toys');
 **How it works:**
 * `FROM products` selects data from the products table.
 * `SELECT name, price` returns the product name and its price.
-* The subquery `(SELECT MAX(price) FROM products WHERE department = 'Toys')` finds the highest-priced product in the Toys department.
+* The subquery `(SELECT MAX(price) FROM products WHERE department = 'Toys')` finds the highest-priced product in the 
+Toys department.
 * `WHERE price > (...)` filters products whose price is greater than that maximum value.
 * This ensures only products strictly more expensive than all Toys are returned.
 
@@ -666,7 +674,8 @@ HAVING SUM(price * units_sold) > 2000000;
 * `FROM phones` selects data from the phones table.
 * `SUM(price * units_sold)` calculates total revenue for each manufacturer.
 * `GROUP BY manufacturer` groups rows so revenue is calculated per manufacturer.
-* `HAVING SUM(price * units_sold) > 2000000` filters grouped results to keep only manufacturers whose total revenue is greater than 2,000,000.
+* `HAVING SUM(price * units_sold) > 2000000` filters grouped results to keep only manufacturers whose total revenue is 
+greater than 2,000,000.
 * `SELECT manufacturer, SUM(price * units_sold) AS revenue` outputs the manufacturer name and their computed revenue.
 
 **Example result:**
@@ -751,9 +760,10 @@ WHERE price > (SELECT price FROM phones WHERE name = 'S5620 Monte');
 
 **Example result:**
 
-| name |	price |
-| iPhone 13 |	900 |
-| Galaxy S21 |	850 |
+| name       | 	price  |
+|------------|---------|
+| iPhone 13  | 	900    |
+| Galaxy S21 | 	850    |
 
 **Short note version:**
 * Uses a subquery to get the price of a specific phone and returns all phones that are more expensive than it.
@@ -812,7 +822,7 @@ WHERE pages > (SELECT AVG(pages) FROM books);
 
 ***
 
-**21. Most expensive product in each department (correlated subquery).**
+**21. Most expensive product in each department (correlated subquery).** // here
 ```sql
 SELECT p1.name, p1.department, p1.price
 FROM products p1
@@ -870,7 +880,8 @@ HAVING COUNT(*) = (SELECT COUNT(*) FROM photos);
 * `GROUP BY users.id` groups all likes per user so we can count them.
 * `COUNT(*)` calculates how many photos each user has liked.
 * The subquery `(SELECT COUNT(*) FROM photos)` returns the total number of photos available.
-* `HAVING COUNT(*) = (...)` keeps only users whose number of likes matches the total number of photos (meaning they liked every photo).
+* `HAVING COUNT(*) = (...)` keeps only users whose number of likes matches the total number of photos 
+(meaning they liked every photo).
 
 **Example result:**
 
@@ -1103,11 +1114,11 @@ for the current customer.
 * (Customers without orders are not returned.)
 
 **Short note version:**
-* Uses EXISTS to return only customers who have at least one matching order.
+* Uses `EXISTS` to return only customers who have at least one matching order.
 
 **Key point:**
-* `EXISTS` checks for the presence of rows, not the number of rows. It can stop searching as soon as it finds the first match, 
-making it efficient.
+* `EXISTS` checks for the presence of rows, not the number of rows. 
+* It can stop searching as soon as it finds the first match, making it efficient.
 
 **Equivalent JOIN version:**
 ```sql
@@ -1119,7 +1130,7 @@ JOIN orders o ON o.customer_id = c.id;
 
 ***
 
-**28. Customers who never placed an order (NOT EXISTS).**
+**28. Customers who never placed an order (`NOT EXISTS`).**
 ```sql
 SELECT c.*
 FROM customers c
@@ -1132,7 +1143,8 @@ WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id);
 **How it works:**
 * `FROM customers c` starts with the customers table.
 * `SELECT c.*` returns all customer details.
-* The `NOT EXISTS` subquery: `SELECT 1 FROM orders o WHERE o.customer_id = c.id` checks whether any orders exist for the current customer.
+* The `NOT EXISTS` subquery: `SELECT 1 FROM orders o WHERE o.customer_id = c.id` checks whether any orders exist for 
+the current customer.
 * `NOT EXISTS` returns `TRUE` only when no matching order is found.
 * As a result, only customers without orders are returned.
 
@@ -1152,7 +1164,7 @@ WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id);
 * `NOT EXISTS` is often preferred over `NOT IN` because it handles `NULL` values safely and is usually more efficient 
 for this type of check.
 
-**Equivalent LEFT JOIN version:**
+**Equivalent `LEFT JOIN` version:**
 ```sql
 SELECT c.*
 FROM customers c
@@ -1228,8 +1240,8 @@ LIMIT 1;
 ```
 
 **Purpose:**
-* Finds the city with the longest name in the station table. If multiple cities have the same length, it picks the one 
-that comes first alphabetically.
+* Finds the city with the longest name in the station table. 
+* If multiple cities have the same length, it picks the one that comes first alphabetically.
 
 **How it works:**
 * `FROM station` selects data from the station table.
@@ -1257,7 +1269,7 @@ FROM station
 ORDER BY LENGTH(city) DESC, city ASC
 LIMIT 1;
 ```
-* If you also need the shortest city, the logic is the same but reversed (ASC instead of DESC).
+* If you also need the shortest city, the logic is the same but reversed (`ASC` instead of `DESC`).
 
 ***
 
@@ -1275,7 +1287,8 @@ ORDER By Customers.CustomerID;
 
 **How it works:**
 * `FROM Customers` starts with the full list of customers.
-* `LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID AND Orders.EmployeeID = 4` joins only orders handled by Employee 4.
+* `LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID AND Orders.EmployeeID = 4` joins only orders handled 
+by Employee 4.
 * If a customer has no such order, the joined Orders columns will be `NULL`.
 * `WHERE Orders.CustomerID IS NULL` filters to keep only customers who do not have any matching order from Employee 4.
 * `SELECT Customers.CustomerID, Orders.CustomerID` shows the customer ID and confirms absence of matching orders 
@@ -1293,7 +1306,7 @@ ORDER By Customers.CustomerID;
 * Uses a `LEFT JOIN` filtered by EmployeeID = 4 and returns customers who have no matching orders with that employee.
 
 **Key point:**
-* The condition on the JOIN (EmployeeID = 4) ensures we only check orders for that specific employee, 
+* The condition on the `JOIN` (EmployeeID = 4) ensures we only check orders for that specific employee, 
 and `IS NULL` identifies missing matches.
 
 **Optional improvement (cleaner output):**
@@ -1373,8 +1386,8 @@ WHERE NOT EXISTS (
 
 **How it works:**
 * `FROM Customers` starts with the full list of customers.
-* The `NOT EXISTS` subquery checks for matching orders: 
-  * `SELECT CustomerID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID AND EmployeeID = 4`.
+* The `NOT EXISTS` subquery checks for matching orders:
+`SELECT CustomerID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID AND EmployeeID = 4`.
 * For each customer, the subquery looks for at least one order handled by Employee 4.
 * If such an order exists, `EXISTS` becomes true and `NOT EXISTS` excludes that customer.
 * If no matching order is found, the customer is included in the result.
@@ -1390,10 +1403,10 @@ WHERE NOT EXISTS (
 * Uses `NOT EXISTS` to return customers who do not have any orders associated with EmployeeID 4.
 
 **Key point:**
-& This is a correlated subquery—the inner query depends on each customer row from the outer query.
+* This is a correlated subquery—the inner query depends on each customer row from the outer query.
 
 **Why this version is good:**
-* `NOT EXISTS` is safer and more reliable than `NOT IN`, especially when dealing with NULL values in the data.
+* `NOT EXISTS` is safer and more reliable than `NOT IN`, especially when dealing with `NULL` values in the data.
 
 **Optional improvement (cleaner formatting):**
 ```sql
@@ -1424,7 +1437,7 @@ WHERE
 **Purpose:**
 * Finds customers who have never placed any orders, using two different SQL approaches.
 
-**1. LEFT JOIN approach.**
+**1. `LEFT JOIN` approach.**
 ```sql
 SELECT Customers_CustomerID = Customers.CustomerID,
 Orders_CustomerID = Orders.CustomerID
@@ -1446,7 +1459,7 @@ WHERE Orders.CustomerID IS NULL;
 **Short note version:**
 * Uses a `LEFT JOIN` and filters `NULL` matches to find customers with no orders.
 
-**2. NOT IN approach.**
+**2. `NOT IN` approach.**
 ```sql
 SELECT CustomerID
 FROM Customers
@@ -1494,7 +1507,8 @@ WHERE NOT EXISTS
 
 **How it works:**
 * `FROM Customers` selects all customers as the starting point.
-* `The NOT EXISTS` subquery checks for matching orders: `SELECT CustomerID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID`.
+* `The NOT EXISTS` subquery checks for matching orders: 
+`SELECT CustomerID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID`.
 * For each customer, the subquery searches for at least one related order.
 * If a matching order exists → `EXISTS` becomes true → customer is excluded.
 * If no matching order exists → `NOT EXISTS` is true → customer is included in the result.
@@ -1510,10 +1524,12 @@ WHERE NOT EXISTS
 | 7          |
 
 **Short note version:**
-* Uses `NOT EXISTS` with a correlated subquery to return customers who do not have any matching records in the Orders table.
+* Uses `NOT EXISTS` with a correlated subquery to return customers who do not have any matching records in the 
+Orders table.
 
 **Why this is useful:**
-* `NOT EXISTS` is generally preferred over `NOT IN` because it handles `NULL` values safely and works efficiently with indexed joins.
+* `NOT EXISTS` is generally preferred over `NOT IN` because it handles `NULL` values safely and works efficiently 
+with indexed joins.
 
 **Optional cleaner version:**
 ```sql
@@ -1536,14 +1552,16 @@ ORDER BY Orders.OrderID, Products.ProductID;
 ```
 
 **Purpose:**
-* Creates a detailed report showing which employee handled each order, along with the products in the order and their quantities.
+* Creates a detailed report showing which employee handled each order, along with the products in the order and 
+their quantities.
 
 **How it works:**
 * `FROM Employees` starts with the employee table.
 * `JOIN Orders ON Orders.EmployeeID = Employees.EmployeeID` links each employee to the orders they handled.
-* `JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID` connects each order to its line items (products and quantities).
+* `JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID` connects each order to its line items 
+(products and quantities).
 * `JOIN Products ON Products.ProductID = OrderDetails.ProductID` retrieves product names for each order item.
-* SELECT returns:
+* `SELECT` returns:
   * Employee ID and last name.
   * Order ID.
   * Product name.
@@ -1563,7 +1581,8 @@ ORDER BY Orders.OrderID, Products.ProductID;
 and what items were included.
 
 **Key point:**
-* This is a multi-table `INNER JOIN` chain that builds a full transactional view from employee → order → order items → product.
+* This is a multi-table `INNER JOIN` chain that builds a full transactional view from 
+employee → order → order items → product.
 
 **Optional improved readability version:**
 ```sql
@@ -1580,11 +1599,11 @@ ORDER BY o.OrderID, p.ProductID;
 
 **37. Categories, and the total products in each category.**
 ```sql
-SELECT CategoryName, TotalProducts = count(*)
+SELECT CategoryName, TotalProducts = COUNT(*)
 FROM Products
-    JOIN Categories ON Products.CateggoryID = Categories.CategoryID
+    JOIN Categories ON Products.CategoryID = Categories.CategoryID
 GROUP BY CategoryName
-ORDER BY count(*) DESC;
+ORDER BY COUNT(*) DESC;
 ```
 
 **Purpose:**
@@ -1620,13 +1639,13 @@ JOIN Categories c ON p.CategoryID = c.CategoryID
 GROUP BY c.CategoryName
 ORDER BY TotalProducts DESC;
 ```
-* This version fixes the typo (CateggoryID) and improves readability with aliases.
+* This version improves readability with aliases.
 
 ***
 
 **38. Orders and the Shipper that was used.**
 ```sql
-SELECT OrderID, OrderDate = convert(date, orderDate), Shipper = CompanyName
+SELECT OrderID, OrderDate = CONVERT(date, orderDate), Shipper = CompanyName
 FROM Orders
     JOIN Shippers ON Shippers.ShipperID = Orders.ShipVia
 WHERE
@@ -1635,7 +1654,8 @@ ORDER BY OrderID;
 ```
 
 **Purpose:**
-* Shows each order along with its order date (without time) and the shipping company used, for orders with ID less than 10271.
+* Shows each order along with its order date (without time) and the shipping company used, 
+for orders with ID less than 10271.
 
 **How it works:**
 * `FROM Orders` starts with the orders table.
@@ -1657,7 +1677,8 @@ ORDER BY OrderID;
 * Joins Orders with Shippers to show order details, shipper name, and formatted order date for orders with ID below 10271.
 
 **Key point:**
-* The `JOIN` connects orders to shipping companies, while `CONVERT(date, OrderDate)` formats the datetime into a clean date-only value.
+* The `JOIN` connects orders to shipping companies, while `CONVERT(date, OrderDate)` formats the datetime into a clean 
+date-only value.
 
 **Optional improved version (clean aliases):**
 ```sql
@@ -1687,7 +1708,7 @@ FROM Products
 * `FROM Products` starts with the products table.
 * `JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID` links each product to its supplier using `SupplierID`.
 * `SELECT ProductID, ProductName` returns product details.
-* Supplier = CompanyName displays the supplier’s company name under the alias “Supplier”.
+* `Supplier = CompanyName` displays the supplier’s company name under the alias “Supplier”.
 * The result includes only products that have a matching supplier (`INNER JOIN` behavior).
 
 **Example result:**
@@ -1701,7 +1722,7 @@ FROM Products
 * Joins Products and Suppliers to display each product with its corresponding supplier name.
 
 **Key point:**
-* The `JOIN` connects each product to its supplier using SupplierID, enriching product data with supplier information.
+* The `JOIN` connects each product to its supplier using `SupplierID`, enriching product data with supplier information.
 
 **Optional improved version (clean aliases):**
 ```sql

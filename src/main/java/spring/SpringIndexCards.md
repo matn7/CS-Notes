@@ -170,6 +170,8 @@ and modular architecture.
 **55. What happens if dependency is missing?**
 * Application startup failure.
 
+***
+
 ## Dependency Injection Deep Dive.
 
 **56. Types of DI supported by Spring?**
@@ -194,7 +196,7 @@ and modular architecture.
 * Using reflection.
 
 **63. Can `@Autowired` be optional?**
-* Yes (required = false).
+* Yes (`required = false`).
 
 **64. What happens if autowiring fails?**
 * `UnsatisfiedDependencyException`.
@@ -208,10 +210,10 @@ and modular architecture.
 **67. Can method injection be used?**
 * Yes, but rare.
 
-**68. Can static fields be autowired?**
+**68. Can `static` fields be autowired?**
 * No.
 
-**69. Can final fields be autowired?**
+**69. Can `final` fields be autowired?**
 * Yes (constructor injection).
 
 **70. What is circular dependency?**
@@ -260,7 +262,9 @@ and modular architecture.
 * Yes (mocking).
 
 **85. Does DI enforce SOLID principles?**
-* Yes (especially DIP).
+* Yes (especially DIP - Dependency Injection Principle).
+
+***
 
 ## Bean Scopes & Lifecycle.
 
@@ -345,16 +349,16 @@ and modular architecture.
 **112. What is destroy-method?**
 * Custom cleanup hook.
 
-**113. What is BeanPostProcessor?**
+**113. What is `BeanPostProcessor`?**
 * Custom logic before/after initialization.
 
-**114. Can BeanPostProcessor modify beans?**
+**114. Can `BeanPostProcessor` modify beans?**
 * Yes.
 
-**115. What is ApplicationContextAware?**
+**115. What is `ApplicationContextAware`?**
 * Allows access to context.
 
-**116. What is BeanNameAware?**
+**116. What is `BeanNameAware`?**
 * Allows bean to know its name.
 
 **117. Are lifecycle annotations from Spring?**
@@ -383,6 +387,8 @@ and modular architecture.
 
 **125. Why lifecycle matters?**
 * Resource management.
+
+***
 
 ## AOP, MVC, Boot, Validation.
 
@@ -413,13 +419,13 @@ and modular architecture.
 **134. Spring AOP limitation?** 
 * Method-level only.
 
-**135. DispatcherServlet?** 
+**135. `DispatcherServlet`?** 
 * Front controller.
 
-**136. HandlerMapping?** 
+**136. `HandlerMapping`?** 
 * Maps requests.
 
-**137. ViewResolver?** 
+**137. `ViewResolver`?** 
 * Resolves views.
 
 **138. `@RestController`?** 
@@ -437,7 +443,7 @@ and modular architecture.
 **142. Spring Boot purpose?** 
 * Reduce config.
 
-**143. SpringBootApplication?** 
+**143. `SpringBootApplication`?** 
 * Meta-annotation.
 
 **144. Starters?** 
@@ -513,7 +519,7 @@ and modular architecture.
 * Handle exceptions.
 
 **168. MVC separation?** 
-* Controller/View/Model.
+* Controller / View / Model.
 
 **169. Microservices support?** 
 * Spring Cloud.
@@ -747,7 +753,8 @@ and modular architecture.
 
 **236. Why is `@Component` not always enough?**
 * Trap: Because it’s generic.
-* Correct answer: Stereotypes (`@Service`, `@Repository`) provide semantic meaning and enable features like exception translation.
+* Correct answer: Stereotypes (`@Service`, `@Repository`) provide semantic meaning and enable features like exception 
+translation.
 * Why it matters: Cleaner architecture and better tooling.
 
 **237. Is `@Repository` just documentation?**
@@ -767,7 +774,8 @@ and modular architecture.
 
 **240. Why does Spring allow circular dependencies sometimes?**
 * Trap: Because Spring is smart.
-* Correct answer: Spring can resolve setter-based circular dependencies using early references, but not constructor-based ones.
+* Correct answer: Spring can resolve setter-based circular dependencies using early references, 
+but not constructor-based ones.
 * Why it matters: Reveals internal container mechanics.
 
 **241. Is `@Lazy` a performance optimization?**
@@ -787,7 +795,7 @@ and modular architecture.
   * `ServletContext` -> Web container (Tomcat).
 * Why it matters: Web application architecture clarity.
 
-**244. Can Spring Boot run without a web server?** // here
+**244. Can Spring Boot run without a web server?**
 * Trap: No.
 * Correct answer: Yes. Spring Boot supports CLI, batch, messaging, and standalone apps.
 * Why it matters: Non-web use cases.

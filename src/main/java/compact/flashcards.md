@@ -4,18 +4,18 @@
 * Callback hell.
 
 **2. Concurrency APIs in Java.**
-* Future:
+* `Future`:
   * Released in Java 5.
   * Write Asynchronous code.
   * Disadvantages: 
     * No easy way to combine the result from multiple features.
   * `Future.get()` - this is a blocking call!
-* `ComparableFuture:
+* `ComparableFuture`:
   * Released in Java 8.
   * Write Asynchronous code in functional style.
   * Easy to compose / combine Multiple Futures.
   * Disadvantages:
-    * Future that returns many elements.
+    * `Future` that returns many elements.
     * Eg. `ComparableFuture<List<Result>>` will need to wait for the whole collection to build and readily available.
     * `ComparableFuture` does not hava a handle for infinite values.
 
@@ -81,13 +81,13 @@ client and service.
 **14. `map()` vs `flatmap()` project reactor.**
 * `map()`:
   * One to one transformation.
-  * Does the simple transformation from T to V.
+  * Does the simple transformation from `T` to `V`.
   * Used for simple synchronous transformations.
   * Does not support transformations that returns Publisher.
 * `flatMap()`:
   * One to N transformation.
-  * Does more than just transformation. Subscribes to `Flux` or `Mono` that's part of the transformation and then flattens it
-  and send it downstream.
+  * Does more than just transformation. 
+  * Subscribes to `Flux` or `Mono` that's part of the transformation and then flattens it and send it downstream.
   * Used to asynchronous transformations.
   * Use it with transformations that returns Publisher.
 
