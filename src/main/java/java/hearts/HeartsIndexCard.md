@@ -1,4 +1,4 @@
-`## Hearts - Index Card.
+## Hearts - Index Card.
 
 **1. What is Concurrent Programming?**
 * Concurrent programming means multiple computations executing at the same time instead of sequentially. 

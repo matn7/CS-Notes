@@ -411,7 +411,7 @@ void test() {
 **32. Improving Performance with Parallelization of Streams.**
 ```java
 void test() {
-    long sum = LonggStream.range(0, 1000000000).parallel().sum();
+    long sum = LongStream.range(0, 1000000000).parallel().sum();
     
     // structured code has stats so it is harder to parallelize
     numbers.stream().parallel().reduce(0, Integer::sum);
@@ -479,7 +479,7 @@ void test() {
 ```java
 void test() {
     Comparator<Course> compNumOfStudentsAndScore = Comparator.comparingInt(Course::getNumOfStudents)
-            .thenComparingInt(Course::ggetReviewScore)
+            .thenComparingInt(Course::getReviewScore)
             .reversed();
 }
 ```
@@ -631,8 +631,10 @@ public class Accounting {
     private static final double HIGH_EARNER_THRESHOLD = 100_000;
     private final BiFunction<Double, Double, Double> deductExpenses = (revenue, expression) -> revenue - expression;
     private final Function<Double, Double> takeStdDeduction = income -> income - STANDARD_DEDUCTION;
-    private final Function<Double, Double> calcTaxRate = taxableIncome -> taxableIncome < HIGH_EARNER_THRESHOLD ? 0.2 : 0.3;
-    private final Function<Double, Double> witholdIncomeTax = taxableIncome -> taxableIncome * (1 - calcTaxRate.apply(taxableIncome));
+    private final Function<Double, Double> calcTaxRate = 
+            taxableIncome -> taxableIncome < HIGH_EARNER_THRESHOLD ? 0.2 : 0.3;
+    private final Function<Double, Double> witholdIncomeTax = 
+            taxableIncome -> taxableIncome * (1 - calcTaxRate.apply(taxableIncome));
     
     public double calcNetIncomeAfterTax(double grossRevenue, double businessExpenses) {
         return deductExpenses.andThen(takeStdDeduction)
@@ -777,7 +779,8 @@ void test() {
                     Collectors.toList(),
                     list -> {
                         int size = list.size();
-                        return size % 2 == 0 ? (list.get(size / 2 - 1) + list.get(size / 2)) / 2.0 : list.get(size / 2);
+                        return size % 2 == 0 ? 
+                                (list.get(size / 2 - 1) + list.get(size / 2)) / 2.0 : list.get(size / 2);
                     }
             ));
 }
@@ -914,7 +917,9 @@ void test() {
 public static String everySecondChar(String source) {
     StringBuilder returnVal = new StringBuilder();
     for (int i = 0; i < source.length; i++) {
-        returnVal.append(source.charAt(i));
+        if (i % 2 == 0) {
+            returnVal.append(source.charAt(i));
+        }
     }
     return returnVal.toString();
 }
@@ -989,7 +994,7 @@ void test() {
 
 **74. Lambda, function input list of strings, return number of unique strings, which can be built from a string.**
 ```java
-int countUniqueStrings(List<Stringg> list) {
+int countUniqueStrings(List<String> list) {
     Set<String> set = new HashSet<>();
     list.forEach(
             s -> {
@@ -1055,6 +1060,15 @@ void test() {
             students.stream()
                     .collect(Collectors.partitioningBy(student -> student.getGrade() >= 65));
 }
+```
+
+```java
+void test() {
+    Map<Boolean, List<Student>> passing =
+            students.stream()
+                    .collect(Collectors.groupingBy(
+                            student -> student.getGrade() >= 65
+                    ));
 ```
 
 **79. Group the movies by genre?**
@@ -1449,7 +1463,15 @@ void test() {
             .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
             .entrySet()
             .forEach(System.out::println);
+    // Map<String, Long> res
+    // banana = 1
+    // orange = 1
+    // apple = 2
     
+    Stream.of("apple", "orange", "banana", "apple")
+            .collect(Collectors.groupingBy(fruit -> fruit, Collectors.counting()))
+            .entrySet()
+            .forEach(System.out::println);
     // Map<String, Long> res
     // banana = 1
     // orange = 1
@@ -1524,6 +1546,20 @@ void test() {
     
     Map<Boolean, Long> expCount = students.stream()
             .collect(Collectors.partitioningBy(Student::hasExperienced, Collectors.counting()));
+
+    Map<Boolean, List<Student>> expCount1 =
+            students.stream()
+                    .collect(Collectors.groupingBy(
+                            Student::hasExperienced
+                            Collectors.counting()
+                    ));
+    
+    Map<Boolean, List<Student>> expCount2 =
+            students.stream()
+                    .collect(Collectors.groupingBy(
+                            student -> student.hasExperience(),
+                            Collectors.counting()
+                    ));
     
     Map<Boolean, Long> expAndActive = students.stream()
             .collect(Collectors.partitioningBy(s -> s.hasExperienced() && s.getMonthsSinceActive() == 0, Collectors.counting()));
@@ -1585,8 +1621,8 @@ void test() {
 
 **113. What is the purpose of the `wait()` and `notify()` methods in Java? Provide an example of how to use them for
 inter-thread communication.**
-* The `wait()` and `notify() methods are used for inter-thread communication and synchronization. 
-* `wait()` is called by a thread to release the lock, and wait for another thread to notify it. 
+* The `wait()` and `notify()` methods are used for inter-thread communication and synchronization. 
+* `wait()` is called by a thread to release the lock, and wait for another thread to notify it.
 * `notify()` is called by a thread to wake up a waiting thread.
 
 **114. `ThreadLocal` example.**
@@ -1655,7 +1691,7 @@ void test() {
 }
 ```
 
-**118. Which method will bring the thread into a WAITING state?**
+**118. Which method will bring the thread into a `WAITING` state?**
 * `Object.wait();`.
 * `LockSupport.park();`.
 * `Thread.join();`.
@@ -1675,39 +1711,29 @@ void test() {
 }
 ```
 
+## Top 5 Java Stream Interview Questions on Creating Frequency Maps.
 
+* These are extremely common in Java backend interviews because they test:
+  * Stream API knowledge.
+  * Collectors mastery.
+  * Functional programming style.
+  * Performance awareness.
+  * Clean coding.
 
-Top 5 Java Stream Interview Questions on Creating Frequency Maps
-
-These are extremely common in Java backend interviews because they test:
-
-Stream API knowledge
-Collectors mastery
-Functional programming style
-Performance awareness
-Clean coding
-1. Count frequency of characters in a String
-   Question
-
-Given a string, create a frequency map of each character using Java Streams.
-
-Example
-
-Input:
-
-"banana"
-
-Output:
-
-{b=1, a=3, n=2}
-Expected Solution
+**1. Count frequency of characters in a String.**
+* Question: Given a string, create a frequency map of each character using Java Streams.
+* Example
+  * Input: "banana"
+  * Output: `{b=1, a=3, n=2}`.
+* Expected Solution:
+```java
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
-public static void main(String[] args) {
-String str = "banana";
+    public static void main(String[] args) {
+        String str = "banana";
 
         Map<Character, Long> freqMap =
                 str.chars()
@@ -1720,33 +1746,29 @@ String str = "banana";
         System.out.println(freqMap);
     }
 }
+```
+
 Interview Follow-ups
 Why Function.identity()?
 Why Long instead of Integer?
 Difference between chars() and codePoints()?
-2. Count frequency of words in a sentence
-   Question
 
-Create a frequency map of words from a sentence.
 
-Example
 
-Input:
-
-"java is good java is fast"
-
-Output:
-
-{java=2, is=2, good=1, fast=1}
-Expected Solution
+**2. Count frequency of words in a sentence**
+* Question: Create a frequency map of words from a sentence.
+* Example
+  * Input: "java is good java is fast".
+  * Output: `{java=2, is=2, good=1, fast=1}`.
+* Expected Solution:
+```java
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.Arrays;
 
 public class Main {
-public static void main(String[] args) {
-
+    public static void main(String[] args) {
         String sentence = "java is good java is fast";
 
         Map<String, Long> wordFreq =
@@ -1759,25 +1781,20 @@ public static void main(String[] args) {
         System.out.println(wordFreq);
     }
 }
+```
+
 Interview Follow-ups
 How to ignore case?
 How to remove punctuation?
 How to sort by frequency?
-3. Find the first non-repeating character using frequency map
-   Question
 
-Find the first character whose frequency is 1.
-
-Example
-
-Input:
-
-"swiss"
-
-Output:
-
-w
-Expected Solution
+**3. Find the first non-repeating character using frequency map?**
+* Question: Find the first character whose frequency is 1.
+* Example
+  * Input: "swiss".
+  * Output: `w`
+* Expected Solution:
+```java
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -1808,70 +1825,65 @@ public class Main {
         System.out.println(result);
     }
 }
+```
+
 Interview Follow-ups
 Why use LinkedHashMap?
 Time complexity?
 Can this be done in one pass?
-4. Sort elements by frequency using Streams
-   Question
 
-Sort elements based on frequency in descending order.
-
-Example
-
-Input:
-
-["apple", "banana", "apple", "orange", "banana", "apple"]
-
-Output:
-
-apple=3
-banana=2
-orange=1
-Expected Solution
+**4. Sort elements by frequency using Streams.**
+* Question: Sort elements based on frequency in descending order.
+* Example
+  * Input: ["apple", "banana", "apple", "orange", "banana", "apple"].
+  * Output: `apple=3 banana=2 orange=1`.
+* Expected Solution
+```java
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        List<String> fruits = Arrays.asList(
-                "apple", "banana", "apple",
-                "orange", "banana", "apple"
-        );
+    List<String> fruits = Arrays.asList(
+            "apple", "banana", "apple",
+            "orange", "banana", "apple"
+    );
 
-        Map<String, Long> sortedFreq =
-                fruits.stream()
-                      .collect(Collectors.groupingBy(
-                              Function.identity(),
-                              Collectors.counting()
-                      ))
-                      .entrySet()
-                      .stream()
-                      .sorted(Map.Entry.<String, Long>comparingByValue()
-                              .reversed())
-                      .collect(Collectors.toMap(
-                              Map.Entry::getKey,
-                              Map.Entry::getValue,
-                              (a, b) -> a,
-                              LinkedHashMap::new
-                      ));
+    Map<String, Long> sortedFreq =
+            fruits.stream()
+                    .collect(Collectors.groupingBy(
+                            Function.identity(),
+                            Collectors.counting()
+                    ))
+                    .entrySet()
+                    .stream()
+                    .sorted(Map.Entry.<String, Long>comparingByValue()
+                            .reversed())
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (a, b) -> a,
+                            LinkedHashMap::new
+                    ));
 
-        System.out.println(sortedFreq);
-    }
-}
+    System.out.println(sortedFreq);
+  }
+} 
+```
+
 Interview Follow-ups
 Why use LinkedHashMap after sorting?
 Complexity of sorting?
 How to return top K frequent elements?
-5. Create frequency map with parallel streams
-   Question
 
-How do you safely create a frequency map using parallel streams?
 
-Expected Solution
+**5. Create frequency map with parallel streams?**
+* Question: How do you safely create a frequency map using parallel streams?
+* Expected Solution:
+```java
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -1894,10 +1906,13 @@ public class Main {
         System.out.println(freqMap);
     }
 }
+```
+
 Interview Follow-ups
 Difference between groupingBy() and groupingByConcurrent()?
 When should parallel streams be avoided?
 Is ordering guaranteed?
+
 Most Important Concepts Interviewers Expect
 Concept	Why It Matters
 groupingBy()	Core frequency-map collector

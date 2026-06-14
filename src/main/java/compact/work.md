@@ -7,7 +7,7 @@ auto-configuration, embedded servers, and production-ready features.
 
 **2. How does auto-configuration work internally?**
 * Spring Boot uses `@EnableAutoConfiguration`, which triggers loading of configuration classes listed in 
-**META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports**. 
+`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`. 
 * These classes use conditional annotations like `@ConditionalOnClass`, `@ConditionalOnMissingBean`, etc., 
 to configure beans dynamically based on the classpath and environment.
 
@@ -21,7 +21,7 @@ and starter dependencies.
 reducing dependency conflicts and setup time.
 
 **5. How do you externalize configuration?**
-* Using **application.properties** or **application.yml**, environment variables, command-line arguments, and profiles. 
+* Using `application.properties` or `application.yml`, environment variables, command-line arguments, and profiles. 
 * Spring Boot follows a priority order for configuration sources.
 
 **6. What is Spring Boot Actuator?**
@@ -29,8 +29,8 @@ reducing dependency conflicts and setup time.
 * It integrates with tools like Prometheus and Grafana.
 
 **7. How do profiles work?**
-* Profiles allow environment-specific configurations using **spring.profiles.active**. 
-* Separate config files like **application-dev.yml** can be used to isolate settings.
+* Profiles allow environment-specific configurations using `spring.profiles.active`. 
+* Separate config files like `application-dev.yml` can be used to isolate settings.
 
 **8. What is the difference between `@Component`, `@Service`, and `@Repository`?**
 * All are stereotypes of `@Component`.
@@ -67,8 +67,8 @@ reducing dependency conflicts and setup time.
 * Provides hot reload, automatic restart, and development-time enhancements to improve productivity.
 
 **17. How do you connect to a database?**
-* Using Spring Data JPA or JDBC with configuration in **application.yml**. 
-* Boot auto-configures DataSource if dependencies are present.
+* Using Spring Data JPA or JDBC with configuration in `application.yml`. 
+* Boot auto-configures `DataSource` if dependencies are present.
 
 **18. What is Spring Data JPA?**
 * A layer over JPA that simplifies database access by generating repository implementations automatically.
@@ -97,7 +97,7 @@ reducing dependency conflicts and setup time.
 
 **24. What is Spring Boot’s startup lifecycle?**
 * Key phases:
-  * Application starts (SpringApplication.run).
+  * Application starts (`SpringApplication.run`).
   * Environment prepared.
   * Context created.
   * Beans initialized.
@@ -259,7 +259,7 @@ containerized applications.
 * Deployment → manages replicas, updates, and rollbacks of Pods.
 
 **5. How does Kubernetes handle scaling?**
-* Manual scaling (kubectl scale).
+* Manual scaling (`kubectl scale`).
 * Horizontal Pod Autoscaler (HPA) based on CPU/memory/custom metrics.
 * Cluster Autoscaler for nodes.
 
@@ -364,11 +364,11 @@ containerized applications.
 * Built from a Dockerfile and stored in registries.
 
 **4. What is a Dockerfile?**
-* A script containing instructions to build a Docker image (e.g., FROM, RUN, COPY, CMD).
+* A script containing instructions to build a Docker image (e.g., `FROM`, `RUN`, `COPY`, `CMD`).
 
-**5. What is the difference between CMD and ENTRYPOINT?**
-* CMD → default command, can be overridden.
-* ENTRYPOINT → fixed command, arguments passed to it.
+**5. What is the difference between `CMD` and `ENTRYPOINT`?**
+* `CMD` → default command, can be overridden.
+* `ENTRYPOINT` → fixed command, arguments passed to it.
 
 **6. What are Docker layers?**
 * Each instruction in a Dockerfile creates a layer. 
@@ -381,10 +381,11 @@ containerized applications.
 * Combine commands to reduce layers.
 
 **8. What is a multi-stage build?**
-* A technique where you use multiple FROM statements to separate build and runtime environments, reducing final image size.
+* A technique where you use multiple `FROM` statements to separate build and runtime environments, 
+reducing final image size.
 
 **9. What is Docker Compose?**
-* A tool to define and run multi-container applications using a **docker-compose.yml** file.
+* A tool to define and run multi-container applications using a `docker-compose.yml` file.
 
 **10. How does Docker networking work?**
 * Docker provides bridge, host, and overlay networks. 
@@ -439,7 +440,7 @@ containerized applications.
 * Lack of resource limits.
 
 **22. How do you manage container resource limits?**
-* Using CPU and memory constraints (**--memory**, **--cpus**) to prevent resource exhaustion.
+* Using CPU and memory constraints (`--memory`, `--cpus`) to prevent resource exhaustion.
 
 **23. What is Docker Swarm?**
 * Docker’s native orchestration tool for managing clusters of Docker nodes.
@@ -469,7 +470,7 @@ containerized applications.
 * Docker CLI runs individual containers, while Compose manages multiple containers as a single application stack with 
 defined relationships.
 
-**3. What is the structure of a docker-compose.yml file?**
+**3. What is the structure of a `docker-compose.yml` file?**
 * Main sections include:
   * `services`.
   * `networks`.
@@ -498,11 +499,11 @@ defined relationships.
 * External secrets/config systems.
 
 **9. What is the difference between build and image?**
-* build → builds image from Dockerfile.
+* build → builds image from `Dockerfile`.
 * image → pulls pre-built image.
 
 **10. How do you scale services in Docker Compose?**
-* Using: `docker-compose up --scale service=n`, though limited compared to orchestration tools like Kubernetes.
+* `docker-compose up --scale service=n`, though limited compared to orchestration tools like Kubernetes.
 
 **11. What are Docker Compose profiles?**
 * Profiles allow selective startup of services (e.g., dev vs test environments).
@@ -594,7 +595,7 @@ changes automatically.
 
 **5. What is backpressure in reactive programming?**
 * Backpressure is a mechanism that controls data flow between producer and consumer to prevent overwhelming the consumer. 
-* Reactor supports it via request(n) and operators like `onBackpressureBuffer`.
+* Reactor supports it via `request(n)` and operators like `onBackpressureBuffer`.
 
 **6. How do you convert a blocking repository to reactive?**
 * Use reactive repositories (`ReactiveCrudRepository` in Spring Data).
@@ -2038,7 +2039,7 @@ traffic management, observability, security, and resiliency features.
 
 **27. What are static and dynamic resources in Envoy?**
 * Static resources:
-  * Defined directly in **envoy.yaml**.
+  * Defined directly in `envoy.yaml`.
   * Require restart for changes.
 * Dynamic resources:
   * Retrieved from control plane.
@@ -2481,9 +2482,11 @@ traffic management, observability, security, and resiliency features.
 **6. What is lazy initialization?**
 * Lazy initialization means a bean is created only when first needed instead of during startup.
 * Example:
-  * `@Lazy`.
-  * `@Service`.
-  * `class HeavyService {}`.
+```java
+@Lazy
+@Service
+class HeavyService {}
+```
 * Benefits:
   * Faster startup.
   * Lower initial memory usage.
@@ -3222,12 +3225,7 @@ UserService service = new UserService();
 * If `UserService` is inside **library.jar**, the JVM loads it from that JAR.
 
 **Follow-up: What happens if the dependency JAR is missing?**
-* Possible outcomes:
-```
-ClassNotFoundException
-NoClassDefFoundError
-```
-depending on when the class is needed.
+* Possible outcomes:`ClassNotFoundException` `NoClassDefFoundError` depending on when the class is needed.
 
 **Follow-up: Does Java load all classes at startup?**
 * No.
@@ -3242,13 +3240,7 @@ depending on when the class is needed.
     * Preparation: Allocates static variables.
     * Resolution: Converts symbolic references into direct references.
   * Initialization:
-    * Executes:
-    ```java
-    static {
-      System.out.println("Initialized");
-    }
-    ```
-    and static variable assignments.
+    * Executes: `static { System.out.println("Initialized"); }` and static variable assignments.
 
 **Follow-up: When does initialization happen?**
 * When class is first actively used.
@@ -3403,11 +3395,7 @@ java -jar app.jar
 
 **11. What is a Custom ClassLoader?**
 * A developer-created ClassLoader.
-* Example:
-```java
-public class PluginLoader extends ClassLoader {
-}
-```
+* Example:`public class PluginLoader extends ClassLoader {}`.
 * Use Cases:
   * Plugin systems.
   * Dynamic deployment.
@@ -3667,7 +3655,7 @@ jcmd
 **Follow-up: See all settings?**
 * `jcmd PID VM.system_properties` or `java -XX:+PrintFlagsFinal`.
 
-**16. Explain `-XX:+UseG1GC`.** // here
+**16. Explain `-XX:+UseG1GC`.**
 * Enables G1 Garbage Collector.
 * Designed for:
   * Large heaps.
@@ -3969,19 +3957,19 @@ abstract class ExportJob {
 
 **What Makes a Strong Interview Answer.**
 
-A strong answer always includes:
-- Scalability thinking.
-- Tradeoffs (not just patterns).
-- Failure handling.
-- Extensibility strategy.
-- Real-world constraints.
-- Async/event-driven mindset.
+* A strong answer always includes:
+  - Scalability thinking.
+  - Tradeoffs (not just patterns).
+  - Failure handling.
+  - Extensibility strategy.
+  - Real-world constraints.
+  - Async/event-driven mindset.
 
 **One-line Senior Summary.**
 
 * Design patterns in system design help decouple complex distributed systems into maintainable, extensible components. 
-* Strategy and Factory enable flexibility, Observer enables event-driven scaling, and patterns like CQRS, Saga, and Circuit Breaker 
-ensure scalability, consistency, and resilience in real-world production systems.
+* Strategy and Factory enable flexibility, Observer enables event-driven scaling, and patterns like CQRS, Saga, 
+and Circuit Breaker ensure scalability, consistency, and resilience in real-world production systems.
 
 ***
 
@@ -4126,13 +4114,7 @@ Flux<Order> orders =
 ```
 
 **Critical concept → Backpressure.**
-```java
-flux.onBackpressureBuffer(10000);
-```
-* or.
-```java
-.limitRate(100)
-```
+* `flux.onBackpressureBuffer(10000)` or. `.limitRate(100)`.
 
 **Senior-level insight.**
 * Reactive programming improves thread utilization under high IO wait times but introduces debugging complexity and 
@@ -4154,6 +4136,7 @@ should not be adopted without measurable scalability requirements.
 * Huge fetches → massive memory usage.
 
 **Solutions.**
+
 **a) Use pagination.**
 ```java
 PageRequest.of(page, size);
@@ -4204,22 +4187,11 @@ hibernate.jdbc.batch_size=50
   6. User notified when ready.
 
 **Important techniques.**
-* Chunk processing.
-```java
-LIMIT 10000 OFFSET ...
-```
-* or cursor-based iteration.
+* Chunk processing `LIMIT 10000 OFFSET ...`, or cursor-based iteration.
 
 **Streaming write.**
-* Avoid:
-```java
-List<Record> all = ...
-```
-* Prefer:
-```java
-BufferedWriter
-```
-incrementally.
+* Avoid: `List<Record> all = ...`.
+* Prefer: `BufferedWriter`, incrementally.
 
 **Technologies interviewers love hearing.**
 - Spring Batch.
@@ -4261,7 +4233,7 @@ incrementally.
 - Separate OLTP from analytics workloads.
 - Minimize heap retention.
 - Prefer projections over entity hydration.
-- “Use reactive only for IO-bound scalability.
+- Use reactive only for IO-bound scalability.
 
 **One Perfect Senior-Level Summary Answer.**
 * For huge DB responses, I avoid loading full datasets into memory. 
@@ -4308,6 +4280,7 @@ transactional database.
 | Connection timeout | Transport     |
 | API returns 500    | Application   |
 
+***
 
 **2. Explain the difference between TCP and UDP.**
 
@@ -4329,7 +4302,8 @@ transactional database.
 
 **Strong Interview Answer.**
 * TCP guarantees delivery, ordering, and error checking, making it ideal for critical communication like APIs and databases. 
-* UDP is lightweight and optimized for low latency where occasional packet loss is acceptable, such as video streaming or online gaming.
+* UDP is lightweight and optimized for low latency where occasional packet loss is acceptable, such as video streaming 
+or online gaming.
 
 **Important concepts to mention.**
 
@@ -4344,6 +4318,8 @@ transactional database.
 - No handshake.
 - Lower overhead.
 
+***
+
 **3. What happens when you type a URL into a browser?**
 
 **What interviewers are testing.**
@@ -4354,16 +4330,10 @@ transactional database.
 **Strong Expected Flow.**
 
 **a) DNS Resolution.**
-* Browser resolves domain to IP.
-```text
-google.com → 142.250.x.x
-```
+* Browser resolves domain to IP: `google.com → 142.250.x.x`.
 
 **b) TCP Handshake.**
-* Client establishes TCP connection.
-```text
-SYN → SYN-ACK → ACK
-```
+* Client establishes TCP connection: `SYN → SYN-ACK → ACK`.
 
 **c) TLS Handshake (HTTPS).**
 - Certificate validation.
@@ -4632,11 +4602,12 @@ if (alreadyProcessed(eventId)) {
 
 **Strong Interview Answer.**
 * Reliable event delivery requires transactional event publishing, retries, idempotent consumers, and dead-letter queues. 
-* In production systems, exactly-once delivery is extremely difficult, so most systems rely on at-least-once delivery with idempotency.
+* In production systems, exactly-once delivery is extremely difficult, so most systems rely on at-least-once delivery 
+with idempotency.
 
 ***
 
-**4. How would you design a real-time analytics pipeline using event-driven architecture?**
+**4. How would you design a real-time analytics pipeline using event-driven architecture?** // here
 
 **What interviewers are testing.**
 - Streaming systems understanding.
@@ -4761,7 +4732,7 @@ to handle consistency and failure scenarios at scale.
 
 ***
 
-# Top 5 Interview Questions — Object-Oriented Programming (Java).
+## Top 5 Interview Questions — Object-Oriented Programming (Java).
 
 **1. Explain the 4 Pillars of Object-Oriented Programming.**
 
@@ -5065,7 +5036,7 @@ responsibilities cleanly.
 
 ***
 
-# Top Interview Questions — XML, XSD, XSLT & Namespaces,
+## Top Interview Questions — XML, XSD, XSLT & Namespaces.
 
 **1. What is XML and why is it used?**
 
@@ -5201,7 +5172,7 @@ supports validation, namespaces, and extensibility.
 
 **What is XSLT?**
 * XSLT (eXtensible Stylesheet Language Transformations) transforms XML into:
-  * another XML.
+  * Another XML.
   * HTML.
   * Text.
   * Different structure.
@@ -5242,8 +5213,7 @@ commonly used in enterprise integrations and reporting systems.
 **DOM Parser.**
 * Loads entire XML into memory.
 ```java
-DocumentBuilderFactory factory =
-    DocumentBuilderFactory.newInstance();
+DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 ```
 
 **Advantages.**
@@ -5321,83 +5291,242 @@ processing because they stream data without loading the entire document into mem
 
 ***
 
-Other Q&A.
+## Other Q&A.
 
+**Why is reactive harder to debug?**
+* Reactive code is harder to debug because it replaces step-by-step execution with event-driven data flow over time, 
+which makes causality less obvious and timing issues more prominent.
 
-- Why is reactive harder to debug?
-- Difference between async and reactive?
-- What is backpressure?
+**Difference between async and reactive?**
+* Async programming is about doing work without blocking the main thread, usually using async/await, futures, or callbacks. 
+It focuses on handling tasks that complete later.
+* Reactive programming is about data streams and propagation of change. You don’t just wait for results—you react to 
+continuous sequences of events (streams), often using operators like map, filter, merge.
+* Simple distinction:
+  * Async = “get result later”.
+  * Reactive = “react to ongoing streams of data/events over time”.
 
-- What causes N+1 queries?
-- Difference between LAZY and EAGER?
-- Why can pagination still be slow?
+**What is backpressure?**
+* Backpressure is the ability of a reactive system to handle producer-consumer speed mismatch by controlling or limiting 
+data flow.
 
-- OFFSET pagination problem?
-- Cursor vs offset pagination?
-- How to avoid killing production DB?
+**What causes N+1 queries?**
+* N+1 queries are caused by lazy-loading related data inside a loop, resulting in one query for the parent list and one 
+additional query per item.
 
+**Difference between LAZY and EAGER?**
+* Lazy loading defers fetching related data until it’s accessed, while eager loading fetches it upfront with the main query.
 
-- Difference between OSI and TCP/IP model?
-- Which layers does HTTPS use?
-- At which layer does DNS operate?
+**Why can pagination still be slow?**
+* Pagination can still be slow due to large OFFSET scans, expensive sorting, missing indexes, and join/aggregation 
+overhead—so databases still process a lot of data before applying LIMIT.
 
-- What is the TCP 3-way handshake?
-- Why is UDP faster?
-- Why does video streaming prefer UDP?
+**OFFSET pagination problem?**
+* OFFSET pagination is slow because the database must scan and discard all preceding rows, making it `O(n)` per page, 
+whereas keyset pagination avoids this by using a cursor and indexed lookups.
 
-- What is DNS caching?
-- Difference between HTTP and HTTPS?
-- What is TLS?
-- What happens if DNS fails?
+**Cursor vs offset pagination?**
+* OFFSET pagination skips rows and becomes slower as the offset grows, while cursor pagination uses a pointer to the 
+last seen record, making it more efficient and scalable for large datasets.
 
-- What is a certificate authority?
-- How does TLS work?
-- Why is HTTPS important for APIs?
+**How to avoid killing production DB?**
+* To avoid killing a production DB, you reduce load via indexing and caching, limit query cost and pagination patterns, 
+offload heavy work, and add guardrails like rate limiting, connection pooling, and query monitoring.
 
-- What is TTL?
-- What is DNS propagation?
-- Why can DNS changes take time?
-- Difference between recursive and authoritative DNS?\
+**Difference between OSI and TCP/IP model?**
+* OSI is a 7-layer conceptual model used for learning and standardization, while TCP/IP is a 4-layer practical model 
+that implements real-world internet communication.
 
+**Which layers does HTTPS use?**
+* HTTPS operates at the application layer, using HTTP over TLS for encryption, which runs on top of TCP/IP for reliable 
+network communication.
 
-- Why is inheritance sometimes dangerous?
-- Difference between abstraction and encapsulation?
-- Prefer composition or inheritance?
+**At which layer does DNS operate?**
+* DNS operates at the application layer, typically using UDP over port 53 for name resolution, with TCP used for larger 
+or more reliable transfers.
 
+**What is the TCP 3-way handshake?**
+* The TCP 3-way handshake is a connection setup process where the client and server exchange SYN, SYN-ACK, 
+and ACK packets to establish a reliable connection and synchronize sequence numbers.
 
-- Can abstraction exist without encapsulation?
-- Why are interfaces abstraction?
-- Why should fields usually be private?
+**Why is UDP faster?**
+* UDP is faster than TCP because it has no connection setup, no acknowledgments, no retransmissions, and minimal header 
+overhead, making it a lightweight, low-latency protocol.
 
+**Why does video streaming prefer UDP?**
+* Video streaming prefers UDP because it minimizes latency by avoiding retransmissions and head-of-line blocking, 
+allowing applications to prioritize real-time playback over perfect reliability.
 
-- How does JVM decide overridden method?
-- Why is runtime polymorphism powerful?
-- Difference between overload and override?
+**What is DNS caching?**
+* DNS caching stores domain-to-IP mappings temporarily across browsers, OS, and DNS resolvers to reduce lookup latency 
+and improve performance, using TTL to determine expiration.
 
-- When is inheritance acceptable?
-- What problems does deep inheritance cause?
-- What is tight coupling?
+**Difference between HTTP and HTTPS?**
+* HTTP transmits data in plaintext, while HTTPS encrypts HTTP traffic using TLS, ensuring secure, authenticated, 
+and tamper-proof communication over port 443.
 
-- Which SOLID principle is most violated?
-- How does Spring use Dependency Injection?
-- Difference between abstraction and interface segregation?
+**What is TLS?**
+* TLS is a cryptographic protocol that secures network communication by providing encryption, integrity, 
+and authentication between client and server, commonly used in HTTPS over TCP.
 
-- Difference between DTD and XSD?
-- Why is XSD preferred over DTD?
-- What are simpleType and complexType?
+**What happens if DNS fails?**
+* If DNS fails, domain names cannot be resolved to IP addresses, preventing the client from establishing any TCP 
+connection, effectively making websites unreachable despite the server being operational.
 
-- Is namespace URI an actual webpage?
-- Difference between default and prefixed namespace?
-- Why are namespaces heavily used in SOAP?
+**What is a certificate authority?**
+* A Certificate Authority is a trusted entity that verifies identities and issues digitally signed certificates used in 
+TLS to establish secure and authenticated HTTPS connections.
 
+**How does TLS work?**
+* TLS works by first performing a handshake to authenticate the server and establish a shared symmetric session key, 
+then using that key to encrypt all subsequent communication between client and server.
 
-- Difference between XPath and XSLT?
-- Why is XSLT considered declarative?
-- Is XSLT still used today?
+**Why is HTTPS important for APIs?**
+* HTTPS is essential for APIs because it encrypts data, ensures integrity, and authenticates servers using TLS, 
+protecting sensitive information like tokens and payloads from interception and tampering.
 
+**What is TTL?**
+* TTL (Time To Live) defines how long DNS records are cached or how many network hops an IP packet can make before 
+being discarded.
 
-- Why is SAX memory efficient?
-- Difference between SAX and StAX?
-- Which parser is best for huge XML files?
+**What is DNS propagation?**
+* DNS propagation is the time it takes for updated DNS records to spread across distributed caches worldwide, 
+as resolvers gradually refresh their cached entries based on TTL values.
 
+**Why can DNS changes take time?**
+* DNS changes take time because DNS responses are heavily cached across distributed resolvers worldwide, 
+and those caches only update after TTL expiration, leading to gradual propagation instead of instant updates.
+
+**Difference between recursive and authoritative DNS?**
+* Recursive DNS resolves queries on behalf of clients by querying other DNS servers and caching results, 
+while authoritative DNS is the source of truth that directly stores and returns domain records.
+
+**Why is inheritance sometimes dangerous?**
+* Inheritance can be dangerous because it creates tight coupling between parent and child classes, leading to fragile 
+designs where changes in the base class can unintentionally break subclasses, making systems rigid and harder to maintain.
+
+**Difference between abstraction and encapsulation?**
+* Abstraction hides implementation details and exposes only functionality, while encapsulation hides internal state 
+and protects data by restricting direct access.
+
+**Prefer composition or inheritance?**
+* Composition is generally preferred over inheritance because it provides greater flexibility, reduces coupling, 
+and avoids rigid class hierarchies, while inheritance should only be used for clear and stable “is-a” relationships.
+
+**Can abstraction exist without encapsulation?**
+* Yes, abstraction can exist without encapsulation because they address different concerns—abstraction hides 
+implementation complexity, while encapsulation restricts access to internal state; however, good design typically 
+uses both together.
+
+**Why are interfaces abstraction?**
+* Interfaces are abstraction because they define a contract of behavior without exposing implementation details, 
+allowing multiple interchangeable implementations while hiding how the functionality is actually performed.
+
+**Why should fields usually be private?**
+* Fields should be private to enforce encapsulation, protect object state, maintain invariants, and ensure that all 
+modifications go through controlled methods instead of direct external access.
+
+**How does JVM decide overridden method?**
+* The JVM resolves overridden methods at runtime using dynamic dispatch, where the actual method executed is determined 
+by the object’s runtime type via the virtual method table (vtable), not the reference type.
+
+**Why is runtime polymorphism powerful?**
+* Runtime polymorphism is powerful because it enables loose coupling and dynamic behavior selection by allowing code 
+to depend on abstractions while deferring the actual method execution to runtime based on the object type.
+
+**Difference between overload and override?**
+* Overloading is compile-time polymorphism where methods share the same name but differ in parameters, while overriding 
+is runtime polymorphism where a subclass provides a specific implementation of a parent class method with the same signature.
+
+**When is inheritance acceptable?**
+* Inheritance is acceptable when there is a true “is-a” relationship, the Liskov Substitution Principle holds, 
+and you need polymorphic behavior with stable shared logic; otherwise composition is preferred.
+
+**What problems does deep inheritance cause?**
+* Deep inheritance causes tight coupling, fragile base class issues, poor maintainability, and hidden behavior across 
+multiple levels, making systems harder to understand, extend, and safely modify.
+
+**What is tight coupling?**
+* Tight coupling occurs when components depend heavily on each other’s concrete implementations, making the system rigid, 
+harder to modify, test, and extend.
+
+**Which SOLID principle is most violated?**
+* The Single Responsibility Principle is the most frequently violated SOLID principle because developers often combine 
+multiple responsibilities into a single class, leading to tightly coupled, hard-to-maintain “God classes.”
+
+**How does Spring use Dependency Injection?**
+* Spring implements Dependency Injection using its IoC container, which automatically creates beans, resolves their 
+dependencies, and injects them—typically via constructor injection—removing the need for manual object creation and 
+promoting loose coupling.
+
+**Difference between abstraction and interface segregation?**
+* Abstraction is a general OOP concept of hiding implementation details behind interfaces or abstract classes, 
+while Interface Segregation Principle is a design guideline that ensures abstractions are fine-grained so clients are 
+not forced to depend on methods they do not use.
+
+**Difference between DTD and XSD?**
+* DTD is an older, simple, non-XML schema language for defining XML structure, while XSD is a modern, XML-based 
+alternative that provides richer data types, stronger validation, and better extensibility.
+
+**Why is XSD preferred over DTD?**
+* XSD is preferred over DTD because it supports rich data types, stronger validation rules, XML syntax, namespaces, 
+and extensibility, making it far more powerful and suitable for modern XML-based systems.
+
+**What are simpleType and complexType?**
+* simpleType defines XML elements containing only text with optional constraints, while complexType defines structured 
+elements that can contain child elements and attributes, representing object-like data.
+
+**Is namespace URI an actual webpage?**
+* A namespace URI in XML is not necessarily a real webpage; it is simply a unique identifier used to distinguish 
+XML vocabularies, even though it is often formatted like a URL for global uniqueness.
+
+**Difference between default and prefixed namespace?**
+* A default namespace applies to all unprefixed elements and avoids prefixes for simplicity, while a prefixed namespace 
+requires explicit prefixes for elements, allowing multiple namespaces to be used simultaneously in the same XML document.
+
+**Why are namespaces heavily used in SOAP?**
+* Namespaces are heavily used in SOAP to avoid XML element conflicts, support extensibility 
+(like security and addressing modules), and ensure interoperability between different systems by clearly distinguishing 
+elements from different XML vocabularies.
+
+**Difference between XPath and XSLT?**
+* XPath is a query language used to navigate and select nodes in an XML document, while XSLT is a transformation 
+language that uses XPath to convert XML into other formats like HTML, XML, or text.
+
+**Why is XSLT considered declarative?**
+* XSLT is declarative because it specifies transformation rules using templates and matches, describing what the output 
+should be rather than how to iteratively process the XML step by step.
+
+**Is XSLT still used today?**
+* XSLT is still used in legacy and enterprise XML-heavy systems (such as SOAP integrations and document processing), 
+but has largely been replaced by JSON-based APIs and general-purpose programming languages in modern applications.
+
+**Why is SAX memory efficient?**
+* SAX is memory efficient because it parses XML in a streaming fashion without building an in-memory tree, 
+processing elements sequentially and discarding them immediately after handling.
+
+**Difference between SAX and StAX?**
+* SAX is a push-based event-driven parser where the parser controls the flow and sends events to the application, 
+while StAX is a pull-based streaming parser where the application controls the flow and reads XML data at its own pace.
+
+**Which parser is best for huge XML files?**
+* For huge XML files, SAX or StAX are preferred because they process XML in a streaming manner without loading the 
+entire document into memory, unlike DOM which is memory-intensive.
+
+***
+
+- Kubernetes commands 10 TOP.
+
+- GCP Kubernetes 10 TOP
+
+- GCP GCE TOP 10
+
+- Bazel
+
+- Helm config examples
+
+- Kubernetes config examples
+
+- 
+- Przeczytaj pytania i przygotuj listę których wstyd nie wiedzieć? możesz dodać jak ich nie ma w moim dokumencie.
 
