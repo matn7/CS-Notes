@@ -4594,7 +4594,7 @@ Mono<?>
 
 ***
 
-## Spring Security // here
+## Spring Security
 
 ```xml
 <dependency>

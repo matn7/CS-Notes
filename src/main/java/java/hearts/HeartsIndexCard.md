@@ -33,10 +33,10 @@
 * Independent tasks can be run in parallel for speed-up if independent of each other's results.
 
 **11. Intrinsic Locks (`synchronized`).**
-* Every object has a lock; synchronized blocks/methods ensure mutual exclusion.
+* Every object has a lock; `synchronized` blocks/methods ensure mutual exclusion.
 
 **12. `ReentrantLock`.**
-* Explicit lock with features not available in synchronized, like interruptible locking.
+* Explicit lock with features not available in `synchronized`, like interruptible locking.
 
 **13. `tryLock()`.**
 * Attempts to acquire lock without blocking; useful for avoiding deadlocks.
@@ -63,7 +63,8 @@
 * Allows grouping threads for management, but mostly outdated API.
 
 **21. `ThreadFactory`.**
-* Custom thread creation: naming, daemon flag, priority. Useful in `ThreadPoolExecutor`.
+* Custom thread creation: naming, daemon flag, priority. 
+* Useful in `ThreadPoolExecutor`.
 
 **22. `AtomicInteger`.**
 * Provides atomic operations like `incrementAndGet()` to avoid race conditions.
@@ -117,7 +118,7 @@
 **38. `ScheduledThreadPool`.**
 * Run tasks after a delay or repeatedly at fixed rate or fixed delay.
 
-**39. `sscheduleAtFixedRate`.**
+**39. `scheduleAtFixedRate`.**
 * Runs periodically regardless of task duration (may delay but won't overlap).
 
 **40. `scheduleWithFixedDelay`.**
@@ -837,4 +838,304 @@ while (!condition) {
 * Correct answer: Hidden side effects and unreadable pipelines.
 * Tests: Code quality judgment.
 
+# Java 21.
 
+**1. What are the major features introduced in Java 21?**
+* Record patterns & pattern matching enhancements.
+* Virtual threads (Project Loom).
+* Scoped values (Project Panama).
+* String templates preview.
+* Sequenced collections improvements.
+* General performance and garbage collector improvements.
+
+**2. What are virtual threads in Java 21?**
+* Lightweight threads managed by the JVM (not OS threads).
+* Allow millions of concurrent tasks with low memory overhead.
+* Integrated with standard `ExecutorService` via `Executors.newVirtualThreadPerTaskExecutor()`.
+
+**3. How do virtual threads differ from platform threads?**
+
+| Aspect            | 	Platform Threads  | 	Virtual Threads                    |
+|-------------------|--------------------|-------------------------------------|
+| Creation overhead | 	High	             | Very low                            |
+| Memory footprint  | 	1–2 MB per thread | 	~1 KB per thread                   |
+| Blocking I/O      | 	Blocks thread	    | Doesn’t block other virtual threads |
+
+**4. What are scoped values in Java 21?**
+* Scoped values are a safe alternative to `ThreadLocal`, designed to pass immutable values to multiple threads,
+  including virtual threads, without leaks.
+
+**5. What are record patterns?**
+* Record patterns allow deconstructing records in pattern matching.
+* For example:
+```java
+record Point(int x, int y) {}
+Point p = new Point(1,2);
+if (p instanceof Point(int a, int b)) {
+        System.out.println(a + b);
+}
+```
+
+**6. What are pattern matching enhancements?**
+* Switch expressions can now match records and sealed types.
+* `instanceof` supports pattern binding inline.
+* Simplifies complex type checks.
+
+**7. What are string templates?**
+* Preview feature in Java 21 allowing type-safe, embedded expressions in strings, similar to Python f-strings:
+```java
+int a = 5;
+String s = STR."Value: \{a}";
+```
+
+**8. What are sequenced collections?**
+* New collection types where iteration order is guaranteed, e.g., `SequencedSet` and `SequencedMap`.
+* Useful for LRU caches or ordered APIs.
+
+**9. How does Project Loom improve concurrency?**
+* Reduces thread management complexity.
+* Supports millions of concurrent tasks without complex async code.
+* Works with existing blocking I/O code.
+
+**10. Can you use virtual threads with existing `Executors`?**
+* Yes, via:
+```java
+ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+```
+* You can submit tasks like normal threads but with much lighter resource usage.
+
+**11. What are the limitations of virtual threads?**
+* Not a solution for CPU-bound tasks.
+* Blocking native code can still block the carrier thread.
+* Some frameworks may need updates for full integration.
+
+**12. How do you handle exception handling in virtual threads?**
+* Same as platform threads, using try-catch blocks.
+* Futures (`CompletableFuture`) also propagate exceptions normally.
+
+**13. How do scoped values compare to `ThreadLocal`?**
+* Scoped values are immutable, designed for structured concurrency.
+* `ThreadLocal` can leak memory and is mutable.
+
+**14. What is structured concurrency?**
+* A concept where related tasks are grouped in a scope, and their lifetimes are tied together.
+* Java 21 supports this via `StructuredTaskScope`.
+
+**15. How do you create a virtual thread and start it?**
+```java
+Thread vThread = Thread.ofVirtual().start(() -> System.out.println("Hello"));
+```
+
+**16. Can you block on a virtual thread without worrying about scalability?**
+* Yes, blocking is safe on virtual threads because other virtual threads on the same carrier thread continue to execute.
+
+**17. What is a preview feature in Java 21?**
+* Features like string templates and record patterns in switch are preview.
+* Must be enabled with `--enable-preview`.
+* Not final; APIs can change in future releases.
+
+**18. How do you enable preview features?**
+```bash
+javac --enable-preview --release 21 MyClass.java
+java --enable-preview MyClass
+```
+
+**19. How do sequenced maps differ from `LinkedHashMap`?**
+* Sequenced maps guarantee order of insertion + efficient iteration.
+* API is more explicit and safer for LRU / ordering operations.
+
+**20. What improvements have been made to garbage collection?**
+* **ZGC** and **Shenandoah** optimized for virtual threads.
+* Lower pause times for massive concurrent workloads.
+* Reduced memory footprint for many threads.
+
+**21. How does Java 21 handle async I/O with virtual threads?**
+* Blocking I/O calls (e.g., `InputStream.read()`) are automatically non-blocking for other virtual threads.
+* Reduces need for `CompletableFuture` chains.
+
+**22. How can virtual threads improve reactive applications?**
+* Simplifies reactive-like concurrency without full reactive frameworks.
+* Can replace complex event-loop based systems for high concurrency.
+
+**23. What is a real-world use case for structured concurrency?**
+* Parallel HTTP requests aggregation.
+* Batch processing where tasks must complete together or fail as a group.
+* Transactional operations across multiple async calls.
+
+**24. How does pattern matching with sealed types help?**
+* Enforces exhaustiveness at compile-time.
+* Reduces runtime instanceof checks.
+* Improves readability of complex branching logic.
+
+**25. What are the key pitfalls of Java 21 features for senior devs?**
+* Using virtual threads for CPU-bound tasks.
+* Forgetting `--enable-preview` for preview features.
+* Mixing legacy blocking frameworks without testing.
+* Overusing scoped values instead of structured concurrency.
+* Assuming sequencing guarantees without checking API docs.
+
+***
+
+# Java 21 - Streams.
+
+**1. What are the main enhancements in Java 21 for Streams and Lambdas?**
+* Improved Stream API performance.
+* Pattern matching in lambdas.
+* Scoped values with functional operations.
+* `toList()` and `toMap()` collector improvements.
+* Enhanced `flatMap()` and combinators.
+* Better integration with virtual threads and structured concurrency.
+
+**2. How has `Stream.toList()` changed in Java 21?**
+* Now returns an unmodifiable List.
+* Performs better due to optimized internal implementations.
+* Can be combined with pattern matching to extract data.
+
+**3. How do you create a parallel stream in Java 21, and when is it beneficial?**
+```java
+List<String> names = List.of("A","B","C");
+names.parallelStream().map(String::toLowerCase).toList();
+```
+* Beneficial for CPU-intensive operations.
+* Avoid for small collections or IO-bound tasks (use virtual threads instead).
+
+**4. What are virtual threads implications on Stream operations?**
+* You can safely block inside lambdas when using parallel streams with virtual threads.
+* Reduces need for complex async code.
+* Stream operations remain thread-safe if collections are immutable.
+
+**5. How does Java 21 improve `Collectors.toMap()`?**
+* Better type inference.
+* Supports merge functions more efficiently.
+* Optimized for large datasets.
+
+**6. How do you combine `filter()`, `map()`, and `flatMap()` efficiently in Java 21?**
+```java
+List<String> result = users.stream()
+        .filter(u -> u.isActive())
+        .flatMap(u -> u.getEmails().stream())
+        .map(String::toLowerCase)
+        .toList();
+```
+* Combine operations in single pipeline for lazy evaluation.
+* Avoid unnecessary intermediate collections.
+
+**7. What are pattern matching enhancements in lambdas?**
+* Can destructure objects in map or filter lambdas.
+* Example:
+```java
+record Point(int x, int y) {}
+List<Point> points = List.of(new Point(1,2));
+points.stream()
+        .map(p -> p instanceof Point(int a, int b) ? a + b : 0)
+        .toList();
+```
+
+**8. How do scoped values integrate with functional streams?**
+* Scoped values provide immutable context propagation.
+* Useful in parallel streams to pass values safely without `ThreadLocal`.
+
+**9. How do you handle exceptions in lambda expressions in streams?**
+* Wrap in try-catch inside lambda.
+* Use helper methods for checked exceptions:
+```java
+stream.map(s -> {
+    try {
+        return Integer.parseInt(s); 
+    } catch(Exception e) { 
+        return 0; 
+    }
+});
+```
+
+**10. What is the difference between `map()` and `flatMap()` in Java 21 streams?**
+* `map()` → transforms each element to a single object.
+* `flatMap()` → transforms each element into a stream and flattens it.
+
+**11. How do you combine multiple streams efficiently?**
+* `Stream.concat(stream1, stream2)`.
+* `Stream.of(stream1, stream2).flatMap(s -> s)`.
+* Java 21 optimizes internal buffering for large concatenated streams.
+
+**12. How does Java 21 improve reduction operations?**
+* `reduce` now performs better for parallel streams.
+* Supports Combiner efficiently for multi-threaded aggregation.
+
+**13. How do you implement grouping with streams in Java 21?**
+```java
+Map<String, List<User>> grouped = users.stream()
+        .collect(Collectors.groupingBy(User::getRole));
+```
+* Java 21 has optimized hash-based collectors.
+* Supports `Collectors.groupingByConcurrent` with better scaling.
+
+**14. How do you handle infinite streams safely in Java 21?**
+* Use `limit()` to avoid unbounded processing.
+* Combine with `takeWhile()` / `dropWhile()` for controlled consumption.
+
+**15. What are enhancements in `Optional` functional operations?**
+* `stream()` support for `Optional`.
+* Can integrate directly in pipelines:
+```java
+Optional<String> opt = Optional.of("abc");
+opt.stream().map(String::toUpperCase).toList();
+```
+
+**16. How has `forEach()` changed in Java 21 streams?**
+* Minor performance improvements for large parallel streams.
+* Can accept method references or lambdas seamlessly with virtual threads.
+
+**17. How do you use record patterns with streams?**
+* Destructure objects in filter or map:
+```java
+points.stream()
+        .filter(p -> p instanceof Point(int x, int y) && x > 0)
+        .map(p -> ((Point)p).y)
+        .toList();
+```
+
+**18. How do you use `takeWhile()` and `dropWhile()` in Java 21?**
+```java
+List<Integer> list = List.of(1,2,3,4,5);
+List<Integer> taken = list.stream().takeWhile(i -> i < 4).toList();
+List<Integer> dropped = list.stream().dropWhile(i -> i < 4).toList();
+```
+* Lazily evaluated, efficient in pipelines.
+
+**19. How do you handle parallel streams safely with mutable objects?**
+* Avoid shared mutable state.
+* Use collectors like `toList()` or `toConcurrentMap()`.
+* Prefer immutable data structures.
+
+**20. What is `Stream.iterate()` enhancement in Java 21?**
+* Supports predicate-based termination.
+* `Stream.iterate(0, i -> i < 10, i -> i + 1).toList();`.
+* Cleaner and safer than previous infinite iterate.
+
+**21. How do you efficiently concatenate strings in stream pipelines?**
+* `String result = stream.collect(Collectors.joining(","));`.
+* Java 21 improves internal string concatenation and memory usage.
+
+**22. How do you integrate streams with reactive programming in Java 21?**
+* Streams can be converted to reactive `Flux`: `Flux.fromStream(list.stream());`.
+* Useful for batch processing in virtual threads.
+
+**23. How do you optimize stream performance in Java 21?**
+* Use primitive streams (`IntStream`, `LongStream`).
+* Minimize boxing/unboxing.
+* Use parallel streams for CPU-bound tasks.
+* Avoid unnecessary intermediate collections.
+
+**24. How do lambda expressions improve code readability in Java 21?**
+* Enables concise functional transformations.
+* Combined with pattern matching, reduces boilerplate.
+* Improves maintainability for complex pipelines.
+
+**25. What are common pitfalls when using Streams/Lambdas in Java 21?**
+* Using blocking calls inside streams.
+* Overusing parallel streams for small collections.
+* Misusing mutable shared objects.
+* Forgetting to handle exceptions in lambdas.
+* Assuming performance improvements automatically apply.
+
+***

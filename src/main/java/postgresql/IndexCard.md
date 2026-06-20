@@ -822,7 +822,7 @@ WHERE pages > (SELECT AVG(pages) FROM books);
 
 ***
 
-**21. Most expensive product in each department (correlated subquery).** // here
+**21. Most expensive product in each department (correlated subquery).**
 ```sql
 SELECT p1.name, p1.department, p1.price
 FROM products p1
@@ -1731,4 +1731,6 @@ FROM Products p
 JOIN Suppliers s ON p.SupplierID = s.SupplierID;
 ```
 * This version is more readable and commonly used in real-world queries.
+
+***
 

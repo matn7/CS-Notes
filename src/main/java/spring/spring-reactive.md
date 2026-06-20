@@ -1,4 +1,4 @@
-# Spring reactive
+# Spring reactive.
 
 **Process.**
 * An instance of a computer program.
@@ -21,8 +21,10 @@
 **Problem Statement!**
 * CPU is very expensive.
   * Try to use CPU as much as you can!
-* Often times in Microservices architecture, we have many network calls. But network calls are slow. Threads will be idle.
-So people create too many threads to make use of CPU.
+* Often times in Microservices architecture, we have many network calls. 
+  * But network calls are slow. 
+  * Threads will be idle.
+  * So people create too many threads to make use of CPU.
 * Thread is an expensive resource:
   * Expensive = Heavy / Consumer Memory.
 * We need a mechanism to make these network calls more efficient without wasting System resources!!
@@ -51,7 +53,7 @@ So people create too many threads to make use of CPU.
 backpressure.
 * It is based on Observer design pattern!
 * C - Procedural Programming Language.
-  * Unit od reusability is function.
+  * Unit of reusability is function.
 * Java - Object Oriented Programming Language:
   * Unit of reusability is Class.
   * Data and Methods are together.
@@ -136,26 +138,26 @@ programming:
   * Subscriber has to subscribe and request for producer to produce items! Till then producer does NOT produce anything.
   Be lazy as much as possible.
   * Subscriber can cancel anytime. (Producer should NOT produce data after that).
-  * Producer will produce items via onNext.
+  * Producer will produce items via `onNext`.
   * Producer will call onComplete after emitting `0..N` data.
   * Producer will call onError in case of issues.
-  * Producer will NOT invoke anything after onComplete / onError. Subscription request / cancel will have NO effect after that.
+  * Producer will NOT invoke anything after `onComplete` / `onError`. Subscription request / cancel will have NO effect after that.
 
 ***
 
 ## Reactor.
 
 **Reactor Publisher.**
-* Mono<T>.
-* Flux<T>.
+* `Mono<T>`.
+* `Flux<T>`.
 
 **Mono.**
 * It emits 0 or 1 item.
-* Followed by an onComplete / onError.
+* Followed by an `onComplete` / `onError`.
 
 **Flux.**
 * It emits 0, 1, ... N items.
-* Followed by an onComplete / onError.
+* Followed by an `onComplete` / `onError`.
 
 **Why Mono & Flux?**
 ```java
@@ -176,12 +178,12 @@ interface CustomerRepository extends ReactiveCrudRepository<Customer, Long> {
 
 **Mono.**
 * How to create Mono publisher using the Factory methods / to support existing codebase.
-  * just - When the value is in memory already.
-  * empty - No item to emit.
-  * error - Error emit.
-  * fromSupplier - defer execution by using Supplier<T>.
-  * fromCallable - defer execution by using Callable<T>.
-  * fromFeature - Publisher from CompletableFuture<T>.
+  * `just` - When the value is in memory already.
+  * `empty` - No item to emit.
+  * `error` - Error emit.
+  * `fromSupplier` - defer execution by using `Supplier<T>`.
+  * `fromCallable` - defer execution by using `Callable<T>`.
+  * `fromFeature` - Publisher from `CompletableFuture<T>`.
 
 **Data From Remote Service / DB.**
 * HTTP:
@@ -209,15 +211,14 @@ interface CustomerRepository extends ReactiveCrudRepository<Customer, Long> {
 **Quiz 2.**
 
 **Question 1: Mono can emit 0, 1 or N items?**
-- False.
-
-"False" is correct because the statement suggests that "Mono" can represent multiple items (0, 1, or N), 
-but "Mono" specifically means one, indicating it cannot have zero or multiple items.
+* False.
+* False is correct because the statement suggests that `Mono` can represent multiple items (0, 1, or N), 
+but `Mono` specifically means one, indicating it cannot have zero or multiple items.
 
 **Question 2: Correct order for passing the arguments when we subscribe to Publisher?**
-- onNext, onError, onComplete.
-"onNext, onError, onComplete" is correct because when subscribing to a Publisher, you typically handle the emitted items 
-first with onNext, followed by any errors with onError, and finally, you signal completion with onComplete. This order 
+- `onNext`, `onError`, `onComplete`.
+* `onNext`, `onError`, `onComplete` is correct because when subscribing to a Publisher, you typically handle the emitted items 
+first with `onNext`, followed by any errors with `onError`, and finally, you signal completion with `onComplete`. This order 
 ensures you properly manage the sequence of events in reactive programming.
 
 **Question 3: Which signal(s) will the subscriber first receive when it subscriber to this publisher?**
@@ -228,8 +229,8 @@ Mono<Integer> get() {
     });
 }
 ```
-- onComplete only.
-"onComplete only" is correct because in the provided scenario, the Mono is created using Mono.fromRunnable(), which does 
+- `onComplete` only.
+* `onComplete` only is correct because in the provided scenario, the `Mono` is created using `Mono.fromRunnable()`, which does 
 not emit any items but instead completes after executing the runnable. Thus, the subscriber receives the completion signal 
 without any preceding values or errors.
 
@@ -239,8 +240,8 @@ Mono<Integer> get() {
     return Mono.fromSupplier(() -> 3 * 4);
 }
 ```
-- onNext and onComplete.
-"onNext and onComplete" is correct because the get() method uses Mono.fromSupplier(), which emits a single item 
+- `onNext` and `onComplete`.
+* `onNext` and `onComplete` is correct because the `get()` method uses `Mono.fromSupplier()`, which emits a single item 
 (the result of 3 * 4), followed by a completion signal. This reflects the expected behavior in reactive programming, 
 where you first receive the value and then the completion notification.
 
@@ -248,16 +249,16 @@ where you first receive the value and then the completion notification.
 ```java
 Mono<Integer> mono = Mono.empty();
 ```
-- onComplete only.
-"onComplete only" is correct because Mono.empty() does not emit any value; it simply completes without an item, signaling 
-the end of the stream with an onComplete signal. 
+- `onComplete` only.
+* `onComplete` only is correct because `Mono.empty()` does not emit any value; it simply completes without an item, 
+signaling the end of the stream with an `onComplete` signal. 
 
 **Question 6: What are the signals we could expect when we subscribe to this mono?**
 ```java
 Mono<Integer> mono = Mono.error(new RuntimeException("some message"));
 ```
-- onError only.
-"onError only" is correct because when subscribing to Mono.error(), it directly emits an error signal without any preceding 
+* `onError` only.
+* `onError` only is correct because when subscribing to `Mono.error()`, it directly emits an error signal without any preceding 
 value or completion signal. This aligns with the understanding of error handling in reactive programming, emphasizing the 
 importance of recognizing when a stream encounters an issue.
 
@@ -265,66 +266,65 @@ importance of recognizing when a stream encounters an issue.
 
 ## Flux.
 * It emits 0, 1 ... N items.
-* Followed by an onComplete / onError.
+* Followed by an `onComplete` / `onError`.
 
 **Flux (not exhaustive).**
-* Just.
-* fromIterable.
-* fromArray.
-* fromStream.
+* `just`.
+* `fromIterable`.
+* `fromArray`.
+* `fromStream`.
 
 **Log operator.**
 
 **Mono / Flux - Data Structures?**
-* List<T>, Set<T>, etc.
+* `List<T>`, `Set<T>`, etc.
   * Represent the data in the memory!
   * Storage.
-* Flux<T>, Mono<T>.
+* `Flux<T>`, `Mono<T>`.
   * Represent a tunnel / pipe through which data can be transferred from one place to another.
 
 **Flux - defer.**
 
 **Summary.**
 * Flux emits 0, 1 ... N items.
-* Followed by an onComplete / onError.
+* Followed by an `onComplete` / `onError`.
 
 **Flux.**
 
-| Condition.                      | What to use.                                                              |
-|---------------------------------|---------------------------------------------------------------------------|
-| Data already present in memory. | Flux.just(...), Flux.fromIterable(), Flux.fromArray(), Flux.fromStream(). |
-| Range / Count.                  | Flux.range(start, count).                                                 |
-| Periodic.                       | Flux.interval(duration).                                                  |
-| Mono -> Flux, Flux -> Mono.     | Flux.from(mono), Mono.from(flux).                                         |
-| To delay the execution.         | Flux.defer(() -> ...).                                                    |
+| Condition.                      | What to use.                                                                     |
+|---------------------------------|----------------------------------------------------------------------------------|
+| Data already present in memory. | `Flux.just(...)`, `Flux.fromIterable()`, `Flux.fromArray()`, `Flux.fromStream()` |
+| Range / Count.                  | `Flux.range(start, count)`                                                       |
+| Periodic.                       | `Flux.interval(duration)`                                                        |
+| Mono -> Flux, Flux -> Mono.     | `Flux.from(mono), Mono.from(flux)`                                               |
+| To delay the execution.         | `Flux.defer(() -> ...)`                                                          |
 
 
 **Quiz 3.**
 
 **Question 1: Flux can emit 0, 1 or N items.**
 - True.
-Flux can emit none, one, or multiple items, which is a fundamental concept in programming and data flow. Understanding 
+* Flux can emit none, one, or multiple items, which is a fundamental concept in programming and data flow. Understanding 
 this allows you to work effectively with data emissions and manage item flow in various applications.
 
-**Question 2: Options ti create a Flux.**
-- Flux.just(1, 2, 3).
-- Flux.range(1,10).
-- Flux.interval(Duration.ofSeconds(1)).
+**Question 2: Options to create a Flux.**
+- `Flux.just(1, 2, 3)`.
+- `Flux.range(1,10)`.
+- `Flux.interval(Duration.ofSeconds(1))`.
 
-**Question 3: How many items will the below Flux emit when a subscriber subscribes to this Flux? Flux.range(13,17).**
-- 17
-Flux.range(13, 17) generates a sequence starting at 13 and emits 17 items, which results in the numbers 13 through 29 
+**Question 3: How many items will the below Flux emit when a subscriber subscribes to this Flux? `Flux.range(13,17)`.**
+*`17`.
+* `Flux.range(13, 17)` generates a sequence starting at 13 and emits 17 items, which results in the numbers 13 through 29 
 being emitted, leading to a total of 17 items.
 
-**Question 4: What are all the items / signals we could expect when a subscriber subscribes to this flux?**
+**Question 4: What are all the items / signals we could expect when a subscriber subscribes to this Flux?**
 ```java
 void main() {
-  Flux .range(3,5)
-          .map(i -> i / (i - 4));
+  Flux .range(3,5).map(i -> i / (i - 4));
 }
 ```
-- -3 and error signal.
-Flux.range(3, 5) is processed with the map function, it attempts to divide by zero when the item 4 is emitted, resulting 
+* `-3` and error signal.
+* `Flux.range(3, 5)` is processed with the map function, it attempts to divide by zero when the item 4 is emitted, resulting 
 in an error signal.
 
 ***
@@ -333,9 +333,9 @@ in an error signal.
 
 **Flux.create -> FluxSink.**
 * It is designed to be used when we have a single subscriber.
-* FluxSink is thread safe. We can share it with multiple threads.
+* `FluxSink` is thread safe. We can share it with multiple threads.
 * We can keep on emitting data into the sink without worrying about downstream demand.
-* FluxSink will deliver everything to Subscriber safely.
+* `FluxSink` will deliver everything to `Subscriber` safely.
 * Open Items:
   * What if I want to have multiple subscribers?
   * Backpressure handling!
@@ -349,12 +349,12 @@ in an error signal.
 
 **Flux Generate With State.**
 * Create:
-  * Accepts a Consumer<FluxSink<T>>.
+  * Accepts a `Consumer<FluxSink<T>>`.
   * Consumer is invoked only once.
   * Consumer can emit 0..N elements immediately without worrying about downstream demand.
   * Thread-Safe.
 * Generate:
-  * Accepts a Consumer<SynchronousSink<T>>.
+  * Accepts a `Consumer<SynchronousSink<T>>`.
   * Consumer is invoked again and again.
   * Consumer can emit only one element. Downstream demand is respected!
 
@@ -369,9 +369,9 @@ void main() {
     }).subscribe(System.out::println);
 }
 ```
-- Subscriber will receive 1 and 2.
-"Subscriber will receive 1 and 2" is correct is that the synchronousSink is used to emit the values 1 and 2 to the subscriber. 
-This shows that the program successfully sends these values, and since there's no onComplete call, it simply returns the 
+* Subscriber will receive 1 and 2.
+* `Subscriber will receive 1 and 2` is correct is that the synchronousSink is used to emit the values 1 and 2 to the subscriber. 
+This shows that the program successfully sends these values, and since there's no `onComplete` call, it simply returns the 
 emitted values without any further completion message. 
 
 **Question 2: What can we expect when execute this?**
@@ -383,8 +383,8 @@ void main() {
     }).subscribe(System.out::println);
 }
 ```
-- Subscriber will receive 1 and error.
-"Subscriber will receive 1 and error" is correct because the synchronous sink emits the value 1 but likely encounters an 
+* Subscriber will receive 1 and error.
+* "Subscriber will receive 1 and error", is correct because the synchronous sink emits the value 1 but likely encounters an 
 issue before processing the subsequent value, thus leading to an error. This illustrates how error handling in reactive 
 programming can occur even after some emissions.
 
@@ -396,8 +396,8 @@ void main() {
             .subscribe(Util.subscriber());
 }
 ```
-- 1,2,onComplete.
-"1,2,onComplete" is correct because the takeWhile operator allows emissions as long as the condition (i < 3) holds true, 
+* 1,2,onComplete.
+* "1,2,onComplete" is correct because the `takeWhile` operator allows emissions as long as the condition (i < 3) holds true, 
 which includes the values 1 and 2, before signaling completion. This demonstrates how reactive programming can manage 
 emissions and completions effectively. 
 
@@ -409,24 +409,24 @@ void main() {
             .subscribe(Util.subscriber());
 }
 ```
-- 1,onComplete.
-"1,onComplete" is correct because the takeUntil operator stops emissions once the condition (i < 3) no longer holds, 
+*1,onComplete.
+* "1,onComplete" is correct because the `takeUntil` operator stops emissions once the condition (i < 3) no longer holds, 
 leading to the emission of only the value 1 before signaling completion. This illustrates how reactive programming 
 effectively manages value emissions and completions based on conditions.
 
-## Operators
+## Operators.
 
 **Operators -> Decorators.**
 
 **Operators - Pipeline.**
 
 **Operator (not exhaustive).**
-* filter.
-* map.
-* log.
-* take.
-* takeWhile.
-* takeUntil.
+* `filter`.
+* `map`.
+* `log`.
+* `take`.
+* `takeWhile`.
+* `takeUntil`.
 
 **doOnNext.**
 * Mutation is bad.
@@ -437,28 +437,28 @@ effectively manages value emissions and completions based on conditions.
 
 **Operator - timeout.**
 * Timeout - will produce timeout error.
-  * We can handle as part of onError methods.
+  * We can handle as part of `onError` methods.
 * There is also an overloaded method to accept a publisher.
 * We can have multiple timeouts, the closest one to the subscriber will take effect.
 
 **Operator - transform.**
 
 **Summary - Operators.**
-* filter.
-* map.
-* take / takeWhile / takeUntil.
-* delayElements.
+* `filter`.
+* `map`.
+* `take` / `takeWhile` / `takeUntil`.
+* `delayElements`.
 * do Hooks.
-* onErrorReturn / onErrorResume / onErrorContinue.
-* timeout.
-* defaultIfEmpty / switchIfEmpty.
-* handle.
-* transform.
+* `onErrorReturn` / `onErrorResume` / `onErrorContinue`.
+* `timeout`.
+* `defaultIfEmpty` / `switchIfEmpty`.
+* `handle`.
+* `transform`.
 
 **Quiz 5.**
 
 **Question 1: Valid Flux operators.**
-- take, log, handle.
+- `take`, `log`, `handle`.
 
 **Question 2: What can we expect when we execute this?**
 ```java
@@ -471,8 +471,8 @@ void main() {
             .subscribe(Util.subscriber());
 }
 ```
-- 1, 2, onComplete.
-"1,2,onComplete," is correct because executing the provided Flux code results in the emission of the numbers 1 and 2, 
+* 1, 2, onComplete.
+* "1,2,onComplete," is correct because executing the provided Flux code results in the emission of the numbers 1 and 2, 
 followed by an onComplete signal when it finishes subscribing.
 
 **Question 3: What are all the items we expect to receive in the below case?**
@@ -483,8 +483,8 @@ void main() {
     range.subscribe(System.out::println);
 }
 ```
-- "1,2,3,...,10".
-"1,2,3...10," is correct because the Flux.range(1, 10) method generates a sequence of integers from 1 to 10, which are 
+* "1,2,3,...,10".
+* "1,2,3,...10", is correct because the `Flux.range(1, 10)` method generates a sequence of integers from 1 to 10, which are 
 emitted as individual items.
 
 **Question 4: What are all the items can the subscriber expect to receive in the below case?**
@@ -497,9 +497,9 @@ void main() {
             .subscribe(System.out::println);
 }
 ```
-- "6".
-"6," is correct because the Flux chain processes the range of numbers, filters out anything less than or equal to 5, 
-and then takes only the first two remaining items, which are 6 and 7. However, since the next() operator is used, only 
+*"6".
+* "6," is correct because the `Flux` chain processes the range of numbers, filters out anything less than or equal to 5, 
+and then takes only the first two remaining items, which are 6 and 7. However, since the `next()` operator is used, only 
 the first item, 6, is emitted to the subscriber.
 
 **Question 5: What are all the items can the subscriber expect to receive in the below case?**
@@ -510,19 +510,19 @@ void main() {
             .onErrorReturn();
 }
 ```
-- "1, 3, and complete signal".
-"1, 3 and complete signal," is correct because the Flux.range(1, 3) generates values 1, 2, and 3, but the second value 
-(2) will throw an error when processed by the map operator. However, the onErrorReturn(3) effectively handles this error, 
+*"1, 3, and complete signal".
+* "1, 3 and complete signal," is correct because the `Flux.range(1, 3)` generates values 1, 2, and 3, but the second value 
+(2) will throw an error when processed by the map operator. However, the `onErrorReturn(3)` effectively handles this error, 
 allowing the sequence to continue and emit 1, then 3, followed by a complete signal.
 
 **Question 6: Which can be used to conditionally emit a complete signal to the downstream?**
-- "handle".
-"handle," is correct because the handle operator allows you to decide whether to emit items, including the complete signal, 
+* "handle".
+* "handle," is correct because the `handle` operator allows you to decide whether to emit items, including the complete signal, 
 based on certain conditions.
 
 **Question 7: Which of the following can be used for applying operators dynamically?**
-- "transform".
-"transform," is correct because the transform operator allows you to dynamically apply other operators to the emitted items, 
+* "transform".
+* "transform," is correct because the `transform` operator allows you to dynamically apply other operators to the emitted items, 
 enabling flexible and customizable data manipulation within the reactive programming flow. 
 
 ## Hot / Cold Publishers.
@@ -530,14 +530,14 @@ enabling flexible and customizable data manipulation within the reactive program
 **Hot Publisher - Broadcasting Messages.**
 
 **Hot Publisher.**
-* share, publish().refCount(1):
+* share, `publish().refCount(1)`:
   * At least 1 subscriber. It will start when there is at least 1 subscriber and stop when there is 0 subscriber. 
   We can re-subscribe.
-* publish().autoConnect(1):
+* `publish().autoConnect(1)`:
   * Same as above. It does NOT stop when subscribers leave.
-* publish().autoConnect(0):
+* `publish().autoConnect(0)`:
   * Real hot publisher - no subscriber required.
-* reply(n).autoConnect(0):
+* `reply(n).autoConnect(0)`:
   * Cache the emitted item for late subscribers.
 
 **Quiz 6.**
@@ -556,13 +556,13 @@ void main() {
   map.subscribe(System.out::println);
 }
 ```
-- "2".
-map.subscribe method is called twice, and each subscription triggers the creation of the flux, resulting in "created" 
+* "2".
+* map.subscribe method is called twice, and each subscription triggers the creation of the flux, resulting in "created" 
 being printed two times.
 
 **Question 2: Statement.**
-- Share is an alias for publish().refCount(1).
-The share() operator in reactive programming establishes a multicast observable that shares a single subscription while 
+* Share is an alias for `publish().refCount(1)`.
+* The `share()` operator in reactive programming establishes a multicast observable that shares a single subscription while 
 automatically managing the subscription lifecycle, effectively allowing one active connection when there is at least one 
 subscriber. This mechanism helps improve resource management and performance in scenarios with multiple subscribers.
 
@@ -582,9 +582,9 @@ void main() {
   flux.subscribe(System.out::println);
 }
 ```
-- "1".
-The refCount(2) in your Flux setup means that the created message is printed only for the first subscription, as the 
-publish() operator allows sharing the same stream among multiple subscribers, with only one source of data emission. 
+* "1".
+* The `refCount(2)` in your Flux setup means that the created message is printed only for the first subscription, as the 
+`publish()` operator allows sharing the same stream among multiple subscribers, with only one source of data emission. 
 Hence, regardless of how many times you subscribe, the output for "created" is limited to one instance.
 
 ## Threading & Schedulers.
@@ -599,13 +599,13 @@ Hence, regardless of how many times you subscribe, the output for "created" is l
 * immediate: Current thread.
 
 **Operators for Scheduling.**
-* subscribeOn: For upstream.
-* publishOn: For downstream.
+* `subscribeOn`: For upstream.
+* `publishOn`: For downstream.
 
 **Schedulers != Parallel-execution.**
 * All the operations are always executed in sequential.
 * Data is processed one by one - by a thread from the ThreadPool from a Subscriber.
-* Subscribers.parallel() - is a thread pool for CPU tasks. Does NOT mean parallel execution.
+* `Subscribers.parallel()` - is a thread pool for CPU tasks. Does NOT mean parallel execution.
 
 **Schedulers.**
 * Scheduler - Thread pool.
@@ -626,16 +626,16 @@ Hence, regardless of how many times you subscribe, the output for "created" is l
 **Quiz 7.**
 
 **Question 1: Scheduler from reactor.**
-- immediate, parallel, single, boundedElastic.
+- `immediate`, `parallel`, `single`, `boundedElastic`.
 
 **Question 2: Which Scheduler is good choice for a blocking operation?**
-- boundedElastic.
-"boundedElastic" it is specifically designed to handle potentially blocking tasks by providing additional threads as needed, 
+* boundedElastic.
+* "boundedElastic" it is specifically designed to handle potentially blocking tasks by providing additional threads as needed, 
 making it ideal for operations that can block without causing performance issues in the overall application. 
 
 **Question 3: publishOn is used to make the upstream publishers to use specific schedulers?**
-- False.
-"publishOn" affects upstream publishers with specific schedulers, but in reality, it alters the execution context 
+* False.
+* "publishOn" affects upstream publishers with specific schedulers, but in reality, it alters the execution context 
 downstream instead. 
 
 **Question 4: Select correct answer.**
@@ -653,8 +653,8 @@ void main() {
     .subscribe(Util.subscriber());
 }
 ```
-- fluxSink & map get executed in parallel thread pool.
-"fluxSink & map get executed in parallel thread pool" is correct because both the fluxSink creation and the subsequent 
+- `fluxSink` & `map` get executed in parallel thread pool.
+* "`fluxSink` & `map` get executed in parallel thread pool" is correct because both the fluxSink creation and the subsequent 
 map operation run on the parallel scheduler, which is designed for non-blocking parallel processing in reactive programming, 
 ensuring both operations are executed concurrently. 
 
@@ -666,19 +666,18 @@ void main() {
         fluxSink.next(i);
       }
       fluxSink.complete();
-    })
-    .subscribeOn(Schedulers.boundedElastic());
+    }).subscribeOn(Schedulers.boundedElastic());
 
   flux.subscribeOn(Schedulers.parallel())
     .map(i -> i + "a")
     .subscribe(Util.subscriber());
 }
 ```
-- boundedElastic.
-"boundedElastic" because this scheduler is specifically intended for potentially blocking operations, which fits the 
-context of the Flux.create method where blocking might occur. 
+*boundedElastic.
+* "boundedElastic" because this scheduler is specifically intended for potentially blocking operations, which fits the 
+context of the `Flux.create` method where blocking might occur. 
 
-**Question 6: Which thread/thread pool will execute the doFirst ?**
+**Question 6: Which thread/thread pool will execute the doFirst?**
 ```java
 void main() {
   Flux.create(fluxSink -> {
@@ -694,11 +693,11 @@ void main() {
     .subscribe(Util.subscriber());
 }
 ```
-- parallel.
-"parallel" is correct because the doFirst operation, following the subscribeOn(Schedulers.parallel()), is executed on 
+* parallel.
+* "parallel" is correct because the doFirst operation, following the `subscribeOn(Schedulers.parallel())`, is executed on 
 the parallel thread pool, which is optimized for concurrent processing. 
 
-**Question 7: Which thread/thread pool will execute the doFirst ?.**
+**Question 7: Which thread/thread pool will execute the doFirst?.**
 ```java
 void main() {
   Flux.create(fluxSink -> {
@@ -714,11 +713,11 @@ void main() {
     .subscribe(Util.subscriber());
 }
 ```
-- current/main thread.
-"current/main thread" is correct because the doFirst() operation is executed on the thread that is currently processing 
-the reactive chain. Since it is placed before any scheduling (like publishOn()), it runs on the main thread by default. 
+* current/main thread.
+* "current/main thread" is correct because the `doFirst()` operation is executed on the thread that is currently processing 
+the reactive chain. Since it is placed before any scheduling (like `publishOn()`), it runs on the main thread by default. 
 
-**Question 8: Which thread/thread pool will execute the doFirst ?.**
+**Question 8: Which thread/thread pool will execute the doFirst?.**
 ```java
 void main() {
   Flux.create(fluxSink -> {
@@ -734,9 +733,9 @@ void main() {
     .subscribe(Util.subscriber());
 }
 ```
-- parallel.
-"parallel" is correct because, in the provided reactive chain, the doFirst() operation is executed in the context set by 
-subscribeOn(Schedulers.parallel()), which utilizes the parallel thread pool. 
+* parallel.
+* "parallel" is correct because, in the provided reactive chain, the `doFirst()` operation is executed in the context set by 
+`subscribeOn(Schedulers.parallel())`, which utilizes the parallel thread pool. 
 
 ## Backpressure / Overflow Strategy.
 
@@ -744,20 +743,20 @@ subscribeOn(Schedulers.parallel()), which utilizes the parallel thread pool.
 * Might not be applicable for all the applications.
 
 **Backpressure / Overflow Strategy.**
-* buffer: Keep in memory.
-* error: Throw error to the downstream.
-* drop: Once queue is full, new items will be dropped.
-* latest: Once the queue is full, keep 1 latest item as and when it arrives. Drop old.
+* `buffer`: Keep in memory.
+* `error`: Throw error to the downstream.
+* `drop`: Once queue is full, new items will be dropped.
+* `latest`: Once the queue is full, keep 1 latest item as and when it arrives. Drop old.
 
 ## Combining Publishers.
 
 **Options.**
-* startWith.
-* concat.
-* merge.
-* zip.
-* flatMap.
-* concatMap.
+* `startWith`.
+* `concat`.
+* `merge`.
+* `zip`.
+* `flatMap`.
+* `concatMap`.
 
 **Zip.**
 * Subscribe to all the producers at the same time.
@@ -766,15 +765,15 @@ subscribeOn(Schedulers.parallel()), which utilizes the parallel thread pool.
 
 **FlatMap.**
 * Independent producers:
-  * startWith.
-  * concat.
-  * merge.
-  * zip.
+  * `startWith`.
+  * `concat`.
+  * `merge`.
+  * `zip`.
 * What about dependent sequential calls?
 
 **Quiz 8.**
 
-**Question 1: hat will be the order of the items / signals the subscriber will receive?**
+**Question 1: What will be the order of the items / signals the subscriber will receive?**
 ```java
 void main() {
   Flux.just("a", "b", "c")
@@ -782,8 +781,8 @@ void main() {
           .subscribe(Util.subscriber());
 }
 ```
-- "a, b, c, a, b, c, onComplete".
-"a, b, c, a, b, c, onComplete" because the startWith method emits its items first, followed by the items from Flux.just. 
+* "a, b, c, a, b, c, onComplete".
+* "a, b, c, a, b, c, onComplete" because the startWith method emits its items first, followed by the items from `Flux.just`. 
 This leads to the subscriber receiving both sequences in the specified order before signaling completion.
 
 **Question 2: What will happen in the below case?**
@@ -794,8 +793,8 @@ void main() {
           .subscribe(Util.subscriber());
 }
 ```
-- "a, b, c, a, b, c, onComplete".
-"a, b, c, a, b, c, onComplete" because the startWith method duplicates the emitted items from flux, resulting in each item 
+* "a, b, c, a, b, c, onComplete".
+* "a, b, c, a, b, c, onComplete" because the `startWith` method duplicates the emitted items from flux, resulting in each item 
 being printed twice in the order specified, followed by the completion signal. 
 
 **Question 3: What will be the order of the items / signals the subscriber will receive?**
@@ -809,14 +808,14 @@ void main() {
           .subscribe(Util.subscriber());
 }
 ```
-- "2, 3, 1, onComplete".
-"2, 3, 1, onComplete," is correct because the Flux.merge function combines multiple publishers, emitting items as they 
+* "2, 3, 1, onComplete".
+* "2, 3, 1, onComplete," is correct because the `Flux.merge` function combines multiple publishers, emitting items as they 
 become available, leading to the sequence: the value from flux1 (2), then from flux2 (3), followed by the delayed value 
 from mono1 (1), and finally signaling completion. 
 
 **Question 4: Which has the lazy subscription behavior?**
-- concat.
-The concat operator subscribes lazily, meaning it only begins processing the next sequence after the previous one has 
+* `concat`.
+* The `concat` operator subscribes lazily, meaning it only begins processing the next sequence after the previous one has 
 completed, effectively managing the order of emissions. 
 
 **Question 5: List of String which has 1 million items. Change the below code (v1) to v2 to improve the performance as 
@@ -833,28 +832,28 @@ void main() {
           .subscribe(Util.subscriber());
 }
 ```
-- toUpperCase() is not an IO call. There will not be any improvement.
-toUpperCase() is a simple, in-memory operation that does not involve any I/O calls, meaning using flatMap in V2 won't 
+*`toUpperCase()` is not an IO call. There will not be any improvement.
+* `toUpperCase()` is a simple, in-memory operation that does not involve any I/O calls, meaning using flatMap in V2 won't 
 improve performance over V1. 
 
 ## Batching.
 
 * Assumptions:
   * You use Kafka / RabbitMQ / Pulsar...
-  * You have a Flux<T> - never ending stream of messages.
+  * You have a `Flux<T>` - never ending stream of messages.
 * Operators:
-  * buffer.
-  * window.
-  * group.
+  * `buffer`.
+  * `window`.
+  * `group`.
 
 ## Repeat & Retry.
 
-* publisher -> subscriber.
+* Publisher -> Subscriber.
   * No items after.
-    * onComplete.
-    * onError.
-* repeat: Resubscribe after complete signal.
-* retry: Resubscribe after error signal.
+    * `onComplete`.
+    * `onError`.
+* `repeat`: Resubscribe after complete signal.
+* `retry`: Resubscribe after error signal.
 
 **Quiz 9.**
 
@@ -867,10 +866,10 @@ void main() {
             .subscribe(Util.subscriber());
 }
 ```
-- "6".
-The code will print "a" a total of 6 times because the original emission from Flux.just("a") occurs once, then is repeated 
+* "6".
+* The code will print "a" a total of 6 times because the original emission from Flux.just("a") occurs once, then is repeated 
 1 additional time (making it 2), and that combined result is then repeated 2 more times, resulting in 2 multiplied by 3 
-(1 for the original, 1 for the first repeat, and 2 for the final repeat). Thus, 1 x (1 + 2) = 6.
+(1 for the original, 1 for the first repeat, and 2 for the final repeat). Thus, 2 x (1 + 2) = 6.
 
 **Question 2: How many times the below code print "a"?**
 ```java
@@ -881,8 +880,8 @@ void main() {
             .subscribe(Util.subscriber());
 }
 ```
-- "1".
-"1" is correct because the code executes a single emission of "a" and attempts two retries, ultimately resulting in only 
+* "1".
+* "1" is correct because the code executes a single emission of "a" and attempts two retries, ultimately resulting in only 
 one successful output of "a".
 
 ## Sinks.
@@ -906,18 +905,18 @@ one successful output of "a".
 
 ## Unit Testing - StepVerifier.
 
-* StepVerifier.create(..).
+* `StepVerifier.create(..)`.
 * Next:
-  * expectNext(..).
-  * expectNextCount().
-  * thenConsumeWhile(...).
-  * assertNext(...).
+  * `expectNext(..)`.
+  * `expectNextCount()`.
+  * `thenConsumeWhile(...)`.
+  * `assertNext(...)`.
 * Verify:
-  * expectComplete().
-  * expectError().
+  * `expectComplete()`.
+  * `expectError()`.
 * Virtual Time Scheduler:
-  * StepVerifier.withVirtualTime(() -> getFlux()).
-  * thenAwait(Duration).
+  * `StepVerifier.withVirtualTime(() -> getFlux())`.
+  * `thenAwait(Duration)`.
 * StepVerifierOptions.
   * Context.
   * Scenario name.
@@ -949,8 +948,8 @@ one successful output of "a".
   * Scalability.
   * Streaming + Backpressure.
 * It does not have features like:
-  * @OneToMany.
-  * @ManyToMany.
+  * `@OneToMany`.
+  * `@ManyToMany`.
 
 **R2DBC Drivers / Config.**
 
@@ -991,7 +990,7 @@ void test() {
 
 **Repository / Database Client.**
 * Repository.
-  * @Query.
+  * `@Query`.
 * Database client.
 
 **Reactive Manifesto.**
@@ -1025,14 +1024,14 @@ void test() {
 * Mono/Flux are publisher types!
   * data/empty -> 200.
   * error -> 500.
-* ResponseEntity:
-  * Mono<ResponseEntity<T>>:
+* `ResponseEntity`:
+  * `Mono<ResponseEntity<T>>`:
     * "400", "404", "429".
 
 **How To Test?**
-* WebClient:
+* `WebClient`:
   * To send non-blocking HTTP requests.
-* WebTestClient:
+* `WebTestClient`:
   * To write unit/integration tests.
 
 **Body vs BodyValue.**
@@ -1046,7 +1045,7 @@ void test() {
 
 * Do not do request body validation!
 * We can access:
-  * path. header, parameters, cookies ... etc.
+  * path, header, parameters, cookies ... etc.
 * We can chain multiple WebFilter to do multiple validations before the request reaches the controller.
 
 ## Functional Endpoints.
@@ -1061,7 +1060,7 @@ void test() {
 * Handler Function:
   * Server Request:
     * headers / cookies / principal / path Variables / query params.
-  * return ServerResponse.
+  * Return ServerResponse.
 
 ## WebClient.
 
@@ -1072,23 +1071,23 @@ void test() {
 * Non-Blocking.
 * Immutable.
 * Thread safe!
-* client.get().
-  * post().
-  * put().
-  * delete().
-* uri("/path").
-* retrieve().
-  * send the request.
-  * receives the response.
+* `client.get()`.
+  * `post()`.
+  * `put()`.
+  * `delete()`.
+* `uri("/path")`.
+* `retrieve()`.
+  * Send the request.
+  * Receives the response.
   * It is non-blocking!
 
 ## Streaming.
 
 **Communication Patterns.**
-* request -> response.
-* request -> streaming response - (file download).
-* streaming request -> response - (file upload, apple-watch health info).
-* bidirectional-streaming - (online games).
+* Request -> response.
+* Request -> streaming response - (file download).
+* Streaming request -> response - (file upload, apple-watch health info).
+* Bidirectional - streaming - (online games).
 
 **Streaming Advantages.**
 * We will setup connection once and keep sending the messages in a streaming fashion.
@@ -1099,34 +1098,12 @@ void test() {
 **JSON Array.**
 
 **JSON Line Format.**
-* aka ND-JSON:
+* aka `ND-JSON`:
   * new-line delimited.
 * Each line is 1 JSON object:
-  * self-contained.
-  * easy to parse.
-  * great for streaming!
-  * massive datasets!
-* JSON array is good for smaller and related data - For example: reviews for a product.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  * Self-contained.
+  * Easy to parse.
+  * Great for streaming!
+  * Massive datasets!
+* JSON array is good for smaller and related data.
+* For example: reviews for a product.

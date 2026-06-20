@@ -135,8 +135,9 @@ list.parallelStream();
 * Heavy mutation / side effects.
 
 **21. Internal Iteration vs External Iteration.**
-* External iteration: for, while (you control iteration).
-* Internal iteration: Streams (library controls iteration). Benefits: composability, parallelism, cleaner code.
+* External iteration: `for`, `while` (you control iteration).
+* Internal iteration: Streams (library controls iteration). 
+  * Benefits: composability, parallelism, cleaner code.
 
 **22. Stream Pipeline Execution Model.**
 * Stream operations form a pipeline.
@@ -311,7 +312,7 @@ orders.stream()
   * `JOIN FETCH`.
   * Entity graphs.
 
-**46. Why `parallelStream()` Is Dangerous with JPA?**
+**46. Why `parallelStream()` is Dangerous with JPA?**
 * `EntityManager` is not thread-safe.
 * Lazy loading in parallel threads breaks.
 * Can cause inconsistent state or exceptions.
@@ -352,7 +353,7 @@ repo.findActiveUsers();
   * Tuning threads.
   * Isolation.
 
-**51. How Does `ForkJoinPool` Affect `parallelStream()`?**
+**51. How Does `ForkJoinPool` affect `parallelStream()`?**
 * Uses common pool by default.
 * Shared across JVM.
 * Blocking operations can starve threads.
@@ -366,7 +367,7 @@ list.parallelStream()
 ```
 * Safe if computation is pure and independent.
 
-**53. Why Using Streams for I/O Is a Bad Idea.**
+**53. Why Using Streams for I/O is a Bad Idea.**
 * Streams do not manage backpressure.
 * Blocking I/O wastes threads.
 * Prefer reactive or async APIs for I/O.
@@ -406,8 +407,8 @@ Collectors.toMap(
 
 **58. Memory Leak Risk with Streams.**
 * Lambdas can capture:
-  * this.
-  * large objects.
+  * `this`.
+  * Large objects.
 * Leading to unexpected object retention.
 
 **59. Example: Refactoring Loop -> Stream.**
@@ -572,7 +573,7 @@ Mono.fromCallable(this::blockingCall)
 * Stack depth is proportional to recursion depth, which is `O(log n)` on average but can degrade to `O(n)` in worst cases.
 
 **84. Difference between synchronized method and synchronized block?**
-* Synchronized method locks on this (or class object if static).
+* Synchronized method locks on `this` (or class object if static).
 * Synchronized block allows finer-grained locking on a specific object.
 * Blocks reduce contention and improve scalability.
 
@@ -599,7 +600,8 @@ Mono.fromCallable(this::blockingCall)
 * It defines visibility guarantees across threads.
 
 **90. What is unsafe publication?**
-* Publishing an object reference before it is fully constructed, allowing other threads to see a partially initialized object.
+* Publishing an object reference before it is fully constructed, allowing other threads to see a partially 
+initialized object.
 
 **91. Recommended approaches for concurrency?**
 * Immutable objects.
@@ -849,7 +851,7 @@ Mono.fromCallable(this::blockingCall)
 * `@PostConstruct`, `@PreDestroy`.
 * Custom `init` / `destroy` methods.
 
-**145. Typical AOP use cases?**
+**145. Typical AOP use cases?**c vx98
 * Logging.
 * Transactions.
 * Metrics.
@@ -1161,3 +1163,14 @@ Mono.fromCallable(this::blockingCall)
 * Non-preemptive allocation: A resource released only after the thread is done using it.
 * Circular wait: A chain of at least two threads each one is holding one resource and waiting for another resource.
 
+**207. Private Constructor.**
+* A private constructor restricts object instantiation from outside the class and is commonly used in Singleton or 
+utility classes.
+
+**208. Return from finally.**
+* A return statement inside a finally block overrides any return from the try or catch block. 
+* It is generally discouraged because it can hide exceptions and make debugging difficult.
+
+**209. Final etc. what is the difference between final, finally, and finalize?**
+* `final` is a keyword for restriction, `finally` is a cleanup block, and `finalize()` is a deprecated 
+garbage collection callback method.

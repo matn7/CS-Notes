@@ -52,7 +52,7 @@ and modular architecture.
 * Foundation module providing IoC and DI.
 
 **17. Is Spring opinionated?**
-* Core is flexible; Spring Boot is opinionated.
+* Core is flexible; Spring Boot is opinionated (uparty).
 
 **18. What is convention over configuration?**
 * Defaults reduce explicit configuration.
@@ -837,7 +837,7 @@ but not constructor-based ones.
 
 **252. Is Spring singleton the same as Java singleton?**
 * Trap: Yes, only one instance exists.
-* Correct answer: No. Spring singleton means one instance per ApplicationContext, not JVM-wide.
+* Correct answer: No. Spring singleton means one instance per `ApplicationContext`, not JVM-wide.
 * Tests: Understanding of container scope.
 
 **253. Does Spring automatically make beans thread-safe?**
@@ -984,3 +984,256 @@ but not constructor-based ones.
 * Trap: For inheritance.
 * Correct answer: For loose coupling and testability.
 * Tests: Design principles.
+
+***
+
+# Spring Boot.
+
+**1. What is Spring Boot and why is it used?**
+* Spring Boot is an opinionated framework built on top of Spring that simplifies application setup by providing
+  auto-configuration, embedded servers, and production-ready features.
+* It reduces boilerplate and accelerates development while still allowing deep customization.
+
+**2. How does auto-configuration work internally?**
+* Spring Boot uses `@EnableAutoConfiguration`, which triggers loading of configuration classes listed in
+  `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`.
+* These classes use conditional annotations like `@ConditionalOnClass`, `@ConditionalOnMissingBean`, etc.,
+  to configure beans dynamically based on the classpath and environment.
+
+**3. What are the key differences between Spring and Spring Boot?**
+* Spring requires manual configuration (XML or Java), while Spring Boot provides auto-configuration, embedded servers,
+  and starter dependencies.
+* Boot is designed for rapid development and microservices, while Spring is more flexible but verbose.
+
+**4. What is a Spring Boot starter?**
+* Starters are curated dependency bundles (e.g., `spring-boot-starter-web`) that include all necessary libraries for a feature,
+  reducing dependency conflicts and setup time.
+
+**5. How do you externalize configuration?**
+* Using `application.properties` or `application.yml`, environment variables, command-line arguments, and profiles.
+* Spring Boot follows a priority order for configuration sources.
+
+**6. What is Spring Boot Actuator?**
+* Actuator provides production-ready features like health checks, metrics, environment info, and monitoring endpoints.
+* It integrates with tools like Prometheus and Grafana.
+
+**7. How do profiles work?**
+* Profiles allow environment-specific configurations using `spring.profiles.active`.
+* Separate config files like `application-dev.yml` can be used to isolate settings.
+
+**8. What is the difference between `@Component`, `@Service`, and `@Repository`?**
+* All are stereotypes of `@Component`.
+  * `@Service` → business logic.
+  * `@Repository` → persistence layer (adds exception translation).
+  * `@Component` → generic bean.
+
+**9. How does dependency injection work in Spring Boot?**
+* Through IoC container using constructor, setter, or field injection.
+* Constructor injection is preferred for immutability and testability.
+
+**10. What is the difference between `@RestController` and `@Controller`?**
+* `@RestController` combines `@Controller` and `@ResponseBody`, returning JSON/XML directly.
+* `@Controller` is used for MVC views.
+
+**11. How do you handle exceptions globally?**
+* Using `@ControllerAdvice` with `@ExceptionHandler`.
+* It centralizes error handling and allows consistent API responses.
+
+**12. What is Spring Boot’s embedded server?**
+* Spring Boot includes embedded servers like Tomcat, Jetty, or Undertow, allowing applications to run as standalone JARs.
+
+**13. How do you secure a Spring Boot application?**
+* Using Spring Security with authentication (JWT, OAuth2), authorization, CSRF protection, and secure password storage (BCrypt).
+
+**14. What is the difference between `@Bean` and `@Component`?**
+* `@Component` → auto-detected via component scanning.
+* `@Bean` → explicitly declared in configuration class.
+
+**15. How do you implement caching?**
+* Using `@EnableCaching` and annotations like `@Cacheable`, `@CacheEvict`, with providers like Redis, Ehcache, or Caffeine.
+
+**16. What is Spring Boot DevTools?**
+* Provides hot reload, automatic restart, and development-time enhancements to improve productivity.
+
+**17. How do you connect to a database?**
+* Using Spring Data JPA or JDBC with configuration in `application.yml`.
+* Boot auto-configures `DataSource` if dependencies are present.
+
+**18. What is Spring Data JPA?**
+* A layer over JPA that simplifies database access by generating repository implementations automatically.
+
+**19. What are transactions in Spring Boot?**
+* Managed using `@Transactional`.
+* Spring uses AOP proxies to handle commit/rollback behavior.
+
+**20. What is the difference between `@Transactional` propagation types?**
+* Defines how transactions behave:
+  * REQUIRED (default).
+  * REQUIRES_NEW.
+  * SUPPORTS.
+  * MANDATORY.
+* Important for complex service-layer logic.
+
+**21. How do you build REST APIs in Spring Boot?**
+* Using `@RestController`, mapping endpoints with `@RequestMapping`, `@GetMapping`, etc., and returning DTOs.
+
+**22. How do you validate input?**
+* Using `@Valid` and Bean Validation (Jakarta Validation), with annotations like `@NotNull`, `@Size`, etc.
+
+**23. How do you implement microservices with Spring Boot?**
+* Using Spring Cloud tools like Config Server, Eureka, Gateway, and Feign clients.
+* Emphasis on service discovery, resilience, and scalability.
+
+**24. What is Spring Boot’s startup lifecycle?**
+* Key phases:
+  * Application starts (`SpringApplication.run`).
+  * Environment prepared.
+  * Context created.
+  * Beans initialized.
+  * Application ready events triggered.
+
+**25. How do you optimize Spring Boot performance?**
+* Use lazy initialization.
+* Tune connection pools (HikariCP).
+* Enable caching.
+* Optimize queries.
+* Use reactive programming (WebFlux) where applicable.
+* Monitor with Actuator.
+
+***
+
+# Reactive Spring.
+
+**1. What is Reactive Programming?**
+* Reactive programming is an asynchronous, non-blocking programming paradigm that deals with streams of data and propagates
+  changes automatically.
+* It’s ideal for high-throughput, low-latency applications.
+
+**2. What is Spring WebFlux?**
+* Spring WebFlux is a reactive web framework in Spring that supports non-blocking I/O using Reactor (`Mono` and `Flux`).
+* It can run on Netty, Undertow, or Servlet 3.1+ containers.
+
+**3. What are the key differences between Spring MVC and WebFlux?**
+
+| Aspect      | Spring MVC       | Spring WebFlux                 |
+|-------------|------------------|--------------------------------|
+| I/O         | Blocking         | Non-blocking                   |
+| Threads     | 1 request/thread | Event-loop / small thread pool |
+| Data types  | Object	          | Mono / Flux                    |
+| Scalability | Limited	         | High for concurrent requests   |
+
+**4. What are `Mono` and `Flux`?**
+* `Mono<T>` → 0 or 1 element.
+* `Flux<T>` → 0..N elements.
+* Both are Publisher implementations from Project Reactor.
+
+**5. What is backpressure in reactive programming?**
+* Backpressure is a mechanism that controls data flow between producer and consumer to prevent overwhelming the consumer.
+* Reactor supports it via `request(n)` and operators like `onBackpressureBuffer`.
+
+**6. How do you convert a blocking repository to reactive?**
+* Use reactive repositories (`ReactiveCrudRepository` in Spring Data).
+* Wrap blocking calls with `Schedulers.boundedElastic()` to offload to a separate thread.
+
+**7. How do you create a reactive REST endpoint?**
+
+```java
+@GetMapping("/users/{id}")
+public Mono<User> getUser(@PathVariable String id) {
+  return userRepository.findById(id);
+}
+```
+
+**8. What is the difference between `subscribeOn` and `publishOn`?**
+* `subscribeOn` → determines which thread executes upstream.
+* `publishOn` → changes thread downstream from that point.
+
+**9. How do you handle errors in a reactive stream?**
+* Use Reactor operators:
+  * `onErrorReturn`.
+  * `onErrorResume`.
+  * `doOnError`.
+  * `retry` / `retryWhen`.
+
+**10. How do you test reactive streams?**
+* Use `StepVerifier` from Project Reactor for unit testing `Mono` / `Flux`.
+* Verify emitted items, completion, or errors.
+
+**11. What is the difference between `flatMap()` and `map()` in `Flux`/`Mono`?**
+* `map()` → synchronous transformation.
+* `flatMap()` → async transformation, returns `Publisher`.
+
+**12. How do you handle multiple reactive streams together?**
+* `zip()` → combine streams element-wise.
+* `merge()` → combine streams concurrently.
+* `concat()` → sequential combination.
+
+**13. How do you integrate Reactive Spring with a database?**
+* Use Spring Data R2DBC for SQL databases.
+* Use `ReactiveMongoRepository` for MongoDB.
+* Avoid blocking JDBC calls; wrap with `Schedulers.boundedElastic()` if needed.
+
+**14. Can you use reactive programming with `RestTemplate`?**
+* No — `RestTemplate` is blocking.
+* Use `WebClient`, which is non-blocking and reactive.
+
+**15. What is `WebClient`?**
+* `WebClient` is a reactive HTTP client in Spring WebFlux.
+* It supports asynchronous, non-blocking calls and streaming responses.
+```java
+WebClient client = WebClient.create("http://example.com");
+Mono<User> user = client.get().uri("/users/1").retrieve().bodyToMono(User.class);
+```
+
+**16. How do you stream data from the server to clients?**
+* Use `Flux` and return `MediaType.TEXT_EVENT_STREAM_VALUE` for Server-Sent Events (SSE).
+```java
+@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+public Flux<Event> streamEvents() { 
+    return eventService.streamEvents(); 
+}
+```
+
+**17. How do you handle blocking operations in WebFlux?**
+* Avoid blocking calls in the main thread.
+* Wrap blocking calls in `Mono.fromCallable(() -> blockingCall()).subscribeOn(Schedulers.boundedElastic())`.
+
+**18. What is a `Scheduler` in Reactor?**
+* Schedulers manage which thread executes a reactive stream.
+* Types:
+  * `parallel()` → CPU-intensive tasks.
+  * `boundedElastic()` → blocking I/O.
+  * `single()` → single-threaded.
+
+**19. How do you implement backpressure in WebFlux endpoints?**
+* Reactive types (`Flux`) support backpressure natively.
+* Control request rate using `limitRate()`, `onBackpressureBuffer()`, or `onBackpressureDrop()`.
+
+**20. What are hot and cold publishers?**
+* Cold Publisher: starts emitting items when subscribed (e.g., `Flux.range`).
+* Hot Publisher: emits items independently of subscribers (e.g., `Sinks.many().multicast()`).
+
+**21. How do you implement retry strategies in Reactor?**
+* `retry(n)` → simple retry.
+* `retryWhen(Retry.backoff(maxRetries, Duration.ofSeconds(1)))` → exponential backoff.
+* Can handle errors selectively.
+
+**22. How do you handle streaming JSON responses?**
+* Return a `Flux<T>`.
+* Ensure `MediaType.APPLICATION_NDJSON_VALUE` for streaming JSON array elements.
+
+**23. How do you integrate Reactive Spring with messaging systems?**
+* Use reactive clients for Kafka (`reactor-kafka`) or RabbitMQ (`reactor-rabbitmq`).
+* Process messages asynchronously without blocking threads.
+
+**24. How do you monitor reactive applications?**
+* Use Micrometer + Prometheus for metrics (e.g., request throughput, active subscribers).
+* Trace reactive streams using Spring Sleuth.
+* Watch thread usage (non-blocking allows fewer threads under load).
+
+**25. What are common pitfalls in Reactive Spring?**
+* Mixing blocking calls with reactive code.
+* Not handling backpressure → memory leaks.
+* Using `block()` in reactive flows.
+* Misunderstanding `subscribeOn()` vs `publishOn()`.
+* Overcomplicating simple endpoints that don’t need reactive.
