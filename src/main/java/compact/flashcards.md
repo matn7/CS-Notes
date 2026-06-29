@@ -1,3 +1,5 @@
+# Flashcard.
+
 **1. Callbacks.**
 * Asynchronous methods that accepts a callback as a parameter and invokes it when the blocking call completes.
 * Writing code with callbacks are hard to compose and difficult to read and maintain.
@@ -7,8 +9,7 @@
 * `Future`:
   * Released in Java 5.
   * Write Asynchronous code.
-  * Disadvantages: 
-    * No easy way to combine the result from multiple features.
+  * Disadvantages: No easy way to combine the result from multiple features.
   * `Future.get()` - this is a blocking call!
 * `ComparableFuture`:
   * Released in Java 8.
@@ -16,7 +17,7 @@
   * Easy to compose / combine Multiple Futures.
   * Disadvantages:
     * `Future` that returns many elements.
-    * Eg. `ComparableFuture<List<Result>>` will need to wait for the whole collection to build and readily available.
+    * `ComparableFuture<List<Result>>` will need to wait for the whole collection to build and readily available.
     * `ComparableFuture` does not hava a handle for infinite values.
 
 **3. What is Reactive Programming?**
@@ -110,7 +111,7 @@ client and service.
   * `skip(3)`.
 * `peek()` - just for debugging - `Consumer<T>`.
   * `peek(i -> System.out.print(i))`.
-* `distinct()` - allows only distinct values in the pipeline - N/A.
+* `distinct()` - allows only distinct values in the pipeline - `N/A`.
   * `distinct()`.
 * `sorted()` - sorts the data (asc/desc) - `Comparator`.
   * `sorted(Comparator.naturalOrder())`.
@@ -131,8 +132,8 @@ void test() {
     List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
     
     list.stream()
-            .filter(num -> num % 2 == 0)
-            .map(num -> num * num)
+            .filter(num -> num % 2 == 0)    // filters even numbers
+            .map(num -> num * num)          // square nums
             .limit(3)
             .forEach(System.out::println);
 }
@@ -196,7 +197,7 @@ public class ThreadAndNotify {
         thread.start();
         synchronized (thread) {
             try {
-                thread.wait();
+                thread.wait();  // wait until 1000000 operations completed
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -210,10 +211,10 @@ public class ThreadAndNotify {
 ```java
 void test() {
     double avgAgeOfWomanAbove30 = people.stream()
-            .filter(p -> p.getGender() == Gender.FEMALE)
-            .filter(p -> p.getAge() > 30)
-            .mapToInt(Person::getAge)
-            .average()
+            .filter(p -> p.getGender() == Gender.FEMALE)        // filter by gender: 'women'
+            .filter(p -> p.getAge() > 30)                       // filter by age: 'older than 30 years'
+            .mapToInt(Person::getAge)                           // get age: 'age'
+            .average()                                          // opetation: 'calculate average'
             .orElse(0.0);
 }
 ```
@@ -222,7 +223,9 @@ void test() {
 ```java
 void test() {
     List<Integer> numbers = Arrays.asList(1, 7, 3, 9, 5, 2, 8);
-    int maxVal = numbers.stream().max(Integer::compare).get();
+    int maxVal = numbers.stream()
+            .max(Integer::compare)          // 'largest value'
+            .get();
 }
 ```
 
@@ -230,7 +233,8 @@ void test() {
 ```java
 void test() {
     List<String> strings = Arrays.asList("hello", "world", "how", "are", "you");
-    String result = strings.stream().reduce("", (s1,s2) -> s1 + " " + s2);
+    String result = strings.stream()
+            .reduce("", (s1,s2) -> s1 + " " + s2);
 }
 ```
 
@@ -238,8 +242,8 @@ void test() {
 ```java
 void test() {
     List<Employee> sortedEmployees = employees.stream()
-            .filter(emp -> emp.getSkills().size() >= 2)
-            .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+            .filter(emp -> emp.getSkills().size() >= 2)                             // 'at least 2 skills'
+            .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())     // 'sorted by salary in decreasing order'
             .collect(Collectors.toList());
 }
 ```
@@ -412,7 +416,6 @@ void test() {
 ```java
 void test() {
     long sum = LongStream.range(0, 1000000000).parallel().sum();
-    
     // structured code has stats so it is harder to parallelize
     numbers.stream().parallel().reduce(0, Integer::sum);
 }
@@ -422,10 +425,10 @@ void test() {
 ```java
 void test() {
     courses.stream().peek(System.out::println)
-            .filter(course -> course.length() > 11)
-            .map(String::toUpperCase)
+            .filter(course -> course.length() > 11)     // 'course with 11 characters'
+            .map(String::toUpperCase)                   // 'uppercase value'
             .peek(System.out::println)
-            .findFirst();
+            .findFirst();                               // 'Find first'
     // Not check for other element when found first element. Imporve performance.
     // Spring, Spring Boot, API, Microservices, MICROSERVICES (end of execution)
 }
@@ -470,7 +473,8 @@ void test() {
 **37. Joining courses by comma.**
 ```java
 void test() {
-    courses().stream()
+    courses()
+            .stream()
             .collect(Collectors.joining(","));
 }
 ```
@@ -478,9 +482,11 @@ void test() {
 **38. Comparators with primitives, more efficient due not boxing and unboxing.**
 ```java
 void test() {
-    Comparator<Course> compNumOfStudentsAndScore = Comparator.comparingInt(Course::getNumOfStudents)
-            .thenComparingInt(Course::getReviewScore)
-            .reversed();
+    Comparator<Course> compNumOfStudentsAndScore = 
+            Comparator
+                    .comparingInt(Course::getNumOfStudents)     // 'with primitives;
+                    .thenComparingInt(Course::getReviewScore)
+                    .reversed();
 }
 ```
 
@@ -574,8 +580,8 @@ void test() {
 ```java
 void test() {
     Runnable runnable = () -> {
-        IntStream.range(0, 10000).forEach(
-                i -> System.out.println(Thread.currentThread().getId() + ":" + i)
+        IntStream.range(0, 10000)
+                .forEach(i -> System.out.println(Thread.currentThread().getId() + ":" + i)
         );
     };
     Thread thread = new Thread(runnable);
@@ -644,14 +650,15 @@ public class Accounting {
 }
 ```
 
-**49. Lambda, given lists of strings, return new list with all strings containing letter "a", sorted in decreasing order by length.**
+**49. Lambda, given lists of strings, return new list with all strings containing letter "a", sorted in decreasing order 
+by length.**
 ```java
 void test() {
     List<String> inputList = Arrays.adList("apple", "banana", "cat", "dog", "elephant");
     List<String> returnList = inputList.stream()
-            .filter(s -> s.contains("a"))
-            .sorted(Comparator.comparingInt(String::length).reversed())
-            .collect(Collectors.toList());
+            .filter(s -> s.contains("a"))                                   // 'strings containing letter "a"'
+            .sorted(Comparator.comparingInt(String::length).reversed())     // 'sorted in decreasing order by length'
+            .collect(Collectors.toList());                                  // 'return new list'
 }
 ```
 
@@ -665,27 +672,34 @@ private static int add(List<Integer> nums) {
 }
 ```
 
-**51. Func max number using reduce.**
+**51. Function max number using reduce.**
 ```java
 void test() {
     List<Integer> numbers = List.of(12, 9, 12, 4, 6, 2, 4, 12, 15);
-    numbers.stream().reduce(0, (x,y) -> x > y ? x : y);
+    numbers.stream()
+            .reduce(0, (x,y) -> x > y ? x : y);
     
     // For negative values
-    numbers.stream().reduce(Integer.MIN_VALUE, (x, y) -> x > y ? x : y);
+    numbers.stream()
+            .reduce(Integer.MIN_VALUE, (x, y) -> x > y ? x : y);
 }
 ```
 
 **52. Sum squares using reduce.**
 ```java
 void test() {
-    numbers.stream().map(n -> n * n).reduce(0, (x, y) -> x + y);
+    numbers.stream()
+            .map(n -> n * n)                // 'squares'
+            .reduce(0, (x, y) -> x + y);
     
     // qubes
-    numbers.stream().map(n -> n * n * n).reduce(0, Integer::sum);
+    numbers.stream()
+            .map(n -> n * n * n)            // 'qubes'
+            .reduce(0, Integer::sum);
     
     // sum of odd nums
-    numbers.stream().filter(n -> n % 2 != 0)
+    numbers.stream()
+            .filter(n -> n % 2 != 0)        // 'odd nums'
             .reduce(0, (x, y) -> x + y);
 }
 ```
@@ -719,7 +733,7 @@ void test() {
 void test() {
     List<String> strings = Arrays.asList("cat", "dog", "bird", "elephant", "ant");
     String longestReversed = strings.stream()
-            .map(Comparator.comparingInt(String::length))
+            .max(Comparator.comparingInt(String::length))           // 'find the longest string'
             .map(s -> new StringBuilder(s).reverse().toString())
             .orElse("");
 }
@@ -762,8 +776,7 @@ void test() {
             Arrays.asList(4,5,6),
             Arrays.asList(7,8,9)
     );
-    List<Integer> flattenedList = nestedLists
-            .stream()
+    List<Integer> flattenedList = nestedLists.stream()
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
 }
@@ -790,7 +803,9 @@ void test() {
 ```java
 void test() {
     List<String> list = Arrays.asList("FOO", "BAR");
-    Iterable<String> iterable = () -> list.stream().map(String::toLowerCase).iterator();
+    Iterable<String> iterable = () -> list.stream()
+            .map(String::toLowerCase)
+            .iterator();
     
     for (String str : iterable) {
         System.out.println(str);
@@ -806,11 +821,10 @@ void test() {
 void test() {
     List<Integer> numbers = Arrays.asList(2, 4, 6, 7, 8, 9, 10, 11);
     
-    int sumOfSquaredOddNumbers = numbers
-            .stream()
-            .filter(num -> num > 5 && num % 2 != 0)
-            .mapToInt(num -> num * num)
-            .sum();
+    int sumOfSquaredOddNumbers = numbers.stream()
+            .filter(num -> num > 5 && num % 2 != 0)     // 'greater than 5' and 'odd numbers'
+            .mapToInt(num -> num * num)                 // 'squares'
+            .sum();                                     // 'sum of'
 }
 ```
 
@@ -829,9 +843,7 @@ void test() {
             .flatMap(s -> s.getEngagementMap().values().stream())
             .collect(Collectors.groupingBy(
                     CourseEngagement::getCourseCode,
-                    Collectors.groupingBy(
-                            CourseEngagement::getLastActivityYear, Collectors.counting()
-                    )
+                    Collectors.groupingBy(CourseEngagement::getLastActivityYear, Collectors.counting())
             ));
 }
 ```
@@ -839,10 +851,10 @@ void test() {
 **63. Determine the average percentage complete, for all courses, for this group of students.**
 ```java
 void test() {
-    Map<String, Double> percentages =
-            students.stream()
+    Map<String, Double> percentages = students.stream()
                     .flatMap(s -> s.getEngagementMap(),values().stream())
-                    .collect(Collectors.groupingBy(CourseEngagement::getCourseCode,
+                    .collect(Collectors.groupingBy(
+                            CourseEngagement::getCourseCode,
                             Collectors.averagingDouble(CourseEngagement::getPercentageCompleted)));
     // JMC      64.57    
     // JGAME    86.23
@@ -853,10 +865,10 @@ void test() {
 **64. How many students are taking 1, 2, or 3 classes?**
 ```java
 void test() {
-    Map<Integer, Long> classCount = 
-            students.stream()
+    Map<Integer, Long> classCount = students.stream()
                     .collect(Collectors.groupingBy(
-                            s -> s.getEngagementMap().size(), Collectors.counting()));
+                            s -> s.getEngagementMap().size(), 
+                            Collectors.counting()));
     // 1    3351
     // 2    3386
     // 3    3263
@@ -869,7 +881,8 @@ void test() {
     Map<String, Long> mappedActivity = students.stream()
             .flatMap(s -> s.getEngagementMap().values().stream())
             .collect(Collectors.groupingBy(
-                    CourseEngagement::getCourseCode, Collectors.counting()));
+                    CourseEngagement::getCourseCode, 
+                    Collectors.counting()));
     // JMC      6607
     // JGAME    6671
     // PYMC     6634
@@ -879,12 +892,10 @@ void test() {
 **66. Flat Map.**
 ```java
 void test() {
-    Map<Boolean, List<Student>> experienced = students
-            .stream()
+    Map<Boolean, List<Student>> experienced = students.stream()
             .collect(partitioningBy(Student::hasExperience));
     
-    long count = experienced.values()
-            .stream()
+    long count = experienced.values().stream()
             .flatMap(l -> l.stream())
             .filter(s -> s.getActive() <= 3)
             .count();
@@ -906,9 +917,9 @@ void test() {
     List<Integer> inputList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     
     int sum = inputList.stream()
-            .filter(n -> n % 2 == 0)
-            .mapToInt(Integer::intValue)
-            .sum();
+            .filter(n -> n % 2 == 0)            // 'even numbers'
+            .mapToInt(Integer::intValue)        
+            .sum();                             // 'sum of all'
 }
 ```
 
@@ -977,9 +988,9 @@ void test() {
 void test() {
     List<String> inputList = Arrays.asList("apple", "banana", "cat", "dog", "elephant");
     String shortestString = inputList.stream()
-            .filter(s -> s.contains("a") && s -> s.contains("e") && s -> s.contains("i") && s -> s.contains("o")
-                && s -> s.contains("o"))
-            .min(Comparator.comparingInt(String::length))
+            .filter(s -> s.contains("a") && s -> s.contains("e") && s -> s.contains("i") 
+                    && s -> s.contains("o") && s -> s.contains("o"))                        // 'all vowels'
+            .min(Comparator.comparingInt(String::length))                                   // 'shortest String'
             .orElse(null);
 }
 ```
@@ -988,7 +999,8 @@ void test() {
 ```java
 void test() {
     List<Object> inputList = Arrays.asList("apple", 1, "banana", 2, "cat", 3);
-    Map<Class<?>, List<Object>> resultMap = inputList.stream().collect(Collectors.groupingBy(Object::getClass));
+    Map<Class<?>, List<Object>> resultMap = inputList.stream()
+            .collect(Collectors.groupingBy(Object::getClass));
 }
 ```
 
@@ -1056,8 +1068,7 @@ void test() {
 **78. Passing Grade is 65. Divide students into 2 groups. Students who passed the exam. Student who did not pass exam.**
 ```java
 void test() {
-    Map<Boolean, List<Student>> passing = 
-            students.stream()
+    Map<Boolean, List<Student>> passing = students.stream()
                     .collect(Collectors.partitioningBy(student -> student.getGrade() >= 65));
 }
 ```
@@ -1251,9 +1262,9 @@ void test() {
 ```java
 void test() {
     list.stream()
-            .filter(name -> name.contains("-"))
-            .map(name -> name.replaceAll("-", ""))
-            .collect(Collectors.toList());
+            .filter(name -> name.contains("-"))         // 'names containing '-' in'
+            .map(name -> name.replaceAll("-", ""))      // 'replace it with a space'
+            .collect(Collectors.toList());              // 'collect them into a list'
 }
 ```
 
@@ -1266,7 +1277,7 @@ void test() {
 }
 ```
 
-**92. Sum using IntStream.**
+**92. Sum using `IntStream`.**
 ```java
 void test() {
     int sum = list.stream()
@@ -1318,8 +1329,8 @@ void text() {
 }
 ```
 
-**98. Consider entity class Movie with fields name and genre (both Strings). And a list of movies. Write a code to group
-movies by genre.**
+**98. Consider entity class Movie with fields name and genre (both Strings). And a list of movies. 
+Write a code to group movies by genre.**
 ```java
 void test() {
     Movie<String, List<Movie>> yearToMovies = movies.stream()
@@ -1369,8 +1380,7 @@ void test() {
 ```java
 void test() {
     Function<Integer, Integer> squareFun = x -> x * x;
-    Function<Integer, Integer> squareFun2 = 
-            new Function<Integer, Integer> () {
+    Function<Integer, Integer> squareFun2 = new Function<Integer, Integer> () {
         public Integer apply(Integer x) {
             return x * x;        
         }
@@ -1631,15 +1641,15 @@ public class ThreadLocalExample {
     private static ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 0);
     
     public static void main(Stringg[] args) {
-        threadLocal.set(42);
+        threadLocal.set(42); // main thread
         
         Thread thread1 = new Thread(() -> {
             threadLocal.set(10);
-            System.out.println("Thread 1: " + threadLocal.get()); // 10
+            System.out.println("Thread 1: " + threadLocal.get()); // 10 - thread1
         });
         
         Thread thread2 = new Thread(() -> {
-            System.out.println("Thread 2: " + threadLocal.get()); // 0
+            System.out.println("Thread 2: " + threadLocal.get()); // 0 - thread2
         });
         
         thread1.start();
@@ -1704,12 +1714,55 @@ void test() {
             .stream()
             .map(WebElement::getText)
             .map(String::trim)
-            .filter(e -> e.length() > 0)
-            .filter(e -> !e.toLowerCase().containing("s"))
-            .map(String::toUpperCase)
+            .filter(e -> e.length() > 0)                        // 'Do not allow blank links'
+            .filter(e -> !e.toLowerCase().containing("s"))      // 'Do not allow links containing 's''
+            .map(String::toUpperCase)                           // 'Convert link text to uppercase'
             .forEach(System.out::println);
 }
 ```
+
+**120. There is a class Country that has methods getContinent() and getPopulation(). 
+Write a function int getPopulation(List<Country> countries, String continent) that computes the total population of a 
+given continent, given a list of all countries and the name of a continent.**
+
+* Without Lambda.
+```java
+int getPopulation(List<Country> countries, String continent) {
+    int sum = 0;
+    for (Country c : countries) {
+        if (c.getContinent().equals(continent)) {
+            sum += c.getPopulation();
+        }
+    }
+    return sum;
+}
+```
+
+* With Lambda.
+```java
+int getPopulation(List<Country> countries, String continent) {
+  // Filter countries.
+  Stream<Country> sublist = countries.stream().filter(
+          country -> { return country.getContinent().equals(continent); }
+  );
+  
+  // Convert to list of populations.
+  Stream<Integer> populations = sublist.map(
+          c -> c.getPopulation()
+  );
+  
+  // Sum list.
+  int population = populations.reduce(0, (a, b) -> a + b);
+}
+
+int getPopulation2(List<Country> countries, String continent) {
+    Stream<Integer> populations = countries.stream().map(
+            c -> c.getContinent().equals(continent) ? c.getPopulation() : 0);
+    return populations.reduce(0, (a, b) -> a + b);
+}
+```
+
+***
 
 ## Top 5 Java Stream Interview Questions on Creating Frequency Maps.
 
@@ -1726,34 +1779,44 @@ void test() {
   * Input: "banana"
   * Output: `{b=1, a=3, n=2}`.
 * Expected Solution:
-```java
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+  ```java
+  import java.util.*;
+  import java.util.function.Function;
+  import java.util.stream.Collectors;
+  
+  public class Main {
+      public static void main(String[] args) {
+          String str = "banana";
+  
+          Map<Character, Long> freqMap =
+                  str.chars()
+                     .mapToObj(c -> (char) c)
+                     .collect(Collectors.groupingBy(
+                             Function.identity(),
+                             Collectors.counting()
+                     ));
+  
+          System.out.println(freqMap);
+      }
+  }
+  ```
+**Interview Follow-ups:**
 
-public class Main {
-    public static void main(String[] args) {
-        String str = "banana";
+**Why Function.identity()?**
+* `Function.identity()` returns the input element itself. In `groupingBy()`, it's used as the classifier function, 
+so each character is grouped by its own value. It's equivalent to c -> c, but is more concise and idiomatic.
 
-        Map<Character, Long> freqMap =
-                str.chars()
-                   .mapToObj(c -> (char) c)
-                   .collect(Collectors.groupingBy(
-                           Function.identity(),
-                           Collectors.counting()
-                   ));
+**Why Long instead of Integer?**
+* `Collectors.counting()` returns a `Long`, not an `Integer`, because it counts elements using a long value to support 
+very large collections. Therefore, the map type is `Map<Character, Long>`.
 
-        System.out.println(freqMap);
-    }
-}
-```
+**Difference between chars() and codePoints()?**
+* `chars()` returns a stream of UTF-16 char values (16-bit), so it may break characters outside the Basic Multilingual 
+Plane (like emoji) into surrogate pairs.
+* `codePoints()` returns full Unicode code points (32-bit ints), so it correctly handles all Unicode characters, 
+including emoji and supplementary characters.
 
-Interview Follow-ups
-Why Function.identity()?
-Why Long instead of Integer?
-Difference between chars() and codePoints()?
-
-
+***
 
 **2. Count frequency of words in a sentence**
 * Question: Create a frequency map of words from a sentence.
@@ -1783,10 +1846,38 @@ public class Main {
 }
 ```
 
-Interview Follow-ups
-How to ignore case?
-How to remove punctuation?
-How to sort by frequency?
+**Interview Follow-ups.**
+
+**How to ignore case?**
+* Convert each word to lowercase (or uppercase) before collecting, so "Java" and "java" are treated the same.
+
+**How to remove punctuation?**
+* Remove punctuation before splitting or grouping by cleaning each word using regex.
+```java
+Map<String, Long> wordFreq =
+        Arrays.stream(sentence.toLowerCase().split("\\W+"))
+                .collect(Collectors.groupingBy(
+                        Function.identity(),
+                        Collectors.counting()
+                )); 
+```
+
+**How to sort by frequency?**
+* After building the frequency map, sort it by values using a stream on the entry set.
+```java
+Map<String, Long> sorted =
+        wordFreq.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+```
+
+***
 
 **3. Find the first non-repeating character using frequency map?**
 * Question: Find the first character whose frequency is 1.
@@ -1827,10 +1918,40 @@ public class Main {
 }
 ```
 
-Interview Follow-ups
-Why use LinkedHashMap?
-Time complexity?
-Can this be done in one pass?
+**Interview Follow-ups**
+
+**Why use LinkedHashMap?**
+* `LinkedHashMap` is used to preserve the insertion order of characters as they appear in the input string. 
+This is important because we want the first non-repeating character in original order, not in sorted or random map order.
+
+**Time complexity?** 
+* The solution runs in linear time `O(n)` because we scan the string once to build the frequency map and once more to 
+find the first unique character.
+
+**Can this be done in one pass?**
+* Yes, it can be done in one pass using a `LinkedHashMap` or a map that tracks counts while preserving order, 
+and then selecting the first character with count = 1.
+```java
+String input = "swiss";
+
+Map<Character, Integer> map = new LinkedHashMap<>();
+
+for (char c : input.toCharArray()) {
+    map.put(c, map.getOrDefault(c, 0) + 1);
+}
+
+Character result = null;
+for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+    if (entry.getValue() == 1) {
+        result = entry.getKey();
+        break;
+    }
+}
+
+System.out.println(result);
+```
+
+***
 
 **4. Sort elements by frequency using Streams.**
 * Question: Sort elements based on frequency in descending order.
@@ -1874,11 +1995,33 @@ public class Main {
 } 
 ```
 
-Interview Follow-ups
-Why use LinkedHashMap after sorting?
-Complexity of sorting?
-How to return top K frequent elements?
+**Interview Follow-ups**
 
+**Why use LinkedHashMap after sorting?**
+* `LinkedHashMap` is used after sorting to preserve the sorted order of entries.
+
+**Complexity of sorting?**
+* The sorting step has a time complexity of `O(k log k)`, where k is the number of unique elements.
+
+**How to return top K frequent elements?**
+* To get Top K frequent elements, first build a frequency map, then sort by frequency in descending order, 
+and finally take the first K entries.
+```java
+List<String> topK =
+        fruits.stream()
+                .collect(Collectors.groupingBy(
+                        Function.identity(),
+                        Collectors.counting()
+                ))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(k)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList()); 
+```
+
+***
 
 **5. Create frequency map with parallel streams?**
 * Question: How do you safely create a frequency map using parallel streams?
@@ -1908,49 +2051,16 @@ public class Main {
 }
 ```
 
-Interview Follow-ups
-Difference between groupingBy() and groupingByConcurrent()?
-When should parallel streams be avoided?
-Is ordering guaranteed?
+**Interview Follow-ups.**
 
-Most Important Concepts Interviewers Expect
-Concept	Why It Matters
-groupingBy()	Core frequency-map collector
-counting()	Aggregation collector
-Function.identity()	Cleaner key mapping
-LinkedHashMap	Preserve insertion order
-groupingByConcurrent()	Parallel stream support
-Stream pipeline	Functional programming maturity
-Collector composition	Advanced Stream expertise
-Most Common Trap Questions
-Why does counting() return Long?
+**Difference between groupingBy() and groupingByConcurrent()?**
+* `groupingBy()` is a standard collector that is not thread-safe, while `groupingByConcurrent()` is designed for 
+parallel streams and performs concurrent grouping in a thread-safe manner.
 
-Because counts can exceed Integer.MAX_VALUE.
+**When should parallel streams be avoided?**
+* Parallel streams should be avoided when the overhead of parallelization is higher than the performance benefit, 
+or when the task is not suitable for safe or efficient splitting.
 
-Why use Function.identity()?
-
-It returns the element itself:
-
-x -> x
-
-Cleaner and reusable.
-
-What is the complexity?
-Frequency creation → O(n)
-Sorting → O(n log n)
-Senior-Level Tip
-
-Interviewers love candidates who mention:
-
-immutability
-collector efficiency
-parallel stream caveats
-ordering guarantees
-memory overhead
-
-Example:
-
-“For large datasets with no ordering requirement, groupingByConcurrent() with parallel streams can improve throughput, but contention on shared buckets may reduce gains.”
-
-
+**Is ordering guaranteed?**
+* No — ordering is not guaranteed in parallel streams by default, unless you explicitly enforce it.
 

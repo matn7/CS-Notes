@@ -237,7 +237,8 @@ containerized applications.
 # Docker.
 
 **1. What is Docker and why is it used?**
-* Docker is a containerization platform that packages applications with their dependencies into lightweight, portable containers. 
+* Docker is a containerization platform that packages applications with their dependencies into lightweight, 
+portable containers. 
 * It ensures consistency across environments and simplifies deployment.
 
 **2. What is the difference between a container and a virtual machine?**
@@ -1177,7 +1178,7 @@ called charts.
 
 ***
 
-# Hard "Senior-Level" Questions.
+# Hard Questions.
 
 **1. Why is distributed consensus difficult?**
 * Nodes can fail, network partitions occur, clocks differ.
@@ -1214,9 +1215,10 @@ called charts.
 # Envoy Proxy Interview Questions And Answers.
 
 **1. What is Envoy Proxy?**
-* Envoy Proxy is a high-performance, open-source edge and service proxy originally developed at Lyft. It is designed for 
-cloud-native applications and microservices architectures. Envoy operates as an L4 and L7 proxy, supporting advanced 
-traffic management, observability, security, and resiliency features.
+* Envoy Proxy is a high-performance, open-source edge and service proxy originally developed at Lyft. 
+* It is designed for cloud-native applications and microservices architectures. 
+* Envoy operates as an L4 and L7 proxy, supporting advanced traffic management, observability, security, 
+and resiliency features.
 * Key characteristics:
   * Written in C++ for performance and low latency.
   * Supports HTTP/1.1, HTTP/2, HTTP/3, gRPC, and TCP traffic.
@@ -1808,8 +1810,8 @@ traffic management, observability, security, and resiliency features.
 
 **57. What are ingress and egress gateways in service mesh?**
 * Ingress gateway:
-  * Handles external inbound traffic
-  * Provides TLS termination and routing
+  * Handles external inbound traffic.
+  * Provides TLS termination and routing.
 * Egress gateway:
   * Controls outbound traffic to external services.
   * Enforces security and observability policies.
@@ -2670,7 +2672,7 @@ UserService service = new UserService();
 * If `UserService` is inside **library.jar**, the JVM loads it from that JAR.
 
 **Follow-up: What happens if the dependency JAR is missing?**
-* Possible outcomes:`ClassNotFoundException` `NoClassDefFoundError` depending on when the class is needed.
+* Possible outcomes:`ClassNotFoundException`, `NoClassDefFoundError` - depending on when the class is needed.
 
 **Follow-up: Does Java load all classes at startup?**
 * No.
@@ -2698,12 +2700,7 @@ Class.forName("User");
 
 **3. What are the JVM ClassLoaders?**
 * Bootstrap ClassLoader
-  * Loads:
-  ```java
-  java.lang.*
-  java.util.*
-  ```
-  from JDK runtime.
+  * Loads: `java.lang.*`, `java.util.*` - from JDK runtime.
 * Platform ClassLoader: Loads platform modules.
 * Application ClassLoader, Loads classes from:
   * Classpath.
@@ -2717,10 +2714,7 @@ System.out.println(User.class.getClassLoader());
 
 **Follow-up: What ClassLoader loads String?**
 * Bootstrap.
-* Returns:
-```java
-String.class.getClassLoader();
-```
+* Returns: `String.class.getClassLoader();`.
 * Output: null, because Bootstrap is implemented natively.
 
 **4. Explain Parent Delegation**
@@ -2779,7 +2773,7 @@ Bootstrap
 **Follow-up: Which one indicates deployment issue?**
 * Usually: `NoClassDefFoundError`.
 
-**7. What Happens If Two JARs Contain the Same Class?**
+**7. What Happens if two JARs Contain the Same Class?**
 * Example: **lib-v1.jar** contains: `com.example.Util` and  **lib-v2.jar** contains same class.
 * Usually first classpath match wins.
 
@@ -3410,7 +3404,7 @@ abstract class ExportJob {
   - Real-world constraints.
   - Async/event-driven mindset.
 
-**One-line Senior Summary.**
+**One-line Summary.**
 
 * Design patterns in system design help decouple complex distributed systems into maintainable, extensible components. 
 * Strategy and Factory enable flexibility, Observer enables event-driven scaling, and patterns like CQRS, Saga, 
@@ -3418,11 +3412,11 @@ and Circuit Breaker ensure scalability, consistency, and resilience in real-worl
 
 ***
 
-# Top 5 Interview Questions — Optimizing Huge Database Queries in Java Applications
+# Optimizing Huge Database Queries in Java Applications.
 
 **1. How would you handle a database query returning millions of rows in a Java application?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Memory management.
 - Streaming vs buffering.
 - DB cursor understanding.
@@ -3472,7 +3466,7 @@ users
 
 **2. How would you optimize a slow query returning massive JSON responses from DB to API?**
 
-**What interviewers are testing.**
+**What are testing.**
 - API scalability.
 - Serialization bottlenecks.
 - DTO optimization.
@@ -3522,7 +3516,7 @@ public Flux<UserDTO> users() {
 
 **3. Explain when to use Reactive Programming for database-heavy applications.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Reactive maturity.
 - Correct use cases.
 - Architecture tradeoffs.
@@ -3569,7 +3563,7 @@ should not be adopted without measurable scalability requirements.
 
 **4. How would you optimize Hibernate/JPA for huge datasets?**
 
-**What interviewers are testing.**
+**What are testing.**
 - ORM internals.
 - Persistence context management.
 - Batch optimization.
@@ -3614,7 +3608,7 @@ hibernate.jdbc.batch_size=50
 
 **5. Design a scalable export system for 100M database records.**
 
-**What interviewers are testing.**
+**What are testing.**
 - End-to-end architecture.
 - Async processing.
 - Distributed systems thinking.
@@ -3638,7 +3632,7 @@ hibernate.jdbc.batch_size=50
 * Avoid: `List<Record> all = ...`.
 * Prefer: `BufferedWriter`, incrementally.
 
-**Technologies interviewers love hearing.**
+**Technologies.**
 - Spring Batch.
 - Kafka.
 - WebFlux.
@@ -3671,7 +3665,7 @@ hibernate.jdbc.batch_size=50
 
 **Mention these phrases.**
 
-**These instantly signal seniority:**
+**These instantly signal seniority.**
 - Avoid materializing the entire dataset.
 - Use cursor-based streaming.
 - Control backpressure explicitly.
@@ -3680,7 +3674,7 @@ hibernate.jdbc.batch_size=50
 - Prefer projections over entity hydration.
 - Use reactive only for IO-bound scalability.
 
-**One Perfect Senior-Level Summary Answer.**
+**One Perfect Summary Answer.**
 * For huge DB responses, I avoid loading full datasets into memory. 
 * I prefer cursor-based streaming with fetch-size tuning, DTO projections, and batch processing. 
 * For high-concurrency IO-heavy systems, I use reactive stacks like WebFlux + R2DBC with explicit backpressure handling. 
@@ -3689,11 +3683,11 @@ transactional database.
 
 ***
 
-# Top 5 Interview Questions — ISO OSI & Basic Networking.
+# Top Questions — ISO OSI & Basic Networking.
 
 **1. Explain the OSI Model and responsibilities of each layer**
 
-**What interviewers are testing.**
+**What are testing.**
 - Networking fundamentals.
 - Understanding of layered architecture.
 - Ability to troubleshoot network issues.
@@ -3767,7 +3761,7 @@ or online gaming.
 
 **3. What happens when you type a URL into a browser?**
 
-**What interviewers are testing.**
+**What are testing.**
 - End-to-end networking understanding.
 - DNS knowledge.
 - HTTP/TLS understanding.
@@ -3801,7 +3795,7 @@ HTTP/1.1 200 OK
 - JavaScript execution.
 - Additional requests.
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * Typing a URL triggers DNS resolution, followed by TCP and optionally TLS handshakes. 
 * The browser then sends an HTTP request, receives a response, and renders the content while fetching additional resources.
 
@@ -3809,7 +3803,7 @@ HTTP/1.1 200 OK
 
 **4. Explain HTTP vs HTTPS.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Web security fundamentals.
 - Encryption understanding.
 - Practical networking knowledge.
@@ -3824,7 +3818,7 @@ HTTP/1.1 200 OK
 | Protocol    | HTTP       | HTTP + TLS |
 | Data Safety | Plain text | Encrypted  |
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * HTTPS is HTTP secured with TLS encryption. 
 * It protects data confidentiality and integrity while also verifying server identity using certificates.
 
@@ -3839,12 +3833,12 @@ HTTP/1.1 200 OK
 
 **5. Explain DNS and how domain resolution works.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Core internet knowledge.
 - Infrastructure understanding.
 - Debugging capability.
 
-**DNS Resolution Flow**
+**DNS Resolution Flow.**
 
 **Step-by-step.**
 * Browser cache.
@@ -3860,7 +3854,7 @@ HTTP/1.1 200 OK
 api.company.com → 192.168.1.10
 ```
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * DNS translates human-readable domain names into IP addresses. 
 * Resolution is hierarchical and heavily cached for performance.
 
@@ -3875,7 +3869,7 @@ api.company.com → 192.168.1.10
 | TXT     | Verification/security |
 | NS      | Name server           |
 
-**Most Important Networking Concepts Interviewers Expect.**
+**Most Important Networking Concepts.**
 
 | Concept       | Why It Matters            |
 |---------------|---------------------------|
@@ -3904,7 +3898,6 @@ api.company.com → 192.168.1.10
 
 **Mention these phrases.**
 
-**These immediately sound senior-level:**
 - TCP guarantees ordered delivery.
 - DNS resolution is heavily cached.
 - HTTPS uses TLS encryption.
@@ -3912,7 +3905,7 @@ api.company.com → 192.168.1.10
 - OSI layers help isolate failures.
 - Connection pooling reduces TCP overhead.
 
-**One Perfect Senior-Level Summary Answer.**
+**One Perfect Summary Answer.**
 * The OSI model provides layered abstraction for networking communication. 
 * In real systems, protocols like TCP/IP, DNS, HTTP, and TLS work together to enable secure and reliable communication 
 between distributed services. 
@@ -3920,11 +3913,11 @@ between distributed services.
 
 ***
 
-# Top 5 Interview Questions — Event-Driven System Design.
+# Top 5 Questions — Event-Driven System Design.
 
 **1. How would you design an event-driven order processing system for e-commerce?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Microservices communication.
 - Async processing.
 - Eventual consistency.
@@ -3967,7 +3960,7 @@ Shipping Service
 
 **2. Explain Event-Driven Architecture (EDA) and its advantages/disadvantages.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Architectural maturity.
 - Tradeoff understanding.
 - Practical experience.
@@ -4011,7 +4004,7 @@ Fraud Service evaluates risk
 
 **3. How would you guarantee reliable event delivery in a distributed system?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Reliability engineering.
 - Consistency understanding.
 - Production architecture knowledge.
@@ -4045,7 +4038,7 @@ if (alreadyProcessed(eventId)) {
 **e) Message Acknowledgment.**
 * Broker confirms successful processing.
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * Reliable event delivery requires transactional event publishing, retries, idempotent consumers, and dead-letter queues. 
 * In production systems, exactly-once delivery is extremely difficult, so most systems rely on at-least-once delivery 
 with idempotency.
@@ -4054,7 +4047,7 @@ with idempotency.
 
 **4. How would you design a real-time analytics pipeline using event-driven architecture?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Streaming systems understanding.
 - Scalability.
 - Data engineering basics.
@@ -4080,14 +4073,14 @@ Dashboard / Monitoring
 - Backpressure.
 - Batching vs streaming.
 
-**Technologies interviewers expect.**
+**Technologies expect.**
 - Kafka.
 - Apache Flink.
 - Spark Streaming.
 - Kinesis.
 - Pulsar.
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * Events are continuously streamed through Kafka partitions and processed by stream-processing engines like Flink. 
 * Aggregated results are written into analytical storage optimized for querying and dashboards.
 
@@ -4095,7 +4088,7 @@ Dashboard / Monitoring
 
 **5. How would you handle ordering and duplicate events in an event-driven system?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Distributed systems maturity.
 - Event processing correctness.
 - Practical production knowledge.
@@ -4133,11 +4126,11 @@ eventVersion = 1,2,3...
 **Event timestamps.**
 * Useful but not fully reliable.
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * In distributed event-driven systems, duplicate delivery is expected, so consumers must be idempotent. 
 * Ordering is usually guaranteed only within a partition or entity boundary, not globally across the entire system.
 
-**Most Important Event-Driven Concepts Interviewers Expect.**
+**Most Important Event-Driven Concepts Expect.**
 
 | Concept              | Why It Matters             |
 |----------------------|----------------------------|
@@ -4170,14 +4163,14 @@ eventVersion = 1,2,3...
 - Separate command and event flows.
 - Avoid distributed transactions when possible.
 
-**One Perfect Senior-Level Summary Answer.**
+**One Summary Answer.**
 * Event-driven architecture enables scalable and loosely coupled distributed systems through asynchronous communication. 
 * Reliable implementations require idempotent consumers, retries, dead-letter queues, and patterns like Outbox and Saga 
 to handle consistency and failure scenarios at scale.
 
 ***
 
-## Top 5 Interview Questions — Object-Oriented Programming (Java).
+## Top 5 Questions — Object-Oriented Programming (Java).
 
 **1. Explain the 4 Pillars of Object-Oriented Programming.**
 
@@ -4228,6 +4221,71 @@ class Dog extends Animal {
 }
 ```
 
+**Polymorphism Example.**
+```java
+// Parent class
+class Animal {
+    public void makeSound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+// Child class
+class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+
+// Child class
+class Cat extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Cat meows");
+    }
+}
+
+public class PolymorphismExample {
+    public static void main(String[] args) {
+        Animal a1 = new Dog(); // Parent reference, Dog object
+        Animal a2 = new Cat(); // Parent reference, Cat object
+
+        a1.makeSound(); // Output: Dog barks
+        a2.makeSound(); // Output: Cat meows
+    }
+}
+```
+
+**Abstraction Example.**
+```java
+// Abstract class
+abstract class Animal {
+    abstract void makeSound(); // Abstract method
+
+    void sleep() {
+        System.out.println("Sleeping...");
+    }
+}
+
+// Child class
+class Dog extends Animal {
+    @Override
+    void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class AbstractionExample {
+    public static void main(String[] args) {
+        Animal dog = new Dog();
+        dog.makeSound();
+        dog.sleep();
+    }
+}
+```
+
+
 **Strong Interview Answer.**
 * OOP organizes software around objects and behavior. 
 * Encapsulation protects data, inheritance enables reuse, polymorphism allows flexible behavior, and abstraction simplifies 
@@ -4237,7 +4295,7 @@ complex systems by hiding implementation details.
 
 **2. What is the difference between abstraction and encapsulation?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Conceptual clarity.
 - Real OOP understanding.
 
@@ -4270,7 +4328,7 @@ class User {
 ```
 * Internal data protected.
 
-**Strong Interview Answer**
+**Strong Answer**
 * Abstraction focuses on exposing only essential behavior, while encapsulation protects internal object state and 
 implementation details.
 
@@ -4293,7 +4351,6 @@ implementation details.
 **Compile-time Polymorphism.**
 ```java
 class Calculator {
-
     int add(int a, int b) {
         return a + b;
     }
@@ -4327,15 +4384,16 @@ animal.sound();
 ```
 * Resolved at runtime.
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * Polymorphism allows objects to behave differently through a common interface. 
-* In Java, compile-time polymorphism uses method overloading, while runtime polymorphism uses method overriding and dynamic dispatch.
+* In Java, compile-time polymorphism uses method overloading, while runtime polymorphism uses method overriding 
+and dynamic dispatch.
 
 ***
 
 **4. Why is composition preferred over inheritance?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Clean architecture thinking.
 - SOLID principles understanding.
 - Maintainability awareness.
@@ -4390,14 +4448,14 @@ class Bird {
 
 **5. Explain SOLID principles with Java examples.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Software design maturity.
 - Maintainability thinking.
 - Enterprise coding standards.
 
 **SOLID Principles.**
 
-| Principle  | Meanin g                        |
+| Principle  | Meaning                         |
 |------------|---------------------------------|
 | S          | Single Responsibility Principle |
 | O          | Open/Closed Principle           |
@@ -4453,11 +4511,95 @@ class OrderService {
 }
 ```
 
-**Strong Interview Answer**
+**Example — Liskov Substitution Principle (LSP).**
+
+* BAD:
+```java
+class Bird {
+    public void fly() {
+        System.out.println("Bird is flying");
+    }
+}
+
+class Penguin extends Bird {
+    @Override
+    public void fly() {
+        throw new UnsupportedOperationException("Penguins can't fly!");
+    }
+}
+
+public class BadLSP {
+    public static void main(String[] args) {
+        Bird bird = new Penguin();
+        bird.fly(); // Runtime exception!
+    }
+}
+```
+* GOOD:
+```java
+class Bird {
+    public void eat() {
+        System.out.println("Bird is eating");
+    }
+}
+
+class Sparrow extends Bird {
+    public void fly() {
+        System.out.println("Sparrow is flying");
+    }
+}
+
+class Penguin extends Bird {
+    public void swim() {
+        System.out.println("Penguin is swimming");
+    }
+}
+
+public class LSPExample {
+    public static void main(String[] args) {
+        Bird bird1 = new Sparrow();
+        Bird bird2 = new Penguin();
+
+        bird1.eat();
+        bird2.eat();
+    }
+}
+```
+* BETTER DESIGN:
+```java
+class Bird {
+    public void eat() {
+        System.out.println("Bird is eating");
+    }
+}
+
+abstract class FlyingBird extends Bird {
+    abstract void fly();
+}
+
+class Sparrow extends FlyingBird {
+    @Override
+    void fly() {
+        System.out.println("Sparrow is flying");
+    }
+}
+
+class Penguin extends Bird {
+    public void swim() {
+        System.out.println("Penguin is swimming");
+    }
+}
+```
+* The Liskov Substitution Principle means that any subclass should be usable wherever its parent class is expected 
+without breaking the program. A common bad example is making `Penguin` extend Bird when `Bird` has a `fly()` method. 
+Since penguins can't fly, they either throw an exception or leave the method empty, violating LSP. A better design is 
+to keep common behavior like `eat()` in `Bird` and move `fly()` into a separate `FlyingBird` class or a `Flyable` interface.
+
+**Strong Answer**
 * SOLID principles improve maintainability, extensibility, and testability by reducing coupling and organizing 
 responsibilities cleanly.
 
-**Most Important OOP Concepts Interviewers Expect.**
+**Most Important OOP Concepts Expect.**
 
 | Concept              | Why It Matters        |
 |----------------------|-----------------------|
@@ -4481,11 +4623,11 @@ responsibilities cleanly.
 
 ***
 
-## Top Interview Questions — XML, XSD, XSLT & Namespaces.
+## Top Questions — XML, XSD, XSLT & Namespaces.
 
 **1. What is XML and why is it used?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Understanding of structured data exchange.
 - Enterprise integration basics.
 - API communication knowledge.
@@ -4518,7 +4660,7 @@ supports validation, namespaces, and extensibility.
 
 **2. What is XSD and why is it important?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Validation understanding.
 - Enterprise XML processing.
 - Schema design basics.
@@ -4552,7 +4694,7 @@ supports validation, namespaces, and extensibility.
 | Contract definition | Producer/consumer agreement |
 | Documentation       | Describes structure         |
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * XSD defines the contract for XML documents. 
 * It validates structure, element ordering, required fields, and data types, ensuring interoperability between systems.
 
@@ -4560,7 +4702,7 @@ supports validation, namespaces, and extensibility.
 
 **3. What are XML Namespaces and why are they needed?**
 
-**What interviewers are testing.**
+**What are testing.**
 - XML conflict resolution understanding.
 - SOAP/integration experience.
 
@@ -4604,14 +4746,14 @@ supports validation, namespaces, and extensibility.
 </users>
 ```
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * Namespaces uniquely identify XML elements and avoid naming conflicts when combining multiple XML schemas or standards.
 
 ***
 
 **4. What is XSLT and where is it used?**
 
-**What interviewers are testing.**
+**What are testing.**
 - XML transformation understanding.
 - Enterprise integration knowledge.
 
@@ -4642,15 +4784,15 @@ supports validation, namespaces, and extensibility.
 | Data transformation | Enterprise messaging |
 | Report generation   | XML reports          |
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * XSLT is a transformation language used to convert XML documents into different formats or structures, 
 commonly used in enterprise integrations and reporting systems.
 
 ***
 
-**5. How do you parse XML in Java? DOM vs SAX vs StAX**
+**5. How do you parse XML in Java? DOM vs SAX vs StAX.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Java XML processing experience.
 - Performance awareness.
 - Memory optimization.
@@ -4697,11 +4839,11 @@ endElement(...)
 | SAX     | Low     | High         | Hard        |
 | StAX    | Low     | High         | Flexible    |
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * DOM is suitable for small XML documents requiring random access, while SAX and StAX are preferred for large XML 
 processing because they stream data without loading the entire document into memory.
 
-**Most Important XML Concepts Interviewers Expect.**
+**Most Important XML Concepts.**
 
 | Concept        | Why It Matters       |
 |----------------|----------------------|
@@ -4960,11 +5102,121 @@ entire document into memory, unlike DOM which is memory-intensive.
 
 ***
 
-- Kubernetes commands 10 TOP.
+## Kubernetes `kubectl` Commands – Interview Cheat Sheet.
 
-- GCP Kubernetes 10 TOP
+| Command                                              | Purpose                                                            | Example                                        |
+|------------------------------------------------------|--------------------------------------------------------------------|------------------------------------------------|
+| `kubectl get pods`                                   | List all pods                                                      | `kubectl get pods`                             |
+| `kubectl get deployments`                            | List all deployments                                               | `kubectl get deployments`                      |
+| `kubectl get services`                               | List all services                                                  | `kubectl get services`                         |
+| `kubectl get nodes`                                  | List all cluster nodes                                             | `kubectl get nodes`                            |
+| `kubectl describe pod <pod-name>`                    | Show detailed information about a pod (events, status, containers) | `kubectl describe pod nginx-123`               |
+| `kubectl logs <pod-name>`                            | View logs from a pod                                               | `kubectl logs nginx-123`                       |
+| `kubectl exec -it <pod-name> -- /bin/bash`           | Open a shell inside a running pod                                  | `kubectl exec -it nginx-123 -- /bin/bash`      |
+| `kubectl apply -f deployment.yaml`                   | Create or update resources from a YAML file                        | `kubectl apply -f app.yaml`                    |
+| `kubectl delete -f deployment.yaml`                  | Delete resources defined in a YAML file                            | `kubectl delete -f app.yaml`                   |
+| `kubectl scale deployment <deployment> --replicas=3` | Scale a deployment                                                 | `kubectl scale deployment my-app --replicas=3` |
+| `kubectl rollout restart deployment <deployment>`    | Restart all pods in a deployment                                   | `kubectl rollout restart deployment my-app`    |
+| `kubectl rollout status deployment <deployment>`     | Check rollout progress                                             | `kubectl rollout status deployment my-app`     |
+| `kubectl get all`                                    | List most common resources                                         | `kubectl get all`                              |
+| `kubectl get pods -o wide`                           | Show additional pod information (IP, Node)                         | `kubectl get pods -o wide`                     |
+| `kubectl get pod <pod-name> -o yaml`                 | Display a resource as YAML                                         | `kubectl get pod nginx-123 -o yaml`            |
+| `kubectl delete pod <pod-name>`                      | Delete a specific pod                                              | `kubectl delete pod nginx-123`                 |
+| `kubectl port-forward <pod-name> 8080:80`            | Forward local port to a pod                                        | `kubectl port-forward nginx-123 8080:80`       |
+| `kubectl config current-context`                     | Show the current Kubernetes context                                | `kubectl config current-context`               |
+| `kubectl config get-contexts`                        | List available contexts                                            | `kubectl config get-contexts`                  |
+| `kubectl config use-context <context>`               | Switch Kubernetes context                                          | `kubectl config use-context minikube`          |
 
-- GCP GCE TOP 10
+### Top 10 Commands to Remember.
+
+| Priority  | Command                              | When to Use                 |
+|-----------|--------------------------------------|-----------------------------|
+| ⭐⭐⭐⭐⭐     | `kubectl get pods`                   | Check running pods          |
+| ⭐⭐⭐⭐⭐     | `kubectl describe pod`               | Debug pod issues            |
+| ⭐⭐⭐⭐⭐     | `kubectl logs`                       | View application logs       |
+| ⭐⭐⭐⭐⭐     | `kubectl exec -it`                   | Access a running container  |
+| ⭐⭐⭐⭐⭐     | `kubectl apply -f`                   | Deploy/update applications  |
+| ⭐⭐⭐⭐☆     | `kubectl delete -f`                  | Remove deployed resources   |
+| ⭐⭐⭐⭐☆     | `kubectl get deployments`            | View deployments            |
+| ⭐⭐⭐⭐☆     | `kubectl scale deployment`           | Scale application replicas  |
+| ⭐⭐⭐⭐☆     | `kubectl rollout restart deployment` | Restart application         |
+| ⭐⭐⭐⭐☆     | `kubectl get all`                    | Quick overview of resources |
+
+***
+
+### GCP + Kubernetes – Top 10 Interview Questions (Condensed).
+
+| Question                                         | Short Answer                                                                                                                               |
+|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **What is GKE?**                                 | Google Kubernetes Engine (GKE) is a managed Kubernetes service where Google manages the control plane, upgrades, and cluster availability. |
+| **Difference between Kubernetes and GKE?**       | Kubernetes is the orchestration platform; GKE is Google's managed Kubernetes service.                                                      |
+| **What is a Pod?**                               | The smallest deployable unit in Kubernetes. It can contain one or more containers sharing network and storage.                             |
+| **What is a Deployment?**                        | A Kubernetes object that manages Pods, supports scaling, rolling updates, and self-healing.                                                |
+| **What is a Service?**                           | Provides a stable IP/DNS to access Pods. Types: `ClusterIP`, `NodePort`, `LoadBalancer`.                                                   |
+| **How do you expose an application externally?** | Use a `LoadBalancer` Service or an Ingress with an HTTP(S) Load Balancer.                                                                  |
+| **How does Kubernetes handle failed Pods?**      | The Deployment automatically recreates failed Pods to maintain the desired replica count.                                                  |
+| **How do you scale an application?**             | `kubectl scale deployment <name> --replicas=<n>` or enable the Horizontal Pod Autoscaler (HPA).                                            |
+| **How do you deploy an application?**            | Create a Deployment YAML and run `kubectl apply -f deployment.yaml`.                                                                       |
+| **How do you troubleshoot a Pod?**               | `kubectl get pods` → `kubectl describe pod <pod>` → `kubectl logs <pod>` → `kubectl exec -it <pod> -- /bin/bash`.                          |
+
+---
+
+### Bonus Questions.
+
+| Question                             | Short Answer                                                                                               |
+|--------------------------------------|------------------------------------------------------------------------------------------------------------|
+| **What is an Ingress?**              | Routes external HTTP/HTTPS traffic to Services, often using a single public IP.                            |
+| **What is ConfigMap?**               | Stores non-sensitive configuration data.                                                                   |
+| **What is Secret?**                  | Stores sensitive data (passwords, API keys, certificates).                                                 |
+| **What is a Namespace?**             | Logically separates resources within a cluster.                                                            |
+| **What is HPA?**                     | Horizontal Pod Autoscaler automatically scales Pods based on CPU or memory usage.                          |
+| **Rolling Update vs Recreate?**      | Rolling Update replaces Pods gradually with no downtime; Recreate stops old Pods before starting new ones. |
+| **What is a Node?**                  | A worker machine (VM) that runs Pods.                                                                      |
+| **What is the Control Plane?**       | Manages scheduling, cluster state, API server, and controllers. In GKE, Google manages it.                 |
+| **How are container images stored?** | Typically in Artifact Registry or another container registry, then pulled by Kubernetes.                   |
+| **How does GKE improve Kubernetes?** | Automatic upgrades, auto-repair, autoscaling, integrated IAM, logging, monitoring, and high availability.  |
+
+### Common Interview Flow.
+
+1. Build application (e.g., Spring Boot).
+2. Create a Docker image.
+3. Push the image to Artifact Registry.
+4. Create Deployment and Service YAML files.
+5. Deploy using `kubectl apply -f`.
+6. Expose the application with a LoadBalancer or Ingress.
+7. Monitor using Cloud Logging/Monitoring.
+8. Scale using HPA or `kubectl scale`.
+9. Troubleshoot with `kubectl logs`, `describe`, and `exec`.
+10. Perform rolling updates with `kubectl rollout`.
+
+***
+
+# GCP Compute Engine (GCE) – Top 10 Interview Questions
+
+| #  | Question                             | Concise Answer                                                                                                                           |
+|----|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | What is Google Compute Engine (GCE)? | A GCP IaaS service that provides virtual machines running on Google’s infrastructure with full control over OS, storage, and networking. |
+| 2  | What are machine types in GCE?       | Predefined VM configurations defining vCPU and memory (e.g., E2, N2, C2, M2).                                                            |
+| 3  | Difference between GCE and GKE?      | GCE manages VMs directly; GKE manages containerized workloads using Kubernetes on top of VMs.                                            |
+| 4  | What are preemptible (Spot) VMs?     | Cheap, short-lived VMs that can be terminated anytime by Google, ideal for batch and fault-tolerant workloads.                           |
+| 5  | What is a startup script in GCE?     | A script executed automatically during VM boot for setup tasks like installing software or configuring services.                         |
+| 6  | How does GCE pricing work?           | Based on compute time, storage (persistent disks), and network egress, with discounts like sustained and committed use.                  |
+| 7  | What is a persistent disk?           | Durable block storage for VMs that is automatically replicated and can be resized without downtime.                                      |
+| 8  | What are instance groups?            | A collection of identical VMs used for load balancing, auto-healing, and auto-scaling (Managed or Unmanaged).                            |
+| 9  | What is auto-scaling in GCE?         | Automatically adds/removes VM instances based on metrics like CPU usage or load.                                                         |
+| 10 | How do you securely access a GCE VM? | Using SSH, IAP (Identity-Aware Proxy), OS Login, or IAM-based service accounts.                                                          |
+
+---
+
+## Bonus Interview Points (Quick Recall)
+
+* VPC networking controls VM communication.
+* Firewall rules control inbound/outbound traffic.
+* External IP vs Internal IP usage.
+* Live migration allows VMs to move without downtime.
+* Metadata server provides instance configuration data.
+
+
 
 - Bazel
 

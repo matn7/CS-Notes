@@ -26,7 +26,6 @@ with the comment's user reference (`comments.user_id`).
 
 **Possible improvement:**
 * Use table aliases to make the query shorter and easier to read:
-
 ```sql
 SELECT c.contents, u.username
 FROM comments c
@@ -337,7 +336,7 @@ FULL JOIN orders ON orders.customer_id = customers.id;
 * Uses a `FULL JOIN` to combine customers and orders, showing all records from both tables even when there is no match.
 
 **Key point:**
-* FULL JOIN is useful for identifying unmatched data on both sides (customers without orders and orphan orders).
+* `FULL JOIN` is useful for identifying unmatched data on both sides (customers without orders and orphan orders).
 
 **Optional improvement (using aliases):**
 ```sql
@@ -535,12 +534,12 @@ LIMIT 5;
 * Finds the 5 most frequently used hashtags in photos.
 
 **How it works:**
-* `FROM photo_tags` starts with the table that links photos to tags.
-* `JOIN tags ON tags.id = photo_tags.tag_id` connects each tag ID to its tag name.
-* `SELECT tags.tag_name, COUNT(*) AS total` retrieves each tag name and counts how many times it appears.
-* `GROUP BY tags.tag_name` groups rows by each unique tag so counting can be performed per tag.
-* `ORDER BY total DESC` sorts tags from most used to least used.
-* `LIMIT 5` returns only the top 5 results.
+* `FROM photo_tags`; starts with the table that links photos to tags.
+* `JOIN tags ON tags.id = photo_tags.tag_id`; connects each tag ID to its tag name.
+* `SELECT tags.tag_name, COUNT(*) AS total`; retrieves each tag name and counts how many times it appears.
+* `GROUP BY tags.tag_name`; groups rows by each unique tag so counting can be performed per tag.
+* `ORDER BY total DESC`; sorts tags from most used to least used.
+* `LIMIT 5`; returns only the top 5 results.
 
 **Example result:**
 
@@ -586,9 +585,9 @@ WHERE e1.dept_id = e2.dept_id;
 * The employees table is joined with itself using aliases:
   * `e1` represents employees.
   * `e2` represents their managers.
-* `JOIN employees e2 ON e1.mngr_id = e2.emp_id` links each employee to their manager using `mngr_id`.
-* `WHERE e1.dept_id = e2.dept_id` filters only cases where the employee and their manager belong to the same department.
-* `SELECT e1.emp_name` returns only the employee names that satisfy this condition.
+* `JOIN employees e2 ON e1.mngr_id = e2.emp_id`; links each employee to their manager using `mngr_id`.
+* `WHERE e1.dept_id = e2.dept_id`; filters only cases where the employee and their manager belong to the same department.
+* `SELECT e1.emp_name`; returns only the employee names that satisfy this condition.
 
 **Example result:**
 
@@ -628,11 +627,11 @@ WHERE price > (SELECT MAX(price) FROM products WHERE department = 'Toys');
 * Finds products that are more expensive than every product in the “Toys” department.
 
 **How it works:**
-* `FROM products` selects data from the products table.
-* `SELECT name, price` returns the product name and its price.
-* The subquery `(SELECT MAX(price) FROM products WHERE department = 'Toys')` finds the highest-priced product in the 
+* `FROM products`; selects data from the products table.
+* `SELECT name, price`; returns the product name and its price.
+* The subquery - `(SELECT MAX(price) FROM products WHERE department = 'Toys')`; finds the highest-priced product in the 
 Toys department.
-* `WHERE price > (...)` filters products whose price is greater than that maximum value.
+* `WHERE price > (...)`; filters products whose price is greater than that maximum value.
 * This ensures only products strictly more expensive than all Toys are returned.
 
 **Example result:**
@@ -671,12 +670,12 @@ HAVING SUM(price * units_sold) > 2000000;
 * Calculates total revenue per phone manufacturer and returns only those whose revenue exceeds 2,000,000.
 
 **How it works:**
-* `FROM phones` selects data from the phones table.
-* `SUM(price * units_sold)` calculates total revenue for each manufacturer.
-* `GROUP BY manufacturer` groups rows so revenue is calculated per manufacturer.
-* `HAVING SUM(price * units_sold) > 2000000` filters grouped results to keep only manufacturers whose total revenue is 
+* `FROM phones`; selects data from the phones table.
+* `SUM(price * units_sold)`; calculates total revenue for each manufacturer.
+* `GROUP BY manufacturer`; groups rows so revenue is calculated per manufacturer.
+* `HAVING SUM(price * units_sold) > 2000000`; filters grouped results to keep only manufacturers whose total revenue is 
 greater than 2,000,000.
-* `SELECT manufacturer, SUM(price * units_sold) AS revenue` outputs the manufacturer name and their computed revenue.
+* `SELECT manufacturer, SUM(price * units_sold) AS revenue`; outputs the manufacturer name and their computed revenue.
 
 **Example result:**
 
@@ -714,10 +713,10 @@ WHERE total_viewers < (SELECT AVG(total_viewers) FROM sports);
 * Finds sports whose total number of viewers is below the overall average across all sports.
 
 **How it works:**
-* `FROM sports` selects data from the sports table.
-* `SELECT name, total_viewers` returns each sport’s name and its viewer count.
-* The subquery `(SELECT AVG(total_viewers) FROM sports)` calculates the average number of viewers across all sports.
-* `WHERE total_viewers < (...)` filters and keeps only sports with below-average viewership.
+* `FROM sports`; selects data from the sports table.
+* `SELECT name, total_viewers`; returns each sport’s name and its viewer count.
+* The subquery `(SELECT AVG(total_viewers) FROM sports)`; calculates the average number of viewers across all sports.
+* `WHERE total_viewers < (...)`; filters and keeps only sports with below-average viewership.
 
 **Example result:**
 
@@ -753,10 +752,10 @@ WHERE price > (SELECT price FROM phones WHERE name = 'S5620 Monte');
 * Finds all phones that are more expensive than the Samsung S5620 Monte.
 
 **How it works:**
-* `FROM phones` selects data from the phones table.
-* `SELECT name, price` returns the phone name and its price.
-* The subquery `(SELECT price FROM phones WHERE name = 'S5620 Monte')` retrieves the price of the Samsung S5620 Monte.
-* `WHERE price > (...)` filters and keeps only phones whose price is higher than that value.
+* `FROM phones`; selects data from the phones table.
+* `SELECT name, price`; returns the phone name and its price.
+* The subquery `(SELECT price FROM phones WHERE name = 'S5620 Monte')`; retrieves the price of the Samsung S5620 Monte.
+* `WHERE price > (...)`; filters and keeps only phones whose price is higher than that value.
 
 **Example result:**
 
@@ -792,10 +791,10 @@ WHERE pages > (SELECT AVG(pages) FROM books);
 * Finds authors who have written books with a page count higher than the overall average page count of all books.
 
 **How it works:**
-* `FROM books` selects data from the books table.
-* `SELECT author_fname, author_lname` returns the author’s first and last name.
-* The subquery `(SELECT AVG(pages) FROM books)` calculates the average number of pages across all books.
-* `WHERE pages > (...)` filters only books whose page count is above that average.
+* `FROM books`; selects data from the books table.
+* `SELECT author_fname, author_lname`; returns the author’s first and last name.
+* The subquery `(SELECT AVG(pages) FROM books)`; calculates the average number of pages across all books.
+* `WHERE pages > (...)`; filters only books whose page count is above that average.
 * The result shows authors linked to those longer-than-average books.
 
 **Example result:**
@@ -812,7 +811,6 @@ WHERE pages > (SELECT AVG(pages) FROM books);
 * This is a scalar subquery used for comparison against an aggregate value.
 
 **Optional improvement (avoid duplicates if an author has multiple qualifying books):**
-
 ```sql
 SELECT DISTINCT author_fname, author_lname
 FROM books
@@ -833,11 +831,11 @@ WHERE p1.price = (SELECT MAX(p2.price) FROM products p2 WHERE p1.department = p2
 * Finds the most expensive product in each department.
 
 **How it works:**
-* `FROM products p1` selects the products table (alias `p1` for the outer query).
-* `SELECT p1.name, p1.department, p1.price` returns each product’s name, department, and price.
-* The correlated subquery `(SELECT MAX(p2.price) FROM products p2 WHERE p1.department = p2.department)` calculates 
+* `FROM products p1`; selects the products table (alias `p1` for the outer query).
+* `SELECT p1.name, p1.department, p1.price`; returns each product’s name, department, and price.
+* The correlated subquery `(SELECT MAX(p2.price) FROM products p2 WHERE p1.department = p2.department)`; calculates 
 the highest price within the same department as each product.
-* `WHERE p1.price = (...)` filters and keeps only products whose price matches the maximum price in their department.
+* `WHERE p1.price = (...)`; filters and keeps only products whose price matches the maximum price in their department.
 
 **Example result:**
 
@@ -875,12 +873,12 @@ HAVING COUNT(*) = (SELECT COUNT(*) FROM photos);
 * Finds users who have liked every photo in the system.
 
 **How it works:**
-* `FROM users` starts with the users table.
-* `JOIN likes ON likes.user_id = users.id` connects each user to the photos they have liked.
-* `GROUP BY users.id` groups all likes per user so we can count them.
-* `COUNT(*)` calculates how many photos each user has liked.
-* The subquery `(SELECT COUNT(*) FROM photos)` returns the total number of photos available.
-* `HAVING COUNT(*) = (...)` keeps only users whose number of likes matches the total number of photos 
+* `FROM users`; starts with the users table.
+* `JOIN likes ON likes.user_id = users.id`; connects each user to the photos they have liked.
+* `GROUP BY users.id`; groups all likes per user so we can count them.
+* `COUNT(*)`; calculates how many photos each user has liked.
+* The subquery `(SELECT COUNT(*) FROM photos)`; returns the total number of photos available.
+* `HAVING COUNT(*) = (...)`; keeps only users whose number of likes matches the total number of photos 
 (meaning they liked every photo).
 
 **Example result:**
@@ -919,11 +917,11 @@ WHERE department NOT IN (SELECT department FROM products WHERE price < 100);
 * Finds products that belong to departments where no product costs less than 100.
 
 **How it works:**
-* `SELECT name, department` returns the product name and department.
-* `FROM products` reads data from the products table.
-* The subquery: `SELECT department FROM products WHERE price < 100`. Finds all departments that contain at least one 
+* `SELECT name, department`; returns the product name and department.
+* `FROM products`; reads data from the products table.
+* The subquery: `SELECT department FROM products WHERE price < 100`; finds all departments that contain at least one 
 product priced below 100.
-* `WHERE department NOT IN (...)` excludes products from those departments.
+* `WHERE department NOT IN (...)`; excludes products from those departments.
 * The result contains only products from departments where every product is priced at 100 or more.
 
 **Example result:**
@@ -961,9 +959,9 @@ FROM (SELECT user_id, COUNT(*) AS order_count FROM orders GROUP BY user_id) AS t
 * Calculates the average number of orders placed per user.
 
 **How it works:**
-* The inner query: `SELECT user_id, COUNT(*) AS order_count FROM orders GROUP BY user_id`, counts how many orders each user has placed.
+* The inner query: `SELECT user_id, COUNT(*) AS order_count FROM orders GROUP BY user_id`; counts how many orders each user has placed.
 * This result is treated as a temporary table named t.
-* `AVG(order_count)` calculates the average of those order counts across all users.
+* `AVG(order_count)`; calculates the average of those order counts across all users.
 * The final result is a single value representing the average orders per user.
 
 **Example:**
@@ -1056,9 +1054,9 @@ FROM products p;
 **How it works:**
 * `FROM products p` starts with the products table.
 * `SELECT p.name` returns the product name.
-* The correlated subquery: `(SELECT COUNT(*) FROM orders o WHERE o.product_id = p.id)` counts how many orders reference 
+* The correlated subquery: `(SELECT COUNT(*) FROM orders o WHERE o.product_id = p.id)`; counts how many orders reference 
 the current product.
-* `AS num_orders` labels the count as num_orders.
+* `AS num_orders`; labels the count as num_orders.
 * The subquery runs for each product row, using `p.id` from the outer query.
 
 **Example result:**
@@ -1097,9 +1095,9 @@ WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id);
 * Finds customers who have placed at least one order.
 
 **How it works:**
-* `FROM customers c` starts with the customers table.
-* `SELECT c.*` returns all customer columns.
-* The EXISTS subquery: `SELECT 1 FROM orders o WHERE o.customer_id = c.id` checks whether at least one order exists 
+* `FROM customers c`; starts with the customers table.
+* `SELECT c.*`; returns all customer columns.
+* The EXISTS subquery: `SELECT 1 FROM orders o WHERE o.customer_id = c.id`; checks whether at least one order exists 
 for the current customer.
 * If a matching order is found, `EXISTS` returns `TRUE` and the customer is included in the result.
 * If no matching order exists, the customer is excluded.
@@ -1111,7 +1109,7 @@ for the current customer.
 | 1   | 	Alice |
 | 3   | 	Bob   |
 
-* (Customers without orders are not returned.)
+* Customers without orders are not returned.
 
 **Short note version:**
 * Uses `EXISTS` to return only customers who have at least one matching order.
@@ -1141,9 +1139,9 @@ WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id);
 * Finds customers who have never placed an order.
 
 **How it works:**
-* `FROM customers c` starts with the customers table.
-* `SELECT c.*` returns all customer details.
-* The `NOT EXISTS` subquery: `SELECT 1 FROM orders o WHERE o.customer_id = c.id` checks whether any orders exist for 
+* `FROM customers c`; starts with the customers table.
+* `SELECT c.*`; returns all customer details.
+* The `NOT EXISTS` subquery: `SELECT 1 FROM orders o WHERE o.customer_id = c.id`; checks whether any orders exist for 
 the current customer.
 * `NOT EXISTS` returns `TRUE` only when no matching order is found.
 * As a result, only customers without orders are returned.
@@ -1155,7 +1153,7 @@ the current customer.
 | 2   | 	Charlie |
 | 5   | 	Emma    |
 
-* (These customers have never placed an order.)
+* These customers have never placed an order.
 
 **Short note version:**
 * Uses `NOT EXISTS` to return customers who do not have any matching orders.
@@ -1189,11 +1187,11 @@ HAVING COUNT(*) > 20;
 * Finds users who have posted more than 20 comments on photos with an ID less than 50.
 
 **How it works:**
-* `FROM comments` selects data from the comments table.
-* `WHERE photo_id < 50` filters comments to only those made on photos with IDs below 50.
-* `GROUP BY user_id` groups the filtered comments by user.
-* `COUNT(*) AS num_comments` counts the number of comments each user made.
-* `HAVING COUNT(*) > 20` keeps only users who made more than 20 comments.
+* `FROM comments`; selects data from the comments table.
+* `WHERE photo_id < 50`; filters comments to only those made on photos with IDs below 50.
+* `GROUP BY user_id`; groups the filtered comments by user.
+* `COUNT(*) AS num_comments`; counts the number of comments each user made.
+* `HAVING COUNT(*) > 20`; keeps only users who made more than 20 comments.
 
 **Example result:**
 
@@ -1286,14 +1284,14 @@ ORDER By Customers.CustomerID;
 * Finds customers who have not placed any orders handled by `EmployeeID = 4`.
 
 **How it works:**
-* `FROM Customers` starts with the full list of customers.
-* `LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID AND Orders.EmployeeID = 4` joins only orders handled 
+* `FROM Customers`; starts with the full list of customers.
+* `LEFT JOIN Orders ON Orders.CustomerID = Customers.CustomerID AND Orders.EmployeeID = 4`; joins only orders handled 
 by Employee 4.
 * If a customer has no such order, the joined Orders columns will be `NULL`.
-* `WHERE Orders.CustomerID IS NULL` filters to keep only customers who do not have any matching order from Employee 4.
-* `SELECT Customers.CustomerID, Orders.CustomerID` shows the customer ID and confirms absence of matching orders 
+* `WHERE Orders.CustomerID IS NULL`; filters to keep only customers who do not have any matching order from Employee 4.
+* `SELECT Customers.CustomerID, Orders.CustomerID`; shows the customer ID and confirms absence of matching orders 
 (will be `NULL` for orders side).
-* `ORDER BY Customers.CustomerID` sorts the final result by customer ID.
+* `ORDER BY Customers.CustomerID`; sorts the final result by customer ID.
 
 **Example result:**
 
@@ -1337,10 +1335,10 @@ WHERE CustomerID NOT IN (SELECT
 * Finds customers who have never placed an order handled by EmployeeID = 4.
 
 **How it works:**
-* `FROM Customers` selects all customers.
-* The subquery: `SELECT CustomerID FROM Orders WHERE EmployeeID = 4` retrieves all customers who have at least one order
+* `FROM Customers`; selects all customers.
+* The subquery: `SELECT CustomerID FROM Orders WHERE EmployeeID = 4`; retrieves all customers who have at least one order
 handled by Employee 4.
-* `WHERE CustomerID NOT IN (...)` excludes those customers from the result.
+* `WHERE CustomerID NOT IN (...)`; excludes those customers from the result.
 * The final output contains only customers who do not appear in that list.
 
 **Example result:**
@@ -1385,8 +1383,8 @@ WHERE NOT EXISTS (
 * Finds customers who have never placed an order handled by EmployeeID = 4.
 
 **How it works:**
-* `FROM Customers` starts with the full list of customers.
-* The `NOT EXISTS` subquery checks for matching orders:
+* `FROM Customers`; starts with the full list of customers.
+* The `NOT EXISTS`; subquery checks for matching orders:
 `SELECT CustomerID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID AND EmployeeID = 4`.
 * For each customer, the subquery looks for at least one order handled by Employee 4.
 * If such an order exists, `EXISTS` becomes true and `NOT EXISTS` excludes that customer.
@@ -1449,9 +1447,9 @@ WHERE Orders.CustomerID IS NULL;
 
 **How it works:**
 * Starts with all rows from Customers.
-* Uses `LEFT JOIN` to match any related rows in Orders.
-* If a customer has no matching order, `Orders.CustomerID` becomes `NULL`.
-* `WHERE Orders.CustomerID IS NULL` filters out customers who do have orders, leaving only those without any.
+* Uses `LEFT JOIN`; to match any related rows in Orders.
+* If a customer has no matching order, `Orders.CustomerID`; becomes `NULL`.
+* `WHERE Orders.CustomerID IS NULL`; filters out customers who do have orders, leaving only those without any.
 
 **Key idea:**
 * Missing match = no order.
@@ -1492,7 +1490,7 @@ WHERE NOT EXISTS (SELECT 1 FROM Orders o WHERE o.CustomerID = c.CustomerID);
 
 ***
 
-**35. Customers with no Orders (II).**
+**35. Customers with no Orders (II).** // here
 ```sql
 SELECT CustomerID
 FROM Customers
@@ -1506,8 +1504,8 @@ WHERE NOT EXISTS
 * Finds customers who have never placed any orders.
 
 **How it works:**
-* `FROM Customers` selects all customers as the starting point.
-* `The NOT EXISTS` subquery checks for matching orders: 
+* `FROM Customers`; selects all customers as the starting point.
+* `The NOT EXISTS`; subquery checks for matching orders: 
 `SELECT CustomerID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID`.
 * For each customer, the subquery searches for at least one related order.
 * If a matching order exists → `EXISTS` becomes true → customer is excluded.
@@ -1556,17 +1554,17 @@ ORDER BY Orders.OrderID, Products.ProductID;
 their quantities.
 
 **How it works:**
-* `FROM Employees` starts with the employee table.
-* `JOIN Orders ON Orders.EmployeeID = Employees.EmployeeID` links each employee to the orders they handled.
-* `JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID` connects each order to its line items 
+* `FROM Employees`; starts with the employee table.
+* `JOIN Orders ON Orders.EmployeeID = Employees.EmployeeID`; links each employee to the orders they handled.
+* `JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID`; connects each order to its line items 
 (products and quantities).
-* `JOIN Products ON Products.ProductID = OrderDetails.ProductID` retrieves product names for each order item.
+* `JOIN Products ON Products.ProductID = OrderDetails.ProductID`; retrieves product names for each order item.
 * `SELECT` returns:
   * Employee ID and last name.
   * Order ID.
   * Product name.
   * Quantity ordered.
-* `ORDER BY Orders.OrderID, Products.ProductID` sorts the output by order, then product.
+* `ORDER BY Orders.OrderID, Products.ProductID`; sorts the output by order, then product.
 
 **Example result:**
 
@@ -1597,7 +1595,7 @@ ORDER BY o.OrderID, p.ProductID;
 
 ***
 
-**37. Categories, and the total products in each category.**
+**37. Categories, and the total products in each category.** // here
 ```sql
 SELECT CategoryName, TotalProducts = COUNT(*)
 FROM Products

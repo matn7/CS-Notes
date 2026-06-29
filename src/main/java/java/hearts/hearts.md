@@ -271,7 +271,7 @@ public class Locky2 {
 }
 ```
 
-### 5. Semaphores.
+### 5. Semaphores. // here
 
 - **Semaphore** is a high level synchronize that maintains a set of permits that can be acquired and released by threads.
 - A **Semaphore** can be imagined as a counter of permits that will be decremented when a thread acquires,
@@ -327,7 +327,7 @@ class Pool {
 }
 ```
 
-### :star: 6. Synchronization.
+### :star: 6. Synchronization. // here
 
 - The synchronization block, which can use any Java object as an intrinsic lock.
 
