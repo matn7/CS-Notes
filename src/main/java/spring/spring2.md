@@ -93,9 +93,7 @@ public class UserController {
 * Example bean:
     ```java
     @Service
-    public class UserService {
-    
-    }
+    public class UserService {}
     ```
 * Spring automatically registers it in the container.
 
@@ -245,7 +243,7 @@ public class UserController {}
 
 ***
 
-## Spring Boot
+## Spring Boot.
 
 **What is Spring Boot.**
 * Spring Boot is an extension of Spring that simplifies application development.
@@ -278,7 +276,7 @@ public class UserController {}
 
 ***
 
-### Starter Dependencies
+### Starter Dependencies.
 
 * Starters simplify dependency management by grouping common dependencies.
 * Example: `spring-boot-starter-web` includes:
@@ -310,7 +308,6 @@ public class UserController {}
   ```java
   @SpringBootApplication
   public class Application {
-  
    public static void main(String[] args) {
        SpringApplication.run(Application.class, args);
    }
@@ -320,7 +317,7 @@ public class UserController {}
 
 ***
 
-### Main Annotation
+### Main Annotation.
 
 **`@SpringBootApplication`.**
 * This is the main annotation used in Spring Boot applications.
@@ -332,11 +329,9 @@ public class UserController {}
   ```java
   @SpringBootApplication
   public class Application {
-  
    public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
    }
-  
   }
   ```
 
@@ -672,9 +667,7 @@ Response returned to client
   ```java
   @GetMapping("/users/{id}")
   public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-  
    UserDTO user = service.findById(id);
-  
    return ResponseEntity.ok(user);
   }
   ```
@@ -728,14 +721,13 @@ Response returned to client
 
 ***
 
-### Exception Handling
+### Exception Handling.
 
 * Use global exception handling with: `@RestControllerAdvice`.
 * Example:
   ```java
   @RestControllerAdvice
   public class GlobalExceptionHandler {
-  
    @ExceptionHandler(UserNotFoundException.class)
    public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
     return ResponseEntity
@@ -798,6 +790,7 @@ Response returned to client
 ***
 
 ### How Spring Starts.
+
 * Application startup sequence:
   1. JVM starts `main` method.
   2. `SpringApplication.run()`.
@@ -1008,8 +1001,7 @@ Response returned to client
 ### Spring Data.
 
 * Spring Data simplifies database access in Java applications.
-* Instead of writing DAO classes manually, 
-* Spring Data provides repository interfaces.
+* Instead of writing DAO classes manually,  Spring Data provides repository interfaces.
 * Spring automatically generates implementations at runtime.
 * Supported databases:
   * PostgreSQL.
@@ -1023,6 +1015,7 @@ Response returned to client
 ***
 
 ### Spring Data JPA.
+
 * Spring Data JPA integrates Spring with JPA providers like Hibernate.
 * Main benefits:
   * Less boilerplate code.
@@ -1091,18 +1084,9 @@ Response returned to client
 ### Derived Queries.
 
 * Spring Data can generate queries from method names.
-* Example 1:
-  ```java
-  List<User> findByName(String name)
-  ```
-* Example 2:
-  ```java
-  List<User> findByEmail(String email)
-  ```
-* More complex, example 3:
-  ```java
-  List<User> findByNameAndEmail(String name, String email)
-  ```
+* Example 1: `List<User> findByName(String name)`.
+* Example 2: `List<User> findByEmail(String email)`.
+* More complex, example 3: `List<User> findByNameAndEmail(String name, String email)`.
 * Spring parses method names and generates SQL queries.
 
 ***
@@ -1655,24 +1639,24 @@ public class SecurityConfig {
 # Spring Boot.
 
 **1. What is Spring Boot and why is it used?**
-* Spring Boot is an opinionated framework built on top of Spring that simplifies application setup by providing
-  auto-configuration, embedded servers, and production-ready features.
+* Spring Boot is an opinionated (uparty/zwazięty) framework built on top of Spring that simplifies application setup 
+by providing auto-configuration, embedded servers, and production-ready features.
 * It reduces boilerplate and accelerates development while still allowing deep customization.
 
 **2. How does auto-configuration work internally?**
 * Spring Boot uses `@EnableAutoConfiguration`, which triggers loading of configuration classes listed in
-  `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`.
+`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`.
 * These classes use conditional annotations like `@ConditionalOnClass`, `@ConditionalOnMissingBean`, etc.,
-  to configure beans dynamically based on the classpath and environment.
+to configure beans dynamically based on the classpath and environment.
 
 **3. What are the key differences between Spring and Spring Boot?**
 * Spring requires manual configuration (XML or Java), while Spring Boot provides auto-configuration, embedded servers,
-  and starter dependencies.
+and starter dependencies.
 * Boot is designed for rapid development and microservices, while Spring is more flexible but verbose.
 
 **4. What is a Spring Boot starter?**
-* Starters are curated dependency bundles (e.g., `spring-boot-starter-web`) that include all necessary libraries for a feature,
-  reducing dependency conflicts and setup time.
+* Starters are curated (wyselekcjonowane) dependency bundles (e.g., `spring-boot-starter-web`) that include all 
+necessary libraries for a feature, educing dependency conflicts and setup time.
 
 **5. How do you externalize configuration?**
 * Using `application.properties` or `application.yml`, environment variables, command-line arguments, and profiles.
@@ -1708,7 +1692,8 @@ public class SecurityConfig {
 * Spring Boot includes embedded servers like Tomcat, Jetty, or Undertow, allowing applications to run as standalone JARs.
 
 **13. How do you secure a Spring Boot application?**
-* Using Spring Security with authentication (JWT, OAuth2), authorization, CSRF protection, and secure password storage (BCrypt).
+* Using Spring Security with authentication (JWT, OAuth2), authorization, CSRF protection, 
+and secure password storage (BCrypt).
 
 **14. What is the difference between `@Bean` and `@Component`?**
 * `@Component` → auto-detected via component scanning.
@@ -1771,7 +1756,7 @@ public class SecurityConfig {
 
 **1. What is Reactive Programming?**
 * Reactive programming is an asynchronous, non-blocking programming paradigm that deals with streams of data and propagates
-  changes automatically.
+changes automatically.
 * It’s ideal for high-throughput, low-latency applications.
 
 **2. What is Spring WebFlux?**
@@ -1801,7 +1786,6 @@ public class SecurityConfig {
 * Wrap blocking calls with `Schedulers.boundedElastic()` to offload to a separate thread.
 
 **7. How do you create a reactive REST endpoint?**
-
 ```java
 @GetMapping("/users/{id}")
 public Mono<User> getUser(@PathVariable String id) {

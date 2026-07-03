@@ -2001,98 +2001,985 @@ Java Process
 * Without threads, these tasks would execute one after another.
 
 ## 💡 Advantages of Threads.
+* Better CPU utilization.
+* Faster responsiveness.
+* Lower memory usage than processes.
+* Easy sharing of data.
 
-- Better CPU utilization.
-- Faster responsiveness.
-- Lower memory usage than processes.
-- Easy sharing of data.
+## ⚠️ Disadvantages of Threads.
+* Because threads share memory, they can introduce:
+  * Race conditions.
+  * Deadlocks.
+  * Synchronization issues.
+  * Visibility problems.
+* These are the main topics of Java concurrency.
 
-
-## ⚠️ Disadvantages of Threads
-
-Because threads share memory, they can introduce:
-
-- Race conditions
-- Deadlocks
-- Synchronization issues
-- Visibility problems
-
-These are the main topics of Java concurrency.
-
----
-
-## 💡 Common Follow-up Questions
+## 💡 Common Follow-up Questions.
 
 ### Why are threads "lightweight"?
-
-Because creating a thread requires much fewer resources than creating a new process.
-
----
+* Because creating a thread requires much fewer resources than creating a new process.
 
 ### Can threads communicate easily?
-
-Yes.
-
-They share the same heap memory, making communication much faster than between processes.
-
----
+* Yes.
+* They share the same heap memory, making communication much faster than between processes.
 
 ### Do threads have separate memory?
-
-Only their own:
-
-- Stack
-- Program counter
-- Registers
-
-The heap is shared.
-
----
+* Only their own:
+  * Stack.
+  * Program counter.
+  * Registers.
+* The heap is shared.
 
 ### Can multiple processes share memory?
+* Not directly.
+* They typically communicate using IPC mechanisms such as:
+  * Pipes.
+  * Sockets.
+  * Shared memory.
+  * Message queues.
 
-Not directly.
-
-They typically communicate using IPC mechanisms such as:
-
-- Pipes
-- Sockets
-- Shared memory
-- Message queues
-
----
-
-## ⚠️ Key Point
+## ⚠️ Key Point.
 
 **Processes provide isolation.**
 
 **Threads provide concurrency within a process.**
 
----
+## 🧠 15-Second Interview Answer.
 
-## 🧠 15-Second Interview Answer
+* A process is an independent program with its own memory and system resources. 
+* A thread is a lightweight unit of execution inside a process. 
+* Threads share the process's heap and resources but have their own stack and program counter. 
+* Threads are faster to create and communicate more efficiently, but shared memory introduces synchronization challenges.
 
-> A process is an independent program with its own memory and system resources. A thread is a lightweight unit of execution inside a process. Threads share the process's heap and resources but have their own stack and program counter. Threads are faster to create and communicate more efficiently, but shared memory introduces synchronization challenges.
-
----
-
-## 📝 Memory Hook
+## 📝 Memory Hook.
 
 > **Process = Separate house 🏠**  
 > **Thread = Person living in the same house 👥**
 
-- Different houses → separate resources
-- People in one house → share resources
-- Sharing is efficient, but requires coordination
+- Different houses → separate resources.
+- People in one house → share resources.
+- Sharing is efficient, but requires coordination.
 
+***
 
+# 2. Index Card – Context Switch (Java / Operating Systems)
 
+## ❓ Interview Question
+**What is a context switch? Why is it expensive?**
 
+## ✅ Short Answer.
+* A **context switch** is the process of the operating system **pausing one thread (or process) and resuming another**.
+* Before switching, the CPU saves the current execution state (the **context**) of the running thread and restores 
+the context of the next thread.
 
+## 🎯 What Is "Context"?
 
+* The context includes everything needed to resume execution later, such as:
+  * Program Counter (PC).
+  * CPU registers.
+  * Stack pointer.
+  * Thread state.
+  * Scheduling information.
+* When the thread runs again, execution continues exactly where it stopped.
 
+## 🎯 How a Context Switch Works.
+```
+Running Thread A
+        │
+        ▼
+Save Thread A's context
+        │
+        ▼
+Scheduler selects Thread B
+        │
+        ▼
+Restore Thread B's context
+        │
+        ▼
+Running Thread B
+```
 
+## 🎯 Why Does Context Switching Happen?
+* The operating system performs a context switch when:
+  * A thread's time slice (quantum) expires.
+  * A higher-priority thread becomes runnable.
+  * A thread blocks (e.g., waiting for I/O).
+  * A thread calls `sleep()`, `wait()`, or blocks on a lock.
+  * A thread voluntarily yields the CPU (`Thread.yield()`).
 
+## 💡 Why Is Context Switching Expensive?
+* A context switch is **overhead** because the CPU is not doing useful application work while switching.
+* Costs include:
+  * Saving and restoring CPU registers.
+  * Updating scheduling information.
+  * Switching stacks.
+  * Possible CPU cache invalidation.
+  * Possible TLB (Translation Lookaside Buffer) misses (especially for process switches).
+
+## 🎯 Thread Switch vs. Process Switch.
+
+| Feature      | Thread Switch  | Process Switch  |
+|--------------|----------------|-----------------|
+| Memory Space | Shared         | Different       |
+| Cost         | Lower          | Higher          |
+| Cache Impact | Smaller        | Larger          |
+| TLB Flush    | Usually no     | Often yes       |
+
+* A **process switch** is generally more expensive because it involves changing the address space.
+
+## 💡 Java Perspective.
+* The JVM relies on the operating system's scheduler.
+* When many Java threads compete for CPU time:
+  * More context switches occur.
+  * CPU spends more time switching than executing.
+  * Performance can decrease.
+* This is why creating **too many threads** can hurt performance.
+
+## 💡 Common Follow-up Questions.
+
+### Is a context switch performed by the JVM?
+* No.
+* The **operating system scheduler** performs context switches.
+* The JVM creates and manages Java threads, but scheduling is handled by the OS.
+
+### Is context switching always bad?
+* No.
+* It enables:
+  - Multitasking.
+  - Concurrency.
+  - Fair CPU sharing.
+* However, excessive context switching reduces performance.
+
+### Why do thread pools improve performance?
+* Thread pools **reuse existing threads**, reducing:
+  - Thread creation overhead.
+  - Context switching.
+  - Memory consumption.
+
+### Can multiple CPU cores reduce context switching?
+* Yes.
+* If there are enough CPU cores, multiple threads can run **simultaneously**, reducing the need for frequent switching on a single core.
+
+## ⚠️ Key Point.
+* A context switch is **necessary for multitasking**, but it is not free. 
+* Too many context switches can significantly reduce application performance.
+
+## 🧠 15-Second Interview Answer
+
+* A context switch occurs when the operating system pauses one thread or process and resumes another. 
+* It saves the current execution context—such as CPU registers and the program counter—and restores the next one. 
+* Context switching enables multitasking but introduces overhead, so excessive switching can reduce performance.
+
+## 📝 Memory Hook.
+
+> **Context switch = "Save current work → Load next work → Continue."**
+
+* Think of it like switching between browser tabs:
+  * You save where you were in one tab.
+  * Open another tab and continue working.
+  * Returning later lets you resume exactly where you left off.
+
+***
+
+# 3. Index Card – Dining Philosophers (Java / Concurrency)
+
+## ❓ Interview Question.
+
+**What is the Dining Philosophers problem? How can deadlock be avoided?**
+
+## ✅ Short Answer.
+* The **Dining Philosophers** problem is a classic concurrency problem that demonstrates how multiple threads competing 
+for shared resources can cause a **deadlock**.
+* The goal is to design a solution that allows all philosophers to eat without deadlocks or starvation.
+
+## 🎯 The Problem.
+
+* Imagine:
+  * 5 philosophers sitting around a table.
+  * 5 forks, one between each pair of philosophers.
+  * To eat, a philosopher needs **both the left and right fork**.
+  * After eating, the forks are put back, and the philosopher starts thinking.
+```
+      P1
+   F1    F2
+
+P5          P2
+
+F5          F3
+
+   P4    P3
+      F4
+```
+* Each philosopher repeats:
+```
+Think
+↓
+Pick up left fork
+↓
+Pick up right fork
+↓
+Eat
+↓
+Put down both forks
+↓
+Repeat
+```
+
+---
+
+## 🎯 The Deadlock Scenario
+
+* Suppose every philosopher:
+  1. Picks up the **left fork**.
+  2. Waits for the **right fork**.
+
+* Result:
+```
+P1 holds F1 → waiting for F2
+P2 holds F2 → waiting for F3
+P3 holds F3 → waiting for F4
+P4 holds F4 → waiting for F5
+P5 holds F5 → waiting for F1
+```
+* Everyone is waiting.
+* No one can continue.
+* This is a **deadlock**.
+
+## 💡 Why Does Deadlock Occur?
+* The four conditions for deadlock are present:
+  1. **Mutual exclusion** – forks can only be used by one philosopher.
+  2. **Hold and wait** – philosophers hold one fork while waiting for another.
+  3. **No preemption** – forks cannot be taken away.
+  4. **Circular wait** – each philosopher waits for the next fork.
+* If all four conditions exist simultaneously, a deadlock can occur.
+
+## 🎯 Common Solutions.
+
+### 1. Resource Ordering (Most Common)
+* Always pick up the lower-numbered fork first.
+* Example:
+```
+Fork 2 → Fork 5
+```
+* instead of:
+```
+Left → Right
+```
+* This removes the circular wait condition.
+
+### 2. One Philosopher Picks Forks in Reverse Order.
+
+* Example:
+  *  Philosophers 1–4:
+    * Left → Right
+  * Philosopher 5:
+    * Right → Left
+* This breaks the circular dependency.
+
+### 3. Limit the Number of Philosophers Eating
+* Allow at most **N - 1 philosophers** to try to eat simultaneously.
+* For 5 philosophers:
+```
+Only 4 philosophers may compete for forks.
+```
+* At least one philosopher can always obtain both forks, preventing deadlock.
+
+### 4. Use `tryLock()`.
+* Instead of waiting forever:
+```java
+if (left.tryLock()) {
+    if (right.tryLock()) {
+        // eat
+    }
+}
+```
+* If both locks are not acquired, release any held lock and try again later.
+
+## 💡 Why Is This Important?
+* The Dining Philosophers problem models many real-world systems where multiple threads compete for shared resources, such as:
+  - Database transactions.
+  - File locks.
+  - Network resources.
+  - Printer access.
+  - Java `Lock` and `synchronized` usage.
+
+## 💡 Common Follow-up Questions
+
+### What is the lesson of this problem?
+* Deadlocks occur when threads acquire shared resources in conflicting orders.
+* A consistent locking strategy prevents this.
+
+### Is deadlock the only problem?
+* No.
+* Another issue is **starvation**, where one philosopher never gets a chance to eat because others repeatedly acquire 
+the forks first.
+* A good solution should avoid both deadlock and starvation.
+
+### How does Java help avoid deadlocks?
+* Java provides tools such as:
+  - `ReentrantLock.tryLock()`.
+  - Timeouts when acquiring locks.
+  - Consistent lock ordering.
+  - Higher-level concurrency utilities in `java.util.concurrent`.
+
+## ⚠️ Key Point.
+* The Dining Philosophers problem teaches that **multiple threads competing for shared resources can deadlock if 
+resources are acquired in inconsistent order**.
+* A common solution is to **always acquire locks in a consistent global order**.
+
+## 🧠 15-Second Interview Answer.
+
+* The Dining Philosophers problem is a classic synchronization problem where multiple threads compete for shared resources. 
+* If each thread acquires one resource and waits for another, a deadlock can occur. 
+* Common solutions include acquiring resources in a fixed order, limiting the number of competing threads, 
+or using `tryLock()` to avoid waiting indefinitely.
+
+## 📝 Memory Hook
+> **5 philosophers 🍽️ + 5 forks 🍴 = Deadlock if everyone grabs one fork and waits for the other.**
+
+**Golden Rule:**
+> **Always acquire shared resources in a consistent order.**
+
+***
+
+# 4. Index Card – Deadlock-Free Class (Java / Concurrency).
+
+## ❓ Interview Question.
+
+**How can you design a class to be deadlock-free?**
+
+## ✅ Short Answer.
+* A class is **deadlock-free** if it is designed so that threads **cannot wait on each other forever**.
+* The most common technique is to **always acquire multiple locks in a consistent order**.
+
+## 🎯 What Is a Deadlock?
+* A deadlock occurs when two or more threads wait indefinitely for each other to release locks.
+
+### Example
+```
+Thread A                 Thread B
+---------                ---------
+Lock A                   Lock B
+   ↓                        ↓
+Wait for Lock B         Wait for Lock A
+```
+* Neither thread can continue.
+
+## 🎯 Bad Example.
+
+```java
+// Thread 1
+synchronized (lockA) {
+    synchronized (lockB) {
+        // work
+    }
+}
+```
+
+```java
+// Thread 2
+synchronized (lockB) {
+    synchronized (lockA) {
+        // work
+    }
+}
+```
+* If both threads execute simultaneously, a deadlock can occur.
+
+## 🎯 Solution 1 – Consistent Lock Ordering (Best Practice).
+
+* Always acquire locks in the same order.
+```java
+synchronized (lockA) {
+    synchronized (lockB) {
+        // work
+    }
+}
+```
+* Every thread follows:
+```
+Lock A
+↓
+Lock B
+```
+* Never:
+```
+Lock B
+↓
+Lock A
+```
+* This eliminates the **circular wait** condition.
+
+## 🎯 Solution 2 – Use a Global Ordering.
+* If objects have IDs:
+```text
+Lock lower ID first.
+Lock higher ID second.
+```
+* Example:
+```
+Transfer(Account 3, Account 8)
+
+Acquire:
+Account 3
+Account 8
+```
+* Even if another thread transfers in the opposite direction, both threads lock the accounts in the same order.
+* This is a common interview solution for bank account transfer problems.
+
+## 🎯 Solution 3 – Use `tryLock()`.
+* Instead of waiting forever:
+```java
+if (lockA.tryLock()) {
+    try {
+        if (lockB.tryLock()) {
+            try {
+                // work
+            } finally {
+                lockB.unlock();
+            }
+        }
+    } finally {
+        lockA.unlock();
+    }
+}
+```
+* If a lock cannot be acquired, release any held locks and retry later.
+
+## 💡 Design Principles for Deadlock-Free Classes.
+
+- Keep synchronized sections as short as possible.
+- Avoid nested locks when possible.
+- Always acquire locks in a consistent order.
+- Minimize the number of locks.
+- Prefer higher-level concurrency utilities when appropriate.
+
+## 💡 Common Follow-up Questions.
+
+### Why does lock ordering prevent deadlock?
+* Because every thread acquires locks in the same sequence, **circular waiting cannot occur**.
+
+### What is lock granularity?
+* It refers to the size and scope of locking.
+  * **Coarse-grained locking:** fewer locks, simpler but less concurrency.
+  * **Fine-grained locking:** more concurrency but higher complexity and greater risk of deadlocks.
+
+### Can `synchronized` prevent deadlocks?
+* No.
+* `synchronized` provides mutual exclusion but **does not prevent deadlocks**.
+* Proper lock ordering and design are still required.
+
+### Is using a single lock always deadlock-free?
+* Yes, because there is no possibility of circular waiting.
+* However, it may reduce concurrency by allowing only one thread into the critical section at a time.
+
+## ⚠️ Key Point.
+* Deadlocks are **design problems**, not language problems.
+* The most effective prevention strategy is:
+> **Always acquire multiple locks in a consistent global order.**
+
+## 🧠 15-Second Interview Answer
+
+* A deadlock-free class is designed so that threads cannot wait indefinitely for each other. 
+* The most common solution is to always acquire locks in a consistent order, which prevents circular waiting. 
+* Other techniques include using `tryLock()`, reducing nested locking, and keeping critical sections as small as possible.
+
+## 📝 Memory Hook
+
+> **Deadlock-Free Rule:**
+
+> **Lock A → Lock B → Lock C**
+
+**Never:**
+
+> **Lock B → Lock A**
+
+* A **consistent lock order** is the simplest and most common way to prevent deadlocks.
+
+***
+
+# 5. Index Card – Call In Order (Java / Concurrency)
+
+## ❓ Interview Question.
+
+**How would you ensure that three methods are executed in order by different threads?**
+
+* For example:
+```
+Thread A → first()
+Thread B → second()
+Thread C → third()
+```
+* The methods may be called in any order, but they **must execute** as:
+```
+first()
+↓
+second()
+↓
+third()
+```
+
+## ✅ Short Answer.
+
+* Use **thread synchronization** so that:
+  * `second()` waits until `first()` finishes.
+  * `third()` waits until `second()` finishes.
+* This can be implemented using:
+  * `CountDownLatch` (preferred).
+  * `Semaphore`.
+  * `wait()` / `notify()`.
+  * `Condition`.
+  * Atomic variables with busy waiting (not recommended).
+
+## 🎯 Preferred Solution – `CountDownLatch`.
+* Create two latches:
+```java
+CountDownLatch firstDone = new CountDownLatch(1);
+CountDownLatch secondDone = new CountDownLatch(1);
+```
+
+### `first()`.
+```java
+public void first() {
+    System.out.println("first");
+    firstDone.countDown();
+}
+```
+
+### `second()`.
+```java
+public void second() throws InterruptedException {
+    firstDone.await();
+
+    System.out.println("second");
+
+    secondDone.countDown();
+}
+```
+
+### `third()`
+```java
+public void third() throws InterruptedException {
+    secondDone.await();
+
+    System.out.println("third");
+}
+```
+* Regardless of which thread starts first, the output is always:
+```
+first
+second
+third
+```
+
+## 🎯 How It Works.
+
+```
+Thread A
+   │
+first()
+   │
+countDown()
+   │
+   ▼
+Thread B unblocks
+   │
+second()
+   │
+countDown()
+   │
+   ▼
+Thread C unblocks
+   │
+third()
+```
+* Each method signals the next one when it has completed.
+
+## 💡 Why `CountDownLatch`?
+* It is designed for **one-time synchronization**.
+* Advantages:
+  - Simple.
+  - Efficient.
+  - No manual locking.
+  - Easy to understand.
+
+## 💡 Alternative Solutions.
+
+### `Semaphore`.
+* Control execution using permits.
+
+### `wait()` / `notify()`.
+* Classic Java synchronization.
+* Works, but is:
+  * More verbose.
+  * Easier to get wrong.
+  * More error-prone.
+
+### `Condition` (`ReentrantLock`).
+* Provides explicit waiting and signaling.
+* Useful when more control than `synchronized` is needed.
+
+## 💡 Common Follow-up Questions.
+
+### Why not use `Thread.sleep()`?.
+* Because sleeping:
+  * Does not guarantee execution order.
+  * Depends on timing.
+  * Is unreliable and inefficient.
+
+### Can `join()` solve this?
+* Only if one thread explicitly waits for another thread to finish.
+* It is useful when coordinating whole threads, but not ideal for coordinating independent method execution like this.
+
+### What if the methods need to run repeatedly?
+* `CountDownLatch` cannot be reset.
+* For repeated synchronization, use:
+  * `CyclicBarrier`.
+  * `Phaser`.
+
+## ⚠️ Key Point.
+* This problem is about **coordination**, not **mutual exclusion**.
+* No shared data is being protected—the goal is simply to ensure the correct execution order.
+
+## 🧠 15-Second Interview Answer
+
+* To guarantee that `first()`, `second()`, and `third()` execute in order, each method should signal the next one after 
+it finishes. 
+* In Java, the cleanest solution is to use two `CountDownLatch` objects: `second()` waits for `first()`, and `third()` 
+waits for `second()`. 
+* This guarantees the correct order regardless of which thread starts first.
+
+## 📝 Memory Hook.
+
+> **Call In Order = "Signal the next thread."**
+```
+first()
+    │
+ countDown()
+    │
+    ▼
+second()
+    │
+ countDown()
+    │
+    ▼
+third()
+```
+* **Remember:** Use **`CountDownLatch`** for one-time ordering of thread execution.
+
+***
+
+# 6. Index Card – Synchronized Methods (Java / Concurrency).
+
+## ❓ Interview Question
+
+**What does the `synchronized` keyword do? What is the difference between synchronized instance methods and synchronized 
+static methods?**
+
+## ✅ Short Answer.
+* The `synchronized` keyword ensures that **only one thread at a time** can execute a synchronized block or method 
+protected by the same lock.
+* The lock depends on what is synchronized:
+  * **Instance method** → locks the current object (`this`).
+  * **Static method** → locks the `Class` object.
+
+## 🎯 Synchronized Instance Method.
+```java
+public synchronized void increment() {
+    count++;
+}
+```
+* Equivalent to:
+```java
+public void increment() {
+    synchronized (this) {
+        count++;
+    }
+}
+```
+
+### Lock Used.
+```
+this
+```
+* Only one thread can execute synchronized instance methods **on the same object**.
+* Different objects have different locks.
+
+## 🎯 Example.
+```java
+Counter c1 = new Counter();
+Counter c2 = new Counter();
+```
+* These can execute simultaneously:
+```
+Thread A → c1.increment()
+Thread B → c2.increment()
+```
+* Because:
+```
+c1 != c2
+```
+* Each object has its own monitor (lock).
+
+## 🎯 Synchronized Static Method.
+```java
+public static synchronized void update() {
+    // ...
+}
+```
+* Equivalent to:
+```java
+public static void update() {
+    synchronized (Counter.class) {
+        // ...
+    }
+}
+```
+
+### Lock Used.
+```
+Counter.class
+```
+* There is only **one `Class` object** for a class, so all threads share the same lock.
+
+## 🎯 Instance vs Static Locks.
+
+| Method                              | Lock              |
+|-------------------------------------|-------------------|
+| `synchronized void method()`        | `this`            |
+| `static synchronized void method()` | `ClassName.class` |
+
+* These are **different locks**.
+* That means:
+  * A synchronized instance method **does not block** a synchronized static method.
+  * They can execute at the same time.
+
+## 💡 What Is a Monitor?
+* Every Java object has an associated **monitor** (intrinsic lock).
+* When a thread enters a synchronized method:
+  1. It acquires the monitor.
+  2. Other threads requesting the same monitor must wait.
+  3. The monitor is released when the method exits (even if an exception occurs).
+
+## 💡 Common Follow-up Questions.
+
+### Does `synchronized` prevent race conditions?
+* Yes, **if all accesses to the shared mutable state are properly synchronized**.
+
+### Is `synchronized` reentrant?
+* Yes.
+* A thread that already owns a lock can acquire it again without deadlocking.
+```java
+synchronized void methodA() {
+    methodB();
+}
+
+synchronized void methodB() {
+    // Same thread can enter
+}
+```
+
+### Does `synchronized` guarantee visibility?
+* Yes.
+* Entering and exiting a synchronized block establishes a **happens-before** relationship, ensuring changes made by one 
+thread are visible to another after the lock is released and reacquired.
+
+### Can two synchronized methods execute simultaneously?
+* It depends.
+  * **Same object** → ❌ No.
+  * **Different objects** → ✅ Yes.
+  * **Instance vs static synchronized** → ✅ Yes (different locks).
+
+## ⚠️ Key Point.
+* `synchronized` provides:
+  * **Mutual exclusion** (only one thread enters the critical section).
+  * **Memory visibility** (changes become visible across threads).
+* The effectiveness depends on **which lock is being used**.
+
+## 🧠 15-Second Interview Answer.
+* The `synchronized` keyword ensures that only one thread at a time can execute code protected by the same lock. 
+* A synchronized instance method locks the current object (`this`), while a synchronized static method locks the 
+class object (`ClassName.class`). 
+* Instance and static synchronized methods use different locks, so they do not block each other.
+
+## 📝 Memory Hook
+
+> **Instance synchronized → Lock the object (`this`)**  
+> **Static synchronized → Lock the class (`ClassName.class`)**
+
+**Think:**
+```
+Object Lock  → protects one object
+Class Lock   → protects the entire class
+```
+
+***
+
+# 7. Index Card – Multithreaded FizzBuzz (Java / Concurrency),
+
+## ❓ Interview Question.
+
+**Design a multithreaded version of FizzBuzz.**
+
+* Print the numbers from **1 to n** using four threads:
+  * Thread 1 → `"Fizz"` (multiples of 3).
+  * Thread 2 → `"Buzz"` (multiples of 5).
+  * Thread 3 → `"FizzBuzz"` (multiples of both 3 and 5).
+  * Thread 4 → Numbers (all remaining values).
+* The output must remain in the correct order.
+
+## ✅ Short Answer.
+* The key challenge is **thread coordination**, not the FizzBuzz logic itself.
+* All four threads share a common counter, and **only the thread responsible for the current number is allowed to print**. 
+* Synchronization ensures that numbers are printed in order without duplicates or omissions.
+
+## 🎯 Example Output (`n = 16`).
+
+```
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+```
+
+## 🎯 Core Idea.
+* Use a shared variable:
+```java
+int current = 1;
+```
+* Each thread repeatedly:
+  1. Checks whether it should handle `current`.
+  2. If yes:
+      - Prints the correct value.
+      - Increments `current`.
+  3. Otherwise:
+      - Waits for another thread.
+
+## 🎯 Typical Solution.
+
+* Use:
+  - `synchronized`.
+  - `wait()`.
+  - `notifyAll()`.
+* Pseudo-code:
+```text
+while (current <= n)
+    synchronized(lock)
+        if (this thread should print current)
+            print
+            current++
+            notifyAll()
+        else
+            wait()
+```
+* This guarantees:
+  * Correct ordering.
+  * No skipped numbers.
+  * No duplicate output.
+
+## 💡 Why `notifyAll()`?
+* There are **four waiting threads**.
+* After `current` changes:
+  * Any one of the four threads may become eligible.
+  * Using `notify()` could wake the wrong thread, causing the correct one to remain blocked.
+* Therefore:
+```java
+notifyAll();
+```
+* is preferred.
+
+## 💡 Why Is This a Concurrency Problem?
+* The challenge is **coordination**.
+* All threads share:
+```
+current
+```
+* Without synchronization:
+```
+Thread A prints 5
+Thread B prints 5
+```
+* or.
+```
+6 gets skipped
+```
+* This is a classic **race condition**.
+
+## 💡 Common Follow-up Questions.
+
+### Why use one shared counter?
+* Because the output must be produced **in ascending order**.
+* If each thread maintained its own counter, the output order could not be guaranteed.
+
+### Why not use four independent loops?
+* They cannot coordinate execution order.
+* The interview is testing synchronization, not FizzBuzz logic.
+
+### Which synchronization mechanisms could be used?
+* Possible solutions include:
+  - `synchronized` + `wait()`/`notifyAll()` (most common).
+  - `ReentrantLock` + `Condition`.
+  - `Semaphore`.
+  - `LockSupport`.
+* The interview solution typically uses `synchronized`.
+
+### What is the time complexity?
+* **Time:** `O(n)`
+* **Space:** `O(1)`
+* Only one thread prints each number.
+
+## ⚠️ Key Point.
+* The difficulty is **not deciding whether a number is Fizz, Buzz, or FizzBuzz**.
+* The real challenge is ensuring that:
+  * Exactly one thread prints each value.
+  * Values are printed in order.
+  * Threads cooperate without race conditions or deadlocks.
+
+## 🧠 15-Second Interview Answer.
+* In the multithreaded FizzBuzz problem, four threads share a common counter. 
+* Each thread is responsible for printing a specific type of output (`Fizz`, `Buzz`, `FizzBuzz`, or the number). 
+* Using synchronization with `wait()` and `notifyAll()`, only the appropriate thread prints the current value, 
+increments the counter, and wakes the others. 
+* This guarantees correct ordering without race conditions.
+
+## 📝 Memory Hook.
+
+> **One Counter → Four Threads → One Lock**
+> 
+```
+current = 1
+
+Fizz Thread
+      │
+Buzz Thread
+      │
+FizzBuzz Thread
+      │
+Number Thread
+      │
+      ▼
+Only ONE thread prints
+      │
+current++
+      │
+notifyAll()
+```
+
+**Golden Rule:**
+
+> **Share one counter and synchronize access to it.**
 
 
 

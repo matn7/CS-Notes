@@ -1595,7 +1595,7 @@ ORDER BY o.OrderID, p.ProductID;
 
 ***
 
-**37. Categories, and the total products in each category.** // here
+**37. Categories, and the total products in each category.**
 ```sql
 SELECT CategoryName, TotalProducts = COUNT(*)
 FROM Products
@@ -1608,12 +1608,12 @@ ORDER BY COUNT(*) DESC;
 * Shows each product category along with the number of products in that category, sorted from most to least products.
 
 **How it works:**
-* `FROM Products` starts with the product table.
-* `JOIN Categories ON Products.CategoryID = Categories.CategoryID` links each product to its category.
-* `GROUP BY` CategoryName groups all products under each category.
-* `COUNT(*)` counts how many products belong to each category.
-* `SELECT CategoryName, TotalProducts = COUNT(*)` outputs the category name and product count.
-* `ORDER BY COUNT(*) DESC` sorts categories by number of products in descending order.
+* `FROM Products`; starts with the product table.
+* `JOIN Categories ON Products.CategoryID = Categories.CategoryID`; links each product to its category.
+* `GROUP BY`; CategoryName groups all products under each category.
+* `COUNT(*)`; counts how many products belong to each category.
+* `SELECT CategoryName, TotalProducts = COUNT(*)`; outputs the category name and product count.
+* `ORDER BY COUNT(*) DESC`; sorts categories by number of products in descending order.
 
 **Example result:**
 
@@ -1656,13 +1656,13 @@ ORDER BY OrderID;
 for orders with ID less than 10271.
 
 **How it works:**
-* `FROM Orders` starts with the orders table.
-* `JOIN Shippers ON Shippers.ShipperID = Orders.ShipVia` links each order to the shipper that delivered it.
-* `SELECT OrderID` returns the order ID.
-* `OrderDate = CONVERT(date, OrderDate)` removes the time portion, keeping only the date.
-* `Shipper = CompanyName` shows the shipping company name.
-* `WHERE OrderID < 10271` filters the results to only include early orders.
-* `ORDER BY OrderID` sorts the output by order ID in ascending order.
+* `FROM Orders`; starts with the orders table.
+* `JOIN Shippers ON Shippers.ShipperID = Orders.ShipVia`; links each order to the shipper that delivered it.
+* `SELECT OrderID`; returns the order ID.
+* `OrderDate = CONVERT(date, OrderDate)`; removes the time portion, keeping only the date.
+* `Shipper = CompanyName`; shows the shipping company name.
+* `WHERE OrderID < 10271`; filters the results to only include early orders.
+* `ORDER BY OrderID`; sorts the output by order ID in ascending order.
 
 **Example result:**
 
@@ -1703,10 +1703,10 @@ FROM Products
 * Shows each product along with the name of its supplier.
 
 **How it works:**
-* `FROM Products` starts with the products table.
-* `JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID` links each product to its supplier using `SupplierID`.
-* `SELECT ProductID, ProductName` returns product details.
-* `Supplier = CompanyName` displays the supplier’s company name under the alias “Supplier”.
+* `FROM Products`; starts with the products table.
+* `JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID`; links each product to its supplier using `SupplierID`.
+* `SELECT ProductID, ProductName`; returns product details.
+* `Supplier = CompanyName`; displays the supplier’s company name under the alias “Supplier”.
 * The result includes only products that have a matching supplier (`INNER JOIN` behavior).
 
 **Example result:**
@@ -1731,4 +1731,1318 @@ JOIN Suppliers s ON p.SupplierID = s.SupplierID;
 * This version is more readable and commonly used in real-world queries.
 
 ***
+
+# Index Card – Multiple Apartments (SQL / Databases)
+
+## ❓ Interview Question
+
+**Write a SQL query to find all tenants who are renting more than one apartment.**
+
+## ✅ Short Answer.
+* Use:
+  * `GROUP BY` to group rows by tenant.
+  * `COUNT()` to count apartments per tenant.
+  * `HAVING` to keep only tenants with more than one apartment.
+
+## 🎯 Example Schema.
+
+### Tenants.
+
+| TenantID  | Name  |
+|-----------|-------|
+| 1         | Alice |
+| 2         | Bob   |
+
+### Apartments.
+
+| ApartmentID  | Unit  |
+|--------------|-------|
+| 101          | A1    |
+| 102          | A2    |
+
+### TenantApartments.
+
+| TenantID  | ApartmentID  |
+|-----------|--------------|
+| 1         | 101          |
+| 1         | 102          |
+| 2         | 101          |
+
+* Alice rents two apartments.
+
+## 🎯 SQL Solution.
+
+```sql
+SELECT
+    TenantID,
+    COUNT(*) AS ApartmentCount
+FROM TenantApartments
+GROUP BY TenantID
+HAVING COUNT(*) > 1;
+```
+
+## 🎯 If Tenant Names Are Required.
+* Join with the `Tenants` table:
+```sql
+SELECT
+    t.Name,
+    COUNT(*) AS ApartmentCount
+FROM Tenants t
+JOIN TenantApartments ta
+    ON t.TenantID = ta.TenantID
+GROUP BY t.TenantID, t.Name
+HAVING COUNT(*) > 1;
+```
+
+## 💡 Why `HAVING` Instead of `WHERE`?
+
+* `WHERE` filters **rows before grouping**.
+* `HAVING` filters **groups after aggregation**.
+* Example:
+```sql
+GROUP BY TenantID
+HAVING COUNT(*) > 1
+```
+* You cannot write:
+```sql
+WHERE COUNT(*) > 1   -- ❌ Invalid
+```
+
+## 💡 Key SQL Concepts Tested.
+
+* This question tests your understanding of:
+  * `JOIN`.
+  * `GROUP BY`.
+  * Aggregate functions (`COUNT`).
+  * `HAVING`.
+* It is a very common SQL interview pattern.
+
+## 💡 Common Follow-up Questions.
+
+### Why use `COUNT(*)`?
+* Because each row in the junction table represents one apartment rented by a tenant.
+
+### Why group by `TenantID`?
+* Because we want one result per tenant.
+
+### What if a tenant rents exactly one apartment?
+* They are excluded because:
+```sql
+HAVING COUNT(*) > 1
+```
+
+### What if duplicate rows exist?
+* If duplicate assignments are possible, use:
+```sql
+COUNT(DISTINCT ApartmentID)
+```
+* instead of:
+```sql
+COUNT(*)
+```
+
+## ⚠️ Key Point.
+* Remember the execution order:
+```
+FROM
+↓
+WHERE
+↓
+GROUP BY
+↓
+HAVING
+↓
+SELECT
+↓
+ORDER BY
+```
+* `HAVING` filters **groups**, while `WHERE` filters **individual rows**.
+
+## 🧠 15-Second Interview Answer
+* To find tenants renting multiple apartments, group the rental records by tenant, count the number of apartments 
+for each tenant, and use `HAVING COUNT(*) > 1` to keep only tenants with more than one apartment. 
+* If tenant names are needed, join the result with the `Tenants` table.
+
+## 📝 Memory Hook
+
+> **Multiple apartments = `GROUP BY` + `COUNT()` + `HAVING`**
+
+```
+Tenant
+   │
+GROUP BY
+   │
+COUNT()
+   │
+HAVING > 1
+```
+
+***
+
+# 2. Index Card – Open Requests (SQL / Databases).
+
+## ❓ Interview Question.
+
+**Write a SQL query to find all buildings that have open maintenance requests.**
+
+## ✅ Short Answer.
+* Join the **Buildings**, **Apartments**, and **Requests** tables, then filter for requests that are still open.
+* Use:
+  * `JOIN` to connect related tables.
+  * `WHERE` to filter open requests.
+  * `DISTINCT` to avoid duplicate buildings.
+
+## 🎯 Example Schema.
+
+### Buildings.
+
+| BuildingID  | BuildingName  |
+|-------------|---------------|
+| 1           | Green Tower   |
+| 2           | Sunset Plaza  |
+
+### Apartments.
+
+| ApartmentID  | BuildingID  |
+|--------------|-------------|
+| 101          | 1           |
+| 102          | 1           |
+| 201          | 2           |
+
+### Requests.
+
+| RequestID  | ApartmentID  | Status  |
+|------------|--------------|---------|
+| 1          | 101          | Open    |
+| 2          | 102          | Closed  |
+| 3          | 201          | Open    |
+
+## 🎯 SQL Solution.
+```sql
+SELECT DISTINCT
+    b.BuildingID,
+    b.BuildingName
+FROM Buildings b
+JOIN Apartments a
+    ON b.BuildingID = a.BuildingID
+JOIN Requests r
+    ON a.ApartmentID = r.ApartmentID
+WHERE r.Status = 'Open';
+```
+
+## 🎯 Why `DISTINCT`?
+* A building may have multiple apartments with multiple open requests.
+* Without `DISTINCT`:
+```
+Green Tower
+Green Tower
+Green Tower
+```
+* With `DISTINCT`:
+```
+Green Tower
+Sunset Plaza
+```
+* Each building appears only once.
+
+## 💡 Key SQL Concepts Tested.
+* This question tests:
+  * `JOIN`.
+  * Filtering with `WHERE`.
+  * Removing duplicates with `DISTINCT`.
+* It also checks whether you understand relationships between multiple tables.
+
+## 💡 Common Follow-up Questions.
+
+### Why not query only the `Requests` table?
+* Because the `Requests` table does not contain building information.
+* You must follow the relationships:
+```
+Building
+    ↓
+Apartment
+    ↓
+Request
+```
+
+### Why use `INNER JOIN`?
+* Because we only care about buildings that actually have matching apartments and open requests.
+
+### When would you use `LEFT JOIN`?
+* If you wanted **all buildings**, including those **without** open requests.
+* For example:
+```sql
+SELECT
+    b.BuildingName,
+    COUNT(r.RequestID)
+FROM Buildings b
+LEFT JOIN Apartments a
+    ON b.BuildingID = a.BuildingID
+LEFT JOIN Requests r
+    ON a.ApartmentID = r.ApartmentID
+    AND r.Status = 'Open'
+GROUP BY b.BuildingName;
+```
+
+### What if "open" is stored as a boolean?
+* Instead of:
+```sql
+WHERE Status = 'Open'
+```
+* You might use:
+```sql
+WHERE IsOpen = TRUE
+```
+* or
+```sql
+WHERE ClosedDate IS NULL
+```
+* depending on the schema.
+
+## ⚠️ Key Point.
+* When data is spread across multiple related tables:
+  1. Start with the table containing the information you want (`Buildings`).
+  2. Join through the relationships.
+  3. Filter the desired records.
+  4. Use `DISTINCT` if duplicates are possible.
+
+## 🧠 15-Second Interview Answer.
+* To find buildings with open maintenance requests, join the `Buildings`, `Apartments`, and `Requests` tables, 
+filter for open requests, and use `DISTINCT` so each building appears only once, even if it has multiple open requests.
+
+## 📝 Memory Hook.
+
+> **Building → Apartment → Request**
+
+```
+Buildings
+     │
+     ▼
+Apartments
+     │
+     ▼
+Requests
+     │
+WHERE Status = 'Open'
+     │
+DISTINCT Buildings
+```
+
+**Golden Rule:**
+
+> **Follow the foreign keys, then filter the data you need.**
+
+***
+
+# 3. Index Card – Close All Requests (SQL / Databases)
+
+## ❓ Interview Question.
+
+**Write a SQL query to close all maintenance requests for apartments in a specific building.**
+
+## ✅ Short Answer.
+* Use an **`UPDATE` statement** with a **subquery** (or a `JOIN`, depending on the database) to update all requests 
+belonging to apartments in the target building.
+* The idea is:
+  1. Find all apartments in the building.
+  2. Update their maintenance requests.
+  3. Mark them as closed.
+
+## 🎯 Example Schema.
+
+### Buildings.
+
+| BuildingID  | BuildingName  |
+|-------------|---------------|
+| 1           | Green Tower   |
+| 2           | Sunset Plaza  |
+
+### Apartments.
+
+| ApartmentID  | BuildingID  |
+|--------------|-------------|
+| 101          | 1           |
+| 102          | 1           |
+| 201          | 2           |
+
+### Requests.
+
+| RequestID  | ApartmentID  | Status  |
+|------------|--------------|---------|
+| 1          | 101          | Open    |
+| 2          | 102          | Open    |
+| 3          | 201          | Open    |
+
+* Suppose we want to close all requests for **Building 1**.
+
+## 🎯 SQL Solution (Subquery).
+
+```sql
+UPDATE Requests
+SET Status = 'Closed'
+WHERE ApartmentID IN (
+    SELECT ApartmentID
+    FROM Apartments
+    WHERE BuildingID = 1
+);
+```
+
+* After execution:
+
+| RequestID  | ApartmentID  | Status  |
+|------------|--------------|---------|
+| 1          | 101          | Closed  |
+| 2          | 102          | Closed  |
+| 3          | 201          | Open    |
+
+## 🎯 Alternative (JOIN).
+
+* Some databases (e.g., MySQL) support:
+```sql
+UPDATE Requests r
+JOIN Apartments a
+    ON r.ApartmentID = a.ApartmentID
+SET r.Status = 'Closed'
+WHERE a.BuildingID = 1;
+```
+
+## 💡 Why Use a Subquery?
+
+* The `Requests` table does not know which building an apartment belongs to.
+* The relationship is:
+```
+Building
+    ↓
+Apartment
+    ↓
+Request
+```
+* The subquery first finds the relevant apartments, then the `UPDATE` modifies their requests.
+
+## 💡 Key SQL Concepts Tested.
+
+* This question tests:
+  * `UPDATE`.
+  * Subqueries.
+  * `IN`.
+  * Relationships between tables.
+* It demonstrates that SQL is not just for retrieving data—it can also modify it.
+
+## 💡 Common Follow-up Questions.
+
+### Why not update by `BuildingID` directly?
+* Because the `Requests` table does not contain a `BuildingID` column.
+* You must first identify the apartments belonging to the building.
+
+### Why use `IN`?
+* Because the subquery may return **multiple apartment IDs**.
+* Example:
+```
+101
+102
+103
+```
+* `IN` matches all of them.
+
+### What if only open requests should be closed?
+* Add another condition:
+```sql
+UPDATE Requests
+SET Status = 'Closed'
+WHERE Status = 'Open'
+AND ApartmentID IN (
+    SELECT ApartmentID
+    FROM Apartments
+    WHERE BuildingID = 1
+);
+```
+* This avoids updating requests that are already closed.
+
+### Is `UPDATE` transactional?
+* Yes.
+* In most databases, `UPDATE` statements execute within a transaction. 
+* You can:
+  * `COMMIT` to save the changes.
+  * `ROLLBACK` to undo them if something goes wrong.
+
+## ⚠️ Key Point.
+
+* When updating data across related tables:
+  1. Identify the related records (often with a subquery or join).
+  2. Update only the matching rows.
+  3. Add filters (such as `Status = 'Open'`) to avoid unnecessary updates.
+
+## 🧠 15-Second Interview Answer.
+
+* To close all requests for a building, update the `Requests` table and use a subquery to find all apartments belonging 
+to that building. 
+* The subquery returns the apartment IDs, and the `UPDATE` marks their requests as closed.
+
+## 📝 Memory Hook.
+
+> **UPDATE → Find apartments → Close requests**
+
+```
+Building
+    │
+    ▼
+Apartments
+    │
+    ▼
+Requests
+    │
+UPDATE Status = 'Closed'
+```
+
+**Golden Rule:**
+
+> **When the column you need isn't in the target table, use a subquery or join to reach it.**
+
+***
+
+# 4. Index Card – SQL Joins (Databases).
+
+## ❓ Interview Question.
+
+**What is the difference between `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, and `FULL OUTER JOIN`?**
+
+## ✅ Short Answer.
+* A **JOIN** combines rows from two (or more) tables based on a related column.
+* The type of join determines **which rows are included** in the result.
+
+## 🎯 Example Tables.
+
+### Employees
+
+| EmployeeID  | Name  | DepartmentID  |
+|-------------|-------|---------------|
+| 1           | Alice | 10            |
+| 2           | Bob   | 20            |
+| 3           | Carol | NULL          |
+
+### Departments
+
+| DepartmentID  | Department  |
+|---------------|-------------|
+| 10            | HR          |
+| 20            | IT          |
+| 30            | Sales       |
+
+## 🎯 INNER JOIN.
+* Returns **only matching rows** from both tables.
+```sql
+SELECT e.Name, d.Department
+FROM Employees e
+INNER JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+```
+
+### Result
+
+| Name  | Department  |
+|-------|-------------|
+| Alice | HR          |
+| Bob   | IT          |
+
+* Carol is excluded because she has no department.
+
+## 🎯 LEFT JOIN.
+
+* Returns:
+  * All rows from the **left table**.
+  * Matching rows from the right table.
+  * `NULL` when there is no match.
+```sql
+SELECT e.Name, d.Department
+FROM Employees e
+LEFT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+```
+
+### Result
+
+| Name  | Department  |
+|-------|-------------|
+| Alice | HR          |
+| Bob   | IT          |
+| Carol | NULL        |
+
+## 🎯 RIGHT JOIN.
+
+* Returns:
+  * All rows from the **right table**.
+  * Matching rows from the left table.
+  * `NULL` when there is no match.
+```sql
+SELECT e.Name, d.Department
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+```
+
+### Result.
+
+| Name  | Department  |
+|-------|-------------|
+| Alice | HR          |
+| Bob   | IT          |
+| NULL  | Sales       |
+
+* Sales appears even though no employee belongs to it.
+
+## 🎯 FULL OUTER JOIN.
+* Returns **all rows** from both tables.
+* If no match exists, the missing side contains `NULL`.
+```sql
+SELECT e.Name, d.Department
+FROM Employees e
+FULL OUTER JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+```
+
+### Result.
+
+| Name  | Department  |
+|-------|-------------|
+| Alice | HR          |
+| Bob   | IT          |
+| Carol | NULL        |
+| NULL  | Sales       |
+
+## 💡 Visual Representation.
+
+```
+INNER JOIN
+
+Employees ∩ Departments
+```
+
+```
+LEFT JOIN
+
+All Employees
++ Matching Departments
+```
+
+```
+RIGHT JOIN
+
+Matching Employees
++ All Departments
+```
+
+```
+FULL OUTER JOIN
+
+Everything
+```
+
+## 💡 Key SQL Concepts Tested.
+
+* This question tests your understanding of:
+  * Table relationships.
+  * Matching vs. non-matching rows.
+  * `NULL` values.
+  * Choosing the correct join for a problem.
+
+## 💡 Common Follow-up Questions.
+
+### Which join is used most often?
+* **`INNER JOIN`** is the most commonly used because it returns only related data.
+
+### When would you use `LEFT JOIN`?
+* When you need **all rows from the left table**, even if there is no match.
+* Example:
+  * All customers and their orders.
+  * All employees and their departments.
+
+### When would you use `FULL OUTER JOIN`?
+* When you need to find:
+  * Missing relationships.
+  * Unmatched rows in both tables.
+* Example:
+  * Employees without departments.
+  * Departments without employees.
+
+### Does MySQL support `FULL OUTER JOIN`?
+* No (at least not directly).
+* It is commonly simulated using:
+```sql
+LEFT JOIN
+UNION
+RIGHT JOIN
+```
+
+## ⚠️ Key Point.
+
+* The difference between joins is **which unmatched rows are preserved**.
+
+| Join              | Returns                   |
+|-------------------|---------------------------|
+| `INNER JOIN`      | Matching rows only        |
+| `LEFT JOIN`       | All left rows + matches   |
+| `RIGHT JOIN`      | All right rows + matches  |
+| `FULL OUTER JOIN` | All rows from both tables |
+
+## 🧠 15-Second Interview Answer.
+* SQL joins combine rows from multiple tables based on a related column. 
+* An `INNER JOIN` returns only matching rows. 
+* A `LEFT JOIN` returns all rows from the left table and matching rows from the right. 
+* A `RIGHT JOIN` does the opposite, and a `FULL OUTER JOIN` returns all rows from both tables, filling missing values with `NULL`.
+
+## 📝 Memory Hook.
+
+> **INNER = Intersection (only matches)**
+
+> **LEFT = Keep everything on the left**
+
+> **RIGHT = Keep everything on the right**
+
+> **FULL = Keep everything**
+
+```
+INNER  → Matching only
+
+LEFT   → ← Everything
+
+RIGHT  → Everything →
+
+FULL   → Everything ← →
+```
+ 
+***
+
+# 5. Index Card – Denormalization (Databases)
+
+## ❓ Interview Question
+
+**What is denormalization? When would you use it?**
+
+## ✅ Short Answer.
+* **Denormalization** is the process of **intentionally adding redundant data** to a database to improve read performance.
+* It is the opposite of **normalization**, which removes redundancy to improve data consistency.
+
+## 🎯 Normalization vs. Denormalization.
+
+| Normalization            | Denormalization             |
+|--------------------------|-----------------------------|
+| Removes duplicate data   | Adds duplicate data         |
+| Minimizes redundancy     | Introduces redundancy       |
+| Optimizes data integrity | Optimizes query performance |
+| More joins               | Fewer joins                 |
+| Better for writes        | Better for reads            |
+
+## 🎯 Example.
+
+### Normalized Design.
+
+#### Customers.
+
+| CustomerID  | Name  |
+|-------------|-------|
+| 1           | Alice |
+
+#### Orders.
+
+| OrderID  | CustomerID  |
+|----------|-------------|
+| 101      | 1           |
+
+* To retrieve the customer's name:
+```sql
+SELECT o.OrderID, c.Name
+FROM Orders o
+JOIN Customers c
+ON o.CustomerID = c.CustomerID;
+```
+* A `JOIN` is required.
+
+### Denormalized Design.
+
+#### Orders.
+
+| OrderID  | CustomerID  | CustomerName  |
+|----------|-------------|---------------|
+| 101      | 1           | Alice         |
+
+* Now the query is simply:
+```sql
+SELECT OrderID, CustomerName
+FROM Orders;
+```
+* No `JOIN` is needed.
+
+## 💡 Why Denormalize?
+* Denormalization improves **read performance** by reducing:
+  * Expensive joins.
+  * Complex queries.
+  * Query execution time.
+* This is especially useful for:
+  * Reporting.
+  * Dashboards.
+  * Analytics.
+  * Data warehouses.
+
+## ⚠️ Trade-Offs.
+
+### Advantages.
+* Faster reads.
+* Simpler queries.
+* Fewer joins.
+* Better reporting performance.
+
+### Disadvantages.
+* Duplicate data
+* More storage required
+* Harder updates
+* Risk of inconsistent data
+* Example:
+```
+Customer Name
+```
+* appears in:
+  * Customers.
+  * Orders.
+  * Invoices.
+* If the customer changes their name, all copies must be updated.
+
+## 💡 Common Use Cases.
+
+* Denormalization is commonly used in:
+  * Data warehouses.
+  * OLAP systems.
+  * Business intelligence.
+  * Reporting databases.
+  * Read-heavy applications.
+
+## 💡 Common Follow-up Questions.
+
+### Why normalize first?
+* Normalization ensures:
+  * Data consistency.
+  * Minimal redundancy.
+  * Easier maintenance.
+* Most transactional databases start with a normalized design.
+
+### Why denormalize later?
+* Once performance becomes a concern, selective denormalization can reduce the cost of joins and speed up frequent 
+read queries.
+
+### Is denormalization always better?
+* No.
+* If the application performs many writes or updates, denormalization can increase complexity and the risk of 
+inconsistent data.
+
+### Can indexes replace denormalization?
+* Sometimes.
+* Adding appropriate indexes often improves performance without introducing redundant data.
+* Denormalization is usually considered **after** indexing and query optimization.
+
+## ⚠️ Key Point.
+* Normalization optimizes **data integrity**.
+* Denormalization optimizes **performance**.
+* Choosing between them is a trade-off between:
+  * Fast writes vs. fast reads.
+  * Consistency vs. speed.
+
+## 🧠 15-Second Interview Answer.
+* Denormalization is the intentional duplication of data to improve read performance by reducing joins. 
+* It is commonly used in reporting and analytics systems where reads are much more frequent than writes. 
+* The trade-off is increased storage and a higher risk of inconsistent data.
+
+## 📝 Memory Hook
+
+> **Normalize = Remove duplicates**
+
+> **Denormalize = Add duplicates for speed**
+
+```
+Normalization
+Customers ──┐
+            ├── JOIN ──► Result
+Orders ─────┘
+
+Denormalization
+Orders
+├── CustomerID
+└── CustomerName
+
+No JOIN needed
+```
+
+**Golden Rule:**
+
+> **Normalize for consistency. Denormalize for performance.**
+
+***
+
+# 6. Index Card – Entity-Relationship Diagram (ERD) (Databases).
+
+## ❓ Interview Question.
+* **What is an Entity-Relationship Diagram (ERD)? Why is it used?**
+
+## ✅ Short Answer.
+* An **Entity-Relationship Diagram (ERD)** is a visual model of a database that shows:
+  * **Entities** (tables).
+  * **Attributes** (columns).
+  * **Relationships** between entities.
+* It is used during database design to model how data is organized and connected before implementing the database.
+
+## 🎯 Main Components of an ERD.
+
+### 1. Entity.
+* An **entity** represents a real-world object or concept.
+* Examples:
+  * Customer.
+  * Order.
+  * Employee.
+  * Product.
+* In a relational database, an entity usually becomes a **table**.
+* Example:
+```
+Customer
+---------
+CustomerID
+Name
+Email
+```
+
+### 2. Attribute.
+* An **attribute** describes an entity.
+* Example:
+```
+Customer
+---------
+CustomerID
+Name
+Email
+Phone
+```
+* Here:
+  * `CustomerID`.
+  * `Name`.
+  * `Email`.
+  * `Phone`.
+* are attributes (columns).
+
+### 3. Relationship.
+* A relationship describes how two entities are connected.
+* Example:
+```
+Customer
+    │
+places
+    │
+Order
+```
+* Meaning:
+  * A customer places orders.
+
+## 🎯 Relationship Types.
+
+### One-to-One (1:1).
+* One record relates to exactly one other record.
+* Example:
+```
+Person
+    │
+Passport
+```
+* One person has one passport.
+
+### One-to-Many (1:N).
+* The most common relationship.
+* Example:
+```
+Customer
+    │
+    ├──── Order
+    ├──── Order
+    └──── Order
+```
+* One customer can place many orders.
+* Each order belongs to one customer.
+
+### Many-to-Many (M:N).
+* Many records relate to many others.
+* Example:
+```
+Student
+     │
+Enrollment
+     │
+Course
+```
+* A student can enroll in many courses.
+* A course can have many students.
+* This is implemented using a **junction (bridge) table**.
+
+## 🎯 Example ERD.
+```
+Customers
+--------------------
+CustomerID (PK)
+Name
+
+        1
+        │
+        │
+        │
+        ▼
+Orders
+--------------------
+OrderID (PK)
+CustomerID (FK)
+OrderDate
+
+        1
+        │
+        │
+        ▼
+OrderItems
+--------------------
+OrderItemID (PK)
+OrderID (FK)
+ProductID (FK)
+Quantity
+
+        ▲
+        │
+        │
+Products
+--------------------
+ProductID (PK)
+Name
+Price
+```
+
+## 💡 Primary Key (PK).
+* A **Primary Key** uniquely identifies each row.
+* Example:
+```
+CustomerID
+OrderID
+ProductID
+```
+* Every table should have a primary key.
+
+## 💡 Foreign Key (FK).
+* A **Foreign Key** creates relationships between tables.
+* Example:
+```
+Orders
+
+CustomerID
+```
+* references
+```
+Customers.CustomerID
+```
+* This enforces **referential integrity**.
+
+## 💡 Why Use ERDs?
+* ERDs help:
+  * Design databases before implementation.
+  * Identify relationships.
+  * Avoid redundant data.
+  * Improve communication between developers and stakeholders.
+  * Support normalization.
+
+## 💡 Common Follow-up Questions.
+
+### What is cardinality?
+* Cardinality describes **how many records** participate in a relationship.
+* Examples:
+  * `1:1`.
+  * `1:N`.
+  * `M:N`.
+
+### How is a many-to-many relationship implemented?
+* Using a **junction table**.
+* Example:
+```
+Students
+Courses
+
+↓
+
+StudentCourses
+--------------
+StudentID
+CourseID
+```
+
+### Is an ERD the same as a database schema?
+* Not exactly.
+  * **ERD** → Conceptual/logical design showing entities and relationships.
+  * **Schema** → Actual database implementation (tables, columns, indexes, constraints).
+
+### When is an ERD created?
+* Typically during the **database design phase**, before writing SQL or creating tables.
+
+## ⚠️ Key Point.
+* An ERD is a **blueprint** for a database.
+* It models:
+  * What data exists (entities)
+  * What information is stored (attributes)
+  * How data is connected (relationships)
+* A well-designed ERD leads to a well-structured, maintainable database.
+
+## 🧠 15-Second Interview Answer.
+* An Entity-Relationship Diagram (ERD) is a visual representation of a database that shows entities, their attributes, 
+and the relationships between them. 
+* It is used during database design to model the data structure, define primary and foreign keys, and ensure the 
+database is well organized before implementation.
+
+## 📝 Memory Hook.
+
+> **ERD = Blueprint of a Database**
+
+```
+Entity
+   │
+Attributes
+   │
+Relationships
+```
+* Think of it as:
+```
+Tables
+   +
+Columns
+   +
+Connections
+```
+
+**Golden Rule:**
+
+> **ERDs describe the structure of a database before it is built.**
+
+***
+
+# 7. Index Card – Design a Grade Database (Databases).
+
+## ❓ Interview Question.
+* **Design a database to store students, courses, and grades.**
+
+## ✅ Short Answer.
+* A good design should be **normalized** and model the real-world relationships.
+* The key entities are:
+  * **Students**.
+  * **Courses**.
+  * **Enrollments (or Grades)**.
+* Because a student can take many courses, and a course can have many students, this is a **many-to-many relationship** 
+implemented using a junction table.
+
+## 🎯 Step 1 – Identify the Entities.
+
+### Students.
+```text
+Student
+--------
+StudentID (PK)
+FirstName
+LastName
+Email
+```
+
+### Courses.
+```text
+Course
+-------
+CourseID (PK)
+CourseName
+Credits
+```
+
+### Enrollments (Grades).
+
+```text
+Enrollment
+----------
+EnrollmentID (PK)
+StudentID (FK)
+CourseID (FK)
+Grade
+Semester
+Year
+```
+* This table represents a student taking a course and stores the student's grade.
+
+## 🎯 ER Diagram.
+```text
+Students
+---------
+StudentID (PK)
+Name
+
+       1
+       │
+       │
+       ▼
+
+Enrollments
+------------
+EnrollmentID (PK)
+StudentID (FK)
+CourseID (FK)
+Grade
+
+       ▲
+       │
+       │
+
+Courses
+---------
+CourseID (PK)
+CourseName
+```
+* Relationship:
+```
+Student
+    │
+    │ 1:N
+    ▼
+Enrollment
+    ▲
+    │ N:1
+    │
+Course
+```
+* Overall:
+```
+Student  M:N  Course
+```
+* implemented via the **Enrollment** table.
+
+## 🎯 Why Use an Enrollment Table?
+* Without it, the database cannot correctly represent:
+  * One student taking multiple courses.
+  * One course having multiple students.
+* The **Enrollment** table resolves the many-to-many relationship.
+* It can also store additional information, such as:
+  * Grade.
+  * Semester.
+  * Year.
+  * Instructor.
+  * Attendance.
+
+## 💡 Example Data.
+
+### Students.
+
+| StudentID  | Name  |
+|------------|-------|
+| 1          | Alice |
+| 2          | Bob   |
+
+### Courses.
+
+| CourseID  | CourseName  |
+|-----------|-------------|
+| 10        | Databases   |
+| 20        | Algorithms  |
+
+### Enrollments.
+
+| StudentID  | CourseID | Grade  |
+|------------|----------|--------|
+| 1          | 10       | A      |
+| 1          | 20       | B      |
+| 2          | 10       | A-     |
+
+## 🎯 Sample Query.
+
+### Find all grades for a student.
+```sql
+SELECT
+    c.CourseName,
+    e.Grade
+FROM Enrollment e
+JOIN Courses c
+ON e.CourseID = c.CourseID
+WHERE e.StudentID = 1;
+```
+
+## 💡 Why Is This Design Good?
+* It is **normalized** because:
+  * Student information is stored once.
+  * Course information is stored once.
+  * Grades belong to the relationship between a student and a course.
+* This avoids data duplication and update anomalies.
+
+## 💡 Common Follow-up Questions.
+
+### Why not store grades in the Student table?
+* A student has many grades.
+* Storing multiple grades in one row violates **First Normal Form (1NF)**.
+
+### Why not store students inside the Course table?
+* A course has many students.
+* This also creates a many-to-many relationship that should be handled with a junction table.
+
+### Can a student take the same course twice?
+* Yes.
+* You can support this by adding fields such as:
+  * Semester.
+  * Year.
+  * AttemptNumber.
+* Or by including these in a composite unique key.
+
+### What is the primary key of the Enrollment table?
+
+* Two common designs:
+
+**Option 1 (Most Common)**
+```text
+EnrollmentID (PK)
+```
+
+**Option 2**
+* Composite primary key:
+```text
+(StudentID, CourseID)
+```
+
+* If students can retake courses, a surrogate key (`EnrollmentID`) is generally preferred.
+
+## ⚠️ Key Point.
+
+* Whenever you see:
+
+> **Many students take many courses**
+
+* Think immediately:
+
+> **Many-to-Many Relationship → Junction Table**
+
+* The **Enrollment** table stores the relationship and any attributes (like grades) that belong to it.
+
+## 🧠 15-Second Interview Answer
+
+* A grade database should contain `Students`, `Courses`, and an `Enrollment` table. 
+* Students and courses have a many-to-many relationship, so the `Enrollment` table acts as a junction table and stores 
+additional information such as grades, semester, and year. 
+* This normalized design avoids data duplication and is easy to extend.
+
+## 📝 Memory Hook.
+
+> **Student ⇄ Enrollment ⇄ Course**
+
+```
+Student
+    │
+    ▼
+Enrollment
+(Grade)
+    ▲
+    │
+Course
+```
+
+**Golden Rule:**
+
+> **Many-to-Many relationship = Junction Table**
+>
+> **Relationship data (e.g., Grade) belongs in the junction table, not in either entity.**
 

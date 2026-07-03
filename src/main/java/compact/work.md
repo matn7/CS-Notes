@@ -5216,6 +5216,8 @@ entire document into memory, unlike DOM which is memory-intensive.
 * Live migration allows VMs to move without downtime.
 * Metadata server provides instance configuration data.
 
+- 10 examples concurrency code in java explicit for interview.
+- 10 examples k8s configs explicit for interview
 
 
 - Bazel
