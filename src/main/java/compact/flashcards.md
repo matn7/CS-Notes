@@ -84,13 +84,13 @@ client and service.
   * One to one transformation.
   * Does the simple transformation from `T` to `V`.
   * Used for simple synchronous transformations.
-  * Does not support transformations that returns Publisher.
+  * Does not support transformations that returns `Publisher`.
 * `flatMap()`:
   * One to N transformation.
   * Does more than just transformation. 
   * Subscribes to `Flux` or `Mono` that's part of the transformation and then flattens it and send it downstream.
   * Used to asynchronous transformations.
-  * Use it with transformations that returns Publisher.
+  * Use it with transformations that returns `Publisher`.
 
 **15. `concatMap()` project reactor.**
 * Works similar to `flatMap()`.
@@ -852,7 +852,7 @@ void test() {
 ```java
 void test() {
     Map<String, Double> percentages = students.stream()
-                    .flatMap(s -> s.getEngagementMap(),values().stream())
+                    .flatMap(s -> s.getEngagementMap().values().stream())
                     .collect(Collectors.groupingBy(
                             CourseEngagement::getCourseCode,
                             Collectors.averagingDouble(CourseEngagement::getPercentageCompleted)));
@@ -1335,6 +1335,12 @@ Write a code to group movies by genre.**
 void test() {
     Movie<String, List<Movie>> yearToMovies = movies.stream()
             .collect(Collectors.groupingBy(Movie::getGenre));
+
+    movies.forEach(movie ->
+          genreToMovies
+                  .computeIfAbsent(movie.getGenre(), k -> new ArrayList<>())
+                  .add(movie)
+  );
 }
 ```
 * The `Collectors.groupingBy()` method is the right way to perform that grouping. 
@@ -1361,17 +1367,20 @@ void test() {
     // {Cloud = [AWS:21:92, AZURE:11:95], Framework = [SP:1:25]}
     
     Map<String, Integer> map2 = courses.stream()
-            .collect(Collectors.groupingBy(Course::getCategory, Collectors.counting()));
+            .collect(Collectors.groupingBy(Course::getCategory, 
+                    Collectors.counting()));
     // {Cloud = 2, Framework = 1}
   
     // map by category and highest score
     Map<String, Optional<Courses>> map3 = courses.stream()
-            .collect(Collectors.groupingBy(Course::getCategory, Collectors.maxBy(Comparator.comparing(Course::getReview))));
+            .collect(Collectors.groupingBy(Course::getCategory, 
+                    Collectors.maxBy(Comparator.comparing(Course::getReview))));
     // {Cloud = Optional[Azure:11:95], Framework = Optional[SP:1:23]}
   
     // map by category, list of names as value only
     Map<String, List<String>> map4 = courses.stream()
-            .collect(Collectors.groupingBy(Course::getCategory, Collectors.mapping(Course::getName, Collectors.toList())));
+            .collect(Collectors.groupingBy(Course::getCategory, 
+                    Collectors.mapping(Course::getName, Collectors.toList())));
     // {Cloud = [AWS, Azure], Framework = [SP]}
 }
 ```
@@ -1387,7 +1396,7 @@ void test() {
     };
     
     Consumer<Integer> sysout = System.out::println;
-    COnsumer<Integer> sysout2 = new Consumer<Integer>() {
+    Consumer<Integer> sysout2 = new Consumer<Integer>() {
         public void accept(Integer x) {
             System.out.println(x);
         }
@@ -1511,7 +1520,7 @@ void test() {
     
     var streamG = Stream.of("G46", "G47");
     int rSeed = seed;
-    var streamO = Stream.generate(Mai::generator)
+    var streamO = Stream.generate(Math::generator)
             .limit(15)
             .map(i -> "O" + (rSeed + i));
 }
@@ -1536,7 +1545,7 @@ void test() {
 * Given object - pass as parameter.
   * `(data) -> list.add(data);`.
   * `list::add;`.
-* Create new object - new Cat().
+* Create new object - `new Cat()`.
   * `() -> new Cat();`.
   * `Cat::new;`.
 
@@ -1601,7 +1610,7 @@ void test() {
             .filter(s -> s.getCountryCode().equals("AU"))
             .filter(s -> s.getEnrolled() < 30)
             .collect(() -> new TreeSet<>(
-                    Comparator.comparingg(Student::getStudentId)), TreeSet::add, TreeSet::addAll);
+                    Comparator.comparing(Student::getStudentId)), TreeSet::add, TreeSet::addAll);
     String countryList = students.stream().map(Student::getCountryCode)
             .distinct().sorted().reduce("", (r,v) -> r + " " + v);
 }
@@ -1618,7 +1627,7 @@ void test() {
             .mapToDouble(s -> s.getPercentComplete("JMC"))
             .reduce(0, Double::sum);
     
-    Comparator<Student> longTermStudent = Comparator.comparingLongg(Student::getYearEnrolled);
+    Comparator<Student> longTermStudent = Comparator.comparingLong(Student::getYearEnrolled);
     
     List<Student> hardWorkers = students.stream()
             .filter(s -> s.getMonthsSinceActive("JMC") == 0)
@@ -1721,8 +1730,8 @@ void test() {
 }
 ```
 
-**120. There is a class Country that has methods getContinent() and getPopulation(). 
-Write a function int getPopulation(List<Country> countries, String continent) that computes the total population of a 
+**120. There is a class `Country` that has methods `getContinent()` and `getPopulation()`. 
+Write a function `int getPopulation(List<Country> countries, String continent)` that computes the total population of a 
 given continent, given a list of all countries and the name of a continent.**
 
 * Without Lambda.
@@ -1776,7 +1785,7 @@ int getPopulation2(List<Country> countries, String continent) {
 **1. Count frequency of characters in a String.**
 * Question: Given a string, create a frequency map of each character using Java Streams.
 * Example
-  * Input: "banana"
+  * Input: "banana".
   * Output: `{b=1, a=3, n=2}`.
 * Expected Solution:
   ```java
@@ -1804,7 +1813,7 @@ int getPopulation2(List<Country> countries, String continent) {
 
 **Why Function.identity()?**
 * `Function.identity()` returns the input element itself. In `groupingBy()`, it's used as the classifier function, 
-so each character is grouped by its own value. It's equivalent to c -> c, but is more concise and idiomatic.
+so each character is grouped by its own value. It's equivalent to `c -> c`, but is more concise and idiomatic.
 
 **Why Long instead of Integer?**
 * `Collectors.counting()` returns a `Long`, not an `Integer`, because it counts elements using a long value to support 
@@ -1818,9 +1827,9 @@ including emoji and supplementary characters.
 
 ***
 
-**2. Count frequency of words in a sentence**
+**2. Count frequency of words in a sentence.**
 * Question: Create a frequency map of words from a sentence.
-* Example
+* Example:
   * Input: "java is good java is fast".
   * Output: `{java=2, is=2, good=1, fast=1}`.
 * Expected Solution:
@@ -1881,7 +1890,7 @@ Map<String, Long> sorted =
 
 **3. Find the first non-repeating character using frequency map?**
 * Question: Find the first character whose frequency is 1.
-* Example
+* Example:
   * Input: "swiss".
   * Output: `w`
 * Expected Solution:
@@ -1918,7 +1927,7 @@ public class Main {
 }
 ```
 
-**Interview Follow-ups**
+**Interview Follow-ups.**
 
 **Why use LinkedHashMap?**
 * `LinkedHashMap` is used to preserve the insertion order of characters as they appear in the input string. 
@@ -1955,10 +1964,10 @@ System.out.println(result);
 
 **4. Sort elements by frequency using Streams.**
 * Question: Sort elements based on frequency in descending order.
-* Example
-  * Input: ["apple", "banana", "apple", "orange", "banana", "apple"].
+* Example:
+  * Input: {"apple", "banana", "apple", "orange", "banana", "apple"}.
   * Output: `apple=3 banana=2 orange=1`.
-* Expected Solution
+* Expected Solution.
 ```java
 import java.util.*;
 import java.util.function.Function;
@@ -1995,9 +2004,9 @@ public class Main {
 } 
 ```
 
-**Interview Follow-ups**
+**Interview Follow-ups.**
 
-**Why use LinkedHashMap after sorting?**
+**Why use `LinkedHashMap` after sorting?**
 * `LinkedHashMap` is used after sorting to preserve the sorted order of entries.
 
 **Complexity of sorting?**
@@ -2053,7 +2062,7 @@ public class Main {
 
 **Interview Follow-ups.**
 
-**Difference between groupingBy() and groupingByConcurrent()?**
+**Difference between `groupingBy()` and `groupingByConcurrent()`?**
 * `groupingBy()` is a standard collector that is not thread-safe, while `groupingByConcurrent()` is designed for 
 parallel streams and performs concurrent grouping in a thread-safe manner.
 
@@ -2063,4 +2072,155 @@ or when the task is not suitable for safe or efficient splitting.
 
 **Is ordering guaranteed?**
 * No — ordering is not guaranteed in parallel streams by default, unless you explicitly enforce it.
+
+***
+
+# Flash cards.
+
+**1. Determine if a Number.**
+
+```java
+public static boolean parseNumber(String str) {
+    State currState = State.BEGIN;
+    for (char c : str.toCharArray()) {
+        boolean validPart = false;
+        List<State> states = nextStates.get(currState);
+        for (State state : states) {
+            Predicate<Character> fn = stateValidator.get(currState);
+            for (State state : states) {
+                Predicate<Character> fn = stateValidator.get(state);
+                if (fn.test(c)) {
+                    validPart = true;
+                    currState = state;
+                    break;
+                }
+            }
+            if (!validPart) {
+                return false;
+            }
+        }
+    }
+    Set<State> end = Set.of(State.NUM1, State.NUM2, State.NUM2);
+    return end.contains(currState);
+}
+
+static Map<State, Predicate<Character>> stateValidator = new HashMap<>();
+static Map<State, List<State>> nextStates = new HashMap<>();
+
+static {
+    stateValidator.put(State.BEGIN, a -> true);
+    stateValidator.put(State.NUM1, a -> Character.isDigit(a));
+    stateValidator.put(State.NUM2, a -> Character.isDigit(a));
+    stateValidator.put(State.DOT, a -> a == '.');
+    stateValidator.put(State.E, a -> a == 'e');
+    stateValidator.put(State.NEGATIVE1, a -> a == '-');
+    stateValidator.put(State.NEGATIVE2, a -> a == '-');
+    
+    nextStates.put(State.BEGIN, Arrays.asList(State.NEGATIVE1, State.NUM1));
+    nextStates.put(State.NEGATIVE1, Arrays.asList(State.NUM1, State.DOT));
+    nextStates.put(State.NUM1, Arrays.adList(State.NUM1, State.E, State.DOT));
+    nextStates.put(State.NEGATIVE2, Arrays.asList(NUM3));
+    nextStates.put(State.NUM3, Arrays.asList(NUM3));
+    nextStates.put(State.E, Arrays.asList(State.NUM3, State.NEGATIVE2));
+}
+
+
+enum States {
+    BEGIN, NUM1, NUM2, NUM3, DOT, E, NEGATIVE1, NEGATIVE2;
+}
+```
+
+**2. Evaluate Expression Tree.**
+```java
+public static int evaluateExpression(Node node) {
+    Map<Integer, BiFunction<Integer, Integer, Integer>> op = new HashMap<>();
+    op.put(-1, (a, b) -> a + b);
+    op.put(-2, (a, b) -> a - b);
+    op.put(-3, (a, b) -> a / b);
+    op.put(-4, (a, b) -> a * b);
+  
+    return helper(node, op);
+}
+
+private static int helper(Node node, Map<Integer, BiFunction<Integger, Integer, Integer>> op) {
+    if (node.value >= 0) {
+        return node.value;
+    }
+    int left = helper(node.left, op);
+    int right = helper(node.right, op);
+    BiFunction<Integer, Integer, Integer> fn = op.get(node.value);
+    return fn.apply(left, right);
+}
+
+static final class Node {
+    private final int value;
+    private final Node left;
+    private final Node right;
+    
+    public Node(int value) {
+        this(value, null, null);
+    }
+    
+    public Node(int value, Node left, Node right) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+    
+    // getters
+}
+```
+
+**3. Arithmetic Binary Tree.**
+```java
+public static int calcIter(Node node) {
+    Map<String, BiFunction<Integer, Integer, Integer>> op = new HashMap<>();
+    op.put("+", (a, b) -> a + b);
+    op.put("-", (a, b) -> a - b);
+    op.put("*", (a, b) -> a * b);
+    op.put("/", (a, b) -> a / b);
+    Stack<String> stack = new Stack<>();
+    calcHelper(node, stack, op);
+    return Integer.parseInt(stack.pop());
+} 
+
+private static void calcHelper(Node node, Stack<String> stack, Map<String, BiFunction<Integer, Integer, Integer>> op) {
+    if (node.left == null && node.right == null) {
+        stack.push(node.value);
+    }
+    calcHelper(node.left, stack, op);
+    calcHelper(node.right, stack, op);
+    if (op.containsKey(node.value)) {
+        BiFunction<Integger, Integer, Integer> fn = op.get(node.value);
+        Integer b = Integer.parseInf(stack.pop());
+        Integer a = Integer.parseInt(stack.pop());
+        Integer result = fn.apply(a, b);
+        stack.push(String.valueOf(result));
+    } else {
+        stack.push(node.value);
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

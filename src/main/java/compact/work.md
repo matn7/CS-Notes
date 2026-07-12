@@ -2349,7 +2349,8 @@ Point p = new Point(1,2);
   * First requests: 500ms.
   * After warmup: 20ms.
 * If benchmark starts immediately, results are inaccurate.
-* Coordinated omission: A latency measurement problem where the benchmark tool stops sending requests while the system is overloaded.
+* Coordinated omission: A latency measurement problem where the benchmark tool stops sending requests while the system 
+is overloaded.
 * Result:
   * Latency spikes become hidden.
   * Metrics appear unrealistically good.
@@ -2699,9 +2700,10 @@ Class.forName("User");
 ```
 
 **3. What are the JVM ClassLoaders?**
-* Bootstrap ClassLoader
+* Bootstrap ClassLoader:
   * Loads: `java.lang.*`, `java.util.*` - from JDK runtime.
-* Platform ClassLoader: Loads platform modules.
+* Platform ClassLoader: 
+  * Loads platform modules.
 * Application ClassLoader, Loads classes from:
   * Classpath.
   * Module path.
@@ -2820,7 +2822,7 @@ java -jar app.jar
 * Example: `Class<?> clazz = User.class;`, or `Class.forName("User");`.
 
 **Follow-up: Why do frameworks use reflection?**
-* Spring: `@Component`discovery.
+* Spring: `@Component` discovery.
 * Hibernate:
   * Entity inspection.
   * Proxy creation.
@@ -2834,7 +2836,7 @@ java -jar app.jar
 
 **11. What is a Custom ClassLoader?**
 * A developer-created ClassLoader.
-* Example:`public class PluginLoader extends ClassLoader {}`.
+* Example: `public class PluginLoader extends ClassLoader {}`.
 * Use Cases:
   * Plugin systems.
   * Dynamic deployment.
@@ -2852,9 +2854,9 @@ findClass()
 
 **12. Explain JVM Parameters**
 * Three common categories:
-* Heap: `-Xms2g -Xmx4g`.
-* System Properties: `-Denv=prod`.
-* JVM Flags: `-XX:+UseG1GC`.
+  * Heap: `-Xms2g -Xmx4g`.
+  * System Properties: `-Denv=prod`.
+  * JVM Flags: `-XX:+UseG1GC`.
 
 **Follow-up: Difference between `-D` and environment variables?**
 * `-D`: `System.getProperty()`.
@@ -2995,7 +2997,7 @@ System.getProperty("env");
 * Environment variables come from OS.
 * System properties come from JVM startup.
 
-**4. Explain -Xms and -Xmx.**
+**4. Explain `-Xms` and `-Xmx`.**
 * `-Xms2g`: Initial heap size.
 * `-Xmx4g`: Maximum heap size.
 
@@ -3182,11 +3184,12 @@ java -XX:+HeapDumpOnOutOfMemoryError \
 
 ***
 
-# Top 5 Interview Questions — Design Patterns in System Design.
+# Top 5 Questions — Design Patterns in System Design.
 
-**1. How would you design a notification system that supports multiple channels (Email, SMS, Push, WhatsApp) and is easily extensible?**
+**1. How would you design a notification system that supports multiple channels (Email, SMS, Push, WhatsApp) 
+and is easily extensible?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Open/Closed Principle.
 - Plugin-like extensibility.
 - Event-driven architecture.
@@ -3272,7 +3275,7 @@ interface PaymentGateway {
 
 **3. How would you design a plugin-based architecture (like IntelliJ or a SaaS platform with extensions)?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Modular architecture.
 - Runtime extensibility.
 - Dependency isolation.
@@ -3303,7 +3306,7 @@ public interface Plugin {
 
 **4. How would you design a URL shortener system with analytics and tracking?**
 
-**What interviewers are testing.**
+**What are testing.**
 - Scalability.
 - Event-driven design.
 - Separation of read/write concerns.
@@ -3394,7 +3397,7 @@ abstract class ExportJob {
 | Saga                    | Distributed transactions               |
 | Circuit Breaker         | Resilience & fault tolerance           |
 
-**What Makes a Strong Interview Answer.**
+**What Makes a Strong Answer.**
 
 * A strong answer always includes:
   - Scalability thinking.
@@ -3568,8 +3571,6 @@ should not be adopted without measurable scalability requirements.
 - Persistence context management.
 - Batch optimization.
 
-**Strong Expected Answer.**
-
 **Problem.**
 * Hibernate keeps entities in persistence context.
 * Huge fetches → massive memory usage.
@@ -3648,7 +3649,7 @@ hibernate.jdbc.batch_size=50
 - DB load isolation.
 - Read replicas.
 
-**Most Important Concepts Interviewers Expect.**
+**Most Important Concepts.**
 
 | Concept              | Why It Matters                     |
 |----------------------|------------------------------------|
@@ -3664,8 +3665,6 @@ hibernate.jdbc.batch_size=50
 | Persistence Context  | Hibernate memory management        |
 
 **Mention these phrases.**
-
-**These instantly signal seniority.**
 - Avoid materializing the entire dataset.
 - Use cursor-based streaming.
 - Control backpressure explicitly.
@@ -3704,7 +3703,7 @@ transactional database.
 | 2      | Data Link    | MAC addressing            | Ethernet, Switch |
 | 1      | Physical     | Bits over cable/wifi      | Fiber, RJ45      |
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * The OSI model separates networking responsibilities into seven layers. 
 * Each layer abstracts specific functionality, making networks modular and easier to troubleshoot. 
 * For example, TCP operates at Layer 4 for reliable transport, while HTTP operates at Layer 7 for application communication.
@@ -3723,7 +3722,7 @@ transactional database.
 
 **2. Explain the difference between TCP and UDP.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Transport layer knowledge.
 - Performance tradeoffs.
 - Real-world protocol usage.
@@ -3952,7 +3951,7 @@ Shipping Service
 - Retry Pattern.
 - Dead Letter Queue (DLQ).
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * Instead of synchronous service-to-service calls, services communicate through events published to a broker like Kafka. 
 * This improves scalability and decoupling while enabling independent service evolution.
 
@@ -4286,7 +4285,7 @@ public class AbstractionExample {
 ```
 
 
-**Strong Interview Answer.**
+**Strong Answer.**
 * OOP organizes software around objects and behavior. 
 * Encapsulation protects data, inheritance enables reuse, polymorphism allows flexible behavior, and abstraction simplifies 
 complex systems by hiding implementation details.
@@ -4336,7 +4335,7 @@ implementation details.
 
 **3. What is polymorphism in Java? Explain compile-time vs runtime polymorphism.**
 
-**What interviewers are testing.**
+**What are testing.**
 - Dynamic dispatch understanding.
 - Java runtime behavior.
 - Method resolution.
@@ -4591,7 +4590,7 @@ class Penguin extends Bird {
 }
 ```
 * The Liskov Substitution Principle means that any subclass should be usable wherever its parent class is expected 
-without breaking the program. A common bad example is making `Penguin` extend Bird when `Bird` has a `fly()` method. 
+without breaking the program. A common bad example is making `Penguin` extend `Bird` when `Bird` has a `fly()` method. 
 Since penguins can't fly, they either throw an exception or leave the method empty, violating LSP. A better design is 
 to keep common behavior like `eat()` in `Bird` and move `fly()` into a separate `FlyingBird` class or a `Flyable` interface.
 
@@ -4880,11 +4879,11 @@ processing because they stream data without loading the entire document into mem
 
 ## Other Q&A.
 
-**Why is reactive harder to debug?**
+**1. Why is reactive harder to debug?**
 * Reactive code is harder to debug because it replaces step-by-step execution with event-driven data flow over time, 
 which makes causality less obvious and timing issues more prominent.
 
-**Difference between async and reactive?**
+**2. Difference between async and reactive?**
 * Async programming is about doing work without blocking the main thread, usually using async/await, futures, or callbacks. 
 It focuses on handling tasks that complete later.
 * Reactive programming is about data streams and propagation of change. You don’t just wait for results—you react to 
@@ -4893,210 +4892,210 @@ continuous sequences of events (streams), often using operators like map, filter
   * Async = “get result later”.
   * Reactive = “react to ongoing streams of data/events over time”.
 
-**What is backpressure?**
+**3. What is backpressure?**
 * Backpressure is the ability of a reactive system to handle producer-consumer speed mismatch by controlling or limiting 
 data flow.
 
-**What causes N+1 queries?**
+**4. What causes N+1 queries?**
 * N+1 queries are caused by lazy-loading related data inside a loop, resulting in one query for the parent list and one 
 additional query per item.
 
-**Difference between LAZY and EAGER?**
+**5. Difference between LAZY and EAGER?**
 * Lazy loading defers fetching related data until it’s accessed, while eager loading fetches it upfront with the main query.
 
-**Why can pagination still be slow?**
+**6. Why can pagination still be slow?**
 * Pagination can still be slow due to large OFFSET scans, expensive sorting, missing indexes, and join/aggregation 
 overhead—so databases still process a lot of data before applying LIMIT.
 
-**OFFSET pagination problem?**
+**7. OFFSET pagination problem?**
 * OFFSET pagination is slow because the database must scan and discard all preceding rows, making it `O(n)` per page, 
 whereas keyset pagination avoids this by using a cursor and indexed lookups.
 
-**Cursor vs offset pagination?**
+**8. Cursor vs offset pagination?**
 * OFFSET pagination skips rows and becomes slower as the offset grows, while cursor pagination uses a pointer to the 
 last seen record, making it more efficient and scalable for large datasets.
 
-**How to avoid killing production DB?**
+**9. How to avoid killing production DB?**
 * To avoid killing a production DB, you reduce load via indexing and caching, limit query cost and pagination patterns, 
 offload heavy work, and add guardrails like rate limiting, connection pooling, and query monitoring.
 
-**Difference between OSI and TCP/IP model?**
+**10. Difference between OSI and TCP/IP model?**
 * OSI is a 7-layer conceptual model used for learning and standardization, while TCP/IP is a 4-layer practical model 
 that implements real-world internet communication.
 
-**Which layers does HTTPS use?**
+**11. Which layers does HTTPS use?**
 * HTTPS operates at the application layer, using HTTP over TLS for encryption, which runs on top of TCP/IP for reliable 
 network communication.
 
-**At which layer does DNS operate?**
+**12. At which layer does DNS operate?**
 * DNS operates at the application layer, typically using UDP over port 53 for name resolution, with TCP used for larger 
 or more reliable transfers.
 
-**What is the TCP 3-way handshake?**
+**13. What is the TCP 3-way handshake?**
 * The TCP 3-way handshake is a connection setup process where the client and server exchange SYN, SYN-ACK, 
 and ACK packets to establish a reliable connection and synchronize sequence numbers.
 
-**Why is UDP faster?**
+**14. Why is UDP faster?**
 * UDP is faster than TCP because it has no connection setup, no acknowledgments, no retransmissions, and minimal header 
 overhead, making it a lightweight, low-latency protocol.
 
-**Why does video streaming prefer UDP?**
+**15. Why does video streaming prefer UDP?**
 * Video streaming prefers UDP because it minimizes latency by avoiding retransmissions and head-of-line blocking, 
 allowing applications to prioritize real-time playback over perfect reliability.
 
-**What is DNS caching?**
+**16. What is DNS caching?**
 * DNS caching stores domain-to-IP mappings temporarily across browsers, OS, and DNS resolvers to reduce lookup latency 
 and improve performance, using TTL to determine expiration.
 
-**Difference between HTTP and HTTPS?**
+**17. Difference between HTTP and HTTPS?**
 * HTTP transmits data in plaintext, while HTTPS encrypts HTTP traffic using TLS, ensuring secure, authenticated, 
 and tamper-proof communication over port 443.
 
-**What is TLS?**
+**18. What is TLS?**
 * TLS is a cryptographic protocol that secures network communication by providing encryption, integrity, 
 and authentication between client and server, commonly used in HTTPS over TCP.
 
-**What happens if DNS fails?**
+**19. What happens if DNS fails?**
 * If DNS fails, domain names cannot be resolved to IP addresses, preventing the client from establishing any TCP 
 connection, effectively making websites unreachable despite the server being operational.
 
-**What is a certificate authority?**
+**20. What is a certificate authority?**
 * A Certificate Authority is a trusted entity that verifies identities and issues digitally signed certificates used in 
 TLS to establish secure and authenticated HTTPS connections.
 
-**How does TLS work?**
+**21. How does TLS work?**
 * TLS works by first performing a handshake to authenticate the server and establish a shared symmetric session key, 
 then using that key to encrypt all subsequent communication between client and server.
 
-**Why is HTTPS important for APIs?**
+**23. Why is HTTPS important for APIs?**
 * HTTPS is essential for APIs because it encrypts data, ensures integrity, and authenticates servers using TLS, 
 protecting sensitive information like tokens and payloads from interception and tampering.
 
-**What is TTL?**
+**24. What is TTL?**
 * TTL (Time To Live) defines how long DNS records are cached or how many network hops an IP packet can make before 
 being discarded.
 
-**What is DNS propagation?**
+**25. What is DNS propagation?**
 * DNS propagation is the time it takes for updated DNS records to spread across distributed caches worldwide, 
 as resolvers gradually refresh their cached entries based on TTL values.
 
-**Why can DNS changes take time?**
+**26. Why can DNS changes take time?**
 * DNS changes take time because DNS responses are heavily cached across distributed resolvers worldwide, 
 and those caches only update after TTL expiration, leading to gradual propagation instead of instant updates.
 
-**Difference between recursive and authoritative DNS?**
+**27. Difference between recursive and authoritative DNS?**
 * Recursive DNS resolves queries on behalf of clients by querying other DNS servers and caching results, 
 while authoritative DNS is the source of truth that directly stores and returns domain records.
 
-**Why is inheritance sometimes dangerous?**
+**28. Why is inheritance sometimes dangerous?**
 * Inheritance can be dangerous because it creates tight coupling between parent and child classes, leading to fragile 
 designs where changes in the base class can unintentionally break subclasses, making systems rigid and harder to maintain.
 
-**Difference between abstraction and encapsulation?**
+**29. Difference between abstraction and encapsulation?**
 * Abstraction hides implementation details and exposes only functionality, while encapsulation hides internal state 
 and protects data by restricting direct access.
 
-**Prefer composition or inheritance?**
+**30. Prefer composition or inheritance?**
 * Composition is generally preferred over inheritance because it provides greater flexibility, reduces coupling, 
 and avoids rigid class hierarchies, while inheritance should only be used for clear and stable “is-a” relationships.
 
-**Can abstraction exist without encapsulation?**
+**31. Can abstraction exist without encapsulation?**
 * Yes, abstraction can exist without encapsulation because they address different concerns—abstraction hides 
 implementation complexity, while encapsulation restricts access to internal state; however, good design typically 
 uses both together.
 
-**Why are interfaces abstraction?**
+**32. Why are interfaces abstraction?**
 * Interfaces are abstraction because they define a contract of behavior without exposing implementation details, 
 allowing multiple interchangeable implementations while hiding how the functionality is actually performed.
 
-**Why should fields usually be private?**
+**33. Why should fields usually be private?**
 * Fields should be private to enforce encapsulation, protect object state, maintain invariants, and ensure that all 
 modifications go through controlled methods instead of direct external access.
 
-**How does JVM decide overridden method?**
+**34. How does JVM decide overridden method?**
 * The JVM resolves overridden methods at runtime using dynamic dispatch, where the actual method executed is determined 
 by the object’s runtime type via the virtual method table (vtable), not the reference type.
 
-**Why is runtime polymorphism powerful?**
+**35. Why is runtime polymorphism powerful?**
 * Runtime polymorphism is powerful because it enables loose coupling and dynamic behavior selection by allowing code 
 to depend on abstractions while deferring the actual method execution to runtime based on the object type.
 
-**Difference between overload and override?**
+**36. Difference between overload and override?**
 * Overloading is compile-time polymorphism where methods share the same name but differ in parameters, while overriding 
 is runtime polymorphism where a subclass provides a specific implementation of a parent class method with the same signature.
 
-**When is inheritance acceptable?**
+**37. When is inheritance acceptable?**
 * Inheritance is acceptable when there is a true “is-a” relationship, the Liskov Substitution Principle holds, 
 and you need polymorphic behavior with stable shared logic; otherwise composition is preferred.
 
-**What problems does deep inheritance cause?**
+**38. What problems does deep inheritance cause?**
 * Deep inheritance causes tight coupling, fragile base class issues, poor maintainability, and hidden behavior across 
 multiple levels, making systems harder to understand, extend, and safely modify.
 
-**What is tight coupling?**
+**39. What is tight coupling?**
 * Tight coupling occurs when components depend heavily on each other’s concrete implementations, making the system rigid, 
 harder to modify, test, and extend.
 
-**Which SOLID principle is most violated?**
+**40. Which SOLID principle is most violated?**
 * The Single Responsibility Principle is the most frequently violated SOLID principle because developers often combine 
 multiple responsibilities into a single class, leading to tightly coupled, hard-to-maintain “God classes.”
 
-**How does Spring use Dependency Injection?**
+**41. How does Spring use Dependency Injection?**
 * Spring implements Dependency Injection using its IoC container, which automatically creates beans, resolves their 
 dependencies, and injects them—typically via constructor injection—removing the need for manual object creation and 
 promoting loose coupling.
 
-**Difference between abstraction and interface segregation?**
+**42. Difference between abstraction and interface segregation?**
 * Abstraction is a general OOP concept of hiding implementation details behind interfaces or abstract classes, 
 while Interface Segregation Principle is a design guideline that ensures abstractions are fine-grained so clients are 
 not forced to depend on methods they do not use.
 
-**Difference between DTD and XSD?**
+**43. Difference between DTD and XSD?**
 * DTD is an older, simple, non-XML schema language for defining XML structure, while XSD is a modern, XML-based 
 alternative that provides richer data types, stronger validation, and better extensibility.
 
-**Why is XSD preferred over DTD?**
+**44. Why is XSD preferred over DTD?**
 * XSD is preferred over DTD because it supports rich data types, stronger validation rules, XML syntax, namespaces, 
 and extensibility, making it far more powerful and suitable for modern XML-based systems.
 
-**What are simpleType and complexType?**
+**45. What are simpleType and complexType?**
 * simpleType defines XML elements containing only text with optional constraints, while complexType defines structured 
 elements that can contain child elements and attributes, representing object-like data.
 
-**Is namespace URI an actual webpage?**
+**46. Is namespace URI an actual webpage?**
 * A namespace URI in XML is not necessarily a real webpage; it is simply a unique identifier used to distinguish 
 XML vocabularies, even though it is often formatted like a URL for global uniqueness.
 
-**Difference between default and prefixed namespace?**
+**47. Difference between default and prefixed namespace?**
 * A default namespace applies to all unprefixed elements and avoids prefixes for simplicity, while a prefixed namespace 
 requires explicit prefixes for elements, allowing multiple namespaces to be used simultaneously in the same XML document.
 
-**Why are namespaces heavily used in SOAP?**
+**48. Why are namespaces heavily used in SOAP?**
 * Namespaces are heavily used in SOAP to avoid XML element conflicts, support extensibility 
 (like security and addressing modules), and ensure interoperability between different systems by clearly distinguishing 
 elements from different XML vocabularies.
 
-**Difference between XPath and XSLT?**
+**49. Difference between XPath and XSLT?**
 * XPath is a query language used to navigate and select nodes in an XML document, while XSLT is a transformation 
 language that uses XPath to convert XML into other formats like HTML, XML, or text.
 
-**Why is XSLT considered declarative?**
+**50. Why is XSLT considered declarative?**
 * XSLT is declarative because it specifies transformation rules using templates and matches, describing what the output 
 should be rather than how to iteratively process the XML step by step.
 
-**Is XSLT still used today?**
+**51. Is XSLT still used today?**
 * XSLT is still used in legacy and enterprise XML-heavy systems (such as SOAP integrations and document processing), 
 but has largely been replaced by JSON-based APIs and general-purpose programming languages in modern applications.
 
-**Why is SAX memory efficient?**
+**52. Why is SAX memory efficient?**
 * SAX is memory efficient because it parses XML in a streaming fashion without building an in-memory tree, 
 processing elements sequentially and discarding them immediately after handling.
 
-**Difference between SAX and StAX?**
+**53. Difference between SAX and StAX?**
 * SAX is a push-based event-driven parser where the parser controls the flow and sends events to the application, 
 while StAX is a pull-based streaming parser where the application controls the flow and reads XML data at its own pace.
 
-**Which parser is best for huge XML files?**
+**54. Which parser is best for huge XML files?**
 * For huge XML files, SAX or StAX are preferred because they process XML in a streaming manner without loading the 
 entire document into memory, unlike DOM which is memory-intensive.
 
@@ -5176,7 +5175,7 @@ entire document into memory, unlike DOM which is memory-intensive.
 | **How are container images stored?** | Typically in Artifact Registry or another container registry, then pulled by Kubernetes.                   |
 | **How does GKE improve Kubernetes?** | Automatic upgrades, auto-repair, autoscaling, integrated IAM, logging, monitoring, and high availability.  |
 
-### Common Interview Flow.
+### Common Flow.
 
 1. Build application (e.g., Spring Boot).
 2. Create a Docker image.
@@ -5216,16 +5215,932 @@ entire document into memory, unlike DOM which is memory-intensive.
 * Live migration allows VMs to move without downtime.
 * Metadata server provides instance configuration data.
 
-- 10 examples concurrency code in java explicit for interview.
 - 10 examples k8s configs explicit for interview
 
+***
 
-- Bazel
+# Kubernetes Interview Guide (Top 10 Configuration Examples)
 
-- Helm config examples
+## Table of Contents
 
-- Kubernetes config examples
+1. Deploy a Simple Application
+2. ConfigMap
+3. Secret
+4. Liveness, Readiness & Startup Probes
+5. Resource Requests & Limits
+6. Rolling Update Strategy
+7. Persistent Volume & Persistent Volume Claim
+8. Ingress
+9. Horizontal Pod Autoscaler (HPA)
+10. NetworkPolicy
+11. Common Kubernetes Follow-up Questions
 
-- 
-- Przeczytaj pytania i przygotuj listę których wstyd nie wiedzieć? możesz dodać jak ich nie ma w moim dokumencie.
+---
+
+# 1. Deploy a Simple Application
+
+## Problem
+
+Deploy an Nginx application with three replicas.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+```
+
+## Create Service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+
+spec:
+  selector:
+    app: nginx
+
+  ports:
+    - port: 80
+      targetPort: 80
+
+  type: ClusterIP
+```
+
+## Follow-up Questions
+
+### Why Deployment instead of Pod?
+
+Deployment manages:
+
+- ReplicaSets
+- Scaling
+- Rolling updates
+- Self-healing
+
+Pods should almost never be created directly.
+
+---
+
+### Difference between Deployment and ReplicaSet?
+
+Deployment manages ReplicaSets.
+
+ReplicaSet only ensures the desired number of Pods exists.
+
+---
+
+### Why use labels?
+
+Services and Deployments use labels/selectors to discover Pods.
+
+---
+
+# 2. ConfigMap
+
+## Problem
+
+Externalize configuration.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: app-config
+
+data:
+  APP_NAME: interview
+  LOG_LEVEL: INFO
+```
+
+Use it inside Deployment.
+
+```yaml
+containers:
+- name: app
+  image: my-app
+
+  envFrom:
+    - configMapRef:
+        name: app-config
+```
+
+## Follow-up Questions
+
+### Why ConfigMap?
+
+Configuration should not be baked into Docker images.
+
+---
+
+### Can ConfigMap store passwords?
+
+No.
+
+Use Secret instead.
+
+---
+
+### Can ConfigMap be mounted as files?
+
+Yes.
+
+It can be:
+
+- Environment variables
+- Files
+- Volumes
+
+---
+
+# 3. Secret
+
+## Problem
+
+Store database credentials.
+
+```yaml
+apiVersion: v1
+kind: Secret
+
+metadata:
+  name: db-secret
+
+type: Opaque
+
+stringData:
+  username: admin
+  password: secret123
+```
+
+Consume it.
+
+```yaml
+env:
+- name: DB_USER
+  valueFrom:
+    secretKeyRef:
+      name: db-secret
+      key: username
+
+- name: DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: db-secret
+      key: password
+```
+
+## Follow-up Questions
+
+### Are Secrets encrypted?
+
+Not by default.
+
+They are Base64 encoded.
+
+Use:
+
+- Encryption at rest
+- External Secret Manager
+- HashiCorp Vault
+- AWS Secrets Manager
+
+---
+
+### Difference between Secret and ConfigMap?
+
+| ConfigMap | Secret |
+|------------|----------|
+| Non-sensitive | Sensitive |
+| Plain text | Base64 encoded |
+
+---
+
+# 4. Health Probes
+
+## Problem
+
+Configure liveness, readiness and startup probes.
+
+```yaml
+containers:
+
+- name: app
+  image: my-app
+
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 8080
+
+    initialDelaySeconds: 20
+
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 8080
+
+    periodSeconds: 5
+
+  startupProbe:
+    httpGet:
+      path: /startup
+      port: 8080
+
+    failureThreshold: 30
+```
+
+## Follow-up Questions
+
+### Difference?
+
+**Liveness**
+
+Is the application alive?
+
+If not → restart Pod.
+
+---
+
+**Readiness**
+
+Can the application receive traffic?
+
+If not → remove Pod from Service.
+
+---
+
+**Startup**
+
+Has application finished booting?
+
+Useful for slow-starting applications.
+
+---
+
+### Which probe is most important?
+
+Readiness.
+
+It prevents sending traffic to unhealthy Pods.
+
+---
+
+# 5. Resource Requests & Limits
+
+## Problem
+
+Prevent noisy neighbors.
+
+```yaml
+resources:
+
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+```
+
+## Follow-up Questions
+
+### Difference between request and limit?
+
+Request
+
+Guaranteed resources.
+
+Limit
+
+Maximum allowed resources.
+
+---
+
+### What happens if memory exceeds limit?
+
+Container is OOMKilled.
+
+---
+
+### What happens if CPU exceeds limit?
+
+CPU is throttled.
+
+---
+
+# 6. Rolling Update Strategy
+
+## Problem
+
+Configure zero-downtime deployments.
+
+```yaml
+strategy:
+
+  type: RollingUpdate
+
+  rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 1
+```
+
+## Follow-up Questions
+
+### What is maxUnavailable?
+
+Maximum Pods unavailable during deployment.
+
+---
+
+### What is maxSurge?
+
+Extra Pods temporarily created.
+
+---
+
+### Difference between RollingUpdate and Recreate?
+
+RollingUpdate
+
+Zero downtime.
+
+Recreate
+
+Deletes everything before creating new Pods.
+
+---
+
+# 7. Persistent Volume (PV) & Persistent Volume Claim (PVC)
+
+## PersistentVolume
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+
+metadata:
+  name: pv
+
+spec:
+
+  capacity:
+    storage: 5Gi
+
+  accessModes:
+    - ReadWriteOnce
+
+  hostPath:
+    path: /data
+```
+
+## PersistentVolumeClaim
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: pvc
+
+spec:
+
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+Mount into Pod.
+
+```yaml
+volumes:
+
+- name: storage
+
+  persistentVolumeClaim:
+    claimName: pvc
+```
+
+## Follow-up Questions
+
+### Difference between PV and PVC?
+
+PV
+
+Actual storage.
+
+PVC
+
+Request for storage.
+
+---
+
+### What is StorageClass?
+
+Automates dynamic PV provisioning.
+
+---
+
+### Access Modes
+
+| Mode | Meaning |
+|------|----------|
+| ReadWriteOnce | One node |
+| ReadOnlyMany | Many readers |
+| ReadWriteMany | Multiple writers |
+
+---
+
+# 8. Ingress
+
+## Problem
+
+Expose application externally.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: app
+
+spec:
+
+  ingressClassName: nginx
+
+  rules:
+
+  - host: app.example.com
+
+    http:
+
+      paths:
+
+      - path: /
+
+        pathType: Prefix
+
+        backend:
+
+          service:
+
+            name: app-service
+
+            port:
+
+              number: 80
+```
+
+## Follow-up Questions
+
+### Why Ingress?
+
+Provides:
+
+- Routing
+- TLS
+- Virtual Hosts
+- Path-based routing
+
+---
+
+### Difference between Ingress and LoadBalancer?
+
+LoadBalancer
+
+One Service.
+
+Ingress
+
+Many Services behind one external IP.
+
+---
+
+### Does Ingress work by itself?
+
+No.
+
+Requires an Ingress Controller.
+
+Examples:
+
+- NGINX
+- Traefik
+- HAProxy
+
+---
+
+# 9. Horizontal Pod Autoscaler (HPA)
+
+## Problem
+
+Scale based on CPU.
+
+```yaml
+apiVersion: autoscaling/v2
+
+kind: HorizontalPodAutoscaler
+
+metadata:
+  name: app
+
+spec:
+
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: app
+
+  minReplicas: 2
+  maxReplicas: 10
+
+  metrics:
+
+  - type: Resource
+
+    resource:
+
+      name: cpu
+
+      target:
+
+        type: Utilization
+        averageUtilization: 70
+```
+
+## Follow-up Questions
+
+### What metrics are supported?
+
+- CPU
+- Memory
+- Custom Metrics
+- External Metrics
+
+---
+
+### What component provides metrics?
+
+Metrics Server.
+
+---
+
+### Difference between HPA and Cluster Autoscaler?
+
+HPA
+
+Adds Pods.
+
+Cluster Autoscaler
+
+Adds Nodes.
+
+---
+
+# 10. NetworkPolicy
+
+## Problem
+
+Allow traffic only from frontend Pods.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+
+kind: NetworkPolicy
+
+metadata:
+  name: backend-policy
+
+spec:
+
+  podSelector:
+
+    matchLabels:
+      app: backend
+
+  policyTypes:
+    - Ingress
+
+  ingress:
+
+  - from:
+
+    - podSelector:
+
+        matchLabels:
+          app: frontend
+```
+
+## Follow-up Questions
+
+### What happens without NetworkPolicy?
+
+All Pods can communicate.
+
+---
+
+### Does NetworkPolicy work automatically?
+
+No.
+
+Requires a CNI plugin that supports NetworkPolicy.
+
+Examples:
+
+- Calico
+- Cilium
+- Antrea
+
+---
+
+### Can NetworkPolicy control egress?
+
+Yes.
+
+Ingress
+
+Incoming traffic.
+
+Egress
+
+Outgoing traffic.
+
+---
+
+# Common Kubernetes Interview Questions
+
+## What is a Pod?
+
+Smallest deployable unit in Kubernetes.
+
+One or more containers sharing:
+
+- Network
+- Storage
+- Lifecycle
+
+---
+
+## Deployment vs StatefulSet
+
+| Deployment | StatefulSet |
+|------------|-------------|
+| Stateless | Stateful |
+| Random Pod names | Stable Pod names |
+| No ordering | Ordered startup/shutdown |
+
+---
+
+## ClusterIP vs NodePort vs LoadBalancer
+
+| Type | Purpose |
+|-------|----------|
+| ClusterIP | Internal communication |
+| NodePort | Exposes service on every node |
+| LoadBalancer | Cloud-managed external access |
+
+---
+
+## What is a Namespace?
+
+Logical isolation inside a cluster.
+
+Used for:
+
+- Teams
+- Environments
+- Resource quotas
+
+---
+
+## ConfigMap vs Secret
+
+| ConfigMap | Secret |
+|------------|----------|
+| Configuration | Credentials |
+| Non-sensitive | Sensitive |
+
+---
+
+## What is etcd?
+
+Distributed key-value store.
+
+Stores the entire Kubernetes cluster state.
+
+---
+
+## kube-apiserver
+
+Entry point to Kubernetes.
+
+Every component communicates through it.
+
+---
+
+## kube-scheduler
+
+Chooses which node should run a Pod.
+
+Considers:
+
+- Resources
+- Taints
+- Affinity
+- Constraints
+
+---
+
+## kube-controller-manager
+
+Runs controllers like:
+
+- Deployment Controller
+- ReplicaSet Controller
+- Node Controller
+- Job Controller
+
+Ensures desired state matches actual state.
+
+---
+
+## kubelet
+
+Runs on every node.
+
+Responsibilities:
+
+- Starts Pods
+- Reports node health
+- Talks to API Server
+
+---
+
+## kube-proxy
+
+Handles networking.
+
+Creates routing rules for Services.
+
+---
+
+## Taints vs Tolerations
+
+**Taint**
+
+Repels Pods from a node.
+
+**Toleration**
+
+Allows a Pod to be scheduled onto a tainted node.
+
+---
+
+## Node Affinity
+
+Allows Pods to prefer or require certain nodes based on labels.
+
+Example:
+
+```yaml
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: disktype
+          operator: In
+          values:
+          - ssd
+```
+
+---
+
+## Pod Affinity vs Anti-Affinity
+
+Pod Affinity
+
+Schedule Pods together.
+
+Pod Anti-Affinity
+
+Keep Pods apart for high availability.
+
+---
+
+## DaemonSet
+
+Runs exactly one Pod on every node.
+
+Examples:
+
+- Fluentd
+- Prometheus Node Exporter
+- CNI Plugins
+- Log Collectors
+
+---
+
+## Job vs CronJob
+
+Job
+
+Runs once until completion.
+
+CronJob
+
+Runs on a schedule.
+
+---
+
+## Init Containers
+
+Run before application containers.
+
+Common uses:
+
+- Database migrations
+- Waiting for dependencies
+- Downloading configuration
+
+---
+
+## Sidecar Containers
+
+Run alongside the main application.
+
+Examples:
+
+- Logging
+- Service Mesh (Envoy)
+- Metrics
+- Proxy
+
+---
+
+## Rolling Update vs Blue-Green vs Canary
+
+| Strategy | Description |
+|-----------|-------------|
+| Rolling Update | Gradually replaces Pods |
+| Blue-Green | Switch traffic between two environments |
+| Canary | Send a small percentage of traffic to the new version first |
+
+---
+
+# Summary
+
+These examples cover many of the Kubernetes resources and concepts commonly discussed in DevOps and platform engineering interviews:
+
+- Deployment
+- Service
+- ConfigMap
+- Secret
+- Liveness / Readiness / Startup Probes
+- Resource Requests & Limits
+- Rolling Updates
+- PersistentVolume (PV)
+- PersistentVolumeClaim (PVC)
+- StorageClass
+- Ingress
+- Horizontal Pod Autoscaler (HPA)
+- NetworkPolicy
+- Namespace
+- DaemonSet
+- StatefulSet
+- Job & CronJob
+- Init Containers
+- Sidecars
+- Affinity & Anti-Affinity
+- Taints & Tolerations
+
+Understanding how these resources work together—and being able to explain when to use each one—is a strong foundation for Kubernetes interviews ranging from junior DevOps positions to senior Platform Engineer and SRE roles.
+
+***
+
 
