@@ -1490,7 +1490,7 @@ WHERE NOT EXISTS (SELECT 1 FROM Orders o WHERE o.CustomerID = c.CustomerID);
 
 ***
 
-**35. Customers with no Orders (II).** // here
+**35. Customers with no Orders (II).**
 ```sql
 SELECT CustomerID
 FROM Customers
@@ -1505,7 +1505,7 @@ WHERE NOT EXISTS
 
 **How it works:**
 * `FROM Customers`; selects all customers as the starting point.
-* `The NOT EXISTS`; subquery checks for matching orders: 
+* The `NOT EXISTS`; subquery checks for matching orders: 
 `SELECT CustomerID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID`.
 * For each customer, the subquery searches for at least one related order.
 * If a matching order exists → `EXISTS` becomes true → customer is excluded.
@@ -1541,7 +1541,8 @@ WHERE NOT EXISTS (SELECT 1 FROM Orders o WHERE o.CustomerID = c.CustomerID);
 
 **36. Employee/Order detail report.**
 ```sql
-SELECT Employees.EmployeeID, Employees.LastName, Orders.OrderID, Products.ProductName, OrderDetails.Quantity
+SELECT Employees.EmployeeID, Employees.LastName, Orders.OrderID, 
+  Products.ProductName, OrderDetails.Quantity
 FROM Employees
     JOIN Orders ON Orders.EmployeeID = Employees.EmployeeID
     JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID
@@ -1610,7 +1611,7 @@ ORDER BY COUNT(*) DESC;
 **How it works:**
 * `FROM Products`; starts with the product table.
 * `JOIN Categories ON Products.CategoryID = Categories.CategoryID`; links each product to its category.
-* `GROUP BY`; CategoryName groups all products under each category.
+* `GROUP BY CategoryName`; groups all products under each category.
 * `COUNT(*)`; counts how many products belong to each category.
 * `SELECT CategoryName, TotalProducts = COUNT(*)`; outputs the category name and product count.
 * `ORDER BY COUNT(*) DESC`; sorts categories by number of products in descending order.
@@ -2492,10 +2493,10 @@ FROM Orders;
 * Better reporting performance.
 
 ### Disadvantages.
-* Duplicate data
-* More storage required
-* Harder updates
-* Risk of inconsistent data
+* Duplicate data.
+* More storage required.
+* Harder updates.
+* Risk of inconsistent data.
 * Example:
 ```
 Customer Name

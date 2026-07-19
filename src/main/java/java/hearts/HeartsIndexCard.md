@@ -864,7 +864,7 @@ while (!condition) {
 
 **4. What are scoped values in Java 21?**
 * Scoped values are a safe alternative to `ThreadLocal`, designed to pass immutable values to multiple threads,
-  including virtual threads, without leaks.
+including virtual threads, without leaks.
 
 **5. What are record patterns?**
 * Record patterns allow deconstructing records in pattern matching.
@@ -1932,7 +1932,7 @@ System.out.println(add.apply(2, 3)); // 5
 
 ***
 
-# Threads abd Locks.
+# Threads and Locks.
 
 # 1. Index Card – Thread vs. Process (Java).
 
@@ -2498,7 +2498,7 @@ if (lockA.tryLock()) {
 
 ***
 
-# 5. Index Card – Call In Order (Java / Concurrency)
+# 5. Index Card – Call In Order (Java / Concurrency).
 
 ## ❓ Interview Question.
 
@@ -2983,27 +2983,27 @@ notifyAll()
 
 ***
 
-# Java Concurrency Interview Guide (Top 10 Coding Questions)
+# Java Concurrency Interview Guide (Top 10 Coding Questions).
 
-## Table of Contents
+## Table of Contents.
 
-1. Producer Consumer using BlockingQueue
-2. Print Odd Even Numbers
-3. ReadWriteLock
-4. Deadlock Example
-5. CountDownLatch
-6. CyclicBarrier
-7. Semaphore
-8. ReentrantLock with Condition
-9. ExecutorService + Future
-10. CompletableFuture Pipeline
-11. Common Follow-up Theory Questions
+1. Producer Consumer using BlockingQueue.
+2. Print Odd Even Numbers.
+3. ReadWriteLock.
+4. Deadlock Example.
+5. CountDownLatch.
+6. CyclicBarrier.
+7. Semaphore.
+8. ReentrantLock with Condition.
+9. ExecutorService + Future.
+10. CompletableFuture Pipeline.
+11. Common Follow-up Theory Questions.
 
 ---
 
-# 1. Producer Consumer using BlockingQueue
+# 1. Producer Consumer using BlockingQueue.
 
-## Problem
+## Problem.
 
 Implement Producer Consumer without using `wait()`/`notify()`.
 
