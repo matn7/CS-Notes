@@ -5215,33 +5215,29 @@ entire document into memory, unlike DOM which is memory-intensive.
 * Live migration allows VMs to move without downtime.
 * Metadata server provides instance configuration data.
 
-- 10 examples k8s configs explicit for interview
-
 ***
 
-# Kubernetes Interview Guide (Top 10 Configuration Examples)
+# Kubernetes Interview Guide (Top 10 Configuration Examples).
 
-## Table of Contents
+## Table of Contents.
 
-1. Deploy a Simple Application
-2. ConfigMap
-3. Secret
-4. Liveness, Readiness & Startup Probes
-5. Resource Requests & Limits
-6. Rolling Update Strategy
-7. Persistent Volume & Persistent Volume Claim
-8. Ingress
-9. Horizontal Pod Autoscaler (HPA)
-10. NetworkPolicy
-11. Common Kubernetes Follow-up Questions
+1. Deploy a Simple Application.
+2. ConfigMap.
+3. Secret.
+4. Liveness, Readiness & Startup Probes.
+5. Resource Requests & Limits.
+6. Rolling Update Strategy.
+7. Persistent Volume & Persistent Volume Claim.
+8. Ingress.
+9. Horizontal Pod Autoscaler (HPA).
+10. NetworkPolicy.
+11. Common Kubernetes Follow-up Questions.
 
 ---
 
-# 1. Deploy a Simple Application
+### 1. Deploy a Simple Application.
 
-## Problem
-
-Deploy an Nginx application with three replicas.
+* Deploy Nginx application with three replicas.
 
 ```yaml
 apiVersion: apps/v1
@@ -5250,16 +5246,13 @@ metadata:
   name: nginx-deployment
 spec:
   replicas: 3
-
   selector:
     matchLabels:
       app: nginx
-
   template:
     metadata:
       labels:
         app: nginx
-
     spec:
       containers:
         - name: nginx
@@ -5268,134 +5261,89 @@ spec:
             - containerPort: 80
 ```
 
-## Create Service
+**Create Service.**
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-
 spec:
   selector:
     app: nginx
-
   ports:
     - port: 80
       targetPort: 80
-
   type: ClusterIP
 ```
 
-## Follow-up Questions
+**Why Deployment instead of Pod?**
+* Deployment manages:
+  - ReplicaSets.
+  - Scaling.
+  - Rolling updates.
+  - Self-healing.
+* Pods should almost never be created directly.
 
-### Why Deployment instead of Pod?
+**Difference between Deployment and ReplicaSet?**
+* Deployment manages ReplicaSets.
+* ReplicaSet only ensures the desired number of Pods exists.
 
-Deployment manages:
+**Why use labels?**
+* Services and Deployments use labels/selectors to discover Pods.
 
-- ReplicaSets
-- Scaling
-- Rolling updates
-- Self-healing
+### 2. ConfigMap.
 
-Pods should almost never be created directly.
-
----
-
-### Difference between Deployment and ReplicaSet?
-
-Deployment manages ReplicaSets.
-
-ReplicaSet only ensures the desired number of Pods exists.
-
----
-
-### Why use labels?
-
-Services and Deployments use labels/selectors to discover Pods.
-
----
-
-# 2. ConfigMap
-
-## Problem
-
-Externalize configuration.
-
+* Externalize configuration.
 ```yaml
 apiVersion: v1
 kind: ConfigMap
-
 metadata:
   name: app-config
-
 data:
   APP_NAME: interview
   LOG_LEVEL: INFO
 ```
 
-Use it inside Deployment.
-
+* Use it inside Deployment.
 ```yaml
 containers:
 - name: app
   image: my-app
-
   envFrom:
     - configMapRef:
         name: app-config
 ```
 
-## Follow-up Questions
+**Why ConfigMap?**
+* Configuration should not be baked into Docker images.
 
-### Why ConfigMap?
+**Can ConfigMap store passwords?**
+* No.
+* Use Secret instead.
 
-Configuration should not be baked into Docker images.
+**Can ConfigMap be mounted as files?**
+* Yes.
+* It can be:
+  - Environment variables.
+  - Files.
+  - Volumes.
 
----
+### 3. Secret.
 
-### Can ConfigMap store passwords?
-
-No.
-
-Use Secret instead.
-
----
-
-### Can ConfigMap be mounted as files?
-
-Yes.
-
-It can be:
-
-- Environment variables
-- Files
-- Volumes
-
----
-
-# 3. Secret
-
-## Problem
-
-Store database credentials.
-
+* Store database credentials.
 ```yaml
 apiVersion: v1
 kind: Secret
-
 metadata:
   name: db-secret
-
 type: Opaque
-
 stringData:
   username: admin
   password: secret123
 ```
 
-Consume it.
-
+* Consume it.
 ```yaml
 env:
 - name: DB_USER
@@ -5403,7 +5351,6 @@ env:
     secretKeyRef:
       name: db-secret
       key: username
-
 - name: DB_PASSWORD
   valueFrom:
     secretKeyRef:
@@ -5411,622 +5358,394 @@ env:
       key: password
 ```
 
-## Follow-up Questions
+**Are Secrets encrypted?**
+* Not by default.
+* They are Base64 encoded.
+* Use:
+  - Encryption at rest.
+  - External Secret Manager.
+  - HashiCorp Vault.
+  - AWS Secrets Manager.
 
-### Are Secrets encrypted?
+**Difference between Secret and ConfigMap?**
 
-Not by default.
+| ConfigMap     | Secret         |
+|---------------|----------------|
+| Non-sensitive | Sensitive      |
+| Plain text    | Base64 encoded |
 
-They are Base64 encoded.
+### 4. Health Probes.
 
-Use:
-
-- Encryption at rest
-- External Secret Manager
-- HashiCorp Vault
-- AWS Secrets Manager
-
----
-
-### Difference between Secret and ConfigMap?
-
-| ConfigMap | Secret |
-|------------|----------|
-| Non-sensitive | Sensitive |
-| Plain text | Base64 encoded |
-
----
-
-# 4. Health Probes
-
-## Problem
-
-Configure liveness, readiness and startup probes.
-
+* Configure liveness, readiness and startup probes.
 ```yaml
 containers:
-
 - name: app
   image: my-app
-
   livenessProbe:
     httpGet:
       path: /health
       port: 8080
-
     initialDelaySeconds: 20
-
   readinessProbe:
     httpGet:
       path: /ready
       port: 8080
-
     periodSeconds: 5
-
   startupProbe:
     httpGet:
       path: /startup
       port: 8080
-
     failureThreshold: 30
 ```
 
-## Follow-up Questions
-
-### Difference?
+**Difference?**
 
 **Liveness**
-
-Is the application alive?
-
-If not → restart Pod.
-
----
+* Is the application alive?
+* If not → restart Pod.
 
 **Readiness**
+* Can the application receive traffic?
+* If not → remove Pod from Service.
 
-Can the application receive traffic?
+**Startup.**
+* Has application finished booting?
+* Useful for slow-starting applications.
 
-If not → remove Pod from Service.
+**Which probe is most important?**
+* Readiness.
+* It prevents sending traffic to unhealthy Pods.
 
----
+### 5. Resource Requests & Limits.
 
-**Startup**
-
-Has application finished booting?
-
-Useful for slow-starting applications.
-
----
-
-### Which probe is most important?
-
-Readiness.
-
-It prevents sending traffic to unhealthy Pods.
-
----
-
-# 5. Resource Requests & Limits
-
-## Problem
-
-Prevent noisy neighbors.
-
+* Prevent noisy neighbors.
 ```yaml
 resources:
-
   requests:
     cpu: "250m"
     memory: "256Mi"
-
   limits:
     cpu: "500m"
     memory: "512Mi"
 ```
 
-## Follow-up Questions
+**Difference between request and limit?**
 
-### Difference between request and limit?
+**Request.**
+* Guaranteed resources.
 
-Request
+**Limit**
+* Maximum allowed resources.
 
-Guaranteed resources.
+**What happens if memory exceeds limit?**
+* Container is OOMKilled.
 
-Limit
+**What happens if CPU exceeds limit?**
+* CPU is throttled.
 
-Maximum allowed resources.
+### 6. Rolling Update Strategy.
 
----
-
-### What happens if memory exceeds limit?
-
-Container is OOMKilled.
-
----
-
-### What happens if CPU exceeds limit?
-
-CPU is throttled.
-
----
-
-# 6. Rolling Update Strategy
-
-## Problem
-
-Configure zero-downtime deployments.
-
+* Configure zero-downtime deployments.
 ```yaml
 strategy:
-
   type: RollingUpdate
-
   rollingUpdate:
     maxUnavailable: 1
     maxSurge: 1
 ```
 
-## Follow-up Questions
+**What is maxUnavailable?**
+* Maximum Pods unavailable during deployment.
 
-### What is maxUnavailable?
+**What is maxSurge?**
+* Extra Pods temporarily created.
 
-Maximum Pods unavailable during deployment.
+**Difference between RollingUpdate and Recreate?**
 
----
+**RollingUpdate.**
+* Zero downtime.
 
-### What is maxSurge?
+**Recreate.**
+* Deletes everything before creating new Pods.
 
-Extra Pods temporarily created.
+### 7. Persistent Volume (PV) & Persistent Volume Claim (PVC).
 
----
-
-### Difference between RollingUpdate and Recreate?
-
-RollingUpdate
-
-Zero downtime.
-
-Recreate
-
-Deletes everything before creating new Pods.
-
----
-
-# 7. Persistent Volume (PV) & Persistent Volume Claim (PVC)
-
-## PersistentVolume
+**PersistentVolume.**
 
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
-
 metadata:
   name: pv
-
 spec:
-
   capacity:
     storage: 5Gi
-
   accessModes:
     - ReadWriteOnce
-
   hostPath:
     path: /data
 ```
 
-## PersistentVolumeClaim
+**PersistentVolumeClaim.**
 
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
-
 metadata:
   name: pvc
-
 spec:
-
   accessModes:
     - ReadWriteOnce
-
   resources:
     requests:
       storage: 5Gi
 ```
 
-Mount into Pod.
-
+* Mount into Pod.
 ```yaml
 volumes:
-
 - name: storage
-
   persistentVolumeClaim:
     claimName: pvc
 ```
 
-## Follow-up Questions
+**Difference between PV and PVC?**
 
-### Difference between PV and PVC?
+**PV.**
+* Actual storage.
 
-PV
+**PVC.**
+* Request for storage.
 
-Actual storage.
+**What is StorageClass?**
+* Automates dynamic PV provisioning.
 
-PVC
+**Access Modes.**
 
-Request for storage.
-
----
-
-### What is StorageClass?
-
-Automates dynamic PV provisioning.
-
----
-
-### Access Modes
-
-| Mode | Meaning |
-|------|----------|
-| ReadWriteOnce | One node |
-| ReadOnlyMany | Many readers |
+| Mode          | Meaning          |
+|---------------|------------------|
+| ReadWriteOnce | One node         |
+| ReadOnlyMany  | Many readers     |
 | ReadWriteMany | Multiple writers |
 
----
+### 8. Ingress.
 
-# 8. Ingress
-
-## Problem
-
-Expose application externally.
+* Expose application externally.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
-
 metadata:
   name: app
-
 spec:
-
   ingressClassName: nginx
-
   rules:
-
   - host: app.example.com
-
     http:
-
       paths:
-
       - path: /
-
         pathType: Prefix
-
         backend:
-
           service:
-
             name: app-service
-
             port:
-
               number: 80
 ```
 
-## Follow-up Questions
+**Why Ingress?.**
 
-### Why Ingress?
+**Provides:**
+- Routing.
+- TLS.
+- Virtual Hosts.
+- Path-based routing.
 
-Provides:
+**Difference between Ingress and LoadBalancer?**
 
-- Routing
-- TLS
-- Virtual Hosts
-- Path-based routing
+**LoadBalancer.**
+* One Service.
 
----
+**Ingress.**
+* Many Services behind one external IP.
 
-### Difference between Ingress and LoadBalancer?
+**Does Ingress work by itself?**
 
-LoadBalancer
+* No.
+* Requires an Ingress Controller.
+* Examples:
+  - NGINX.
+  - Traefik.
+  - HAProxy.
 
-One Service.
+### 9. Horizontal Pod Autoscaler (HPA)
 
-Ingress
-
-Many Services behind one external IP.
-
----
-
-### Does Ingress work by itself?
-
-No.
-
-Requires an Ingress Controller.
-
-Examples:
-
-- NGINX
-- Traefik
-- HAProxy
-
----
-
-# 9. Horizontal Pod Autoscaler (HPA)
-
-## Problem
-
-Scale based on CPU.
+* Scale based on CPU.
 
 ```yaml
 apiVersion: autoscaling/v2
-
 kind: HorizontalPodAutoscaler
-
 metadata:
   name: app
-
 spec:
-
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: app
-
   minReplicas: 2
   maxReplicas: 10
-
   metrics:
-
   - type: Resource
-
     resource:
-
       name: cpu
-
       target:
-
         type: Utilization
         averageUtilization: 70
 ```
 
-## Follow-up Questions
+**What metrics are supported?**
+- CPU.
+- Memory.
+- Custom Metrics.
+- External Metrics.
 
-### What metrics are supported?
+**What component provides metrics?**
+* Metrics Server.
 
-- CPU
-- Memory
-- Custom Metrics
-- External Metrics
+**Difference between HPA and Cluster Autoscaler?**
 
----
+**HPA.**
+* Adds Pods.
 
-### What component provides metrics?
+**Cluster Autoscaler.**
+* Adds Nodes.
 
-Metrics Server.
+### 10. NetworkPolicy.
 
----
-
-### Difference between HPA and Cluster Autoscaler?
-
-HPA
-
-Adds Pods.
-
-Cluster Autoscaler
-
-Adds Nodes.
-
----
-
-# 10. NetworkPolicy
-
-## Problem
-
-Allow traffic only from frontend Pods.
+* Allow traffic only from frontend Pods.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
-
 kind: NetworkPolicy
-
 metadata:
   name: backend-policy
-
 spec:
-
   podSelector:
-
     matchLabels:
       app: backend
-
   policyTypes:
     - Ingress
-
   ingress:
-
   - from:
-
     - podSelector:
-
         matchLabels:
           app: frontend
 ```
 
-## Follow-up Questions
+**What happens without NetworkPolicy?**
+* All Pods can communicate.
 
-### What happens without NetworkPolicy?
+**Does NetworkPolicy work automatically?**
+* No.
+* Requires a CNI plugin that supports NetworkPolicy.
+* Examples:
+  - Calico.
+  - Cilium.
+  - Antrea.
 
-All Pods can communicate.
+**Can NetworkPolicy control egress?**
+* Yes.
+* **Ingress:**
+  * Incoming traffic.
+* **Egress:**
+  * Outgoing traffic.
 
----
+***
 
-### Does NetworkPolicy work automatically?
+## Common Kubernetes Interview Questions.
 
-No.
+**1. What is a Pod?**
+* Smallest deployable unit in Kubernetes.
+* One or more containers sharing:
+  - Network.
+  - Storage.
+  - Lifecycle.
 
-Requires a CNI plugin that supports NetworkPolicy.
+**2. Deployment vs StatefulSet**
 
-Examples:
+| Deployment       | StatefulSet              |
+|------------------|--------------------------|
+| Stateless        | Stateful                 |
+| Random Pod names | Stable Pod names         |
+| No ordering      | Ordered startup/shutdown |
 
-- Calico
-- Cilium
-- Antrea
+**3. ClusterIP vs NodePort vs LoadBalancer.**
 
----
-
-### Can NetworkPolicy control egress?
-
-Yes.
-
-Ingress
-
-Incoming traffic.
-
-Egress
-
-Outgoing traffic.
-
----
-
-# Common Kubernetes Interview Questions
-
-## What is a Pod?
-
-Smallest deployable unit in Kubernetes.
-
-One or more containers sharing:
-
-- Network
-- Storage
-- Lifecycle
-
----
-
-## Deployment vs StatefulSet
-
-| Deployment | StatefulSet |
-|------------|-------------|
-| Stateless | Stateful |
-| Random Pod names | Stable Pod names |
-| No ordering | Ordered startup/shutdown |
-
----
-
-## ClusterIP vs NodePort vs LoadBalancer
-
-| Type | Purpose |
-|-------|----------|
-| ClusterIP | Internal communication |
-| NodePort | Exposes service on every node |
+| Type         | Purpose                       |
+|--------------|-------------------------------|
+| ClusterIP    | Internal communication        |
+| NodePort     | Exposes service on every node |
 | LoadBalancer | Cloud-managed external access |
 
----
+**3. What is a Namespace?**
+* Logical isolation inside a cluster.
+* Used for:
+  - Teams.
+  - Environments.
+  - Resource quotas.
 
-## What is a Namespace?
+**4. ConfigMap vs Secret**
 
-Logical isolation inside a cluster.
-
-Used for:
-
-- Teams
-- Environments
-- Resource quotas
-
----
-
-## ConfigMap vs Secret
-
-| ConfigMap | Secret |
-|------------|----------|
+| ConfigMap     | Secret      |
+|---------------|-------------|
 | Configuration | Credentials |
-| Non-sensitive | Sensitive |
+| Non-sensitive | Sensitive   |
 
----
+**5. What is etcd?**
+* Distributed key-value store.
+* Stores the entire Kubernetes cluster state.
 
-## What is etcd?
+**6. kube-apiserver.**
+* Entry point to Kubernetes.
+* Every component communicates through it.
 
-Distributed key-value store.
+**7. kube-scheduler.**
+* Chooses which node should run a Pod.
+* Considers:
+  - Resources.
+  - Taints.
+  - Affinity.
+  - Constraints.
 
-Stores the entire Kubernetes cluster state.
+**8. kube-controller-manager.**
+* Runs controllers like:
+  - Deployment Controller.
+  - ReplicaSet Controller.
+  - Node Controller.
+  - Job Controller.
+* Ensures desired state matches actual state.
 
----
+**9. kubelet.**
+* Runs on every node.
+* Responsibilities:
+  - Starts Pods.
+  - Reports node health.
+  - Talks to API Server.
 
-## kube-apiserver
+**10. kube-proxy.**
+* Handles networking.
+* Creates routing rules for Services.
 
-Entry point to Kubernetes.
+**11. Taints vs Tolerations.**
 
-Every component communicates through it.
+**Taint.**
+* Repels Pods from a node.
 
----
+**Toleration.**
+* Allows a Pod to be scheduled onto a tainted node.
 
-## kube-scheduler
-
-Chooses which node should run a Pod.
-
-Considers:
-
-- Resources
-- Taints
-- Affinity
-- Constraints
-
----
-
-## kube-controller-manager
-
-Runs controllers like:
-
-- Deployment Controller
-- ReplicaSet Controller
-- Node Controller
-- Job Controller
-
-Ensures desired state matches actual state.
-
----
-
-## kubelet
-
-Runs on every node.
-
-Responsibilities:
-
-- Starts Pods
-- Reports node health
-- Talks to API Server
-
----
-
-## kube-proxy
-
-Handles networking.
-
-Creates routing rules for Services.
-
----
-
-## Taints vs Tolerations
-
-**Taint**
-
-Repels Pods from a node.
-
-**Toleration**
-
-Allows a Pod to be scheduled onto a tainted node.
-
----
-
-## Node Affinity
-
-Allows Pods to prefer or require certain nodes based on labels.
-
-Example:
-
+**12. Node Affinity.**
+* Allows Pods to prefer or require certain nodes based on labels.
+* Example:
 ```yaml
 affinity:
   nodeAffinity:
@@ -6039,107 +5758,71 @@ affinity:
           - ssd
 ```
 
----
+**13. Pod Affinity vs Anti-Affinity.**
+* **Pod Affinity:**
+  * Schedule Pods together.
+* **Pod Anti-Affinity:**
+  * Keep Pods apart for high availability.
 
-## Pod Affinity vs Anti-Affinity
+**14. DaemonSet.**
+* Runs exactly one Pod on every node.
+* Examples:
+  - Fluentd.
+  - Prometheus Node Exporter.
+  - CNI Plugins.
+  - Log Collectors.
 
-Pod Affinity
+**14. Job vs CronJob.**
+* **Job:**
+  * Runs once until completion.
+* **CronJob:**
+  * Runs on a schedule.
 
-Schedule Pods together.
+**15. Init Containers.**
+* Run before application containers.
+* Common uses:
+  - Database migrations.
+  - Waiting for dependencies.
+  - Downloading configuration.
 
-Pod Anti-Affinity
+**16. Sidecar Containers.**
+* Run alongside the main application.
+* Examples:
+  - Logging.
+  - Service Mesh (Envoy).
+  - Metrics.
+  - Proxy.
 
-Keep Pods apart for high availability.
+**17. Rolling Update vs Blue-Green vs Canary**
 
----
+| Strategy       | Description                                                 |
+|----------------|-------------------------------------------------------------|
+| Rolling Update | Gradually replaces Pods                                     |
+| Blue-Green     | Switch traffic between two environments                     |
+| Canary         | Send a small percentage of traffic to the new version first |
 
-## DaemonSet
-
-Runs exactly one Pod on every node.
-
-Examples:
-
-- Fluentd
-- Prometheus Node Exporter
-- CNI Plugins
-- Log Collectors
-
----
-
-## Job vs CronJob
-
-Job
-
-Runs once until completion.
-
-CronJob
-
-Runs on a schedule.
-
----
-
-## Init Containers
-
-Run before application containers.
-
-Common uses:
-
-- Database migrations
-- Waiting for dependencies
-- Downloading configuration
-
----
-
-## Sidecar Containers
-
-Run alongside the main application.
-
-Examples:
-
-- Logging
-- Service Mesh (Envoy)
-- Metrics
-- Proxy
-
----
-
-## Rolling Update vs Blue-Green vs Canary
-
-| Strategy | Description |
-|-----------|-------------|
-| Rolling Update | Gradually replaces Pods |
-| Blue-Green | Switch traffic between two environments |
-| Canary | Send a small percentage of traffic to the new version first |
-
----
-
-# Summary
-
-These examples cover many of the Kubernetes resources and concepts commonly discussed in DevOps and platform engineering interviews:
-
-- Deployment
-- Service
-- ConfigMap
-- Secret
-- Liveness / Readiness / Startup Probes
-- Resource Requests & Limits
-- Rolling Updates
-- PersistentVolume (PV)
-- PersistentVolumeClaim (PVC)
-- StorageClass
-- Ingress
-- Horizontal Pod Autoscaler (HPA)
-- NetworkPolicy
-- Namespace
-- DaemonSet
-- StatefulSet
-- Job & CronJob
-- Init Containers
-- Sidecars
-- Affinity & Anti-Affinity
-- Taints & Tolerations
-
-Understanding how these resources work together—and being able to explain when to use each one—is a strong foundation for Kubernetes interviews ranging from junior DevOps positions to senior Platform Engineer and SRE roles.
+**18. Summary.**
+- Deployment.
+- Service.
+- ConfigMap.
+- Secret.
+- Liveness / Readiness / Startup Probes.
+- Resource Requests & Limits.
+- Rolling Updates.
+- PersistentVolume (PV).
+- PersistentVolumeClaim (PVC).
+- StorageClass.
+- Ingress.
+- Horizontal Pod Autoscaler (HPA).
+- NetworkPolicy.
+- Namespace.
+- DaemonSet.
+- StatefulSet.
+- Job & CronJob.
+- Init Containers.
+- Sidecars.
+- Affinity & Anti-Affinity.
+- Taints & Tolerations.
 
 ***
 

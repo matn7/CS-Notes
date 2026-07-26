@@ -635,8 +635,10 @@ void test() {
 public class Accounting {
     private static final double STANDARD_DEDUCTION = 12_000;
     private static final double HIGH_EARNER_THRESHOLD = 100_000;
-    private final BiFunction<Double, Double, Double> deductExpenses = (revenue, expression) -> revenue - expression;
-    private final Function<Double, Double> takeStdDeduction = income -> income - STANDARD_DEDUCTION;
+    private final BiFunction<Double, Double, Double> deductExpenses = 
+            (revenue, expression) -> revenue - expression;
+    private final Function<Double, Double> takeStdDeduction = 
+            income -> income - STANDARD_DEDUCTION;
     private final Function<Double, Double> calcTaxRate = 
             taxableIncome -> taxableIncome < HIGH_EARNER_THRESHOLD ? 0.2 : 0.3;
     private final Function<Double, Double> witholdIncomeTax = 
@@ -1115,7 +1117,7 @@ void test() {
 **82. Optionals.**
 ```java
 void test() {
-    List<Strudent> students = Stream.generate(() -> Student.getRand(jms, pms))
+    List<Student> students = Stream.generate(() -> Student.getRand(jms, pms))
             .limit(1000).collect(Collectors.toList());
     Optional<Student> o1 = getStudent(new ArrayList<>(), "first");
     o1.ifPresentOrElse(System.out::println, () -> System.out.println("--> Empty"));
@@ -1258,7 +1260,7 @@ void test() {
 }
 ```
 
-**90. Find the names containing '-' in it and replace it with a space, collect them into a list.**
+**90. Find the names containing '-' in it and replace it with a space, collect them into a list.** // here
 ```java
 void test() {
     list.stream()
