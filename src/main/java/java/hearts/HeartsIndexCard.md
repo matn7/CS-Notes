@@ -3362,19 +3362,17 @@ It is one-time only.
 
 ---
 
-# 6. CyclicBarrier
+## 6. CyclicBarrier
 
-## Problem
+### Problem.
 
-Wait until all threads reach the barrier.
+* Wait until all threads reach the barrier.
 
 ```java
 import java.util.concurrent.*;
 
 public class BarrierExample {
-
     public static void main(String[] args) {
-
         CyclicBarrier barrier =
                 new CyclicBarrier(
                         3,
@@ -3395,107 +3393,77 @@ public class BarrierExample {
 }
 ```
 
-## Follow-up Questions
+### Follow-up Questions.
 
-### Why is it called "cyclic"?
+**Why is it called "cyclic"?**
+* After all threads pass the barrier, it automatically resets and can be reused.
 
-After all threads pass the barrier, it automatically resets and can be reused.
+**What happens if one thread never reaches the barrier?**
+* The remaining threads wait indefinitely unless a timeout is specified.
 
----
+**What is the barrier action?**
+* A Runnable executed once when the final thread reaches the barrier.
 
-### What happens if one thread never reaches the barrier?
+***
 
-The remaining threads wait indefinitely unless a timeout is specified.
+## 7. Semaphore
 
----
+### Problem.
 
-### What is the barrier action?
-
-A Runnable executed once when the final thread reaches the barrier.
-
----
-
-# 7. Semaphore
-
-## Problem
-
-Limit concurrent access to three threads.
+* Limit concurrent access to three threads.
 
 ```java
 import java.util.concurrent.*;
 
 public class ConnectionPool {
 
-    private final Semaphore semaphore =
-            new Semaphore(3);
+    private final Semaphore semaphore = new Semaphore(3);
 
     public void connect() {
-
         try {
-
             semaphore.acquire();
-
             System.out.println(Thread.currentThread().getName());
-
             Thread.sleep(1000);
-
         } catch (InterruptedException e) {
-
             Thread.currentThread().interrupt();
-
         } finally {
-
             semaphore.release();
         }
     }
 
     public static void main(String[] args) {
-
         ConnectionPool pool = new ConnectionPool();
-
-        ExecutorService executor =
-                Executors.newFixedThreadPool(10);
-
+        ExecutorService executor = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 10; i++)
             executor.submit(pool::connect);
-
         executor.shutdown();
     }
 }
 ```
 
-## Follow-up Questions
+### Follow-up Questions.
 
-### What is Semaphore?
+**What is Semaphore?**
+* A synchronization primitive that controls access using permits.
 
-A synchronization primitive that controls access using permits.
+**Difference between Semaphore and Lock?**
+* Semaphore:
+  - Multiple permits.
+  - Multiple threads may enter.
+* Lock:
+  - Single owner.
 
----
+**What is a binary semaphore?**
+* Semaphore with exactly one permit.
+* Equivalent to a mutex.
 
-### Difference between Semaphore and Lock?
+***
 
-Semaphore:
-- Multiple permits
-- Multiple threads may enter
+## 8. ReentrantLock with Condition.
 
-Lock:
-- Single owner
+### Problem
 
----
-
-### What is a binary semaphore?
-
-Semaphore with exactly one permit.
-
-Equivalent to a mutex.
-
----
-
-# 8. ReentrantLock with Condition
-
-## Problem
-
-Implement waiting using `Condition`.
+* Implement waiting using `Condition`.
 
 ```java
 import java.util.concurrent.locks.*;
@@ -3506,139 +3474,104 @@ public class Buffer {
 
     private boolean available = false;
 
-    private final Lock lock =
-            new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
-    private final Condition notEmpty =
-            lock.newCondition();
+    private final Condition notEmpty = lock.newCondition();
 
     public void produce(int value) {
-
         lock.lock();
-
         try {
-
             item = value;
             available = true;
             notEmpty.signal();
-
         } finally {
-
             lock.unlock();
         }
     }
 
     public int consume() throws InterruptedException {
-
         lock.lock();
-
         try {
-
             while (!available)
                 notEmpty.await();
-
             available = false;
-
             return item;
-
         } finally {
-
             lock.unlock();
         }
     }
 }
 ```
 
-## Follow-up Questions
+### Follow-up Questions.
 
-### Why use Condition instead of wait()/notify()?
+**Why use Condition instead of wait()/notify()?**
+* `Condition` allows multiple waiting queues per lock.
 
-`Condition` allows multiple waiting queues per lock.
+**Equivalent methods.**
 
----
+| Condition   | synchronized  |
+|-------------|---------------|
+| await()     | wait()        |
+| signal()    | notify()      |
+| signalAll() | notifyAll()   |
 
-### Equivalent methods
+**Advantages of ReentrantLock.**
 
-| Condition | synchronized |
-|------------|--------------|
-| await() | wait() |
-| signal() | notify() |
-| signalAll() | notifyAll() |
+- `tryLock()`.
+- `lockInterruptibly()`.
+- Timeout.
+- Fairness.
+- Multiple conditions.
 
----
+***
 
-### Advantages of ReentrantLock
+## 9. ExecutorService + Future.
 
-- tryLock()
-- lockInterruptibly()
-- timeout
-- fairness
-- multiple conditions
+### Problem.
 
----
-
-# 9. ExecutorService + Future
-
-## Problem
-
-Execute a task asynchronously and retrieve its result.
+* Execute a task asynchronously and retrieve its result.
 
 ```java
 import java.util.concurrent.*;
 
 public class FutureExample {
 
-    public static void main(String[] args)
-            throws Exception {
-
-        ExecutorService executor =
-                Executors.newFixedThreadPool(2);
-
-        Future<Integer> future =
-                executor.submit(() -> {
-
+    public static void main(String[] args) throws Exception {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Future<Integer> future = executor.submit(() -> {
                     Thread.sleep(1000);
-
                     return 42;
                 });
-
         System.out.println(future.get());
-
         executor.shutdown();
     }
 }
 ```
 
-## Follow-up Questions
+### Follow-up Questions.
 
-### Difference between execute() and submit()?
+**Difference between execute() and submit()?**
 
-| execute() | submit() |
-|------------|-----------|
-| No return value | Returns Future |
+| execute()              | submit()            |
+|------------------------|---------------------|
+| No return value        | Returns Future      |
 | Cannot retrieve result | Can retrieve result |
 
----
+**What happens if the task throws an exception?**
+* `Future.get()` throws `ExecutionException`.
 
-### What happens if the task throws an exception?
+**Does Future support chaining?**
+* No.
+* Use `CompletableFuture` instead.
 
-`Future.get()` throws `ExecutionException`.
+***
 
----
+## 10. CompletableFuture Pipeline.
 
-### Does Future support chaining?
+### Problem.
 
-No.
-
-Use `CompletableFuture` instead.
-
----
-
-# 10. CompletableFuture Pipeline
-
-## Problem
-
-Create an asynchronous processing pipeline.
+* Create an asynchronous processing pipeline.
 
 ```java
 import java.util.concurrent.*;
@@ -3646,216 +3579,157 @@ import java.util.concurrent.*;
 public class CompletableFutureDemo {
 
     public static void main(String[] args) {
-
         CompletableFuture
                 .supplyAsync(() -> 10)
-
                 .thenApply(x -> x * 2)
-
                 .thenApply(x -> x + 5)
-
                 .thenAccept(System.out::println)
-
                 .join();
     }
 }
 ```
 
-## Follow-up Questions
+### Follow-up Questions.
 
-### Difference between thenApply() and thenCompose()?
+**Difference between thenApply() and thenCompose()?**
+* `thenApply()`:
+  - Maps one value to another.
+  - Similar to `map()`.
+* `thenCompose()`:
+  - Chains another `CompletableFuture`.
+  - Similar to `flatMap()`.
 
-`thenApply()`
-- Maps one value to another.
-- Similar to `map()`.
+**Difference between thenAccept() and thenRun()?**
 
-`thenCompose()`
-- Chains another `CompletableFuture`.
-- Similar to `flatMap()`.
-
----
-
-### Difference between thenAccept() and thenRun()?
-
-| thenAccept | thenRun |
-|-------------|----------|
+| thenAccept               | thenRun                 |
+|--------------------------|-------------------------|
 | Receives previous result | Ignores previous result |
 
----
+**Difference between get() and join()?**
 
-### Difference between get() and join()?
+| get()                       | join()               |
+|-----------------------------|----------------------|
+| Checked exceptions          | Unchecked exceptions |
+| Throws InterruptedException | Does not             |
 
-| get() | join() |
-|--------|---------|
-| Checked exceptions | Unchecked exceptions |
-| Throws InterruptedException | Does not |
+***
 
----
+### Common Java Concurrency Interview Questions.
 
-# Common Java Concurrency Interview Questions
+**1. What is a race condition?**
+* Multiple threads modify shared mutable state without proper synchronization, leading to unpredictable behavior.
 
-## What is a race condition?
+**2. What is visibility?**
+* One thread may not see another thread's updates due to CPU caches or compiler optimizations.
+* Visibility is guaranteed by:
+  - `volatile`.
+  - synchronized.
+  - Lock.
+  - Atomic classes.
 
-Multiple threads modify shared mutable state without proper synchronization, leading to unpredictable behavior.
-
----
-
-## What is visibility?
-
-One thread may not see another thread's updates due to CPU caches or compiler optimizations.
-
-Visibility is guaranteed by:
-- `volatile`
-- synchronized
-- Lock
-- Atomic classes
-
----
-
-## What is atomicity?
-
-An operation that cannot be interrupted.
-
-Examples:
-
+**3. What is atomicity?**
+* An operation that cannot be interrupted.
+* Examples:
 ```java
 AtomicInteger.incrementAndGet();
 ```
 
----
-
-## What does volatile guarantee?
-
-- Visibility
-- Ordering
-
-It **does not** make compound operations atomic.
-
-Example:
-
+**4. What does volatile guarantee?**
+* Visibility.
+* Ordering.
+* It **does not** make compound operations atomic.
+* Example:
 ```java
 count++;
 ```
+* is **not** atomic.
 
-is **not** atomic.
+**5. synchronized vs ReentrantLock.**
 
----
+| synchronized     | ReentrantLock       |
+|------------------|---------------------|
+| Simpler          | More features       |
+| Automatic unlock | Manual unlock       |
+| No timeout       | Timeout supported   |
+| No tryLock       | tryLock supported   |
+| One wait queue   | Multiple Conditions |
 
-## synchronized vs ReentrantLock
+**6. Runnable vs Callable.**
 
-| synchronized | ReentrantLock |
-|--------------|---------------|
-| Simpler | More features |
-| Automatic unlock | Manual unlock |
-| No timeout | Timeout supported |
-| No tryLock | tryLock supported |
-| One wait queue | Multiple Conditions |
-
----
-
-## Runnable vs Callable
-
-| Runnable | Callable |
-|----------|-----------|
-| No return value | Returns value |
+| Runnable                        | Callable                     |
+|---------------------------------|------------------------------|
+| No return value                 | Returns value                |
 | Cannot throw checked exceptions | Can throw checked exceptions |
 
----
+**7. FixedThreadPool vs CachedThreadPool.**
 
-## FixedThreadPool vs CachedThreadPool
+**FixedThreadPool:**
+- Fixed number of threads.
+- Predictable memory usage.
 
-**FixedThreadPool**
+**CachedThreadPool:**
+- Creates threads as needed.
+- Can grow very large.
 
-- Fixed number of threads
-- Predictable memory usage
+**8. AtomicInteger vs synchronized.**
 
-**CachedThreadPool**
+**AtomicInteger:**
+- Lock-free.
+- Uses CAS (Compare-And-Set).
+- Better for simple counters.
 
-- Creates threads as needed
-- Can grow very large
+**synchronized:**
+- Protects multiple related operations.
+- More flexible.
 
----
+**8. ConcurrentHashMap vs HashMap.**
 
-## AtomicInteger vs synchronized
-
-**AtomicInteger**
-
-- Lock-free
-- Uses CAS (Compare-And-Set)
-- Better for simple counters
-
-**synchronized**
-
-- Protects multiple related operations
-- More flexible
-
----
-
-## ConcurrentHashMap vs HashMap
-
-| HashMap | ConcurrentHashMap |
-|----------|-------------------|
-| Not thread-safe | Thread-safe |
+| HashMap                        | ConcurrentHashMap          |
+|--------------------------------|----------------------------|
+| Not thread-safe                | Thread-safe                |
 | Faster in single-threaded code | Supports concurrent access |
 
----
+**9.wait() vs sleep().**
 
-## wait() vs sleep()
-
-| wait() | sleep() |
-|----------|----------|
-| Releases monitor | Keeps monitor |
-| Must be inside synchronized | Can be called anywhere |
+| wait()                              | sleep()                    |
+|-------------------------------------|----------------------------|
+| Releases monitor                    | Keeps monitor              |
+| Must be inside synchronized         | Can be called anywhere     |
 | Used for inter-thread communication | Used for pausing execution |
 
----
+**9. What is starvation?**
+* A thread never gets CPU time or access to a required resource because other threads continuously consume it.
 
-## What is starvation?
+**10. What is livelock?**
+* Threads remain active and keep responding to each other but make no useful progress.
 
-A thread never gets CPU time or access to a required resource because other threads continuously consume it.
+**11. What is CAS?**
+* CAS (Compare-And-Set) is an atomic CPU instruction used by classes in `java.util.concurrent.atomic`.
+* It:
+  - Compares a value with an expected value.
+  - If they match, updates the value atomically.
+  - Otherwise, retries or fails.
+* It enables many lock-free algorithms.
 
----
-
-## What is livelock?
-
-Threads remain active and keep responding to each other but make no useful progress.
-
----
-
-## What is CAS?
-
-CAS (Compare-And-Set) is an atomic CPU instruction used by classes in `java.util.concurrent.atomic`.
-
-It:
-- Compares a value with an expected value.
-- If they match, updates the value atomically.
-- Otherwise, retries or fails.
-
-It enables many lock-free algorithms.
-
----
-
-# Summary
-
-These examples cover many of the explicit concurrency primitives commonly discussed in Java interviews:
-
-- `Thread`
-- `ExecutorService`
-- `Future`
-- `CompletableFuture`
-- `BlockingQueue`
-- `Semaphore`
-- `CountDownLatch`
-- `CyclicBarrier`
-- `ReadWriteLock`
-- `ReentrantLock`
-- `Condition`
-- `synchronized`
-- `wait()` / `notify()`
-- `AtomicInteger`
-- `ConcurrentHashMap`
-
-Understanding when and why to use each construct, along with their trade-offs and common interview follow-up questions, will prepare you for most Java concurrency coding interviews.
+### Summary.
+* These examples cover many of the explicit concurrency primitives commonly discussed in Java interviews:
+  - `Thread`
+  - `ExecutorService`
+  - `Future`
+  - `CompletableFuture`
+  - `BlockingQueue`
+  - `Semaphore`
+  - `CountDownLatch`
+  - `CyclicBarrier`
+  - `ReadWriteLock`
+  - `ReentrantLock`
+  - `Condition`
+  - `synchronized`
+  - `wait()` / `notify()`
+  - `AtomicInteger`
+  - `ConcurrentHashMap`
+* Understanding when and why to use each construct, along with their trade-offs and common interview follow-up questions, 
+will prepare you for most Java concurrency coding interviews.
 
 
 

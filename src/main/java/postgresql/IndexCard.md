@@ -1,4 +1,4 @@
-**Join.**
+## Join.
 
 **1. List each comment’s text and the username of the user who wrote it.**
 ```sql
@@ -228,6 +228,21 @@ JOIN course_registrations c ON s.id = c.student_id;
 ***
 
 **7. Return all humans and their pet names (include humans with no pets).**
+
+**Human.**
+
+| id  | name  |
+|-----|-------|
+| 1   | Alice |
+| 2   | Bob   |
+
+**Animal.**
+
+| id  | owner_id  | name  |
+|-----|-----------|-------|
+| 1   | 1         | Rex   |
+| 2   | 1         | Milo  |
+
 ```sql
 SELECT humans.name AS human_name, pets.name AS pet_name
 FROM humans
@@ -266,6 +281,29 @@ LEFT JOIN pets p ON p.owner_id = h.id;
 ***
 
 **8. Return players, their team names, and their salary.**
+
+**Players.**
+
+| id  | name       | team_id |
+|-----|------------|---------|
+| 1   | John Smith | 1       |
+| 2   | Alex Brown | 2       |
+
+**Teams.**
+
+| id  | name   |
+|-----|--------|
+| 1   | Lakers |
+| 2   | Bulls  |
+
+**Contracts.**
+
+| id  | salary  | player_id  |
+|-----|---------|------------|
+| 1   | 50000   | 1          |
+| 2   | 60000   | 2          |
+
+
 ```sql
 SELECT players.name AS player_name, teams.name AS team_name, contracts.salary
 FROM players
@@ -306,6 +344,21 @@ JOIN contracts c ON c.player_id = p.id;
 ***
 
 **9. List all customers and any orders they made using `FULL JOIN`.**
+
+**Customers.**
+
+| id  | name  |
+|-----|-------|
+| 1   | Alice |
+| 2   | Bob   |
+
+**Orders.**
+
+| id  | customer_id  | total  |
+|-----|--------------|--------|
+| 101 | 1            | 50     |
+| 201 | 99           | 21     |
+
 ```sql
 SELECT *
 FROM customers
@@ -326,11 +379,11 @@ FULL JOIN orders ON orders.customer_id = customers.id;
 
 **Example result:**
 
-| id   | 	name   | 	id   | 	customer_id  | 	total   |
-|------|---------|-------|---------------|----------|
-| 1    | 	Alice  | 	101  | 	1            | 	50      |
-| 2    | 	Bob    | 	NULL | 	NULL         | 	NULL    |
-| NULL | 	NULL   | 	201  | 	99           |          |
+| id   | 	name   | 	id   | 	customer_id  | 	total  |
+|------|---------|-------|---------------|---------|
+| 1    | 	Alice  | 	101  | 	1            | 	50     |
+| 2    | 	Bob    | 	NULL | 	NULL         | 	NULL   |
+| NULL | 	NULL   | 	201  | 	99           | 21      |
 
 **Short note version:**
 * Uses a `FULL JOIN` to combine customers and orders, showing all records from both tables even when there is no match.
@@ -349,6 +402,16 @@ FULL JOIN orders o ON o.customer_id = c.id;
 ***
 
 **10. Find all customer pairs who live in the same city.**
+
+**Customers.**
+
+| id  | customer_id  | city   |
+|-----|--------------|--------|
+| 101 | 1            | Kraków | 
+| 102 | 3            | Kraków |
+| 103 | 2            | Łódź   |
+| 104 | 5            | Łódź   |
+
 ```sql
 SELECT A.customer_id AS customer1, B.customer_id AS customer2
 FROM customers A
@@ -368,11 +431,12 @@ AND A.customer_id <> B.customer_id;
 
 **Example result:**
 
-| customer1  | 	customer2  |
-|------------|-------------|
-| 1          | 	3          |
-| 3          | 	1          |
-| 2          | 	5          |
+| customer1 | 	customer2 |
+|-----------|------------|
+| 1         | 	3         |
+| 3         | 	1         |
+| 2         | 	5         |
+| 5         |  2         |
 
 **Short note version:**
 * Uses a self-join on the customers table to find all pairs of different customers living in the same city.
@@ -393,6 +457,28 @@ AND A.customer_id < B.customer_id;
 ***
 
 **11. Return book title, author name, and review rating only when the book author = review author.**
+
+**Books.**
+
+| id  | title       | author_id  |
+|-----|-------------|------------|
+| 101 | SQL Basics  | 1          |
+| 102 | Advanced DB | 2          |
+
+**Authors.**
+
+| id  | name       |
+|-----|------------|
+| 1   | John Doe   |
+| 2   | Jane Smith |
+
+**Reviews.**
+
+| id   | rating  | book_id  | reviewer_id  |
+|------|---------|----------|--------------|
+| 1    | 5       | 102      | 1            |
+| 2    | 4       | 101      | 2            |
+
 ```sql
 SELECT books.title, authors.name, reviews.rating
 FROM reviews
