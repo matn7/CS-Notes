@@ -8,9 +8,9 @@
 * [ ] Why are immutable objects useful? #
 * [ ] How do you design an immutable class in Java? #
 * [ ] What is the difference between shallow copy and deep copy? #
-* [ ] What is defensive copying and when should you use it?
-* [ ] Composition vs inheritance — when would you choose each?
-* [ ] What problems can inheritance introduce?
+* [ ] What is defensive copying and when should you use it? #
+* [ ] Composition vs inheritance — when would you choose each? #
+* [ ] What problems can inheritance introduce? #
 * [ ] Interface vs abstract class — when would you use each?
 * [ ] What did default methods change in Java interfaces?
 * [ ] What are records?
@@ -32,9 +32,9 @@
 * [ ] How are collisions handled in `HashMap`? #
 * [ ] When is a bucket in `HashMap` transformed into a tree? #
 * [ ] What happens during `HashMap` resize? #
-* [ ] Why is a good `hashCode()` implementation important?
-* [ ] What is the complexity of `get()` and `put()`?
-* [ ] Is `HashMap` thread-safe?
+* [ ] Why is a good `hashCode()` implementation important? #
+* [ ] What is the complexity of `get()` and `put()`? #
+* [ ] Is `HashMap` thread-safe? #
 * [ ] How does `ConcurrentHashMap` work?
 * [ ] Why does `ConcurrentHashMap` not need to lock the whole map?
 * [ ] `HashMap` vs `ConcurrentHashMap`?
@@ -58,9 +58,9 @@
 * [ ] How does type erasure affect runtime behavior? #
 * [ ] Why can’t you do `new T()`? #
 * [ ] Why can’t you do `new List<String>[10]`? #
-* [ ] What does `<?>` mean?
-* [ ] `? extends T` vs `? super T`?
-* [ ] Explain PECS.
+* [ ] What does `<?>` mean? #
+* [ ] `? extends T` vs `? super T`? #
+* [ ] Explain PECS. #
 * [ ] Why is `List<Integer>` not a subtype of `List<Number>`?
 * [ ] What are bounded type parameters?
 * [ ] What is the difference between `<T extends X>` and `<? extends X>`?
@@ -76,9 +76,9 @@
 * [ ] `map()` vs `flatMap()`? #
 * [ ] `filter()` vs `map()`? #
 * [ ] What does `reduce()` do? #
-* [ ] How does `collect()` work?
-* [ ] When is a Stream a worse choice than a regular loop?
-* [ ] What problems can side effects cause in Streams?
+* [ ] How does `collect()` work? #
+* [ ] When is a Stream a worse choice than a regular loop? #
+* [ ] What problems can side effects cause in Streams? #
 * [ ] What is a parallel stream?
 * [ ] When can `parallelStream()` make performance worse? #
 * [ ] Which pool does a parallel stream use?
@@ -102,10 +102,10 @@
 * [ ] What does ordering mean? #
 * [ ] What is happens-before? #
 * [ ] Give examples of happens-before relationships. #
-* [ ] What does `volatile` guarantee?
+* [ ] What does `volatile` guarantee? #
 * [ ] What does `volatile` NOT guarantee? #
-* [ ] Why is `volatile int counter; counter++` not thread-safe?
-* [ ] `volatile` vs `synchronized`?
+* [ ] Why is `volatile int counter; counter++` not thread-safe? #
+* [ ] `volatile` vs `synchronized`? #
 * [ ] Are reads and writes of references atomic?
 * [ ] What is safe publication?
 
@@ -116,9 +116,9 @@
 * [ ] `synchronized` method vs block? #
 * [ ] Static synchronized vs instance synchronized? #
 * [ ] `synchronized` vs `ReentrantLock`? #
-* [ ] What does `tryLock()` provide?
-* [ ] What is a deadlock?
-* [ ] How do you prevent deadlocks?
+* [ ] What does `tryLock()` provide? #
+* [ ] What is a deadlock? #
+* [ ] How do you prevent deadlocks? #
 * [ ] What is livelock? #
 * [ ] What is starvation? #
 * [ ] What is a race condition?
@@ -132,8 +132,8 @@
 * [ ] What problems can CAS have? #
 * [ ] What is the ABA problem? #
 * [ ] `AtomicInteger` vs `LongAdder`? #
-* [ ] When is `LongAdder` better?
-* [ ] What does lock-free mean?
+* [ ] When is `LongAdder` better? #
+* [ ] What does lock-free mean? #
 
 ---
 
@@ -144,10 +144,10 @@
 * [ ] What happens when all threads are busy? #
 * [ ] How do you choose the size of a thread pool? #
 * [ ] CPU-bound vs I/O-bound — how does this affect pool sizing? #
-* [ ] `FixedThreadPool` vs `CachedThreadPool`?
+* [ ] `FixedThreadPool` vs `CachedThreadPool`? #
 * [ ] What are the risks of an unbounded queue? #
-* [ ] How does `CompletableFuture` work?
-* [ ] `thenApply()` vs `thenCompose()`?
+* [ ] How does `CompletableFuture` work? #
+* [ ] `thenApply()` vs `thenCompose()`? #
 * [ ] `thenApply()` vs `thenAccept()`?
 * [ ] `thenCombine()` vs `allOf()`?
 * [ ] How do you handle exceptions in `CompletableFuture`?
@@ -175,8 +175,8 @@
 * [ ] What is stored on the heap? #
 * [ ] What is Metaspace? #
 * [ ] What is stored in the Code Cache? #
-* [ ] How does class loading work?
-* [ ] What are the phases of class loading?
+* [ ] How does class loading work? #
+* [ ] What are the phases of class loading? #
 * [ ] Bootstrap / Platform / Application ClassLoader?
 * [ ] What is parent delegation?
 * [ ] What is JIT?
@@ -213,8 +213,8 @@
 * [ ] `BeanFactory` vs `ApplicationContext`? #
 * [ ] How does Spring discover beans? #
 * [ ] How does component scanning work? #
-* [ ] `@Component` vs `@Service` vs `@Repository`?
-* [ ] Why is constructor injection usually preferred?
+* [ ] `@Component` vs `@Service` vs `@Repository`? #
+* [ ] Why is constructor injection usually preferred? #
 * [ ] What is the lifecycle of a Spring bean?
 * [ ] What does `BeanPostProcessor` do? #
 * [ ] What does `@PostConstruct` do?
@@ -236,8 +236,8 @@
 * [ ] JDK dynamic proxy vs CGLIB? #
 * [ ] When does Spring use a JDK proxy? #
 * [ ] When does Spring use CGLIB? #
-* [ ] What is the self-invocation problem?
-* [ ] Why can `this.transactionalMethod()` bypass `@Transactional`?
+* [ ] What is the self-invocation problem? #
+* [ ] Why can `this.transactionalMethod()` bypass `@Transactional`? #
 * [ ] How can you solve the self-invocation problem?
 * [ ] Can a private method effectively use `@Transactional`?
 * [ ] How is AOP used to implement `@Transactional`?
@@ -254,8 +254,8 @@
 * [ ] Who performs the rollback? #
 * [ ] When does Spring roll back by default? #
 * [ ] Checked vs unchecked exceptions — how do they affect rollback? #
-* [ ] How do you force rollback for a checked exception?
-* [ ] What does propagation mean?
+* [ ] How do you force rollback for a checked exception? #
+* [ ] What does propagation mean? #
 * [ ] What does `REQUIRED` mean?
 * [ ] What does `REQUIRES_NEW` mean?
 * [ ] What does `NESTED` mean?
@@ -291,8 +291,8 @@
 * [ ] What is detached state? #
 * [ ] What is removed state? #
 * [ ] What is the first-level cache? #
-* [ ] Can the first-level cache be disabled?
-* [ ] What is dirty checking?
+* [ ] Can the first-level cache be disabled? #
+* [ ] What is dirty checking? #
 * [ ] How does Hibernate detect entity changes?
 * [ ] Do you need to call `save()` after modifying a managed entity?
 * [ ] `flush()` vs `commit()`?
@@ -310,8 +310,8 @@
 * [ ] How do you solve N+1? #
 * [ ] What does `JOIN FETCH` do? #
 * [ ] What is an EntityGraph? #
-* [ ] When can batch fetching help?
-* [ ] Why is `FetchType.EAGER` not a universal solution to N+1?
+* [ ] When can batch fetching help? #
+* [ ] Why is `FetchType.EAGER` not a universal solution to N+1? #
 * [ ] What causes `LazyInitializationException`?
 * [ ] How do you avoid `LazyInitializationException`?
 * [ ] What do you think about Open Session in View?
@@ -325,8 +325,8 @@
 * [ ] What should you do after an optimistic locking failure? #
 * [ ] What is pessimistic locking? #
 * [ ] Optimistic vs pessimistic locking? #
-* [ ] When can pessimistic locking be necessary?
-* [ ] How can pessimistic locking lead to a deadlock?
+* [ ] When can pessimistic locking be necessary? #
+* [ ] How can pessimistic locking lead to a deadlock? #
 * [ ] How do you prevent lost updates?
 
 ---
@@ -339,8 +339,8 @@
 * [ ] How does Spring Boot decide which configurations to apply? #
 * [ ] How do `@Conditional...` annotations work? #
 * [ ] What does `@ConditionalOnClass` do? #
-* [ ] What does `@ConditionalOnMissingBean` do?
-* [ ] What is a starter?
+* [ ] What does `@ConditionalOnMissingBean` do? #
+* [ ] What is a starter? #
 * [ ] What happens after adding the JDBC starter?
 * [ ] How does Spring Boot create a `DataSource`?
 * [ ] `application.properties` vs `application.yml`?
@@ -363,8 +363,8 @@
 * [ ] How would you design an idempotent `POST /payments` endpoint? #
 * [ ] What is an idempotency key? #
 * [ ] What if two identical requests arrive at the same time? #
-* [ ] PUT vs PATCH?
-* [ ] 200 vs 201 vs 202 vs 204?
+* [ ] PUT vs PATCH? #
+* [ ] 200 vs 201 vs 202 vs 204? #
 * [ ] 400 vs 422?
 * [ ] 401 vs 403?
 * [ ] How do you design pagination?
@@ -386,8 +386,8 @@
 * [ ] When does retry make sense? #
 * [ ] When is retry dangerous? #
 * [ ] What is exponential backoff? #
-* [ ] Why use jitter?
-* [ ] What is a retry storm?
+* [ ] Why use jitter? #
+* [ ] What is a retry storm? #
 * [ ] What is a circuit breaker?
 * [ ] What states does a circuit breaker have?
 * [ ] What is a bulkhead?
@@ -410,8 +410,8 @@
 * [ ] What is a partition? #
 * [ ] What is an offset? #
 * [ ] What is a consumer group? #
-* [ ] How does Kafka assign partitions to consumers?
-* [ ] What happens if there are more consumers than partitions?
+* [ ] How does Kafka assign partitions to consumers? #
+* [ ] What happens if there are more consumers than partitions? #
 * [ ] Does Kafka guarantee ordering?
 * [ ] Where does Kafka guarantee ordering?
 * [ ] How would you preserve ordering for events related to one `orderId`?
@@ -443,8 +443,8 @@
 * [ ] How does an index work? #
 * [ ] Why are B-tree indexes commonly used? #
 * [ ] When might an index not be used? #
-* [ ] Why can too many indexes be a problem?
-* [ ] Why does column order matter in a composite index?
+* [ ] Why can too many indexes be a problem? #
+* [ ] Why does column order matter in a composite index? #
 * [ ] What is a covering index?
 * [ ] How do you analyze a slow query?
 * [ ] What does `EXPLAIN` / an execution plan tell you?
@@ -466,8 +466,8 @@
 * [ ] Unit test vs integration test? #
 * [ ] What should a unit test verify? #
 * [ ] What should not be mocked? #
-* [ ] What problems does over-mocking create?
-* [ ] What is the test pyramid?
+* [ ] What problems does over-mocking create? #
+* [ ] What is the test pyramid? #
 * [ ] Is the test pyramid always the best model?
 * [ ] What does `@SpringBootTest` do?
 * [ ] Why can `@SpringBootTest` be slow?
@@ -494,8 +494,8 @@
 
 * [ ] Monolith vs microservices? #
 * [ ] When should you NOT use microservices? #
-* [ ] What are the advantages of a modular monolith?
-* [ ] How do you define microservice boundaries?
+* [ ] What are the advantages of a modular monolith? #
+* [ ] How do you define microservice boundaries? #
 * [ ] What is a bounded context?
 * [ ] What is DDD?
 * [ ] Entity vs Value Object?
@@ -517,9 +517,9 @@
 
 # 19. Observability / Production
 
-* [ ] Logging vs metrics vs tracing?
-* [ ] What should be included in logs?
-* [ ] Why should you not log everything?
+* [ ] Logging vs metrics vs tracing? #
+* [ ] What should be included in logs? #
+* [ ] Why should you not log everything? #
 * [ ] What is a correlation ID?
 * [ ] How do you trace a request across 10 microservices?
 * [ ] What is distributed tracing?
@@ -545,8 +545,8 @@
 
 # 20. Security
 
-* [ ] Authentication vs authorization?
-* [ ] How does JWT work?
+* [ ] Authentication vs authorization? #
+* [ ] How does JWT work? #
 * [ ] What problems does JWT introduce?
 * [ ] Access token vs refresh token?
 * [ ] Where should tokens be stored?
@@ -823,3 +823,4 @@ Compare with the all questions and answers in this chat.
 Based on that pick 50 question from any fields which are missing, do not repeat already covered questions and answers.
 Output 50 questions as a list.
 It can be any field as i mentions, and questions should be like interview one for Senior Role.
+Focus on problems such as, Streams vs Database Query Optimization.
