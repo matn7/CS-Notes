@@ -1,3 +1,4 @@
+# PROCESSED
 ## Lambda expression
 
 - In Java, a lambda expression is a concise way of defining a **functional interface**, which is an interface that has 
